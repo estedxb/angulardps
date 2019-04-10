@@ -35,13 +35,34 @@ namespace DpsApis.Controllers
         // GET: DpsApi/Customer/GetWorkSchedules
         [HttpGet]
         [Route("GetWorkSchedules")]
-        public ActionResult<List<CustomerWorkScheduleVM>> GetWorkSchedules(int CustomerId)
+        public ActionResult<CustomerWorkScheduleVM> GetWorkSchedules(int CustomerId)
         {
-            List<CustomerWorkScheduleVM> workSchedulesList = new List<CustomerWorkScheduleVM>();
-            CustomerWorkScheduleVM workSchedules = new CustomerWorkScheduleVM();
+            //List<CustomerWorkScheduleVM> workSchedulesList = new List<CustomerWorkScheduleVM>();
 
-            workSchedulesList.Add(workSchedules);
-            return Ok(workSchedulesList);
+            List<WorkTimeVM> workTimeList = new List<WorkTimeVM>();
+            WorkTimeVM workTimeVM = new WorkTimeVM();
+            workTimeList.Add(workTimeVM);
+
+            List<BreakTimeVM> breakTimesList = new List<BreakTimeVM>();
+            BreakTimeVM breakTimeVM = new BreakTimeVM();           
+            breakTimesList.Add(breakTimeVM);
+
+            
+
+            WorkDayVM workDayVM = new WorkDayVM();
+            workDayVM.WorkTimes = workTimeList;
+            workDayVM.BreakTime = breakTimesList;
+            List<WorkDayVM> workDayList = new List<WorkDayVM>();
+            workDayList.Add(workDayVM);
+
+            WorkScheduleVM workSchedule = new WorkScheduleVM();
+            workSchedule.WorkDays = workDayList;
+
+            CustomerWorkScheduleVM workSchedules = new CustomerWorkScheduleVM();
+            workSchedules.WorkSchedule = workSchedule;
+
+
+            return Ok(workSchedules);
 
         }
 
@@ -179,14 +200,14 @@ namespace DpsApis.Controllers
 
     public class WorkScheduleVM
     {
-        public WorkDayVM WorkDays { get; set; } = new WorkDayVM();
+        public List<WorkDayVM> WorkDays { get; set; } = new List<WorkDayVM>();
     }
 
     public class WorkDayVM
     {
         public int DayOfWeek { get; set; } = DateTime.Now.Day;
-        public WorkTimeVM WorkTimes { get; set; } = new WorkTimeVM();
-        public BreakTimeVM BreakTime { get; set; } = new BreakTimeVM();
+        public List<WorkTimeVM> WorkTimes { get; set; } = new List<WorkTimeVM>();
+        public List<BreakTimeVM> BreakTime { get; set; } = new List<BreakTimeVM>();
     }
 
     public class BreakTimeVM
