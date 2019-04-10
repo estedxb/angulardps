@@ -49,11 +49,37 @@ namespace DpsApis.Controllers
 
             
 
-            WorkDayVM workDayVM = new WorkDayVM();
-            workDayVM.WorkTimes = workTimeList;
-            workDayVM.BreakTime = breakTimesList;
+            WorkDayVM workDayVM1 = new WorkDayVM();
+            workDayVM1.DayOfWeek = 1;
+            workDayVM1.WorkTimes = workTimeList;
+            workDayVM1.BreakTime = breakTimesList;
+
+            WorkDayVM workDayVM2 = new WorkDayVM();
+            workDayVM2.DayOfWeek = 2;
+            workDayVM2.WorkTimes = workTimeList;
+            workDayVM2.BreakTime = breakTimesList;
+
+            WorkDayVM workDayVM3 = new WorkDayVM();
+            workDayVM3.DayOfWeek = 3;
+            workDayVM3.WorkTimes = workTimeList;
+            workDayVM3.BreakTime = breakTimesList;
+
+            WorkDayVM workDayVM4 = new WorkDayVM();
+            workDayVM4.DayOfWeek = 4;
+            workDayVM4.WorkTimes = workTimeList;
+            workDayVM4.BreakTime = breakTimesList;
+
+            WorkDayVM workDayVM5 = new WorkDayVM();
+            workDayVM5.DayOfWeek = 5;
+            workDayVM5.WorkTimes = workTimeList;
+            workDayVM5.BreakTime = breakTimesList;
+
             List<WorkDayVM> workDayList = new List<WorkDayVM>();
-            workDayList.Add(workDayVM);
+            workDayList.Add(workDayVM1);
+            workDayList.Add(workDayVM2);
+            workDayList.Add(workDayVM3);
+            workDayList.Add(workDayVM4);
+            workDayList.Add(workDayVM5);
 
             WorkScheduleVM workSchedule = new WorkScheduleVM();
             workSchedule.WorkDays = workDayList;
@@ -266,6 +292,11 @@ namespace DpsApis.Controllers
         public bool CreditWorthy { get; set; } = true;
         public double CreditLimit { get; set; } = 100000;
         public DateTime DateChecked { get; set; } = DateTime.Now.AddMonths(-3).Date;
+
+        public bool CreditCheck(string VATNumber)
+        {
+            return true;
+        }
     }
 }
 
