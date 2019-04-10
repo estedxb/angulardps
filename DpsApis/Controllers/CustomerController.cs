@@ -16,10 +16,10 @@ namespace DpsApis.Controllers
     {
 
 
-        // GET: DpsApi/Customer/GetCustomers
+        // GET: DpsApi/Customer/GetCustomer
         [HttpGet]
-        [Route("GetCustomers")]
-        public ActionResult<List<CustomerVM>> GetCustomers(string VATNumber)
+        [Route("GetCustomer")]
+        public ActionResult<CustomerVM> GetCustomer(string VATNumber)
         {
             //List<CustomerVM> CustomersList = new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();
