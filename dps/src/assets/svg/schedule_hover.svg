@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+	<defs>
+		<filter xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="f013" inkscape:label="Bloom" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, cushion-like bevel with matte highlights" color-interpolation-filters="sRGB">
+            <feGaussianBlur result="result1" in="SourceAlpha" stdDeviation="2.2"/>
+            <feSpecularLighting result="result0" specularExponent="18.1" specularConstant="2" surfaceScale="5">
+                <feDistantLight azimuth="225" elevation="24"/>
+            </feSpecularLighting>
+            <feComposite result="result6" operator="in" in2="SourceAlpha"/>
+            <feMorphology radius="5.7" operator="dilate"/>
+            <feGaussianBlur result="result11" stdDeviation="5.7"/>
+            <feDiffuseLighting surfaceScale="5" result="result3" diffuseConstant="2" in="result1">
+                <feDistantLight elevation="25" azimuth="225"/>
+            </feDiffuseLighting>
+            <feBlend result="result7" mode="multiply" in="result3" in2="SourceGraphic"/>
+            <feComposite in="result7" operator="in" in2="SourceAlpha" result="result91"/>
+            <feBlend result="result9" mode="lighten" in="result6" in2="result91"/>
+            <feComposite in="result11" in2="result9"/>
+        </filter>
+	</defs>	
+	<g class="currentLayer" style="">
+		<path fill="none" fill-opacity="0" stroke="#E37619" stroke-opacity="1" stroke-width="2" stroke-dasharray="none" stroke-linejoin="miter" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end="" d="M3.8597376527993172,16.849453315665038 C3.8597376527993172,10.237978446156832 9.406292820111736,4.882683801855187 16.253891792102376,4.882683801855187 C23.101490764093015,4.882683801855187 28.648045931405434,10.237978446156832 28.648045931405434,16.849453315665038 C28.648045931405434,23.46092818517324 23.101490764093015,28.816222829474885 16.253891792102376,28.816222829474885 C9.406292820111736,28.816222829474885 3.8597376527993172,23.46092818517324 3.8597376527993172,16.849453315665038 z" id="svg_19" class="" filter=""/>
+		<path fill="none" fill-opacity="1" stroke="#E37619" stroke-opacity="1" stroke-width="1" stroke-dasharray="none" stroke-linejoin="miter" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end="" d="M17.41620122728959,19.145247323299518 L17.41620122728959,7.972062727644115 " id="svg_3" class=""/>
+		<path fill="none" fill-opacity="1" stroke="#E37619" stroke-opacity="1" stroke-width="1" stroke-dasharray="none" stroke-linejoin="miter" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end="" d="M11.494415081960113,18.586584457444122 L17.081007379787806,18.586584457444122 " id="svg_8" class=""/>
+	</g>
+</svg>

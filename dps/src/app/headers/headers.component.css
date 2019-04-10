@@ -1,0 +1,9 @@
+#customlogo{border-radius: 50%;  width: 50px; height: 50px; border:solid 1px rgba(199,199,199,.3);background-size: initial;display: block;
+    -webkit-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
+    -moz-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
+    box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3); padding:7px;
+}
+#dpslogo{width: 210px; height: 50px;}
+.row{border: 1px solid blue;}
+div div{padding: 10px 50px 10px 50px; float: left;}
+div div:nth-child(1) {text-align : right; float:right ;}

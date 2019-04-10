@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+	<defs>
+		<style>
+			.a,.b{fill:none;stroke:#E37619;stroke-width:3px;}.d{stroke-miterlimit:10;}
+		</style>
+	</defs>
+	<g transform="rotate(180 27.330881118774414,28.380876541137695) " id="svg_3">
+		<path class="a" d="M38.107880105495454,28.380876541137695 A10.777,10.777 0 1 1 27.330880105495453,39.15787654113768 A10.777,10.777 0 0 1 38.107880105495454,28.380876541137695 z" id="svg_4"></path>
+		<line class="b" y2="53.52687644958496" x2="38.10788053274155" y1="40.95387649536133" x1="38.10788053274155" id="svg_5"></line>
+	</g>
+</svg>
