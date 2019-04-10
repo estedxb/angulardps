@@ -19,17 +19,18 @@ namespace DpsApis.Controllers
         // GET: DpsApi/Customer/GetCustomers
         [HttpGet]
         [Route("GetCustomers")]
-        public ActionResult<List<CustomerVM>> GetCustomers()
+        public ActionResult<List<CustomerVM>> GetCustomers(string VATNumber)
         {
-            List<CustomerVM> CustomersList = new List<CustomerVM>();
+            //List<CustomerVM> CustomersList = new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            return Ok(CustomersList);
+            customerVM.VATNumber = VATNumber;
+            //CustomersList.Add(customerVM);
+            //CustomersList.Add(customerVM);
+            //CustomersList.Add(customerVM);
+            //CustomersList.Add(customerVM);
+            //CustomersList.Add(customerVM);
+            //CustomersList.Add(customerVM);
+            return Ok(customerVM);
         }
         
         // GET: DpsApi/Customer/GetWorkSchedules
@@ -198,7 +199,7 @@ namespace DpsApis.Controllers
     public class CustomerVM
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
-        public string VATNumber { get; set; } = "1234567890";
+        public string VATNumber { get; set; } 
         public string Name { get; set; } = "Name";
         public string OfficialName { get; set; } = "OfficialName";
         public string LegalForm { get; set; } = "Abc";
