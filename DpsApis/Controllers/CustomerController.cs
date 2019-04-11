@@ -16,27 +16,31 @@ namespace DpsApis.Controllers
     {
 
 
-        // GET: DpsApi/Customer/GetCustomer
-        [HttpGet]
-        [Route("GetCustomer")]
-        public ActionResult<CustomerVM> GetCustomer(string VATNumber)
+        // GET: DpsApi/Customer
+        [HttpGet]       
+        public async Task<ActionResult<List<CustomerVM>>> GetCustomeAsync()
+        {
+            List<CustomerVM> CustomersList =  new List<CustomerVM>();
+            CustomerVM customerVM = new CustomerVM();
+            CustomersList.Add(customerVM);
+
+            return Ok(CustomersList);
+        }
+
+        // GET: DpsApi/Customer/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerVM>> GetCustomerAsync(int id)
         {
             //List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();
-            customerVM.VATNumber = VATNumber;
-            //CustomersList.Add(customerVM);
-            //CustomersList.Add(customerVM);
-            //CustomersList.Add(customerVM);
-            //CustomersList.Add(customerVM);
-            //CustomersList.Add(customerVM);
-            //CustomersList.Add(customerVM);
+            CustomerVM customerVM = new CustomerVM();        
+            
             return Ok(customerVM);
         }
-        
-        // GET: DpsApi/Customer/GetWorkSchedules
+
+        // GET: DpsApi/Customer/WorkSchedules
         [HttpGet]
-        [Route("GetWorkSchedules")]
-        public ActionResult<CustomerWorkScheduleVM> GetWorkSchedules(int CustomerId)
+        [Route("WorkSchedules")]
+        public async Task<ActionResult<CustomerWorkScheduleVM>> GetWorkSchedulesAsync()
         {
             //List<CustomerWorkScheduleVM> workSchedulesList = new List<CustomerWorkScheduleVM>();
 
@@ -93,10 +97,10 @@ namespace DpsApis.Controllers
 
         }
 
-        // GET: DpsApi/Customer/GetPositions
+        // GET: DpsApi/Customer/Positions
         [HttpGet]
-        [Route("GetPositions")]
-        public ActionResult<CustomerPostionVM> GetPositions(int CustomerId)
+        [Route("Positions")]
+        public async Task<ActionResult<CustomerPostionVM>> GetPositionsAsync()
         {
             List<CustomerPostionVM> postionsList = new List<CustomerPostionVM>();
             CustomerPostionVM customerPostion = new CustomerPostionVM();
@@ -107,10 +111,10 @@ namespace DpsApis.Controllers
 
         }
 
-        // GET: DpsApi/Customer/GetLocations
+        // GET: DpsApi/Customer/Locations
         [HttpGet]
-        [Route("GetLocations")]
-        public ActionResult<CustomerLocationVM> GetLocations(int CustomerId)
+        [Route("Locations")]
+        public async Task<ActionResult<CustomerLocationVM>> GetLocationsAsync()
         {
             List<CustomerLocationVM> locationsList = new List<CustomerLocationVM>();
             CustomerLocationVM customerLocation = new CustomerLocationVM();
@@ -125,7 +129,7 @@ namespace DpsApis.Controllers
         // POST: DpsApi/Customer/CreateCustomerForm1
         [HttpPost]
         [Route("CreateCustomerForm1")]
-        public ActionResult<int> CreateCustomerForm1(CustomerVM model)
+        public async Task<ActionResult<int>> CreateCustomerForm1Async(CustomerVM model)
         {
             
             if (!ModelState.IsValid)
@@ -156,7 +160,7 @@ namespace DpsApis.Controllers
         // POST: DpsApi/Customer/CreateCustomerForm2
         [HttpPost]
         [Route("CreateCustomerForm2")]
-        public ActionResult CreateCustomerForm2(CustomerVM model)
+        public async Task <ActionResult> CreateCustomerForm2Async(CustomerVM model)
         {
 
             if (!ModelState.IsValid)
@@ -179,18 +183,18 @@ namespace DpsApis.Controllers
 
         }
 
-        // POST: DpsApi/Customer/UpdateCustomer
+        // POST: DpsApi/Customer/Update
         [HttpPost]
-        [Route("UpdateCustomer")]
-        public ActionResult UpdateCustomer(CustomerVM model)
+        [Route("Update")]
+        public async Task<ActionResult> UpdateCustomerAsync(CustomerVM model)
         {
             return Ok(model);
         }
 
-        // POST: DpsApi/Customer/ArchiveCustomer
+        // POST: DpsApi/Customer/Archive
         [HttpPost]
-        [Route("ArchiveCustomer")]
-        public ActionResult ArchiveCustomer(CustomerVM model)
+        [Route("Archive")]
+        public async Task<ActionResult> ArchiveCustomerAsync(CustomerVM model)
         {
             return Ok(model);
         }

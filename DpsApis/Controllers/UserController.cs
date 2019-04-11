@@ -11,18 +11,18 @@ namespace DpsApis.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // POST: DpsApi/User/CreateUser
+        // POST: DpsApi/User/Create
         [HttpPost]
-        [Route("CreateUser")]
-        public ActionResult CreateUser(UserVM model)
+        [Route("Create")]
+        public async Task<ActionResult> CreateUser(UserVM model)
         {
             return Ok(model);
         }
 
-        // POST: DpsApi/User/UpdateUser
+        // POST: DpsApi/User/Update
         [HttpPost]
-        [Route("UpdateUser")]
-        public ActionResult UpdateUser(UserVM model)
+        [Route("Update")]
+        public async Task<ActionResult> UpdateUser(UserVM model)
         {
             return Ok(model);
         }
@@ -30,15 +30,15 @@ namespace DpsApis.Controllers
         // POST: DpsApi/User/EnableDisableUser
         [HttpPost]
         [Route("EnableDisableUser")]
-        public ActionResult EnableDisableUser(UserVM model)
+        public async Task<ActionResult> EnableDisableUser(UserVM model)
         {
             return Ok(model);
         }
 
-        // POST: DpsApi/User/ArchiveUser
+        // POST: DpsApi/User/Archive
         [HttpPost]
-        [Route("ArchiveUser")]
-        public ActionResult ArchiveUser(UserVM model)
+        [Route("Archive")]
+        public async Task<ActionResult> ArchiveUser(UserVM model)
         {
             return Ok(model);
         }
@@ -46,7 +46,7 @@ namespace DpsApis.Controllers
 
     public class UserVM
     {
-         public string Username { get; set; }
+        public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
