@@ -24,9 +24,9 @@ import { HeadersComponent } from './headers/headers.component';
     BrowserModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent,MenuComponent,HeadersComponent]
+  bootstrap: [AppComponent, MenuComponent, HeadersComponent]
 })
 export class AppModule { }

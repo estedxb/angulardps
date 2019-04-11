@@ -1,0 +1,11 @@
+.row,div{border: 0px solid;}
+.row{border-color: blue;} 
+.col {border-color: red;}
+
+.btn {background-image: linear-gradient(104deg, rgba(227, 118, 25, 1),rgba(159, 11, 25, 1));margin:20px 50px 0px 0px;border-radius: 16px;line-height: 17px;height: 32px;  vertical-align: middle;color: #fff; font-size: 17px;font-weight: bold;}
+.btn:disabled{background-image: linear-gradient(104deg,#e1e1e1, #c7c7c7);}
+#forward {width: 260px;text-align: left;}
+#backward {width: 135px;text-align: right;}
+#forward img{float: right;}
+#backward img{float: left;}
+

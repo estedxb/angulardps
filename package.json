@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cleanWindows": "rmdir /s /q node_modules",
-    "rebuild": "npm run cleanWindows && npm install && npm run build && ng serve"
+    "rebuild": "npm run cleanWindows && npm install && npm audit fix && npm run build && ng serve"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +23,10 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.8.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
     "angular-bootstrap-md": "^7.4.4",
     "angular-font-awesome": "^3.1.2",

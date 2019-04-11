@@ -1,9 +1,16 @@
-#customlogo{border-radius: 50%;  width: 50px; height: 50px; border:solid 1px rgba(199,199,199,.3);background-size: initial;display: block;
+.row,div{border: 0px solid;}
+.row{border-color: blue;} div {border-color:  red;}
+#customlogo{width: 80px; margin: 0px; }
+#dpslogo{height: 60px; margin-top: 10px; margin-bottom: 10px; }
+.float-left{padding: 30px 0px 30px 6%; float: left;}
+.float-right {padding: 30px 6% 30px 0px; text-align : right; float:right ;}
+div div div {float: left; vertical-align: middle;}
+a {text-decoration: none;font-size: 20px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;color: black;vertical-align: middle;line-height: 70px; width: 100%;}
+div.clogo{width:80px;border:solid 1px rgba(199,199,199,.3);line-height: 70px;
     -webkit-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
     -moz-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
-    box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3); padding:7px;
+    box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
+    border-radius: 70%;  
 }
-#dpslogo{width: 210px; height: 50px;}
-.row{border: 1px solid blue;}
-div div{padding: 10px 50px 10px 50px; float: left;}
-div div:nth-child(1) {text-align : right; float:right ;}
+.cname{min-width:100px;margin-left: 10px;padding: 5px 10px 5px 5px;line-height: 60px;}
+.cname span{float: left;}
