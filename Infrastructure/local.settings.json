@@ -1,0 +1,6 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureStorageTableConnctionString": "DefaultEndpointsProtocol=https;AccountName=dpsstorageaccountdev;AccountKey=8VYzrDWiF1MtuTXg6yo7Vtgsopbw5G2+APrThPKnuidmcMEQ8a9Vvlh5imxqV+OPR2LVsfJnY+76wsqWhjTAaQ==;EndpointSuffix=core.windows.net"
+  }
+}
