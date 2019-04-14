@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DpsApis.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace DpsApis.Controllers
 
         // GET: DpsApi/Customer
         [HttpGet]       
-        public async Task<ActionResult<List<CustomerVM>>> GetCustomeAsync()
+        public async Task<ActionResult<List<CustomerVM>>> GetCustomersAsync()
         {
             List<CustomerVM> CustomersList =  new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();
@@ -29,7 +30,7 @@ namespace DpsApis.Controllers
 
         // GET: DpsApi/Customer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerVM>> GetCustomerAsync(int id)
+        public async Task<ActionResult<CustomerVM>> GetCustomerByIdAsync(int id)
         {
             //List<CustomerVM> CustomersList = new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();        
@@ -129,7 +130,7 @@ namespace DpsApis.Controllers
         // POST: DpsApi/Customer/CreateCustomerForm1
         [HttpPost]
         [Route("CreateCustomerForm1")]
-        public async Task<ActionResult<int>> CreateCustomerForm1Async(CustomerVM model)
+        public async Task<ActionResult<int>> CreateCustomerForm1Async(CustomerFromOneVM model)
         {
             
             if (!ModelState.IsValid)
@@ -139,11 +140,7 @@ namespace DpsApis.Controllers
             else
             {
                 try
-                {
-                    List<CustomerVM> customers = new List<CustomerVM>();
-                   
-                    customers.Add(model);
-                    //model.CustomersList = customers;
+                {                   
                     return Ok(model);
                 }
                 catch (Exception e)
@@ -184,7 +181,7 @@ namespace DpsApis.Controllers
         }
 
         // POST: DpsApi/Customer/Update
-        [HttpPost]
+        [HttpPut]
         [Route("Update")]
         public async Task<ActionResult> UpdateCustomerAsync(CustomerVM model)
         {
