@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="RepositoryImplementation\" />
-    <Folder Include="ServicesImplementation\" />
   </ItemGroup>
 
   <ItemGroup>

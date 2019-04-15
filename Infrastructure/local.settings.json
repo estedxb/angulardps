@@ -1,6 +1,12 @@
 {
   "IsEncrypted": false,
   "Values": {
+
+    "BSURL": "https://jobfixers-staging.b-bright.be/backend/index.php/",
+    "BSURLToken": "874c4bdf-e4d7-4b79-b5d8-9cd81c4417ec",
+    "BSURLVersionNumber": "1",
+    "JobFixersAPI": "http://jobfixersapisdev.azurewebsites.net/",
+
     "AzureStorageTableConnctionString": "DefaultEndpointsProtocol=https;AccountName=dpsstorageaccountdev;AccountKey=8VYzrDWiF1MtuTXg6yo7Vtgsopbw5G2+APrThPKnuidmcMEQ8a9Vvlh5imxqV+OPR2LVsfJnY+76wsqWhjTAaQ==;EndpointSuffix=core.windows.net"
   }
 }
