@@ -13,8 +13,12 @@ namespace Core.ServicesInterface
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        Task<int> AddCustomerToBS(DpsCustomer customer);
+        string AddCustomerToBS(DpsCustomer customer);
 
+       
 
+        //string AddEnterprise(string status, string enterprise_id, string search_name, string gen_name, string office_id, string VATNumber, string vatcountry_iso, string street, string street_nr, string postal_code, string city, string country_iso, string extref, string jobprofile);
+
+       
     }
 }

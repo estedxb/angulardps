@@ -27,6 +27,9 @@ namespace DpsApis.Controllers
             List<CustomerVM> CustomersList = new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();
             CustomersList.Add(customerVM);
+            CustomersList.Add(customerVM);
+            CustomersList.Add(customerVM);
+
 
             return Ok(CustomersList);
         }
@@ -148,13 +151,6 @@ namespace DpsApis.Controllers
         {
             return Ok();
         }
-
-
-
-
-
-
-
 
 
         // GET: api/Customer/WorkSchedules
