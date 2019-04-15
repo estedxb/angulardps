@@ -24,7 +24,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
+
 export const routingComponents = [
     CustomersComponent,
     HomeComponent,
@@ -32,4 +34,4 @@ export const routingComponents = [
     PageNotFoundComponentComponent,
     HeadersComponent,
     CustomerselectionComponent
-  ]
+];

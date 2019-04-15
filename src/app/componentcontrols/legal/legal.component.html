@@ -1,3 +1,3 @@
-<p>
-  legal works!
-</p>
+<select id="ddl_legalform" class="legalform">
+    <option *ngFor="let legalform of legalforms" [value]="legalform.LegalFormID">{{legalform.LegalFormName}}</option>
+</select>

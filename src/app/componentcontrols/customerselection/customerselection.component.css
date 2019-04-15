@@ -45,7 +45,9 @@
  }
  .dialog .content{
    margin: 20px 0px 10px 0px;
-   height: 405px;
+   height: auto;
+   min-height: 120px;
+   max-height: 405px;
    overflow-y:scroll;
 }
 .dialog .content #customersList{
@@ -60,8 +62,8 @@ button.close {
    overflow: hidden;    
    float: right;     
 }
-.search-form {border-radius: 0px 16px 16px 0px; height: 32px;background-color: #fff; border: solid 2px #000; border-left: 0px;  color: #000; cursor:pointer; overflow: hidden; outline:none;width: 275px;}
-.search-btn  {margin-left: 16px;border-radius: 16px 0px 0px 16px; height: 32px;background-color: #fff; border: solid 2px #000; border-right: 0px; color: #000; cursor:pointer; overflow: hidden; outline:none;}
+.search-form {border-radius: 0px 16px 16px 0px; height: 32px;background-color: #fff; border: solid .05em #000; border-left: 0px;  color: #000; cursor:pointer; overflow: hidden; outline:none;width: 235px;}
+.search-btn  {margin-left: 16px;border-radius: 16px 0px 0px 16px; height: 32px;background-color: #fff; border: solid .05em #000; border-right: 0px; color: #000; cursor:pointer; overflow: hidden; outline:none;}
 .compHeader{ height: 25px; text-align: right;}
 .gap{width: 10px;}
 .state-container-dropdown{

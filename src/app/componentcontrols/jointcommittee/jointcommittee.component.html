@@ -1,3 +1,4 @@
-<p>
-  jointcommittee works!
-</p>
+
+<select id="ddl_jointcommittee" class="jointcommittee">
+    <option *ngFor="let jointCommittee of jointCommittees" [value]="jointCommittee.JointCommitteeID">{{jointCommittee.JointCommitteeName}}</option>
+</select>

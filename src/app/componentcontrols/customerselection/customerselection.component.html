@@ -9,10 +9,10 @@
             <div class="content" id="customerContent">
                 <div class="error">{{ errorMsg }}</div>
                 <div *ngFor = "let customer of customernames">
-                <div id="customersList" *ngIf="customer && customer.vatNumber != null && customer.vatNumber != undefined && customer.vatNumber != '' && customer.vatNumber != 'undefined'  ">
-                    <a href="customer/{{ customer.vatNumber }}">{{customer.customerName}}</a>
+                    <div id="customersList" *ngIf="customer && customer.vatNumber != null && customer.vatNumber != undefined && customer.vatNumber != '' && customer.vatNumber != 'undefined'  ">
+                        <a href="customer/{{ customer.vatNumber }}">{{customer.customerName}}</a>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>      
     </ng-container>

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiURL: 'https://dpsapisdev.azurewebsites.net/DpsApi/',
-  getcustomers: 'Customer'
+  getcustomers: 'Customer',
+  getJointCommitee: '',
 };
 
 /*

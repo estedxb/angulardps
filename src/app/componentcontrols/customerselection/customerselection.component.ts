@@ -1,13 +1,13 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ICustomer } from '../../models/customer';
 import { CustomersService } from '../../shared/customers.service';
-import { CustomersComponent } from '../../customers/customers.component';
 
 @Component({
   selector: 'app-customerselection',
   templateUrl: './customerselection.component.html',
   styleUrls: ['./customerselection.component.css']
 })
+
 export class CustomerselectionComponent implements OnInit {
   public customers = [];
   public customernames = [];
@@ -20,9 +20,7 @@ export class CustomerselectionComponent implements OnInit {
     this.customernames = [];
     if (this.customers.length > 0) {
       this.customernames = this.customers
-        .map( cust => {
-          if (cust.customerName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; }
-        } );
+        .map( cust => { if (cust.customerName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
     } else {
       this.customernames = this.customers;
     }

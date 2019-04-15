@@ -4,10 +4,11 @@ import { ICustomer } from '../models/customer';
 import { Observable } from 'rxjs/observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class CustomersService {
+
   private getCustomerUrl = 'assets/data/customers.json';
   //private getCustomerUrl = environment.apiURL + environment.getcustomers;
 

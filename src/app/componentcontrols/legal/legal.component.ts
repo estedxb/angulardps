@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LegalForm } from '../../models/legalform';
+import { LegalformService } from '../../shared/legalform.service';
 
 @Component({
   selector: 'app-legal',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./legal.component.css']
 })
 export class LegalComponent implements OnInit {
-
-  constructor() { }
+  public legalforms = [];
+  public errorMsg;
+  constructor(private legalformService: LegalformService) { }
 
   ngOnInit() {
+    this.legalformService.getLegalForms().subscribe(data => this.legalforms = data , error => this.errorMsg = error);
   }
 
 }
