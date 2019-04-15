@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace DpsApis.ViewModels
 
     public class Customerdetail
     {
+        [Required]
         public string vatnumber { get; set; }
         public bool checkcheck { get; set; }
         public int creditlimt { get; set; }

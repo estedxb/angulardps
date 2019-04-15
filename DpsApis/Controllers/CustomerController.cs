@@ -4,41 +4,160 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using BoemmValueObjects;
+using Core.DomainModel.DpsCustomer;
 using DpsApis.ViewModels;
+using Infrastructure.RepositoryImplementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace DpsApis.Controllers
 {
-    [Route("DpsApi/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
 
 
-        // GET: DpsApi/Customer
-        [HttpGet]       
-        public async Task<ActionResult<List<CustomerVM>>> GetCustomersAsync()
+        // GET: api/Customer
+        [HttpGet]
+        public async Task<ActionResult> Get()
         {
-            List<CustomerVM> CustomersList =  new List<CustomerVM>();
+            List<CustomerVM> CustomersList = new List<CustomerVM>();
             CustomerVM customerVM = new CustomerVM();
             CustomersList.Add(customerVM);
 
             return Ok(CustomersList);
         }
 
-        // GET: DpsApi/Customer/5
+
+
+        // GET: api/Customer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerVM>> GetCustomerByIdAsync(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            //List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();        
-            
-            return Ok(customerVM);
+            DpsCustomer Model = new DpsCustomer();
+
+            // Customer
+            Customer customer = new Customer();
+            customer.VatNumber = "B001";
+            customer.Name = "Test Name";
+            customer.OfficialName = "Test Offical Name";
+            customer.LegalForm = "Test LehalForm";
+            customer.Address = new Address { Bus = "Bus", City = "Magic City", Country = "UAE", CountryCode = "UAE", PostalCode = "00", Street = "Magic Street", StreetNumber = "558" };
+            customer.PhoneNumber = new PhoneNumber { Number = "+971548788415" };
+            customer.Email = new Email { EmailAddress = "testmail@testServer.test" };
+            customer.VCACertification = new VCACertification { Cerified = false };
+            customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
+            Model.Customer = customer;
+
+
+
+            // invoice setting ...
+            var OtherAllowanceList = new List<OtherAllowance>();
+            OtherAllowanceList.Add(new OtherAllowance { Amount = 15, CodeId = new Guid(), Nominal = false });
+
+            var ShiftAllownsList = new List<ShiftAllowance>();
+            ShiftAllownsList.Add(new ShiftAllowance { Amount = 12, Nominal = false, ShiftName = "testShiftName", TimeSpan = new TimeSpan(10, 10, 10) });
+
+            //
+            Model.InvoiceEmail = new Email { EmailAddress = "InvoiceMail@mail.com" };
+            Model.ContractsEmail = new Email { EmailAddress = "ContractMail@mail.com" };
+            Model.BulkContractsEnabled = false;
+            Model.invoiceSettings = new InvoiceSettings
+            {
+                HolidayInvoiced = false,
+                LieuDaysAllowance =
+                new LieuDaysAllowance { Enabled = false, Payed = false },
+                MobilityAllowance = new MobilityAllowance { Enabled = false, AmountPerKm = 0 },
+                OtherAllowances = OtherAllowanceList,
+                ShiftAllowance = true,
+                ShiftAllowances = ShiftAllownsList,
+                SicknessInvoiced = true
+            };
+
+
+            // contact 
+            Model.Contact = new Contact
+            {
+                Email = new Email { EmailAddress = "Contact@customerdoain.com" },
+                FirstName = "Alex",
+                Language = new Language
+                { Name = "English", ShortName = "En" },
+                LastName = "SuperMan",
+                Mobile = new PhoneNumber { Number = "+97154254528" },
+                PhoneNumber = new PhoneNumber { Number = "+971545458578" },
+                Postion = "Postion"
+            };
+
+
+            Model.StatuteSettings = new List<StatuteSettings>();
+            Model.StatuteSettings.Add(new StatuteSettings
+            {
+                Coefficient = 2,
+                MealVoucherSettings = new MealVoucherSettings { EmployerShare = 50, MinimumHours = 60, TotalWorth = 600 },
+                ParitairCommitee = new BOEMMParitairCommitee { Name = "BOEMMParitairCommitee Name", Number = "251465463sd" },
+                Statute = new Statute { Name = "Statute Name" }
+            });
+
+
+            return Ok(Model);
         }
 
-        // GET: DpsApi/Customer/WorkSchedules
+
+
+        // POST: api/Customer/
+        [HttpPost]
+        public async Task<ActionResult> Post(DpsCustomer value)
+        {
+
+            try
+            {
+                //var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(value);
+                var Saved = await value.CreateNewCustomer(new RICustomer());
+                if (Saved)
+                {
+                    return Ok(value.Customer.VatNumber);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return StatusCode(500);
+
+            }
+        }
+
+
+
+        // POST: api/Customer/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, CustomerVM model)
+        {
+            return Ok(model);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Put(string id)
+        {
+            return Ok();
+        }
+
+
+
+
+
+
+
+
+
+        // GET: api/Customer/WorkSchedules
         [HttpGet]
         [Route("WorkSchedules")]
         public async Task<ActionResult<CustomerWorkScheduleVM>> GetWorkSchedulesAsync()
@@ -50,10 +169,10 @@ namespace DpsApis.Controllers
             workTimeList.Add(workTimeVM);
 
             List<BreakTimeVM> breakTimesList = new List<BreakTimeVM>();
-            BreakTimeVM breakTimeVM = new BreakTimeVM();           
+            BreakTimeVM breakTimeVM = new BreakTimeVM();
             breakTimesList.Add(breakTimeVM);
 
-            
+
 
             WorkDayVM workDayVM1 = new WorkDayVM();
             workDayVM1.DayOfWeek = 1;
@@ -98,7 +217,7 @@ namespace DpsApis.Controllers
 
         }
 
-        // GET: DpsApi/Customer/Positions
+        // GET: api/Customer/Positions
         [HttpGet]
         [Route("Positions")]
         public async Task<ActionResult<CustomerPostionVM>> GetPositionsAsync()
@@ -112,7 +231,7 @@ namespace DpsApis.Controllers
 
         }
 
-        // GET: DpsApi/Customer/Locations
+        // GET: api/Customer/Locations
         [HttpGet]
         [Route("Locations")]
         public async Task<ActionResult<CustomerLocationVM>> GetLocationsAsync()
@@ -127,80 +246,18 @@ namespace DpsApis.Controllers
 
         }
 
-        // POST: DpsApi/Customer/CreateCustomerForm1
-        [HttpPost]
-        [Route("CreateCustomerForm1")]
-        public async Task<ActionResult<int>> CreateCustomerForm1Async(CustomerFromOneVM model)
-        {
-            
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            else
-            {
-                try
-                {                   
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceError(e.Message);
-                    // return we have an internal error ...
-                    return StatusCode(500);
-                }
-            }
-
-        }
 
 
-        // POST: DpsApi/Customer/CreateCustomerForm2
-        [HttpPost]
-        [Route("CreateCustomerForm2")]
-        public async Task <ActionResult> CreateCustomerForm2Async(CustomerVM model)
-        {
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            else
-            {
-                try
-                {
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceError(e.Message);
-                    // return we have an internal error ...
-                    return StatusCode(500);
-                }
-            }
 
-        }
 
-        // POST: DpsApi/Customer/Update
-        [HttpPut]
-        [Route("Update")]
-        public async Task<ActionResult> UpdateCustomerAsync(CustomerVM model)
-        {
-            return Ok(model);
-        }
 
-        // POST: DpsApi/Customer/Archive
-        [HttpPost]
-        [Route("Archive")]
-        public async Task<ActionResult> ArchiveCustomerAsync(CustomerVM model)
-        {
-            return Ok(model);
-        }
 
     }
     public class CustomerVM
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
-        public string VATNumber { get; set; } 
+        public string VATNumber { get; set; }
         public string Name { get; set; } = "Name";
         public string OfficialName { get; set; } = "OfficialName";
         public string LegalForm { get; set; } = "Abc";
@@ -219,9 +276,9 @@ namespace DpsApis.Controllers
 
     public class CustomerWorkScheduleVM
     {
-        public Guid CustomerId { get; set; } =  Guid.NewGuid();
+        public Guid CustomerId { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = "Qwerty";
-        public WorkScheduleVM WorkSchedule   { get; set; } = new WorkScheduleVM();
+        public WorkScheduleVM WorkSchedule { get; set; } = new WorkScheduleVM();
         public bool IsEnabled { get; set; } = true;
         public bool IsArchived { get; set; } = false;
     }
@@ -250,7 +307,7 @@ namespace DpsApis.Controllers
 
     public class CustomerPostionVM
     {
-        public Guid CustomerId { get; set; } =  Guid.NewGuid();
+        public Guid CustomerId { get; set; } = Guid.NewGuid();
         public PositionVM Position { get; set; } = new PositionVM();
         public bool IsEnabled { get; set; } = true;
         public bool IsArchived { get; set; } = false;
@@ -262,7 +319,7 @@ namespace DpsApis.Controllers
         public string TaskDescription { get; set; } = "TaskDescription";
         public bool IsStudentAllowed { get; set; } = true;
         public string CostCenter { get; set; } = "CostCenter";
-        public DocumentVM WorkStationDocument { get; set; } 
+        public DocumentVM WorkStationDocument { get; set; }
     }
 
     public class DocumentVM
