@@ -1,5 +1,3 @@
-import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
-
 export interface ICustomer {
     vatNumber: string;
     customerName: string;
@@ -16,83 +14,105 @@ export interface ICustomer {
     telephone?: string;
     generalEmail?: string;
     billingEmail?: string;
-    contractEmail?: string
+    contractEmail?: string;
 }
-/*
-export class DPSCustomer {
-{
-    customer: Customer;
-    invoiceEmail: EmailAddress;
-    contractsEmail: EmailAddress;
-    bulkContractsEnabled: true;
-    statuteSettings: [
-      { 
-        statute: { name: string };
-        paritairCommitee: { number: string; name: string };
-        coefficient: 0;
-        mealVoucherSettings: {
-            totalWorth: 0;
-            employerShare: 0;
-            minimumHours: 0
-        }
-      }
-    ];
-    invoiceSettings: {
-      lieuDaysAllowance: {
- enabled: true;
- payed: true
-      };
-      sicknessInvoiced: true;
-      holidayInvoiced: true;
-      mobilityAllowance: {
- enabled: true;
- amountPerKm: 0
-      };
-      shiftAllowance: true;
-      shiftAllowances: [
- {
-   shiftName: string;
-   timeSpan: string;
-   amount: 0;
-   nominal: true
- }
-      ];
-      otherAllowances: [
- {
-   codeId: string;
-   amount: 0;
-   nominal: true
- }
-      ]
-    };
-    contact: ConvertActionBindingResult;
-  }
 
-export class Customer {
+export interface DPSCustomer {
+    customer: Customer;
+    invoiceEmail?: EmailAddress;
+    contractsEmail?: EmailAddress;
+    bulkContractsEnabled: boolean;
+    statuteSettings?: StatuteSetting[];
+    invoiceSettings?: InvoiceSettings;
+    contact: Contact;
+}
+
+export interface Customer { 
     vatNumber: string;
     name: string;
     officialName?: string;
-    legalForm?: string;
-    creditCheck?: CreditCheck;
+    legalForm: string;
+    creditCheck: CreditCheck;
     address?: Address;
-    phoneNumber?: PhoneNumber;
-    email: EmailAddress;
-    vcaCertification: Cerified;
-  }
-export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: Date; }
-export class Cerified { cerified: true; }
-export class Address {    street: string;    streetNumber: string;    bus: string;    city: string;    postalCode: string;    country: string;    countryCode: string; }
-export class {
-    firstName: string;
-    lastName: string;
-    postion: string;
-    email: EmailAddress;
-    mobile: PhoneNumber;
-    phoneNumber: PhoneNumber;
-    language: Language;
+    phoneNumber?: string;
+    email?: EmailAddress;
+    vcaCertification?: VcaCertification;
 }
 
-export class EmailAddress { emailAddress: string; }
-export class PhoneNumber { number: string; }
-export class Language { name: string; shortName: string }
-*/
+export interface EmailAddress { emailAddress: string; }
+
+export interface CreditCheck {
+    creditcheck: boolean;
+    creditLimit: number;
+    dateChecked: Date;
+}
+
+export interface PhoneNumber { number: string; }
+
+export interface Address {
+    street?: string;
+    streetNumber?: string;
+    bus?: string;
+    city?: string;
+    postalCode?: string;
+    country?: string;
+    countryCode?: string;
+}
+
+export interface VcaCertification { cerified: boolean; }
+
+export interface Statute { name: string; }
+
+export interface ParitairCommitee { number: string; name: string; }
+
+export interface MealVoucherSettings { 
+    totalWorth?: number; 
+    employerShare?: number; 
+    minimumHours?: number;
+}
+
+export interface StatuteSetting {
+    statute: Statute;
+    paritairCommitee?: ParitairCommitee;
+    coefficient?: number;
+    mealVoucherSettings?: MealVoucherSettings;
+}
+
+export interface LieuDaysAllowance { enabled: boolean; payed: boolean; }
+
+export interface MobilityAllowance { enabled: boolean; amountPerKm?: number; }
+
+export interface ShiftAllowance {
+    shiftName: string;
+    timeSpan: string;
+    amount: number;
+    nominal?: boolean;
+}
+
+export interface OtherAllowance {
+    codeId: string;
+    amount: number;
+    nominal?: boolean;
+}
+
+export interface InvoiceSettings {
+    lieuDaysAllowance?: LieuDaysAllowance;
+    sicknessInvoiced?: boolean;
+    holidayInvoiced?: boolean;
+    mobilityAllowance?: MobilityAllowance;
+    shiftAllowance?: boolean;
+    shiftAllowances?: ShiftAllowance[];
+    otherAllowances?: OtherAllowance[];
+}
+
+export interface Language { name: string; shortName: string; }
+
+export interface Contact {
+    firstName: string;
+    lastName?: string;
+    postion?: string;
+    email?: EmailAddress;
+    mobile?: PhoneNumber;
+    phoneNumber?: PhoneNumber;
+    language?: Language;
+}
