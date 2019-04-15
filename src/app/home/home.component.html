@@ -1,16 +1,32 @@
-<div class="row">
-  <div class="col-sm-9" style="height: 1000px; overflow-y:auto; ">
-      <div id="CustomerDetails" class="customerBox">
-          asdasdasd
-      </div>
-      <div id="CustomerContact" class="customerBox">
-          asdasdasd
-      </div>
-  </div>
-  <div class="col-sm-3">
-      <button class="btn" id="forward">Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
-      <button class="btn" id="backward" disabled><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>
-  </div>
+<div class="row">      
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br/><div class="pagehead">Create Customer</div></div>
+  <div class="col col-sm-3"></div>
 </div>
 
+<div class="row" id="formState">
+    <div class="col col-sm-3"></div>
+    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+        1. Create Company Details<hr style="background-color:#9A0C19;"/><img src="../../assets/svg/circle.svg">
+    </div>
+    <div class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+        2. Agreements<hr style="background-color:#C7C7C7;"/><input type="checkbox" id="formOk" value="0" disabled checked/>
+    </div>
+    <div class="col col-sm-3"></div>
+</div>
 
+<div class="row">
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-6" id="maincontentarea">
+    <div class="scrollbar" id="maincontent">
+      <div class="force-overflow">
+        <div id="CustomerDetails" class="customerBox">Customer Details</div>
+        <div id="CustomerContact" class="customerBox">Customer Contact</div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-sm-3">
+    <button class="btn" id="forward">Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
+    <button class="btn" id="backward" disabled><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>      
+  </div>
+</div>

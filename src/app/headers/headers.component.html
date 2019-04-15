@@ -1,9 +1,8 @@
-<div class="row">
-  <div class="col-sm-6 float-left uliine">
-    <a href="#">
+<div class="headerRow">
+  <div class="float-right"><img src="../../assets/img/DPSLogo.png" id="dpslogo" ></div>
+  <div class="float-left uliine" (click)="customerList.ShowHideCustomerList()">
       <div class="clogo"><img src="../../assets/img/jobfixerslogo.png" id="customlogo" alt="JobFixers"></div>
-      <div class="cname"><span  id="Organization">JobFixers</span></div>
-    </a>    
+      <div class="cname"><span  id="Organization">JobFixers</span>{{buttonName}}</div>
   </div>
-  <div class="col-sm-6 float-right"><img src="../../assets/img/DPSLogo.png" id="dpslogo" ></div>
 </div>
+<app-customerselection #customerList></app-customerselection>

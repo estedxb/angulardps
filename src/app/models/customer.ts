@@ -1,4 +1,4 @@
-export class Customer {
+export interface ICustomer {
     vatNumber: string;
     customerName: string;
     officialName: string;

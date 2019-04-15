@@ -1,16 +1,18 @@
-.row,div{border: 0px solid;}
-.row{border-color: blue;} div {border-color:  red;}
+.headerRow,div{border: 0px solid;}
+.headerRow{border-color: blue;} div {border-color:  red;}
+.headerRow{list-style-type: none; margin: 0; padding: 0; overflow: hidden;}
 #customlogo{width: 80px; margin: 0px; }
-#dpslogo{height: 60px; margin-top: 10px; margin-bottom: 10px; }
-.float-left{padding: 30px 0px 30px 6%; float: left;}
-.float-right {padding: 30px 6% 30px 0px; text-align : right; float:right ;}
+#dpslogo{height: 60px; margin-top: 6px; margin-bottom: 6px; }
+.float-left{float: left;padding: 10px 0px 10px 20px; }
+.float-right {float: right;padding: 10px 20px 10px 0px; text-align : right; }
 div div div {float: left; vertical-align: middle;}
 a {text-decoration: none;font-size: 20px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;color: black;vertical-align: middle;line-height: 70px; width: 100%;}
 div.clogo{width:80px;border:solid 1px rgba(199,199,199,.3);line-height: 70px;
     -webkit-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
     -moz-box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
     box-shadow: 0px 0px 3px 6px rgba(199,199,199,.3);
-    border-radius: 70%;  
+    border-radius: 70%;   cursor: pointer
 }
 .cname{min-width:100px;margin-left: 10px;padding: 5px 10px 5px 5px;line-height: 60px;}
 .cname span{float: left;}
+.cname {text-decoration: none;font-size: 20px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;color: black;vertical-align: middle;line-height: 70px; cursor: pointer}

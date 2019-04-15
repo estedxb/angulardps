@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://'
+  apiURL: 'https://dpsapisdev.azurewebsites.net/DpsApi/',
+  getcustomers: 'Customer'
 };
 
 /*

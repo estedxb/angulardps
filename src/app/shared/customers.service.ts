@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { ICustomer } from '../models/customer';
+import { Observable } from 'rxjs/observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import { environment } from '../../environments/environment.prod';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class CustomersService {
-  customers = [
-    {id: 1, name: "Customers 001", description: "Customers 001 des", email: "c001@email.com"},
-    {id: 2, name: "Customers 002", description: "Customers 002 des", email: "c002@email.com"},
-    {id: 3, name: "Customers 003", description: "Customers 003 des", email: "c003@email.com"},
-    {id: 4, name: "Customers 004", description: "Customers 004 des", email: "c004@email.com"}
-  ];
-  constructor() { }
+  private getCustomerUrl = 'assets/data/customers.json';
+  //private getCustomerUrl = environment.apiURL + environment.getcustomers;
 
-  public getCustomers():Array<{id, name, description, email}>{
-    return this.customers;
+  constructor(private http: HttpClient) { }
+
+  public getCustomers(): Observable<ICustomer[]> {
+      return this.http.get<ICustomer[]>(this.getCustomerUrl)
+        .catch(this.errorHandler);
   }
+
+  errorHandler(error: HttpErrorResponse){
+      return Observable.throw(error.message);
+  }
+
+}
+  /*
   public createCustomer(customer: {id, name, description, email}){
     this.customers.push(customer);
   }
-  /*
+
   public editCustomer(customer: {id, name, description, email}){
     this.customers.push(customer);
   }
-  
+
   public deleteCustomer(customer: {id, name, description, email}){
     this.customers.push(customer);
   }
   */
-}

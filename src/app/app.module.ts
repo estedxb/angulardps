@@ -1,30 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { CustomersComponent } from './customers/customers.component';
-import { HomeComponent } from './home/home.component';
-import { MenuComponent } from './menu/menu.component';
-import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { HttpClientModule } from '@angular/common/http';
+//import { MatAutocompleteModule,MatInputModule } from '@angular/material';
+//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { CustomersComponent } from './customers/customers.component';
+//import { HomeComponent } from './home/home.component';
+//import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
+//import { CustomerselectionComponent } from './customerselection/customerselection.component';
+import { MenuComponent } from './menu/menu.component';
 import { HeadersComponent } from './headers/headers.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomersComponent,
-    HomeComponent,
-    MenuComponent,
-    PageNotFoundComponentComponent,
-    HeadersComponent
+    routingComponents
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    BrowserAnimationsModule
+    AutocompleteLibModule,
+    //MatAutocompleteModule,
+    //MatInputModule,
+    //FormsModule,
+    //ReactiveFormsModule,
+    //NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent, MenuComponent, HeadersComponent]
