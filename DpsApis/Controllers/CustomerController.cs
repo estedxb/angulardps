@@ -25,11 +25,25 @@ namespace DpsApis.Controllers
         public async Task<ActionResult> Get()
         {
             List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
-            CustomersList.Add(customerVM);
+            CustomerVM customerVM1 = new CustomerVM();
+            customerVM1.VATNumber = "123";
+            customerVM1.OfficialName = "abc";
+            customerVM1.Name = "abc";
 
+            CustomerVM customerVM2 = new CustomerVM();
+            customerVM2.VATNumber = "456";
+            customerVM2.OfficialName = "cde";
+            customerVM2.Name = "cde";
+
+            CustomerVM customerVM3 = new CustomerVM();
+            customerVM3.VATNumber = "789";
+            customerVM3.OfficialName = "efg";
+            customerVM3.Name = "efg";
+
+            CustomersList.Add(customerVM1);
+            CustomersList.Add(customerVM2);
+            CustomersList.Add(customerVM3);
+            
 
             return Ok(CustomersList);
         }
@@ -254,8 +268,8 @@ namespace DpsApis.Controllers
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
         public string VATNumber { get; set; }
-        public string Name { get; set; } = "Name";
-        public string OfficialName { get; set; } = "OfficialName";
+        public string Name { get; set; } 
+        public string OfficialName { get; set; } 
         public string LegalForm { get; set; } = "Abc";
         public CreditCheckVM CreditCheck { get; set; } = new CreditCheckVM();
         public string Address { get; set; } = "Qwerty";
