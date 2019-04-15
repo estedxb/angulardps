@@ -19,23 +19,97 @@ namespace DpsApis.Controllers
 
         // GET: DpsApi/Customer
         [HttpGet]       
-        public async Task<ActionResult<List<CustomerVM>>> GetCustomersAsync()
+        public async Task<ActionResult<List<CustomerFromOneVM>>> GetCustomersAsync()
         {
-            List<CustomerVM> CustomersList =  new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();
-            CustomersList.Add(customerVM);
+            try
+            {
+                List<CustomerFromOneVM> CustomersList = new List<CustomerFromOneVM>();
 
-            return Ok(CustomersList);
+                Customerdetail customerdetail1 = new Customerdetail();
+                customerdetail1.vatnumber = "123";
+                customerdetail1.checkcheck = true;
+                customerdetail1.creditlimt = 123;
+                customerdetail1.customername = "customername";
+                customerdetail1.officialname = "officialname";
+                customerdetail1.legalform = "legalform";
+                customerdetail1.street = "street";
+                customerdetail1.streetno = 123;
+                customerdetail1.bus = "bus";
+                customerdetail1.place = "place";
+                customerdetail1.postal = 123;
+                customerdetail1.country = "country";
+                customerdetail1.telephone = "telephone";
+                customerdetail1.generalEmail = "generalEmail";
+                customerdetail1.billingEmail = "billingEmail";
+                customerdetail1.contractEmail = "contractEmail";
+
+                Contactdetail contactdetail1 = new Contactdetail();
+                contactdetail1.lastName = "lastName";
+                contactdetail1.language = "language";
+                contactdetail1.position = "position";
+                contactdetail1.contactEmail = "contactEmail";
+                contactdetail1.mobileNumber = "mobileNumber";
+                contactdetail1.telephone = "telephone";
+                contactdetail1.createAsUser = true;
+                contactdetail1.mobileNumber = "mobileNumber";
+
+                CustomerFromOneVM customerVM1 = new CustomerFromOneVM();
+                customerVM1.userid = 123;
+                customerVM1.customerdetail = customerdetail1;
+                customerVM1.contactDetail = contactdetail1;
+
+
+                CustomersList.Add(customerVM1);
+                CustomersList.Add(customerVM1);
+
+                return Ok(CustomersList);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         // GET: DpsApi/Customer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerVM>> GetCustomerByIdAsync(int id)
+        public async Task<ActionResult<CustomerFromOneVM>> GetCustomerByIdAsync(int id)
         {
-            //List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();        
-            
-            return Ok(customerVM);
+            Customerdetail customerdetail1 = new Customerdetail();
+            customerdetail1.vatnumber = "123";
+            customerdetail1.checkcheck = true;
+            customerdetail1.creditlimt = 123;
+            customerdetail1.customername = "customername";
+            customerdetail1.officialname = "officialname";
+            customerdetail1.legalform = "legalform";
+            customerdetail1.street = "street";
+            customerdetail1.streetno = 123;
+            customerdetail1.bus = "bus";
+            customerdetail1.place = "place";
+            customerdetail1.postal = 123;
+            customerdetail1.country = "country";
+            customerdetail1.telephone = "telephone";
+            customerdetail1.generalEmail = "generalEmail";
+            customerdetail1.billingEmail = "billingEmail";
+            customerdetail1.contractEmail = "contractEmail";
+
+            Contactdetail contactdetail1 = new Contactdetail();
+
+            contactdetail1.lastName = "lastName";
+            contactdetail1.language = "language";
+            contactdetail1.position = "position";
+            contactdetail1.contactEmail = "contactEmail";
+            contactdetail1.mobileNumber = "mobileNumber";
+            contactdetail1.telephone = "telephone";
+            contactdetail1.createAsUser = true;
+            contactdetail1.mobileNumber = "mobileNumber";
+
+            CustomerFromOneVM customerVM1 = new CustomerFromOneVM();
+            customerVM1.userid = 123;
+            customerVM1.customerdetail = customerdetail1;
+            customerVM1.contactDetail = contactdetail1;
+
+            return Ok(customerVM1);
         }
 
         // GET: DpsApi/Customer/WorkSchedules
@@ -130,7 +204,7 @@ namespace DpsApis.Controllers
         // POST: DpsApi/Customer/CreateCustomerForm1
         [HttpPost]
         [Route("CreateCustomerForm1")]
-        public async Task<ActionResult<int>> CreateCustomerForm1Async(CustomerFromOneVM model)
+        public async Task<ActionResult> CreateCustomerForm1Async(CustomerFromOneVM model)
         {
             
             if (!ModelState.IsValid)
@@ -141,7 +215,7 @@ namespace DpsApis.Controllers
             {
                 try
                 {                   
-                    return Ok(model);
+                    return Ok(model.userid);
                 }
                 catch (Exception e)
                 {
