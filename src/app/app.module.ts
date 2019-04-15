@@ -15,11 +15,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { LegalComponent } from './componentcontrols/legal/legal.component';
+import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    LegalComponent,
+    JointcommitteeComponent
   ],
   imports: [
     BrowserModule,
