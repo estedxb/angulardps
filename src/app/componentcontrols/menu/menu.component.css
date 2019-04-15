@@ -7,11 +7,11 @@ nav a {width:24px; height:24px; line-height: 24px;}
 nav a:nth-child(1){margin-top:12px;}
 nav a:nth-last-child(1){margin-bottom:12px;}  
 
-#home{background: url("../../assets/svg/home.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../assets/svg/home_hover.svg") no-repeat;background-size: contain; background-position: center; }
-#customer{background: url("../../assets/svg/customer.svg") no-repeat;background-size: contain; background-position: center; }#customer:hover{background: url("../../assets/svg/customer_hover.svg") no-repeat;background-size: contain; background-position: center; }
-#schedule{background: url("../../assets/svg/schedule.svg") no-repeat;background-size: contain; background-position: center; }#schedule:hover{background: url("../../assets/svg/schedule_hover.svg") no-repeat;background-size: contain; background-position: center; }
-#settings{background: url("../../assets/svg/setting.svg") no-repeat;background-size: contain; background-position: center; }#settings:hover{background: url("../../assets/svg/setting_hover.svg") no-repeat;background-size: contain; background-position: center; }
-#logout{background: url("../../assets/svg/logout.svg") no-repeat;background-size: contain; background-position: center; }#logout:hover{background: url("../../assets/svg/logout_hover.svg") no-repeat;background-size: contain; background-position: center; }
+#home{background: url("../../../assets/svg/home.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/home_hover.svg") no-repeat;background-size: contain; background-position: center; }
+#customer{background: url("../../../assets/svg/customer.svg") no-repeat;background-size: contain; background-position: center; }#customer:hover{background: url("../../../assets/svg/customer_hover.svg") no-repeat;background-size: contain; background-position: center; }
+#schedule{background: url("../../../assets/svg/schedule.svg") no-repeat;background-size: contain; background-position: center; }#schedule:hover{background: url("../../../assets/svg/schedule_hover.svg") no-repeat;background-size: contain; background-position: center; }
+#settings{background: url("../../../assets/svg/setting.svg") no-repeat;background-size: contain; background-position: center; }#settings:hover{background: url("../../../assets/svg/setting_hover.svg") no-repeat;background-size: contain; background-position: center; }
+#logout{background: url("../../../assets/svg/logout.svg") no-repeat;background-size: contain; background-position: center; }#logout:hover{background: url("../../../assets/svg/logout_hover.svg") no-repeat;background-size: contain; background-position: center; }
 
 @media (min-width:400px) {
     nav {border-radius: 16px;width: 32px;margin-top: 32px;margin-left: 16px;height: 192px;}
