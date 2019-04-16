@@ -1,4 +1,6 @@
 export interface JointCommittee {
-    JointCommitteeID: number;
-    JointCommitteeName: string;
+    BrightStaffingCommitteeId: string;
+    number: string;
+    name: string;
+    type: string;
 }

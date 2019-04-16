@@ -1,11 +1,1904 @@
 [
-    {"JointCommitteeID": 200, "JointCommitteeName": "200 - aanvullen paritair comité …"},
-    {"JointCommitteeID": 300, "JointCommitteeName": "300 - jobfixers paritair comité …"},
-    {"JointCommitteeID": 400, "JointCommitteeName": "400 - boemm paritair comité …"},
-    {"JointCommitteeID": 500, "JointCommitteeName": "500 - DPS paritair comité …"},
-    {"JointCommitteeID": 600, "JointCommitteeName": "600 - Pro Group paritair comité …"},
-    {"JointCommitteeID": 700, "JointCommitteeName": "700 - Pro Group paritair comité …"},
-    {"JointCommitteeID": 800, "JointCommitteeName": "800 - Pro Group paritair comité …"},
-    {"JointCommitteeID": 900, "JointCommitteeName": "900 - Pro Group paritair comité …"},
-    {"JointCommitteeID": 1000, "JointCommitteeName": "1000 - XVX White & Moore paritair comité …"}
+    {
+        "BrightStaffingCommitteeId": "1",
+        "number": "100",
+        "name": "aanvullend pc arbeiders",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "2",
+        "number": "101",
+        "name": "nationale gemengde mijncommissie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "3",
+        "number": "102",
+        "name": "groefbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "4",
+        "number": "102.01",
+        "name": "hardsteengroeven en der groeven van uit te houwen kalksteen in de provincie hene",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "5",
+        "number": "102.02",
+        "name": "hardsteengroeven en der groeven van uit te houwen kalksteen in de provincies lui",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "6",
+        "number": "102.03",
+        "name": "porfiergroeven",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "7",
+        "number": "102.04",
+        "name": "zandsteen- en kwartsietgroeven",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "8",
+        "number": "102.05",
+        "name": "porseleinaarde- en zandgroeven welke in openlucht geëxploiteerd worden",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "9",
+        "number": "102.06",
+        "name": "grint- en zandgroeven welke in openlucht geëxploiteerd worden",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "10",
+        "number": "102.07",
+        "name": "kalksteengroeven, cementfabrieken en kalkovens van het administratief arrondisse",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "11",
+        "number": "102.08",
+        "name": "marmergroeven en -zagerijen op het gehele grondgebied van het rijk",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "12",
+        "number": "102.09",
+        "name": "groeven van niet uit te houwen kalksteen en van de kalkovens, van de bitterspaat",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "13",
+        "number": "102.10",
+        "name": "terugwinning van steenstort",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "14",
+        "number": "102.11",
+        "name": "leisteengroeven, coticulegroeven en groeven van slijpsteen voor scheermessen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "15",
+        "number": "104",
+        "name": "ijzernijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "16",
+        "number": "105",
+        "name": "non-ferro metalen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "17",
+        "number": "106",
+        "name": "cementbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "18",
+        "number": "106.01",
+        "name": "cementfabrieken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "19",
+        "number": "106.02",
+        "name": "betonindustrie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "20",
+        "number": "106.03",
+        "name": "vezelcement",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "21",
+        "number": "107",
+        "name": "meester-kleermakers, de kleermaaksters en naaisters",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "22",
+        "number": "109",
+        "name": "kleding- en confectiebedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "23",
+        "number": "110",
+        "name": "textielverzorging",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "24",
+        "number": "111",
+        "name": "metaal-, machine- en elektrische bouw",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "25",
+        "number": "112",
+        "name": "garagebedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "26",
+        "number": "113",
+        "name": "ceramiekbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "27",
+        "number": "113.04",
+        "name": "pannenbakkerijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "28",
+        "number": "114",
+        "name": "steenbakkerij",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "29",
+        "number": "115",
+        "name": "glasbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "30",
+        "number": "116",
+        "name": "scheikundige nijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "31",
+        "number": "117",
+        "name": "petroleumnijverheid en -handel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "32",
+        "number": "118",
+        "name": "voedingsnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "33",
+        "number": "119",
+        "name": "handel in voedingswaren",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "34",
+        "number": "120",
+        "name": "textielnijverheid en het breiwerk",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "35",
+        "number": "120.01",
+        "name": "textielnijverheid uit het administratief arrondissement verviers",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "36",
+        "number": "120.02",
+        "name": "vlasbereiding",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "37",
+        "number": "120.03",
+        "name": "vervaardigen van en de handel in zakken in jute of in vervangingsmaterialen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "38",
+        "number": "121",
+        "name": "schoonmaak",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "39",
+        "number": "124",
+        "name": "bouwbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "40",
+        "number": "125",
+        "name": "houtnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "41",
+        "number": "125.01",
+        "name": "bosontginningen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "42",
+        "number": "125.02",
+        "name": "zagerijen en aanverwante nijverheden",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "43",
+        "number": "125.03",
+        "name": "houthandel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "44",
+        "number": "126",
+        "name": "stoffering en de houtbewerking",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "45",
+        "number": "127",
+        "name": "handel in brandstoffen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "46",
+        "number": "127.02",
+        "name": "handel in brandstoffen van oost-vlaanderen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "47",
+        "number": "128",
+        "name": "huiden- en lederbedrijf en vervangingsproducten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "48",
+        "number": "128.01",
+        "name": "leerlooierij en de handel in ruwe huiden en vellen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "49",
+        "number": "128.02",
+        "name": "schoeiselindustrie, de laarzenmakers en de maatwerkers",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "50",
+        "number": "128.03",
+        "name": "marokijnwerk en de handschoennijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "51",
+        "number": "128.05",
+        "name": "zadelmakerij, de vervaardiging van riemen en industriële artikelen in leder",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "52",
+        "number": "128.06",
+        "name": "orthopedische schoeisels",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "53",
+        "number": "129",
+        "name": "voortbrenging van papierpap, papier en karton",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "54",
+        "number": "130",
+        "name": "drukkerij-, grafische kunst- en dagbladbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "55",
+        "number": "132",
+        "name": "ondernemingen van technische land- en tuinbouwwerken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "56",
+        "number": "133.02",
+        "name": "tabaksbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "57",
+        "number": "136",
+        "name": "papier- en kartonbewerking",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "58",
+        "number": "139",
+        "name": "binnenscheepvaart",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "59",
+        "number": "140",
+        "name": "vervoer en de logistiek",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "60",
+        "number": "140.01",
+        "name": "autobussen en autocars",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "61",
+        "number": "140.02",
+        "name": "taxi's",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "62",
+        "number": "140.03",
+        "name": "wegvervoer en de logistiek voor rekening van derden",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "63",
+        "number": "140.04",
+        "name": "grondafhandeling op luchthavens",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "64",
+        "number": "140.05",
+        "name": "verhuizing",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "65",
+        "number": "142",
+        "name": "ondernemingen waar teruggewonnen grondstoffen opnieuw ter waarde worden gebracht",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "66",
+        "number": "142.01",
+        "name": "terugwinning van metalen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "67",
+        "number": "142.02",
+        "name": "terugwinning van lompen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "68",
+        "number": "142.03",
+        "name": "terugwinning van papier",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "69",
+        "number": "142.04",
+        "name": "terugwinning van allerlei producten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "70",
+        "number": "143",
+        "name": "zeevisserij",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "71",
+        "number": "144",
+        "name": "landbouw",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "72",
+        "number": "145",
+        "name": "tuinbouwbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "73",
+        "number": "146",
+        "name": "bosbouwbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "74",
+        "number": "147",
+        "name": "wapensmederij met de hand",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "75",
+        "number": "148",
+        "name": "bont en kleinvel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "76",
+        "number": "148.01",
+        "name": "haarsnijderijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "77",
+        "number": "148.03",
+        "name": "industriële en ambachtelijke fabricage van bontwerk",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "78",
+        "number": "148.05",
+        "name": "pelslooierijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "79",
+        "number": "149",
+        "name": "sectors die aan de metaal-, machine- en elektrische bouw verwant zijn",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "80",
+        "number": "149.01",
+        "name": "elektriciens : installatie en distributie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "81",
+        "number": "149.02",
+        "name": "koetswerk",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "82",
+        "number": "149.03",
+        "name": "edele metalen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "83",
+        "number": "149.04",
+        "name": "metaalhandel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "84",
+        "number": "152",
+        "name": "gesubsidieerde inrichtingen van het vrij onderwijs",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "85",
+        "number": "152.01",
+        "name": "gesubsidieerde inrichtingen van het vrij onderwijs van de vlaamse gemeenschap",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "86",
+        "number": "152.02",
+        "name": "gesubsidieerde inrichtingen van het vrij onderwijs",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "87",
+        "number": "200",
+        "name": "aanvullend bedienden",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "88",
+        "number": "201",
+        "name": "zelfstandige kleinhandel",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "89",
+        "number": "202",
+        "name": "bedienden uit de kleinhandel in voedingswaren",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "90",
+        "number": "202.01",
+        "name": "middelgrote levensmiddelenbedrijven",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "91",
+        "number": "203",
+        "name": "bedienden uit de hardsteengroeven",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "92",
+        "number": "205",
+        "name": "bedienden van de steenkolenmijnen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "93",
+        "number": "207",
+        "name": "bedienden uit de scheikundige nijverheid",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "94",
+        "number": "209",
+        "name": "bedienden der metaalfabrikatennijverheid",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "95",
+        "number": "210",
+        "name": "bedienden van de ijzernijverheid",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "96",
+        "number": "211",
+        "name": "bedienden uit de petroleumnijverheid en -handel",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "97",
+        "number": "214",
+        "name": "bedienden van de textielnijverheid en het breiwerk",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "98",
+        "number": "215",
+        "name": "bedienden van het kleding- en confectiebedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "99",
+        "number": "216",
+        "name": "notarisbedienden",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "100",
+        "number": "217",
+        "name": "casinobedienden",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "101",
+        "number": "218",
+        "name": "aanvullend nationaal bedienden",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "102",
+        "number": "219",
+        "name": "diensten en organismen voor technische controles en gelijkvormigheidstoetsing",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "103",
+        "number": "220",
+        "name": "bedienden uit de voedingsnijverheid",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "104",
+        "number": "221",
+        "name": "bedienden uit de papiernijverheid",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "105",
+        "number": "222",
+        "name": "bedienden van de papier- en kartonbewerking",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "106",
+        "number": "223",
+        "name": "nationaal sport",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "107",
+        "number": "224",
+        "name": "bedienden van de non-ferro metalen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "108",
+        "number": "225",
+        "name": "bedienden van de inrichtingen van het gesubsidieerd vrij onderwijs",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "109",
+        "number": "225.01",
+        "name": "bedienden van de inrichtingen van het gesubsidieerd vrij onderwijs van de vlaams",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "110",
+        "number": "225.02",
+        "name": "bedienden van de inrichtingen van het gesubsidieerd vrij onderwijs ",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "111",
+        "number": "226",
+        "name": "bedienden uit de internationale handel, het vervoer en de logistiek",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "112",
+        "number": "227",
+        "name": "audiovisuele sector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "113",
+        "number": "301",
+        "name": "havenbedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "114",
+        "number": "301.01",
+        "name": "haven van antwerpen, nationaal paritair comité der haven van antwerpen genaamd",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "115",
+        "number": "301.02",
+        "name": "haven van gent",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "116",
+        "number": "301.03",
+        "name": "haven van brussel en vilvoorde",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "117",
+        "number": "301.04",
+        "name": "havens van oostende en nieuwpoort",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "118",
+        "number": "301.05",
+        "name": "haven van zeebrugge - brugge",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "119",
+        "number": "302",
+        "name": "hotelbedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "120",
+        "number": "303",
+        "name": "filmbedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "121",
+        "number": "303.01",
+        "name": "filmproductie",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "122",
+        "number": "303.03",
+        "name": "exploitatie van bioscoopzalen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "123",
+        "number": "304",
+        "name": "vermakelijkheidsbedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "124",
+        "number": "306",
+        "name": "verzekeringswezen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "125",
+        "number": "307",
+        "name": "makelarij en verzekeringsagentschappen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "126",
+        "number": "308",
+        "name": "maatschappijen voor hypothecaire leningen, sparen en kapitalisatie",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "127",
+        "number": "309",
+        "name": "beursvennootschappen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "128",
+        "number": "310",
+        "name": "banken",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "129",
+        "number": "311",
+        "name": "grote kleinhandelszaken",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "130",
+        "number": "312",
+        "name": "warenhuizen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "131",
+        "number": "313",
+        "name": "apotheken en tarificatiediensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "132",
+        "number": "314",
+        "name": "kappersbedrijf en de schoonheidszorgen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "133",
+        "number": "315",
+        "name": "handelsluchtvaart",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "134",
+        "number": "315.01",
+        "name": "technisch onderhoud, bijstand en opleiding in de luchtvaartsector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "135",
+        "number": "315.02",
+        "name": "luchtvaartmaatschappijen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "136",
+        "number": "315.03",
+        "name": "luchthavenbeheer",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "137",
+        "number": "316",
+        "name": "koopvaardij",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "138",
+        "number": "317",
+        "name": "bewakings- en/of toezichtsdiensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "139",
+        "number": "318",
+        "name": "diensten voor gezins- en bejaardenhulp",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "140",
+        "number": "318.01",
+        "name": "diensten voor gezins- en bejaardenhulp",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "141",
+        "number": "318.02",
+        "name": "diensten voor gezins- en bejaardenhulp van de vlaamse gemeenschap",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "142",
+        "number": "319",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "143",
+        "number": "319.01",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten van de vlaamse gemeenschap",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "144",
+        "number": "319.02",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "145",
+        "number": "320",
+        "name": "begrafenisondernemingen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "146",
+        "number": "321",
+        "name": "groothandelaars-verdelers in geneesmiddelen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "147",
+        "number": "322",
+        "name": "uitzendarbeid en de erkende ondernemingen die buurtwerken of -diensten leveren",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "148",
+        "number": "322.01",
+        "name": "erkende ondernemingen die buurtwerken of -diensten leveren",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "149",
+        "number": "323",
+        "name": "beheer van gebouwen, de vastgoedmakelaars en de dienstboden",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "150",
+        "number": "324",
+        "name": "diamantnijverheid en -handel",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "151",
+        "number": "325",
+        "name": "openbare kredietinstellingen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "152",
+        "number": "326",
+        "name": "gas- en elektriciteitsbedrijf",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "153",
+        "number": "327",
+        "name": "beschutte werkplaatsen en de sociale werkplaatsen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "154",
+        "number": "327.01",
+        "name": "beschutte werkplaatsen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "155",
+        "number": "327.02",
+        "name": "beschutte werkplaatsen gesubsidieerd door de franse gemeenschapscommissie",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "156",
+        "number": "327.03",
+        "name": "beschutte werkplaatsen van het waalse gewest en van de duitstalige gemeenschap",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "157",
+        "number": "328",
+        "name": "stads- en streekvervoer",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "158",
+        "number": "328.01",
+        "name": "stads- en streekvervoer van het vlaamse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "159",
+        "number": "328.02",
+        "name": "stads- en streekvervoer van het waalse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "160",
+        "number": "328.03",
+        "name": "stads- en streekvervoer van het brusselse hoofdstedelijk gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "161",
+        "number": "329",
+        "name": "socio-culturele sector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "162",
+        "number": "329.01",
+        "name": "socio-culturele sector van de vlaamse gemeenschap",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "163",
+        "number": "329.02",
+        "name": "socio-culturele sector van de franstalige en duitstalige gemeenschap en het waal",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "164",
+        "number": "329.03",
+        "name": "federale en bicommunautaire socio-culturele organisaties",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "165",
+        "number": "330",
+        "name": "gezondheidsinrichtingen en -diensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "166",
+        "number": "330.01.10",
+        "name": "privé-ziekenhuizen en de psychiatrische verzorgingstehuizen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "167",
+        "number": "330.01.20",
+        "name": " rusthuizen,  rust- en verzorgingstehuizen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "168",
+        "number": "330.01.30",
+        "name": "thuisverpleging",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "169",
+        "number": "330.01.41",
+        "name": "revalidatiecentra gelegen in het vlaamse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "170",
+        "number": "330.01.42",
+        "name": "revalidatiecentra gelegen in het waalse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "171",
+        "number": "330.01.51",
+        "name": "initiatieven voor beschut wonen in het vlaamse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "172",
+        "number": "330.01.52",
+        "name": " initiatieven voor beschut wonen in het waalse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "173",
+        "number": "330.01.53",
+        "name": "wijkgezondheidscentra gelegen in het vlaamse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "174",
+        "number": "330.01.54",
+        "name": "wijkgezondheidscentra gelegen in het waalse gewest",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "175",
+        "number": "330.01.55",
+        "name": "diensten voor bloed van het rode kruis van belgïe",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "176",
+        "number": "330.02",
+        "name": "bicommunautaire gezondheidsinrichtingen en -diensten",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "177",
+        "number": "330.03",
+        "name": "tandprothesen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "178",
+        "number": "330.04",
+        "name": "overige diensten en instellingen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "179",
+        "number": "331",
+        "name": "vlaamse welzijns- en gezondheidssector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "180",
+        "number": "331.00.10",
+        "name": "kinderopvang",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "181",
+        "number": "331.00.20",
+        "name": "centra voor geboorteregeling",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "182",
+        "number": "332",
+        "name": "franstalige en duitstalige welzijns- en gezondheidssector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "183",
+        "number": "332.00.10",
+        "name": "kinderopvang",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "184",
+        "number": "332.00.20",
+        "name": "diensten die hulp verlenen aan justiciabelen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "185",
+        "number": "333",
+        "name": "paritair comité voor toeristische attracties",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "186",
+        "number": "334",
+        "name": "openbare loterijen.",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "187",
+        "number": "335",
+        "name": "sociale organisaties",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "188",
+        "number": "336",
+        "name": "vrije beroepen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "189",
+        "number": "337",
+        "name": "non-profitsector",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "190",
+        "number": "339",
+        "name": "erkende maatschappijen voor sociale huisvesting",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "191",
+        "number": "340",
+        "name": "orthopedische technologieën",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "192",
+        "number": "301",
+        "name": "havenbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "193",
+        "number": "301.01",
+        "name": "haven van antwerpen, nationaal paritair comité der haven van antwerpen genaamd",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "194",
+        "number": "301.02",
+        "name": "haven van gent",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "195",
+        "number": "301.03",
+        "name": "haven van brussel en vilvoorde",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "196",
+        "number": "301.04",
+        "name": "havens van oostende en nieuwpoort",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "197",
+        "number": "301.05",
+        "name": "haven van zeebrugge - brugge",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "198",
+        "number": "302",
+        "name": "hotelbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "199",
+        "number": "303",
+        "name": "filmbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "200",
+        "number": "303.01",
+        "name": "filmproductie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "201",
+        "number": "303.03",
+        "name": "exploitatie van bioscoopzalen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "202",
+        "number": "304",
+        "name": "vermakelijkheidsbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "203",
+        "number": "306",
+        "name": "verzekeringswezen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "204",
+        "number": "307",
+        "name": "makelarij en verzekeringsagentschappen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "205",
+        "number": "308",
+        "name": "maatschappijen voor hypothecaire leningen, sparen en kapitalisatie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "206",
+        "number": "309",
+        "name": "beursvennootschappen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "207",
+        "number": "310",
+        "name": "banken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "208",
+        "number": "311",
+        "name": "grote kleinhandelszaken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "209",
+        "number": "312",
+        "name": "warenhuizen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "210",
+        "number": "313",
+        "name": "apotheken en tarificatiediensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "211",
+        "number": "314",
+        "name": "kappersbedrijf en de schoonheidszorgen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "212",
+        "number": "315",
+        "name": "handelsluchtvaart",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "213",
+        "number": "315.01",
+        "name": "technisch onderhoud, bijstand en opleiding in de luchtvaartsector",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "214",
+        "number": "315.02",
+        "name": "luchtvaartmaatschappijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "215",
+        "number": "315.03",
+        "name": "luchthavenbeheer",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "216",
+        "number": "316",
+        "name": "koopvaardij",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "217",
+        "number": "317",
+        "name": "bewakings- en/of toezichtsdiensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "218",
+        "number": "318",
+        "name": "diensten voor gezins- en bejaardenhulp",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "219",
+        "number": "318.01",
+        "name": "diensten voor gezins- en bejaardenhulp",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "220",
+        "number": "318.02",
+        "name": "diensten voor gezins- en bejaardenhulp van de vlaamse gemeenschap",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "221",
+        "number": "319",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "222",
+        "number": "319.01",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten van de vlaamse gemeenschap",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "223",
+        "number": "319.02",
+        "name": "opvoedings- en huisvestingsinrichtingen en -diensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "224",
+        "number": "320",
+        "name": "begrafenisondernemingen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "225",
+        "number": "321",
+        "name": "groothandelaars-verdelers in geneesmiddelen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "226",
+        "number": "322",
+        "name": "uitzendarbeid en de erkende ondernemingen die buurtwerken of -diensten leveren",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "227",
+        "number": "322.01",
+        "name": "erkende ondernemingen die buurtwerken of -diensten leveren",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "228",
+        "number": "323",
+        "name": "beheer van gebouwen, de vastgoedmakelaars en de dienstboden",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "229",
+        "number": "324",
+        "name": "diamantnijverheid en -handel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "230",
+        "number": "325",
+        "name": "openbare kredietinstellingen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "231",
+       "number": "326",
+        "name": "gas- en elektriciteitsbedrijf",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "232",
+        "number": "327",
+        "name": "beschutte werkplaatsen en de sociale werkplaatsen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "233",
+        "number": "327.01",
+        "name": "beschutte werkplaatsen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "234",
+        "number": "327.02",
+        "name": "beschutte werkplaatsen gesubsidieerd door de franse gemeenschapscommissie",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "235",
+        "number": "327.03",
+        "name": "beschutte werkplaatsen van het waalse gewest en van de duitstalige gemeenschap",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "236",
+        "number": "328",
+        "name": "stads- en streekvervoer",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "237",
+        "number": "328.01",
+        "name": "stads- en streekvervoer van het vlaamse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "238",
+        "number": "328.02",
+        "name": "stads- en streekvervoer van het waalse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "239",
+        "number": "328.03",
+        "name": "stads- en streekvervoer van het brusselse hoofdstedelijk gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "240",
+        "number": "329",
+        "name": "socio-culturele sector",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "241",
+        "number": "329.01",
+        "name": "socio-culturele sector van de vlaamse gemeenschap",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "242",
+        "number": "329.02",
+        "name": "socio-culturele sector van de franstalige en duitstalige gemeenschap en het waal",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "243",
+        "number": "329.03",
+        "name": "federale en bicommunautaire socio-culturele organisaties",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "244",
+        "number": "330",
+        "name": "gezondheidsinrichtingen en -diensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "245",
+        "number": "330.01.10",
+        "name": "privé-ziekenhuizen en de psychiatrische verzorgingstehuizen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "246",
+        "number": "330.01.20",
+        "name": " rusthuizen,  rust- en verzorgingstehuizen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "247",
+        "number": "330.01.30",
+        "name": "thuisverpleging",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "248",
+        "number": "330.01.41",
+        "name": "revalidatiecentra gelegen in het vlaamse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "249",
+        "number": "330.01.42",
+        "name": "revalidatiecentra gelegen in het waalse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "250",
+        "number": "330.01.51",
+        "name": "initiatieven voor beschut wonen in het vlaamse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "251",
+        "number": "330.01.52",
+        "name": " initiatieven voor beschut wonen in het waalse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "252",
+        "number": "330.01.53",
+        "name": "wijkgezondheidscentra gelegen in het vlaamse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "253",
+        "number": "330.01.54",
+        "name": "wijkgezondheidscentra gelegen in het waalse gewest",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "254",
+        "number": "330.01.55",
+        "name": "diensten voor bloed van het rode kruis van belgïe",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "255",
+        "number": "330.02",
+        "name": "bicommunautaire gezondheidsinrichtingen en -diensten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "256",
+        "number": "330.03",
+        "name": "tandprothesen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "257",
+        "number": "330.04",
+        "name": "overige diensten en instellingen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "258",
+        "number": "331",
+        "name": "vlaamse welzijns- en gezondheidssector",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "259",
+        "number": "331.00.10",
+        "name": "kinderopvang",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "260",
+        "number": "331.00.20",
+        "name": "centra voor geboorteregeling",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "261",
+        "number": "332",
+        "name": "franstalige en duitstalige welzijns- en gezondheidssector",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "262",
+        "number": "332.00.10",
+        "name": "kinderopvang",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "263",
+        "number": "332.00.20",
+        "name": "diensten die hulp verlenen aan justiciabelen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "264",
+        "number": "333",
+        "name": "paritair comité voor toeristische attracties",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "265",
+        "number": "334",
+        "name": "openbare loterijen.",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "266",
+        "number": "335",
+        "name": "sociale organisaties",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "267",
+        "number": "336",
+        "name": "vrije beroepen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "268",
+        "number": "337",
+        "name": "non-profitsector",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "269",
+        "number": "339",
+        "name": "erkende maatschappijen voor sociale huisvesting",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "270",
+        "number": "340",
+        "name": "orthopedische technologieën",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "271",
+        "number": "133.03",
+        "name": "Sigaren en cigarello",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "272",
+        "number": "111.01",
+        "name": "metaal-, machine- en elektrische bouw: industriële metaalverwerking",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "273",
+        "number": "111.02",
+        "name": "metaal-, machine- en elektrische bouw: ambachtelijke metaalverwerking",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "274",
+        "number": "111.03",
+        "name": "metaal-, machine- en elektrische bouw: montage van metalen bruggen en gebinten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "275",
+        "number": "118.01",
+        "name": "maalderijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "276",
+        "number": "118.02",
+        "name": "deegwaren, bijproducten van graangewassen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "277",
+        "number": "118.03",
+        "name": "industriële en ambachtelijke bakkerijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "278",
+        "number": "118.04",
+        "name": "mais- en rijststijfselfabriek, aardappelfabriek",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "279",
+        "number": "118.05",
+        "name": "koekjes- en beschuitfabriek",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "280",
+        "number": "118.06",
+        "name": "suikernijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "281",
+        "number": "118.07",
+        "name": "brouwerijen, mouterijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "282",
+        "number": "118.08",
+        "name": "dranknijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "283",
+        "number": "118.09",
+        "name": "groentennijverheid, groentenconserven",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "284",
+        "number": "118.10",
+        "name": "vruchtennijverheid: jam, appeldeeg, fruitconserven",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "285",
+        "number": "118.11",
+        "name": "vleesnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "286",
+        "number": "118.12",
+        "name": "zuivelnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "287",
+        "number": "118.13",
+        "name": "olie- en margarinefabrieken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "288",
+        "number": "118.14",
+        "name": "chocolade en broodsmeersel, suikerbakkerijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "289",
+        "number": "118.15",
+        "name": "koelnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "290",
+        "number": "118.16",
+        "name": "visnijverheid",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "291",
+        "number": "118.17",
+        "name": "koffie- en chicoreibranderijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "292",
+        "number": "118.18",
+        "name": "zoutziederijen, azijn- en mosterdfabrieken",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "293",
+        "number": "118.19",
+        "name": "voedingsspecialiteiten",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "294",
+        "number": "118.20",
+        "name": "veevoeders",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "295",
+        "number": "118.21",
+        "name": "aardappelverwerking",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "296",
+        "number": "118.22",
+        "name": "aardappelschilbedrijven",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "297",
+        "number": "119.01",
+        "name": "voedingsgroothandel",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "298",
+        "number": "119.02",
+        "name": "handel in voedingswaren < 10 wkn",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "299",
+        "number": "119.03",
+        "name": "beenhouwerijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "300",
+        "number": "119.04",
+        "name": "handel in bieren en drinkwaters",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "301",
+        "number": "115.03",
+        "name": "spiegelmakerij en kunstramen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "302",
+        "number": "115.09",
+        "name": "aanvullende subsector glas",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "303",
+        "number": "116.01",
+        "name": "scheikundige nijverheid w-vl",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "304",
+        "number": "145.01",
+        "name": "bloementeelt",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "305",
+        "number": "145.02",
+        "name": "wijnbouw",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "306",
+        "number": "145.03",
+        "name": "boomkwekerijen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "307",
+        "number": "145.04",
+        "name": "tuinonderhoud",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "308",
+        "number": "145.05",
+        "name": "fruitteelt",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "309",
+        "number": "145.06",
+        "name": "groententeelt",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "310",
+        "number": "145.07",
+        "name": "paddestoelen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "311",
+        "number": "140.018",
+        "name": "autocars (schoolbus / toerisme)",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "313",
+        "number": "314.01",
+        "name": "kappers",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "315",
+        "number": "314.01",
+        "name": "kappers",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "317",
+        "number": "314.02",
+        "name": "schoonheidszorgen",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "319",
+        "number": "314.02",
+        "name": "schoonheidszorgen",
+        "type": "white"
+    },
+    {
+        "BrightStaffingCommitteeId": "321",
+        "number": "314.03",
+        "name": "fitness-, bodybuilding- en zonnecentra",
+        "type": "blue"
+    },
+    {
+        "BrightStaffingCommitteeId": "323",
+        "number": "314.03",
+        "name": "fitness-, bodybuilding- en zonnecentra",
+        "type": "white"
+    }
 ]

@@ -6,6 +6,8 @@ import { PageNotFoundComponentComponent } from './page-not-found-component/page-
 import { CustomerselectionComponent } from './componentcontrols/customerselection/customerselection.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './headers/headers.component';
+import { LegalComponent } from './componentcontrols/legal/legal.component';
+import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
 
 const routes: Routes = [
   {path: '404', component: PageNotFoundComponentComponent },
@@ -33,5 +35,7 @@ export const routingComponents = [
     MenuComponent,
     PageNotFoundComponentComponent,
     HeadersComponent,
-    CustomerselectionComponent
+    CustomerselectionComponent,
+    LegalComponent,
+    JointcommitteeComponent
 ];

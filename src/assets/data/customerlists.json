@@ -1,0 +1,72 @@
+[
+    {
+      "vatNumber": "BE23244",
+      "name": "Customer AAAA 1",
+      "officialName": "Official Name 1"
+    },
+    {
+      "vatNumber": "BE232442",
+      "name": "Customer ABBB 2",
+      "officialName": "Official Name 2"
+    },
+    {
+      "vatNumber": "BE01234567",
+      "name": "Test ABC 3",
+      "officialName": "Test 3"
+    },
+    {
+      "vatNumber": "BE0123456ssd7",
+      "name": "Test BCC 4",
+      "officialName": "Test 4"
+    },
+    {
+      "vatNumber": "BE01232342d7",
+      "name": "Test BCD 5",
+      "officialName": "Test 5"
+    },
+    {
+      "vatNumber": "BE012567567567",
+      "name": "Test CDD 6",
+      "officialName": "Test 6"
+    },
+    {
+      "vatNumber": "BE012324327",
+      "name": "Test CDE 7",
+      "officialName": "Test 7"
+    },
+    {
+      "vatNumber": "BE0123453447",
+      "name": "Test DEE 8",
+      "officialName": "Test 8"
+    },
+    {
+      "vatNumber": "BE01223527",
+      "name": "bhfgh DEF 9",
+      "officialName": "Test 9"
+    },
+    {
+      "vatNumber": "BE012323237",
+      "name": "cvbcvb EFF 10",
+      "officialName": "Test 10"
+    },
+    {
+      "vatNumber": "BE0345345237",
+      "name": "JLm EFF 11",
+      "officialName": "Test 11"
+    },
+    {
+      "vatNumber": "BE078573237",
+      "name": "fhfgh EFF 12",
+      "officialName": "Test 12"
+    },
+    {
+      "vatNumber": "BE0180037",
+      "name": "Hdfs EFF 13",
+      "officialName": "Test 13"
+    },
+    {
+      "vatNumber": "BE08797893237",
+      "name": "OIdfd EFF 14",
+      "officialName": "Test 14"
+    }   
+]

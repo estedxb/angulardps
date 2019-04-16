@@ -12,18 +12,18 @@ import { HttpClientModule } from '@angular/common/http';
 //import { HomeComponent } from './home/home.component';
 //import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
 //import { CustomerselectionComponent } from './customerselection/customerselection.component';
+//import { LegalComponent } from './componentcontrols/legal/legal.component';
+//import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { LegalComponent } from './componentcontrols/legal/legal.component';
-import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
+import { CountriesComponent } from './componentcontrols/countries/countries.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    LegalComponent,
-    JointcommitteeComponent
+    CountriesComponent
   ],
   imports: [
     BrowserModule,

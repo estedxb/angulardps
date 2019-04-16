@@ -1,22 +1,3 @@
-export interface ICustomer {
-    vatNumber: string;
-    customerName: string;
-    officialName: string;
-    checkCheck: boolean;
-    creditLimt: number;
-    legalForm: string;
-    street?: string;
-    streetNo?: number;
-    bus?: string;
-    place?: string;
-    postal: number;
-    country: string;
-    telephone?: string;
-    generalEmail?: string;
-    billingEmail?: string;
-    contractEmail?: string;
-}
-
 export interface DPSCustomer {
     customer: Customer;
     invoiceEmail?: EmailAddress;
@@ -27,7 +8,7 @@ export interface DPSCustomer {
     contact: Contact;
 }
 
-export interface Customer { 
+export interface Customer {
     vatNumber: string;
     name: string;
     officialName?: string;

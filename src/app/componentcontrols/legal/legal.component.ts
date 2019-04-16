@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LegalForm } from '../../models/legalform';
 import { LegalformService } from '../../shared/legalform.service';
 
 @Component({
@@ -9,11 +8,17 @@ import { LegalformService } from '../../shared/legalform.service';
 })
 export class LegalComponent implements OnInit {
   public legalforms = [];
+  public legalformslang = [];
+
   public errorMsg;
+
   constructor(private legalformService: LegalformService) { }
 
   ngOnInit() {
-    this.legalformService.getLegalForms().subscribe(data => this.legalforms = data , error => this.errorMsg = error);
+    this.legalformService.getLegalForms().subscribe(data => {
+      this.legalforms = data;
+      // tslint:disable-next-line: no-string-literal
+      this.legalformslang = data['fr'];
+    }, error => this.errorMsg = error);
   }
-
 }

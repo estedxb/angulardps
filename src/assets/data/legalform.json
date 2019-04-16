@@ -1,11 +1,5 @@
-[
-    {"LegalFormID": 200, "LegalFormName": "Anvullen"},
-    {"LegalFormID": 300, "LegalFormName": "Jobfixers"},
-    {"LegalFormID": 400, "LegalFormName": "Boemm"},
-    {"LegalFormID": 500, "LegalFormName": "DPS"},
-    {"LegalFormID": 600, "LegalFormName": "Pro Group"},
-    {"LegalFormID": 700, "LegalFormName": "Pro Group X"},
-    {"LegalFormID": 800, "LegalFormName": "Pro Group Y"},
-    {"LegalFormID": 900, "LegalFormName": "Pro Group Z"},
-    {"LegalFormID": 1000, "LegalFormName": "XVX White & Moore"}
-]
+{
+	"nl": [{"FormName": "NV"},{"FormName": "BVBA"},{"FormName": "S-BVBA"},{"FormName": "CVBA"},{"FormName": "CVOA"},{"FormName": "VOF"},{"FormName": "GCV"},{"FormName": "CVA"}],
+	"en": [{"FormName": "NV"},{"FormName": "BVBA"},{"FormName": "S-BVBA"},{"FormName": "CVBA"},{"FormName": "CVOA"},{"FormName": "VOF"},{"FormName": "GCV"},{"FormName": "CVA"}],
+	"fr": [{"FormName": "SA"},{"FormName": "SPRL"},{"FormName": "SPRL-S"},{"FormName": "SCRL"},{"FormName": "SCRI"},{"FormName": "SNC"},{"FormName": "SCS"},{"FormName": "SCA"}]
+}

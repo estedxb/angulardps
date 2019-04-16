@@ -1,3 +1,4 @@
-<select id="ddl_legalform" class="legalform">
-    <option *ngFor="let legalform of legalforms" [value]="legalform.LegalFormID">{{legalform.LegalFormName}}</option>
+<select id="ddl_legalform" class="legalform selectcomponent">
+    <option *ngFor="let legalform of legalformslang" [value]="legalform.FormName">{{legalform.FormName}}</option>
 </select>
+<div class="error">{{ errorMsg }}</div>

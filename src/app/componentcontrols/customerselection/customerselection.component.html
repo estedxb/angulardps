@@ -1,20 +1,18 @@
-
-      <ng-container *ngIf="show">
-        <div class="dialog">
-            <div class="compHeader"><a href="#" (click)="closeMe()" class="close-thik"></a></div>
-            <div class="input-group ng-autocomplete">
-                <span class="input-group-btn"><button type="submit" class="search-btn" data-target="#search-form" name="q"  ><i class="fa fa-search"></i></button></span>    
-                <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /> <a routerLink="../home" routerLinkActive="active" (click)="closeMe()" class="close"><img src="../../assets/svg/Add.svg" style="width: 30px;height: 30px;margin: 1px 8px 1px 8px;"></a>           
-            </div>
-            <div class="content" id="customerContent">
-                <div class="error">{{ errorMsg }}</div>
-                <div *ngFor = "let customer of customernames">
-                    <div id="customersList" *ngIf="customer && customer.vatNumber != null && customer.vatNumber != undefined && customer.vatNumber != '' && customer.vatNumber != 'undefined'  ">
-                        <a href="customer/{{ customer.vatNumber }}">{{customer.customerName}}</a>
-                    </div>
+<ng-container *ngIf="show">
+    <div class="dialog">
+        <div class="compHeader"><a href="#" (click)="closeMe()" class="close-thik"></a></div>
+        <div class="input-group ng-autocomplete">
+            <span class="input-group-btn"><button type="submit" class="search-btn" data-target="#search-form" name="q"  ><i class="fa fa-search"></i></button></span>    
+            <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /> <a routerLink="../home" routerLinkActive="active" (click)="closeMe()" class="close"><img src="../../assets/svg/Add.svg" style="width: 30px;height: 30px;margin: 1px 8px 1px 8px;"></a>           
+        </div>
+        <div class="content" id="customerContent">
+            <div class="error">{{ errorMsg }}</div>
+            <div *ngFor = "let customer of customernames">
+                <div id="customersList" *ngIf="customer && customer.vatNumber != null && customer.vatNumber != undefined && customer.vatNumber != '' && customer.vatNumber != 'undefined'  ">
+                    <a href="customer/{{ customer.vatNumber }}">{{customer.name}}</a>
                 </div>
             </div>
-        </div>      
-    </ng-container>
-    
-    <!--<button class="close" (click)="closeMe()"><img src="../../assets/svg/X.svg" style="width: 12px;height: 12px;"></button>-->
+        </div>
+    </div>      
+</ng-container>
+<!--<button class="close" (click)="closeMe()"><img src="../../assets/svg/X.svg" style="width: 12px;height: 12px;"></button>-->

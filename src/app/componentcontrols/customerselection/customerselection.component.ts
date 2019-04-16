@@ -1,5 +1,5 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { ICustomer } from '../../models/customer';
+import { CustomerListsService } from '../../shared/customerlists.service';
 import { CustomersService } from '../../shared/customers.service';
 
 @Component({
@@ -13,36 +13,33 @@ export class CustomerselectionComponent implements OnInit {
   public customernames = [];
   public errorMsg;
   public show = false;
-  constructor(private customersService: CustomersService) { }
-  values = '';
+   constructor(private customerLists: CustomerListsService) { }
+  // constructor(private customerLists: CustomersService) { }
+
 
   oncustomerKeyup(value) {
     this.customernames = [];
     if (this.customers.length > 0) {
       this.customernames = this.customers
-        .map( cust => { if (cust.customerName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
+        .map( cust => { if (cust.name.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
     } else {
       this.customernames = this.customers;
     }
   }
 
   ngOnInit() {
-     this.customersService.getCustomers()
-      .subscribe(data => {
+    this.customerLists.getCustomers()
+        .subscribe( data => {
           this.customers = data;
           this.customernames = data;
-      }, error => this.errorMsg = error);
+          console.log('getCustomers ::');
+          console.log(data);
+        }, error => this.errorMsg = error );
   }
 
-  ShowHideCustomerList() {
-    this.show = !this.show;
-  }
+  ShowHideCustomerList() { this.show = !this.show; }
 
-  closeMe() {
-    this.show = false;
-  }
-  AddCustomer() {
-    alert('AddCustomer');
-  }
+  closeMe() { this.show = false; }
+
 }
 

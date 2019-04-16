@@ -1,0 +1,4 @@
+<select id="ddl_countries" class="countries selectcomponent" >
+    <option *ngFor="let country of countrieslists" [value]="country.countryCode">{{country.countryName}}</option>
+</select>
+<div class="error">{{ errorMsg }}</div>

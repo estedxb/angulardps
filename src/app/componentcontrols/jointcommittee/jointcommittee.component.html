@@ -1,4 +1,5 @@
 
-<select id="ddl_jointcommittee" class="jointcommittee">
-    <option *ngFor="let jointCommittee of jointCommittees" [value]="jointCommittee.JointCommitteeID">{{jointCommittee.JointCommitteeName}}</option>
+<select id="ddl_jointcommittee" class="jointcommittee selectcomponent">
+    <option *ngFor="let jc of jointCommittees" [value]="'{&quot;BrightStaffingCommitteeId&quot;: &quot;' + jc.BrightStaffingCommitteeId + '&quot; , &quot;number&quot;: &quot;' + jc.number +'&quot;, &quot;name&quot;: &quot;' + jc.name + '&quot;, &quot;type&quot;: &quot;' + jc.type + '&quot;}'">{{ jc.number + ' - ' + jc.name }}</option>
 </select>
+<div class="error">{{ errorMsg }}</div>

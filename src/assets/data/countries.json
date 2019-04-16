@@ -1,0 +1,17 @@
+[
+    { "countryCode": "AE", "countryName": "UAE"},
+    { "countryCode": "BE", "countryName": "Belgium"},
+    { "countryCode": "DE", "countryName": "Denmark"},
+    { "countryCode": "UK", "countryName": "United Kingdom"},
+    { "countryCode": "IR", "countryName": "Ireland"},
+    { "countryCode": "DU", "countryName": "Dublin"},
+    { "countryCode": "GE", "countryName": "Germany"},
+    { "countryCode": "FR", "countryName": "France"},
+    { "countryCode": "SW", "countryName": "Switzerland"},
+    { "countryCode": "IT", "countryName": "Italy"},
+    { "countryCode": "SP", "countryName": "Spain"},
+    { "countryCode": "GR", "countryName": "Greece"},
+    { "countryCode": "BL", "countryName": "Bulgaria"},
+    { "countryCode": "RO", "countryName": "Romania"},
+    { "countryCode": "UR", "countryName": "Ukraine"}
+]
