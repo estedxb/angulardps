@@ -70,9 +70,22 @@ namespace Infrastructure.RepositoryImplementation
         }
 
 
-        public Task<List<DpsCustomer>> GetAllCustomersAsync()
+        public async Task<List<DpsCustomer>> GetAllCustomersAsync()
         {
-            throw new NotImplementedException();
+            var Model = new List<DpsCustomer>();
+
+            var tableClient = cloudStorageAccount.CreateCloudTableClient();
+            var table = tableClient.GetTableReference("customer");
+            await table.CreateIfNotExistsAsync();
+
+            TableQuery<DbDpsCustomer> query = new TableQuery<DbDpsCustomer>();
+            var AllItems = await table.ExecuteQuerySegmentedAsync(query, null);
+
+            foreach (var item in AllItems)
+            {
+                Model.Add(JsonConvert.DeserializeObject<DpsCustomer>(item.DpsCustomer));
+            }
+            return Model;
         }
     }
 }

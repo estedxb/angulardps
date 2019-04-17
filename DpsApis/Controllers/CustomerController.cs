@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using BoemmValueObjects;
+﻿using BoemmValueObjects;
 using Core.DomainModel.DpsCustomer;
-using DpsApis.ViewModels;
 using Infrastructure.RepositoryImplementation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DpsApis.Controllers
 {
@@ -18,24 +13,14 @@ namespace DpsApis.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-
-
         // GET: api/Customer
         [HttpGet]
-        public async Task<ActionResult> Get(bool? PreviewJson)
+        public async Task<ActionResult> Get()
         {
             try
             {
                 DpsCustomer dpsCustomer = new DpsCustomer();
-                if (PreviewJson.Value)
-                {
-                    return Ok(await dpsCustomer.GetCustomerVatAndNameAsync(new RICustomer()));
-                }
-                else
-                {
-                    return Ok(await dpsCustomer.GetAllCustomersAsync(new RICustomer()));
-                }
-
+                return Ok(await dpsCustomer.GetAllCustomersAsync(new RICustomer()));
             }
             catch (Exception e)
             {
@@ -44,7 +29,22 @@ namespace DpsApis.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAllCustomersPreviewJson")]
+        public async Task<ActionResult> GetAllCustomersPreviewJson()
+        {
+            try
+            {
+                DpsCustomer dpsCustomer = new DpsCustomer();
+                return Ok(await dpsCustomer.GetCustomerVatAndNameAsync(new RICustomer()));
 
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return BadRequest(e.Message);
+            }
+        }
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
@@ -63,7 +63,6 @@ namespace DpsApis.Controllers
                 {
                     return NotFound();
                 }
-
             }
             catch (Exception e)
             {
@@ -73,7 +72,7 @@ namespace DpsApis.Controllers
             }
         }
 
-        // GET: api/Customer/5        
+        // GET: api/Customer/5
         [Route("GetCustomerByVatNumber")]
         //[HttpGet("{VatNumber}")]
         public async Task<ActionResult> GetCustomerByVatNumber(string VatNumber)
@@ -92,8 +91,6 @@ namespace DpsApis.Controllers
             customer.VCACertification = new VCACertification { Cerified = false };
             customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
             Model.Customer = customer;
-
-
 
             // invoice setting ...
             var OtherAllowanceList = new List<OtherAllowance>();
@@ -118,8 +115,7 @@ namespace DpsApis.Controllers
                 SicknessInvoiced = true
             };
 
-
-            // contact 
+            // contact
             Model.Contact = new Contact
             {
                 Email = new Email { EmailAddress = "Contact@customerdoain.com" },
@@ -132,7 +128,6 @@ namespace DpsApis.Controllers
                 Postion = "Postion"
             };
 
-
             Model.StatuteSettings = new List<StatuteSettings>();
             Model.StatuteSettings.Add(new StatuteSettings
             {
@@ -142,7 +137,6 @@ namespace DpsApis.Controllers
                 Statute = new Statute { Name = "Statute Name" }
             });
 
-
             return Ok(Model);
         }
 
@@ -150,7 +144,6 @@ namespace DpsApis.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(DpsCustomer value)
         {
-
             try
             {
                 //var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(value);
@@ -163,17 +156,13 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return BadRequest(e.Message);
-
             }
         }
-
-
 
         // POST: api/Customer/5
         [HttpPut("{id}")]
@@ -187,7 +176,6 @@ namespace DpsApis.Controllers
         {
             return Ok();
         }
-
 
         // GET: api/Customer/WorkSchedules
         [HttpGet]
@@ -203,8 +191,6 @@ namespace DpsApis.Controllers
             List<BreakTimeVM> breakTimesList = new List<BreakTimeVM>();
             BreakTimeVM breakTimeVM = new BreakTimeVM();
             breakTimesList.Add(breakTimeVM);
-
-
 
             WorkDayVM workDayVM1 = new WorkDayVM();
             workDayVM1.DayOfWeek = 1;
@@ -244,9 +230,7 @@ namespace DpsApis.Controllers
             CustomerWorkScheduleVM workSchedules = new CustomerWorkScheduleVM();
             workSchedules.WorkSchedule = workSchedule;
 
-
             return Ok(workSchedules);
-
         }
 
         // GET: api/Customer/Positions
@@ -260,7 +244,6 @@ namespace DpsApis.Controllers
             postionsList.Add(customerPostion);
             postionsList.Add(customerPostion);
             return Ok(postionsList);
-
         }
 
         // GET: api/Customer/Locations
@@ -275,21 +258,14 @@ namespace DpsApis.Controllers
             locationsList.Add(customerLocation);
             locationsList.Add(customerLocation);
             return Ok(locationsList);
-
         }
-
-
-
-
-
-
-
-
     }
+
     public class CustomerVM
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
         public string VATNumber { get; set; }
+
         public string Name { get; set; }
         public string OfficialName { get; set; }
         public string LegalForm { get; set; } = "Abc";
@@ -298,7 +274,6 @@ namespace DpsApis.Controllers
         public string PhoneNumber { get; set; } = "+971557142152";
         public string Email { get; set; } = "Qwerty@abc.com";
         public VCACertificationVM VCACertification { get; set; } = new VCACertificationVM();
-
     }
 
     public class VCACertificationVM
@@ -390,5 +365,3 @@ namespace DpsApis.Controllers
         }
     }
 }
-
-
