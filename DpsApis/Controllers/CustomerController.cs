@@ -50,6 +50,7 @@ namespace DpsApis.Controllers
             customer.Email = new Email { EmailAddress = "testmail@testServer.test" };
             customer.VCACertification = new VCACertification { Cerified = false };
             customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
+            customer.IsBlocked = false;
             Model.Customer = customer;
 
 
@@ -129,7 +130,7 @@ namespace DpsApis.Controllers
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                return StatusCode(500);
+                return BadRequest(e.Message);
 
             }
         }
