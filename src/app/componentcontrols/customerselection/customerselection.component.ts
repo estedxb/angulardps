@@ -1,6 +1,5 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CustomerListsService } from '../../shared/customerlists.service';
-import { CustomersService } from '../../shared/customers.service';
 
 @Component({
   selector: 'app-customerselection',
@@ -13,15 +12,13 @@ export class CustomerselectionComponent implements OnInit {
   public customernames = [];
   public errorMsg;
   public show = false;
-   constructor(private customerLists: CustomerListsService) { }
-  // constructor(private customerLists: CustomersService) { }
-
+  constructor(private customerLists: CustomerListsService) { }
 
   oncustomerKeyup(value) {
     this.customernames = [];
     if (this.customers.length > 0) {
       this.customernames = this.customers
-        .map( cust => { if (cust.name.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
+        .map( cust => { if (cust.item2.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
     } else {
       this.customernames = this.customers;
     }
@@ -32,7 +29,7 @@ export class CustomerselectionComponent implements OnInit {
         .subscribe( data => {
           this.customers = data;
           this.customernames = data;
-          console.log('getCustomers ::');
+          console.log('getCustomers in customerselection.component ::');
           console.log(data);
         }, error => this.errorMsg = error );
   }

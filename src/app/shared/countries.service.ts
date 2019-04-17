@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
-import { CountriesList } from '../models/countries';
+import { CountriesList } from './models';
 import { Observable } from 'rxjs/observable';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
@@ -25,8 +25,9 @@ export class CountriesService {
   }
 
   public getCountriesList(): Observable<CountriesList[]> {
-    console.log('Data From = ' + this.getCountriesListUrl);
+    console.log('CountriesService Data From = ' + this.getCountriesListUrl);
     const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
+    console.log(result);
     return result;
   }
 

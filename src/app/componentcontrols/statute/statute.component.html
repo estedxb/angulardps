@@ -1,0 +1,26 @@
+<div class="error">{{ errorMsg }}</div>
+<div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox" *ngFor="let statute of statutes"> 
+    <div class="row panelheader">
+        <div class="col col-sm-5 fright"><h4>{{ statute.name }}</h4><hr></div>
+        <div class="col col-sm-7"></div>
+    </div>            
+    <div class="row">
+        <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee></app-jointcommittee></div>
+        <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input type="number" min="0" value="0" step=".01"></div>
+    </div>
+    <div class="row mealrow">
+      <div class="col col-sm-12 ">
+        <ui-switch [(ngModel)]="enable" id="'meal_{{ statute.name.replace(' ','_') }}" (onChangeEvent)="onChangeEvent($event)"></ui-switch> <span>Maaltijdcheques</span>
+      </div>
+    </div>
+    <div class="row hideme" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" >
+      <div class="col col-sm-11">
+        <div class="row">
+            <div class="col col-sm-4 inputWithIcon">Totale waarde<input type="number" id="txt_totalvalue" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4 inputWithIcon">Wergeversdeel<input type="number" id="txt_sharesection" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4">Minimum uren<input type="number" id="txt_minhours" min="0" value="0" step=".01"></div>
+        </div>
+    </div>
+    <div class="col col-sm-1"></div>
+  </div>
+</div>

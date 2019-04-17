@@ -1,14 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
-body  {background-image: url("assets/svg/bg.svg");background-size: cover;background-repeat: no-repeat;background-attachment: fixed;}
+body  {background-image: url("assets/svg/bg.svg");background-size: cover;background-repeat: no-repeat;background-attachment: fixed;font-family: 'Arial Rounded MT Bold', Roboto, "Helvetica Neue", Verdana, Geneva, Tahoma, sans-serif; margin: 0;  }
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.panelbg{
-    background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-}
+.panelbg{background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);}
 .boxShadow{box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
+.center-block{text-align: center; margin: auto;}
+.pagehead{font-size: 20px;font-weight: bold;}
+.scrollbar{height: 600px; overflow-y:scroll;padding-right: 20px;}
+.error{color: red;}
+#maincontentarea span { font-size: 15px;font-weight: normal; padding: 5px 5px 5px 7px;  }
+#maincontentarea input[type=text], #maincontentarea input[type=password], #maincontentarea input[type=number] {
+    width: 100%; font-size: 15px;font-weight: normal; padding: 3px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619;
+}
+#maincontentarea input:hover, #maincontentarea input:focus, #maincontentarea input::selection, #maincontentarea input::-webkit-keygen-select, #maincontentarea input::-moz-selection, #maincontentarea input::-moz-focusring{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
+.selectcomponent{ width: 100%; font-size: 15px;font-weight: normal; padding: 5px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619; }
+.selectcomponent:hover{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
+.selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
+.jointcommittee  {min-width: 150px;max-width: 500px;}
+.countries {min-width: 100px;max-width: 250px;}
+.legalform {min-width: 100px;max-width: 150px;}
 div.customerBox {
     min-width:400px;
     max-width:810px;
@@ -19,21 +31,58 @@ div.customerBox {
     background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
-div#CustomerDetails{
-    min-height: 640px;
+div#CustomerDetails{min-height: 220px;}
+div#CustomerContact{min-height: 220px;}
+.panelheader hr {
+    margin-top: 10px;
+    margin-bottom: 1rem;
+    margin-left: -15px;
+    padding: 0px;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,1);
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
 }
-div#CustomerContact{
-    min-height: 397px;    
-}
+.fright{float: right;text-align: right;}
+.fleft{float: left;text-align: left;}
+.fright h4,.fleft h4 {margin: 0px;padding: 10px 1px 0px 0px;font-size:16px;font-weight: bold;}
 .row,.col{border: 0px solid;}
 .row{border-color: green;} 
 .col{border-color: yellow;}
-.center-block{text-align: center; margin: auto;}
-.pagehead{font-family: 'Arial Rounded MT Bold', Regular; font-size: 20px;font-weight: bold;}
-.scrollbar{height: 600px; overflow-y:scroll;padding-right: 20px;}
-.error{color: red;}
-.selectcomponent{ width: 100%; font-family: 'Arial Rounded MT Bold', Regular; font-size: 20px;font-weight: bold; padding: 2px; }
-.selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
-.jointcommittee  {width: 500px;}
-.countries {width: 250px;}
-.legalform {width: 150px;}
+.switch.switch-small{
+    margin: 15px 5px 15px 5px;
+    height: 16px;
+    border-radius: 16px;
+}
+.switch.switch-small small{
+    width: 14px;
+    height: 14px;
+    margin: 2px;
+    right: calc(100% - 17px);
+}
+.switch.checked small{
+    right: 0px;
+}
+#maincontentarea .ng-valid span {
+    font-size: 15px;
+    font-weight: normal;
+    padding: 1px;
+}
+
+#maincontentarea .mealrow span {
+    font-size: 15px;
+    font-weight: normal;
+    padding: 1px;
+    float: left;
+    line-height: 48px;
+    vertical-align: middle;
+}
+
+.hideme { display: block;}
+#maincontentarea .inputWithIcon, .inputWithIcon {position: relative;}
+#maincontentarea .inputWithIcon i, .inputWithIcon i {
+    position: absolute; left:2px; padding: 11px; color: #9A0C19;
+}
+#maincontentarea .inputWithIcon input[type=text], #maincontentarea .inputWithIcon input,.inputWithIcon input[type=text], .inputWithIcon input[type=number] { padding-left:20px;}
+#maincontentarea .inputWithIcon input[type=text] +i, #maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=text] +i, .inputWithIcon input[type=number] +i { padding-left:20px;}

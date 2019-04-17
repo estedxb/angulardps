@@ -1,0 +1,10 @@
+[
+    {"name":"Arbeider","type":"Blue"},
+    {"name":"Jobstudent Arbeider","type":"Blue"},
+    {"name":"Flexijob Arbeider","type":"Blue"},
+    {"name":"Seizoensarbeider","type":"Blue"},
+    {"name":"Gelegenheidsarbeider horeca","type":"Blue"},
+    {"name":"Bediende","type":"White"},
+    {"name":"Jobstudent Bediende","type":"White"},
+    {"name":"Flexijob Bediende","type":"White"}
+]

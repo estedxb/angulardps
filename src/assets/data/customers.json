@@ -1,156 +1,702 @@
 [
-    {
-      "vatNumber": "BE23244",
-      "name": "Customer AAA 1",
-      "officialName": "Official Name 1",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "Comm. V",
-      "address": { "street": "Sheikh Zayed Road", "streetNumber": 10, "bus": "B10", "city": "Dubai", "postalCode" : 4523 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971 50 5642721"},
-      "email": {"emailAddress": "development.2@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+  {
+    "customer": {
+      "vatNumber": "1223334",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-03-15T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdfas",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
     },
-    {
-      "vatNumber": "BE232442",
-      "name": "Customer ABB 2",
-      "officialName": "Official Name 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":400000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "Xyz",
-      "address": { "street": "29st Street", "streetNumber": 75, "bus": "X23", "city": "Dubai", "postalCode" : 3423 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971501234567"},
-      "email": {"emailAddress": "development.3@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
     },
-    {
-      "vatNumber": "BE01234567",
-      "name": "Test ABC 3",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":600000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "Sheikh Hamdan Street", "streetNumber": 52, "bus": "L10", "city": "Dubai", "postalCode" : 3245 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
     },
-    {
-      "vatNumber": "BE0123456ssd7",
-      "name": "Test BCC 4",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":700000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "Al Wahda Street", "streetNumber": 230, "bus": "E10", "city": "Sharjah", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "12233434",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-04-03T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdf",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": null,
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": true
+      },
+      "isBlocked": false
     },
-    {
-      "vatNumber": "BE01232342d7",
-      "name": "Test BCD 5",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "Al Amman Street", "streetNumber": 100, "bus": "F22", "city": "Dubai", "postalCode" : 4568 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
     },
-    {
-      "vatNumber": "BE012567567567",
-      "name": "Test CDD 6",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":800000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "contractsEmail": {
+      "emailAddress": "adsffaf@gmail.com"
     },
-    {
-      "vatNumber": "BE012324327",
-      "name": "Test CDE 7",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":200000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "bulkContractsEnabled": false,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": null
+  },
+  {
+    "customer": {
+      "vatNumber": "1223s3aa34",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-03-15T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdfas",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
     },
-    {
-      "vatNumber": "BE0123453447",
-      "name": "Test DEE 8",
-      "officialName": "Test 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":300000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
     },
-    {
-      "vatNumber": "BE01223527",
-      "name": "bhfgh DEF 9",
-      "officialName": "vbn 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":500000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
     },
-    {
-      "vatNumber": "BE012323237",
-      "name": "cvbcvb EFF 10",
-      "officialName": "cvbcvb 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":150000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "1223sss2334",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-03-02T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdfas",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
     },
-    {
-      "vatNumber": "BE0345345237",
-      "name": "JLm EFF 10",
-      "officialName": "sdfsdgbcv 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
     },
-    {
-      "vatNumber": "BE078573237",
-      "name": "fhfgh EFF 10",
-      "officialName": "sdfsdf 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
     },
-    {
-      "vatNumber": "BE0180037",
-      "name": "Hdfs EFF 10",
-      "officialName": "dsfds 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "1223sss23aa34",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-03-15T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdfas",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
     },
-    {
-      "vatNumber": "BE08797893237",
-      "name": "OIdfd EFF 10",
-      "officialName": "sfsddf 3",
-      "creditCheck": {"creditcheck":true,"creditLimit":100000.0,"dateChecked":"2019-01-15T00:00:00+00:00"},
-      "legalForm": "AAB",
-      "address": { "street": "XYZ Road", "streetNumber": 52, "bus": "K10", "city": "Dubai", "postalCode" : 1278 , "country": "UAE", "countryCode": "AE"},
-      "phoneNumber": {"number": "+971507654321"},
-      "email": {"emailAddress": "development.4@jobfixers.be"},
-      "vcaCertification": {"cerified": true}
-    }    
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
+    },
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
+    },
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "23234565656",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-03-02T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdf",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
+    },
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
+    },
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
+    },
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "876376364343434",
+      "name": "Faisal",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-04-03T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdf",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": null,
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": true
+      },
+      "isBlocked": false
+    },
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
+    },
+    "contractsEmail": {
+      "emailAddress": ""
+    },
+    "bulkContractsEnabled": false,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": null
+  },
+  {
+    "customer": {
+      "vatNumber": "B001",
+      "name": "Test Name",
+      "officialName": "Test Offical Name",
+      "legalForm": "Test LehalForm",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10,
+        "dateChecked": "2019-04-15T07:25:44.0857677+00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "558",
+        "bus": "Bus",
+        "city": "Magic City",
+        "postalCode": "00",
+        "country": "UAE",
+        "countryCode": "UAE"
+      },
+      "phoneNumber": {
+        "number": "+971548788415"
+      },
+      "email": {
+        "emailAddress": "testmail@testServer.test"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
+    },
+    "invoiceEmail": {
+      "emailAddress": "InvoiceMail@mail.com"
+    },
+    "contractsEmail": {
+      "emailAddress": "ContractMail@mail.com"
+    },
+    "bulkContractsEnabled": false,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "Statute Name",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "251465463sd",
+          "name": "BOEMMParitairCommitee Name",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 2,
+        "mealVoucherSettings": {
+          "totalWorth": 600,
+          "employerShare": 50,
+          "minimumHours": 60
+        }
+      }
+    ],
+    "invoiceSettings": {
+      "lieuDaysAllowance": {
+        "enabled": false,
+        "payed": false
+      },
+      "sicknessInvoiced": true,
+      "holidayInvoiced": false,
+      "mobilityAllowance": {
+        "enabled": false,
+        "amountPerKm": 0
+      },
+      "shiftAllowance": true,
+      "shiftAllowances": [
+        {
+          "shiftName": "testShiftName",
+          "timeSpan": "10:10:10",
+          "amount": 12.0,
+          "nominal": false
+        }
+      ],
+      "otherAllowances": [
+        {
+          "codeId": "00000000-0000-0000-0000-000000000000",
+          "amount": 15.0,
+          "nominal": false
+        }
+      ]
+    },
+    "contact": {
+      "firstName": "Alex",
+      "lastName": "SuperMan",
+      "postion": "Postion",
+      "email": {
+        "emailAddress": "Contact@customerdoain.com"
+      },
+      "mobile": {
+        "number": "+97154254528"
+      },
+      "phoneNumber": {
+        "number": "+971545458578"
+      },
+      "language": {
+        "name": "English",
+        "shortName": "En"
+      }
+    }
+  },
+  {
+    "customer": {
+      "vatNumber": "3431",
+      "name": "asdf",
+      "officialName": "basha",
+      "legalForm": "legal",
+      "creditCheck": {
+        "creditcheck": false,
+        "creditLimit": 10000,
+        "dateChecked": "2019-04-02T00:00:00",
+        "creditCheckPending": false
+      },
+      "address": {
+        "street": "asdf",
+        "streetNumber": "40",
+        "bus": "45",
+        "city": "antewerp",
+        "postalCode": "454",
+        "country": "Belgium",
+        "countryCode": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "email": {
+        "emailAddress": "faisalbasha.andd@gmail.com"
+      },
+      "vcaCertification": {
+        "cerified": false
+      },
+      "isBlocked": false
+    },
+    "invoiceEmail": {
+      "emailAddress": "faisalbasha.andd@gmail.com"
+    },
+    "contractsEmail": {
+      "emailAddress": "faisalbasha@gmail.com"
+    },
+    "bulkContractsEnabled": true,
+    "statuteSettings": [
+      {
+        "statute": {
+          "name": "",
+          "type": null
+        },
+        "paritairCommitee": {
+          "number": "",
+          "name": "",
+          "type": null,
+          "brightStaffingId": null
+        },
+        "coefficient": 0,
+        "mealVoucherSettings": {
+          "totalWorth": 0,
+          "employerShare": 0,
+          "minimumHours": 0
+        }
+      }
+    ],
+    "invoiceSettings": null,
+    "contact": {
+      "firstName": "",
+      "lastName": "",
+      "postion": "",
+      "email": {
+        "emailAddress": ""
+      },
+      "mobile": {
+        "number": ""
+      },
+      "phoneNumber": {
+        "number": ""
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      }
+    }
+  }
 ]

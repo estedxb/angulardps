@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CountriesList } from '../../models/countries';
 import { CountriesService } from '../../shared/countries.service';
 
 @Component({

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JointCommittee } from '../../models/jointcommittee';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
 
 @Component({

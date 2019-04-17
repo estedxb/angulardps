@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
-import { Customer } from '../models/customer';
+import { Customer, DPSCustomer } from './models';
 import { Observable } from 'rxjs/observable';
 import { environment } from '../../environments/environment';
 
@@ -19,9 +19,11 @@ export class CustomersService {
     }
   }
 
-  public getCustomers(): Observable<Customer[]> {
-    console.log('Data From = ' + this.getCountriesListUrl);
-    return this.http.get<Customer[]>(this.getCountriesListUrl).catch(this.errorHandler);
+  public getCustomers(): Observable<DPSCustomer[]> {
+    console.log('CustomersService Data From = ' + this.getCountriesListUrl);
+    const result =  this.http.get<DPSCustomer[]>(this.getCountriesListUrl).catch(this.errorHandler);
+    console.log(result);
+    return result;
   }
 
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }

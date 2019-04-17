@@ -1,4 +1,6 @@
-
+input[type=text], input[type=password], input[type=number] {
+   width: 235px; font-size: 15px;font-weight: normal; padding: 3px; margin: 0px; 
+   border-radius: 0px 16px 16px 0px; height: 32px;background-color: #fff; border: solid .05em #000; border-left: 0px;  color: #000; cursor:pointer; overflow: hidden; outline:none;}
 .dialog:hover {box-shadow: 0px 0px 40px rgba(0,0,0,.2);}
 
 [class*='close-'] {
@@ -36,7 +38,6 @@
    overflow: hidden;
    box-shadow: 0px 0px 40px rgba(0,0,0,.2);  
    font-size: 16px;
-   font-family: Verdana, Geneva, Tahoma, sans-serif;  
    color: #777;   
    text-decoration: none;
    box-sizing: border-box;
@@ -62,8 +63,8 @@ button.close {
    overflow: hidden;    
    float: right;     
 }
-.search-form {border-radius: 0px 16px 16px 0px; height: 32px;background-color: #fff; border: solid .05em #000; border-left: 0px;  color: #000; cursor:pointer; overflow: hidden; outline:none;width: 235px;}
-.search-btn  {margin-left: 16px;border-radius: 16px 0px 0px 16px; height: 32px;background-color: #fff; border: solid .05em #000; border-right: 0px; color: #000; cursor:pointer; overflow: hidden; outline:none;}
+
+.search-btn {margin-left: 16px;border-radius: 16px 0px 0px 16px; height: 32px;background-color: #fff; border: solid .05em #000; border-right: 0px; color: #000; cursor:pointer; overflow: hidden; outline:none;}
 .compHeader{ height: 25px; text-align: right;}
 .gap{width: 10px;}
 .state-container-dropdown{
@@ -78,4 +79,5 @@ button.close {
    overflow:auto;
 }
 
-a {text-decoration: none;font-size: 12px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;color: black;vertical-align: middle;line-height: 16px; }
+a {text-decoration: none;font-size: 12px; font-weight: bold; color: black;vertical-align: middle;line-height: 16px; }
+span { font-size: 15px;font-weight: normal; padding: 0px;  }

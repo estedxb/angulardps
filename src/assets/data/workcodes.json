@@ -1,0 +1,1196 @@
+[
+    {
+       "CodeNumber": 1010,
+       "Description": "Gewerkt",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "Yes",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1012,
+       "Description": "Betaalde pauze",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1015,
+       "Description": "Gewerkt NIET factureren",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1020,
+       "Description": "Betaalde feestdag factureren",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1025,
+       "Description": "Betaalde feestdag NIET factureren",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1030,
+       "Description": "Klein verlet",
+       "CodeType": "Absent",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1031,
+       "Description": "Klein verlet factureren",
+       "CodeType": "Absent",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1040,
+       "Description": "Educatief verlof",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1090,
+       "Description": "Betaalde afwezigheid",
+       "CodeType": "Absent",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1190,
+       "Description": "Vaderschapsverlof",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1220,
+       "Description": "1ste dag slecht weer bouw",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1300,
+       "Description": "Gewaarborgd dagloon",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1330,
+       "Description": "GWL Arbeidsongeval",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": "Blue"
+    },
+    {
+       "CodeNumber": 1370,
+       "Description": "GML Arbeidsongeval Bediende",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": "White"
+    },
+    {
+      "CodeNumber": 1600,
+       "Description": "Verlof arbeider",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "Yes",
+       "StatuteType": "Blue"
+    },
+    {
+       "CodeNumber": 1650,
+       "Description": "ADV betaald",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1660,
+       "Description": "ADV NIET betaald",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1680,
+       "Description": "Inhaalrust overwerk onbetaald",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1690,
+       "Description": "Inhaalrust overwerk betaald",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1720,
+       "Description": "Formele opleiding cursist",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1796,
+       "Description": "Bouw meerprestaties geen recup",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1830,
+       "Description": "Regenuren",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 1840,
+       "Description": "GWL weerverlet bouw",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": "Blue"
+    },
+    {
+       "CodeNumber": 1841,
+       "Description": "GWL weerverlet bouw NIET factureren",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": "Blue"
+    },
+    {
+       "CodeNumber": 2170,
+       "Description": "Ziektedag bewijs te laat",
+       "CodeType": "Sick",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2180,
+       "Description": "Vaderschapsverlof RIZIV",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2220,
+       "Description": "Jeugdvakantie",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2230,
+       "Description": "Seniorvakantie",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2500,
+       "Description": "Familiaal verlof",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2510,
+       "Description": "Inhaalrustdag KB Bouw",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2700,
+       "Description": "Economisch werkloos",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 2720,
+       "Description": "Werkloosheid slecht weer",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3000,
+       "Description": "Gerechtvaardigde afwezigheid",
+       "CodeType": "Absent",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3010,
+       "Description": "Onwettig afwezig",
+       "CodeType": "Absent",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "Yes",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3020,
+       "Description": "Werkloosheid collectieve sluiting",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3060,
+       "Description": "Inhaalrustdag CAO bouw",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3090,
+       "Description": "Uren te laat",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3160,
+       "Description": "Afwezigheidsdag",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3161,
+       "Description": "Verlof bediende",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "Yes",
+       "StatuteType": "White"
+    },
+    {
+       "CodeNumber": 3900,
+       "Description": "Ziekte",
+       "CodeType": "Sick",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "Yes",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 3901,
+       "Description": "Ziekte (fac met coefficient)",
+       "CodeType": "Sick",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5000,
+       "Description": "Overuren 50%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5001,
+       "Description": "Overuren 50%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5010,
+       "Description": "Overuren 100%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5011,
+       "Description": "Overuren 125%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5020,
+       "Description": "Overuren 150%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5021,
+       "Description": "Overuren 150% zonder MTC",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5030,
+       "Description": "Overuren 200%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5031,
+       "Description": "Overuren 200%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5060,
+       "Description": "Toeslag",
+       "CodeType": "Other",
+       "ValueType": "",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5070,
+       "Description": "Toeslag",
+       "CodeType": "Other",
+       "ValueType": "",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5100,
+       "Description": "Zaterdagwerk (perc)",
+       "CodeType": "Work",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5101,
+       "Description": "Zaterdagwerk 100%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5102,
+       "Description": "Zaterdagwerk 50%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5110,
+       "Description": "Zaterdagwerk (bedrag)",
+       "CodeType": "Work",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5120,
+       "Description": "Zondagswerk (perc)",
+       "CodeType": "Work",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5130,
+       "Description": "Zondagswerk (bedrag)",
+       "CodeType": "Work",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5131,
+       "Description": "Zondagswerk Bakker 3,01 eur",
+       "CodeType": "Work",
+       "ValueType": "",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5132,
+       "Description": "Weekendpremie Bakker (klein) 4,20 eur",
+       "CodeType": "Other",
+       "ValueType": "",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5140,
+       "Description": "Feestdagnacht (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5141,
+       "Description": "Toeslag nacht ou (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5191,
+       "Description": "Hoogtepremie",
+       "CodeType": "Other",
+       "ValueType": "",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5200,
+       "Description": "Ploegpremie ochtend (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5210,
+       "Description": "Ploegpremie ochtend (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5221,
+       "Description": "Premie feestdag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5270,
+       "Description": "Toeslag ploegwerk (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5271,
+       "Description": "Toeslag middag ou (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5390,
+       "Description": "Toeslaguren 20% KB213",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5460,
+       "Description": "Ploegpremie middag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5461,
+       "Description": "Ploegpremie zondag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5470,
+       "Description": "Ploegpremie middag (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5520,
+       "Description": "Nachtwerk (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5521,
+       "Description": "Nachtwerk 20%",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5522,
+       "Description": "Hittepremie (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5523,
+       "Description": "Stofpremie (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5525,
+       "Description": "Koudepremie (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5530,
+       "Description": "Beschikbaarheidstijd 100%",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5532,
+       "Description": "Beschikbaarheidstijd (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5533,
+       "Description": "Beschikbaarheidstijd (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5540,
+       "Description": "Beschikbaarheidstijd (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5571,
+       "Description": "Zaterdagnacht (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5572,
+       "Description": "Zondagnacht (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5573,
+       "Description": "Zaterdag feestdag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5574,
+       "Description": "Zondag feestdag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5575,
+       "Description": "Zaterdagnacht feestdag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 5576,
+       "Description": "Zondagnacht feestdag (perc)",
+       "CodeType": "Other",
+       "ValueType": "Percentage",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6060,
+       "Description": "Brutoloon seizoensarbeid",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6140,
+       "Description": "Haardvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6150,
+       "Description": "Standplaatsvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6170,
+       "Description": "Rijvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6180,
+       "Description": "Overwerk",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6350,
+       "Description": "Overwerk aan 100%",
+       "CodeType": "Work",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6401,
+       "Description": "Voordeel GSM",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6531,
+       "Description": "Yesarlijkse premie",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6540,
+       "Description": "Forfaitair bedrag feestdag (factureren)",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6541,
+       "Description": "Forfaitair bedrag feestdag (NIET factureren)",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6550,
+       "Description": "Niet opgenomen inhaalrust",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6551,
+       "Description": "Niet opgenomen feestdag (factureren)",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6552,
+       "Description": "Niet opgenomen feestdag (NIET factureren)",
+       "CodeType": "Holiday",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6561,
+       "Description": "Koopkrachtpremie",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6570,
+       "Description": "Premie (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6571,
+       "Description": "Koudepremie (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6572,
+       "Description": "Pensioenpremie (Automatisch)",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6576,
+       "Description": "Omzetting ecocheques",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6577,
+       "Description": "Safety First Bonus",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6581,
+       "Description": "Hondenpremie / uur (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6610,
+       "Description": "Aanwezigheidspremie",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6821,
+       "Description": "Premie zon -en feestdagen horeca",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6830,
+       "Description": "Toeslag nachtwerk (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6831,
+       "Description": "Toeslag nachtwerk zonder coeff (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6910,
+       "Description": "Dagvergoeding tot 6u",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 6913,
+       "Description": "Dagvergoeding > 6u",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 7380,
+       "Description": "Vergoeding mobiliteit zonder RSZ",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 7610,
+       "Description": "Aanvullend gewaarborgd loon",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 7910,
+       "Description": "Prive gebruik voertuig",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8050,
+       "Description": "Tussenk woon-werkverkeer (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8101,
+       "Description": "Mobiliteitsvergoeding bouw",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8110,
+       "Description": "Mobiliteit bouw buiten werkuren",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8150,
+       "Description": "Kledijvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8151,
+       "Description": "Kledijvergoeding (fac met coefficient)",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8190,
+       "Description": "Vergoeding schoonmaak werkkledij",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8191,
+       "Description": "Vergoeding schoonmaak werkkledij (fac met co",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8250,
+       "Description": "Verblijfskosten",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8280,
+       "Description": "Dagvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8281,
+       "Description": "Dagvergoeding met coeff",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8350,
+       "Description": "Terugbetaling onkosten",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8351,
+       "Description": "Terugbetaling onkosten (fac met coefficient)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8352,
+       "Description": "Terugbetaling onkosten (NIET factureren)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8360,
+       "Description": "Maandvergoeding netto",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8410,
+       "Description": "ARAB vergoeding 1,3920",
+       "CodeType": "Other",
+       "ValueType": "Hour",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8411,
+       "Description": "ARAB vergoeding (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8420,
+       "Description": "ARAB vergoeding (bedrag)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8460,
+       "Description": "Kilometervergoeding",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8540,
+       "Description": "Maaltijdvergoeding",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8600,
+       "Description": "Verblijfsvergoeding A",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8610,
+       "Description": "Verblijfsvergoeding B",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8665,
+       "Description": "Bonus (Niet-Rec Res Voordeel)",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8800,
+       "Description": "Extra Maaltijdch werkgeversaandeel",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8810,
+       "Description": "Extra Maaltijdch totaal",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8892,
+       "Description": "Ecocheque 10 euro",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 8893,
+       "Description": "Ecocheque saldo",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9000,
+       "Description": "Voorschot",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9041,
+       "Description": "Verrekening correctie vorig loon",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9140,
+       "Description": "Verkeersboete",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9450,
+       "Description": "Waarborg werkkledij",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9460,
+       "Description": "Facturatie kosten werkkledij",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9700,
+       "Description": "Diverse afhoudingen",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9900,
+       "Description": "Inactiviteit",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    },
+    {
+       "CodeNumber": 9999,
+       "Description": "Dimona manueel",
+       "CodeType": "Other",
+       "ValueType": "Amount",
+       "IsDefaultForCodeType": "",
+       "StatuteType": ""
+    }
+    ]
+     
+     

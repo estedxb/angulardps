@@ -21,13 +21,16 @@
     <div class="scrollbar" id="maincontent">
       <div class="force-overflow">
         <div id="CustomerDetails" class="customerBox"> 
-            <h3>CustomerDetails</h3>
+            <div class="row panelheader">
+                <div class="col col-sm-5 fright"><h4>Customer Details</h4><hr></div>
+                <div class="col col-sm-7"></div>
+            </div>            
             <app-jointcommittee></app-jointcommittee>
             <app-countries></app-countries>
             <app-legal></app-legal>
-            
         </div>
-        <div id="CustomerContact" class="customerBox"><h3>Customer Contact</h3></div>
+        <app-statute></app-statute>
+        <app-workcodes></app-workcodes>        
       </div>
     </div>
   </div>

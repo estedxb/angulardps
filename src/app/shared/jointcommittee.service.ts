@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
-import { JointCommittee } from '../models/jointcommittee';
+import { JointCommittee } from './models';
 import { Observable } from 'rxjs/observable';
 import { environment } from '../../environments/environment';
 import _ from 'lodash';
@@ -18,8 +18,11 @@ export class JointcommitteeService {
     console.log('Data From = ' + this.getJointCommiteeUrl);
   }
 
-  public getJointCommitees(): Observable<JointCommittee[]> { 
-    return this.http.get<JointCommittee[]>(this.getJointCommiteeUrl).catch(this.errorHandler);
+  public getJointCommitees(): Observable<JointCommittee[]> {
+    console.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
+    const result = this.http.get<JointCommittee[]>(this.getJointCommiteeUrl).catch(this.errorHandler);
+    console.log(result);
+    return result;
   }
 
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }

@@ -9,6 +9,7 @@ import { LegalformService } from '../../shared/legalform.service';
 export class LegalComponent implements OnInit {
   public legalforms = [];
   public legalformslang = [];
+  public currentlanguage = 'nl';
 
   public errorMsg;
 
@@ -17,8 +18,7 @@ export class LegalComponent implements OnInit {
   ngOnInit() {
     this.legalformService.getLegalForms().subscribe(data => {
       this.legalforms = data;
-      // tslint:disable-next-line: no-string-literal
-      this.legalformslang = data['fr'];
+      this.legalformslang = data[this.currentlanguage];
     }, error => this.errorMsg = error);
   }
 }

@@ -4,7 +4,7 @@ export const environment = {
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI : 'https://boemmapidev.azurewebsites.net/api/',
   getCustomers: 'Customer',
-  getCustomerLists: '',
+  getCustomerLists: 'customer/GetAllCustomersPreviewJson',
   getJointCommitee: '',
   getLegalForm: '',
   getCounteries: '',
