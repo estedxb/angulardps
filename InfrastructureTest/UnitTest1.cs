@@ -19,17 +19,17 @@ namespace Tests
         [Test]
         public void AddCustomerToBSTest()
         {
-            SiIBrightStaffing addEnterprise = new SiIBrightStaffing(ConfigurationManager.AppSettings["APIPersonUrl"], ConfigurationManager.AppSettings["APIPersonVerson"], ConfigurationManager.AppSettings["AddEnterprise"]);
+            SiIBrightStaffing addEnterprise = new SiIBrightStaffing("874c4bdf-e4d7-4b79-b5d8-9cd81c4417ec", "1", "https://jobfixers-staging.b-bright.be/backend/index.php/api/enterprise/addEnterprise", "https://jobfixers-staging.b-bright.be/backend/index.php/api/enterprise/getEnterpriseByVat");
 
             DpsCustomer Model = new DpsCustomer();
 
             // Customer
             Customer customer = new Customer();
-            customer.VatNumber = "B001";
-            customer.Name = "Test Name";
-            customer.OfficialName = "Test Offical Name";
+            customer.VatNumber = "VatNumber";  //0843418760
+            customer.Name = "B-Bright bvba";
+            customer.OfficialName = "B-Bright bvba";
             customer.LegalForm = "Test LehalForm";
-            customer.Address = new Address { Bus = "Bus", City = "Magic City", Country = "UAE", CountryCode = "UAE", PostalCode = "00", Street = "Magic Street", StreetNumber = "558" };
+            customer.Address = new Address { Bus = "Bus", City = "Pittem", Country = "Belgi\u00eb", CountryCode = "BE", PostalCode = "8740", Street = "Kapellebilk", StreetNumber = "5" };
             customer.PhoneNumber = new PhoneNumber { Number = "+971548788415" };
             customer.Email = new Email { EmailAddress = "testmail@testServer.test" };
             customer.VCACertification = new VCACertification { Cerified = false };
