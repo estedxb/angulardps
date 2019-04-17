@@ -25,8 +25,25 @@ namespace DpsApis.Controllers
         public async Task<ActionResult> Get()
         {
             List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM = new CustomerVM();
-            CustomersList.Add(customerVM);
+            CustomerVM customerVM1 = new CustomerVM();
+            customerVM1.VATNumber = "123";
+            customerVM1.OfficialName = "abc";
+            customerVM1.Name = "abc";
+
+            CustomerVM customerVM2 = new CustomerVM();
+            customerVM2.VATNumber = "456";
+            customerVM2.OfficialName = "cde";
+            customerVM2.Name = "cde";
+
+            CustomerVM customerVM3 = new CustomerVM();
+            customerVM3.VATNumber = "789";
+            customerVM3.OfficialName = "efg";
+            customerVM3.Name = "efg";
+
+            CustomersList.Add(customerVM1);
+            CustomersList.Add(customerVM2);
+            CustomersList.Add(customerVM3);
+            
 
             return Ok(CustomersList);
         }
@@ -106,7 +123,78 @@ namespace DpsApis.Controllers
             return Ok(Model);
         }
 
+        // GET: api/Customer/5        
+        [Route("GetCustomerByVatNumber")]
+        //[HttpGet("{VatNumber}")]
+        public async Task<ActionResult> GetCustomerByVatNumber(string VatNumber)
+        {
+            DpsCustomer Model = new DpsCustomer();
 
+            // Customer
+            Customer customer = new Customer();
+            customer.VatNumber = "B001";
+            customer.Name = "Test Name";
+            customer.OfficialName = "Test Offical Name";
+            customer.LegalForm = "Test LehalForm";
+            customer.Address = new Address { Bus = "Bus", City = "Magic City", Country = "UAE", CountryCode = "UAE", PostalCode = "00", Street = "Magic Street", StreetNumber = "558" };
+            customer.PhoneNumber = new PhoneNumber { Number = "+971548788415" };
+            customer.Email = new Email { EmailAddress = "testmail@testServer.test" };
+            customer.VCACertification = new VCACertification { Cerified = false };
+            customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
+            Model.Customer = customer;
+
+
+
+            // invoice setting ...
+            var OtherAllowanceList = new List<OtherAllowance>();
+            OtherAllowanceList.Add(new OtherAllowance { Amount = 15, CodeId = new Guid(), Nominal = false });
+
+            var ShiftAllownsList = new List<ShiftAllowance>();
+            ShiftAllownsList.Add(new ShiftAllowance { Amount = 12, Nominal = false, ShiftName = "testShiftName", TimeSpan = new TimeSpan(10, 10, 10) });
+
+            //
+            Model.InvoiceEmail = new Email { EmailAddress = "InvoiceMail@mail.com" };
+            Model.ContractsEmail = new Email { EmailAddress = "ContractMail@mail.com" };
+            Model.BulkContractsEnabled = false;
+            Model.invoiceSettings = new InvoiceSettings
+            {
+                HolidayInvoiced = false,
+                LieuDaysAllowance =
+                new LieuDaysAllowance { Enabled = false, Payed = false },
+                MobilityAllowance = new MobilityAllowance { Enabled = false, AmountPerKm = 0 },
+                OtherAllowances = OtherAllowanceList,
+                ShiftAllowance = true,
+                ShiftAllowances = ShiftAllownsList,
+                SicknessInvoiced = true
+            };
+
+
+            // contact 
+            Model.Contact = new Contact
+            {
+                Email = new Email { EmailAddress = "Contact@customerdoain.com" },
+                FirstName = "Alex",
+                Language = new Language
+                { Name = "English", ShortName = "En" },
+                LastName = "SuperMan",
+                Mobile = new PhoneNumber { Number = "+97154254528" },
+                PhoneNumber = new PhoneNumber { Number = "+971545458578" },
+                Postion = "Postion"
+            };
+
+
+            Model.StatuteSettings = new List<StatuteSettings>();
+            Model.StatuteSettings.Add(new StatuteSettings
+            {
+                Coefficient = 2,
+                MealVoucherSettings = new MealVoucherSettings { EmployerShare = 50, MinimumHours = 60, TotalWorth = 600 },
+                ParitairCommitee = new BOEMMParitairCommitee { Name = "BOEMMParitairCommitee Name", Number = "251465463sd" },
+                Statute = new Statute { Name = "Statute Name" }
+            });
+
+
+            return Ok(Model);
+        }
 
         // POST: api/Customer/
         [HttpPost]
@@ -149,13 +237,6 @@ namespace DpsApis.Controllers
         {
             return Ok();
         }
-
-
-
-
-
-
-
 
 
         // GET: api/Customer/WorkSchedules
@@ -259,8 +340,8 @@ namespace DpsApis.Controllers
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
         public string VATNumber { get; set; }
-        public string Name { get; set; } = "Name";
-        public string OfficialName { get; set; } = "OfficialName";
+        public string Name { get; set; } 
+        public string OfficialName { get; set; } 
         public string LegalForm { get; set; } = "Abc";
         public CreditCheckVM CreditCheck { get; set; } = new CreditCheckVM();
         public string Address { get; set; } = "Qwerty";

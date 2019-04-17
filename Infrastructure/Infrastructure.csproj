@@ -9,11 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="RepositoryImplementation\" />
-    <Folder Include="ServicesImplementation\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.6.9" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>

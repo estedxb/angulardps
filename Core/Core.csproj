@@ -15,9 +15,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServicesInterface\" />
-    <Folder Include="RepositoryInterface\" />
-  </ItemGroup>
-
 </Project>
