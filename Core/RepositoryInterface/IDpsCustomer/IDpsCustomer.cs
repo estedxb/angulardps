@@ -1,4 +1,5 @@
 ﻿using Core.DomainModel.DpsCustomer;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Core.RepositoryInterface.IDpsCustomer
@@ -17,6 +18,9 @@ namespace Core.RepositoryInterface.IDpsCustomer
         /// </summary>
         /// <param name="dpsCustomer"></param>
         /// <returns></returns>
-        Task<string> AddNewCustomer(DpsCustomer dpsCustomer);
+        Task<string> AddNewCustomerAsync(DpsCustomer dpsCustomer);
+
+
+        Task<List<DpsCustomer>> GetAllCustomersAsync();
     }
 }

@@ -31,12 +31,21 @@ namespace Infrastructure.RepositoryImplementation
                 TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, VatNumber)).Take(1);
             var Recored = await table.ExecuteQuerySegmentedAsync(query, null);
 
-            var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(Recored.Single().DpsCustomer);
-            return DpsCustomer;
+            if (Recored.Count() > 0)
+            {
+
+
+                var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(Recored.Single().DpsCustomer);
+                return DpsCustomer;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
-        public async Task<string> AddNewCustomer(DpsCustomer dpsCustomer)
+        public async Task<string> AddNewCustomerAsync(DpsCustomer dpsCustomer)
         {
             try
             {
@@ -60,5 +69,10 @@ namespace Infrastructure.RepositoryImplementation
             }
         }
 
+
+        public Task<List<DpsCustomer>> GetAllCustomersAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Core.DomainModel.DpsCustomer
         public Email InvoiceEmail { get; set; }
         public Email ContractsEmail { get; set; }
         public bool BulkContractsEnabled { get; set; }
-        public  List<StatuteSettings> StatuteSettings { get; set; }
+        public List<StatuteSettings> StatuteSettings { get; set; }
         public InvoiceSettings invoiceSettings { get; set; }
         public Contact Contact { get; set; }
 
@@ -41,7 +41,7 @@ namespace Core.DomainModel.DpsCustomer
         /// </summary>
         /// <param name="iDpsCustomer"></param>
         /// <returns></returns>
-        public async Task<bool> CreateNewCustomer(IDpsCustomer iDpsCustomer)
+        public async Task<bool> CreateNewCustomerAsync(IDpsCustomer iDpsCustomer)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace Core.DomainModel.DpsCustomer
                 }
                 else
                 {
-                    string VatNumber = await iDpsCustomer.AddNewCustomer(this);
+                    string VatNumber = await iDpsCustomer.AddNewCustomerAsync(this);
                     if (string.IsNullOrEmpty(VatNumber) || string.IsNullOrWhiteSpace(VatNumber))
                     {
                         return false;
@@ -70,7 +70,28 @@ namespace Core.DomainModel.DpsCustomer
 
 
 
+        public async Task<List<Tuple<string, string>>> GetCustomerVatAndNameAsync(IDpsCustomer idpsCustomer)
+        {
+            var allCustomers = await idpsCustomer.GetAllCustomersAsync();
+            var Model = new List<Tuple<string, string>>();
+            foreach (var customer in allCustomers)
+            {
+                Model.Add(new Tuple<string, string>(customer.Customer.VatNumber, customer.Customer.Name));
+            }
+            return Model;
+        }
 
+
+        public async Task<List<DpsCustomer>> GetAllCustomersAsync(IDpsCustomer idpsCustomer)
+        {
+            return await idpsCustomer.GetAllCustomersAsync();
+        }
+
+
+        public async Task<DpsCustomer> GetCustomerByVatNumberAsync(string Vat , IDpsCustomer idpsCustomer)
+        {
+            return await idpsCustomer.GetCustomerByVatNumberAsync(Vat);
+        }
 
     }
 

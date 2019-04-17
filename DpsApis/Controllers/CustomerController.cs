@@ -22,105 +22,55 @@ namespace DpsApis.Controllers
 
         // GET: api/Customer
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get(bool? PreviewJson)
         {
-            List<CustomerVM> CustomersList = new List<CustomerVM>();
-            CustomerVM customerVM1 = new CustomerVM();
-            customerVM1.VATNumber = "123";
-            customerVM1.OfficialName = "abc";
-            customerVM1.Name = "abc";
+            try
+            {
+                DpsCustomer dpsCustomer = new DpsCustomer();
+                if (PreviewJson.Value)
+                {
+                    return Ok(await dpsCustomer.GetCustomerVatAndNameAsync(new RICustomer()));
+                }
+                else
+                {
+                    return Ok(await dpsCustomer.GetAllCustomersAsync(new RICustomer()));
+                }
 
-            CustomerVM customerVM2 = new CustomerVM();
-            customerVM2.VATNumber = "456";
-            customerVM2.OfficialName = "cde";
-            customerVM2.Name = "cde";
-
-            CustomerVM customerVM3 = new CustomerVM();
-            customerVM3.VATNumber = "789";
-            customerVM3.OfficialName = "efg";
-            customerVM3.Name = "efg";
-
-            CustomersList.Add(customerVM1);
-            CustomersList.Add(customerVM2);
-            CustomersList.Add(customerVM3);
-            
-
-            return Ok(CustomersList);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return BadRequest(e.Message);
+            }
         }
 
 
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> Get(string id)
         {
-            DpsCustomer Model = new DpsCustomer();
-
-            // Customer
-            Customer customer = new Customer();
-            customer.VatNumber = "B001";
-            customer.Name = "Test Name";
-            customer.OfficialName = "Test Offical Name";
-            customer.LegalForm = "Test LehalForm";
-            customer.Address = new Address { Bus = "Bus", City = "Magic City", Country = "UAE", CountryCode = "UAE", PostalCode = "00", Street = "Magic Street", StreetNumber = "558" };
-            customer.PhoneNumber = new PhoneNumber { Number = "+971548788415" };
-            customer.Email = new Email { EmailAddress = "testmail@testServer.test" };
-            customer.VCACertification = new VCACertification { Cerified = false };
-            customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
-            customer.IsBlocked = false;
-            Model.Customer = customer;
-
-
-
-            // invoice setting ...
-            var OtherAllowanceList = new List<OtherAllowance>();
-            OtherAllowanceList.Add(new OtherAllowance { Amount = 15, CodeId = new Guid(), Nominal = false });
-
-            var ShiftAllownsList = new List<ShiftAllowance>();
-            ShiftAllownsList.Add(new ShiftAllowance { Amount = 12, Nominal = false, ShiftName = "testShiftName", TimeSpan = new TimeSpan(10, 10, 10) });
-
-            //
-            Model.InvoiceEmail = new Email { EmailAddress = "InvoiceMail@mail.com" };
-            Model.ContractsEmail = new Email { EmailAddress = "ContractMail@mail.com" };
-            Model.BulkContractsEnabled = false;
-            Model.invoiceSettings = new InvoiceSettings
+            try
             {
-                HolidayInvoiced = false,
-                LieuDaysAllowance =
-                new LieuDaysAllowance { Enabled = false, Payed = false },
-                MobilityAllowance = new MobilityAllowance { Enabled = false, AmountPerKm = 0 },
-                OtherAllowances = OtherAllowanceList,
-                ShiftAllowance = true,
-                ShiftAllowances = ShiftAllownsList,
-                SicknessInvoiced = true
-            };
+                DpsCustomer dpsCustomer = new DpsCustomer();
+                var Model = await dpsCustomer.GetCustomerByVatNumberAsync(id, new RICustomer());
 
+                if (Model != null)
+                {
+                    return Ok(Model);
+                }
+                else
+                {
+                    return NotFound();
+                }
 
-            // contact 
-            Model.Contact = new Contact
+            }
+            catch (Exception e)
             {
-                Email = new Email { EmailAddress = "Contact@customerdoain.com" },
-                FirstName = "Alex",
-                Language = new Language
-                { Name = "English", ShortName = "En" },
-                LastName = "SuperMan",
-                Mobile = new PhoneNumber { Number = "+97154254528" },
-                PhoneNumber = new PhoneNumber { Number = "+971545458578" },
-                Postion = "Postion"
-            };
-
-
-            Model.StatuteSettings = new List<StatuteSettings>();
-            Model.StatuteSettings.Add(new StatuteSettings
-            {
-                Coefficient = 2,
-                MealVoucherSettings = new MealVoucherSettings { EmployerShare = 50, MinimumHours = 60, TotalWorth = 600 },
-                ParitairCommitee = new BOEMMParitairCommitee { Name = "BOEMMParitairCommitee Name", Number = "251465463sd" },
-                Statute = new Statute { Name = "Statute Name" }
-            });
-
-
-            return Ok(Model);
+                Trace.TraceError(e.Message);
+                return BadRequest(e.Message);
+                throw;
+            }
         }
 
         // GET: api/Customer/5        
@@ -204,7 +154,7 @@ namespace DpsApis.Controllers
             try
             {
                 //var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(value);
-                var Saved = await value.CreateNewCustomer(new RICustomer());
+                var Saved = await value.CreateNewCustomerAsync(new RICustomer());
                 if (Saved)
                 {
                     return Ok(value.Customer.VatNumber);
@@ -340,8 +290,8 @@ namespace DpsApis.Controllers
     {
         //public Guid Id { get; set; } = Guid.NewGuid();
         public string VATNumber { get; set; }
-        public string Name { get; set; } 
-        public string OfficialName { get; set; } 
+        public string Name { get; set; }
+        public string OfficialName { get; set; }
         public string LegalForm { get; set; } = "Abc";
         public CreditCheckVM CreditCheck { get; set; } = new CreditCheckVM();
         public string Address { get; set; } = "Qwerty";
