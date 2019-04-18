@@ -14,21 +14,33 @@ namespace DpsApis.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
-        // GET: DpsApi/User
-        [HttpGet]    
-        public async Task<ActionResult<List<DpsUser>>> Get()
-        {
-            List<DpsUser> userList = new List<DpsUser>(); 
-            return Ok(userList);
-        }
-
+        
         // GET: DpsApi/User/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<DpsUser>>> Get(int Id)
+        [HttpGet("{CustomerVatNumber}")]
+        public async Task<ActionResult> Get(string CustomerVatNumber)
         {
-            DpsUser user = new DpsUser();
-            return Ok(user);
+            try
+            {
+                RIUser iUser = new RIUser();
+                var user = await iUser.GetUserByCustomerVatNumberAsync(CustomerVatNumber);
+
+                if (user!=null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return StatusCode(500);
+
+            }
+            
         }
 
         // POST: DpsApi/User/Create
@@ -61,17 +73,84 @@ namespace DpsApis.Controllers
         // POST: DpsApi/User/Update
         [HttpPut]
         [Route("Update")]
-        public async Task<ActionResult> Update(string id, DpsUser model)
+        public async Task<ActionResult> Update(DpsUser model)
         {
-            return Ok(model);
+            try
+            {
+
+                var Saved = await model.UpdateUser(new RIUser());
+                if (Saved)
+                {
+                    return Ok(model);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return StatusCode(500);
+
+            }
         }      
 
         // POST: DpsApi/User/Archive
         [HttpPut]
-        [Route("Archive")]
-        public async Task<ActionResult> ArchiveUser(string id, DpsUser model)
+        [Route("IsArchived")]
+        public async Task<ActionResult> IsArchived(string CustomerVatNumber, bool isArchived)
         {
-            return Ok(model);
+            try
+            {
+                RIUser iUser = new RIUser();
+                var user = await iUser.IsUserArchivedAsync(CustomerVatNumber, isArchived);
+
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return StatusCode(500);
+
+            }
+        }
+
+        // POST: DpsApi/User/Archive
+        [HttpPut]
+        [Route("IsEnabled")]
+        public async Task<ActionResult> IsEnabled(string CustomerVatNumber, bool isEnabled)
+        {
+            try
+            {
+                RIUser iUser = new RIUser();
+                var user = await iUser.IsUserEnabledAsync(CustomerVatNumber, isEnabled);
+
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                return StatusCode(500);
+
+            }
         }
     }
 

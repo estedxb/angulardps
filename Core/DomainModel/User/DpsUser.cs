@@ -45,11 +45,11 @@ namespace Core.DomainModel.DpsCustomerUser
         }
 
         /// <summary>
-        /// Create new customer user based on the current class instance. Return True if Customer User Created.
+        /// UpdateUser customer user based on the current class instance. Return True if Customer User UpdateUser.
         /// </summary>
         /// <param name="iDpsUser"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateUser(string id ,IDpsUser iDpsUser)
+        public async Task<bool> UpdateUser(IDpsUser iDpsUser)
         {
             try
             {
@@ -65,5 +65,7 @@ namespace Core.DomainModel.DpsCustomerUser
                 throw;
             }
         }
+
+       
     }
 }

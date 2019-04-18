@@ -11,9 +11,11 @@ namespace Core.RepositoryInterface.IDpsCustomerUser
         /// <summary>
         /// Get Customer By id, 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="CustomerVatNumber"></param>
         /// <returns></returns>
-        Task<DpsUser> GetUserByIDAsync(int id);
+        Task<DpsUser> GetUserByCustomerVatNumberAsync(string CustomerVatNumber);
+
+        Task<List<DpsUser>> GetAllUsersAsync();
 
         /// <summary>
         /// Save New Customer User
@@ -24,10 +26,27 @@ namespace Core.RepositoryInterface.IDpsCustomerUser
 
         /// <summary>
         /// Save New Customer User
-        /// </summary>
-        /// /// <param name="id"></param>
+        /// </summary>  
         /// <param name="dpsUser"></param>
         /// <returns></returns>
         Task<string> UpdateUserAsync( DpsUser dpsUser);
+
+        /// <summary>
+        /// Save New Customer User
+        /// </summary>
+        /// <param name="CustomerVatNumber"></param>
+        /// <param name="isArchived"></param>
+        /// <returns></returns>
+        Task<DpsUser> IsUserArchivedAsync(string CustomerVatNumber, bool isArchived);
+
+        /// <summary>
+        /// Save New Customer User
+        /// </summary>
+        /// <param name="CustomerVatNumber"></param>
+        /// <param name="isEnabled"></param>
+        /// <returns></returns>
+        Task<DpsUser> IsUserEnabledAsync(string CustomerVatNumber, bool isEnabled);
+
+
     }
 }

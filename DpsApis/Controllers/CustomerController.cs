@@ -278,13 +278,6 @@ namespace DpsApis.Controllers
 
         }
 
-
-
-
-
-
-
-
     }
     public class CustomerVM
     {

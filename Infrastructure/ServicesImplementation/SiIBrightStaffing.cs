@@ -30,22 +30,29 @@ namespace Infrastructure.ServicesImplementation
 
         }
 
-        private string CountryISO(DpsCustomer customer)
+        public string FormatCountryISO(DpsCustomer customer)
         {
             try
             {
                 if (customer!=null)
-                {
-                    if (customer.Customer.Address.CountryCode.ToUpper() == "BE")
-                    {
-                        return "B";
-                    }
-                    else
-                    {
-                        return customer.Customer.Address.CountryCode;
-                    }
+                {                    
+                    return customer.Customer.Address.CountryCode.ToUpper() == "BE" ? "B" : customer.Customer.Address.CountryCode;                                     
                 }
                 return null;
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                return ex.Message;
+            }
+
+        }
+
+        public string FormatVatNumber(string vatNumber, string countryCode)
+        {
+            try
+            {               
+                return countryCode == "BE" ? countryCode + "" + vatNumber : vatNumber;                
             }
             catch (Exception ex)
             {
@@ -63,15 +70,7 @@ namespace Infrastructure.ServicesImplementation
 
             try
             {
-                string formattedVatNumber;
-                if (countryCode == "BE")
-                {
-                    formattedVatNumber = countryCode + "" + vatNumber;
-                }
-                else
-                {
-                    formattedVatNumber = vatNumber;
-                }
+                string formattedVatNumber = FormatVatNumber(vatNumber, countryCode);              
 
                 var client = new RestClient(bsGetEnterpriseApiErpUrl);
                 var request = new RestRequest(Method.POST);
@@ -116,7 +115,7 @@ namespace Infrastructure.ServicesImplementation
                     jobprofile_info = "null";
                 }
 
-                string country_iso = CountryISO(customer);
+                string country_iso = FormatCountryISO(customer);
 
                 var client = new RestClient(bsPostEnterpriseApiErpUrl);
                 var request = new RestRequest(Method.POST);
