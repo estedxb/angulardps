@@ -1,7 +1,5 @@
 ﻿using Core.DomainModel.DpsCustomerUser;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.RepositoryInterface.IDpsCustomerUser
@@ -9,7 +7,7 @@ namespace Core.RepositoryInterface.IDpsCustomerUser
     public interface IDpsUser
     {
         /// <summary>
-        /// Get Customer By id, 
+        /// Get Customer By id,
         /// </summary>
         /// <param name="CustomerVatNumber"></param>
         /// <returns></returns>
@@ -26,10 +24,10 @@ namespace Core.RepositoryInterface.IDpsCustomerUser
 
         /// <summary>
         /// Save New Customer User
-        /// </summary>  
+        /// </summary>
         /// <param name="dpsUser"></param>
         /// <returns></returns>
-        Task<string> UpdateUserAsync( DpsUser dpsUser);
+        Task<string> UpdateUserAsync(DpsUser dpsUser);
 
         /// <summary>
         /// Save New Customer User
@@ -46,7 +44,5 @@ namespace Core.RepositoryInterface.IDpsCustomerUser
         /// <param name="isEnabled"></param>
         /// <returns></returns>
         Task<DpsUser> IsUserEnabledAsync(string CustomerVatNumber, bool isEnabled);
-
-
     }
 }

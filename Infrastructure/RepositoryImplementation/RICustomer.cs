@@ -1,20 +1,17 @@
 ﻿using Core.DomainModel.DpsCustomer;
 using Core.RepositoryInterface.IDpsCustomer;
+using Infrastructure.DbModel;
+using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.WindowsAzure.Storage.Table;
-using Infrastructure.DbModel;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Infrastructure.RepositoryImplementation
 {
     public class RICustomer : RIBase, IDpsCustomer
     {
-
-
         /// <summary>
         /// Get Customer By Vat Number...
         /// </summary>
@@ -26,15 +23,12 @@ namespace Infrastructure.RepositoryImplementation
             var tableClient = cloudStorageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference("customer");
 
-
             TableQuery<DbDpsCustomer> query = new TableQuery<DbDpsCustomer>().Where(
                 TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, VatNumber)).Take(1);
             var Recored = await table.ExecuteQuerySegmentedAsync(query, null);
 
             if (Recored.Count() > 0)
             {
-
-
                 var DpsCustomer = JsonConvert.DeserializeObject<DpsCustomer>(Recored.Single().DpsCustomer);
                 return DpsCustomer;
             }
@@ -43,7 +37,6 @@ namespace Infrastructure.RepositoryImplementation
                 return null;
             }
         }
-
 
         public async Task<string> AddNewCustomerAsync(DpsCustomer dpsCustomer)
         {
@@ -69,7 +62,6 @@ namespace Infrastructure.RepositoryImplementation
             }
         }
 
-
         public async Task<List<DpsCustomer>> GetAllCustomersAsync()
         {
             var Model = new List<DpsCustomer>();
@@ -86,6 +78,11 @@ namespace Infrastructure.RepositoryImplementation
                 Model.Add(JsonConvert.DeserializeObject<DpsCustomer>(item.DpsCustomer));
             }
             return Model;
+        }
+
+        public Task<bool> UpdateCustomerAsync(DpsCustomer dpsCustomer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,18 +4,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Infrastructure.ServicesImplementation
 {
-
     public class SiIBrightStaffing : IBrightStaffing
-    {     
-
+    {
         internal string personAPIAccessToken;
         internal string personAPIVersion;
         internal string bsPostEnterpriseApiErpUrl;
@@ -27,16 +21,15 @@ namespace Infrastructure.ServicesImplementation
             personAPIVersion = version;
             bsPostEnterpriseApiErpUrl = erpPostEntUrl;
             bsGetEnterpriseApiErpUrl = erpGetEntUrl;
-
         }
 
         public string FormatCountryISO(DpsCustomer customer)
         {
             try
             {
-                if (customer!=null)
-                {                    
-                    return customer.Customer.Address.CountryCode.ToUpper() == "BE" ? "B" : customer.Customer.Address.CountryCode;                                     
+                if (customer != null)
+                {
+                    return customer.Customer.Address.CountryCode.ToUpper() == "BE" ? "B" : customer.Customer.Address.CountryCode;
                 }
                 return null;
             }
@@ -45,32 +38,29 @@ namespace Infrastructure.ServicesImplementation
                 Trace.TraceError(ex.Message);
                 return ex.Message;
             }
-
         }
 
         public string FormatVatNumber(string vatNumber, string countryCode)
         {
             try
-            {               
-                return countryCode == "BE" ? countryCode + "" + vatNumber : vatNumber;                
+            {
+                return countryCode == "BE" ? countryCode + "" + vatNumber : vatNumber;
             }
             catch (Exception ex)
             {
                 Trace.TraceError(ex.Message);
                 return ex.Message;
             }
-
         }
-
 
         public BsEnterpriseDetails getEnterpriseDetails(string vatNumber, string countryCode, string extended)
         {
-            IRestResponse response = null;            
-            BsEnterpriseDetails bsEnterpriseDetails = new BsEnterpriseDetails();          
+            IRestResponse response = null;
+            BsEnterpriseDetails bsEnterpriseDetails = new BsEnterpriseDetails();
 
             try
             {
-                string formattedVatNumber = FormatVatNumber(vatNumber, countryCode);              
+                string formattedVatNumber = FormatVatNumber(vatNumber, countryCode);
 
                 var client = new RestClient(bsGetEnterpriseApiErpUrl);
                 var request = new RestRequest(Method.POST);
@@ -80,15 +70,14 @@ namespace Infrastructure.ServicesImplementation
                 request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_access_token\"\r\n\r\n" + personAPIAccessToken + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_version\"\r\n\r\n" + personAPIVersion + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"vat\"\r\n\r\n" + formattedVatNumber + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"extended\"\r\n\r\n" + extended + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
                 response = client.Execute(request);
 
-                var stri =  response.Content;
+                var stri = response.Content;
 
-                var entDetails =  JsonConvert.DeserializeObject<BsEnterpriseDetails>(stri);
+                var entDetails = JsonConvert.DeserializeObject<BsEnterpriseDetails>(stri);
                 return entDetails;
             }
             catch (Exception ex)
             {
-                 Console.WriteLine(ex.ToString());
-                
+                Console.WriteLine(ex.ToString());
             }
             return bsEnterpriseDetails;
         }
@@ -99,13 +88,13 @@ namespace Infrastructure.ServicesImplementation
             try
             {
                 string enterprise_id, office_id, extref, jobprofile_info;
-                var entDetails = getEnterpriseDetails(customer.Customer.VatNumber, customer.Customer.Address.CountryCode,  "1");
-                if (entDetails.enterprise!=null)
+                var entDetails = getEnterpriseDetails(customer.Customer.VatNumber, customer.Customer.Address.CountryCode, "1");
+                if (entDetails.enterprise != null)
                 {
                     enterprise_id = entDetails.enterprise.enterprise_id;
                     office_id = entDetails.enterprise.office_id;
-                    extref = entDetails.enterprise.extref == "" ? "null" : entDetails.enterprise.extref; 
-                    jobprofile_info = entDetails.enterprise.jobprofile_info ==""? "null" : entDetails.enterprise.jobprofile_info;
+                    extref = entDetails.enterprise.extref == "" ? "null" : entDetails.enterprise.extref;
+                    jobprofile_info = entDetails.enterprise.jobprofile_info == "" ? "null" : entDetails.enterprise.jobprofile_info;
                 }
                 else
                 {
@@ -122,26 +111,20 @@ namespace Infrastructure.ServicesImplementation
                 request.AddHeader("Postman-Token", "27d48774-e4f7-472f-8a26-0156f9cc5ee5");
                 request.AddHeader("Cache-Control", "no-cache");
                 request.AddHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-                request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_access_token\"\r\n\r\n" + personAPIAccessToken + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_version\"\r\n\r\n" + personAPIVersion + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"enterprise\"\r\n\r\n{\n\"enterprise_id\" : " + enterprise_id + ",\n\"search_name\" : \"" + customer.Customer.Name + "\",\n\"gen_name\" : \"" + customer.Customer.Name + "\",\n\"office_id\" : " + office_id + ",\n\"vatnumber\" : \"" +  customer.Customer.VatNumber + "\",\n\"vatcountry_iso\" : \"" + country_iso + "\",\n\"street\" : \"" + customer.Customer.Address.Street + "\",\n\"street_nr\" : \"" + customer.Customer.Address.StreetNumber + "\",\n\"postal_code\" : " + customer.Customer.Address.PostalCode + ",\n\"city\" : \"" + customer.Customer.Address.City + "\",\n\"country_iso\" : \"" + country_iso + "\",\n\"extref\" : \"" + extref + "\",\n\"jobprofile_info\":\"" + jobprofile_info + "\"\n} \n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
+                request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_access_token\"\r\n\r\n" + personAPIAccessToken + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"api_version\"\r\n\r\n" + personAPIVersion + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"enterprise\"\r\n\r\n{\n\"enterprise_id\" : " + enterprise_id + ",\n\"search_name\" : \"" + customer.Customer.Name + "\",\n\"gen_name\" : \"" + customer.Customer.Name + "\",\n\"office_id\" : " + office_id + ",\n\"vatnumber\" : \"" + customer.Customer.VatNumber + "\",\n\"vatcountry_iso\" : \"" + country_iso + "\",\n\"street\" : \"" + customer.Customer.Address.Street + "\",\n\"street_nr\" : \"" + customer.Customer.Address.StreetNumber + "\",\n\"postal_code\" : " + customer.Customer.Address.PostalCode + ",\n\"city\" : \"" + customer.Customer.Address.City + "\",\n\"country_iso\" : \"" + country_iso + "\",\n\"extref\" : \"" + extref + "\",\n\"jobprofile_info\":\"" + jobprofile_info + "\"\n} \n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", ParameterType.RequestBody);
                 response = client.Execute(request);
 
                 var Result = response.Content;
-                JObject jObj = JObject.Parse(Result); 
-                int entId = int.Parse(jObj["enterprise_id"].ToString());                
+                JObject jObj = JObject.Parse(Result);
+                int entId = int.Parse(jObj["enterprise_id"].ToString());
 
                 return entId;
             }
             catch (Exception ex)
-            {               
+            {
                 Trace.TraceError(ex.Message);
                 return 0;
             }
-
-            
         }
-
-
     }
-   
 }
-

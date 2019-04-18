@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DpsApis.ViewModels
 {
-   
     public class CustomerFromOneVM
     {
         public int userid { get; set; }
@@ -18,6 +13,7 @@ namespace DpsApis.ViewModels
     {
         [Required]
         public string vatnumber { get; set; }
+
         public bool checkcheck { get; set; }
         public int creditlimt { get; set; }
         public string customername { get; set; }
@@ -46,5 +42,4 @@ namespace DpsApis.ViewModels
         public string telephone { get; set; }
         public bool createAsUser { get; set; }
     }
-
 }

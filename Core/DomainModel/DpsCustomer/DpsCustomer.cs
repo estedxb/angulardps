@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Threading.Tasks;
-using BoemmValueObjects;
+﻿using BoemmValueObjects;
 using Core.RepositoryInterface.IDpsCustomer;
-using Microsoft.WindowsAzure.Storage.Table;
+using Core.ServicesInterface;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.DomainModel.DpsCustomer
 {
     public class DpsCustomer
     {
-
         public Customer Customer { get; set; }
         public Email InvoiceEmail { get; set; }
         public Email ContractsEmail { get; set; }
@@ -19,13 +16,13 @@ namespace Core.DomainModel.DpsCustomer
         public List<StatuteSettings> StatuteSettings { get; set; }
         public InvoiceSettings invoiceSettings { get; set; }
         public Contact Contact { get; set; }
-
+        public bool ActivateContactAsUser { get; set; }
 
         /// <summary>
         /// Constructor, Vat Number is required.
         /// </summary>
         /// <param name="VatNumber">Vat Number</param>
-        /// 
+        ///
 
         public DpsCustomer()
         {
@@ -41,7 +38,7 @@ namespace Core.DomainModel.DpsCustomer
         /// </summary>
         /// <param name="iDpsCustomer"></param>
         /// <returns></returns>
-        public async Task<bool> CreateNewCustomerAsync(IDpsCustomer iDpsCustomer)
+        public async Task<bool> CreateNewCustomerAsync(IDpsCustomer iDpsCustomer, IBoemmApi iboemmApi)
         {
             try
             {
@@ -57,18 +54,26 @@ namespace Core.DomainModel.DpsCustomer
                     {
                         return false;
                     }
+
+                    var boemmCustomer = await iboemmApi.AddOrUpdateNewCustomerAsync(this.Customer);
+                    if (boemmCustomer != null)
+                    {
+                        // update DpsCustomer
+                        this.Customer = boemmCustomer;
+                        var Updated = await iDpsCustomer.UpdateCustomerAsync(this);
+                        if (!Updated)
+                        {
+                            // create a job or an indeication that this customer isn't updated to match boemm DB . but we have customer alredy.
+                        }
+                    }
                     return true;
                 }
-
             }
             catch (Exception e)
             {
-
                 throw;
             }
         }
-
-
 
         public async Task<List<Tuple<string, string, string>>> GetCustomerVatAndNameAsync(IDpsCustomer idpsCustomer)
         {
@@ -81,21 +86,50 @@ namespace Core.DomainModel.DpsCustomer
             return Model;
         }
 
-
         public async Task<List<DpsCustomer>> GetAllCustomersAsync(IDpsCustomer idpsCustomer)
         {
             return await idpsCustomer.GetAllCustomersAsync();
         }
 
+        public async Task<DpsCustomer> GetCustomerByVatNumberAsync(string Vat, IDpsCustomer idpsCustomer, IBoemmApi iboemmApi)
+        {
+            var localDpsCustomer = await idpsCustomer.GetCustomerByVatNumberAsync(Vat);
+            if (localDpsCustomer != null)
+            {
+                return localDpsCustomer;
+            }
+            else
+            {
+                var BoemmCustomer = await iboemmApi.GetBoemmCustomerByVatNumberAsync(Vat);
+                if (BoemmCustomer != null)
+                {
+                    DpsCustomer dpsCustomer = new DpsCustomer();
+                    dpsCustomer.Customer = BoemmCustomer;
+                    return dpsCustomer;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         public async Task<DpsCustomer> GetCustomerByVatNumberAsync(string Vat, IDpsCustomer idpsCustomer)
         {
-            return await idpsCustomer.GetCustomerByVatNumberAsync(Vat);
+            var localDpsCustomer = await idpsCustomer.GetCustomerByVatNumberAsync(Vat);
+            if (localDpsCustomer != null)
+            {
+                return localDpsCustomer;
+            }
+            else
+            {
+                return null;
+            }
         }
 
+        public bool ValidateVat(string Vat)
+        {
+            return Vat.Length.Equals(12);
+        }
     }
-
-
-
-
 }

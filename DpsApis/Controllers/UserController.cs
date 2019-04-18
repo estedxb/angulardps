@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Core.DomainModel.DpsCustomerUser;
-using System.Diagnostics;
+﻿using Core.DomainModel.DpsCustomerUser;
 using Infrastructure.RepositoryImplementation;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DpsApis.Controllers
 {
@@ -14,7 +11,6 @@ namespace DpsApis.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        
         // GET: DpsApi/User/5
         [HttpGet("{CustomerVatNumber}")]
         public async Task<ActionResult> Get(string CustomerVatNumber)
@@ -24,7 +20,7 @@ namespace DpsApis.Controllers
                 RIUser iUser = new RIUser();
                 var user = await iUser.GetUserByCustomerVatNumberAsync(CustomerVatNumber);
 
-                if (user!=null)
+                if (user != null)
                 {
                     return Ok(user);
                 }
@@ -32,15 +28,12 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return StatusCode(500);
-
             }
-            
         }
 
         // POST: DpsApi/User/Create
@@ -50,7 +43,6 @@ namespace DpsApis.Controllers
         {
             try
             {
-               
                 var Saved = await model.CreateNewUser(new RIUser());
                 if (Saved)
                 {
@@ -60,13 +52,11 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return StatusCode(500);
-
             }
         }
 
@@ -77,7 +67,6 @@ namespace DpsApis.Controllers
         {
             try
             {
-
                 var Saved = await model.UpdateUser(new RIUser());
                 if (Saved)
                 {
@@ -87,15 +76,13 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return StatusCode(500);
-
             }
-        }      
+        }
 
         // POST: DpsApi/User/Archive
         [HttpPut]
@@ -115,13 +102,11 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return StatusCode(500);
-
             }
         }
 
@@ -143,16 +128,12 @@ namespace DpsApis.Controllers
                 {
                     return BadRequest();
                 }
-
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 return StatusCode(500);
-
             }
         }
     }
-
- 
 }

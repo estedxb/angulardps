@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
+﻿using System.Configuration;
 
 namespace Infrastructure.Support
 {
@@ -9,7 +6,6 @@ namespace Infrastructure.Support
     {
         public static string AzureStorageTableConnctionString()
         {
-
             var Conn = System.Configuration.ConfigurationManager.AppSettings["AzureStorageTableConnctionString"];
 
             if (string.IsNullOrEmpty(Conn) || string.IsNullOrWhiteSpace(Conn))
@@ -19,7 +15,6 @@ namespace Infrastructure.Support
             }
 
             return Conn;
-
         }
 
         internal static string BSApiPersonUrl()
@@ -37,7 +32,7 @@ namespace Infrastructure.Support
         internal static string BSApiPersonVerson()
         {
             var verson = ConfigurationManager.AppSettings["BSApiPersonVerson"];
-            
+
             if (string.IsNullOrEmpty(verson) || string.IsNullOrWhiteSpace(verson))
 
             {
@@ -59,8 +54,18 @@ namespace Infrastructure.Support
 
             return url;
         }
-        
+
+        internal static string GetBoemApiBaseUrl()
+        {
+            var url = ConfigurationManager.AppSettings["BoemApiBaseUrl"];
+
+            if (string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url))
+
+            {
+                url = "https://boemmapidev.azurewebsites.net";
+            }
+
+            return url;
+        }
     }
-
-
 }

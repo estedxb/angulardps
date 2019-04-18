@@ -1,8 +1,6 @@
 ﻿using BoemmValueObjects;
 using Core.RepositoryInterface.IDpsCustomerUser;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.DomainModel.DpsCustomerUser
@@ -11,16 +9,13 @@ namespace Core.DomainModel.DpsCustomerUser
     {
         public string CustomerVatNumber { get; set; }
         public User User { get; set; }
-        public string UserRole  { get; set; }
+        public string UserRole { get; set; }
         public bool IsEnabled { get; set; }
         public bool IsArchived { get; set; }
-        
-
 
         public DpsUser()
         {
         }
-
 
         /// <summary>
         /// Create new customer user based on the current class instance. Return True if Customer User Created.
@@ -53,7 +48,7 @@ namespace Core.DomainModel.DpsCustomerUser
         {
             try
             {
-                string customerId = await iDpsUser.UpdateUserAsync( this);
+                string customerId = await iDpsUser.UpdateUserAsync(this);
                 if (string.IsNullOrEmpty(customerId) || string.IsNullOrWhiteSpace(customerId))
                 {
                     return false;
@@ -65,7 +60,5 @@ namespace Core.DomainModel.DpsCustomerUser
                 throw;
             }
         }
-
-       
     }
 }

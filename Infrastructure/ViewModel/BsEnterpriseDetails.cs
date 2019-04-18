@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Infrastructure.ServicesImplementation
+﻿namespace Infrastructure.ServicesImplementation
 {
     public class BsEnterpriseDetails
     {
@@ -78,5 +74,4 @@ namespace Infrastructure.ServicesImplementation
     {
         public string jobdomain_id { get; set; }
     }
-
 }

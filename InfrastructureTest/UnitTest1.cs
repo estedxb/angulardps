@@ -4,7 +4,6 @@ using Infrastructure.ServicesImplementation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace Tests
 {
@@ -14,7 +13,6 @@ namespace Tests
         public void Setup()
         {
         }
-
 
         [Test]
         public void AddCustomerToBSTest()
@@ -35,8 +33,6 @@ namespace Tests
             customer.VCACertification = new VCACertification { Cerified = false };
             customer.CreditCheck = new CreditCheck { Creditcheck = false, CreditLimit = 10, DateChecked = DateTime.Now };
             Model.Customer = customer;
-
-
 
             // invoice setting ...
             var OtherAllowanceList = new List<OtherAllowance>();
@@ -61,8 +57,7 @@ namespace Tests
                 SicknessInvoiced = true
             };
 
-
-            // contact 
+            // contact
             Model.Contact = new Contact
             {
                 Email = new Email { EmailAddress = "Contact@customerdoain.com" },
@@ -75,7 +70,6 @@ namespace Tests
                 Postion = "Postion"
             };
 
-
             Model.StatuteSettings = new List<StatuteSettings>();
             Model.StatuteSettings.Add(new StatuteSettings
             {
@@ -84,7 +78,6 @@ namespace Tests
                 ParitairCommitee = new BOEMMParitairCommitee { Name = "BOEMMParitairCommitee Name", Number = "251465463sd" },
                 Statute = new Statute { Name = "Statute Name" }
             });
-            
 
             addEnterprise.AddCustomerToBS(Model);
         }

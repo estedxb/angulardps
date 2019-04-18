@@ -4,11 +4,10 @@ using Infrastructure.DbModel;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.RepositoryImplementation
 {
@@ -20,7 +19,7 @@ namespace Infrastructure.RepositoryImplementation
             {
                 DbUser dbDpsUser = new DbUser();
 
-                dbDpsUser.RowKey =  dpsUser.User.UserName;
+                dbDpsUser.RowKey = dpsUser.User.UserName;
                 dbDpsUser.PartitionKey = dpsUser.CustomerVatNumber;
                 dbDpsUser.DpsUser = JsonConvert.SerializeObject(dpsUser);
 
@@ -46,7 +45,6 @@ namespace Infrastructure.RepositoryImplementation
                 var tableClient = cloudStorageAccount.CreateCloudTableClient();
                 var table = tableClient.GetTableReference("user");
 
-
                 TableQuery<DbUser> query = new TableQuery<DbUser>().Where(
                     TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, VatNumber)).Take(1);
                 var Recored = await table.ExecuteQuerySegmentedAsync(query, null);
@@ -61,7 +59,7 @@ namespace Infrastructure.RepositoryImplementation
             }
         }
 
-        public async Task<string> UpdateUserAsync( DpsUser dpsUser)
+        public async Task<string> UpdateUserAsync(DpsUser dpsUser)
         {
             try
             {
@@ -70,7 +68,6 @@ namespace Infrastructure.RepositoryImplementation
 
                 var tableClient = cloudStorageAccount.CreateCloudTableClient();
                 var table = tableClient.GetTableReference("user");
-
 
                 TableOperation tableOperation = TableOperation.InsertOrReplace(dbDpsUser);
                 await table.ExecuteAsync(tableOperation);
@@ -82,7 +79,6 @@ namespace Infrastructure.RepositoryImplementation
                 Trace.TraceError(e.Message);
                 throw;
             }
-            
         }
 
         public async Task<DpsUser> IsUserArchivedAsync(string VatNumber, bool isArchived)
@@ -91,7 +87,6 @@ namespace Infrastructure.RepositoryImplementation
             {
                 var tableClient = cloudStorageAccount.CreateCloudTableClient();
                 var table = tableClient.GetTableReference("user");
-
 
                 TableQuery<DbUser> query = new TableQuery<DbUser>().Where(
                     TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, VatNumber)).Take(1);
@@ -125,13 +120,12 @@ namespace Infrastructure.RepositoryImplementation
                 var tableClient = cloudStorageAccount.CreateCloudTableClient();
                 var table = tableClient.GetTableReference("user");
 
-
                 TableQuery<DbUser> query = new TableQuery<DbUser>().Where(
                     TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, VatNumber)).Take(1);
                 var Recored = await table.ExecuteQuerySegmentedAsync(query, null);
 
                 var User = JsonConvert.DeserializeObject<DpsUser>(Recored.Single().DpsUser);
-                User.IsEnabled = isEnabled;                
+                User.IsEnabled = isEnabled;
 
                 DbUser dbDpsUser = new DbUser();
                 dbDpsUser.RowKey = User.User.UserName;

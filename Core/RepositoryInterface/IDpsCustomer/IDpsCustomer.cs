@@ -20,6 +20,7 @@ namespace Core.RepositoryInterface.IDpsCustomer
         /// <returns></returns>
         Task<string> AddNewCustomerAsync(DpsCustomer dpsCustomer);
 
+        Task<bool> UpdateCustomerAsync(DpsCustomer dpsCustomer);
 
         Task<List<DpsCustomer>> GetAllCustomersAsync();
     }
