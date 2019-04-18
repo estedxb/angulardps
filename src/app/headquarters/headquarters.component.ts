@@ -5,6 +5,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
          PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
          LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
          InvoiceSettings, Language, Contact } from '../shared/models';
+import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 
 @Component({
 selector: 'app-headquarters',
@@ -15,9 +16,12 @@ styleUrls: ['./headquarters.component.css']
 export class HeadquartersComponent implements OnInit {
 
   public disabled;
+  public ErrorResponseMessage;
 
   HQdata:any;
   HQForm: FormGroup;
+  getCustomersByvatNumberResponse: any;
+  getCustomersByvatNumberErrorMessage: string;
 
   dpsCustomer:DPSCustomer;
   customer: Customer;
@@ -48,6 +52,7 @@ export class HeadquartersComponent implements OnInit {
   validated:Boolean;
 
   numberPattern:string;
+  vatNumber:string;
 
   enable:boolean = true;
   change:boolean = false;
@@ -55,47 +60,6 @@ export class HeadquartersComponent implements OnInit {
   changeEvent: MouseEvent;
   _isDisabled:boolean = true;
 
-  constructor(private formBuilder:FormBuilder, private customerService: CustomersService) {
-          
-   }
-
-   onChange(value: boolean) {
-    this.change = value;
-
-    if(this.change === true)
-      this.HQForm.get('creditLimit').enable();
-    else
-      this.HQForm.get('creditLimit').disable();
-
-    console.log("this.change="+this.change);
-  }
-
-  onChangeEvent(event: MouseEvent) {
-    console.log(event, event.toString(), JSON.stringify(event));
-    this.changeEvent = event;
-  }
-
-  onValueChange(value: boolean) {
-    this.valueChange = value;
-    console.log("valuechange="+this.valueChange);
-  }
-
-  set isDisabled(value: boolean) {
-    this._isDisabled = value;
-    if(value) {
-     this.HQForm.controls['creditLimit'].disable();
-    } else {
-       this.HQForm.controls['creditLimit'].enable();
-     }
-   }
-
-  get toggleValue() {
-     return this.change;
-  }
-
-  // set creditLimit() {
-
-  // }
 
   ngOnInit() {
 
@@ -124,6 +88,108 @@ export class HeadquartersComponent implements OnInit {
     this.checkValidations();  //check validations
    
   }
+
+  constructor(private formBuilder:FormBuilder, private customerService: CustomersService) {
+          
+   }
+
+   creditLimitApi() {
+
+    this.vatNumber = this.HQForm.get('vatNumber').value;
+
+    if(this.HQForm.get('vatNumber').valid === true)    
+       this.getCustomerByVatNumber(this.vatNumber);
+
+   }
+
+    // response Codes: 
+    // 400 vat number isn't valid 
+    // 204 no record not allowed to create customer
+    // 200 allow to create customer
+    // 409 Customer already in the system dont allow to create new customer
+
+   getCustomerByVatNumber(vatNumber:string) {
+
+    let response:DPSCustomer;
+
+    this.customerService.getCustomersByVatNumber(vatNumber)
+    .subscribe(data => {
+      response = data;
+      console.log(response);
+
+      this.parseData(response);
+    },error => this.handleError(error));
+
+   }
+
+   handleError(errorMessage:HttpErrorResponse) {
+
+    if(errorMessage.status === 400)    
+      this.ErrorResponseMessage = "Vat Number is not in Correct Format";
+    if(errorMessage.status === 204)    
+      this.ErrorResponseMessage = "No record in our system";      
+    if(errorMessage.status === 409)    
+      this.ErrorResponseMessage = "Customer with Vatnumber already exists";      
+
+   }
+
+   parseData(response:DPSCustomer){
+
+    let creditCheckboolean:boolean = response.customer.creditCheck.creditcheck;
+    let creditCheckLimit:number = response.customer.creditCheck.creditLimit;
+
+    console.log("creditchekc="+creditCheckboolean);
+      
+    if(creditCheckboolean === true)
+      this.creditLimit(""+creditCheckLimit);
+    else
+    {
+      this.creditLimit(""+creditCheckLimit);
+    }
+
+   }
+
+   onChange(value: boolean) {
+      this.change = value;
+    
+      this.HQForm.get('creditLimit').disable();
+
+      if(this.change === true)
+        this.creditLimit("$ 3004");
+      else
+        this.creditLimit('');
+
+    console.log("this.change="+this.change);
+  }
+
+  onChangeEvent(event: MouseEvent) {
+    console.log(event, event.toString(), JSON.stringify(event));
+    this.changeEvent = event;
+  }
+
+  onValueChange(value: boolean) {
+    this.valueChange = value;
+    console.log("valuechange="+this.valueChange);
+  }
+
+  set isDisabled(value: boolean) {
+    this._isDisabled = value;
+    if(value) {
+     this.HQForm.controls['creditLimit'].disable();
+    } else {
+       this.HQForm.controls['creditLimit'].enable();
+     }
+   }
+
+  get toggleValue() {
+     return this.change;
+  }
+
+  creditLimit(value:String) {
+    this.HQForm.controls['creditLimit'].setValue(value);
+  }
+
+
 
   
 

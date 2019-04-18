@@ -31,13 +31,14 @@
 
               <div class="col-sm-5 inputWithImg">
                 <label class="titleBold"> Taal: </label>
-                <input formControlName="language" class="form-control" name="language" type="text" required/>
-                <div class="form-control-feedback" *ngIf="CTForm.controls.language.invalid && (CTForm.controls.language.dirty || CTForm.controls.language.touched) else bnewvalid"> 
+                <app-languages></app-languages>
+                <!-- <input formControlName="language" class="form-control" name="language" type="text" required/> -->
+                <!-- <div class="form-control-feedback" *ngIf="CTForm.controls.language.invalid && (CTForm.controls.language.dirty || CTForm.controls.language.touched) else bnewvalid"> 
                     <img src="../../assets/img/InvalidIcon.png" alt="" >
-                </div>
-                <ng-template #bnewvalid>
+                </div> -->
+                <!-- <ng-template #bnewvalid>
                     <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template>
+                </ng-template> -->
               </div>
 
           </div>
@@ -92,8 +93,8 @@
                             </ng-template>
                 </div>
 
-                <div class="col-sm-4">
-                        <label style="font-weight:bold;"> Als gebruiker activeren </label>
+                <div class="col-sm-4" style="padding-top:10px;">
+                        <label style="font-weight:bold;"> Als gebruiker activeren </label><br/>
                     <ui-switch size="small"> </ui-switch> &nbsp;
                 </div>
           </div>

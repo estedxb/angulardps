@@ -5,6 +5,7 @@ export const environment = {
   boemmAPI : 'https://boemmapidev.azurewebsites.net/api/',
   getCustomers: 'Customer',
   getCustomerLists: 'customer/GetAllCustomersPreviewJson',
+  getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getJointCommitee: '',
   getLegalForm: '',
   getCounteries: '',
