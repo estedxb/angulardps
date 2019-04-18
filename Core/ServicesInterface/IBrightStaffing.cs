@@ -15,8 +15,5 @@ namespace Core.ServicesInterface
         /// <returns></returns>
         int AddCustomerToBS(DpsCustomer customer);
 
-       
-
-       
     }
 }

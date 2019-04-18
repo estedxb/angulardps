@@ -70,13 +70,13 @@ namespace Core.DomainModel.DpsCustomer
 
 
 
-        public async Task<List<Tuple<string, string>>> GetCustomerVatAndNameAsync(IDpsCustomer idpsCustomer)
+        public async Task<List<Tuple<string, string, string>>> GetCustomerVatAndNameAsync(IDpsCustomer idpsCustomer)
         {
             var allCustomers = await idpsCustomer.GetAllCustomersAsync();
-            var Model = new List<Tuple<string, string>>();
+            var Model = new List<Tuple<string, string, string>>();
             foreach (var customer in allCustomers)
             {
-                Model.Add(new Tuple<string, string>(customer.Customer.VatNumber, customer.Customer.Name));
+                Model.Add(new Tuple<string, string, string>(customer.Customer.VatNumber, customer.Customer.Name, customer.Customer.OfficialName));
             }
             return Model;
         }
@@ -88,7 +88,7 @@ namespace Core.DomainModel.DpsCustomer
         }
 
 
-        public async Task<DpsCustomer> GetCustomerByVatNumberAsync(string Vat , IDpsCustomer idpsCustomer)
+        public async Task<DpsCustomer> GetCustomerByVatNumberAsync(string Vat, IDpsCustomer idpsCustomer)
         {
             return await idpsCustomer.GetCustomerByVatNumberAsync(Vat);
         }
