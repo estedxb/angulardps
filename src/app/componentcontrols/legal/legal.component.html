@@ -1,4 +1,4 @@
-<select id="ddl_legalform" class="legalform selectcomponent">
-    <option *ngFor="let legalform of legalformslang" [value]="legalform.FormName">{{legalform.FormName}}</option>
+<select [ngModel]="selectedIndex" id="ddl_legalform" name="ddl_legalform" (selectedIndex)="7" class="legalform selectcomponent" (change)="onChange($event)"  ng-dropdown required="required">
+    <option *ngFor="let data of datas let i= index" [attr.data-index]="i" [value]="i"  >{{data.FormName}}</option>
 </select>
 <div class="error">{{ errorMsg }}</div>

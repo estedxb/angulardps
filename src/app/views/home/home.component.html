@@ -20,22 +20,33 @@
   <div class="col col-sm-6" id="maincontentarea">
     <div class="scrollbar" id="maincontent">
       <div class="force-overflow">
+        <div id="from1" *ngIf="showFormIndex === 1">
         <div id="CustomerDetails" class="customerBox"> 
             <div class="row panelheader">
                 <div class="col col-sm-5 fright"><h4>Customer Details</h4><hr></div>
                 <div class="col col-sm-7"></div>
             </div>            
+            <app-legal></app-legal>  
+            <app-countries></app-countries> 
             <app-jointcommittee></app-jointcommittee>
-            <app-countries></app-countries>
-            <app-legal></app-legal>
+        </div>              
+        <app-statute></app-statute> 
+        
+      </div>
+      <div id="from2"  *ngIf="showFormIndex === 2">
+          <div id="Agreements" class="customerBox"> 
+              <div class="row panelheader">
+                  <div class="col col-sm-5 fright"><h4>Agreements</h4><hr></div>
+                  <div class="col col-sm-7"></div>
+              </div>            
+              <app-legal></app-legal>
+          </div>      
         </div>
-        <app-statute></app-statute>
-        <app-workcodes></app-workcodes>        
       </div>
     </div>
   </div>
   <div class="col col-sm-3">
-    <button class="btn" id="forward">Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
-    <button class="btn" id="backward" disabled><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>      
+    <button class="btn" id="forward" (click)="onFormwardClick()" >Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
+    <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>      
   </div>
 </div>

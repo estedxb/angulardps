@@ -82,13 +82,35 @@ div#CustomerContact{min-height: 220px;}
 
 .hideme { display: none;}
 #maincontentarea .inputWithIcon,.inputWithIcon {position: relative;}
+
 #maincontentarea .inputWithIcon i,.inputWithIcon i {
     position: absolute; left:2px; padding: 11px; color: #9A0C19;
 }
+
 #maincontentarea .inputWithIcon input[type=text], .inputWithIcon input[type=text],
 #maincontentarea .inputWithIcon input[type=password], .inputWithIcon input[type=password],
-#maincontentarea .inputWithIcon input, .inputWithIcon input[type=number] { padding-left:20px;}
-#maincontentarea .inputWithIcon input[type=text] +i, .inputWithIcon input[type=text] +i,
+#maincontentarea .inputWithIcon input, .inputWithIcon input[type=number] { padding-left:20px;padding-right:0px;}
+#maincontentarea .inputWithIcon input[type=text] + i, .inputWithIcon input[type=text] +i,
 #maincontentarea .inputWithIcon input[type=password] +i, .inputWithIcon input[type=password] +i,
-#maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=number] +i { padding-left:20px;}
+#maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=number] +i { padding-left:20px; padding-right:0px;}
 
+#maincontentarea .inputWithImg img,.inputWithImg img {
+    position: absolute; right:2px; padding: 7px 25px 7px 0px; color: #9A0C19; top: 35px;
+}
+#maincontentarea .inputWithImg div,.inputWithImg div {
+    position: absolute; right:2px; padding: 7px 25px 7px 0px; color: #9A0C19; top: 0px;
+}
+#maincontentarea input[type=text].form-control, #maincontentarea input[type=number].form-control,
+#maincontentarea .inputWithImg input[type=text], .inputWithImg input[type=text], #maincontentarea .inputWithImg input, .inputWithImg input[type=number] {
+    padding-right: 30px;
+    padding-left: 5px;
+}
+
+.form-control +img,.form-control +div { padding-right:30px; z-index: 10;}
+
+#maincontentarea #hqform span{
+    padding: 0px;
+}
+#maincontentarea #hqform .switch.switch-small{
+    margin: 0px;
+}
