@@ -38,21 +38,23 @@ import { HeadquartersComponent } from './headquarters/headquarters.component';
 })
 export class AppModule { }
 
-// import { MatAutocompleteModule,MatInputModule } from '@angular/material';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { CustomersComponent } from './customers/customers.component';
-// import { HomeComponent } from './home/home.component';
-// import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
-// import { CustomerselectionComponent } from './customerselection/customerselection.component';
-// import { LegalComponent } from './componentcontrols/legal/legal.component';
-// import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
-// import { CountriesComponent } from './componentcontrols/countries/countries.component';
-// import { StatuteComponent } from './componentcontrols/statute/statute.component';
-// import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
-// import { UiSwitchModule } from 'ngx-toggle-switch';
+/* import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomersComponent } from './customers/customers.component';
+import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
+import { CustomerselectionComponent } from './customerselection/customerselection.component';
+import { LegalComponent } from './componentcontrols/legal/legal.component';
+import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
+import { CountriesComponent } from './componentcontrols/countries/countries.component';
+import { StatuteComponent } from './componentcontrols/statute/statute.component';
+import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
+import { UiSwitchModule } from 'ngx-toggle-switch';
 
-// MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule, NgbModule ,
-/*
+import { MatAutocompleteModule,MatInputModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-  */
+MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule,
+NgbModule ,
+
+
+*/
