@@ -102,7 +102,7 @@ export class HeadquartersComponent implements OnInit {
       creditCheck:new FormControl(),
       legalform:new FormControl('',Validators.required),
       creditLimit:new FormControl(),
-      street:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
+      street:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]),
       streetnumber:new FormControl('',[Validators.required,Validators.pattern("^[0-9]+$")]),
       bus:new FormControl('',Validators.pattern("^[0-9]+$")),
       city:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
