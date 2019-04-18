@@ -12,9 +12,10 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { ContactpersonComponent } from './contactperson/contactperson.component';
 import { HeadquartersComponent } from './headquarters/headquarters.component';
+import { LanguagesComponent } from './componentcontrols/languages/languages.component';
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 @NgModule({
-  declarations: [AppComponent, routingComponents, ContactpersonComponent, HeadquartersComponent],
+  declarations: [AppComponent, routingComponents, ContactpersonComponent, HeadquartersComponent, LanguagesComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

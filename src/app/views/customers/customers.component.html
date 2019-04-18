@@ -1,6 +1,9 @@
 <div class="row" style="height: 1000px; overflow-y:auto; ">    
-    <div class="error">{{errorMsg}}</div>
-    <div class="col-sm-9" *ngFor="let customer of dpscustomers">
+    <div class="col-sm-12">
+        <div class="error">{{errorMsg}}</div>
+        <app-languages></app-languages>
+    </div>
+    <div class="col-sm-12" *ngFor="let customer of dpscustomers">
         <h3 class="panel-title">{{ customer.customer.name }}</h3>  
         <div class="col-sm-3">{{ customer.customer.vatNumber }}</div>      
     </div>    

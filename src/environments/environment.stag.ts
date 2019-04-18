@@ -10,5 +10,6 @@ export const environment = {
   getCounteries: '',
   getParitairCommitee: 'ParitairCommitee',
   getStatute: '',
-  getCodes: 'code'
+  getCodes: 'code',
+  getLanguages: ''
 };
