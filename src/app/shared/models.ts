@@ -22,7 +22,7 @@ export class Customer {
 
 export class EmailAddress { emailAddress: string; }
 
-export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; }
+export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: string}
 
 export class PhoneNumber { number: string; }
 
