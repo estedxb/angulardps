@@ -110,9 +110,9 @@ div#CustomerContact{min-height: 220px;}
 
 .form-control +img,.form-control +div { padding-right:30px; z-index: 10;}
 
-#maincontentarea #hqform span{
+#maincontentarea #hqform span, #maincontentarea #CTForm span{
     padding: 0px;
 }
-#maincontentarea #hqform .switch.switch-small{
+#maincontentarea #hqform .switch.switch-small, #maincontentarea #CTForm .switch.switch-small{
     margin: 0px;
 }
