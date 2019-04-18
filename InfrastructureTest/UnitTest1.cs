@@ -23,7 +23,7 @@ namespace Tests
 
             // Customer
             Customer customer = new Customer();
-            customer.VatNumber = "VatNumber";  //0843418760
+            customer.VatNumber = "VatNumber23";  //0843418760
             customer.Name = "B-Bright bvba";
             customer.OfficialName = "B-Bright bvba";
             customer.LegalForm = "Test LehalForm";
@@ -79,7 +79,11 @@ namespace Tests
                 Statute = new Statute { Name = "Statute Name" }
             });
 
-            addEnterprise.AddCustomerToBS(Model);
+           int entId = addEnterprise.AddCustomerToBS(Model);
+
+            //Assert
+            Assert.IsInstanceOf(typeof(int), entId);
+           
         }
     }
 }
