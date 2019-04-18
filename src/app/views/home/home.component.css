@@ -4,7 +4,7 @@
 #backward {width: 135px;text-align: right;}
 #forward img{float: right;}
 #backward img{float: left;}
-.scrollbar{height: 600px; overflow-y:scroll;padding-right: 20px;}
+.scrollbar{height: 900px; overflow-y:scroll;padding-right: 20px; overflow-x: hidden}
 #formState{font-weight: bold;font-size: 12px;}
 .force-overflow{min-height: 1000px;}
 #formState{margin-top: 50px ;margin-bottom: 50px;}

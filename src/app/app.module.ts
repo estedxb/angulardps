@@ -4,14 +4,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './views/headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { ContactpersonComponent } from './contactperson/contactperson.component';
+import { HeadquartersComponent } from './headquarters/headquarters.component';
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, ContactpersonComponent, HeadquartersComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,6 +29,8 @@ import { UiSwitchModule } from 'ngx-ui-switch';
       defaultBoColor : '#000',
       defaultBgColor : '#fff'
     }),
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],
