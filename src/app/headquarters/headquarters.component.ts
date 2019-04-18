@@ -93,6 +93,10 @@ export class HeadquartersComponent implements OnInit {
      return this.change;
   }
 
+  // set creditLimit() {
+
+  // }
+
   ngOnInit() {
 
     this.HQForm = new FormGroup({
