@@ -58,8 +58,8 @@
           </div>
         
           <div class="col-sm-3 inputWithImg">
-              <label class="titleBold"> LegalForm: </label>
-              <input formControlName="legalform" class="form-control" name="legalform" type="text" required/>             
+              <label class="titleBold"> LegalForm: </label> 
+              <app-legal></app-legal>          
           </div>
       </div>
   
@@ -123,7 +123,7 @@
         
           <div class="col-sm-3">
               <label class="titleBold"> Land: </label>
-              <input formControlName="country" class="form-control" name="country"  />           
+              <app-countries></app-countries>           
           </div>
       </div>
 
@@ -141,7 +141,7 @@
                 
           <div class="col-sm-7 inputWithImg">
                   <label class="titleBold"> Algemeen E-mail address: </label>
-                  <input type="email" formControlName="generalEmail" class="form-control" name="generalEmail" ngModel required/>
+                  <input type="email" formControlName="generalEmail" class="form-control" name="generalEmail" required/>
                   <div class="form-control-feedback" *ngIf="HQForm.controls.generalEmail.invalid && (HQForm.controls.generalEmail.dirty || HQForm.controls.generalEmail.touched) else validj"> 
                       <img src="../../assets/img/InvalidIcon.png" alt="" >
                   </div>

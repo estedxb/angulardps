@@ -29,8 +29,11 @@ export class CountriesComponent implements OnInit {
   constructor(private countriesService: CountriesService) { }
 
   ngOnInit() {
-    this.resetToInitValue();
-    this.countriesService.getCountriesList().subscribe(data => this.datas = data , error => this.errorMsg = error);
+    
+    this.countriesService.getCountriesList().subscribe(countries =>{
+      this.datas = countries;
+      console.log('Countries Forms Data : '); console.log(this.datas); 
+    } , error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 

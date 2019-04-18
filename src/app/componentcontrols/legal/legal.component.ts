@@ -34,6 +34,7 @@ export class LegalComponent implements OnInit  {
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
       this.datas = this.maindatas[this.currentlanguage];
+      console.log('Legal Forms Data : '); console.log(this.datas); 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
