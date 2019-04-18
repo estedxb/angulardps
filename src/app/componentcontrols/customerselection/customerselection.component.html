@@ -1,6 +1,6 @@
 <ng-container *ngIf="show">
     <div class="dialog">
-        <div class="compHeader"><a href="#" (click)="closeMe()" class="close-thik"></a></div>
+        <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>
         <div class="input-group ng-autocomplete">
             <span class="input-group-btn"><button type="submit" class="search-btn" data-target="#search-form" name="q"  ><i class="fa fa-search"></i></button></span>    
             <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /> <a routerLink="../home" routerLinkActive="active" (click)="closeMe()" class="close"><img src="../../assets/svg/Add.svg" style="width: 30px;height: 30px;margin: 1px 8px 1px 8px;"></a>           
