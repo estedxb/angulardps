@@ -9,7 +9,7 @@ import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './views/headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
-
+// import { UiSwitchModule } from 'ngx-toggle-switch';
 @NgModule({
   declarations: [AppComponent, routingComponents],
   imports: [
@@ -48,3 +48,6 @@ export class AppModule { }
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
 // MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule, NgbModule ,
+/*
+
+  */

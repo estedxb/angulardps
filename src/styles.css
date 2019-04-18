@@ -12,7 +12,7 @@ html, body { height: 100%; }
 .error{color: red;}
 #maincontentarea span { font-size: 15px;font-weight: normal; padding: 5px 5px 5px 7px;  }
 #maincontentarea input[type=text], #maincontentarea input[type=password], #maincontentarea input[type=number] {
-    width: 100%; font-size: 15px;font-weight: normal; padding: 3px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619;
+    width: 98%; font-size: 15px;font-weight: normal; padding: 3px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619;
 }
 #maincontentarea input:hover, #maincontentarea input:focus, #maincontentarea input::selection, #maincontentarea input::-webkit-keygen-select, #maincontentarea input::-moz-selection, #maincontentarea input::-moz-focusring{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
 .selectcomponent{ width: 100%; font-size: 15px;font-weight: normal; padding: 5px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619; }
@@ -52,14 +52,15 @@ div#CustomerContact{min-height: 220px;}
 .col{border-color: yellow;}
 .switch.switch-small{
     margin: 15px 5px 15px 5px;
-    height: 16px;
-    border-radius: 16px;
+    height: 19px;
+    border-radius: 19px;
+    min-width: 40px;
 }
 .switch.switch-small small{
     width: 14px;
     height: 14px;
-    margin: 2px;
-    right: calc(100% - 17px);
+    margin: 3px;
+    right: calc(100% - 19px);
 }
 .switch.checked small{
     right: 0px;
@@ -79,10 +80,15 @@ div#CustomerContact{min-height: 220px;}
     vertical-align: middle;
 }
 
-.hideme { display: block;}
-#maincontentarea .inputWithIcon, .inputWithIcon {position: relative;}
-#maincontentarea .inputWithIcon i, .inputWithIcon i {
+.hideme { display: none;}
+#maincontentarea .inputWithIcon,.inputWithIcon {position: relative;}
+#maincontentarea .inputWithIcon i,.inputWithIcon i {
     position: absolute; left:2px; padding: 11px; color: #9A0C19;
 }
-#maincontentarea .inputWithIcon input[type=text], #maincontentarea .inputWithIcon input,.inputWithIcon input[type=text], .inputWithIcon input[type=number] { padding-left:20px;}
-#maincontentarea .inputWithIcon input[type=text] +i, #maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=text] +i, .inputWithIcon input[type=number] +i { padding-left:20px;}
+#maincontentarea .inputWithIcon input[type=text], .inputWithIcon input[type=text],
+#maincontentarea .inputWithIcon input[type=password], .inputWithIcon input[type=password],
+#maincontentarea .inputWithIcon input, .inputWithIcon input[type=number] { padding-left:20px;}
+#maincontentarea .inputWithIcon input[type=text] +i, .inputWithIcon input[type=text] +i,
+#maincontentarea .inputWithIcon input[type=password] +i, .inputWithIcon input[type=password] +i,
+#maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=number] +i { padding-left:20px;}
+

@@ -27,12 +27,12 @@ export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecke
 export class PhoneNumber { number: string; }
 
 export class Address {
-    street?: string; streetNumber?: string; bus?: string; city?: string; postalCode?: string; country?: string; countryCode?: string; 
+    street?: string; streetNumber?: string; bus?: string; city?: string; postalCode?: string; country?: string; countryCode?: string;
 }
 
 export class VcaCertification { cerified: boolean; }
 
-export class ParitairCommitee { number: string; name: string; }
+export class ParitairCommitee { number: string; name: string; BrightStaffingCommitteeId?: string; type?: string; }
 
 export class LieuDaysAllowance { enabled: boolean; payed: boolean; }
 
@@ -45,7 +45,7 @@ export class OtherAllowance { codeId: string; amount: number; nominal?: boolean;
 export class MealVoucherSettings { totalWorth?: number; employerShare?: number; minimumHours?: number; }
 
 export class StatuteSetting {
-    statute: Statute; paritairCommitee?: ParitairCommitee; coefficient?: number; mealVoucherSettings?: MealVoucherSettings; 
+    statute: Statute; paritairCommitee?: ParitairCommitee; coefficient?: number; mealVoucherSettings?: MealVoucherSettings;
 }
 
 export class Contact {
@@ -73,14 +73,6 @@ export class CustomersList {
     item2: string;
     item3?: string;
 }
-
-export class JointCommittee {
-    BrightStaffingCommitteeId: string;
-    number: string;
-    name: string;
-    type: string;
-}
-
 export interface WorkCodes {
     CodeNumber: number;
     Description: string;
@@ -93,6 +85,9 @@ export interface WorkCodes {
 export class Statute {
     name: string;
     type?: string;
+    mealstatus?: boolean;
+    jointcommitee?: ParitairCommitee;
+
 }
 
 export class LegalForm {

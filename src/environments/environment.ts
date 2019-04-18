@@ -13,7 +13,7 @@ export const environment = {
   getLegalForm: '',
   getCounteries: '',
   getParitairCommitee: 'ParitairCommitee',
-  getStatute: 'Statute',
+  getStatute: '',
   getCodes: 'code'
 };
 

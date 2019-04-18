@@ -1,24 +1,26 @@
 <div class="error">{{ errorMsg }}</div>
-<div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox" *ngFor="let statute of statutes"> 
+<div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox" *ngFor="let statute of statutes; let i= index" [attr.data-index]="i"> 
     <div class="row panelheader">
         <div class="col col-sm-5 fright"><h4>{{ statute.name }}</h4><hr></div>
         <div class="col col-sm-7"></div>
     </div>            
     <div class="row">
-        <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee></app-jointcommittee></div>
-        <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input type="number" min="0" value="0" step=".01"></div>
+        <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee [id]="'jointcommittee_'+  statute.name.replace(' ','_')"></app-jointcommittee></div>
+        <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
     </div>
     <div class="row mealrow">
       <div class="col col-sm-12 ">
-        <ui-switch [(ngModel)]="enable" id="'meal_{{ statute.name.replace(' ','_') }}" (onChangeEvent)="onChangeEvent($event)"></ui-switch> <span>Maaltijdcheques</span>
+        <input id="meal_{{ statute.name.replace(' ','_') }}_status" type="hidden" value="{{isMealEnabled[this.i]}}" >
+        <ui-switch id="'meal_{{ statute.name.replace(' ','_') }}" (change)="onChange($event,this.i)" [(ngModel)]="isMealEnabled[this.i]" ></ui-switch>
+        <span>Maaltijdcheques</span>
       </div>
-    </div>
-    <div class="row hideme" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" >
+    </div>    
+    <div class="row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngIf="isMealEnabled[this.i]" >
       <div class="col col-sm-11">
         <div class="row">
-            <div class="col col-sm-4 inputWithIcon">Totale waarde<input type="number" id="txt_totalvalue" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
-            <div class="col col-sm-4 inputWithIcon">Wergeversdeel<input type="number" id="txt_sharesection" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
-            <div class="col col-sm-4">Minimum uren<input type="number" id="txt_minhours" min="0" value="0" step=".01"></div>
+            <div class="col col-sm-4 inputWithIcon">Totale waarde<input type="number" id="totalvalue_' + statute.name.replace(' ','_')"   onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4 inputWithIcon">Wergeversdeel<input type="number" id="sharesection_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4">Minimum uren <input type="number" id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
         </div>
     </div>
     <div class="col col-sm-1"></div>

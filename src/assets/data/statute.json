@@ -1,10 +1,11 @@
 [
-    {"name":"Arbeider","type":"Blue"},
-    {"name":"Jobstudent Arbeider","type":"Blue"},
-    {"name":"Flexijob Arbeider","type":"Blue"},
-    {"name":"Seizoensarbeider","type":"Blue"},
-    {"name":"Gelegenheidsarbeider horeca","type":"Blue"},
-    {"name":"Bediende","type":"White"},
-    {"name":"Jobstudent Bediende","type":"White"},
-    {"name":"Flexijob Bediende","type":"White"}
+    {"name":"Arbeider","type":"Blue", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Bediende","type":"White", "mealstatus": true, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Jobstudent Arbeider","type":"Blue", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Flexijob Arbeider","type":"Blue", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Seizoensarbeider","type":"Blue", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Gelegenheidsarbeider horeca","type":"Blue", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Jobstudent Bediende","type":"White", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"},
+    {"name":"Flexijob Bediende","type":"White", "mealstatus": false, "jointcommitee":"{&quot;BrightStaffingCommitteeId&quot;: &quot;2&quot; , &quot;number&quot;: &quot;101&quot;, &quot;name&quot;: &quot;nationale gemengde mijncommissie&quot;, &quot;type&quot;: &quot;blue&quot;}"}
 ]
+
