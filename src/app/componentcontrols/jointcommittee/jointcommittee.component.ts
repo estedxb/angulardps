@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
 //import { ParitairCommitee } from '../../shared/models';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
 // import { $ } from 'jquery';
@@ -10,6 +10,11 @@ import { JointcommitteeService } from '../../shared/jointcommittee.service';
 })
 
 export class JointcommitteeComponent implements OnInit {
+
+  @Input() public JCFormData;
+  @Output() public childEvent = new EventEmitter();
+ 
+
   public id = 'ddl_jointcommittee' ;
   public currentlanguage = 'nl';
   public errorMsg;
@@ -25,7 +30,13 @@ export class JointcommitteeComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
-  onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
+
+  onChange($event) { 
+    this.selectedIndex = $event.target.value;
+    this.childEvent.emit(this.value);
+    console.log(this.value);
+    return this.value; 
+  }
 
   constructor(private jointcommitteeService: JointcommitteeService) { }
 

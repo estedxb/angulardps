@@ -5,7 +5,7 @@
         <div class="col col-sm-7"></div>
     </div>            
     <div class="row">
-        <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee [id]="'jointcommittee_'+  statute.name.replace(' ','_')"></app-jointcommittee></div>
+        <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee (childEvent)="receiveJTdata($event,i)" [JCFormData]= "JCString" [id]="'jointcommittee_'+  statute.name.replace(' ','_')"></app-jointcommittee></div>
         <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
     </div>
     <div class="row mealrow">

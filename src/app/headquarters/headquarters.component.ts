@@ -64,6 +64,7 @@ export class HeadquartersComponent implements OnInit {
 
   numberPattern:string;
   vatNumber:string;
+  creditCheckLimit:number;
 
 
   enable:boolean = true;
@@ -181,18 +182,23 @@ export class HeadquartersComponent implements OnInit {
 
    }
 
+   creditLimit(value:number) {
+    this.HQForm.controls['creditLimit'].setValue(value);
+  }
+
+
    parseData(response:DPSCustomer){
 
     let creditCheckboolean:boolean = response.customer.creditCheck.creditcheck;
-    let creditCheckLimit:number = response.customer.creditCheck.creditLimit;
+     this.creditCheckLimit = response.customer.creditCheck.creditLimit;
 
     console.log("creditchekc="+creditCheckboolean);
       
     if(creditCheckboolean === true)
-      this.creditLimit(""+creditCheckLimit);
+      this.creditLimit(this.creditCheckLimit);
     else
     {
-      this.creditLimit(""+creditCheckLimit);
+      this.creditLimit(this.creditCheckLimit);
     }
 
    }
@@ -203,9 +209,9 @@ export class HeadquartersComponent implements OnInit {
       this.HQForm.get('creditLimit').disable();
 
       if(this.change === true)
-        this.creditLimit("$ 3004");
+        this.creditLimit(3004);
       else
-        this.creditLimit('');
+        this.creditLimit(0);
 
     console.log("this.change="+this.change);
   }
@@ -234,16 +240,12 @@ export class HeadquartersComponent implements OnInit {
      return this.change;
   }
 
-  creditLimit(value:String) {
-    this.HQForm.controls['creditLimit'].setValue(value);
-  }
-
   setCreditCheck() {
     var today = new Date();   
     this.creditCheck = new CreditCheck();
 
     // assigning credit check object
-    this.creditCheck.creditLimit = parseInt(this.HQForm.get('creditLimit').value,10);
+    this.creditCheck.creditLimit = this.creditCheckLimit;
     this.creditCheck.creditcheck = false;
     this.creditCheck.creditCheckPending = false;
     this.creditCheck.dateChecked = (today.getMonth()+1) + "/"+ today.getDay() + "/" + today.getFullYear();

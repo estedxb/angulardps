@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
 
   public HQdata:any;
   public CTdata:any;
+  public HQFormValid:boolean;
+  public CTFormValid:boolean;
 
   public showFormIndex = 1;
   constructor(private customerService:CustomersService) { }

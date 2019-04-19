@@ -88,7 +88,6 @@ export class Statute {
     type?: string;
     mealstatus?: boolean;
     jointcommitee?: ParitairCommitee;
-
 }
 
 export class LegalForm {

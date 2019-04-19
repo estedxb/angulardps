@@ -43,7 +43,7 @@ export class CustomersService {
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
+    this.createCustomerURL = "https://dpsapisdev.azurewebsites.net/api/Customer";
    return this.http.post<any>(this.createCustomerURL,customer, {
       headers: httpHeaders,
       observe: 'response'
