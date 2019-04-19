@@ -21,7 +21,6 @@ steps:
     npm install -g @angular/cli
     npm install
     npm i @types/node
-    npm i @rxjs/observable
     ng build --configuration=staging --output-path $(Build.ArtifactStagingDirectory)/dist
     ng build --prod --output-path $(Build.ArtifactStagingDirectory)/dist_prod
   displayName: 'npm install and build'
