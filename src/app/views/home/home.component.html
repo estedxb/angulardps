@@ -21,31 +21,30 @@
     <div class="scrollbar" id="maincontent">
       <div class="force-overflow">
         <div id="from1" *ngIf="showFormIndex === 1">
-        <div id="CustomerDetails" class="customerBox"> 
-             <div class="row panelheader">
-                <div class="col col-sm-5 fright"><h4>Hoofdzetel</h4><hr></div>
-                <div class="col col-sm-7"></div>
-            </div>            
-           <!-- <app-jointcommittee></app-jointcommittee>
-            <app-countries></app-countries>
-            <app-legal></app-legal> -->
+            <div id="CustomerDetails" class="customerBox"> 
+                <div class="row panelheader">
+                    <div class="col col-sm-5 fright"><h4>Hoofdzetel</h4><hr></div>
+                    <div class="col col-sm-7"></div>
+                </div>            
+              <!-- <app-jointcommittee></app-jointcommittee>
+                <app-countries></app-countries>
+                <app-legal></app-legal> -->
 
-            <app-headquarters></app-headquarters>
-        </div>
+                <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+            </div>
 
-        <div id="CustomerContact" class="customerBox">
-            <div class="row panelheader">
-                <div class="col col-sm-5 fright"><h4>Contactpersoon</h4><hr></div>
-                <div class="col col-sm-7"></div>
-            </div>            
-            <app-contactperson></app-contactperson>
-            
-        </div>
-
-        <!-- <app-statute></app-statute>
-        <app-workcodes></app-workcodes>         -->
-
-
+            <div id="CustomerContact" class="customerBox">
+                <div class="row panelheader">
+                    <div class="col col-sm-5 fright"><h4>Contactpersoon</h4><hr></div>
+                    <div class="col col-sm-7"></div>
+                </div>            
+                <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+                
+            </div>
+      </div>
+      <div id="from2" *ngIf="showFormIndex === 2">
+               <app-statute></app-statute>
+              <!-- <app-workcodes></app-workcodes> -->
       </div>
     </div>
   </div>

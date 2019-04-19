@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 // import { LegalForm, Forms } from '../../shared/models';
 import { LegalformService } from '../../shared/legalform.service';
 
@@ -14,28 +14,53 @@ export class LegalComponent implements OnInit  {
   public errorMsg;
   public maindatas: any = [];
   private datas: any = [];
+  public selectedString:string;
+
+  @Input() public legalFormData;
+  @Output() public childEvent = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
 
   set selectedValue(value: any) { this._selectedValue = value; }
+  
   get selectedValue(): any { return this._selectedValue; }
+  
   set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.datas[this.selectedIndex]; }
+  
   get selectedIndex(): number { return this._selectedIndex; }
+  
   set value(value: any) { this._value = value; }
+  
   get value(): any { return this._value; }
+  
   resetToInitValue() { this.value = this.selectedValue; }
+
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
-  onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
+  
+  onChange($event) { this.selectedIndex = $event.target.value; 
+
+    console.log("legalform selected="+this.value);
+    console.log(this.value);
+    console.log("legalform selected="+this.value.FormName);
+
+    this.selectedString = this.value.FormName;
+
+    this.childEvent.emit(this.value.FormName);    
+
+    return this.value; 
+  }
 
   constructor(private legalformService: LegalformService) { }
 
   ngOnInit() {
+
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
       this.datas = this.maindatas[this.currentlanguage];
       console.log('Legal Forms Data : '); console.log(this.datas); 
     }, error => this.errorMsg = error);
+
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 

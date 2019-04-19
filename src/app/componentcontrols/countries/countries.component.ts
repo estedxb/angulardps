@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output, Input, EventEmitter } from '@angular/core';
 //import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
 
@@ -9,10 +9,15 @@ import { CountriesService } from '../../shared/countries.service';
 })
 
 export class CountriesComponent implements OnInit {
+
+  @Input() public CountryFormData;
+  @Output() public childEvent = new EventEmitter();
+
   public id = 'ddl_legalform' ;
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
+  public selectedString:string;
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
 
@@ -24,7 +29,18 @@ export class CountriesComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
-  onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
+  onChange($event) { 
+    this.selectedIndex = $event.target.value; 
+    console.log("countries selected="+this.value);
+    console.log(this.value);
+    
+    // console.log( selected="+this.value.FormName);
+
+    this.selectedString = this.value;
+
+    this.childEvent.emit(this.value);    
+
+    return this.value; }
 
   constructor(private countriesService: CountriesService) { }
 

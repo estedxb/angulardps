@@ -9,12 +9,14 @@ export class CustomersService {
 
   private getCountriesListUrl = '';
   private getCustomersByVatNumberUrl = "";
+  private createCustomerURL = "";
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getCustomers !== '') {
       console.log('Data From Remote');
       this.getCountriesListUrl = environment.dpsAPI + environment.getCustomers;
       this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
+      this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
       console.log('Data From JSON');
       this.getCountriesListUrl = 'assets/data/customers.json';
@@ -34,6 +36,18 @@ export class CustomersService {
       const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber='+parameter).catch(this.errorHandler);
       console.log(result);
       return result;
+  }
+
+  public createCustomer(customer:any): Observable<any>
+  {
+    let httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+   return this.http.post<any>(this.createCustomerURL,customer, {
+      headers: httpHeaders,
+      observe: 'response'
+   });
   }
 
   errorHandler(error: HttpErrorResponse) { 

@@ -4,7 +4,9 @@
       </div> -->
 
       <form [formGroup]="HQForm" novalidate id="hqform">
-        <!-- <pre>{{ HQForm.value | json}}</pre> -->
+        <pre>{{ HQForm.value | json}}</pre>
+
+        <pre>{{ message }}</pre>
 
         <pre>{{ErrorResponseMessage}}</pre>
 
@@ -61,7 +63,7 @@
         
           <div class="col-sm-3 inputWithImg">
               <label class="titleBold"> LegalForm: </label> 
-              <app-legal></app-legal>          
+              <app-legal (childEvent)="receiveMessage($event)" [legalFormData]="legalString"></app-legal>          
           </div>
       </div>
   
@@ -103,7 +105,7 @@
       <div class="row" style="padding-bottom:10px;">
           <div class="col-sm-5 inputWithImg">
               <label class="titleBold"> Plaats: </label>
-              <input formControlName="city" class="form-control" name="city" type="text" required/>
+              <input formControlName="city"  class="form-control" name="city" type="text" required/>
               <div class="form-control-feedback" *ngIf="HQForm.controls.city.invalid && (HQForm.controls.city.dirty || HQForm.controls.city.touched) else valids"> 
                   <img src="../../assets/img/InvalidIcon.png" alt="" >
               </div>
@@ -114,7 +116,7 @@
         
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> postcode: </label>
-            <input formControlName="postalcode" class="form-control" name="postalcode" type="text" required/>
+            <input formControlName="postalcode"  class="form-control" name="postalcode" type="text" required/>
             <div class="form-control-feedback" *ngIf="HQForm.controls.postalcode.invalid && (HQForm.controls.postalcode.dirty || HQForm.controls.postalcode.touched) else validw"> 
                 <img src="../../assets/img/InvalidIcon.png" alt="" >
             </div>
@@ -125,14 +127,14 @@
         
           <div class="col-sm-3">
               <label class="titleBold"> Land: </label>
-              <app-countries></app-countries>           
+              <app-countries (childEvent)="receiveMessageCountry($event)" [CountryFormData]="countryString"></app-countries>           
           </div>
       </div>
 
       <div class="row" style="padding-bottom:10px;">
           <div class="col-sm-5 inputWithImg">
                      <label class="titleBold"> phonenumber: </label>
-                     <input formControlName="phonenumber" class="form-control" name="phonenumber" type="text" required/>
+                     <input formControlName="phonenumber"  class="form-control" name="phonenumber" type="text" required/>
                      <div class="form-control-feedback" *ngIf="HQForm.controls.phonenumber.invalid && (HQForm.controls.phonenumber.dirty || HQForm.controls.phonenumber.touched) else validf"> 
                          <img src="../../assets/img/InvalidIcon.png" alt="" >
                      </div>
@@ -143,7 +145,7 @@
                 
           <div class="col-sm-7 inputWithImg">
                   <label class="titleBold"> Algemeen E-mail address: </label>
-                  <input type="email" formControlName="generalEmail" class="form-control" name="generalEmail" required/>
+                  <input type="email"  formControlName="generalEmail" class="form-control" name="generalEmail" required/>
                   <div class="form-control-feedback" *ngIf="HQForm.controls.generalEmail.invalid && (HQForm.controls.generalEmail.dirty || HQForm.controls.generalEmail.touched) else validj"> 
                       <img src="../../assets/img/InvalidIcon.png" alt="" >
                   </div>
@@ -167,7 +169,7 @@
               
           <div class="col-sm-7 inputWithImg">
                     <label class="titleBold"> Contracten e-mail address: </label>
-                    <input type="email" (blur)="postData()" formControlName="contractsEmail" class="form-control" name="contractsEmail"  />
+                    <input type="email" (blur)="updateData()" formControlName="contractsEmail" class="form-control" name="contractsEmail"  />
                       <div class="form-control-feedback" *ngIf="HQForm.controls.contractsEmail.invalid && (HQForm.controls.contractsEmail.dirty || HQForm.controls.contractsEmail.touched) else validv"> 
                           <img src="../../assets/img/InvalidIcon.png" alt="" >
                       </div>

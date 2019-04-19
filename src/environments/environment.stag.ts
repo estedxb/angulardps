@@ -6,6 +6,7 @@ export const environment = {
   getCustomers: 'Customer',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerLists: 'customer/GetAllCustomersPreviewJson',
+  createCustomer:'api/Customer',
   getJointCommitee: '',
   getLegalForm: '',
   getCounteries: '',

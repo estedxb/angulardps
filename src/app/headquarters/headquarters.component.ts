@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { CustomersService } from '../shared/customers.service';
 import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
@@ -6,6 +6,8 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
          LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
          InvoiceSettings, Language, Contact } from '../shared/models';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { LegalComponent } from '../../app/componentcontrols/legal/legal.component';
+import { ChildActivationEnd } from '@angular/router';
 
 @Component({
 selector: 'app-headquarters',
@@ -14,6 +16,15 @@ styleUrls: ['./headquarters.component.css']
 })
 
 export class HeadquartersComponent implements OnInit {
+
+  @ViewChild(LegalComponent) legalComponent;
+
+  public legalString;
+  public countryString;
+  public countryCode;
+
+  @Input() public HQFormData;
+  @Output() public childEvent = new EventEmitter();
 
   public disabled;
   public ErrorResponseMessage;
@@ -54,12 +65,17 @@ export class HeadquartersComponent implements OnInit {
   numberPattern:string;
   vatNumber:string;
 
+
   enable:boolean = true;
   change:boolean = false;
   valueChange:boolean = false;
   changeEvent: MouseEvent;
   _isDisabled:boolean = true;
 
+  ngAfterViewInit(){
+    this.legalString = this.legalComponent.selectedString;
+  }
+ 
 
   ngOnInit() {
 
@@ -85,13 +101,45 @@ export class HeadquartersComponent implements OnInit {
 
     this.HQForm.get('creditLimit').disable();
 
-    this.checkValidations();  //check validations
+    this.createObjects();  //check validations    
    
   }
 
   constructor(private formBuilder:FormBuilder, private customerService: CustomersService) {
           
    }
+
+
+   createObjects() {
+
+    //all fields are validated
+      this.setCreditCheck();
+      this.setAddress();
+      this.setCustomerObject();
+      this.setStatuteSettingArray();
+      this.setInvoiceSettings();
+      this.setContacts();
+      this.setDpsCustomer();
+
+  }
+
+  receiveMessage($event){
+    this.legalString = $event;
+    this.setCustomerObject();
+    this.createObjects();
+  }
+
+  receiveMessageCountry($event){
+
+    console.log("recevied event");
+    console.log($event);
+    this.countryString = $event.countryName;
+    this.countryCode = $event.countryCode;
+    this.setAddress();
+    this.setCustomerObject();
+    this.createObjects();
+
+  }
 
    creditLimitApi() {
 
@@ -125,11 +173,11 @@ export class HeadquartersComponent implements OnInit {
    handleError(errorMessage:HttpErrorResponse) {
 
     if(errorMessage.status === 400)    
-      this.ErrorResponseMessage = "Vat Number is not in Correct Format";
+      this.ErrorResponseMessage = "Btw-nummer is niet in correct formaat";
     if(errorMessage.status === 204)    
-      this.ErrorResponseMessage = "No record in our system";      
+      this.ErrorResponseMessage = "Geen record in ons systeem";      
     if(errorMessage.status === 409)    
-      this.ErrorResponseMessage = "Customer with Vatnumber already exists";      
+      this.ErrorResponseMessage = "Klant met vatnummer bestaat al";      
 
    }
 
@@ -172,6 +220,7 @@ export class HeadquartersComponent implements OnInit {
     console.log("valuechange="+this.valueChange);
   }
 
+
   set isDisabled(value: boolean) {
     this._isDisabled = value;
     if(value) {
@@ -189,18 +238,14 @@ export class HeadquartersComponent implements OnInit {
     this.HQForm.controls['creditLimit'].setValue(value);
   }
 
-
-
-  
-
-
   setCreditCheck() {
     var today = new Date();   
     this.creditCheck = new CreditCheck();
 
     // assigning credit check object
-    this.creditCheck.creditLimit = this.HQForm.get('creditLimit').value;
+    this.creditCheck.creditLimit = parseInt(this.HQForm.get('creditLimit').value,10);
     this.creditCheck.creditcheck = false;
+    this.creditCheck.creditCheckPending = false;
     this.creditCheck.dateChecked = (today.getMonth()+1) + "/"+ today.getDay() + "/" + today.getFullYear();
 
   }
@@ -212,14 +257,17 @@ export class HeadquartersComponent implements OnInit {
       // assigning address object
       this.address.bus = this.HQForm.get('bus').value;
       this.address.city = this.HQForm.get('city').value;
-      this.address.country = this.HQForm.get('country').value;
-      this.address.countryCode = "";
+      this.address.country = this.countryString;
+      this.address.countryCode = this.countryCode;
       this.address.postalCode = this.HQForm.get('postalcode').value;
       this.address.street = this.HQForm.get('street').value;
       this.address.streetNumber = this.HQForm.get('streetnumber').value;
   }
 
   setCustomerObject() {
+
+    console.log("setting customer object with legalform="+this.legalString);
+    console.log(this.legalString);
 
     this.customer = new Customer();
     this.generalEmail = new EmailAddress();
@@ -231,18 +279,22 @@ export class HeadquartersComponent implements OnInit {
 
     // assigning general email address object
     this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
+
+    this.phoneNumber.number = this.HQForm.get('phonenumber').value;
     
     // assigning customer object
     this.customer.vatNumber = this.HQForm.get('vatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
-    this.customer.legalForm = this.HQForm.get('legalform').value;
-    this.customer.phoneNumber = this.HQForm.get('phonenumber').value;
+    this.customer.legalForm = this.legalString;
+    this.customer.phoneNumber = this.phoneNumber;
     this.customer.creditCheck = this.creditCheck;
     this.customer.address = this.address;
     this.customer.email = this.generalEmail;
     this.customer.vcaCertification = this.vcaCertification;
+    this.customer.isBlocked = false;
 
+    console.log(this.customer);
   }
 
   setStatuteSettingArray() {
@@ -349,8 +401,6 @@ export class HeadquartersComponent implements OnInit {
 
   getJSONDataObject() {
 
-    this.checkValidations();
-
     if(this.HQdata !== null && this.HQdata !== undefined)
     return this.HQdata;
 
@@ -368,54 +418,26 @@ export class HeadquartersComponent implements OnInit {
         "statuteSettings": this.dpsCustomer.statuteSettings,
         "contacts": this.dpsCustomer.contact
       };
+      this.sendDatatoHome();
     }
     else
      this.HQdata = null;
   }
 
-  checkValidations() {
-
-    this.validated = true;
-
-    //all fields are validated
-    if(this.validated) 
-    {
-      this.setCreditCheck();
-      this.setAddress();
-      this.setCustomerObject();
-      this.setStatuteSettingArray();
-      this.setInvoiceSettings();
-      this.setContacts();
-      this.setDpsCustomer();
-    }
-  }
 
   // post the json data
-  postData() {
-
-    this.checkValidations();
+  updateData() {
 
     console.log(this.HQdata);
     console.log("json="+this.HQdata);
+    this.createObjects();
 
-    // if(this.HQdata !== undefined && this.HQdata !== null)
-    // {
-    //   this.customerService.createCustomer(this.HQdata).subscribe(res =>{
-    //     console.log("response="+res);
-    //   },
-    //    (err:HttpErrorResponse) => {
-    //      if(err.error instanceof Error)
-    //      {
-    //        console.log("Error occured="+err.error.message);
-    //      }
-    //      else {
-    //        console.log("response code="+err.status);
-    //        console.log("response body="+err.error);
-    //      }
-    //    }
-    //   );  
-    // }
+    this.childEvent.emit(this.HQdata);
 
+  }
+
+  sendDatatoHome() {
+    this.childEvent.emit(this.HQdata);
   }
 
 }

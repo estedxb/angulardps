@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
   PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
@@ -13,6 +13,12 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 
 export class ContactpersonComponent implements OnInit {
   
+  public languageString;
+  public languageShortName;
+
+  @Input() public CTFormData;
+  @Output() public childEvent = new EventEmitter();
+
   CTdata:any;
   CTForm: FormGroup;
 
@@ -35,14 +41,23 @@ export class ContactpersonComponent implements OnInit {
       language:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       position:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       mobile:new FormControl('',Validators.required),
-      telephone:new FormControl('',Validators.required),
+      telephone:new FormControl('',[Validators.required,Validators.pattern('^[0-9]+')]),
       emailaddress:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
     });
 
-    this.checkValidations();  //check validations
+    this.createObjects();  //check validations
   }
 
-  checkValidations() {
+  receiveMessageLanguage($event) {
+
+    this.languageString = $event.name;
+    this.languageShortName = $event.shortName;
+
+    this.createObjects();
+
+  }
+
+  createObjects() {
 
    this.phoneNumber = new PhoneNumber();
    this.mobileNumber = new PhoneNumber();
@@ -55,8 +70,8 @@ export class ContactpersonComponent implements OnInit {
    this.mobileNumber.number = this.CTForm.get('mobile').value;
    this.contactsEmail.emailAddress = this.CTForm.get('emailaddress').value;
 
-   this.language.name = this.CTForm.get('language').value;
-   this.language.shortName = this.CTForm.get('language').value;
+   this.language.name = this.languageString;
+   this.language.shortName = this.languageShortName;
 
    this.contact.firstName = this.CTForm.get('firstname').value;
    this.contact.lastName = this.CTForm.get('lastname').value;
@@ -65,6 +80,8 @@ export class ContactpersonComponent implements OnInit {
    this.contact.mobile = this.mobileNumber;
    this.contact.postion = this.CTForm.get('position').value;
    this.contact.language = this.language;
+
+   console.log(this.language);
 
    this.setJSONObject();
 
@@ -82,9 +99,20 @@ export class ContactpersonComponent implements OnInit {
           "language": this.contact.language
    };
 
+   if(this.CTdata !== undefined)
+   {
+     this.childEvent.emit(this.CTdata);
+   }
+
   }
 
-  getJSONObject() {
+  public updateData() {
+    this.createObjects();
+    this.childEvent.emit(this.CTdata);
+  }
+  
+
+  public getJSONObject() {
     if(this.CTdata !== undefined && this.CTdata !== null)
         return this.CTdata;
   }
