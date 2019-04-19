@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { ParitairCommitee } from './models';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import _ from 'lodash';
 
