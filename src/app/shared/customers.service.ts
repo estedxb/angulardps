@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { Customer, DPSCustomer } from './models';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
@@ -43,7 +43,7 @@ export class CustomersService {
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    this.createCustomerURL = "https://dpsapisdev.azurewebsites.net/api/Customer";
+
    return this.http.post<any>(this.createCustomerURL,customer, {
       headers: httpHeaders,
       observe: 'response'
