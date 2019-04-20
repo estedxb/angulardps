@@ -14,9 +14,10 @@ import { ContactpersonComponent } from './contactperson/contactperson.component'
 import { HeadquartersComponent } from './headquarters/headquarters.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
 import { GeneralComponent } from './general/general.component';
+import { InvoiceSettingsComponent } from './invoice-settings/invoice-settings.component';
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 @NgModule({
-  declarations: [AppComponent, routingComponents, ContactpersonComponent, HeadquartersComponent, LanguagesComponent, GeneralComponent],
+  declarations: [AppComponent, routingComponents, ContactpersonComponent, HeadquartersComponent, LanguagesComponent, GeneralComponent, InvoiceSettingsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

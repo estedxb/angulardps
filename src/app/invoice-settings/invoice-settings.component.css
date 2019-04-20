@@ -1,0 +1,128 @@
+
+
+.leftparameters{
+    width: 300px;
+    height: 70px;
+    display: inline-block;
+    margin:-2px;
+    font-size: 15px;
+    vertical-align: bottom;
+    margin-right: 15px;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.rightparameters {
+    width: 200px;
+    height: 50px;
+    display: inline-block;
+    margin:-2px;
+    font-size: 15px;
+    vertical-align: bottom;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.addRow {
+    width: 450px;   
+    height: 50px;
+    margin-left: 10px;
+    padding:5px;
+    background-color:transparent;
+}
+
+.addButton {
+    width: 80px;
+    height: 80px;
+}
+
+.btnAdd {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color:transparent;
+}
+
+.btnRemove {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color:transparent;
+}
+
+.boxes {
+    background-color:transparent;
+}
+
+.addrembuttons {
+   width: 40px;
+   height: 40px;
+
+}
+
+.facturatieParameters {
+    padding: 10px; 
+    margin: auto; 
+    padding-bottom: 25px; 
+    padding-left: 5px; 
+    margin-left:0px;
+    border-radius: 10px;
+    width: 800px;
+    height: 500px;
+    resize: both;
+    overflow: auto;
+}
+
+.inputBoxInhaalrust {
+    width: 100px; 
+    height: 35px; 
+    border-radius: 5px; 
+    margin-left: 50px; 
+    padding: 7px;
+}
+
+.titleBold {
+    font-weight:bold;
+    font-size:15px;
+}
+
+#PloegprimeBox1{
+    width: 125.72px; 
+    height: 35px; 
+    margin-right: 10px; 
+    display: inline-block; 
+    padding: 7px; 
+    border-radius:5px;
+}
+
+#PloegprimeBox2 {
+    width: 100px; 
+    height: 35px; 
+    margin-right: 10px; 
+    display: inline-block; 
+    padding: 7px; 
+    border-radius:5px; 
+}
+
+#PloegprimeBox3 {
+    width: 50px; 
+    height: 35px;
+    margin-right: 0px; 
+    display: inline-block; 
+    padding: 7px; 
+    border-radius:5px;
+}
+
+.Ploegprime{
+    width: 400px;
+    clear:both;
+    height:auto;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility:hidden;
+}

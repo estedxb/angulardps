@@ -1,3 +1,5 @@
+<form [formGroup]="SForm" novalidate id="SForm">
+ 
 <div class="error">{{ errorMsg }}</div>
 <div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox" *ngFor="let statute of statutes; let i= index" [attr.data-index]="i"> 
     <div class="row panelheader">
@@ -6,23 +8,24 @@
     </div>            
     <div class="row">
         <div class="col col-sm-8"><span>Paritair Comité</span><app-jointcommittee (childEvent)="receiveJTdata($event,i)" [JCFormData]= "JCString" [id]="'jointcommittee_'+  statute.name.replace(' ','_')"></app-jointcommittee></div>
-        <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
+        <div class="col col-sm-4"><span>Coëfficient arbeiders</span><input formControlName="CoefficientBox" class="form-control" #coefficient (change)="onChangeCoefficient(coefficient.value,i)" [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
     </div>
     <div class="row mealrow">
       <div class="col col-sm-12 ">
         <input id="meal_{{ statute.name.replace(' ','_') }}_status" type="hidden" value="{{isMealEnabled[this.i]}}" >
-        <ui-switch id="'meal_{{ statute.name.replace(' ','_') }}" (change)="onChange($event,this.i)" [(ngModel)]="isMealEnabled[this.i]" ></ui-switch>
+        <ui-switch id="'meal_{{ statute.name.replace(' ','_') }}" (change)="onMealChange($event,i)"></ui-switch>
         <span>Maaltijdcheques</span>
       </div>
     </div>    
     <div class="row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngIf="isMealEnabled[this.i]" >
       <div class="col col-sm-11">
         <div class="row">
-            <div class="col col-sm-4 inputWithIcon">Totale waarde<input type="number" id="totalvalue_' + statute.name.replace(' ','_')"   onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
-            <div class="col col-sm-4 inputWithIcon">Wergeversdeel<input type="number" id="sharesection_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
-            <div class="col col-sm-4">Minimum uren <input type="number" id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
+            <div class="col col-sm-4 inputWithIcon">Totale waarde<input (change) ="totalChange(totalwaarde.value,i)" formControlName="Totalwaarde" class="form-control" type="number" #totalwaarde id="totalvalue_' + statute.name.replace(' ','_')"   onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4 inputWithIcon">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,i)" formControlName="Wergeversdeel" class="form-control" type="number" #wergeversdeel id="sharesection_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
+            <div class="col col-sm-4">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,i)" formControlName="minimumHours" class="form-control" type="number" #minimumuren id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01"></div>
         </div>
     </div>
     <div class="col col-sm-1"></div>
   </div>
 </div>
+</form>

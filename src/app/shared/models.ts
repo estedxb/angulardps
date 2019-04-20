@@ -86,8 +86,6 @@ export interface WorkCodes {
 export class Statute {
     name: string;
     type?: string;
-    mealstatus?: boolean;
-    jointcommitee?: ParitairCommitee;
 }
 
 export class LegalForm {

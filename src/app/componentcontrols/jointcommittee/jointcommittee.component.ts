@@ -13,7 +13,6 @@ export class JointcommitteeComponent implements OnInit {
 
   @Input() public JCFormData;
   @Output() public childEvent = new EventEmitter();
- 
 
   public id = 'ddl_jointcommittee' ;
   public currentlanguage = 'nl';
@@ -33,7 +32,8 @@ export class JointcommitteeComponent implements OnInit {
 
   onChange($event) { 
     this.selectedIndex = $event.target.value;
-    this.childEvent.emit(this.value);
+    let obj:any = { "selectedObject": this.value, "arrayObject": this.datas};
+    this.childEvent.emit(obj);
     console.log(this.value);
     return this.value; 
   }
@@ -41,9 +41,16 @@ export class JointcommitteeComponent implements OnInit {
   constructor(private jointcommitteeService: JointcommitteeService) { }
 
   ngOnInit() {
+
     this.resetToInitValue();
-    this.jointcommitteeService.getJointCommitees().subscribe(data => this.datas = data , error => this.errorMsg = error);
+
+    this.jointcommitteeService.getJointCommitees().
+         subscribe(data => this.datas = data, 
+            error => this.errorMsg = error);
+
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
+
+
   }
 
 }
