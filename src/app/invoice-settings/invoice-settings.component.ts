@@ -80,7 +80,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onChangeI(event){
-    this.
   }
 
   onMealM(event){
