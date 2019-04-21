@@ -1,4 +1,4 @@
-<select [ngModel]="selectedIndex" id="ddl_jointcommittee" name="ddl_jointcommittee" class="jointcommittee selectcomponent" (change)="onChange($event)"  ng-dropdown required="required">
+<select [ngModel]="selectedIndex" id="ddl_jointcommittee" name="ddl_jointcommittee" class="jointcommittee selectcomponent" (change)="onChange($event)" ng-dropdown required="required">
     <option *ngFor="let data of datas let i= index" [attr.data-index]="i" [value]="i"  >{{data.number + ' - ' + data.name}}</option>
 </select>
 <div class="error">{{ errorMsg }}</div>

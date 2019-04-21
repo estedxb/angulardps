@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 // import { LegalForm, Forms } from '../../shared/models';
 import { LegalformService } from '../../shared/legalform.service';
 import { LanguagesService } from '../../shared/languages.service';
@@ -9,6 +9,10 @@ import { LanguagesService } from '../../shared/languages.service';
   styleUrls: ['./languages.component.css']
 })
 export class LanguagesComponent implements OnInit {
+
+ @Input() public LanguageFormData;
+ @Output() public childEvent = new EventEmitter();
+
   public id = 'ddl_languages' ;
   public currentlanguage = 'nl';
   public errorMsg;
@@ -26,7 +30,16 @@ export class LanguagesComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
-  onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
+  onChange($event) {
+
+    this.selectedIndex = $event.target.value; 
+
+    console.log('language='+this.value);
+    this.childEvent.emit(this.value);
+
+    return this.value; 
+
+  }
 
   constructor(private languagesService: LanguagesService) { }
 

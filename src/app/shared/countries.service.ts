@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { CountriesList } from './models';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 

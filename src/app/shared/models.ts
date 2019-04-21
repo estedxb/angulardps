@@ -15,14 +15,15 @@ export class Customer {
     legalForm: string;
     creditCheck: CreditCheck;
     address?: Address;
-    phoneNumber?: string;
+    phoneNumber?: PhoneNumber;
     email?: EmailAddress;
     vcaCertification?: VcaCertification;
+    isBlocked:boolean;
 }
 
 export class EmailAddress { emailAddress: string; }
 
-export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: string}
+export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean}
 
 export class PhoneNumber { number: string; }
 
@@ -85,9 +86,6 @@ export interface WorkCodes {
 export class Statute {
     name: string;
     type?: string;
-    mealstatus?: boolean;
-    jointcommitee?: ParitairCommitee;
-
 }
 
 export class LegalForm {

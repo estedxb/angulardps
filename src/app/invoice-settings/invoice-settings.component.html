@@ -1,0 +1,58 @@
+<form [formGroup]="ISForm" novalidate id="ISForm">
+ <div class="facturatieParameters customerBox">
+    <div class="leftparameters">
+  <div class="inhaalrust">
+    <ui-switch (change)="onChangeI($event)" size="small"> </ui-switch> &nbsp;
+    <label class="titleBold">Inhaalrust</label>
+  </div>
+  <input id="inhaalrust" formControlName="inhaalrust" class="inputBoxInhaalrust" type="text"/>
+  <div class="ziekte">
+      <ui-switch  (change)="onChangeZ($event)"  size="small"></ui-switch>  &nbsp;
+      <label class="titleBold">Ziekte</label>
+  </div>
+  <div class="feest">
+      <ui-switch (change)="onChangef($event)"  size="small"></ui-switch>  &nbsp;
+      <label class="titleBold">Feest</label>
+  </div>
+  <div class="mobile">
+      <ui-switch  (change)="onChangem($event)"  size="small"></ui-switch>  &nbsp;
+      <label class="titleBold">Mobile</label>
+  </div>
+  <input id="mobilebox" formControlName="mobilebox" class="inputBoxInhaalrust" type="text"/>
+</div>
+
+
+<div class="rightparameters">
+  <div class="Ploegprime clearfix">
+      <ui-switch (change)="onMealM($event)" size="small"></ui-switch>&nbsp;
+      <label class="titleBold">Ploegpremie</label>
+        <div class="addButton">
+              <div class="addRow" *ngFor="let Ploegpremiere of ISForm.get('arrayBox').controls; let i=index">
+                      <div class="boxes">
+                              <input id="PloegprimeBox1" type="text" formControlName="PloegprimeBox1">
+                              <input id="PloegprimeBox2" type="text" formControlName="PloegprimeBox2">
+                              <input id="PloegprimeBox3" type="text" formControlName="PloegprimeBox3"> 
+                              <button (click)="addRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>                 
+                              <button (click)="removeRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>
+                      </div>
+              </div>
+        </div>
+  </div>
+  <div class="Andre">
+      <ui-switch  (change)="onChangeA($event)" size="small"></ui-switch>&nbsp;
+      <label class="titleBold">Andre</label>
+      <div class="addButton">
+              <div class="addRow" *ngFor="let Andre of ISForm.get('arrayAndreBox').controls; let i=index">
+                      <div class="boxes">
+                              <input id="PloegprimeBox1" type="text" formControlName="AndreBox1">
+                              <input id="PloegprimeBox2" type="text" formControlName="AndreBox2">
+                              <input id="PloegprimeBox3" type="text" formControlName="AndreBox3">
+                              <button (click)="addAndreRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>                 
+                              <button (click)="removeAndreRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>
+                      </div>
+              </div>            
+      </div>
+  </div>
+</div>
+</div>
+</form>
