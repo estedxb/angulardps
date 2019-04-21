@@ -1,16 +1,17 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { AppComponent } from "./app.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AppRoutingModule, routingComponents } from "./app-routing.module";
-import { AngularFontAwesomeModule } from "angular-font-awesome";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { MenuComponent } from "./componentcontrols/menu/menu.component";
-import { HeadersComponent } from "./views/headers/headers.component";
-import { AutocompleteLibModule } from "angular-ng-autocomplete";
-import { UiSwitchModule } from "ngx-ui-switch";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MenuComponent } from './componentcontrols/menu/menu.component';
+import { HeadersComponent } from './views/headers/headers.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { UiSwitchModule } from 'ngx-ui-switch';
 // import { UiSwitchModule } from 'ngx-toggle-switch';
+
 @NgModule({
   declarations: [AppComponent, routingComponents],
   imports: [
@@ -20,12 +21,12 @@ import { UiSwitchModule } from "ngx-ui-switch";
     AngularFontAwesomeModule,
     AutocompleteLibModule,
     UiSwitchModule.forRoot({
-      size: "small",
-      color: "#fff",
-      switchOffColor: "red",
-      switchColor: "limegreen",
-      defaultBoColor: "#000",
-      defaultBgColor: "#fff"
+      size: 'small',
+      color: '#fff',
+      switchOffColor: 'red',
+      switchColor: 'limegreen',
+      defaultBoColor: '#000',
+      defaultBgColor: '#fff'
     }),
     FormsModule,
     ReactiveFormsModule,
@@ -34,7 +35,7 @@ import { UiSwitchModule } from "ngx-ui-switch";
   providers: [],
   bootstrap: [AppComponent, MenuComponent, HeadersComponent]
 })
-export class AppModule {}
+export class AppModule { }
 
 /*
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';

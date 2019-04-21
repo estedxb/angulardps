@@ -20,16 +20,17 @@ import { WorkscheduleComponent } from './views/Customers/workschedule/workschedu
 import { PositionComponent } from './views/Customers/position/position.component';
 import { UsersComponent } from './views/Customers/users/users.component';
 import { LocationsComponent } from './views/Customers/locations/locations.component';
-import { UpdateComponent } from './views/Customers/update/update.component';
+import { UpdateCustomerComponent } from './views/Customers/update-customer/update-customer.component';
 import { AddpersonComponent } from './views/person/addperson/addperson.component';
+import { AddCustomerComponent } from './views/Customers/add-customer/add-customer.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
   { path: 'customer', component: CustomersComponent },
-  { path: 'customer/add', component: UpdateComponent },
-  { path: 'customer/:id', component: UpdateComponent },
-  { path: 'customer/update', component: UpdateComponent },
+  { path: 'customer/add', component: AddCustomerComponent },
+  { path: 'customer/:id', component: UpdateCustomerComponent },
+  { path: 'customer/update', component: UpdateCustomerComponent },
   { path: 'settings', component: CustomersComponent },
   { path: 'scheduler', component: CustomersComponent },
   { path: 'person/addperson', component: AddpersonComponent },
@@ -64,6 +65,7 @@ export const routingComponents = [
   PositionComponent,
   UsersComponent,
   LocationsComponent,
-  UpdateComponent,
-  AddpersonComponent
+  UpdateCustomerComponent,
+  AddpersonComponent,
+  AddCustomerComponent
 ];
