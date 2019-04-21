@@ -13,12 +13,12 @@ export class WorkCodesComponent implements OnInit {
   public maindatas = [];
   public datas = [];
   public errorMsg;
-  public show = true;
+  public show = false;
   HQForm: FormGroup;
 
-  
+
   // tslint:disable-next-line: variable-name
-  private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
 
   set selectedValue(value: any) { this._selectedValue = value; }
   get selectedValue(): any { return this._selectedValue; }
@@ -33,14 +33,13 @@ export class WorkCodesComponent implements OnInit {
   constructor(private workCodesService: WorkCodesService) { }
 
   oncustomerKeyup(value) {
-    //this.datas = [];
+    // this.datas = [];
     if (this.maindatas.length > 0) {
       this.datas = this.maindatas
-        .map( cust => {
+        .map(cust => {
           if (cust.Description.toLowerCase().indexOf(value.toLowerCase()) > -1
-          || cust.CodeNumber.toString().indexOf(value.toLowerCase()) > -1
-          || (cust.CodeNumber.toString() + ' - ' + cust.Description.toLowerCase()).indexOf(value.toLowerCase()) > -1)
-          { return cust; }
+            || cust.CodeNumber.toString().indexOf(value.toLowerCase()) > -1
+            || (cust.CodeNumber.toString() + ' - ' + cust.Description.toLowerCase()).indexOf(value.toLowerCase()) > -1) { return cust; }
         });
     } else {
       this.datas = this.maindatas;
@@ -52,7 +51,7 @@ export class WorkCodesComponent implements OnInit {
     if (filterType !== 'reset') {
       if (this.maindatas.length > 0) {
         this.datas = this.maindatas
-          .map( cust => {
+          .map(cust => {
             if (cust.CodeType.toLowerCase() === filterType) { return cust; }
           });
       } else {
@@ -74,15 +73,14 @@ export class WorkCodesComponent implements OnInit {
       this.datas = data;
       console.log('getworkcodes in workcodes.component ::');
       console.log(data);
-    } , error => this.errorMsg = error);
+    }, error => this.errorMsg = error);
   }
 
   closeMe() { this.show = false; }
-  
 
   setWorkCode(i) {
-    this.value  = this.datas[i];
-    this.HQForm.controls['WorkCode'].setValue( this.value.CodeNumber + ' - ' + this.value.Description);
+    this.value = this.datas[i];
+    this.HQForm.controls.WorkCode.setValue(this.value.CodeNumber + ' - ' + this.value.Description);
     this.show = false;
   }
 }

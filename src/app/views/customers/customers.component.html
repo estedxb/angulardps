@@ -1,41 +1,55 @@
-<div class="row">      
+<div class="row">
     <div class="col col-sm-3"></div>
-    <div class="col col-sm-6 center-block"><img src="../../assets/svg/customer_hover.svg" style="left:-15"><br/><div class="pagehead">Customers list</div></div>
+    <div class="col col-sm-6 center-block"><img src="../../assets/svg/customer_hover.svg" style="left:-15"><br />
+        <div class="pagehead">Customers list</div>
+    </div>
     <div class="col col-sm-3"></div>
 </div>
 
+
+<div class="row" id="formState">
+    <div class="col col-sm-3"></div>
+</div>
 <div class="row">
     <div class="col col-sm-3"></div>
     <div class="col col-sm-6" id="maincontentarea">
         <div class="scrollbar" id="maincontent">
-        <div class="force-overflow">
-            <div id="from1">
-            <div id="CustomerDetails" class="customerBox"> 
-                <div class="row panelheader">
-                    <div class="col col-sm-5 fright"><h4>Testing</h4><hr></div>
-                    <div class="col col-sm-7"></div>
-                </div>   
-                <div class="row">
-                    <div class="col-sm-12">
-                        <app-workcodes></app-workcodes>
+            <div class="force-overflow">
+                <div id="from1">
+                    <div id="CustomerDetails" class="customerBox">
+                        <div class="row panelheader">
+                            <div class="col col-sm-5 fright">
+                                <h4>Testing</h4>
+                                <hr>
+                            </div>
+                            <div class="col col-sm-7"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <app-workcodes></app-workcodes>
+                            </div>
+                        </div>
                     </div>
-                </div>         
-            </div>
 
-            <div id="CustomerDetails" class="customerBox" *ngFor="let customer of dpscustomers">
-                <div class="row panelheader">
-                    <div class="col col-sm-5 fright"><h4>{{ customer.customer.name }}</h4><hr></div>
-                    <div class="col col-sm-7 fright">{{ customer.customer.vatNumber }}</div>
+                    <div id="CustomerDetails" class="customerBox" *ngFor="let customer of dpscustomers">
+                        <div class="row panelheader">
+                            <div class="col col-sm-5 fright">
+                                <h4>{{ customer.customer.name }}</h4>
+                                <hr>
+                            </div>
+                            <div class="col col-sm-7 fright">{{ customer.customer.vatNumber }}</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-    
         </div>
-        </div>
-    </div>
     </div>
     <div class="col col-sm-3">
-        <button class="btn" id="forward" (click)="onFormwardClick()" >Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
-        <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>      
+        <button class="btn" id="forward" (click)="onFormwardClick()">Volgende stap <img
+                src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
+        <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+                src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
     </div>
 </div>
 

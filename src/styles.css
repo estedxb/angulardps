@@ -16,7 +16,7 @@ html, body { height: 100%; }
     width: 98%; font-size: 15px;font-weight: normal; padding: 3px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619;
 }
 #maincontentarea input:hover, #maincontentarea input:focus, #maincontentarea input::selection, #maincontentarea input::-webkit-keygen-select, #maincontentarea input::-moz-selection, #maincontentarea input::-moz-focusring{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
-.selectcomponent{ width: 100%; font-size: 15px;font-weight: normal; padding: 8px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619; }
+.selectcomponent{ width: 100%; font-size: 15px;font-weight: normal; padding: 5px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619; }
 .selectcomponent:hover{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
 .selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
 .jointcommittee  {min-width: 150px;max-width: 500px;}
@@ -130,7 +130,7 @@ div#CustomerContact{min-height: 220px;}
 #maincontentarea .dialog .inputWithIcon input[type=text] + i, .dialog  .inputWithIcon input[type=text] +i,
 #maincontentarea .dialog .inputWithIcon input[type=password] +i, .dialog  .inputWithIcon input[type=password] +i,
 #maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
-#maincontentarea label{
-    width:100%;
-}
+#maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
+#maincontentarea label{width:100%;}
 .form-control{ line-height: 22px;}
+

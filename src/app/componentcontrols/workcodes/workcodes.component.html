@@ -1,47 +1,48 @@
-
 <div class="error">{{ errorMsg }}</div>
 <form [formGroup]="HQForm" novalidate id="hqform">
 
-<input type="text" class="form-control" formControlName="WorkCode" name="WorkCode"  readonly (click)="show=true" >
-<ng-container *ngIf="show">
+  <input type="text" class="form-control" formControlName="WorkCode" name="WorkCode" readonly (click)="show=true">
+  <ng-container *ngIf="show">
     <div class="dialog">
-        <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>
-        <div class=row>
-          <!--<div class="col col-sm-1"></div>
-          <div class="col col-sm-10">
-            <div class=row>-->
-                <div class="col-sm-1"></div>
-                <div class="col-sm-2">
-                  <button class="iconButton" (click)="filter('work')"><img id="Work" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></button>
-                </div>
-                <div class="col-sm-2">
-                  <button class="iconButton" (click)="filter('absent')"><img id="Absent" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></button>
-                </div>
-                <div class="col-sm-2">
-                  <button class="iconButton" (click)="filter('others')"><img id="Others" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></button>
-                </div>
-                <div class="col-sm-2">
-                  <button class="iconButton" (click)="filter('holiday')"><img id="Holiday" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></button>
-                </div>
-                <div class="col-sm-2">
-                  <button class="iconButton" (click)="filter('reset')"><img id="Reverse" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></button>
-                </div>
-                <div class="col-sm-1"></div>
-            <!--</div>
-            <div class="col col-sm-1"></div>
-          </div>-->
+      <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>
+      <div class=row>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
+          <button class="iconButton" (click)="filter('work')"><img id="Work"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></button>
         </div>
-        <div class="input-group ng-autocomplete inputWithIcon workSearch">            
-            <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /><i class="fa fa-search fa-2"></i>
+        <div class="col-sm-2">
+          <button class="iconButton" (click)="filter('absent')"><img id="Absent"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></button>
         </div>
-        <div class="content" id="customerContent">
-            <div class="error">{{ errorMsg }}</div>
-            <div *ngFor = "let data of datas let i= index" [attr.data-index]="i">
-                <div id="workCodes" *ngIf="data && data.CodeNumber != null && data.Description != undefined ">
-                    <button (click)="setWorkCode(i)" class="workcodes" title="{{ data.CodeNumber }} -  {{ data.Description  }}">{{ data.CodeNumber }} -  {{ data.Description  }}</button>
-                </div>
-            </div>
+        <div class="col-sm-2">
+          <button class="iconButton" (click)="filter('others')"><img id="Others"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></button>
         </div>
-    </div>      
-</ng-container>
+        <div class="col-sm-2">
+          <button class="iconButton" (click)="filter('holiday')"><img id="Holiday"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></button>
+        </div>
+        <div class="col-sm-2">
+          <button class="iconButton" (click)="filter('reset')"><img id="Reverse"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></button>
+        </div>
+        <div class="col-sm-1"></div>
+      </div>
+      <div class="input-group ng-autocomplete inputWithIcon workSearch">
+        <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /><i
+          class="fa fa-search fa-2"></i>
+      </div>
+      <div class="content" id="customerContent">
+        <div class="error">{{ errorMsg }}</div>
+        <div *ngFor="let data of datas let i= index" [attr.data-index]="i">
+          <div id="workCodes" *ngIf="data && data.CodeNumber != null && data.Description != undefined ">
+            <button (click)="setWorkCode(i)" class="workcodes"
+              title="{{ data.CodeNumber }} -  {{ data.Description  }}">{{ data.CodeNumber }} -
+              {{ data.Description  }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </form>
