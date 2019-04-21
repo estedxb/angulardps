@@ -1,11 +1,11 @@
 <div class="general">
   <div class="row">
     <div class="col-sm-6">
-        <ui-switch  size="small"></ui-switch>  &nbsp;&nbsp;
+        <ui-switch (change)="changeVca($event)" size="small"></ui-switch>  &nbsp;&nbsp;
         <label class="vca">VCA gecertificeerd</label>&nbsp;&nbsp;     
     </div>
     <div class="col-sm-6">
-        <ui-switch  size="small"> </ui-switch> &nbsp;&nbsp;
+        <ui-switch (change)="changeBlk($event)" size="small"> </ui-switch> &nbsp;&nbsp;
         <label class="blk"> Bulk Contracten</label>    
     </div>
   </div>    

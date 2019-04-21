@@ -49,11 +49,11 @@
                   <div class="col col-sm-7"></div>
               </div>   
     
-               <app-general></app-general>
+               <app-general (childEvent)= "receiveGeneralObject($event)"></app-general>
           </div>
           <div id="CustomerContact" class="statuteBox">
-            <app-statute></app-statute>
-            <app-invoice-settings></app-invoice-settings>
+            <app-statute (childEvent)="receiveStatuteData($event)"></app-statute>
+            <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
           </div>         
       </div>
     </div>

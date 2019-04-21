@@ -1,58 +1,77 @@
 <form [formGroup]="ISForm" novalidate id="ISForm">
  <div class="facturatieParameters customerBox">
-    <div class="leftparameters">
-  <div class="inhaalrust">
-    <ui-switch (change)="onChangeI($event)" size="small"> </ui-switch> &nbsp;
-    <label class="titleBold">Inhaalrust</label>
-  </div>
-  <input id="inhaalrust" formControlName="inhaalrust" class="inputBoxInhaalrust" type="text"/>
-  <div class="ziekte">
-      <ui-switch  (change)="onChangeZ($event)"  size="small"></ui-switch>  &nbsp;
-      <label class="titleBold">Ziekte</label>
-  </div>
-  <div class="feest">
-      <ui-switch (change)="onChangef($event)"  size="small"></ui-switch>  &nbsp;
-      <label class="titleBold">Feest</label>
-  </div>
-  <div class="mobile">
-      <ui-switch  (change)="onChangem($event)"  size="small"></ui-switch>  &nbsp;
-      <label class="titleBold">Mobile</label>
-  </div>
-  <input id="mobilebox" formControlName="mobilebox" class="inputBoxInhaalrust" type="text"/>
-</div>
-
-
-<div class="rightparameters">
-  <div class="Ploegprime clearfix">
-      <ui-switch (change)="onMealM($event)" size="small"></ui-switch>&nbsp;
-      <label class="titleBold">Ploegpremie</label>
-        <div class="addButton">
-              <div class="addRow" *ngFor="let Ploegpremiere of ISForm.get('arrayBox').controls; let i=index">
-                      <div class="boxes">
-                              <input id="PloegprimeBox1" type="text" formControlName="PloegprimeBox1">
-                              <input id="PloegprimeBox2" type="text" formControlName="PloegprimeBox2">
-                              <input id="PloegprimeBox3" type="text" formControlName="PloegprimeBox3"> 
-                              <button (click)="addRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>                 
-                              <button (click)="removeRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>
-                      </div>
-              </div>
+        <div class="row panelheader">
+                <div class="col col-sm-5 fright"><h4>Facturatie Parameters</h4><hr></div>
+                <div class="col col-sm-7"></div>
+        </div>                            
+        <div class="row">
+                <div class="col-sm-6">
+                        <div class="inhaalrust">
+                                <div><ui-switch (change)="onChangeI($event)" size="small"></ui-switch>&nbsp;</div>
+                                        <label class="titleBold">Inhaalrust</label>
+                                      </div>
+                                      <select formControlName="inhaalrust" id="dd_inhaalrust" name="dd_inhaalrust" class="inhaalrust selectcomponent" (change)="onChangeDropDown($event)" ng-dropdown required="required">
+                                                    <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i" [value]="i">{{data}}</option>
+                                     </select>
+                                      <!-- <input #inhaalrust id="inhaalrust" (change)="setInhaalrust(inhaalrust.value)" formControlName="inhaalrust" class="inputBoxInhaalrust" type="text"/> -->
+                                      <div class="ziekte">
+                                          <ui-switch  (change)="onChangeZ($event)"  size="small"></ui-switch>  &nbsp;
+                                          <label class="titleBold">Ziekte</label>
+                                      </div>
+                                      <div class="feest">
+                                          <ui-switch (change)="onChangeF($event)"  size="small"></ui-switch>  &nbsp;
+                                          <label class="titleBold">Feest</label>
+                                      </div>
+                                      <div class="mobile">
+                                          <ui-switch  (change)="onChangeM($event)"  size="small"></ui-switch>  &nbsp;
+                                          <label class="titleBold">Mobile</label>
+                                      </div>
+                                      <input id="mobilebox" #mobilebox (change)="setMobileBox(mobilebox.value)" formControlName="mobilebox" class="inputBoxInhaalrust" type="text"/>
+                        </div>
+        
+        <div class="col-sm-6">                
+                <ui-switch (change)="onTeamChange($event)" size="small"></ui-switch>&nbsp;
+                <label class="titleBold">Ploegpremie</label>
+                                                <div class="row" *ngFor="let Ploegpremiere of ISForm.get('arrayBox').controls; let i=index">
+                                                        <div class="col-sm-5">                                                         
+                                                                <input  #code (change)="setPgBox1(code.value,i)" type="text" formControlName="PloegprimeBox1" class="form-control">
+                                                        </div>                
+                                                        <div class="col-sm-3">
+                                                                        <input #amount  (change)="setPgBox2(amount.value,i)" type="number" formControlName="PloegprimeBox2" class="form-control">
+                                                        </div>                                                
+                                                        <div class="col-sm-2">
+                                                                        <select formControlName="currency" id="dd_currency" name="dd_currency" class="currency selectcomponent" (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown required="required">
+                                                                                        <option *ngFor="let data of datacurrencyDropDown let i= index" [attr.data-index]="i" [value]="i">{{data}}</option>
+                                                                         </select>                                    
+                                                        </div>                                                                                
+                                                        <div class="col-sm-2 boxes">
+                                                                        <button (click)="addRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" /></button>                 
+                                                                        <button (click)="removeRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" /></button>
+                                                        </div>                
+                                                </div>
+                                <div class="row">
+                                <ui-switch  (change)="onChangeA($event)" size="small"></ui-switch>&nbsp;
+                                <label class="titleBold">Andre</label>
+                                        <div class="row" *ngFor="let Andre of ISForm.get('arrayAndreBox').controls; let i=index">
+                                                <div class="col-sm-6">
+                                                        <input #codeA (change)="setPgABox1(codeA.value,i)" type="text" formControlName="AndreBox1" class="form-control">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                         <input #amountA (change)="setPgABox2(amountA.value,i)" type="number" formControlName="AndreBox2" class="form-control">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                        <select formControlName="currency" id="dd_currency" name="dd_currency" class="currency selectcomponent" (change)="onChangeDropDownCurrencyOther($event,i)" ng-dropdown required="required">
+                                                                        <option *ngFor="let data of datacurrencyDropDown let i= index" [attr.data-index]="i" [value]="i">{{data}}</option>
+                                                         </select>                    
+                                                </div>
+                                                <div class="col-sm-2 boxes">
+                                                        <button (click)="addAndreRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../assets/img/add.png" alt="" height="17.5" width="17.5" /></button>                 
+                                                        <button (click)="removeAndreRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" /></button>
+                                                </div>
+                                        </div>            
+                                </div>
         </div>
-  </div>
-  <div class="Andre">
-      <ui-switch  (change)="onChangeA($event)" size="small"></ui-switch>&nbsp;
-      <label class="titleBold">Andre</label>
-      <div class="addButton">
-              <div class="addRow" *ngFor="let Andre of ISForm.get('arrayAndreBox').controls; let i=index">
-                      <div class="boxes">
-                              <input id="PloegprimeBox1" type="text" formControlName="AndreBox1">
-                              <input id="PloegprimeBox2" type="text" formControlName="AndreBox2">
-                              <input id="PloegprimeBox3" type="text" formControlName="AndreBox3">
-                              <button (click)="addAndreRows()" [hidden]="addNewRow" type="button" class="btnAdd"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>                 
-                              <button (click)="removeAndreRows(i)" [hidden]="removeLastRemove" type="button" class="btnRemove"><img src="../../../assets/add.png" alt="" height="17.5" width="17.5" /></button>
-                      </div>
-              </div>            
-      </div>
-  </div>
-</div>
-</div>
+        </div>
+ </div>
+
 </form>

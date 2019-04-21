@@ -25,8 +25,9 @@ export class ContactpersonComponent implements OnInit {
   contactsEmail:EmailAddress;
   phoneNumber: PhoneNumber;
   mobileNumber: PhoneNumber;
-  language: Language;
+  language: Language;  
   contact: Contact;
+  alsCheck: boolean;
 
   constructor(private formBuilder:FormBuilder) {
           
@@ -45,6 +46,7 @@ export class ContactpersonComponent implements OnInit {
       emailaddress:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
     });
 
+    this.alsCheck  = false;
     this.createObjects();  //check validations
   }
 
@@ -84,7 +86,10 @@ export class ContactpersonComponent implements OnInit {
    console.log(this.language);
 
    this.setJSONObject();
+  }
 
+  changeAls($event){    
+    this.alsCheck = $event;
   }
 
   setJSONObject() {
@@ -96,13 +101,43 @@ export class ContactpersonComponent implements OnInit {
           "email": this.contact.email,
           "mobile": this.contact.mobile,
           "phoneNumber": this.contact.phoneNumber,
-          "language": this.contact.language
+          "language": this.contact.language,
+          "formValid": this.validity()
    };
 
    if(this.CTdata !== undefined)
    {
      this.childEvent.emit(this.CTdata);
    }
+
+  }
+
+  validity() {
+
+      if(this.CTForm.valid && !this.emptyData())
+        return true;
+       
+        return false;
+  }
+
+  emptyData() {
+
+    if(this.CTForm.get('firstName').value === "")
+      return true;
+    if(this.CTForm.get('lastName').value === "")
+      return true;
+    if(this.CTForm.get('postion').value === "")
+      return true;
+    if(this.CTForm.get('email').value === "")
+    return true;
+    if(this.CTForm.get('mobile').value === "")
+    return true;
+    if(this.CTForm.get('phoneNumber').value === "")
+    return true;
+    if(this.CTForm.get('language').value === "")
+    return true;
+    
+    return false;
 
   }
 

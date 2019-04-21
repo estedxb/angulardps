@@ -20,6 +20,7 @@ html, body { height: 100%; }
 .selectcomponent:hover{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
 .selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
 .jointcommittee  {min-width: 150px;max-width: 500px;}
+.jointcommittee  {min-width: 150px;max-width: 500px;}
 .countries {min-width: 100px;max-width: 250px;}
 .legalform {min-width: 100px;max-width: 150px;}
 div.customerBox {
