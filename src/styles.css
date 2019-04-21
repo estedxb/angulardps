@@ -130,8 +130,6 @@ div#CustomerContact{min-height: 220px;}
 #maincontentarea .dialog .inputWithIcon input[type=password] +i, .dialog  .inputWithIcon input[type=password] +i,
 #maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
 #maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
-#maincontentarea label{
-    width:100%;
-}
+#maincontentarea label{width:100%;}
 .form-control{ line-height: 22px;}
 
