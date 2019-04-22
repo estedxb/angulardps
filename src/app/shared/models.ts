@@ -6,6 +6,7 @@ export class DPSCustomer {
     statuteSettings?: StatuteSetting[];
     invoiceSettings?: InvoiceSettings;
     contact: Contact;
+    activateContactAsUser: boolean;
 }
 
 export class Customer {

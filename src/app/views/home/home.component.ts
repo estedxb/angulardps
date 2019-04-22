@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/htt
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../contactperson/contactperson.component';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
+import { Contact } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-home',
@@ -81,10 +82,15 @@ export class HomeComponent implements OnInit {
     
       console.log("CTdata="+this.CTdata);
       console.log(this.CTdata);
+      console.log("HQdata="+this.HQdata);
+      console.log(this.HQdata);
+
+      console.log("validity data="+this.HQdata.formValid);
   
-     if(this.HQdata !== undefined && this.HQdata !== null)
+     if(this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null)
        {
-        if(this.CTdata !== undefined && this.CTdata !== null){
+        // if(this.CTdata !== undefined && this.CTdata !== null)
+        // {
            
           if(this.HQdata.formValid === true && this.CTdata.formValid === true)
           {
@@ -93,10 +99,13 @@ export class HomeComponent implements OnInit {
             delete this.HQdata.formValid;
             delete this.CTdata.formValid;
 
-            this.HQdata.contact = this.CTdata;
+            this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+            this.HQdata.contact = this.CTdata.contact
 
-              console.log("HQData="+this.HQdata);
-              console.log(this.HQdata);    
+              console.log("updated HQData="+this.HQdata);
+              console.log(this.HQdata.contact);    
+              console.log(this.CTdata.contact);    
+
   
               this.customerService.createCustomer(this.HQdata).subscribe(res =>{
                 console.log("response="+res);
@@ -112,10 +121,16 @@ export class HomeComponent implements OnInit {
                 }
               }
               );  
-          }
+          // }
                     
         }
       } 
+
+      else {
+        console.log("HQdata or CTdata is null or undefined !!")
+      }
+
+
     }
     else if(this.showFormIndex === 2)
     {
