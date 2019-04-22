@@ -1,18 +1,22 @@
-<div class="row">      
+<div class="row">
   <div class="col col-sm-3"></div>
-  <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br/><div class="pagehead">Create Customer</div></div>
+  <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br />
+    <div class="pagehead">Create Customer</div>
+  </div>
   <div class="col col-sm-3"></div>
 </div>
 
 <div class="row" id="formState">
-    <div class="col col-sm-3"></div>
-    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-        1. Create Company Details<hr style="background-color:#9A0C19;"/><img src="../../assets/svg/circle.svg">
-    </div>
-    <div class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
-        2. Agreements<hr style="background-color:#C7C7C7;"/><input type="checkbox" id="formOk" value="0" disabled checked/>
-    </div>
-    <div class="col col-sm-3"></div>
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+    1. Create Company Details
+    <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
+  </div>
+  <div class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+    2. Agreements
+    <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
+  </div>
+  <div class="col col-sm-3"></div>
 </div>
 
 <div class="row">
@@ -21,46 +25,57 @@
     <div class="scrollbar" id="maincontent">
       <div class="force-overflow">
         <div id="from1" *ngIf="showFormIndex === 1">
-            <div id="CustomerDetails" class="customerBox"> 
-                <div class="row panelheader">
-                    <div class="col col-sm-5 fright"><h4>Hoofdzetel</h4><hr></div>
-                    <div class="col col-sm-7"></div>
-                </div>            
-              <!-- <app-jointcommittee></app-jointcommittee>
+          <div id="CustomerDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Hoofdzetel</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+            <!-- <app-jointcommittee></app-jointcommittee>
                 <app-countries></app-countries>
                 <app-legal></app-legal> -->
 
-                <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+            <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+          </div>
+
+          <div id="CustomerContact" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Contactpersoon</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+            <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+
+          </div>
+        </div>
+        <div id="from2" *ngIf="showFormIndex === 2">
+          <div id="CustomerGeneralDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Algemeen</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
             </div>
 
-            <div id="CustomerContact" class="customerBox">
-                <div class="row panelheader">
-                    <div class="col col-sm-5 fright"><h4>Contactpersoon</h4><hr></div>
-                    <div class="col col-sm-7"></div>
-                </div>            
-                <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
-                
-            </div>
-      </div>
-      <div id="from2" *ngIf="showFormIndex === 2">
-          <div id="CustomerDetails" class="customerBox"> 
-              <div class="row panelheader">
-                  <div class="col col-sm-5 fright"><h4>Algemeen</h4><hr></div>
-                  <div class="col col-sm-7"></div>
-              </div>   
-    
-               <app-general></app-general>
+            <app-general (childEvent)="receiveGeneralObject($event)"></app-general>
           </div>
           <div id="CustomerContact" class="statuteBox">
-            <app-statute></app-statute>
-            <app-invoice-settings></app-invoice-settings>
-          </div>         
+            <app-statute (childEvent)="receiveStatuteData($event)"></app-statute>
+          </div>
+          <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
+        </div>
       </div>
     </div>
   </div>
-</div>
   <div class="col col-sm-3">
-    <button class="btn" id="forward" (click)="onFormwardClick()" >Volgende stap <img src="../../assets/svg/right-arrow.svg" style="width:20px"/></button><br/>
-    <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img src="../../assets/svg/left-arrow.svg"  style="width:20px"/> Terug</button>      
+    <button class="btn" id="forward" (click)="onFormwardClick()">Volgende stap <img
+        src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
+    <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+        src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
   </div>
 </div>

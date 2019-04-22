@@ -1,7 +1,7 @@
 
 
 .leftparameters{
-    width: 300px;
+    width: 100px;
     height: 70px;
     display: inline-block;
     margin:-2px;
@@ -13,7 +13,7 @@
 }
 
 .rightparameters {
-    width: 200px;
+    width: 100px;
     height: 50px;
     display: inline-block;
     margin:-2px;
@@ -58,11 +58,10 @@
 .addrembuttons {
    width: 40px;
    height: 40px;
-
 }
 
 .facturatieParameters {
-    padding: 10px; 
+    padding: 15px; 
     margin: auto; 
     padding-bottom: 25px; 
     padding-left: 5px; 
@@ -75,8 +74,6 @@
 }
 
 .inputBoxInhaalrust {
-    width: 100px; 
-    height: 35px; 
     border-radius: 5px; 
     margin-left: 50px; 
     padding: 7px;
@@ -87,7 +84,15 @@
     font-size:15px;
 }
 
-#PloegprimeBox1{
+.floatright{
+    float: left;
+}
+.radiorow .dynrow .col-sm-1,.radiorow .dynrow .col-sm-2,.radiorow .dynrow .col-sm-3,.radiorow .dynrow .col-sm-4,.radiorow .dynrow .col-sm-5,.radiorow .dynrow .col-sm-6,.radiorow .dynrow .col-sm-7,.radiorow .dynrow .col-sm-8,.radiorow .dynrow .col-sm-9,.radiorow .dynrow .col-sm-10,.radiorow .dynrow .col-sm-11,.radiorow .dynrow .col-sm-12{
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+/* #PloegprimeBox1{
     width: 125.72px; 
     height: 35px; 
     margin-right: 10px; 
@@ -97,7 +102,7 @@
 }
 
 #PloegprimeBox2 {
-    width: 100px; 
+    width: 50px; 
     height: 35px; 
     margin-right: 10px; 
     display: inline-block; 
@@ -112,9 +117,9 @@
     display: inline-block; 
     padding: 7px; 
     border-radius:5px;
-}
+} */
 
-.Ploegprime{
+/* .Ploegprime{
     width: 400px;
     clear:both;
     height:auto;
@@ -125,4 +130,4 @@
     display: block;
     clear: both;
     visibility:hidden;
-}
+} */

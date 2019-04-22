@@ -14,10 +14,11 @@ export class JointcommitteeComponent implements OnInit {
   @Input() public JCFormData;
   @Output() public childEvent = new EventEmitter();
 
-  public id = 'ddl_jointcommittee' ;
+  public id = 'ddl_jointcommittee';
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
+  
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
 

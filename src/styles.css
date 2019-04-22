@@ -20,6 +20,7 @@ html, body { height: 100%; }
 .selectcomponent:hover{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
 .selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
 .jointcommittee  {min-width: 150px;max-width: 500px;}
+.jointcommittee  {min-width: 150px;max-width: 500px;}
 .countries {min-width: 100px;max-width: 250px;}
 .legalform {min-width: 100px;max-width: 150px;}
 div.customerBox {
@@ -32,6 +33,7 @@ div.customerBox {
     background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
+div#CustomerGeneralDetails{min-height: 150px;}
 div#CustomerDetails{min-height: 220px;}
 div#CustomerContact{min-height: 220px;}
 .panelheader hr {
@@ -133,3 +135,23 @@ div#CustomerContact{min-height: 220px;}
 #maincontentarea label{width:100%;}
 .form-control{ line-height: 22px;}
 
+
+
+#maincontentarea .radiorow span, #maincontentarea .radiorow label {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 1px;
+    float: left;
+    line-height: 48px;
+    vertical-align: middle;
+}
+
+.m50{
+    margin-left: 50px;
+}
+#maincontentarea .m50 select{
+    width:80%;
+}
+#maincontentarea .m50 input[type=text]{
+    width:80%;
+}

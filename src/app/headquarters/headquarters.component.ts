@@ -395,6 +395,7 @@ export class HeadquartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
+    this.dpsCustomer.invoiceSettings = this.invoiceSettings;
     this.dpsCustomer.statuteSettings = this.statuteSetting;
     this.dpsCustomer.contact = this.contact;
 
@@ -408,6 +409,53 @@ export class HeadquartersComponent implements OnInit {
 
   }
 
+  validity(){
+    if(this.HQForm.valid === true && !this.emptyData() )
+      return true;
+
+    return false;
+  }
+
+  emptyData() {
+
+
+    if(this.HQForm.get('vatNumber').value === "")
+      return true;
+    if(this.HQForm.get('firstname').value === "")
+      return true;
+    if(this.HQForm.get('officialname').value === "")
+      return true;
+    if(this.HQForm.get('creditCheck').value === "")
+    return true;
+    if(this.HQForm.get('legalform').value === "")
+    return true;
+    if(this.HQForm.get('creditLimit').value === "")
+    return true;
+    if(this.HQForm.get('street').value === "")
+    return true;
+    if(this.HQForm.get('streetnumber').value === "")
+    return true;
+    if(this.HQForm.get('city').value === "")
+    return true;
+    if(this.HQForm.get('postalcode').value === "")
+    return true;
+    if(this.HQForm.get('country').value === "")
+    return true;
+    if(this.HQForm.get('phonenumber').value === "")
+    return true;
+    if(this.HQForm.get('telephone').value === "")
+    return true;
+    if(this.HQForm.get('invoiceEmail').value === "")
+    return true;
+    if(this.HQForm.get('contractsEmail').value === "")
+    return true;
+    if(this.HQForm.get('generalEmail').value === "")
+    return true;
+
+    return false;
+
+  }
+
   setJsonDataObject() {    
 
     if(this.dpsCustomer !== null)
@@ -416,9 +464,11 @@ export class HeadquartersComponent implements OnInit {
         "customer": this.dpsCustomer.customer,
         "invoiceEmail": this.dpsCustomer.invoiceEmail,
         "contractsEmail": this.dpsCustomer.contractsEmail,
+        "invoiceSettings": this.dpsCustomer.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.dpsCustomer.statuteSettings,
-        "contacts": this.dpsCustomer.contact
+        "contacts": this.dpsCustomer.contact,
+        "formValid": this.validity()
       };
       this.sendDatatoHome();
     }
