@@ -2,7 +2,7 @@
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6 center-block">
     <img src="../../assets/svg/updateCustomer.svg" style="left:-15" /><br />
-    <div class="pagehead">{{CustomerName}}</div>
+    <div class="pagehead">{{ CustomerName }}</div>
   </div>
   <div class="col col-sm-3"></div>
 </div>
@@ -10,51 +10,67 @@
 <div class="row" id="formState">
   <div class="col col-sm-12"></div>
 </div>
-
 <div class="row">
-  <div class="col col-sm-3">
-    <div class="rline"></div>
-  </div>
-  <div class="col col-sm-9" id="maincontentarea">
-    <div class="scrollbar" id="maincontent">
-      <div class="force-overflow">
-        <div id="from1">
-          <div id="CustomerDetails" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Hoofdzetel</h4>
-                <hr />
+  <div class="col col-sm-1"></div>
+  <div class="col col-sm-11">
+    <div class="row">
+      <div class="col col-sm-3">
+        <div class="rline">
+          <div class="sidemenus">
+            <img src="../../../../assets/svg/calander.svg" /><span>Mijn Werkroosters</span></div>
+          <div class="sidemenus">
+            <img src="../../../../assets/svg/position.svg" /><span>Mijn Functies</span></div>
+          <div class="sidemenus">
+            <img src="../../../../assets/svg/users.svg" /><span>Mijn Gebruikers</span></div>
+          <div class="sidemenus">
+            <img src="../../../../assets/svg/location.svg" /><span>Mijn Vestigingen</span></div>
+          <div class="sidemenus active">
+            <img src="../../../../assets/svg/customers.svg" /><span>Mijn Bedrijfsgegevens</span></div>
+        </div>
+      </div>
+      <div class="col col-sm-9" id="maincontentarea">
+        <div class="scrollbar" id="maincontent">
+          <div class="force-overflow">
+            <div id="from1">
+              <div id="CustomerDetails" class="customerBox">
+                <div class="row panelheader">
+                  <div class="col col-sm-5 fright">
+                    <h4>Hoofdzetel</h4>
+                    <hr />
+                  </div>
+                  <div class="col col-sm-7"></div>
+                </div>
+                <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
               </div>
-              <div class="col col-sm-7"></div>
-            </div>
-            <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
-          </div>
-          <div id="CustomerContact" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Contactpersoon</h4>
-                <hr />
+              <div id="CustomerContact" class="customerBox">
+                <div class="row panelheader">
+                  <div class="col col-sm-5 fright">
+                    <h4>Contactpersoon</h4>
+                    <hr />
+                  </div>
+                  <div class="col col-sm-7"></div>
+                </div>
+                <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
               </div>
-              <div class="col col-sm-7"></div>
-            </div>
-            <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
-          </div>
-          <div id="CustomerDetails" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Algemeen</h4>
-                <hr />
+              <div id="CustomerDetails" class="customerBox">
+                <div class="row panelheader">
+                  <div class="col col-sm-5 fright">
+                    <h4>Algemeen</h4>
+                    <hr />
+                  </div>
+                  <div class="col col-sm-7"></div>
+                </div>
+                <app-general></app-general>
               </div>
-              <div class="col col-sm-7"></div>
+              <div id="CustomerContact" class="statuteBox">
+                <app-statute></app-statute>
+                <app-invoice-settings></app-invoice-settings>
+              </div>
             </div>
-            <app-general></app-general>
-          </div>
-          <div id="CustomerContact" class="statuteBox">
-            <app-statute></app-statute>
-            <app-invoice-settings></app-invoice-settings>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
