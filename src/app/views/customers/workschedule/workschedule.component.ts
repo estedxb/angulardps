@@ -11,5 +11,4 @@ export class WorkscheduleComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

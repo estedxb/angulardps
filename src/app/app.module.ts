@@ -7,14 +7,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
-import { HeadersComponent } from './views/headers/headers.component';
+import { HeadersComponent } from './componentcontrols/headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { LoginComponent } from './views/login/login.component';
-// import { UiSwitchModule } from 'ngx-toggle-switch';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, LoginComponent],
+  declarations: [AppComponent, routingComponents],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -42,7 +40,6 @@ export class AppModule { }
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { MatAutocompleteModule,MatInputModule } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule,
 NgbModule ,
 */
