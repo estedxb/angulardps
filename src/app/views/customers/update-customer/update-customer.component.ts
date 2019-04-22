@@ -7,10 +7,10 @@ import { ContactpersonComponent } from '../../../contactperson/contactperson.com
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',
-  styleUrls: ['./update-customer.component.css']
+  styleUrls: ['./../customers.component.css']
 })
 export class UpdateCustomerComponent implements OnInit {
-
+  public CustomerName = 'SB Graphics bvba';
   constructor(private customerService: CustomersService) { }
 
   ngOnInit() {

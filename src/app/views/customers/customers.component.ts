@@ -10,7 +10,6 @@ import { CustomersService } from '../../shared/customers.service';
 
 export class CustomersComponent implements OnInit {
   public dpscustomers = [];
-  public customerName = 'SB Graphics bvba';
   public errorMsg;
   constructor(private customersService: CustomersService) { console.log('CustomersComponent Init'); }
 

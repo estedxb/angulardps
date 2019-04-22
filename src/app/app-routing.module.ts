@@ -23,6 +23,7 @@ import { LocationsComponent } from './views/Customers/locations/locations.compon
 import { UpdateCustomerComponent } from './views/Customers/update-customer/update-customer.component';
 import { AddpersonComponent } from './views/person/addperson/addperson.component';
 import { AddCustomerComponent } from './views/Customers/add-customer/add-customer.component';
+import { LoginComponent } from './views/login/login.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'customer/update', component: UpdateCustomerComponent },
   { path: 'settings', component: CustomersComponent },
   { path: 'scheduler', component: CustomersComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'person/addperson', component: AddpersonComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
@@ -67,5 +69,6 @@ export const routingComponents = [
   LocationsComponent,
   UpdateCustomerComponent,
   AddpersonComponent,
-  AddCustomerComponent
+  AddCustomerComponent,
+  LoginComponent
 ];
