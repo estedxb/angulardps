@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { CustomersService } from 'src/app/shared/customers.service';
@@ -21,10 +21,12 @@ export class HomeComponent implements OnInit {
   public HQFormValid:boolean;
   public CTFormValid:boolean;
 
-  public showFormIndex = 2;
+  public showFormIndex = 1;
   constructor(private customerService:CustomersService) { }
 
   ngOnInit() {
+    this.HQFormValid =  true;
+    this.CTFormValid = true;
   }
 
   receiveData($event,i){
@@ -60,12 +62,14 @@ export class HomeComponent implements OnInit {
 
   receiveHQdata($event) {
     this.HQdata = $event;
+    this.HQFormValid =  this.HQdata.formValid;
     console.log("received in home component HQ data");
     console.log(this.HQdata);
   }
 
   receiveCTdata($event){
     this.CTdata = $event;
+    this.CTFormValid = this.CTdata.formValid;
     console.log("received in home component CT data");
     console.log(this.CTdata);
   }
@@ -74,7 +78,6 @@ export class HomeComponent implements OnInit {
 
     if(this.showFormIndex === 1)
     {
-      this.showFormIndex = 2;
     
       console.log("CTdata="+this.CTdata);
       console.log(this.CTdata);
@@ -85,7 +88,8 @@ export class HomeComponent implements OnInit {
            
           if(this.HQdata.formValid === true && this.CTdata.formValid === true)
           {
-            
+            this.showFormIndex = 2;
+          
             delete this.HQdata.formValid;
             delete this.CTdata.formValid;
 
