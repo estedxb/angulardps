@@ -4,6 +4,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
   InvoiceSettings, Language, Contact } from '../shared/models';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -22,7 +23,7 @@ export class InvoiceSettingsComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   private _selectedValueInhaalrust: any ; private _selectedIndexInhaalrust: any = 0;  private _Inhaalrustvalue: any ;
 
-  public disabled="false";
+  public disabled="true";
   public addNewRow:boolean;
   public removeLastRemove:boolean;
 
@@ -30,6 +31,9 @@ export class InvoiceSettingsComponent implements OnInit {
   sicknessInvoiced: boolean;
   holidayInvoiced: boolean;
   compensatoryRest:boolean;
+  ploegpremieSwitch:boolean;
+  andreSwitch:boolean;
+
   payId:boolean;
   mobileBoxText:string;
 
@@ -47,7 +51,7 @@ export class InvoiceSettingsComponent implements OnInit {
   public ISForm: FormGroup
 
   public form: FormGroup;
-  public Ploegpremiere: FormArray;  
+  public Ploegpremiere: FormArray;
 
   public formNew: FormGroup;
   public Andre:FormArray;
@@ -204,6 +208,19 @@ export class InvoiceSettingsComponent implements OnInit {
     this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;
 
     this.ISForm.get('mobilebox').disable();
+    this.ISForm.get('PloegprimeBox1').disable();
+    this.ISForm.get('PloegprimeBox2').disable();
+    this.ISForm.get('PloegprimeBox3').disable();
+    this.ISForm.get('inhaalrust').disable();
+
+    this.ISForm.get('AndreBox1').disable();
+    this.ISForm.get('AndreBox2').disable();
+    this.ISForm.get('currency').disable();
+
+    this.disabled = "true";
+
+    this.ploegpremieSwitch = false;
+    this.andreSwitch = false;
 
     this.changeObject();
 
@@ -212,14 +229,57 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onTeamChange($event) {
+
+    this.ploegpremieSwitch = $event;
+
     if($event === true)
     {
-      this.shiftAllowance = true;      
+      this.shiftAllowance = true;
+      this.ISForm.get('PloegprimeBox1').enable();
+      this.ISForm.get('PloegprimeBox2').enable();
+      this.ISForm.get('PloegprimeBox3').enable();
+      this.ISForm.get('currency').enable();
+
+      this.disabled = "false";
     }
     else
+    {
       this.shiftAllowance = false;
+      this.ISForm.get('PloegprimeBox1').disable();      
+      this.ISForm.get('PloegprimeBox2').disable();
+      this.ISForm.get('PloegprimeBox3').disable();
+      this.ISForm.get('currency').disable();
+      this.disabled = "true";
+    }
+
       this.changeObject();
 
+  }
+
+  isInvalid(){
+
+    console.log("is invalid =");
+    console.log(this.ploegpremieSwitch);
+
+    if(this.ploegpremieSwitch === true)
+    {
+      return false;
+    }
+  
+    return true;
+  }
+
+  isInvalidOther() {
+
+    console.log("is invalid andre =");
+    console.log(this.andreSwitch);
+
+    if(this.andreSwitch === true)
+    {
+      return false;
+    }
+  
+    return true;
   }
 
   setPgBox1(value,i:number) {
@@ -313,13 +373,23 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  onChangeA(event) {
+  onChangeA($event) {
 
-    if(event === true ){
+    this.andreSwitch = $event;
+
+    if($event === true ){
       this.ISForm.get('arrayAndreBox').enable();
+      this.ISForm.get('AndreBox1').enable();
+      this.ISForm.get('AndreBox2').enable();
+      this.ISForm.get('currency').enable();
+      this.disabled = "false";
     } 
     else {
       this.ISForm.get('arrayAndreBox').disable();
+      this.ISForm.get('AndreBox1').disable();
+      this.ISForm.get('AndreBox2').disable();
+      this.ISForm.get('currency').disable();
+      this.disabled = "true";
     }
     this.changeObject();
 

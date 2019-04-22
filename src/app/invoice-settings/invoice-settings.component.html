@@ -25,7 +25,7 @@
                                                         <option *ngFor="let data of dataDropDown let i= index"
                                                                 [attr.data-index]="i" [value]="i">{{data}}</option>
                                                 </select>
-                                        </div>                                        
+                                        </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-sm-12">
@@ -92,13 +92,13 @@
                                                 </select>
                                         </div>
                                         <div class="col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
-                                                <button (click)="addRows()" type="button" class="btnAdd">
+                                                <button [disabled]="isInvalid()"  #addButton (click)="addRows()" type="button" class="btnAdd">
                                                         <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
                                                 </button>
                                         </div>
 
                                                 <ng-template #remove>
-                                                                <button (click)="removeRows(i)" type="button" class="btnRemove">
+                                                                <button [disabled]="isInvalid()" #removeButton (click)="removeRows(i)" type="button" class="btnRemove">
                                                                         <img src="../../../assets/img/delete.jpg" alt="" height="17.5" width="17.5" />
                                                                 </button>        
                                                 </ng-template>
@@ -129,12 +129,12 @@
                                                 </select>
                                         </div>
                                         <div class="col-sm-2"  *ngIf="(nresult.length === 1 || isLastA) else removeA">
-                                                <button (click)="addAndreRows()" type="button" class="btnAdd">
+                                                <button [disabled]="isInvalidOther()" #addButtonA (click)="addAndreRows()" type="button" class="btnAdd">
                                                         <img src="../../assets/img/add.png" alt="" height="17.5" width="17.5" />
                                                 </button>
                                         </div>
                                           <ng-template #removeA>
-                                                        <button #buttonA (click)="removeAndreRows(i)" type="button" class="btnRemove">
+                                                        <button [disabled]="isInvalidOther()" #buttonA (click)="removeAndreRows(i)" type="button" class="btnRemove">
                                                                 <img src="../../../assets/img/delete.jpg" alt="" height="17.5" width="17.5" />
                                                         </button>
                                           </ng-template>
