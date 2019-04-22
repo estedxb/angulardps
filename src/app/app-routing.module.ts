@@ -16,7 +16,7 @@ import { HeadquartersComponent } from './headquarters/headquarters.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
 import { GeneralComponent } from './general/general.component';
 import { InvoiceSettingsComponent } from './invoice-settings/invoice-settings.component';
-import { WorkscheduleComponent } from './views/Customers/workschedule/workschedule.component';
+import { WorkscheduleComponent } from './views/customers/workschedule/workschedule.component';
 import { PositionComponent } from './views/Customers/position/position.component';
 import { UsersComponent } from './views/Customers/users/users.component';
 import { LocationsComponent } from './views/Customers/locations/locations.component';
