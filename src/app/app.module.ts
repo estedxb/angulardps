@@ -10,7 +10,6 @@ import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './componentcontrols/headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
-// import { UiSwitchModule } from 'ngx-toggle-switch';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -41,7 +40,6 @@ export class AppModule { }
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { MatAutocompleteModule,MatInputModule } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule,
 NgbModule ,
 */

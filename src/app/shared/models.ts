@@ -18,12 +18,12 @@ export class Customer {
     phoneNumber?: PhoneNumber;
     email?: EmailAddress;
     vcaCertification?: VcaCertification;
-    isBlocked:boolean;
+    isBlocked: boolean;
 }
 
 export class EmailAddress { emailAddress: string; }
 
-export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean}
+export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean }
 
 export class PhoneNumber { number: string; }
 
@@ -94,7 +94,7 @@ export class LegalForm {
     fr: Forms[];
 }
 
-export class Forms { name: string;}
+export class Forms { name: string; }
 
 export class CountriesList {
     countryCode: string;
@@ -102,6 +102,23 @@ export class CountriesList {
 }
 
 export class Language { name: string; shortName: string; }
+
+export class User {
+    userName: string;
+    firstName: string;
+    lastName: string;
+    email: EmailAddress;
+    mobile: PhoneNumber;
+    phone: PhoneNumber;
+}
+
+export class DpsUser {
+    customerVatNumber: string;
+    user: User;
+    userRole: string;
+    isEnabled: boolean;
+    isArchived: boolean;
+}
 
 /*
 export class LegalForm {
