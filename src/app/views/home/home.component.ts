@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   public HQFormValid:boolean;
   public CTFormValid:boolean;
 
-  public showFormIndex = 1;
+  public showFormIndex = 2;
   constructor(private customerService:CustomersService) { }
 
   ngOnInit() {

@@ -3,7 +3,7 @@
         <label class="titleLabel">Headquarters</label>
       </div> -->
 
-      <form [formGroup]="HQForm" novalidate id="hqform">
+      <form [formGroup]="HQForm" id="hqform">
         <!-- <pre>{{ HQForm.value | json}}</pre>
         <pre>{{ HQForm.valid }}</pre>
 
@@ -16,7 +16,7 @@
         <div class="col-sm-5 inputWithImg">
           <label class="titleBold"> Ondernemingsnummer: </label>
           <input (blur)= "creditLimitApi()" formControlName="vatNumber" name="vatNumber" class="form-control" type="text" required/>
-          <div class="form-control-feedback" *ngIf="HQForm.controls.vatNumber.invalid && (HQForm.controls.vatNumber.dirty || HQForm.controls.vatNumber.touched) else valid"> 
+          <div class="form-control-feedback" *ngIf="HQForm.controls.vatNumber.invalid && (HQForm.controls.vatNumber.dirty || HQForm.controls.vatNumber.touched || HQForm.controls.vatNumber.untouched ) else valid"> 
               <img src="../../assets/img/InvalidIcon.png" alt="" >
           </div>
           <ng-template #valid>
@@ -42,18 +42,18 @@
           <div class="col-sm-5 inputWithImg">
             <label class="titleBold"> Naam: </label>
             <input formControlName="firstname" class="form-control" name="firstname" type="text" required/>
-            <div class="form-control-feedback" *ngIf="HQForm.controls.firstname.invalid && (HQForm.controls.firstname.dirty || HQForm.controls.firstname.touched) else valida"> 
+            <div class="form-control-feedback" *ngIf="HQForm.controls.firstname.invalid && (HQForm.controls.firstname.untouched || HQForm.controls.firstname.dirty || HQForm.controls.firstname.touched) else valida"> 
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #valida>
               <img src="../../assets/img/ValidIcon.png" alt="">
-            </ng-template>                          
+            </ng-template>                         
           </div>
 
           <div class="col-sm-4 inputWithImg">
               <label class="titleBold"> officele naam: </label>
               <input formControlName="officialname" class="form-control" name="officialname" type="text" required/>
-              <div class="form-control-feedback" *ngIf="HQForm.controls.officialname.invalid && (HQForm.controls.officialname.dirty || HQForm.controls.officialname.touched) else newvalid"> 
+              <div class="form-control-feedback" *ngIf="HQForm.controls.officialname.invalid && (HQForm.controls.officialname.untouched || HQForm.controls.officialname.dirty || HQForm.controls.officialname.touched) else newvalid"> 
                       <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalid>
@@ -72,7 +72,7 @@
           <div class="col-sm-5 inputWithImg">
               <label class="titleBold"> straat: </label>
               <input formControlName="street" class="form-control" name="street" type="text" required/>
-              <div class="form-control-feedback" *ngIf="HQForm.controls.street.invalid && (HQForm.controls.street.dirty || HQForm.controls.street.touched) else validc"> 
+              <div class="form-control-feedback" *ngIf="HQForm.controls.street.invalid && (HQForm.controls.street.untouched || HQForm.controls.street.dirty || HQForm.controls.street.touched) else validc"> 
                   <img src="../../assets/img/InvalidIcon.png" alt="">
               </div>
               <ng-template #validc>
@@ -83,7 +83,7 @@
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Nr: </label>
               <input formControlName="streetnumber" class="form-control" name="streetnumber" type="text" required/>
-              <div class="form-control-feedback" *ngIf="HQForm.controls.streetnumber.invalid && (HQForm.controls.streetnumber.dirty || HQForm.controls.streetnumber.touched) else validn"> 
+              <div class="form-control-feedback" *ngIf="HQForm.controls.streetnumber.invalid && (HQForm.controls.streetnumber.untouched || HQForm.controls.streetnumber.dirty || HQForm.controls.streetnumber.touched) else validn"> 
                   <img src="../../assets/img/InvalidIcon.png" alt="" >
               </div>
               <ng-template #validn>
@@ -94,7 +94,7 @@
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Bus: </label>
             <input formControlName="bus" class="form-control" name="bus"  type="text" required/>
-            <div class="form-control-feedback" *ngIf="HQForm.controls.bus.invalid && (HQForm.controls.bus.dirty || HQForm.controls.bus.touched) else validq"> 
+            <div class="form-control-feedback" *ngIf="HQForm.controls.bus.invalid && ( HQForm.controls.bus.dirty || HQForm.controls.bus.touched) else validq"> 
                 <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #validq>
@@ -107,7 +107,7 @@
           <div class="col-sm-5 inputWithImg">
               <label class="titleBold"> Plaats: </label>
               <input formControlName="city"  class="form-control" name="city" type="text" required/>
-              <div class="form-control-feedback" *ngIf="HQForm.controls.city.invalid && (HQForm.controls.city.dirty || HQForm.controls.city.touched) else valids"> 
+              <div class="form-control-feedback" *ngIf="HQForm.controls.city.invalid && (HQForm.controls.city.untouched || HQForm.controls.city.dirty || HQForm.controls.city.touched) else valids"> 
                   <img src="../../assets/img/InvalidIcon.png" alt="" >
               </div>
               <ng-template #valids>
@@ -118,7 +118,7 @@
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> postcode: </label>
             <input formControlName="postalcode"  class="form-control" name="postalcode" type="text" required/>
-            <div class="form-control-feedback" *ngIf="HQForm.controls.postalcode.invalid && (HQForm.controls.postalcode.dirty || HQForm.controls.postalcode.touched) else validw"> 
+            <div class="form-control-feedback" *ngIf="HQForm.controls.postalcode.invalid && (HQForm.controls.postalcode.untouched || HQForm.controls.postalcode.dirty || HQForm.controls.postalcode.touched) else validw"> 
                 <img src="../../assets/img/InvalidIcon.png" alt="" >
             </div>
             <ng-template #validw>
@@ -136,7 +136,7 @@
           <div class="col-sm-5 inputWithImg">
                      <label class="titleBold"> phonenumber: </label>
                      <input formControlName="phonenumber"  class="form-control" name="phonenumber" type="text" required/>
-                     <div class="form-control-feedback" *ngIf="HQForm.controls.phonenumber.invalid && (HQForm.controls.phonenumber.dirty || HQForm.controls.phonenumber.touched) else validf"> 
+                     <div class="form-control-feedback" *ngIf="HQForm.controls.phonenumber.invalid && (HQForm.controls.phonenumber.untouched || HQForm.controls.phonenumber.dirty || HQForm.controls.phonenumber.touched) else validf"> 
                          <img src="../../assets/img/InvalidIcon.png" alt="" >
                      </div>
                      <ng-template #validf>
@@ -147,7 +147,7 @@
           <div class="col-sm-7 inputWithImg">
                   <label class="titleBold"> Algemeen E-mail address: </label>
                   <input type="email"  formControlName="generalEmail" class="form-control" name="generalEmail" required/>
-                  <div class="form-control-feedback" *ngIf="HQForm.controls.generalEmail.invalid && (HQForm.controls.generalEmail.dirty || HQForm.controls.generalEmail.touched) else validj"> 
+                  <div class="form-control-feedback" *ngIf="HQForm.controls.generalEmail.invalid && (HQForm.controls.generalEmail.untouched || HQForm.controls.generalEmail.dirty || HQForm.controls.generalEmail.touched) else validj"> 
                       <img src="../../assets/img/InvalidIcon.png" alt="" >
                   </div>
                   <ng-template #validj>
@@ -160,7 +160,7 @@
           <div class="col-sm-5 inputWithImg">
                       <label class="titleBold"> Facturatie e-mail address: </label>
                       <input type="email" formControlName="invoiceEmail" class="form-control" name="invoiceEmail"  />
-                      <div class="form-control-feedback" *ngIf="HQForm.controls.invoiceEmail.invalid && (HQForm.controls.invoiceEmail.dirty || HQForm.controls.invoiceEmail.touched) else validi"> 
+                      <div class="form-control-feedback" *ngIf="HQForm.controls.invoiceEmail.invalid && (HQForm.controls.invoiceEmail.untouched || HQForm.controls.invoiceEmail.dirty || HQForm.controls.invoiceEmail.touched) else validi"> 
                           <img src="../../assets/img/InvalidIcon.png" alt="" >
                         </div>
                         <ng-template #validi>
@@ -171,7 +171,7 @@
           <div class="col-sm-7 inputWithImg">
                     <label class="titleBold"> Contracten e-mail address: </label>
                     <input type="email" (blur)="updateData()" formControlName="contractsEmail" class="form-control" name="contractsEmail"  />
-                      <div class="form-control-feedback" *ngIf="HQForm.controls.contractsEmail.invalid && (HQForm.controls.contractsEmail.dirty || HQForm.controls.contractsEmail.touched) else validv"> 
+                      <div class="form-control-feedback" *ngIf="HQForm.controls.contractsEmail.invalid && (HQForm.controls.contractsEmail.untouched || HQForm.controls.contractsEmail.dirty || HQForm.controls.contractsEmail.touched) else validv"> 
                           <img src="../../assets/img/InvalidIcon.png" alt="" >
                       </div>
                       <ng-template #validv>

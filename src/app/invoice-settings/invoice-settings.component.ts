@@ -94,7 +94,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.selectedIndexCurrencyShiftAllowance = $event.target.value;
     console.log(this.value);
 
-    if(this.value === "euro")
+    if(this.value === "€")
     {
       this.shiftAllowances[i].nominal = true;
       this.changeObject();
@@ -114,7 +114,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.selectedIndexCurrencyOtherAllowance = $event.target.value;
     console.log(this.value);
 
-    if(this.value === "euro")
+    if(this.value === "€")
     {
       console.log("euro selected setting nominal to true");
       this.otherAllowances[i].nominal = true;
@@ -173,7 +173,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.otherAllowances.push(this.otherAllowanceObject);
 
     this.dataDropDown = ["betaald","niet betaald"];
-    this.datacurrencyDropDown = ["euro","%"];
+    this.datacurrencyDropDown = ["€","%"];
 
     this.ISForm = new FormGroup({
 
@@ -374,6 +374,7 @@ export class InvoiceSettingsComponent implements OnInit {
   removeAndreRows(index) {
     if(this.Andre.length != 1)
       this.Andre.removeAt(index);
+      this.otherAllowances.splice(index, 1);
       this.changeObject();
   }
 
@@ -393,6 +394,10 @@ export class InvoiceSettingsComponent implements OnInit {
   removeRows(index) {
     if(this.Ploegpremiere.length != 1)
       this.Ploegpremiere.removeAt(index);
+      
+      // remove from array shiftAllowances
+      this.shiftAllowances.splice(index, 1);
+
       this.changeObject();
   }
 
