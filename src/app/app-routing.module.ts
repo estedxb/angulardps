@@ -5,7 +5,7 @@ import { CustomersComponent } from './views/customers/customers.component';
 import { PageNotFoundComponentComponent } from './views/page-not-found-component/page-not-found-component.component';
 import { CustomerselectionComponent } from './componentcontrols/customerselection/customerselection.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
-import { HeadersComponent } from './views/headers/headers.component';
+import { HeadersComponent } from './componentcontrols/headers/headers.component';
 import { LegalComponent } from './componentcontrols/legal/legal.component';
 import { JointcommitteeComponent } from './componentcontrols/jointcommittee/jointcommittee.component';
 import { CountriesComponent } from './componentcontrols/countries/countries.component';
