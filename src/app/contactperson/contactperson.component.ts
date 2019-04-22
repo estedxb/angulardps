@@ -39,10 +39,10 @@ export class ContactpersonComponent implements OnInit {
       firstname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       alsCheck:new FormControl(),
-      language:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
+      language:new FormControl(''),
       position:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
-      mobile:new FormControl('',[Validators.required,Validators.pattern("^/[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{3}[\.\\- ]{0,1}[0-9]{2}/$")]), 
-      telephone:new FormControl('',[Validators.pattern('^[0-9+]+$')]),
+      mobile:new FormControl('',[Validators.required]),//Validators.pattern("^/[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{3}[\.\\- ]{0,1}[0-9]{2}/$") 
+      telephone:new FormControl(''),
       emailaddress:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
     });
 
@@ -89,52 +89,61 @@ export class ContactpersonComponent implements OnInit {
   }
 
   changeAls($event){    
-    this.alsCheck = $event;
+    this.alsCheck = $event;    
   }
 
   setJSONObject() {
+    
+              // "firstName": this.contact.firstName,
+          // "lastName": this.contact.lastName,
+          // "postion": this.contact.postion,
+          // "email": this.contact.email,
+          // "mobile": this.contact.mobile,
+          // "phoneNumber": this.contact.phoneNumber,
+          // "language": this.contact.language,
 
    this.CTdata =  {
-          "firstName": this.contact.firstName,
-          "lastName": this.contact.lastName,
-          "postion": this.contact.postion,
-          "email": this.contact.email,
-          "mobile": this.contact.mobile,
-          "phoneNumber": this.contact.phoneNumber,
-          "language": this.contact.language,
-          "formValid": this.validity()
+
+          "contact": this.contact,
+          "formValid": this.validity(),
+          "activateContactAsUser":this.alsCheck
    };
 
-   if(this.CTdata !== undefined)
-   {
      this.childEvent.emit(this.CTdata);
-   }
 
   }
 
   validity() {
 
-      if(this.CTForm.valid && !this.emptyData())
+    this.checkValidations();
+
+      if(this.CTForm.valid === true && !this.emptyData())
         return true;
        
         return false;
   }
 
+  checkValidations() {
+
+    console.log(this.CTForm.get('firstname').valid);
+    console.log(this.CTForm.get('lastname').valid);
+    console.log(this.CTForm.get('position').valid);
+    console.log(this.CTForm.get('emailaddress').valid);
+    console.log(this.CTForm.get('mobile').valid);
+
+  }
+
   emptyData() {
 
-    if(this.CTForm.get('firstName').value === "")
+    if(this.CTForm.get('firstname').value === "")
       return true;
-    if(this.CTForm.get('lastName').value === "")
+    if(this.CTForm.get('lastname').value === "")
       return true;
-    if(this.CTForm.get('postion').value === "")
+    if(this.CTForm.get('position').value === "")
       return true;
-    if(this.CTForm.get('email').value === "")
+    if(this.CTForm.get('emailaddress').value === "")
     return true;
     if(this.CTForm.get('mobile').value === "")
-    return true;
-    if(this.CTForm.get('phoneNumber').value === "")
-    return true;
-    if(this.CTForm.get('language').value === "")
     return true;
     
     return false;
@@ -143,7 +152,7 @@ export class ContactpersonComponent implements OnInit {
 
   public updateData() {
     this.createObjects();
-    this.childEvent.emit(this.CTdata);
+    //this.childEvent.emit(this.CTdata);
   }
   
 

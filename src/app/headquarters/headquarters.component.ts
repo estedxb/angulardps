@@ -85,16 +85,15 @@ export class HeadquartersComponent implements OnInit {
       firstname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       officialname: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
       creditCheck:new FormControl(),
-      legalform:new FormControl('',Validators.required),
+      legalform:new FormControl(),
       creditLimit:new FormControl(),
       street:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]),
       streetnumber:new FormControl('',[Validators.required,Validators.pattern("^[0-9]+$")]),
       bus:new FormControl('',Validators.pattern("^[0-9]+$")),
       city:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
       postalcode:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9]+$")]),
-      country:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
-      phonenumber:new FormControl('',[Validators.required]),
-      telephone:new FormControl('',[Validators.required]),
+      country:new FormControl(''),
+      phonenumber:new FormControl('',Validators.required),
       invoiceEmail:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")]),
       contractsEmail:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")]),
       generalEmail:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
@@ -108,6 +107,44 @@ export class HeadquartersComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder, private customerService: CustomersService) {
           
+   }
+
+   checkValidation()
+    {
+     if(this.HQForm.get('vatNumber').valid === true &&
+        this.HQForm.get('firstname').valid === true &&
+        this.HQForm.get('officialname').valid === true &&
+        this.HQForm.get('street').valid === true &&
+        this.HQForm.get('streetnumber').valid === true &&
+        this.HQForm.get('bus').valid === true &&
+        this.HQForm.get('city').valid === true &&
+        this.HQForm.get('postalcode').valid === true &&
+        this.HQForm.get('phonenumber').valid === true &&
+        this.HQForm.get('invoiceEmail').valid === true &&
+        this.HQForm.get('contractsEmail').valid === true &&
+        this.HQForm.get('generalEmail').valid === true)
+     {
+       console.log("form valid");
+        return true;
+     }
+     else {
+       console.log("form not valid");
+       console.log("vatnumber="+this.HQForm.get('vatNumber').valid);
+       console.log("firstname="+this.HQForm.get('firstname').valid);
+       console.log("name="+this.HQForm.get('officialname').valid);
+       console.log("street="+this.HQForm.get('street').valid);
+       console.log("streetnumber="+this.HQForm.get('streetnumber').valid);
+       console.log("bus="+this.HQForm.get('bus').valid);
+       console.log("city="+this.HQForm.get('city').valid);
+       console.log("postalcode="+this.HQForm.get('postalcode').valid);
+       console.log("phonenumber="+this.HQForm.get('phonenumber').valid);
+       console.log("invoiceEmail="+this.HQForm.get('invoiceEmail').valid);
+       console.log("contractsEmail="+this.HQForm.get('contractsEmail').valid);
+       console.log("generalEmail="+this.HQForm.get('generalEmail').valid);
+
+     }
+
+     return false;
    }
 
 
@@ -148,6 +185,8 @@ export class HeadquartersComponent implements OnInit {
 
     if(this.HQForm.get('vatNumber').valid === true)    
        this.getCustomerByVatNumber(this.vatNumber);
+
+       //this.checkValidation();
 
    }
 
@@ -209,7 +248,7 @@ export class HeadquartersComponent implements OnInit {
       this.HQForm.get('creditLimit').disable();
 
       if(this.change === true)
-        this.creditLimit(3004);
+        this.creditLimit(0);
       else
         this.creditLimit(0);
 
@@ -245,7 +284,7 @@ export class HeadquartersComponent implements OnInit {
     this.creditCheck = new CreditCheck();
 
     // assigning credit check object
-    this.creditCheck.creditLimit = this.creditCheckLimit;
+    this.creditCheck.creditLimit =  0; //this.creditCheckLimit;
     this.creditCheck.creditcheck = false;
     this.creditCheck.creditCheckPending = false;
     this.creditCheck.dateChecked = (today.getMonth()+1) + "/"+ today.getDay() + "/" + today.getFullYear();
@@ -395,7 +434,7 @@ export class HeadquartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
-    this.dpsCustomer.invoiceSettings = this.invoiceSettings;
+    //this.dpsCustomer.invoiceSettings = this.invoiceSettings;
     this.dpsCustomer.statuteSettings = this.statuteSetting;
     this.dpsCustomer.contact = this.contact;
 
@@ -418,19 +457,12 @@ export class HeadquartersComponent implements OnInit {
 
   emptyData() {
 
-
     if(this.HQForm.get('vatNumber').value === "")
       return true;
     if(this.HQForm.get('firstname').value === "")
       return true;
     if(this.HQForm.get('officialname').value === "")
       return true;
-    if(this.HQForm.get('creditCheck').value === "")
-    return true;
-    if(this.HQForm.get('legalform').value === "")
-    return true;
-    if(this.HQForm.get('creditLimit').value === "")
-    return true;
     if(this.HQForm.get('street').value === "")
     return true;
     if(this.HQForm.get('streetnumber').value === "")
@@ -439,11 +471,7 @@ export class HeadquartersComponent implements OnInit {
     return true;
     if(this.HQForm.get('postalcode').value === "")
     return true;
-    if(this.HQForm.get('country').value === "")
-    return true;
     if(this.HQForm.get('phonenumber').value === "")
-    return true;
-    if(this.HQForm.get('telephone').value === "")
     return true;
     if(this.HQForm.get('invoiceEmail').value === "")
     return true;
@@ -456,7 +484,7 @@ export class HeadquartersComponent implements OnInit {
 
   }
 
-  setJsonDataObject() {    
+  setJsonDataObject() {        
 
     if(this.dpsCustomer !== null)
     {
@@ -464,11 +492,12 @@ export class HeadquartersComponent implements OnInit {
         "customer": this.dpsCustomer.customer,
         "invoiceEmail": this.dpsCustomer.invoiceEmail,
         "contractsEmail": this.dpsCustomer.contractsEmail,
-        "invoiceSettings": this.dpsCustomer.invoiceSettings,
+        // "invoiceSettings": this.dpsCustomer.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.dpsCustomer.statuteSettings,
-        "contacts": this.dpsCustomer.contact,
-        "formValid": this.validity()
+        "contact": this.dpsCustomer.contact,
+        "activateContactAsUser":false,
+        "formValid": this.validity() //validity()
       };
       this.sendDatatoHome();
     }
@@ -483,6 +512,8 @@ export class HeadquartersComponent implements OnInit {
     console.log(this.HQdata);
     console.log("json="+this.HQdata);
     this.createObjects();
+
+    console.log("validity of form ="+this.HQForm.valid);
 
     this.childEvent.emit(this.HQdata);
 
