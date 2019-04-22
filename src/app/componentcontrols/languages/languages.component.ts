@@ -6,7 +6,7 @@ import { LanguagesService } from '../../shared/languages.service';
 @Component({
   selector: 'app-languages',
   templateUrl: './languages.component.html',
-  styleUrls: ['./languages.component.css']
+  styles: ['select {width:100%;}']
 })
 export class LanguagesComponent implements OnInit {
 

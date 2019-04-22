@@ -27,14 +27,18 @@ import { PositionComponent } from './views/customers/position/position.component
 import { UsersComponent } from './views/customers/users/users.component';
 import { LocationsComponent } from './views/customers/locations/locations.component';
 import { WorkscheduleComponent } from './views/customers/workschedule/workschedule.component';
+import { EditcustomerComponent } from './views/customers/editcustomer/editcustomer.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
   { path: 'customer', component: CustomersComponent },
   { path: 'customer/add', component: AddCustomerComponent },
-  { path: 'customer/:id', component: UpdateCustomerComponent },
   { path: 'customer/update', component: UpdateCustomerComponent },
+  { path: 'customer/workschedule', component: UpdateCustomerComponent },
+  { path: 'customer/update', component: UpdateCustomerComponent },
+  { path: 'customer/update', component: UpdateCustomerComponent },
+  { path: 'customer/:id', component: UpdateCustomerComponent },
   { path: 'settings', component: CustomersComponent },
   { path: 'scheduler', component: CustomersComponent },
   { path: 'login', component: LoginComponent },
@@ -73,5 +77,6 @@ export const routingComponents = [
   UpdateCustomerComponent,
   AddpersonComponent,
   AddCustomerComponent,
-  LoginComponent
+  LoginComponent,
+  EditcustomerComponent
 ];
