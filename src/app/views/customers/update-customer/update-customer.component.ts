@@ -12,26 +12,25 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UpdateCustomerComponent implements OnInit {
   public CustomerName = 'SB Graphics bvba';
-  public currentPage = "editcustomer";
-  public Id = "";
-  
+  public currentPage = 'editcustomer';
+  public Id = '';
 
-  constructor(private customerService: CustomersService,
-  private route: ActivatedRoute){
-  let sub = this.route.params.subscribe((params: Params) => {
-        this.Id = params['id'];
-        console.log(this.Id)
-      })
 
-}
+  constructor(private customerService: CustomersService, private route: ActivatedRoute) {
+    const sub = this.route.params.subscribe((params: any) => {
+      this.Id = params.id;
+      console.log(this.Id);
+    });
 
+  }
 
   ngOnInit() {
-     if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' || this.Id === 'positions' || this.Id === 'users' || this.Id === 'workschedules'){
-       this.currentPage = this.Id;
-     }else {
-       this.currentPage = 'editcustomer';
-     }
+    if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' || this.Id === 'positions'
+      || this.Id === 'users' || this.Id === 'workschedules') {
+      this.currentPage = this.Id;
+    } else {
+      this.currentPage = 'editcustomer';
+    }
   }
 
 }
