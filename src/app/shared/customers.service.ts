@@ -7,25 +7,25 @@ import { environment } from '../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class CustomersService {
 
-  private getCountriesListUrl = '';
+  private getCustomersListUrl = '';
   private getCustomersByVatNumberUrl = "";
   private createCustomerURL = "";
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getCustomers !== '') {
       console.log('Data From Remote');
-      this.getCountriesListUrl = environment.dpsAPI + environment.getCustomers;
+      this.getCustomersListUrl = environment.dpsAPI + environment.getCustomers;
       this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
       console.log('Data From JSON');
-      this.getCountriesListUrl = 'assets/data/customers.json';
+      this.getCustomersListUrl = 'assets/data/customers.json';
     }
   }
 
   public getCustomers(): Observable<DPSCustomer[]> {
-    console.log('CustomersService Data From = ' + this.getCountriesListUrl);
-    const result =  this.http.get<DPSCustomer[]>(this.getCountriesListUrl).catch(this.errorHandler);
+    console.log('CustomersService Data From = ' + this.getCustomersListUrl);
+    const result =  this.http.get<DPSCustomer[]>(this.getCustomersListUrl).catch(this.errorHandler);
     console.log(result);
     return result;
   }
