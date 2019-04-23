@@ -5,7 +5,7 @@ import { CountriesService } from '../../shared/countries.service';
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
-  styleUrls: ['./countries.component.css']
+  styles: ['']
 })
 
 export class CountriesComponent implements OnInit {

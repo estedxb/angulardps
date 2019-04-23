@@ -1,0 +1,36 @@
+<div id="from1">
+  <div id="CustomerDetails" class="customerBox">
+    <div class="row panelheader">
+      <div class="col col-sm-5 fright">
+        <h4>Hoofdzetel</h4>
+        <hr />
+      </div>
+      <div class="col col-sm-7"></div>
+    </div>
+    <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+  </div>
+  <div id="CustomerContact" class="customerBox">
+    <div class="row panelheader">
+      <div class="col col-sm-5 fright">
+        <h4>Contactpersoon</h4>
+        <hr />
+      </div>
+      <div class="col col-sm-7"></div>
+    </div>
+    <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+  </div>
+  <div id="CustomerDetails" class="customerBox">
+    <div class="row panelheader">
+      <div class="col col-sm-5 fright">
+        <h4>Algemeen</h4>
+        <hr />
+      </div>
+      <div class="col col-sm-7"></div>
+    </div>
+    <app-general></app-general>
+  </div>
+  <div id="CustomerContact" class="statuteBox">
+    <app-statute></app-statute>
+    <app-invoice-settings></app-invoice-settings>
+  </div>
+</div>

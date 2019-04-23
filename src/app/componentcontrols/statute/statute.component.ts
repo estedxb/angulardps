@@ -9,7 +9,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 @Component({
   selector: 'app-statute',
   templateUrl: './statute.component.html',
-  styleUrls: ['./statute.component.css']
+  styles: ['']
 })
 export class StatuteComponent implements OnInit {
 

@@ -11,6 +11,8 @@ import { ContactpersonComponent } from '../../../contactperson/contactperson.com
 })
 export class UpdateCustomerComponent implements OnInit {
   public CustomerName = 'SB Graphics bvba';
+  public currentPage = "editcustomer";
+  
   constructor(private customerService: CustomersService) { }
 
   ngOnInit() {

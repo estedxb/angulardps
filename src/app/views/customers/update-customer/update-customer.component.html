@@ -1,3 +1,5 @@
+<app-headers></app-headers>
+<app-menu></app-menu>
 <div class="row">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6 center-block">
@@ -16,56 +18,50 @@
     <div class="row">
       <div class="col col-sm-3">
         <div class="rline">
-          <div class="sidemenus">
-            <img src="../../../../assets/svg/calander.svg" /><span>Mijn Werkroosters</span></div>
-          <div class="sidemenus">
-            <img src="../../../../assets/svg/position.svg" /><span>Mijn Functies</span></div>
-          <div class="sidemenus">
-            <img src="../../../../assets/svg/users.svg" /><span>Mijn Gebruikers</span></div>
-          <div class="sidemenus">
-            <img src="../../../../assets/svg/location.svg" /><span>Mijn Vestigingen</span></div>
-          <div class="sidemenus active">
-            <img src="../../../../assets/svg/customers.svg" /><span>Mijn Bedrijfsgegevens</span></div>
+          <div class="sidemenus" [ngClass]="{active: currentPage==='workschedule'}">
+            <button (click)="currentPage='workschedule'">
+              <img src="./assets/svg/calander.svg" />Mijn Werkroosters
+            </button>
+          </div>
+          <div class="sidemenus" [ngClass]="{active: currentPage==='position'}">
+            <button (click)="currentPage='position'">
+              <img src="./assets/svg/position.svg" />Mijn Functies
+            </button>
+          </div>
+          <div class="sidemenus" [ngClass]="{active: currentPage==='users'}">
+            <button (click)="currentPage='users'">
+              <img src="./assets/svg/users.svg" />Mijn Gebruikers
+            </button>
+          </div>
+          <div class="sidemenus" [ngClass]="{active: currentPage==='location'}">
+            <button (click)="currentPage='location'">
+              <img src="./assets/svg/location.svg" />Mijn Vestigingen
+            </button>
+          </div>
+          <div class="sidemenus" [ngClass]="{active: currentPage==='editcustomer'}">
+            <button (click)="currentPage='editcustomer'">
+              <img src="./assets/svg/customers.svg" />Mijn Bedrijfsgegevens
+            </button>
+          </div>
         </div>
       </div>
       <div class="col col-sm-9" id="maincontentarea">
         <div class="scrollbar" id="maincontent">
           <div class="force-overflow">
-            <div id="from1">
-              <div id="CustomerDetails" class="customerBox">
-                <div class="row panelheader">
-                  <div class="col col-sm-5 fright">
-                    <h4>Hoofdzetel</h4>
-                    <hr />
-                  </div>
-                  <div class="col col-sm-7"></div>
-                </div>
-                <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
-              </div>
-              <div id="CustomerContact" class="customerBox">
-                <div class="row panelheader">
-                  <div class="col col-sm-5 fright">
-                    <h4>Contactpersoon</h4>
-                    <hr />
-                  </div>
-                  <div class="col col-sm-7"></div>
-                </div>
-                <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
-              </div>
-              <div id="CustomerDetails" class="customerBox">
-                <div class="row panelheader">
-                  <div class="col col-sm-5 fright">
-                    <h4>Algemeen</h4>
-                    <hr />
-                  </div>
-                  <div class="col col-sm-7"></div>
-                </div>
-                <app-general></app-general>
-              </div>
-              <div id="CustomerContact" class="statuteBox">
-                <app-statute></app-statute>
-                <app-invoice-settings></app-invoice-settings>
-              </div>
+            <div *ngIf="currentPage==='workschedule'">
+              <app-workschedule></app-workschedule>
+            </div>
+            <div *ngIf="currentPage==='position'">
+              <app-position></app-position>
+            </div>
+            <div *ngIf="currentPage==='users'">
+              <app-users></app-users>
+            </div>
+            <div *ngIf="currentPage==='location'">
+              <app-locations></app-locations>
+            </div>
+            <div *ngIf="currentPage==='editcustomer'">
+              <app-editcustomer></app-editcustomer>
             </div>
           </div>
         </div>

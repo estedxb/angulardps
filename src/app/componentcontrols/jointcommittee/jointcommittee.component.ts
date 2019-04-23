@@ -6,7 +6,7 @@ import { JointcommitteeService } from '../../shared/jointcommittee.service';
 @Component({
   selector: 'app-jointcommittee',
   templateUrl: './jointcommittee.component.html',
-  styleUrls: ['./jointcommittee.component.css']
+  styles: ['']
 })
 
 export class JointcommitteeComponent implements OnInit {

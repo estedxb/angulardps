@@ -6,18 +6,24 @@ export const environment = {
   production: false,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
-  boemmAPI : 'https://boemmapidev.azurewebsites.net/api/',
+  boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
   getCustomers: 'Customer',
-  getCustomerLists: 'customer/GetAllCustomersPreviewJson',
+  getCustomerLists: 'Customer/GetAllCustomersPreviewJson',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
-  createCustomer:'api/Customer',
-  getJointCommitee: '',
+  createCustomer: 'Customer',
+  getUsers: 'User',
+  getUserByUsername: 'User/User',
+  createUser: 'User/Create',
   getLegalForm: '',
   getCounteries: '',
   getParitairCommitee: 'ParitairCommitee',
   getStatute: '',
   getCodes: 'code',
-  getLanguages: ''
+  getLanguages: '',
+  getWorkSchedule: 'User/{CustomerVatNumber}',
+  getPosition: 'User/{CustomerVatNumber}',
+  getLocations: 'Location',
+  createLocation: 'Location',
 };
 
 /*

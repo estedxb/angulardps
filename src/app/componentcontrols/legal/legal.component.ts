@@ -6,7 +6,7 @@ import { LegalformService } from '../../shared/legalform.service';
 @Component({
   selector: 'app-legal',
   templateUrl: './legal.component.html',
-  styleUrls: ['./legal.component.css']
+  styles: ['']
 })
 export class LegalComponent implements OnInit  {
   public id = 'ddl_legalform' ;
