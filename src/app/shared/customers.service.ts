@@ -60,7 +60,7 @@ export class CustomersService {
     if(error.status === 409)
       console.log('customer exists in the system, dont allow customer to create');
 
-    return Observable.throwError(error.message); 
+    return Observable.throwError(error); 
   }
 
 }

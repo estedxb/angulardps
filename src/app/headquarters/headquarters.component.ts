@@ -66,6 +66,8 @@ export class HeadquartersComponent implements OnInit {
   vatNumber:string;
   creditCheckLimit:number;
 
+  allowCustomer:boolean;
+
 
   enable:boolean = true;
   change:boolean = false;
@@ -100,6 +102,8 @@ export class HeadquartersComponent implements OnInit {
     });
 
     this.HQForm.get('creditLimit').disable();
+
+    this.allowCustomer = false;
 
     this.createObjects();  //check validations    
    
@@ -183,10 +187,8 @@ export class HeadquartersComponent implements OnInit {
 
     this.vatNumber = this.HQForm.get('vatNumber').value;
 
-    if(this.HQForm.get('vatNumber').valid === true)    
+    //if(this.HQForm.get('vatNumber').valid === true)    
        this.getCustomerByVatNumber(this.vatNumber);
-
-       //this.checkValidation();
 
    }
 
@@ -205,12 +207,19 @@ export class HeadquartersComponent implements OnInit {
       response = data;
       console.log(response);
 
+      this.allowCustomer = true;
+
       this.parseData(response);
     },error => this.handleError(error));
 
    }
 
-   handleError(errorMessage:HttpErrorResponse) {
+   handleError(errorMessage:any) {
+
+    console.log("handling error message");
+    console.log(errorMessage.status);
+
+    this.allowCustomer = false;
 
     if(errorMessage.status === 400)    
       this.ErrorResponseMessage = "Btw-nummer is niet in correct formaat";
@@ -219,6 +228,10 @@ export class HeadquartersComponent implements OnInit {
     if(errorMessage.status === 409)    
       this.ErrorResponseMessage = "Klant met vatnummer bestaat al";      
 
+   }
+
+   clearError(){
+     this.ErrorResponseMessage = "";
    }
 
    creditLimit(value:number) {
@@ -449,7 +462,7 @@ export class HeadquartersComponent implements OnInit {
   }
 
   validity(){
-    if(this.HQForm.valid === true && !this.emptyData() )
+    if(this.HQForm.valid === true && !this.emptyData()  && this.allowCustomer === true)
       return true;
 
     return false;
