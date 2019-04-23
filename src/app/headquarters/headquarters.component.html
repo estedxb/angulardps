@@ -9,13 +9,13 @@
 
         <!--<pre>{{ message }}</pre> -->
 
-        <pre>{{ErrorResponseMessage}}</pre>
+        <pre style="color:red;">{{ErrorResponseMessage}}</pre>
 
       <div class="row" style="padding-bottom:10px;">
 
         <div class="col-sm-5 inputWithImg">
           <label class="titleBold"> Ondernemingsnummer: </label>
-          <input (blur)= "creditLimitApi()" formControlName="vatNumber" name="vatNumber" class="form-control" type="text" required/>
+          <input (change)= "clearError()" (blur)= "creditLimitApi()" formControlName="vatNumber" name="vatNumber" class="form-control" type="text" required/>
           <div class="form-control-feedback" *ngIf="HQForm.controls.vatNumber.invalid && (HQForm.controls.vatNumber.dirty || HQForm.controls.vatNumber.touched || HQForm.controls.vatNumber.untouched ) else valid"> 
               <img src="../../assets/img/InvalidIcon.png" alt="" >
           </div>
