@@ -1,7 +1,7 @@
 <div class="error">{{ errorMsg }}</div>
 <form [formGroup]="HQForm" novalidate id="hqform">
 
-  <input type="text" class="form-control" formControlName="WorkCode" name="WorkCode" readonly (click)="show=true">
+  <input type="text" class="form-control workcode" formControlName="WorkCode" name="WorkCode" readonly (click)="show=true">
   <ng-container *ngIf="show">
     <div class="dialog">
       <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>
@@ -30,18 +30,18 @@
         <div class="col-sm-1"></div>
       </div>
       <div class="input-group ng-autocomplete inputWithIcon workSearch">
-        <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /><i
+        <input type="text" class="search-form form-control workcode" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /><i
           class="fa fa-search fa-2"></i>
       </div>
       <div class="content" id="customerContent">
-        <div class="error">{{ errorMsg }}</div>
         <div *ngFor="let data of datas let i= index" [attr.data-index]="i">
           <div id="workCodes" *ngIf="data && data.CodeNumber != null && data.Description != undefined ">
             <button (click)="setWorkCode(i)" class="workcodes"
               title="{{ data.CodeNumber }} -  {{ data.Description  }}">{{ data.CodeNumber }} -
               {{ data.Description  }}</button>
           </div>
-        </div>
+        </div>        
+        <div class="error">{{ errorMsg }}</div>
       </div>
     </div>
   </ng-container>

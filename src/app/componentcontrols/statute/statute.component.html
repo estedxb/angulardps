@@ -11,7 +11,7 @@
         <div class="col col-sm-4"><span>Coëfficient </span>
 
           <div class="row inputWithImg">
-                  <input formControlName="CoefficientBox" class="form-control" #coefficient (change)="onChangeCoefficient(coefficient.value,i)" [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01">          
+                  <input formControlName="CoefficientBox" class="form-control" #coefficient (change)="onChangeCoefficient(coefficient.value,i)" [id]="'coefficient_' + statute.name.replace(' ','_')" type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01">
                   <div class="col-sm-2 form-control-feedback" *ngIf="SForm.controls.CoefficientBox.invalid && (SForm.controls.CoefficientBox.untouched || SForm.controls.CoefficientBox.dirty || SForm.controls.CoefficientBox.touched) else valida">
                       <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>

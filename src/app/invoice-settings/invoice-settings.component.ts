@@ -33,6 +33,7 @@ export class InvoiceSettingsComponent implements OnInit {
   compensatoryRest:boolean;
   ploegpremieSwitch:boolean;
   andreSwitch:boolean;
+  public disableWorkCodes:boolean;
 
   payId:boolean;
   mobileBoxText:string;
@@ -213,11 +214,12 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ISForm.get('PloegprimeBox3').disable();
     this.ISForm.get('inhaalrust').disable();
 
-    this.ISForm.get('AndreBox1').disable();
+    // this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
     this.ISForm.get('currency').disable();
 
     this.disabled = "true";
+    this.disableWorkCodes = true;
 
     this.ploegpremieSwitch = false;
     this.andreSwitch = false;
@@ -302,6 +304,16 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
   }
 
+  receiveWorkCode($event,k:number){   
+    console.log("workcode received is="+$event);
+
+    // setting the value in the array
+    if(this.andreSwitch === true){
+      this.otherAllowances[k].codeId = $event;
+      this.changeObject();  
+    }
+  }
+
   onChangeZ(event) {
     this.sicknessInvoiced = event;
     this.changeObject();
@@ -347,10 +359,10 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  setMobileBox(value:string) {
-      this.mobileBoxText = value;
+  setMobileBox(value:number) {
+      //this.mobileBoxText = value;
       this.mobilityAllowanceObject.enabled = false;
-      this.mobilityAllowanceObject.amountPerKm = 0;
+      this.mobilityAllowanceObject.amountPerKm = value;
       this.changeObject();
   }
 
@@ -379,14 +391,16 @@ export class InvoiceSettingsComponent implements OnInit {
 
     if($event === true ){
       this.ISForm.get('arrayAndreBox').enable();
-      this.ISForm.get('AndreBox1').enable();
+      // this.ISForm.get('AndreBox1').enable();
+      this.disableWorkCodes = false;
       this.ISForm.get('AndreBox2').enable();
       this.ISForm.get('currency').enable();
       this.disabled = "false";
     } 
     else {
       this.ISForm.get('arrayAndreBox').disable();
-      this.ISForm.get('AndreBox1').disable();
+      // this.ISForm.get('AndreBox1').disable();
+      this.disableWorkCodes = true;
       this.ISForm.get('AndreBox2').disable();
       this.ISForm.get('currency').disable();
       this.disabled = "true";
@@ -394,6 +408,8 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
 
   }
+
+ 
 
   createAndre(): FormGroup {
     this.addNewRow = false;

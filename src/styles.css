@@ -155,3 +155,10 @@ div#CustomerContact{min-height: 220px;}
 #maincontentarea .m50 input[type=text]{
     width:80%;
 }
+
+#maincontentarea input[type=text].workcode {
+    padding-right: 5px;
+    padding-left: 5px;
+    line-height: 30px;
+    height: 30px;
+}
