@@ -18,13 +18,13 @@
     <div class="row">
       <div class="col col-sm-3">
         <div class="rline">
-          <div class="sidemenus" [ngClass]="{active: currentPage==='workschedule'}">
-            <button (click)="currentPage='workschedule'">
+          <div class="sidemenus" [ngClass]="{active: currentPage==='workschedules'}">
+            <button (click)="currentPage='workschedules'">
               <img src="./assets/svg/calander.svg" />Mijn Werkroosters
             </button>
           </div>
-          <div class="sidemenus" [ngClass]="{active: currentPage==='position'}">
-            <button (click)="currentPage='position'">
+          <div class="sidemenus" [ngClass]="{active: currentPage==='positions'}">
+            <button (click)="currentPage='positions'">
               <img src="./assets/svg/position.svg" />Mijn Functies
             </button>
           </div>
@@ -48,11 +48,11 @@
       <div class="col col-sm-9" id="maincontentarea">
         <div class="scrollbar" id="maincontent">
           <div class="force-overflow">
-            <div *ngIf="currentPage==='workschedule'">
-              <app-workschedule></app-workschedule>
+            <div *ngIf="currentPage==='workschedules'">
+              <app-workschedules></app-workschedules>
             </div>
-            <div *ngIf="currentPage==='position'">
-              <app-position></app-position>
+            <div *ngIf="currentPage==='positions'">
+              <app-positions></app-positions>
             </div>
             <div *ngIf="currentPage==='users'">
               <app-users></app-users>

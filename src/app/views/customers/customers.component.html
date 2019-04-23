@@ -7,8 +7,6 @@
     </div>
     <div class="col col-sm-3"></div>
 </div>
-
-
 <div class="row" id="formState">
     <div class="col col-sm-3"></div>
 </div>
@@ -32,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!--Loop Starts Here-->
                     <div id="CustomerDetails" class="customerBox" *ngFor="let customer of dpscustomers">
                         <div class="row panelheader">
                             <div class="col col-sm-5 fright">
@@ -42,7 +40,7 @@
                             <div class="col col-sm-7 fright">{{ customer.customer.vatNumber }}</div>
                         </div>
                     </div>
-
+                    <!--Loop Ends Here-->
                 </div>
             </div>
         </div>

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-workschedule',
-  templateUrl: './workschedule.component.html',
+  selector: 'app-positions',
+  templateUrl: './positions.component.html',
   styleUrls: ['./../customers.component.css']
 })
-export class WorkscheduleComponent implements OnInit {
+export class PositionsComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit() {
   }
+
 }

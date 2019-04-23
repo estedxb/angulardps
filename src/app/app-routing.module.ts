@@ -23,21 +23,24 @@ import { AddpersonComponent } from './views/person/addperson/addperson.component
 import { LoginComponent } from './views/login/login.component';
 import { AddCustomerComponent } from './views/customers/add-customer/add-customer.component';
 import { UpdateCustomerComponent } from './views/customers/update-customer/update-customer.component';
-import { PositionComponent } from './views/customers/position/position.component';
+import { PositionsComponent } from './views/customers/positions/positions.component';
 import { UsersComponent } from './views/customers/users/users.component';
 import { LocationsComponent } from './views/customers/locations/locations.component';
-import { WorkscheduleComponent } from './views/customers/workschedule/workschedule.component';
+import { WorkschedulesComponent } from './views/customers/workschedules/workschedules.component';
 import { EditcustomerComponent } from './views/customers/editcustomer/editcustomer.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
+  
   { path: 'customer', component: CustomersComponent },
   { path: 'customer/add', component: AddCustomerComponent },
+  { path: 'customer/edit', component: UpdateCustomerComponent },
+  { path: 'customer/locations', component: UpdateCustomerComponent },
+  { path: 'customer/positions', component: UpdateCustomerComponent },
   { path: 'customer/update', component: UpdateCustomerComponent },
-  { path: 'customer/workschedule', component: UpdateCustomerComponent },
-  { path: 'customer/update', component: UpdateCustomerComponent },
-  { path: 'customer/update', component: UpdateCustomerComponent },
+  { path: 'customer/users', component: UpdateCustomerComponent },
+  { path: 'customer/workschedules', component: UpdateCustomerComponent },
   { path: 'customer/:id', component: UpdateCustomerComponent },
   { path: 'settings', component: CustomersComponent },
   { path: 'scheduler', component: CustomersComponent },
@@ -70,8 +73,8 @@ export const routingComponents = [
   LanguagesComponent,
   GeneralComponent,
   InvoiceSettingsComponent,
-  WorkscheduleComponent,
-  PositionComponent,
+  WorkschedulesComponent,
+  PositionsComponent,
   UsersComponent,
   LocationsComponent,
   UpdateCustomerComponent,

@@ -6,8 +6,6 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MenuComponent } from './componentcontrols/menu/menu.component';
-import { HeadersComponent } from './componentcontrols/headers/headers.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 
@@ -32,7 +30,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent, MenuComponent, HeadersComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 
