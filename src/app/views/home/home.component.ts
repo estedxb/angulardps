@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/htt
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../contactperson/contactperson.component';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
+import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber, Address } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   public HQFormValid:boolean;
   public CTFormValid:boolean;
 
-  public showFormIndex = 2;
+  public showFormIndex = 1;
   constructor(private customerService:CustomersService) { }
 
   ngOnInit() {
@@ -161,10 +161,19 @@ export class HomeComponent implements OnInit {
           this.HQdata.customer.creditCheck = new CreditCheck();
           this.HQdata.customer.creditCheck.creditcheck = false;
           this.HQdata.customer.creditCheck.creditLimit = 1000;
-          this.HQdata.customer.creditCheck.dataChecked = "02/19/2019";
+          this.HQdata.customer.creditCheck.dateChecked = "02/19/2019";
           this.HQdata.customer.creditCheck.creditCheckPending = true;
 
-          this.HQdata.customer.vcaCertification = { certified: false};          
+          this.HQdata.customer.address = new Address();
+          this.HQdata.customer.address.street = "string";
+          this.HQdata.customer.address.streetNumber = "new string";
+          this.HQdata.customer.address.bus = "232";
+          this.HQdata.customer.address.city = "hello";
+          this.HQdata.customer.address.postalcode = "jshdf2323";
+          this.HQdata.customer.address.country = "canda";
+          this.HQdata.customer.address.countryCode = "AZ";
+
+          this.HQdata.customer.vcaCertification = { cerified: false};          
           this.HQdata.bulkContractsEnabled = false;
         }
 

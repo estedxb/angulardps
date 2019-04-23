@@ -5,6 +5,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
   InvoiceSettings, Language, Contact } from '../shared/models';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -252,8 +253,10 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('PloegprimeBox3').disable();
       this.ISForm.get('currency').disable();
       this.disabled = "true";
-    }
+      this.clearShiftAllowances();
 
+    }
+    
       this.changeObject();
 
   }
@@ -282,6 +285,36 @@ export class InvoiceSettingsComponent implements OnInit {
     }
   
     return true;
+  }
+
+  clearOtherAllowances() {
+
+    this.ISForm.controls['AndreBox1'].setValue("");
+    this.ISForm.controls['AndreBox2'].setValue("");
+
+    for(var j=0;j<this.otherAllowances.length;j++)
+    {
+      this.otherAllowances[j].codeId = "";
+      this.otherAllowances[j].amount = 0;
+      this.otherAllowances[j].nominal = true;
+    }
+
+  }
+
+  clearShiftAllowances() {
+
+    this.ISForm.controls['PloegprimeBox1'].setValue("");
+    this.ISForm.controls['PloegprimeBox2'].setValue("");
+
+
+    for(var i=0;i<this.shiftAllowances.length;i++)
+      {
+        this.shiftAllowances[i].shiftName = "";
+        this.shiftAllowances[i].amount = 0;
+        this.shiftAllowances[i].timeSpan = "";
+        this.shiftAllowances[i].nominal = true;
+      }
+
   }
 
   setPgBox1(value,i:number) {
@@ -404,6 +437,7 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('AndreBox2').disable();
       this.ISForm.get('currency').disable();
       this.disabled = "true";
+      this.clearOtherAllowances();
     }
     this.changeObject();
 
