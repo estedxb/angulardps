@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class WorkscheduleService {
+export class WorkschedulesService {
   private getCountriesListUrl = '';
   private httpOptions = {
     headers: new HttpHeaders({
