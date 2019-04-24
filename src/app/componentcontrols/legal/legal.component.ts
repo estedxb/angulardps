@@ -16,7 +16,7 @@ export class LegalComponent implements OnInit  {
   private datas: any = [];
   public selectedString:string;
 
-  @Input() public legalFormData;
+  @Input('legalFormData') public legalString;
   @Output() public childEvent = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
@@ -36,7 +36,18 @@ export class LegalComponent implements OnInit  {
   
   resetToInitValue() { this.value = this.selectedValue; }
 
-  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
+  SetInitialValue() { 
+
+    console.log("legal data received="+this.legalString);
+
+     if(this.legalString !== "")
+     {
+        this.selectedValue = this.legalString;
+     }
+     else
+          this.selectedValue = this.datas[this.selectedIndex]; 
+
+}
   
   onChange($event) { this.selectedIndex = $event.target.value; 
 
@@ -60,6 +71,8 @@ export class LegalComponent implements OnInit  {
       this.datas = this.maindatas[this.currentlanguage];
       console.log('Legal Forms Data : '); console.log(this.datas); 
     }, error => this.errorMsg = error);
+
+    console.log("legalFormData="+this.legalString);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }

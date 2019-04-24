@@ -8,6 +8,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { LegalComponent } from '../../app/componentcontrols/legal/legal.component';
 import { ChildActivationEnd } from '@angular/router';
+import { load } from '@angular/core/src/render3';
 
 @Component({
 selector: 'app-headquarters',
@@ -28,11 +29,15 @@ export class HeadquartersComponent implements OnInit {
 
   public disabled;
   public ErrorResponseMessage;
-
+  
   HQdata:any;
   HQForm: FormGroup;
+
+  verifiedCustomerData:any;
+    
   getCustomersByvatNumberResponse: any;
   getCustomersByvatNumberErrorMessage: string;
+
 
   dpsCustomer:DPSCustomer;
   customer: Customer;
@@ -85,14 +90,14 @@ export class HeadquartersComponent implements OnInit {
     this.HQForm = new FormGroup({
       vatNumber: new FormControl('',[Validators.required,Validators.minLength(12), Validators.pattern("^[0-9]+$")]),
       firstname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
-      officialname: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
+      officialname: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]),
       creditCheck:new FormControl(),
       legalform:new FormControl(),
       creditLimit:new FormControl(),
       street:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]),
       streetnumber:new FormControl('',[Validators.required,Validators.pattern("^[0-9]+$")]),
       bus:new FormControl('',Validators.pattern("^[0-9]+$")),
-      city:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z]+$")]),
+      city:new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]),
       postalcode:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9]+$")]),
       country:new FormControl(''),
       phonenumber:new FormControl('',Validators.required),
@@ -104,6 +109,8 @@ export class HeadquartersComponent implements OnInit {
     this.HQForm.get('creditLimit').disable();
 
     this.allowCustomer = false;
+
+    this.legalString = "BVBA";
 
     this.createObjects();  //check validations    
    
@@ -241,6 +248,8 @@ export class HeadquartersComponent implements OnInit {
 
    parseData(response:DPSCustomer){
 
+    this.loadData(response);
+
     let creditCheckboolean:boolean = response.customer.creditCheck.creditcheck;
      this.creditCheckLimit = response.customer.creditCheck.creditLimit;
 
@@ -252,6 +261,36 @@ export class HeadquartersComponent implements OnInit {
     {
       this.creditLimit(this.creditCheckLimit);
     }
+
+   }
+
+   loadData(verifiedCustomerData:DPSCustomer){
+
+
+    if(verifiedCustomerData !== null)
+      {
+        if(verifiedCustomerData.customer !== null){
+
+          this.HQForm.controls['firstname'].setValue(verifiedCustomerData.customer.name);
+          this.HQForm.controls['officialname'].setValue(verifiedCustomerData.customer.officialName);
+          // this.HQForm.controls['legalForm'].setValue(verifiedCustomerData.customer.legalForm); // dropdown value
+
+          this.legalString = verifiedCustomerData.customer.legalForm;
+
+          this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
+          this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
+          this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
+          this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
+          this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
+          this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);
+
+          this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
+          this.HQForm.controls['generalEmail'].setValue(verifiedCustomerData.customer.email.emailAddress);
+          //this.HQForm.controls['contractsEmail'].setValue(verifiedCustomerData.contractsEmail.emailAddress);
+          //this.HQForm.controls['invoiceEmail'].setValue(verifiedCustomerData.invoiceEmail.emailAddress);
+
+        }
+      }
 
    }
 
@@ -510,7 +549,7 @@ export class HeadquartersComponent implements OnInit {
         "statuteSettings": this.dpsCustomer.statuteSettings,
         "contact": this.dpsCustomer.contact,
         "activateContactAsUser":false,
-        "formValid": this.validity() //validity()
+        "formValid": true //validity()
       };
       this.sendDatatoHome();
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WorkCodesService } from '../../shared/workcodes.service';
 import { FormGroup, Form, FormControl } from '@angular/forms';
 import { WorkCodes } from '../../shared/models';
@@ -16,6 +16,8 @@ export class WorkCodesComponent implements OnInit {
   public show = false;
   HQForm: FormGroup;
 
+  @Input() public disabled;
+  @Output() public childEvent = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -62,11 +64,35 @@ export class WorkCodesComponent implements OnInit {
     }
   }
 
+  // ngOnChanges() {
+
+  //   if(this.disabled === true)
+  //     this.HQForm.get('WorkCode').disable();
+  //    else
+  //     this.HQForm.get('WorkCode').enable();
+
+  // }
+
+  ngDoCheck() {
+
+    if(this.disabled === true)
+    this.HQForm.get('WorkCode').disable();
+   else
+    this.HQForm.get('WorkCode').enable();
+
+  }
+
   ngOnInit() {
 
     this.HQForm = new FormGroup({
       WorkCode: new FormControl('')
     });
+
+    if(this.disabled === true)
+    this.HQForm.get('WorkCode').disable();
+   else
+    this.HQForm.get('WorkCode').enable();
+
 
     this.workCodesService.getWorkCodes().subscribe(data => {
       this.maindatas = data;
@@ -82,5 +108,6 @@ export class WorkCodesComponent implements OnInit {
     this.value = this.datas[i];
     this.HQForm.controls.WorkCode.setValue(this.value.CodeNumber + ' - ' + this.value.Description);
     this.show = false;
+    this.childEvent.emit(this.value.CodeNumber + ' - '+this.value.Description);
   }
 }

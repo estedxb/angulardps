@@ -4,6 +4,8 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
   InvoiceSettings, Language, Contact } from '../shared/models';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -32,6 +34,7 @@ export class InvoiceSettingsComponent implements OnInit {
   compensatoryRest:boolean;
   ploegpremieSwitch:boolean;
   andreSwitch:boolean;
+  public disableWorkCodes:boolean;
 
   payId:boolean;
   mobileBoxText:string;
@@ -211,11 +214,12 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ISForm.get('PloegprimeBox3').disable();
     this.ISForm.get('inhaalrust').disable();
 
-    this.ISForm.get('AndreBox1').disable();
+    // this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
     this.ISForm.get('currency').disable();
 
     this.disabled = "true";
+    this.disableWorkCodes = true;
 
     this.ploegpremieSwitch = false;
     this.andreSwitch = false;
@@ -248,8 +252,10 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('PloegprimeBox3').disable();
       this.ISForm.get('currency').disable();
       this.disabled = "true";
-    }
+      this.clearShiftAllowances();
 
+    }
+    
       this.changeObject();
 
   }
@@ -280,6 +286,36 @@ export class InvoiceSettingsComponent implements OnInit {
     return true;
   }
 
+  clearOtherAllowances() {
+
+    this.ISForm.controls['AndreBox1'].setValue("");
+    this.ISForm.controls['AndreBox2'].setValue("");
+
+    for(var j=0;j<this.otherAllowances.length;j++)
+    {
+      this.otherAllowances[j].codeId = "";
+      this.otherAllowances[j].amount = 0;
+      this.otherAllowances[j].nominal = true;
+    }
+
+  }
+
+  clearShiftAllowances() {
+
+    this.ISForm.controls['PloegprimeBox1'].setValue("");
+    this.ISForm.controls['PloegprimeBox2'].setValue("");
+
+
+    for(var i=0;i<this.shiftAllowances.length;i++)
+      {
+        this.shiftAllowances[i].shiftName = "";
+        this.shiftAllowances[i].amount = 0;
+        this.shiftAllowances[i].timeSpan = "";
+        this.shiftAllowances[i].nominal = true;
+      }
+
+  }
+
   setPgBox1(value,i:number) {
     this.shiftAllowances[i].shiftName = value;
     this.changeObject();
@@ -298,6 +334,16 @@ export class InvoiceSettingsComponent implements OnInit {
   setPgABox2(value,l:number){
     this.otherAllowances[l].amount = value;
     this.changeObject();
+  }
+
+  receiveWorkCode($event,k:number){   
+    console.log("workcode received is="+$event);
+
+    // setting the value in the array
+    if(this.andreSwitch === true){
+      this.otherAllowances[k].codeId = $event;
+      this.changeObject();  
+    }
   }
 
   onChangeZ(event) {
@@ -345,10 +391,10 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  setMobileBox(value:string) {
-      this.mobileBoxText = value;
+  setMobileBox(value:number) {
+      //this.mobileBoxText = value;
       this.mobilityAllowanceObject.enabled = false;
-      this.mobilityAllowanceObject.amountPerKm = 0;
+      this.mobilityAllowanceObject.amountPerKm = value;
       this.changeObject();
   }
 
@@ -377,21 +423,26 @@ export class InvoiceSettingsComponent implements OnInit {
 
     if($event === true ){
       this.ISForm.get('arrayAndreBox').enable();
-      this.ISForm.get('AndreBox1').enable();
+      // this.ISForm.get('AndreBox1').enable();
+      this.disableWorkCodes = false;
       this.ISForm.get('AndreBox2').enable();
       this.ISForm.get('currency').enable();
       this.disabled = "false";
     } 
     else {
       this.ISForm.get('arrayAndreBox').disable();
-      this.ISForm.get('AndreBox1').disable();
+      // this.ISForm.get('AndreBox1').disable();
+      this.disableWorkCodes = true;
       this.ISForm.get('AndreBox2').disable();
       this.ISForm.get('currency').disable();
       this.disabled = "true";
+      this.clearOtherAllowances();
     }
     this.changeObject();
 
   }
+
+ 
 
   createAndre(): FormGroup {
     this.addNewRow = false;

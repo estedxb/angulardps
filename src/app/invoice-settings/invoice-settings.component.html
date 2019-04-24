@@ -112,7 +112,8 @@
                                 <div class="row dynrow" *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
                                         <div class="col-sm-5">
                                                 <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
-                                                        formControlName="AndreBox1">
+                                                        formControlName="AndreBox1" style="display: none">
+                                                <app-workcodes [disabled]="disableWorkCodes" (childEvent)="receiveWorkCode($event,i)" ></app-workcodes>
                                         </div>
                                         <div class="col-sm-3">
                                                 <input #amountA (change)="setPgABox2(amountA.value,i)"

@@ -38,7 +38,24 @@ export class CustomersService {
     return result;
   }
 
+<<<<<<< HEAD
   public createCustomer(customer: any): Observable<any> {
+=======
+  public createCustomerUpdate(customer:any): Observable<any>
+  {
+    let httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+   return this.http.put<any>(this.createCustomerURL,customer, {
+      headers: httpHeaders,
+      observe: 'response'
+   });    
+  }
+
+  public createCustomer(customer:any): Observable<any>
+  {
+>>>>>>> b0ef17a0336ab7b4cb373afd8880951ab00d0a1d
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
