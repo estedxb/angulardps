@@ -37,7 +37,7 @@ export class CreatelocationComponent implements OnInit {
       }  
     }`;
   }
-  
+
   @Input() public LocationFormData;
   LocationData:any;
   LocationForm: FormGroup;
@@ -62,7 +62,7 @@ export class CreatelocationComponent implements OnInit {
     this.createObjects();  //check validations
     this.loadLocationToEdit(this.VatNumber);
   }
-
+  
   loadLocationToEdit(vatNumber: string) {  
     this.locationService.getLocationByVatNumber(vatNumber).subscribe(response=> {       
       response.forEach((element) => {        
