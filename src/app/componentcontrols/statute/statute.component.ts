@@ -13,6 +13,7 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 })
 export class StatuteComponent implements OnInit {
 
+  @Input() public STFormData;
   @Output() public childEvent = new EventEmitter();
 
   public statutes = [];
@@ -25,6 +26,7 @@ export class StatuteComponent implements OnInit {
   public statutename ='';
   public statuteSelectedString:ParitairCommitee;
   public arrayParitairCommitee: ParitairCommitee[];
+  public JCString;
   
   SForm:FormGroup;
 
@@ -40,7 +42,20 @@ export class StatuteComponent implements OnInit {
  
   constructor(private statuteService: StatuteService) {
     this.createCoefficientArray();
+   }
 
+   ngDoCheck() {
+      
+      console.log("received data in statute component from edit page");
+      console.log(this.STFormData);
+
+      if(this.STFormData !== undefined)
+      {
+        if(this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit")
+        {
+            this.JCString = this.STFormData.data;
+        }
+      }
    }
 
   ngOnInit() {

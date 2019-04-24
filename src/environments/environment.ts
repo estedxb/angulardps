@@ -10,6 +10,7 @@ export const environment = {
   getCustomers: 'Customer',
   getCustomerLists: 'Customer/GetAllCustomersPreviewJson',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
+  getCustomerByVatNumberEdit:'Customer/',
   createCustomer: 'Customer',
   getUsers: 'User',
   getUserByUsername: 'User/User',

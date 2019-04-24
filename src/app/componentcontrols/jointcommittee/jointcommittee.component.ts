@@ -39,7 +39,24 @@ export class JointcommitteeComponent implements OnInit {
     return this.value; 
   }
 
-  constructor(private jointcommitteeService: JointcommitteeService) { }
+  constructor(private jointcommitteeService: JointcommitteeService) { 
+  }
+
+  ngDoCheck() {
+
+    console.log("RECEIVED paritair commitee data");
+
+    if(this.JCFormData !== undefined)
+    {
+      if(this.JCFormData.data !== null && this.JCFormData.page === "edit")      
+      {
+        console.log("data=");
+        console.log(this.datas);
+
+        //this.datas = this.JCFormData.data.statuteSettings;
+      }
+    }
+  }
 
   ngOnInit() {
 

@@ -27,9 +27,12 @@ export class HeadquartersComponent implements OnInit {
   @Input() public HQFormData;
   @Output() public childEvent = new EventEmitter();
 
+  public oldData:any = {};
   public disabled;
   public ErrorResponseMessage;
-  
+
+  public creditcheckEdit:Boolean = false;
+
   HQdata:any;
   HQForm: FormGroup;
 
@@ -83,7 +86,19 @@ export class HeadquartersComponent implements OnInit {
   ngAfterViewInit(){
     this.legalString = this.legalComponent.selectedString;
   }
- 
+
+  ngDoCheck() {
+      
+    //load Edit Page details
+    if(this.oldData !== this.HQFormData)
+    {
+      if(this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page ==="edit" )
+      {
+        this.oldData = this.HQFormData;
+        this.loadDataEdit(this.HQFormData.data);
+      }
+    }
+  }
 
   ngOnInit() {
 
@@ -107,18 +122,44 @@ export class HeadquartersComponent implements OnInit {
     });
 
     this.HQForm.get('creditLimit').disable();
-
     this.allowCustomer = false;
-
     this.legalString = "BVBA";
-
     this.createObjects();  //check validations    
-   
+
+    console.log("received object in hq component="+this.HQFormData);   
   }
 
   constructor(private formBuilder:FormBuilder, private customerService: CustomersService) {
           
    }
+
+   loadDataEdit(dpscustomer:DPSCustomer) {
+
+    if(dpscustomer !== null)
+    {
+      this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
+      this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
+      this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
+      this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
+      //this.HQForm.controls['creditCheck'].setValue(dpscustomer.customer.creditCheck.creditcheck);
+      this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
+      this.legalString = dpscustomer.customer.legalForm;
+      // this.HQForm.controls['legalForm'].setValue(verifiedCustomerData.customer.legalForm); // dropdown value
+      this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
+      this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
+      this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
+      this.HQForm.controls['city'].setValue(dpscustomer.customer.address.city);
+      this.HQForm.controls['postalcode'].setValue(dpscustomer.customer.address.postalCode);
+      this.HQForm.controls['country'].setValue(dpscustomer.customer.address.country);
+      this.HQForm.controls['phonenumber'].setValue(dpscustomer.customer.phoneNumber.number);
+      this.HQForm.controls['generalEmail'].setValue(dpscustomer.customer.email.emailAddress);
+      this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
+      this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
+
+    }
+
+   }
+
 
    checkValidation()
     {
@@ -264,6 +305,7 @@ export class HeadquartersComponent implements OnInit {
 
    }
 
+   
    loadData(verifiedCustomerData:DPSCustomer){
 
 

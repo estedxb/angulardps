@@ -19,6 +19,8 @@ export class ContactpersonComponent implements OnInit {
   @Input() public CTFormData;
   @Output() public childEvent = new EventEmitter();
 
+  public oldData:any = {};
+
   CTdata:any;
   CTForm: FormGroup;
 
@@ -31,6 +33,27 @@ export class ContactpersonComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder) {
           
+  }
+
+  
+  ngDoCheck(){
+
+    console.log("CTFormData");
+    console.log(this.CTFormData);
+
+    if(this.oldData !== this.CTFormData)
+    {
+      if(this.CTFormData !== undefined)
+      {
+        if(this.CTFormData.data !== "" && this.CTFormData.page==="edit")
+        {
+          this.oldData = this.CTFormData;
+          this.loadEditDetails(this.CTFormData.data);
+        }
+      }
+  
+    }
+
   }
 
   ngOnInit() {
@@ -86,6 +109,19 @@ export class ContactpersonComponent implements OnInit {
    console.log(this.language);
 
    this.setJSONObject();
+  }
+
+  loadEditDetails(contactPerson:any){
+
+    console.log(contactPerson);
+
+    this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
+    this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
+    this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
+    this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
+    this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
+    this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+    
   }
 
   changeAls($event){    

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
-
+import { CustomersService } from 'src/app/shared/customers.service';
 
 @Component({
   selector: 'app-editcustomer',
@@ -14,10 +14,36 @@ export class EditcustomerComponent implements OnInit {
   public GLdata:any;
   public STdata:any;
   public FPdata:any;
+  public vatNumber:string;
 
-  constructor() { }
+  public editObject:any = {
+    "data":"",
+    "page":""
+  }
+
+  public dataCustomerEdit:any;
+
+  constructor(private customerService:CustomersService) { 
+
+    this.vatNumber = "B0011";
+    this.editObject = {
+      "data":"",
+      "page":""
+    }
+  }
 
   ngOnInit() {
+
+    console.log("ngOnInit called");
+    console.log(this.vatNumber);
+   //var url = "https://dpsapisdev.azurewebsites.net/api/Customer/B0011";
+    this.getCustomerByVatNumberEdit(this.vatNumber);
+
+  }
+
+  ngOnDestroy() {
+      
+      console.log("object destroyed");
   }
 
   receiveHQdata($event) {
@@ -25,14 +51,12 @@ export class EditcustomerComponent implements OnInit {
     this.HQdata = $event;
     console.log("received in editcustomer component");
     console.log(this.HQdata);
-
   }
 
   receiveCTdata($event) {
-
     this.CTdata = $event;
     console.log("updated in editcustomer component");
-    console.log(this.HQdata);
+    console.log(this.CTdata);
 
   }
 
@@ -41,14 +65,13 @@ export class EditcustomerComponent implements OnInit {
     this.GLdata = $event;
     console.log("received in editcustomer component");
     console.log(this.HQdata);
-
   }
 
   receiveStatuteData($event) {
 
     this.STdata = $event;
     console.log("received in editcustomer component");
-    console.log(this.HQdata);
+    console.log(this.STdata);
 
   }
 
@@ -59,6 +82,41 @@ export class EditcustomerComponent implements OnInit {
     console.log(this.HQdata);
 
   }
+
+  getCustomerByVatNumberEdit(vatNumber:string)
+  {
+
+    console.log("calling get customer by vatnumber on edit page");
+
+    let response:DPSCustomer;
+
+    this.customerService.getCustomersByVatNumberEdit(vatNumber)
+    .subscribe(data => {
+      response = data;
+      console.log("response=");
+      console.log("response name="+response.customer.name);
+      this.parseData(response);
+    },error => this.handleError(error));
+
+  }
+
+  parseData(response:DPSCustomer) {
+
+    console.log(response);
+
+    this.editObject = {
+      "data": response,
+      "page":"edit"
+    }
+
+    //this.HQdata = response;
+
+  }
+
+  handleError(error:any) {
+
+  }
+
 
   editCustomerApi() {
 

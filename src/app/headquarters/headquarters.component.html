@@ -28,7 +28,7 @@
             <div class="creditCheck">
                 <label class="titleBold"> Krediet Check Ok? </label>
             </div>
-            <ui-switch (change)="onChange($event)" size="small"> </ui-switch> &nbsp;
+            <ui-switch name="creditCheck" [checked]="creditcheckEdit" (change)="onChange($event)" size="small"> </ui-switch> &nbsp;
         </div>
       
         <div class="col-sm-3">
