@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { User, DpsUser } from './models';
 import { Observable } from 'rxjs/Observable';
@@ -10,49 +9,35 @@ import { environment } from '../../environments/environment';
 })
 export class UsersService {
 
-  private getUserByVatNumberUrl = '';
-  private createUserURL = '';
-  private updateUserURL = '';
+  private getUsersByVatNumberUrl = '';
+  private getUserUrl = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getUsers !== '') {
+    if (environment.dataFromAPI_JSON && environment.getUsersByVatNumber !== '') {
       console.log('Data From Remote');
-      this.updateUserURL = environment.dpsAPI + environment.getUsers;
-      this.getUserByVatNumberUrl = environment.dpsAPI + environment.getUsers;
-      this.createUserURL = environment.dpsAPI + environment.getUsers;
+      this.getUsersByVatNumberUrl = environment.dpsAPI + environment.getUsersByVatNumber;
+      this.getUserUrl = environment.dpsAPI + environment.getUser;
     } else {
       console.log('Data From JSON');
-      this.getUserByVatNumberUrl = '../../assets/data/users.json';
+      this.getUsersByVatNumberUrl = '../../assets/data/users.json';
     }
   }
 
   public getUsersByVatNumber(parameter: string): Observable<DpsUser[]> {
-    console.log('UserService Data From = ' + this.getUserByVatNumberUrl);
-    const result = this.http.get<DpsUser[]>(this.getUserByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
+    console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
+    const result = this.http.get<DpsUser[]>(this.getUsersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
 
   public createUser(user: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<any>(this.createUserURL, user, {
-      headers: httpHeaders,
-      observe: 'response'
-    });
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.getUserUrl, user, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateUser(user: any): Observable<any> {
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.put<any>(this.updateUserURL, user, {
-      headers: httpHeaders,
-      observe: 'response'
-    });
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.getUserUrl, user, { headers: httpHeaders, observe: 'response' });
   }
 
   errorHandler(error: HttpErrorResponse) {

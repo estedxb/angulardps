@@ -12,11 +12,11 @@ export class CustomersService {
   private createCustomerURL = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getCustomers !== '') {
+    if (environment.dataFromAPI_JSON && environment.getCustomersByVatNumber !== '') {
       console.log('Data From Remote getCustomers');
       this.getCustomersListUrl = environment.dpsAPI + environment.getCustomers;
-      this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
-      this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
+      this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomersByVatNumber;
+      this.createCustomerURL = environment.dpsAPI + environment.getCustomers;
     } else {
       console.log('Data From JSON getCustomers');
       this.getCustomersListUrl = '../../assets/data/customers.json';
@@ -39,7 +39,7 @@ export class CustomersService {
   }
 
   public createCustomerUpdate(customer: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
+    const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
@@ -50,7 +50,7 @@ export class CustomersService {
   }
 
   public createCustomer(customer: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
+    const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
@@ -61,24 +61,17 @@ export class CustomersService {
   }
 
   errorHandler(error: HttpErrorResponse) {
-    console.log(error.status);
-
-    if (error.status === 400)
+    if (error.status === 400) {
       console.log('vat number not correct format');
-    if (error.status === 204)
+    } else if (error.status === 204) {
       console.log('vat number doesnt exist ');
-    if (error.status === 409)
+    } else if (error.status === 409) {
       console.log('customer exists in the system, dont allow customer to create');
+    } else {
+      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+    }
 
     return Observable.throwError(error);
   }
 
 }
-
-/*
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import { throwError, concat, of } from 'rxjs';
-
-*/

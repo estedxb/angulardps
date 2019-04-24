@@ -390,8 +390,14 @@ div#CustomerContact {
   width: 24px;
 }
 .greenbtn {
-  background-image: linear-gradient(#0fc600, #057e0f);
+  /*background-image: linear-gradient(#0fc600, #057e0f);*/
+  background-image: none;
+  background-color: #0fc600;
   float: right;
+  border: 1px solid #11ad02;
+  font-size: 16px;
+  height: 28px;
+  border-radius: 14px;
 }
 
 .btn:disabled {
@@ -405,9 +411,17 @@ div#CustomerContact {
   min-width: 220px;
 }
 
-#maincontentarea input[type=text].workcode {
-    padding-right: 5px;
-    padding-left: 5px;
-    line-height: 30px;
-    height: 30px;
+#maincontentarea input[type="text"].workcode {
+  padding-right: 5px;
+  padding-left: 5px;
+  line-height: 30px;
+  height: 30px;
+}
+.alertsContainer .alertsRow {
+  border: 1px solid #ffc549;
+}
+.alertsContainer .alertsRow .closeicon a {
+  color: #000;
+  text-decoration: none;
+  font-size: 12px;
 }

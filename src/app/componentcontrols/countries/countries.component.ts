@@ -1,5 +1,5 @@
-import { Component, OnInit,Output, Input, EventEmitter } from '@angular/core';
-//import { CountriesList } from '../../shared/models';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+// import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
 
 @Component({
@@ -13,13 +13,13 @@ export class CountriesComponent implements OnInit {
   @Input() public CountryFormData;
   @Output() public childEvent = new EventEmitter();
 
-  public id = 'ddl_legalform' ;
+  public id = 'ddl_legalform';
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
-  public selectedString:string;
+  public selectedString: string;
   // tslint:disable-next-line: variable-name
-  private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
 
   set selectedValue(value: any) { this._selectedValue = value; }
   get selectedValue(): any { return this._selectedValue; }
@@ -29,31 +29,29 @@ export class CountriesComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
-  onChange($event) { 
-    this.selectedIndex = $event.target.value; 
-    console.log("countries selected="+this.value);
+  onChange($event) {
+    this.selectedIndex = $event.target.value;
+    console.log("countries selected=" + this.value);
     console.log(this.value);
-    
+
     // console.log( selected="+this.value.FormName);
 
     this.selectedString = this.value;
 
-    this.childEvent.emit(this.value);    
+    this.childEvent.emit(this.value);
 
-    return this.value; }
+    return this.value;
+  }
 
   constructor(private countriesService: CountriesService) { }
 
   ngOnInit() {
-    
-    this.countriesService.getCountriesList().subscribe(countries =>{
+
+    this.countriesService.getCountriesList().subscribe(countries => {
       this.datas = countries;
-      console.log('Countries Forms Data : '); console.log(this.datas); 
-    } , error => this.errorMsg = error);
+      console.log('Countries Forms Data : '); console.log(this.datas);
+    }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
 }
-
-// console.log(this.id); console.log($event.target.value);
-// console.log('Country Selected Data ::'); console.log(this.value);
