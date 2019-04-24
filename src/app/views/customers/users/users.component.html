@@ -1,12 +1,32 @@
-<div id="from1">
+<div id="customerUpdate">
     <div id="CustomerDetails" class="customerBox">
         <div class="row panelheader">
             <div class="col col-sm-5 fright">
                 <h4>Mijn gebruikers</h4>
                 <hr />
             </div>
-            <div class="col col-sm-7"></div>
+            <div class="col col-sm-7">
+                <button class="greenbtn" id="addUsers">
+                    <span>Gebruikers toevoegen</span><img [src]='["assets/svg/addIcon.svg"]'>
+                </button>
+            </div>
         </div>
-
+        <div class="row inforow">
+            <div class="col col-sm-12"></div>
+        </div>
+        <!--For loop Starts -->
+        <div class="row inforow" *ngFor="let data of maindatas; let i= index;">
+            <div class="col col-sm-1 switch">
+                <ui-switch (change)="onUiSwitchChange($event,i)" size="small"></ui-switch>
+            </div>
+            <div class="col col-sm-5 info">{{data.user.firstName + ' ' + data.user.lastName}}</div>
+            <div class="col col-sm-1 actionbtn">
+                <button (click)="onClickEdit(i)"><img src="../../../../assets/svg/edit.svg"></button>
+            </div>
+            <div class="col col-sm-1 actionbtn">
+                <button (click)="onClickDelete(i)"><img src="../../../../assets/svg/delete.svg"></button>
+            </div>
+        </div>
+        <!--For loop Ends -->
     </div>
 </div>

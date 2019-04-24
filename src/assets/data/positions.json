@@ -1,0 +1,50 @@
+[
+  {
+    "id": 2,
+    "customerId": "ABC123456",
+    "position": {
+      "name": "str name ",
+      "taskDescription": "str td",
+      "isStudentAllowed": false,
+      "costCenter": "str",
+      "workstationDocument": {
+        "location": "str location",
+        "name": "str name "
+      }
+    },
+    "isEnabled": true,
+    "isArchived": false
+  },
+  {
+    "id": 1,
+    "customerId": "ABC123456",
+    "position": {
+      "name": "str name ",
+      "taskDescription": "str td",
+      "isStudentAllowed": false,
+      "costCenter": "str",
+      "workstationDocument": {
+        "location": "str location",
+        "name": "str name "
+      }
+    },
+    "isEnabled": true,
+    "isArchived": false
+  },
+  {
+    "id": 3,
+    "customerId": "ABC123456",
+    "position": {
+      "name": "str name ",
+      "taskDescription": "str td",
+      "isStudentAllowed": false,
+      "costCenter": "str",
+      "workstationDocument": {
+        "location": "str location",
+        "name": "str name "
+      }
+    },
+    "isEnabled": true,
+    "isArchived": false
+  }
+]

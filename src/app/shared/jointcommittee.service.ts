@@ -13,7 +13,7 @@ export class JointcommitteeService {
     if (environment.dataFromAPI_JSON && environment.getParitairCommitee !== '') {
       this.getJointCommiteeUrl = environment.boemmAPI + environment.getParitairCommitee;
     } else {
-      this.getJointCommiteeUrl = 'assets/data/jointcommittee.json';
+      this.getJointCommiteeUrl = '../../assets/data/jointcommittee.json';
     }
     console.log('Data From = ' + this.getJointCommiteeUrl);
   }

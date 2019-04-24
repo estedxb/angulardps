@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found-component.component.css']
 })
 export class PageNotFoundComponentComponent implements OnInit {
-
+  public locationid=2;
+  public username = 'lewis@esteinternational.com'
   constructor() { }
 
   ngOnInit() {

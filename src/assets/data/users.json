@@ -1,0 +1,82 @@
+[
+  {
+    "customerVatNumber": "ABC123456",
+    "user": {
+      "userName": "balaji@esteinternational.com",
+      "firstName": "Balaji",
+      "lastName": "Subbiah",
+      "email": {
+        "emailAddress": "balaji@esteinternational.com"
+      },
+      "mobile": {
+        "number": "00971505642721"
+      },
+      "phone": {
+        "number": "0097145046710"
+      }
+    },
+    "userRole": "Team Leader",
+    "isEnabled": true,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "ABC123456",
+    "user": {
+      "userName": "faisal@esteinternational.com",
+      "firstName": "Faisal",
+      "lastName": "Basha",
+      "email": {
+        "emailAddress": "faisal@esteinternational.com"
+      },
+      "mobile": {
+        "number": "00971507425641"
+      },
+      "phone": {
+        "number": "00971450467101"
+      }
+    },
+    "userRole": "Solutions Architect",
+    "isEnabled": true,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "ABC123456",
+    "user": {
+      "userName": "lewis@esteinternational.com",
+      "firstName": "lewis",
+      "lastName": "lewis",
+      "email": {
+        "emailAddress": "lewis@esteinternational.com"
+      },
+      "mobile": {
+        "number": "009715027425641"
+      },
+      "phone": {
+        "number": "00971450467101"
+      }
+    },
+    "userRole": "Junior Solutions Architect",
+    "isEnabled": true,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "ABC123456",
+    "user": {
+      "userName": "naga@esteinternational.com",
+      "firstName": "naga",
+      "lastName": "naga",
+      "email": {
+        "emailAddress": "naga@esteinternational.com"
+      },
+      "mobile": {
+        "number": "009715023425641"
+      },
+      "phone": {
+        "number": "00971450467101"
+      }
+    },
+    "userRole": "Solutions Architect",
+    "isEnabled": true,
+    "isArchived": false
+  }
+]

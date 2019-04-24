@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CustomersList } from './models';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { environment } from '../../environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CustomerListsService {
 
   private getCustomerListUrl = '';
@@ -15,7 +15,7 @@ export class CustomerListsService {
     if (environment.dataFromAPI_JSON && environment.getCustomerLists !== '') {
       this.getCustomerListUrl = environment.dpsAPI + environment.getCustomerLists;
     } else {
-      this.getCustomerListUrl = 'assets/data/customerlists.json';
+      this.getCustomerListUrl = '../../assets/data/customerlists.json';
     }
     console.log('Data From = ' + this.getCustomerListUrl);
   }

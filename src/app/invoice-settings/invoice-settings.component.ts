@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl} from '@angular/forms';
-import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
-  PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
-  LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
-  InvoiceSettings, Language, Contact } from '../shared/models';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
+import {
+  DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
+  PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
+  LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
+  InvoiceSettings, Language, Contact
+} from '../shared/models';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { element } from '@angular/core/src/render3';
 
@@ -23,22 +25,22 @@ export class InvoiceSettingsComponent implements OnInit {
   public errorMsg;
 
   // tslint:disable-next-line: variable-name
-  private _selectedValueInhaalrust: any ; private _selectedIndexInhaalrust: any = 0;  private _Inhaalrustvalue: any ;
+  private _selectedValueInhaalrust: any; private _selectedIndexInhaalrust: any = 0; private _Inhaalrustvalue: any;
 
-  public disabled="true";
-  public addNewRow:boolean;
-  public removeLastRemove:boolean;
+  public disabled = 'true';
+  public addNewRow: boolean;
+  public removeLastRemove: boolean;
 
   lieuDaysAllowanceObject: LieuDaysAllowance;
   sicknessInvoiced: boolean;
   holidayInvoiced: boolean;
-  compensatoryRest:boolean;
-  ploegpremieSwitch:boolean;
-  andreSwitch:boolean;
-  public disableWorkCodes:boolean;
+  compensatoryRest: boolean;
+  ploegpremieSwitch: boolean;
+  andreSwitch: boolean;
+  public disableWorkCodes: boolean;
 
-  payId:boolean;
-  mobileBoxText:string;
+  payId: boolean;
+  mobileBoxText: string;
 
   mobilityAllowanceObject: MobilityAllowance;
   shiftAllowance: boolean;
@@ -51,13 +53,13 @@ export class InvoiceSettingsComponent implements OnInit {
   dataDropDown: string[];
   datacurrencyDropDown: string[];
 
-  public ISForm: FormGroup
+  public ISForm: FormGroup;
 
   public form: FormGroup;
   public Ploegpremiere: FormArray;
 
   public formNew: FormGroup;
-  public Andre:FormArray;
+  public Andre: FormArray;
 
   public loadSwitchInhaalrust:boolean;
   public loadSwitchSickness:boolean;
@@ -73,89 +75,87 @@ export class InvoiceSettingsComponent implements OnInit {
   set selectedValue(value: any) { this._selectedValueInhaalrust = value; }
   get selectedValue(): any { return this._selectedValueInhaalrust; }
   set selectedIndex(value: number) { this._selectedIndexInhaalrust = value; this.value = this.dataDropDown[this.selectedIndex]; }
-  set selectedIndexCurrencyShiftAllowance(value:number){ this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];}
-  set selectedIndexCurrencyOtherAllowance(value:number){ this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];}
-  get selectedIndex(): number { 
+  set selectedIndexCurrencyShiftAllowance(value: number) {
+    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
+  }
+  set selectedIndexCurrencyOtherAllowance(value: number) {
+    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
+  }
+  get selectedIndex(): number {
     console.log(this._selectedIndexInhaalrust);
-    return this._selectedIndexInhaalrust; }
+    return this._selectedIndexInhaalrust;
+  }
   set value(value: any) { this._Inhaalrustvalue = value; }
   get value(): any { return this._Inhaalrustvalue; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
 
- 
-  changeObject(){
-   
-    let jsonObject:any = {
-       "lieuDaysAllowance": this.lieuDaysAllowanceObject,
-       "sicknessInvoiced": this.sicknessInvoiced,
-       "holidayInvoiced": this.holidayInvoiced,
-       "mobilityAllowance": this.mobilityAllowanceObject,
-       "shiftAllowance": this.shiftAllowance,
-       "shiftAllowances": this.shiftAllowances,
-       "otherAllowances": this.otherAllowances
+
+  changeObject() {
+
+    let jsonObject: any = {
+      'lieuDaysAllowance': this.lieuDaysAllowanceObject,
+      'sicknessInvoiced': this.sicknessInvoiced,
+      'holidayInvoiced': this.holidayInvoiced,
+      'mobilityAllowance': this.mobilityAllowanceObject,
+      'shiftAllowance': this.shiftAllowance,
+      'shiftAllowances': this.shiftAllowances,
+      'otherAllowances': this.otherAllowances
     };
 
     this.childEvent.emit(jsonObject);
-    
-    console.log("object changed");
+
+    console.log('object changed');
     console.log(jsonObject);
 
   }
 
-  onChangeDropDownCurrencyTeam($event,i) {
+  onChangeDropDownCurrencyTeam($event, i) {
 
     this.selectedIndexCurrencyShiftAllowance = $event.target.value;
     console.log(this.value);
 
-    if(this.value === "€")
-    {
+    if (this.value === '€') {
       this.shiftAllowances[i].nominal = true;
       this.changeObject();
     }
-    else
-    {
+    else {
       this.shiftAllowances[i].nominal = false;
       this.changeObject();
     }
 
-      return this.value;
+    return this.value;
   }
 
-
-  onChangeDropDownCurrencyOther($event,i){
+  onChangeDropDownCurrencyOther($event, i) {
 
     this.selectedIndexCurrencyOtherAllowance = $event.target.value;
     console.log(this.value);
 
-    if(this.value === "€")
-    {
-      console.log("euro selected setting nominal to true");
+    if (this.value === '€') {
+      console.log('euro selected setting nominal to true');
       this.otherAllowances[i].nominal = true;
       this.changeObject();
     }
-    else
-    {
-      console.log("% selected setting nominal to false");
+    else {
+      console.log('% selected setting nominal to false');
       this.otherAllowances[i].nominal = false;
       this.changeObject();
     }
 
-
-      return this.value;
+    return this.value;
   }
 
-  onChangeDropDown($event)
-  {
+  onChangeDropDown($event) {
     this.selectedIndex = $event.target.value;
     console.log(this.value);
 
-    if(this.value === "Betaald")
+    if (this.value === 'Betaald')
       this.lieuDaysAllowanceObject.payed = true;
     else
       this.lieuDaysAllowanceObject.payed = false;
 
-      this.changeObject();
+    this.changeObject();
 
     return this.value;
   }
@@ -193,9 +193,9 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceObject = new ShiftAllowance();
     this.otherAllowanceObject = new OtherAllowance();
 
-    this.shiftAllowanceObject.timeSpan = "nothing";
+    this.shiftAllowanceObject.timeSpan = 'nothing';
 
-    this.shiftAllowances= [];
+    this.shiftAllowances = [];
     this.otherAllowances = [];
 
     this.shiftAllowanceCounter = 1;
@@ -204,8 +204,8 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.otherAllowances.push(this.otherAllowanceObject);
 
-    this.dataDropDown = ["betaald","niet betaald"];
-    this.datacurrencyDropDown = ["€","%"];
+    this.dataDropDown = ['betaald', 'niet betaald'];
+    this.datacurrencyDropDown = ['€', '%'];
 
     this.ISForm = new FormGroup({
 
@@ -222,16 +222,16 @@ export class InvoiceSettingsComponent implements OnInit {
         this.createFirstServant()
       ]),
 
-      AndreBox1:new FormControl(''),
-      AndreBox2:new FormControl(''),
+      AndreBox1: new FormControl(''),
+      AndreBox2: new FormControl(''),
       AndreBox3: new FormControl(''),
 
       arrayAndreBox: this.fb.array([
         this.createAndre()
       ])
     });
-  
-  // set Ploegpremiere to the form control containing contacts
+
+    // set Ploegpremiere to the form control containing contacts
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
     this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;
 
@@ -245,7 +245,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ISForm.get('AndreBox2').disable();
     this.ISForm.get('currency').disable();
 
-    this.disabled = "true";
+    this.disabled = 'true';
     this.disableWorkCodes = true;
 
     this.ploegpremieSwitch = false;
@@ -267,24 +267,22 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.ploegpremieSwitch = $event;
 
-    if($event === true)
-    {
+    if ($event === true) {
       this.shiftAllowance = true;
       this.ISForm.get('PloegprimeBox1').enable();
       this.ISForm.get('PloegprimeBox2').enable();
       this.ISForm.get('PloegprimeBox3').enable();
       this.ISForm.get('currency').enable();
 
-      this.disabled = "false";
+      this.disabled = 'false';
     }
-    else
-    {
+    else {
       this.shiftAllowance = false;
-      this.ISForm.get('PloegprimeBox1').disable();      
+      this.ISForm.get('PloegprimeBox1').disable();
       this.ISForm.get('PloegprimeBox2').disable();
       this.ISForm.get('PloegprimeBox3').disable();
       this.ISForm.get('currency').disable();
-      this.disabled = "true";
+      this.disabled = 'true';
       this.clearShiftAllowances();
 
     }
@@ -293,40 +291,37 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  isInvalid(){
+  isInvalid() {
 
-    console.log("is invalid =");
+    console.log('is invalid =');
     console.log(this.ploegpremieSwitch);
 
-    if(this.ploegpremieSwitch === true)
-    {
+    if (this.ploegpremieSwitch === true) {
       return false;
     }
-  
+
     return true;
   }
 
   isInvalidOther() {
 
-    console.log("is invalid andre =");
+    console.log('is invalid andre =');
     console.log(this.andreSwitch);
 
-    if(this.andreSwitch === true)
-    {
+    if (this.andreSwitch === true) {
       return false;
     }
-  
+
     return true;
   }
 
   clearOtherAllowances() {
 
-    this.ISForm.controls['AndreBox1'].setValue("");
-    this.ISForm.controls['AndreBox2'].setValue("");
+    this.ISForm.controls['AndreBox1'].setValue('');
+    this.ISForm.controls['AndreBox2'].setValue('');
 
-    for(var j=0;j<this.otherAllowances.length;j++)
-    {
-      this.otherAllowances[j].codeId = "";
+    for (var j = 0; j < this.otherAllowances.length; j++) {
+      this.otherAllowances[j].codeId = '';
       this.otherAllowances[j].amount = 0;
       this.otherAllowances[j].nominal = true;
     }
@@ -335,87 +330,81 @@ export class InvoiceSettingsComponent implements OnInit {
 
   clearShiftAllowances() {
 
-    this.ISForm.controls['PloegprimeBox1'].setValue("");
-    this.ISForm.controls['PloegprimeBox2'].setValue("");
+    this.ISForm.controls['PloegprimeBox1'].setValue('');
+    this.ISForm.controls['PloegprimeBox2'].setValue('');
 
 
-    for(var i=0;i<this.shiftAllowances.length;i++)
-      {
-        this.shiftAllowances[i].shiftName = "";
-        this.shiftAllowances[i].amount = 0;
-        this.shiftAllowances[i].timeSpan = "";
-        this.shiftAllowances[i].nominal = true;
-      }
+    for (let i = 0; i < this.shiftAllowances.length; i++) {
+      this.shiftAllowances[i].shiftName = '';
+      this.shiftAllowances[i].amount = 0;
+      this.shiftAllowances[i].timeSpan = '';
+      this.shiftAllowances[i].nominal = true;
+    }
 
   }
 
-  setPgBox1(value,i:number) {
+  setPgBox1(value, i: number) {
     this.shiftAllowances[i].shiftName = value;
     this.changeObject();
   }
 
-  setPgBox2(value,j:number) {
+  setPgBox2(value, j: number) {
     this.shiftAllowances[j].amount = value;
     this.changeObject();
   }
 
-  setPgABox1(value,k:number){
+  setPgABox1(value, k: number) {
     this.otherAllowances[k].codeId = value;
     this.changeObject();
   }
 
-  setPgABox2(value,l:number){
+  setPgABox2(value, l: number) {
     this.otherAllowances[l].amount = value;
     this.changeObject();
   }
 
-  receiveWorkCode($event,k:number){   
-    console.log("workcode received is="+$event);
+  receiveWorkCode($event, k: number) {
+    console.log('workcode received is=' + $event);
 
     // setting the value in the array
-    if(this.andreSwitch === true){
+    if (this.andreSwitch === true) {
       this.otherAllowances[k].codeId = $event;
-      this.changeObject();  
+      this.changeObject();
     }
   }
 
   onChangeZ(event) {
     this.sicknessInvoiced = event;
     this.changeObject();
-    
+
   }
   onChangeF(event) {
     this.holidayInvoiced = event;
     this.changeObject();
   }
 
-  onChangeM(event)
-  {
+  onChangeM(event) {
     this.holidayInvoiced = event;
 
-    if(event === true)
-    {
+    if (event === true) {
       this.ISForm.get('mobilebox').enable();
       this.mobilityAllowanceObject.enabled = true;
-    }
-    else {
+    } else {
       this.ISForm.get('mobilebox').disable();
       this.mobilityAllowanceObject.enabled = false;
+    }
+
+    this.changeObject();
   }
 
-  this.changeObject();
-}
-
-  onChangeI(event){
+  onChangeI(event) {
 
     this.compensatoryRest = event;
 
-    if(event === true)
-    {
+    if (event === true) {
       this.ISForm.get('inhaalrust').enable();
       this.lieuDaysAllowanceObject.enabled = true;
-    }
-    else {
+    } else {
       this.ISForm.get('inhaalrust').disable();
       this.lieuDaysAllowanceObject.enabled = false;
     }
@@ -424,14 +413,14 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  setMobileBox(value:number) {
-      //this.mobileBoxText = value;
-      this.mobilityAllowanceObject.enabled = false;
-      this.mobilityAllowanceObject.amountPerKm = value;
-      this.changeObject();
+  setMobileBox(value: number) {
+    // this.mobileBoxText = value;
+    this.mobilityAllowanceObject.enabled = false;
+    this.mobilityAllowanceObject.amountPerKm = value;
+    this.changeObject();
   }
 
-  setInhaalrust(value:boolean){
+  setInhaalrust(value: boolean) {
     this.payId = value;
 
     this.lieuDaysAllowanceObject.enabled = true;
@@ -439,14 +428,13 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
   }
 
-  onMealM(event){
-      if(event === true ){
-        this.ISForm.get('arrayBox').enable();
-      } 
-      else {
-        this.ISForm.get('arrayBox').disable();
-      }
-      this.changeObject();
+  onMealM(event) {
+    if (event === true) {
+      this.ISForm.get('arrayBox').enable();
+    } else {
+      this.ISForm.get('arrayBox').disable();
+    }
+    this.changeObject();
 
   }
 
@@ -454,28 +442,27 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.andreSwitch = $event;
 
-    if($event === true ){
+    if ($event === true) {
       this.ISForm.get('arrayAndreBox').enable();
       // this.ISForm.get('AndreBox1').enable();
       this.disableWorkCodes = false;
       this.ISForm.get('AndreBox2').enable();
       this.ISForm.get('currency').enable();
-      this.disabled = "false";
-    } 
-    else {
+      this.disabled = 'false';
+    } else {
       this.ISForm.get('arrayAndreBox').disable();
       // this.ISForm.get('AndreBox1').disable();
       this.disableWorkCodes = true;
       this.ISForm.get('AndreBox2').disable();
       this.ISForm.get('currency').disable();
-      this.disabled = "true";
+      this.disabled = 'true';
       this.clearOtherAllowances();
     }
     this.changeObject();
 
   }
 
- 
+
 
   createAndre(): FormGroup {
     this.addNewRow = false;
@@ -518,16 +505,16 @@ export class InvoiceSettingsComponent implements OnInit {
 
   addAndreRows() {
     this.Andre.push(this.createAndre());
-    this.otherAllowanceObject = new OtherAllowance();  
+    this.otherAllowanceObject = new OtherAllowance();
     this.otherAllowances.push(this.otherAllowanceObject);
     this.otherAllowanceCounter++;
   }
 
   removeAndreRows(index) {
-    if(this.Andre.length != 1)
+    if (this.Andre.length != 1)
       this.Andre.removeAt(index);
-      this.otherAllowances.splice(index, 1);
-      this.changeObject();
+    this.otherAllowances.splice(index, 1);
+    this.changeObject();
   }
 
 
@@ -537,24 +524,24 @@ export class InvoiceSettingsComponent implements OnInit {
 
   addRows() {
     this.Ploegpremiere.push(this.createServants());
-    this.shiftAllowanceObject = new ShiftAllowance();  
-    this.shiftAllowanceObject.timeSpan = "nothing";
+    this.shiftAllowanceObject = new ShiftAllowance();
+    this.shiftAllowanceObject.timeSpan = 'nothing';
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.shiftAllowanceCounter++;
   }
 
   removeRows(index) {
-    if(this.Ploegpremiere.length != 1)
+    if (this.Ploegpremiere.length != 1)
       this.Ploegpremiere.removeAt(index);
-      
-      // remove from array shiftAllowances
-      this.shiftAllowances.splice(index, 1);
 
-      this.changeObject();
+    // remove from array shiftAllowances
+    this.shiftAllowances.splice(index, 1);
+
+    this.changeObject();
   }
 
-  replaceRows(index){
-  
+  replaceRows(index) {
+
   }
 
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Statute } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class StatuteService {
   private getStatuteUrl = '';
 
@@ -12,7 +12,7 @@ export class StatuteService {
     if (environment.dataFromAPI_JSON && environment.getStatute !== '') {
       this.getStatuteUrl = environment.boemmAPI + environment.getStatute;
     } else {
-      this.getStatuteUrl = 'assets/data/statute.json';
+      this.getStatuteUrl = '../../assets/data/statute.json';
     }
     console.log('Data From = ' + this.getStatuteUrl);
   }

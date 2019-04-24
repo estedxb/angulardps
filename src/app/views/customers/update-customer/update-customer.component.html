@@ -1,72 +1,69 @@
 <app-headers></app-headers>
 <app-menu></app-menu>
-<div class="row">
-  <div class="col col-sm-3"></div>
-  <div class="col col-sm-6 center-block">
-    <img src="../../assets/svg/updateCustomer.svg" style="left:-15" /><br />
-    <div class="pagehead">{{ CustomerName }}</div>
+<div class="container">
+  <div class="row">
+    <div class="col col-sm-12 center-block">
+      <img src="../../assets/svg/updateCustomer.svg" style="left:-15" /><br />
+      <div class="pagehead">{{ CustomerName }}</div>
+    </div>
   </div>
-  <div class="col col-sm-3"></div>
+  <div class="row" id="formState">
+    <div class="col col-sm-12"></div>
+  </div>
 </div>
-
-<div class="row" id="formState">
-  <div class="col col-sm-12"></div>
-</div>
-<div class="row">
-  <div class="col col-sm-1"></div>
-  <div class="col col-sm-11">
-    <div class="row">
-      <div class="col col-sm-3">
-        <div class="rline">
-          <div class="sidemenus" [ngClass]="{active: currentPage==='workschedules'}">
-            <button (click)="currentPage='workschedules'">
-              <img src="./assets/svg/calander.svg" />Mijn Werkroosters
-            </button>
-          </div>
-          <div class="sidemenus" [ngClass]="{active: currentPage==='positions'}">
-            <button (click)="currentPage='positions'">
-              <img src="./assets/svg/position.svg" />Mijn Functies
-            </button>
-          </div>
-          <div class="sidemenus" [ngClass]="{active: currentPage==='users'}">
-            <button (click)="currentPage='users'">
-              <img src="./assets/svg/users.svg" />Mijn Gebruikers
-            </button>
-          </div>
-          <div class="sidemenus" [ngClass]="{active: currentPage==='location'}">
-            <button (click)="currentPage='location'">
-              <img src="./assets/svg/location.svg" />Mijn Vestigingen
-            </button>
-          </div>
-          <div class="sidemenus" [ngClass]="{active: currentPage==='editcustomer'}">
-            <button (click)="currentPage='editcustomer'">
-              <img src="./assets/svg/customers.svg" />Mijn Bedrijfsgegevens
-            </button>
-          </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col col-sm-4">
+      <div class="rline">
+        <div class="sidemenus" [ngClass]="{active: currentPage==='workschedules'}">
+          <button (click)="currentPage='workschedules'">
+            <img src="./assets/svg/calander.svg" />Mijn Werkroosters
+          </button>
         </div>
+        <div class="sidemenus" [ngClass]="{active: currentPage==='positions'}">
+          <button (click)="currentPage='positions'">
+            <img src="./assets/svg/position.svg" />Mijn Functies
+          </button>
+        </div>
+        <div class="sidemenus" [ngClass]="{active: currentPage==='users'}">
+          <button (click)="currentPage='users'">
+            <img src="./assets/svg/users.svg" />Mijn Gebruikers
+          </button>
+        </div>
+        <div class="sidemenus" [ngClass]="{active: currentPage==='locations'}">
+          <button (click)="currentPage='locations'">
+            <img src="./assets/svg/location.svg" />Mijn Vestigingen
+          </button>
+        </div>
+        <div class="sidemenus" [ngClass]="{active: currentPage==='editcustomer'}">
+          <button (click)="currentPage='editcustomer'">
+            <img src="./assets/svg/customers.svg" />Mijn Bedrijfsgegevens
+          </button>
+        </div>
+        <div *ngIf="currentPage==='editcustomer'">
+          <button class="greenbtn" id="btnSave"><span>Gegevens opslaan</span></button>
+        </div>
+
       </div>
-      <div class="col col-sm-9" id="maincontentarea">
-        <div class="scrollbar" id="maincontent">
-          <div class="force-overflow">
-            <div *ngIf="currentPage==='workschedules'">
-              <app-workschedules></app-workschedules>
-            </div>
-            <div *ngIf="currentPage==='positions'">
-              <app-positions></app-positions>
-            </div>
-            <div *ngIf="currentPage==='users'">
-              <app-users></app-users>
-            </div>
-            <div *ngIf="currentPage==='location'">
-              <app-locations></app-locations>
-            </div>
-            <div *ngIf="currentPage==='editcustomer'">
-              <app-editcustomer></app-editcustomer>
-            </div>
-          </div>
+    </div>
+    <div class="col col-sm-8" id="maincontentarea">
+      <div class="scrollbar" id="maincontent">
+        <div *ngIf="currentPage==='workschedules'">
+          <app-workschedules></app-workschedules>
+        </div>
+        <div *ngIf="currentPage==='positions'">
+          <app-positions></app-positions>
+        </div>
+        <div *ngIf="currentPage==='users'">
+          <app-users></app-users>
+        </div>
+        <div *ngIf="currentPage==='locations'">
+          <app-locations></app-locations>
+        </div>
+        <div *ngIf="currentPage==='editcustomer'">
+          <app-editcustomer></app-editcustomer>
         </div>
       </div>
     </div>
-
   </div>
 </div>

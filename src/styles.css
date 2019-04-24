@@ -1,164 +1,427 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
-body  {background-image: url("assets/svg/bg.svg");background-size: cover;background-repeat: no-repeat;background-attachment: fixed;font-family: 'Arial Rounded MT Bold', Roboto, "Helvetica Neue", Verdana, Geneva, Tahoma, sans-serif; margin: 0;  }
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+body {
+  background-image: url("assets/svg/bg.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Arial Rounded MT Bold", Roboto, "Helvetica Neue", Verdana,
+    Geneva, Tahoma, sans-serif;
+  margin: 0;
+}
 
-html, body { height: 100%; }
-.titleBold {font-weight: bold; }
-.panelbg{background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);}
-.boxShadow{box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
-.center-block{text-align: center; margin: auto;}
-.pagehead{font-size: 20px;font-weight: bold;}
-.scrollbar{height: 600px; overflow-y:scroll;padding-right: 20px;}
-.error{color: red;}
-#maincontentarea span { font-size: 15px;font-weight: normal; padding: 5px 5px 5px 7px;  }
-#maincontentarea input[type=text], #maincontentarea input[type=password], #maincontentarea input[type=number] {
-    width: 98%; font-size: 15px;font-weight: normal; padding: 3px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619;
+html,
+body {
+  height: 100%;
 }
-#maincontentarea input:hover, #maincontentarea input:focus, #maincontentarea input::selection, #maincontentarea input::-webkit-keygen-select, #maincontentarea input::-moz-selection, #maincontentarea input::-moz-focusring{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
-.selectcomponent{ width: 100%; font-size: 15px;font-weight: normal; padding: 5px; border-radius:4px;margin: 4px 0px; border: 1px solid #E37619; }
-.selectcomponent:hover{box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4); }
-.selectcomponent option{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
-.jointcommittee  {min-width: 150px;max-width: 500px;}
-.jointcommittee  {min-width: 150px;max-width: 500px;}
-.countries {min-width: 100px;max-width: 250px;}
-.legalform {min-width: 100px;max-width: 150px;}
+.titleBold {
+  font-weight: bold;
+}
+.panelbg {
+  background-image: linear-gradient(
+    104deg,
+    rgba(227, 118, 25, 0.25),
+    rgba(159, 11, 25, 0.25)
+  );
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+.boxShadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.center-block {
+  text-align: center;
+  margin: auto;
+}
+.pagehead {
+  font-size: 20px;
+  font-weight: bold;
+}
+.scrollbar {
+  height: 600px;
+  overflow-y: scroll;
+  padding-right: 20px;
+}
+.error {
+  color: red;
+}
+#maincontentarea span {
+  font-size: 15px;
+  font-weight: normal;
+  padding: 5px 5px 5px 7px;
+}
+
+#maincontentarea #customerUpdate span {
+  padding: 0px;
+}
+#maincontentarea #customerUpdate .switch.switch-small {
+  margin: 0px;
+}
+
+#maincontentarea input[type="text"],
+#maincontentarea input[type="password"],
+#maincontentarea input[type="number"] {
+  width: 98%;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 3px;
+  border-radius: 4px;
+  margin: 4px 0px;
+  border: 1px solid #e37619;
+}
+#maincontentarea input:hover,
+#maincontentarea input:focus,
+#maincontentarea input::selection,
+#maincontentarea input::-webkit-keygen-select,
+#maincontentarea input::-moz-selection,
+#maincontentarea input::-moz-focusring {
+  box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4);
+}
+.selectcomponent {
+  width: 100%;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 5px;
+  border-radius: 4px;
+  margin: 4px 0px;
+  border: 1px solid #e37619;
+}
+.selectcomponent:hover {
+  box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4);
+}
+.selectcomponent option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.jointcommittee {
+  min-width: 150px;
+  max-width: 500px;
+}
+.jointcommittee {
+  min-width: 150px;
+  max-width: 500px;
+}
+.countries {
+  min-width: 100px;
+  max-width: 250px;
+}
+.legalform {
+  min-width: 100px;
+  max-width: 150px;
+}
 div.customerBox {
-    min-width:400px;
-    max-width:810px;
-    margin: 0px 0px 30px 0px ;
-    padding: 15px;
-    border-radius: 10px;
-    background: #fff;   
-    background-image: linear-gradient(104deg, rgba(227, 118, 25, 0.25),rgba(159, 11, 25, 0.25));
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 30px 0px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
+  background-image: linear-gradient(
+    104deg,
+    rgba(227, 118, 25, 0.25),
+    rgba(159, 11, 25, 0.25)
+  );
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
-div#CustomerGeneralDetails{min-height: 150px;}
-div#CustomerDetails{min-height: 220px;}
-div#CustomerContact{min-height: 220px;}
+div.SaveButton {
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 30px 0px;
+  padding: 0px 15px;
+}
+
+div#CustomerGeneralDetails {
+  min-height: 150px;
+}
+div#CustomerDetails {
+  min-height: 220px;
+}
+div#CustomerContact {
+  min-height: 220px;
+}
 .panelheader hr {
-    margin-top: 10px;
-    margin-bottom: 1rem;
-    margin-left: -15px;
-    padding: 0px;
-    border: 0;
-    border-top: 1px solid rgba(0,0,0,1);
-    box-sizing: content-box;
-    height: 0;
-    overflow: visible;
+  margin-top: 10px;
+  margin-bottom: 1rem;
+  margin-left: -15px;
+  padding: 0px;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 1);
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
 }
-.fright{float: right;text-align: right;}
-.fleft{float: left;text-align: left;}
-.fright h4,.fleft h4 {margin: 0px;padding: 10px 1px 0px 0px;font-size:16px;font-weight: bold;}
-.row,.col{border: 0px solid;}
-.row{border-color: green;} 
-.col{border-color: yellow;}
-.switch.switch-small{
-    margin: 15px 5px 15px 5px;
-    height: 19px;
-    border-radius: 19px;
-    min-width: 40px;
+.fright {
+  float: right;
+  text-align: right;
 }
-.switch.switch-small small{
-    width: 14px;
-    height: 14px;
-    margin: 3px;
-    right: calc(100% - 19px);
+.fleft {
+  float: left;
+  text-align: left;
 }
-.switch.checked small{
-    right: 0px;
+.fright h4,
+.fleft h4 {
+  margin: 0px;
+  padding: 10px 1px 0px 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.row,
+.col {
+  border: 0px solid;
+}
+.row {
+  border-color: green;
+}
+.col {
+  border-color: yellow;
+}
+.switch.switch-small {
+  margin: 15px 5px 15px 5px;
+  height: 19px;
+  border-radius: 19px;
+  min-width: 40px;
+}
+.switch.switch-small small {
+  width: 14px;
+  height: 14px;
+  margin: 3px;
+  right: calc(100% - 19px);
+}
+.switch.checked small {
+  right: 0px;
 }
 #maincontentarea .ng-valid span {
-    font-size: 15px;
-    font-weight: normal;
-    padding: 1px;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 1px;
 }
 
 #maincontentarea .mealrow span {
-    font-size: 15px;
-    font-weight: normal;
-    padding: 1px;
-    float: left;
-    line-height: 48px;
-    vertical-align: middle;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 1px;
+  float: left;
+  line-height: 48px;
+  vertical-align: middle;
 }
 
-.hideme { display: none;}
-
-#maincontentarea .inputWithIcon,#maincontentarea .dialog .inputWithIcon,.inputWithIcon {position: relative;}
-
-#maincontentarea .inputWithIcon i,.inputWithIcon i {
-    position: absolute; left:2px; padding: 11px; color: #000;
+.hideme {
+  display: none;
 }
 
-#maincontentarea .inputWithIcon input[type=text], .inputWithIcon input[type=text],
-#maincontentarea .inputWithIcon input[type=password], .inputWithIcon input[type=password],
-#maincontentarea .inputWithIcon input, .inputWithIcon input[type=number] { padding-left:20px;}
-#maincontentarea .inputWithIcon input[type=text] + i, .inputWithIcon input[type=text] +i,
-#maincontentarea .inputWithIcon input[type=password] +i, .inputWithIcon input[type=password] +i,
-#maincontentarea .inputWithIcon input[type=number] +i, .inputWithIcon input[type=number] +i { padding-left:20px; padding-right:0px;}
-
-#maincontentarea .inputWithImg img,.inputWithImg img {
-    position: absolute; right:2px; padding: 7px 25px 7px 0px; color: #9A0C19; top: 35px;
-}
-#maincontentarea .inputWithImg div,.inputWithImg div {
-    position: absolute; right:2px; padding: 7px 25px 7px 0px; color: #9A0C19; top: 0px;
-}
-#maincontentarea input[type=text].form-control, #maincontentarea input[type=number].form-control,
-#maincontentarea .inputWithImg input[type=text], .inputWithImg input[type=text], #maincontentarea .inputWithImg input, .inputWithImg input[type=number] {
-    padding-right: 30px;
-    padding-left: 5px;
-}
-.inputWithIcon .fa-2 { font-size: 1.4em; }
-.form-control +img,.form-control +div { padding-right:30px; z-index: 10;}
-
-#maincontentarea #hqform span, #maincontentarea #CTForm span{
-    padding: 0px;
-}
-#maincontentarea #hqform .switch.switch-small, #maincontentarea #CTForm .switch.switch-small{
-    margin: 0px;
+#maincontentarea .inputWithIcon,
+#maincontentarea .dialog .inputWithIcon,
+.inputWithIcon {
+  position: relative;
 }
 
-#maincontentarea .dialog .inputWithIcon,.dialog  .inputWithIcon {position: relative;}
-
-#maincontentarea .dialog .inputWithIcon i,.dialog  .inputWithIcon i {
-    position: absolute; right:-25px; padding: 11px; color: #000; left: auto;
+#maincontentarea .inputWithIcon i,
+.inputWithIcon i {
+  position: absolute;
+  left: 2px;
+  padding: 11px;
+  color: #000;
 }
 
-#maincontentarea .dialog .inputWithIcon input[type=text], .dialog  .inputWithIcon input[type=text],
-#maincontentarea .dialog .inputWithIcon input[type=password], .dialog  .inputWithIcon input[type=password],
-#maincontentarea .dialog .inputWithIcon input, .dialog  .inputWithIcon input[type=number] { padding-right:42px;padding-left:5px;}
-#maincontentarea .dialog .inputWithIcon input[type=text] + i, .dialog  .inputWithIcon input[type=text] +i,
-#maincontentarea .dialog .inputWithIcon input[type=password] +i, .dialog  .inputWithIcon input[type=password] +i,
-#maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
-#maincontentarea .dialog .inputWithIcon input[type=number] +i, .dialog  .inputWithIcon input[type=number] +i { padding-right:42px; padding-left:5px;}
-#maincontentarea label{width:100%;}
-.form-control{ line-height: 22px;}
-
-
-
-#maincontentarea .radiorow span, #maincontentarea .radiorow label {
-    font-size: 15px;
-    font-weight: bold;
-    padding: 1px;
-    float: left;
-    line-height: 48px;
-    vertical-align: middle;
+#maincontentarea .inputWithIcon input[type="text"],
+.inputWithIcon input[type="text"],
+#maincontentarea .inputWithIcon input[type="password"],
+.inputWithIcon input[type="password"],
+#maincontentarea .inputWithIcon input,
+.inputWithIcon input[type="number"] {
+  padding-left: 20px;
+}
+#maincontentarea .inputWithIcon input[type="text"] + i,
+.inputWithIcon input[type="text"] + i,
+#maincontentarea .inputWithIcon input[type="password"] + i,
+.inputWithIcon input[type="password"] + i,
+#maincontentarea .inputWithIcon input[type="number"] + i,
+.inputWithIcon input[type="number"] + i {
+  padding-left: 20px;
+  padding-right: 0px;
 }
 
-.m50{
-    margin-left: 50px;
+#maincontentarea .inputWithImg img,
+.inputWithImg img {
+  position: absolute;
+  right: 2px;
+  padding: 7px 25px 7px 0px;
+  color: #9a0c19;
+  top: 35px;
 }
-#maincontentarea .m50 select{
-    width:80%;
+#maincontentarea .inputWithImg div,
+.inputWithImg div {
+  position: absolute;
+  right: 2px;
+  padding: 7px 25px 7px 0px;
+  color: #9a0c19;
+  top: 0px;
 }
-#maincontentarea .m50 input[type=text]{
-    width:80%;
+#maincontentarea input[type="text"].form-control,
+#maincontentarea input[type="number"].form-control,
+#maincontentarea .inputWithImg input[type="text"],
+.inputWithImg input[type="text"],
+#maincontentarea .inputWithImg input,
+.inputWithImg input[type="number"] {
+  padding-right: 30px;
+  padding-left: 5px;
+}
+.inputWithIcon .fa-2 {
+  font-size: 1.4em;
+}
+.form-control + img,
+.form-control + div {
+  padding-right: 30px;
+  z-index: 10;
 }
 
-#maincontentarea input[type=text].workcode {
-    padding-right: 5px;
-    padding-left: 5px;
-    line-height: 30px;
-    height: 30px;
+#maincontentarea #hqform span,
+#maincontentarea #CTForm span {
+  padding: 0px;
+}
+#maincontentarea #hqform .switch.switch-small,
+#maincontentarea #CTForm .switch.switch-small {
+  margin: 0px;
+}
+
+#maincontentarea .dialog .inputWithIcon,
+.dialog .inputWithIcon {
+  position: relative;
+}
+
+#maincontentarea .dialog .inputWithIcon i,
+.dialog .inputWithIcon i {
+  position: absolute;
+  right: -25px;
+  padding: 11px;
+  color: #000;
+  left: auto;
+}
+
+#maincontentarea .dialog .inputWithIcon input[type="text"],
+.dialog .inputWithIcon input[type="text"],
+#maincontentarea .dialog .inputWithIcon input[type="password"],
+.dialog .inputWithIcon input[type="password"],
+#maincontentarea .dialog .inputWithIcon input,
+.dialog .inputWithIcon input[type="number"] {
+  padding-right: 42px;
+  padding-left: 5px;
+}
+#maincontentarea .dialog .inputWithIcon input[type="text"] + i,
+.dialog .inputWithIcon input[type="text"] + i,
+#maincontentarea .dialog .inputWithIcon input[type="password"] + i,
+.dialog .inputWithIcon input[type="password"] + i,
+#maincontentarea .dialog .inputWithIcon input[type="number"] + i,
+.dialog .inputWithIcon input[type="number"] + i {
+  padding-right: 42px;
+  padding-left: 5px;
+}
+#maincontentarea .dialog .inputWithIcon input[type="number"] + i,
+.dialog .inputWithIcon input[type="number"] + i {
+  padding-right: 42px;
+  padding-left: 5px;
+}
+#maincontentarea label {
+  width: 100%;
+}
+.form-control {
+  line-height: 22px;
+}
+
+#maincontentarea .radiorow span,
+#maincontentarea .radiorow label {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 1px;
+  float: left;
+  line-height: 48px;
+  vertical-align: middle;
+}
+
+.m50 {
+  margin-left: 50px;
+}
+#maincontentarea .m50 select {
+  width: 80%;
+}
+#maincontentarea .m50 input[type="text"] {
+  width: 80%;
+}
+
+.btn,
+.greenbtn {
+  background-image: linear-gradient(45deg, #e37619, #b12819);
+  margin: 10px 0px 0px 0px;
+  border-radius: 19px;
+  line-height: 28px;
+  padding: 0px 15px;
+  height: 38px;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  min-width: 150px;
+}
+
+.btn:hover,
+.greenbtn:hover {
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 0 0 2px #000;
+  -moz-text-shadow: 0 0 2px #000;
+  -webkit-text-shadow: 0 0 2px #000;
+}
+
+.btn img,
+.greenbtn img {
+  float: right;
+  padding: 2px 0px 2px 0px;
+}
+
+.btn img {
+  width: 26px;
+}
+.btn-save img {
+  width: 26px;
+}
+.greenbtn img {
+  width: 24px;
+}
+.greenbtn {
+  /*background-image: linear-gradient(#0fc600, #057e0f);*/
+  background-image: none;
+  background-color: #0fc600;
+  float: right;
+  border: 1px solid #11ad02;
+  font-size: 16px;
+  height: 28px;
+  border-radius: 14px;
+}
+
+.btn:disabled {
+  background-image: linear-gradient(45deg, #dfdfdf, #b8b8b8);
+}
+.greenbtn:disabled {
+  background-image: linear-gradient(90deg, #0fc600, #0fad01);
+}
+
+#btnSave.greenbtn {
+  min-width: 220px;
+}
+
+#maincontentarea input[type="text"].workcode {
+  padding-right: 5px;
+  padding-left: 5px;
+  line-height: 30px;
+  height: 30px;
+}
+.alertsContainer .alertsRow {
+  border: 1px solid #ffc549;
+}
+.alertsContainer .alertsRow .closeicon a {
+  color: #000;
+  text-decoration: none;
+  font-size: 12px;
 }

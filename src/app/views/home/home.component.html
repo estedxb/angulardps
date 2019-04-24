@@ -13,14 +13,14 @@
     1. Create Company Details
     <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
   </div>
-  <div  *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+  <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
     2. Agreements
     <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
   </div>
   <ng-template #secondpage>
-     <div  class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-        2. Agreements
-        <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />    
+    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+      2. Agreements
+      <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
     </div>
   </ng-template>
   <div class="col col-sm-3"></div>
@@ -88,8 +88,8 @@
   </div>
   <div class="col col-sm-3">
     <button class="btn" id="forward" (click)="onFormwardClick()">Volgende stap <img
-        src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
+        src="../../assets/svg/right-arrow.svg" /></button><br />
     <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-        src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+        src="../../assets/svg/left-arrow.svg" /> Terug</button>
   </div>
 </div>
