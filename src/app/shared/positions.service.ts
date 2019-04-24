@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CountriesList } from './models';
+import { Postion } from './models';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class CountriesService {
-  private getCountriesListUrl = '';
+export class PositionsService {
+  private getPositionListUrl = '';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -17,15 +16,15 @@ export class CountriesService {
 
   constructor(private http: HttpClient) {
     if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
-      this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
+      this.getPositionListUrl = environment.dpsAPI + environment.getPosition;
     } else {
-      this.getCountriesListUrl = 'assets/data/countries.json';
+      this.getPositionListUrl = 'assets/data/positions.json';
     }
   }
 
-  public getCountriesList(): Observable<CountriesList[]> {
-    console.log('CountriesService Data From = ' + this.getCountriesListUrl);
-    const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
+  public getCountriesList(): Observable<Position[]> {
+    console.log('CountriesService Data From = ' + this.getPositionListUrl);
+    const result = this.http.get<Position[]>(this.getPositionListUrl, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
   }
@@ -33,3 +32,5 @@ export class CountriesService {
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 
 }
+
+

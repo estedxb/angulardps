@@ -1,21 +1,3 @@
-.btn {
-  background-image: linear-gradient(
-    104deg,
-    rgba(227, 118, 25, 1),
-    rgba(159, 11, 25, 1)
-  );
-  margin: 20px 50px 0px 0px;
-  border-radius: 16px;
-  line-height: 17px;
-  height: 32px;
-  vertical-align: middle;
-  color: #fff;
-  font-size: 17px;
-  font-weight: bold;
-}
-.btn:disabled {
-  background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
-}
 #forward {
   width: 260px;
   text-align: left;
@@ -31,9 +13,9 @@
   float: left;
 }
 .scrollbar {
-  height: 900px;
+  height: 650px;
   overflow-y: scroll;
-  padding-right: 20px;
+  padding-right: 0px;
   overflow-x: hidden;
 }
 #formState {
@@ -44,8 +26,8 @@
   min-height: 1000px;
 }
 #formState {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 #maincontent::-webkit-scrollbar-track {
   background-color: transparent;
@@ -93,9 +75,9 @@
 .rline {
   border-right: 1px solid #707070;
   float: right;
-  height: 655px;
+  height: auto;
   margin: 0px 25px 0px 0px;
-  padding: 12px 35px 12px 12px;
+  padding: 12px 35px 100px 12px;
 }
 .sidemenus img {
   opacity: 0.5;
@@ -104,6 +86,30 @@
   margin-top: 1px;
   width: 35px;
   height: 35px;
+}
+
+.inforow .switch,
+.inforow .info,
+.inforow .actionbtn {
+  min-height: 18px;
+  line-height: 18px;
+  vertical-align: middle;
+  padding: 15px 5px 5px 5px;
+}
+.inforow .actionbtn {
+  padding: 10px 5px 5px 5px;
+}
+
+.inforow .switch {
+  text-align: center;
+}
+.inforow .actionbtn button {
+  margin: auto;
+}
+
+.inforow .actionbtn img {
+  width: 18px;
+  height: auto;
 }
 .sidemenus.active button,
 .sidemenus.active img {
@@ -121,7 +127,8 @@ button.close {
   float: right;
 }
 
-.sidemenus button {
+.sidemenus button,
+.inforow .actionbtn button {
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -137,4 +144,23 @@ button.close {
   line-height: 50px;
   vertical-align: middle;
   color: #21252938;
+}
+
+.inforow .actionbtn button {
+  width: 25px;
+  padding: 0px;
+  line-height: 25px;
+  vertical-align: middle;
+}
+
+.row,
+.col {
+  border: 0px solid;
+}
+
+.row {
+  border-color: green;
+}
+.col {
+  border-color: yellow;
 }

@@ -18,7 +18,7 @@ export class CustomerselectionComponent implements OnInit {
     this.customernames = [];
     if (this.customers.length > 0) {
       this.customernames = this.customers
-        .map( cust => { if (cust.item2.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } } );
+        .map(cust => { if (cust.item2.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } });
     } else {
       this.customernames = this.customers;
     }
@@ -26,12 +26,12 @@ export class CustomerselectionComponent implements OnInit {
 
   ngOnInit() {
     this.customerLists.getCustomers()
-        .subscribe( data => {
-          this.customers = data;
-          this.customernames = data;
-          console.log('getCustomers in customerselection.component ::');
-          console.log(data);
-        }, error => this.errorMsg = error );
+      .subscribe(data => {
+        this.customers = data;
+        this.customernames = data;
+        console.log('getCustomers in customerselection.component ::');
+        console.log(data);
+      }, error => this.errorMsg = error);
   }
 
   ShowHideCustomerList() { this.show = !this.show; }

@@ -1,12 +1,25 @@
-<div id="from1">
+<div id="customerUpdate">
     <div id="CustomerDetails" class="customerBox">
         <div class="row panelheader">
             <div class="col col-sm-5 fright">
                 <h4>Mijn vestigingen</h4>
                 <hr />
             </div>
-            <div class="col col-sm-7"></div>
+            <div class="col col-sm-7"><button class="greenbtn" id="addWorkSchedules"><span>Vestigingen
+                        toevoegen</span><img [src]='["assets/svg/addIcon.svg"]'></button></div>
         </div>
-
+        <div class="row inforow">
+            <div class="col col-sm-12"></div>
+        </div>
+        <div class="row inforow">
+            <div class="col col-sm-1 switch">
+                <ui-switch (change)="onUiSwitchChange($event,'1')" size="small"></ui-switch>
+            </div>
+            <div class="col col-sm-5 info">Hoofdzetel</div>
+            <div class="col col-sm-1 actionbtn"><button><img src="../../../../assets/svg/edit.svg"></button>
+            </div>
+            <div class="col col-sm-1 actionbtn"><button><img src="../../../../assets/svg/delete.svg"></button>
+            </div>
+        </div>
     </div>
 </div>

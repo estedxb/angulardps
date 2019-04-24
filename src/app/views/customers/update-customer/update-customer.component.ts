@@ -19,14 +19,14 @@ export class UpdateCustomerComponent implements OnInit {
   constructor(private customerService: CustomersService, private route: ActivatedRoute) {
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
-      console.log(this.Id);
+      console.log('ID :: ' + this.Id);
     });
 
   }
 
   ngOnInit() {
-    if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' || this.Id === 'positions'
-      || this.Id === 'users' || this.Id === 'workschedules') {
+    if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' ||
+      this.Id === 'positions' || this.Id === 'users' || this.Id === 'workschedules') {
       this.currentPage = this.Id;
     } else {
       this.currentPage = 'editcustomer';

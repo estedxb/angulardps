@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PositionService } from './position.service';
+import { PositionsService } from './positions.service';
 
-describe('PositionService', () => {
+describe('PositionsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PositionService = TestBed.get(PositionService);
+    const service: PositionsService = TestBed.get(PositionsService);
     expect(service).toBeTruthy();
   });
 });

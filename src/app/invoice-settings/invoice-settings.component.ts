@@ -4,7 +4,6 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
   InvoiceSettings, Language, Contact } from '../shared/models';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -111,7 +110,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
       return this.value;
   }
-
 
   onChangeDropDownCurrencyOther($event,i){
 
