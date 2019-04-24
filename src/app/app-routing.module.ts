@@ -28,6 +28,10 @@ import { LocationsComponent } from './views/customers/locations/locations.compon
 import { WorkschedulesComponent } from './views/customers/workschedules/workschedules.component';
 import { EditcustomerComponent } from './views/customers/editcustomer/editcustomer.component';
 
+import { CreateuserComponent } from './componentcontrols/createuser/createuser.component';
+import { CreatelocationComponent } from './componentcontrols/createlocation/createlocation.component';
+
+
 import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
@@ -88,5 +92,7 @@ export const routingComponents = [
   AddCustomerComponent,
   LoginComponent,
   EditcustomerComponent,
-  SchedulerComponent
+  SchedulerComponent,
+  CreateuserComponent,
+  CreatelocationComponent
 ];
