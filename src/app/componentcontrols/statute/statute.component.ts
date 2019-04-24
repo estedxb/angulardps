@@ -28,14 +28,9 @@ export class StatuteComponent implements OnInit {
   public statutename = '';
   public statuteSelectedString: ParitairCommitee;
   public arrayParitairCommitee: ParitairCommitee[];
-<<<<<<< HEAD
   public JCString;
   
   SForm:FormGroup;
-=======
->>>>>>> 9f7a55b4c53e637b7a2b4601e7c8ee8f73f7ab7c
-
-  SForm: FormGroup;
 
   public countStatutes: number;
   public statuteSettings = [];
