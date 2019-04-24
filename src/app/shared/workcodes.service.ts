@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { WorkCodes } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class WorkCodesService {
   private getWorkCodeUrl = '';
 
@@ -12,7 +12,7 @@ export class WorkCodesService {
     if (environment.dataFromAPI_JSON && environment.getCodes !== '') {
       this.getWorkCodeUrl = environment.boemmAPI + environment.getCodes;
     } else {
-      this.getWorkCodeUrl = 'assets/data/jointcommittee.json';
+      this.getWorkCodeUrl = '../../assets/data/jointcommittee.json';
     }
     console.log('Data From = ' + this.getWorkCodeUrl);
   }

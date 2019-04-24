@@ -1,34 +1,74 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CountriesList, DpsUser } from './models';
+import { User, DpsUser } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class UsersService {
-  private getCountriesListUrl = '';
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'my-auth-token'
-    })
-  };
 
-  constructor(private http: HttpClient) {
-    if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
-      this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
+  private getUserByVatNumberUrl = '';
+  private createUserURL = '';
+  private updateUserURL = '';
+
+  constructor(private http: HttpClient) { // , private header: HttpHeaders
+    if (environment.dataFromAPI_JSON && environment.getUsers !== '') {
+      console.log('Data From Remote');
+      this.updateUserURL = environment.dpsAPI + environment.getUsers;
+      this.getUserByVatNumberUrl = environment.dpsAPI + environment.getUsers;
+      this.createUserURL = environment.dpsAPI + environment.getUsers;
     } else {
-      this.getCountriesListUrl = 'assets/data/countries.json';
+      console.log('Data From JSON');
+      this.getUserByVatNumberUrl = '../../assets/data/users.json';
     }
   }
 
-  public getCountriesList(): Observable<CountriesList[]> {
-    console.log('CountriesService Data From = ' + this.getCountriesListUrl);
-    const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
+  public getUsersByVatNumber(parameter: string): Observable<DpsUser[]> {
+    console.log('UserService Data From = ' + this.getUserByVatNumberUrl);
+    const result = this.http.get<DpsUser[]>(this.getUserByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
 
-  errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
+  public createUser(user: any): Observable<any> {
+    let httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
+    return this.http.post<any>(this.createUserURL, user, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+  public updateUser(user: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put<any>(this.updateUserURL, user, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    // console.log(error.status);
+
+    if (error.status === 400) {
+      console.log('vat number not correct format');
+    } else if (error.status === 204) {
+      console.log('vat number doesnt exist ');
+    } else if (error.status === 409) {
+      console.log('user exists in the system, dont allow customer to create');
+    } else {
+      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+    }
+
+
+    return Observable.throwError(error.message);
+  }
 }

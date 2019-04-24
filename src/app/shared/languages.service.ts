@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Language } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
@@ -15,7 +15,7 @@ export class LanguagesService {
     if (environment.dataFromAPI_JSON && environment.getLanguages !== '') {
       this.getLanguagesUrl = environment.dpsAPI + environment.getLanguages;
     } else {
-      this.getLanguagesUrl = 'assets/data/languages.json';
+      this.getLanguagesUrl = '../../assets/data/languages.json';
     }
   }
 
@@ -26,5 +26,5 @@ export class LanguagesService {
     return result;
   }
 
-  errorHandler(error: HttpErrorResponse) {return Observable.throwError(error.message); }
+  errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 }

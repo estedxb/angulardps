@@ -18,7 +18,7 @@ export class PositionsService {
     if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
       this.getPositionListUrl = environment.dpsAPI + environment.getPosition;
     } else {
-      this.getPositionListUrl = 'assets/data/positions.json';
+      this.getPositionListUrl = '../../assets/data/positions.json';
     }
   }
 

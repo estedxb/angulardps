@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { LegalForm } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class LegalformService {
   private getLegalFormUrl = '';
 
@@ -13,7 +13,7 @@ export class LegalformService {
     if (environment.dataFromAPI_JSON && environment.getLegalForm !== '') {
       this.getLegalFormUrl = environment.dpsAPI + environment.getLegalForm;
     } else {
-      this.getLegalFormUrl = 'assets/data/legalform.json';
+      this.getLegalFormUrl = '../../assets/data/legalform.json';
     }
   }
 
@@ -24,7 +24,7 @@ export class LegalformService {
     return result;
   }
 
-  errorHandler(error: HttpErrorResponse) {return Observable.throwError(error.message); }
+  errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 }
 
 /*
