@@ -62,7 +62,7 @@ export class CreatelocationComponent implements OnInit {
     this.createObjects();  //check validations
     this.loadLocationToEdit(this.VatNumber);
   }
-  
+
   loadLocationToEdit(vatNumber: string) {
     this.locationsService.getLocationByVatNumber(vatNumber).subscribe(response => {
       response.forEach((element) => {

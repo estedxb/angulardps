@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { AlertsModule } from 'angular-alert-module';
-
+import { MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -30,7 +30,10 @@ import { AlertsModule } from 'angular-alert-module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AlertsModule.forRoot()
+    AlertsModule.forRoot(),
+    MatAutocompleteModule,
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

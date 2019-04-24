@@ -4,6 +4,9 @@ import { Alert } from 'selenium-webdriver';
 import { Location, LoginToken, DpsUser } from '../../../shared/models';
 import { LocationsService } from '../../../shared/locations.service';
 import { AlertsService } from 'angular-alert-module';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CreatelocationComponent } from '../../../componentcontrols/createlocation/createlocation.component';
+
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
@@ -17,7 +20,7 @@ export class LocationsComponent implements OnInit {
   public SelectedLocationEnableStatus = true;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
-  constructor(private locationService: LocationsService, private alerts: AlertsService) { }
+  constructor(private locationService: LocationsService, private alerts: AlertsService, private dialog: MatDialog) { }
 
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
@@ -26,13 +29,27 @@ export class LocationsComponent implements OnInit {
       console.log('Locations Forms Data : '); console.log(this.maindatas);
     }, error => this.errorMsg = error);
 
-    this.alerts.setMessage('All the fields are required', 'error');
+    // this.alerts.setMessage('All the fields are required', 'error');
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreatelocationComponent, {
+      width: '700px',
+      data: this.data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.data = result;
+      console.log('this.data ::', this.data);
+    });
+  }
+
 
   onClickEdit(i) {
     console.log('Edit Clicked Index :: ' + i);
     this.data = this.maindatas[i];
-    return true;
+    return this.openDialog();
   }
 
   onClickDelete(i) {

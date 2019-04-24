@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-update-customer',

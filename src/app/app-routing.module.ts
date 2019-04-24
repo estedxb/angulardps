@@ -31,7 +31,6 @@ import { EditcustomerComponent } from './views/customers/editcustomer/editcustom
 import { CreateuserComponent } from './componentcontrols/createuser/createuser.component';
 import { CreatelocationComponent } from './componentcontrols/createlocation/createlocation.component';
 
-
 import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
@@ -52,7 +51,7 @@ const routes: Routes = [
   */
   { path: 'customer/:id', component: UpdateCustomerComponent },
   { path: 'settings', component: CustomersComponent },
-  { path: 'scheduler', component: SchedulerComponent }, 
+  { path: 'scheduler', component: SchedulerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'person/addperson', component: AddpersonComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
