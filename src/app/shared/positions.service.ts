@@ -22,9 +22,9 @@ export class PositionsService {
     }
   }
 
-  public getCountriesList(): Observable<Position[]> {
+  public getCountriesList(): Observable<DpsPostion[]> {
     console.log('CountriesService Data From = ' + this.getPositionListUrl);
-    const result = this.http.get<Position[]>(this.getPositionListUrl, this.httpOptions).catch(this.errorHandler);
+    const result = this.http.get<DpsPostion[]>(this.getPositionListUrl, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
   }
