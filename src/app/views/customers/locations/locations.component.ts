@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Alert } from 'selenium-webdriver';
+import { Location } from '../../../shared/models';
+import { LocationsService } from '../../../shared/locations.service';
 
 @Component({
   selector: 'app-locations',
@@ -7,15 +10,40 @@ import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from
   styleUrls: ['./../customers.component.css']
 })
 export class LocationsComponent implements OnInit {
+  public maindatas = [];
+  public datas = {};
+  public errorMsg;
+  public SelectedLocationIndex = 0;
+  public SelectedLocationEnableStatus = true;
 
-  constructor() { }
+  constructor(private locationService: LocationsService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onClickEdit(id) {
+    alert('Edit Clicked :: ' + id);
+    return true;
   }
 
-  onUiSwitchChange($event, i) {
+  onClickDelete(id) {
+    alert('Delete Clicked :: ' + id);
+    return true;
+  }
+
+  onUiSwitchChange($event, index) {
+    this.SelectedLocationIndex = index;
+    this.SelectedLocationEnableStatus = $event.target.value;
     /*
-        this.selectedIndexCurrencyOtherAllowance = $event.target.value;
+    this.datas = this.maindatas
+      .map(location => {
+        if (location..toLowerCase().indexOf(value.toLowerCase()) > -1
+          || location.CodeNumber.toString().indexOf(value.toLowerCase()) > -1
+          || (location.CodeNumber.toString() + ' - ' + cust.Description.toLowerCase()).indexOf(value.toLowerCase()) > -1) { return cust; }
+      });
+      */
+    alert('LocationId : ' + this.SelectedLocationIndex + ', Enabled : ' + this.SelectedLocationEnableStatus);
+    /*
+        this.selectedIndexCurrencyOtherAllowance = ;
         console.log(this.value);
     
         if(this.value === "€")

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "customerVatNumber": "BN011",
+    "name": "str name",
+    "address": {
+      "street": "wedfw2fd",
+      "streetNumber": "wedf",
+      "bus": "ss",
+      "city": "ssq",
+      "postalCode": "dwed",
+      "country": "ewfdw",
+      "countryCode": "edw"
+    },
+    "isEnabled": false,
+    "isArchive": true
+  },
+  {
+    "id": 2,
+    "customerVatNumber": "BN011",
+    "name": "str name",
+    "address": {
+      "street": "wedfw2fd",
+      "streetNumber": "wedf",
+      "bus": "ss",
+      "city": "ssq",
+      "postalCode": "dwed",
+      "country": "ewfdw",
+      "countryCode": "edw"
+    },
+    "isEnabled": false,
+    "isArchive": true
+  },
+  {
+    "id": 3,
+    "customerVatNumber": "BN011",
+    "name": "str name",
+    "address": {
+      "street": "wedfw2fd",
+      "streetNumber": "wedf",
+      "bus": "ss",
+      "city": "ssq",
+      "postalCode": "dwed",
+      "country": "ewfdw",
+      "countryCode": "edw"
+    },
+    "isEnabled": false,
+    "isArchive": true
+  }
+]

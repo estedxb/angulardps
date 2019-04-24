@@ -31,27 +31,25 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    console.log("hello");
+    console.log('hello');
 
     const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
 
-  public createCustomerUpdate(customer:any): Observable<any>
-  {
+  public createCustomerUpdate(customer: any): Observable<any> {
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-   return this.http.put<any>(this.createCustomerURL,customer, {
+    return this.http.put<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
       observe: 'response'
-   });    
+    });
   }
 
-  public createCustomer(customer:any): Observable<any>
-  {
+  public createCustomer(customer: any): Observable<any> {
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -66,9 +64,9 @@ export class CustomersService {
     console.log(error.status);
 
     if (error.status === 400)
-      console.log("vat number not correct format");
+      console.log('vat number not correct format');
     if (error.status === 204)
-      console.log("vat number doesnt exist ");
+      console.log('vat number doesnt exist ');
     if (error.status === 409)
       console.log('customer exists in the system, dont allow customer to create');
 

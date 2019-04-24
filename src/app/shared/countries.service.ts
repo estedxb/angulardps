@@ -19,7 +19,7 @@ export class CountriesService {
     if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
       this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
     } else {
-      this.getCountriesListUrl = 'assets/data/countries.json';
+      this.getCountriesListUrl = '../../assets/data/countries.json';
     }
   }
 
