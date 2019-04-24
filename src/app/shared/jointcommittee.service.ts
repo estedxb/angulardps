@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ParitairCommitee } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import _ from 'lodash';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class JointcommitteeService {
   private getJointCommiteeUrl = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getJointCommitee !== '') {
-      this.getJointCommiteeUrl = environment.boemmAPI + environment.getJointCommitee;
+    if (environment.dataFromAPI_JSON && environment.getParitairCommitee !== '') {
+      this.getJointCommiteeUrl = environment.boemmAPI + environment.getParitairCommitee;
     } else {
       this.getJointCommiteeUrl = 'assets/data/jointcommittee.json';
     }

@@ -25,8 +25,9 @@ export class ContactpersonComponent implements OnInit {
   contactsEmail:EmailAddress;
   phoneNumber: PhoneNumber;
   mobileNumber: PhoneNumber;
-  language: Language;
+  language: Language;  
   contact: Contact;
+  alsCheck: boolean;
 
   constructor(private formBuilder:FormBuilder) {
           
@@ -38,13 +39,14 @@ export class ContactpersonComponent implements OnInit {
       firstname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
       alsCheck:new FormControl(),
-      language:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
+      language:new FormControl(''),
       position:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]+$')]),
-      mobile:new FormControl('',Validators.required),
-      telephone:new FormControl('',[Validators.required,Validators.pattern('^[0-9]+')]),
+      mobile:new FormControl('',[Validators.required]),//Validators.pattern("^/[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{3}[\.\\- ]{0,1}[0-9]{2}/$") 
+      telephone:new FormControl(''),
       emailaddress:new FormControl('',[Validators.required,Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
     });
 
+    this.alsCheck  = false;
     this.createObjects();  //check validations
   }
 
@@ -84,31 +86,73 @@ export class ContactpersonComponent implements OnInit {
    console.log(this.language);
 
    this.setJSONObject();
+  }
 
+  changeAls($event){    
+    this.alsCheck = $event;    
   }
 
   setJSONObject() {
+    
+              // "firstName": this.contact.firstName,
+          // "lastName": this.contact.lastName,
+          // "postion": this.contact.postion,
+          // "email": this.contact.email,
+          // "mobile": this.contact.mobile,
+          // "phoneNumber": this.contact.phoneNumber,
+          // "language": this.contact.language,
 
    this.CTdata =  {
-          "firstName": this.contact.firstName,
-          "lastName": this.contact.lastName,
-          "postion": this.contact.postion,
-          "email": this.contact.email,
-          "mobile": this.contact.mobile,
-          "phoneNumber": this.contact.phoneNumber,
-          "language": this.contact.language
+
+          "contact": this.contact,
+          "formValid": this.validity(),
+          "activateContactAsUser":this.alsCheck
    };
 
-   if(this.CTdata !== undefined)
-   {
      this.childEvent.emit(this.CTdata);
-   }
+
+  }
+
+  validity() {
+
+    this.checkValidations();
+
+      if(this.CTForm.valid === true && !this.emptyData())
+        return true;
+       
+        return false;
+  }
+
+  checkValidations() {
+
+    console.log(this.CTForm.get('firstname').valid);
+    console.log(this.CTForm.get('lastname').valid);
+    console.log(this.CTForm.get('position').valid);
+    console.log(this.CTForm.get('emailaddress').valid);
+    console.log(this.CTForm.get('mobile').valid);
+
+  }
+
+  emptyData() {
+
+    if(this.CTForm.get('firstname').value === "")
+      return true;
+    if(this.CTForm.get('lastname').value === "")
+      return true;
+    if(this.CTForm.get('position').value === "")
+      return true;
+    if(this.CTForm.get('emailaddress').value === "")
+    return true;
+    if(this.CTForm.get('mobile').value === "")
+    return true;
+    
+    return false;
 
   }
 
   public updateData() {
     this.createObjects();
-    this.childEvent.emit(this.CTdata);
+    //this.childEvent.emit(this.CTdata);
   }
   
 

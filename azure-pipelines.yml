@@ -18,9 +18,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install -g @angular/cli
+    npm install -g @angular/cli@7.2
     npm install
-    npm i @types/node
     ng build --output-path $(Build.ArtifactStagingDirectory)/dist_test
     #ng build --configuration=staging --output-path $(Build.ArtifactStagingDirectory)/dist_stag
     #ng build --prod --output-path $(Build.ArtifactStagingDirectory)/dist_prod

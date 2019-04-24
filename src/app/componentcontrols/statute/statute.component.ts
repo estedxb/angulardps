@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
 import { StatuteService } from '../../shared/statute.service';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
@@ -9,9 +9,12 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 @Component({
   selector: 'app-statute',
   templateUrl: './statute.component.html',
-  styleUrls: ['./statute.component.css']
+  styles: ['']
 })
 export class StatuteComponent implements OnInit {
+
+  @Output() public childEvent = new EventEmitter();
+
   public statutes = [];
   public errorMsg;
   public isMealEnabled = [];
@@ -65,6 +68,9 @@ export class StatuteComponent implements OnInit {
       //   // alert(this.isMealEnabled[Cnt] );
 
       // }
+      if(this.statutes.length !== 0)
+        this.emitData();
+
     }, error => this.errorMsg = error);
 
 
@@ -144,6 +150,8 @@ export class StatuteComponent implements OnInit {
      }
 
      console.log("created array=")
+     this.emitData();
+
      console.log(this.statuteSettings);
   }
 
@@ -177,7 +185,8 @@ export class StatuteComponent implements OnInit {
       this.createArrayData(this.statutes);
       this.replaceArray(i);
     }
- 
+    this.emitData();
+
   }
 
   replaceArrayWergever(i:number){
@@ -194,8 +203,9 @@ export class StatuteComponent implements OnInit {
     }
     else {
       this.createArrayData(this.statutes);
-
     }
+    this.emitData();
+
   }
 
   replaceArrayTotal(i:number) {
@@ -213,6 +223,7 @@ export class StatuteComponent implements OnInit {
     else {
       this.createArrayData(this.statutes);    
     }
+    this.emitData();
 
   }
 
@@ -231,6 +242,8 @@ export class StatuteComponent implements OnInit {
     else {
       this.createArrayData(this.statutes);    
     }
+
+    this.emitData();
   }
 
 
@@ -249,8 +262,9 @@ export class StatuteComponent implements OnInit {
           }
     }
     else{
-      this.createArrayData(this.statutes);    
+      this.createArrayData(this.statutes);
     }
+    this.emitData();
      console.log(this.statuteSettings)
   }
 
@@ -271,8 +285,12 @@ export class StatuteComponent implements OnInit {
               }
             }
       }
-      
+      this.emitData();
       console.log(this.statuteSettings);
+ }
+
+ emitData(){
+  this.childEvent.emit(this.statuteSettings);
  }
 
 }

@@ -1,18 +1,25 @@
 <ng-container *ngIf="show">
     <div class="dialog">
-        <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>
+        <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button>
+        </div>
         <div class="input-group ng-autocomplete">
-            <span class="input-group-btn"><button type="submit" class="search-btn" data-target="#search-form" name="q"  ><i class="fa fa-search"></i></button></span>    
-            <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /> <a routerLink="../home" routerLinkActive="active" (click)="closeMe()" class="close"><img src="../../assets/svg/Add.svg" style="width: 30px;height: 30px;margin: 1px 8px 1px 8px;"></a>           
+            <span class="input-group-btn"><button type="submit" class="search-btn" data-target="#search-form"
+                    name="q"><i class="fa fa-search"></i></button></span>
+            <input type="text" class="search-form" (keyup)="oncustomerKeyup($event.target.value)"
+                placeholder="Search" /> <a [routerLink]='["/customer/add"]' routerLinkActive="active"
+                (click)="closeMe()" class="close"><img src="../../assets/svg/Add.svg"
+                    style="width: 30px;height: 30px;margin: 1px 8px 1px 8px;"></a>
         </div>
         <div class="content" id="customerContent">
             <div class="error">{{ errorMsg }}</div>
-            <div *ngFor = "let customer of customernames">
-                <div id="customersList" *ngIf="customer && customer.item1 != null && customer.item1 != undefined && customer.item1 != '' && customer.item1 != 'undefined'  ">
-                    <a href="customer/{{ customer.item1 }}" title=" {{ customer.item1 }} -  {{ customer.item2 }} - {{ customer.item3 }}">{{customer.item2}}</a>
+            <div *ngFor="let customer of customernames">
+                <div id="customersList"
+                    *ngIf="customer && customer.item1 != null && customer.item1 != undefined && customer.item1 != '' && customer.item1 != 'undefined'  ">
+                    <a [routerLink]='["/customer/" + customer.item1]'
+                        title=" {{ customer.item1 }} -  {{ customer.item2 }} - {{ customer.item3 }}">{{customer.item2}}</a>
                 </div>
             </div>
         </div>
-    </div>      
+    </div>
 </ng-container>
 <!--<button class="close" (click)="closeMe()"><img src="../../assets/svg/X.svg" style="width: 12px;height: 12px;"></button>-->

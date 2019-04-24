@@ -6,6 +6,7 @@ export class DPSCustomer {
     statuteSettings?: StatuteSetting[];
     invoiceSettings?: InvoiceSettings;
     contact: Contact;
+    activateContactAsUser: boolean;
 }
 
 export class Customer {
@@ -18,12 +19,12 @@ export class Customer {
     phoneNumber?: PhoneNumber;
     email?: EmailAddress;
     vcaCertification?: VcaCertification;
-    isBlocked:boolean;
+    isBlocked: boolean;
 }
 
 export class EmailAddress { emailAddress: string; }
 
-export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean}
+export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean; }
 
 export class PhoneNumber { number: string; }
 
@@ -94,7 +95,7 @@ export class LegalForm {
     fr: Forms[];
 }
 
-export class Forms { name: string;}
+export class Forms { name: string; }
 
 export class CountriesList {
     countryCode: string;
@@ -103,18 +104,82 @@ export class CountriesList {
 
 export class Language { name: string; shortName: string; }
 
-/*
-export class LegalForm {
-    FormName: string;
+export class User {
+    userName: string;
+    firstName: string;
+    lastName: string;
+    email: EmailAddress;
+    mobile: PhoneNumber;
+    phone: PhoneNumber;
 }
-*/
-/*
-export class Dutch {FormName: string;}
-export class English {FormName: string;}
-export class French {FormName: string;}
-export class LegalForm {
-    nl: Dutch[];
-    en: English[];
-    fr: French[];
+
+export class DpsUser {
+    customerVatNumber: string;
+    user: User;
+    userRole: string;
+    isEnabled: boolean;
+    isArchived: boolean;
 }
-*/
+
+export class Location {
+    id: number;
+    customerVatNumber: string;
+    name: string;
+    address?: Address;
+    isEnabled: boolean;
+    isArchived: boolean;
+}
+
+export class DpsPostion {
+    id: number;
+    customerVatNumber: string;
+    position: _Position;
+    isEnabled: boolean;
+    isArchived: boolean;
+}
+// tslint:disable-next-line: class-name
+export class _Position {
+    name: string;
+    taskDescription: string;
+    isStudentAllowed: boolean;
+    costCenter: string;
+    workstationDocument: WorkstationDocument;
+}
+
+export class WorkstationDocument {
+    location: string;
+    name: string;
+}
+
+
+export class DpsWorkSchedule {
+    customerVatNumber: string;
+    name: string;
+    workschedule: WorkSchedule;
+    isEnabled: boolean;
+    isArchived: boolean;
+}
+export class WorkSchedule {
+    workday: WorkDay;
+}
+
+export class WorkDay {
+    DayofWeek: number;
+    WorkTimes?: WorkTime[];
+    BreakTimes?: WorkTime[];
+}
+
+export class WorkTime {
+    timespan: string;
+}
+
+export class Login {
+    userid: string;
+    password: string;
+}
+
+export class LoginToken {
+    accessToken: string;
+    dpsUser: DpsUser;
+}
+

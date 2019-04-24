@@ -1,125 +1,232 @@
-
-input[type=text], input[type=password], input[type=number] {
-    width: 100%; font-size: 15px;font-weight: normal; padding: 5px; margin: 0px; line-height: 42px; vertical-align: middle;
-    height: 42px;background-color: #fff; border: solid .05em #000; border-left: 0px;  color: #000; cursor:pointer; overflow: hidden; outline:none;
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 5px;
+  margin: 0px;
+  line-height: 42px;
+  vertical-align: middle;
+  height: 42px;
+  background-color: #fff;
+  border: solid 0.05em #000;
+  border-left: 0px;
+  color: #000;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 }
 
- .dialog:hover {box-shadow: 0px 0px 40px rgba(0,0,0,.2);}
- 
- [class*='close-'] {
-    color: #777;
-    font: 18px/100% arial, sans-serif;
-    font-weight: bold;
-    position: absolute;
-    right: 8px;
-    text-decoration: none;
-    text-shadow: 0 1px 0 #fff;
-    top: 8px;
-  }
- 
-  .close-thik:after { content: '✖'; }
- 
-  .compHeader .close, .compHeader .close-thik{ float: right; }
-  
-  /* Dialog */
-  .dialog {
-    display: block;
-    position: absolute;
-    border: 1px solid #ccc;
-    background-image: linear-gradient(#FFFFFF,#DBDBDB);
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    float: left;
-    left: 120px;
-    width: 400px;    
-    height: auto;
-    min-width: 200px;
-    max-width: 400px;
-    max-height: 515px;
-    z-index: 2000000;
-    padding: 10px;
-    overflow: hidden;
-    box-shadow: 0px 0px 40px rgba(0,0,0,.2);  
-    font-size: 16px;
-    color: #777;   
-    text-decoration: none;
-    box-sizing: border-box;
-    text-decoration: none;
-    margin: 0px;
-  }
-  .dialog .content{
-    margin: 20px 0px 10px 0px;
-    height: auto;
-    min-height: 220px;
-    max-height: 405px;
-    overflow-y:scroll;
- }
- .dialog .content #customersList{
-    padding: 10px 20px 10px 20px;
- }
- #customerContent::-webkit-scrollbar-track{background-color: transparent;}
- #customerContent::-webkit-scrollbar{width: 4px;	background-color: transparent;}
- #customerContent::-webkit-scrollbar-thumb{background-color: ghostwhite;}
- button.close {     
-    background-color: Transparent; background-repeat:no-repeat;border: none;
-    cursor:pointer;
-    overflow: hidden;    
-    float: right;     
- }
- button.workcodes{
-    background-color: Transparent; background-repeat:no-repeat;border: none;
-    cursor:pointer;
-    overflow: hidden;    
-    float: left; 
-    width: 100%;
-    text-align: left;
-    margin: 0px;
-    padding: 5px 2px ;
-    font-size: 16px;
-    font-weight: bold;
-    color:  rgba(34, 31, 31, 0.575);
- }
- 
- button.workcodes:hover{
-     background: rgba(227, 118, 25,.25);
- }
- .search-btn {margin-left: 16px;border-radius: 16px 0px 0px 16px; height: 32px;background-color: #fff; border: solid .05em #000; border-right: 0px; color: #000; cursor:pointer; overflow: hidden; outline:none;}
- .compHeader{ height: 25px; text-align: right;}
- .gap{width: 10px;}
- .state-container-dropdown{
-    position: absolute;
-    top:40px;
-    z-index: 2;
-    left:30px;
-    width: 330px;
-    height: 200px;
-    max-height: 300px;
-    background: #c7c7c7;
-    overflow:auto;
- }
- 
- a {text-decoration: none;font-size: 12px; font-weight: bold; color: black;vertical-align: middle;line-height: 16px; }
- span { font-size: 15px;font-weight: normal; padding: 0px;  }
- 
- #Work{background: url("../../../assets/svg/work.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/work.svg") no-repeat;background-size: contain; background-position: center; }
- #Absent{background: url("../../../assets/svg/absent.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/absent.svg") no-repeat;background-size: contain; background-position: center; }
- #Others{background: url("../../../assets/svg/others.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/others.svg") no-repeat;background-size: contain; background-position: center; }
- #Holiday{background: url("../../../assets/svg/holiday.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/holiday.svg") no-repeat;background-size: contain; background-position: center; }
- #Reverse{background: url("../../../assets/svg/reverse.svg") no-repeat;background-size: contain; background-position: center; } #home:hover{background: url("../../../assets/svg/reverse.svg") no-repeat;background-size: contain; background-position: center; }
- 
- .iconButton{
-    height: 50px;
-    width: 50px;
-    border: 1px solid #fff;
-    border-radius: 25px;
-    background-image: linear-gradient(#9C0B19,#E37619);
- }
- button.iconButton img {width: 30px;height: 30px;}
+.dialog:hover {
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+}
 
- .workSearch{
-     margin: 25px 0px ;
- }
+[class*="close-"] {
+  color: #777;
+  font: 18px/100% arial, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  right: 8px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+  top: 8px;
+}
 
- .col-sm-2 {
-     padding: 10px;
- }
+.close-thik:after {
+  content: "✖";
+}
+
+.compHeader .close,
+.compHeader .close-thik {
+  float: right;
+}
+
+/* Dialog */
+.dialog {
+  display: block;
+  position: absolute;
+  border: 1px solid #ccc;
+  background-image: linear-gradient(#ffffff, #dbdbdb);
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  float: left;
+  left: 0px;
+  width: 340px;
+  height: auto;
+  min-width: 200px;
+  max-width: 340px;
+  max-height: 300px;
+  z-index: 2000000;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  color: #777;
+  text-decoration: none;
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0px;
+}
+.dialog .content {
+  margin: 20px 0px 10px 0px;
+  height: auto;
+  min-height: 220px;
+  max-height: 105px;
+  overflow-y: scroll;
+}
+.dialog .content #customersList {
+  padding: 10px 20px 10px 20px;
+}
+#customerContent::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+#customerContent::-webkit-scrollbar {
+  width: 4px;
+  background-color: transparent;
+}
+#customerContent::-webkit-scrollbar-thumb {
+  background-color: ghostwhite;
+}
+button.close {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  float: right;
+}
+button.workcodes {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  float: left;
+  width: 100%;
+  text-align: left;
+  margin: 0px;
+  padding: 5px 2px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(34, 31, 31, 0.575);
+}
+
+button.workcodes:hover {
+  background: rgba(227, 118, 25, 0.25);
+}
+.search-btn {
+  margin-left: 16px;
+  border-radius: 16px 0px 0px 16px;
+  height: 26px;
+  background-color: #fff;
+  border: solid 0.05em #000;
+  border-right: 0px;
+  color: #000;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+.compHeader {
+  height: 25px;
+  text-align: right;
+}
+.gap {
+  width: 10px;
+}
+.state-container-dropdown {
+  position: absolute;
+  top: 40px;
+  z-index: 2;
+  left: 30px;
+  width: 330px;
+  height: 200px;
+  max-height: 300px;
+  background: #c7c7c7;
+  overflow: auto;
+}
+
+a {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  vertical-align: middle;
+  line-height: 16px;
+}
+span {
+  font-size: 15px;
+  font-weight: normal;
+  padding: 0px;
+}
+
+#Work {
+  background: url("../../../assets/svg/work.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#home:hover {
+  background: url("../../../assets/svg/work.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#Absent {
+  background: url("../../../assets/svg/absent.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#home:hover {
+  background: url("../../../assets/svg/absent.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#Others {
+  background: url("../../../assets/svg/others.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#home:hover {
+  background: url("../../../assets/svg/others.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#Holiday {
+  background: url("../../../assets/svg/holiday.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#home:hover {
+  background: url("../../../assets/svg/holiday.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#Reverse {
+  background: url("../../../assets/svg/reverse.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+#home:hover {
+  background: url("../../../assets/svg/reverse.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.iconButton {
+  height: 40px;
+  width: 40px;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  background-image: linear-gradient(#9c0b19, #e37619);
+}
+button.iconButton img {
+  width: 25px;
+  height: 25px;
+}
+
+.workSearch {
+  margin: 5px 0px;
+}
+
+.col-sm-2 {
+  padding: 5px;
+}
