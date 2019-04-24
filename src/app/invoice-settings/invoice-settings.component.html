@@ -73,7 +73,8 @@
                                                 <span>Ploegpremie</span>
                                         </div>
                                 </div>
-                                <div class="row dynrow" *ngFor="let Ploegpremiere of ISForm.get('arrayBox').controls as result; let i=index; first as isFirst; last as isLast">
+                                <div class="row dynrow"
+                                        *ngFor="let Ploegpremiere of ISForm.get('arrayBox').controls as result; let i=index; first as isFirst; last as isLast">
                                         <div class="col-sm-5">
                                                 <input #code (change)="setPgBox1(code.value,i)" type="text"
                                                         formControlName="PloegprimeBox1">
@@ -92,16 +93,20 @@
                                                 </select>
                                         </div>
                                         <div class="col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
-                                                <button [disabled]="isInvalid()"  #addButton (click)="addRows()" type="button" class="btnAdd">
-                                                        <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                                                <button [disabled]="isInvalid()" #addButton (click)="addRows()"
+                                                        type="button" class="btnAdd">
+                                                        <img src="../../../assets/img/add.png" alt="" height="17.5"
+                                                                width="17.5" />
                                                 </button>
                                         </div>
 
-                                                <ng-template #remove>
-                                                                <button [disabled]="isInvalid()" #removeButton (click)="removeRows(i)" type="button" class="btnRemove">
-                                                                        <img src="../../../assets/img/delete.jpg" alt="" height="17.5" width="17.5" />
-                                                                </button>        
-                                                </ng-template>
+                                        <ng-template #remove>
+                                                <button [disabled]="isInvalid()" #removeButton (click)="removeRows(i)"
+                                                        type="button" class="btnRemove">
+                                                        <img src="../../../assets/img/delete.jpg" alt="" height="17.5"
+                                                                width="17.5" />
+                                                </button>
+                                        </ng-template>
                                 </div>
                                 <div class="row">
                                         <div class="col-sm-12">
@@ -109,36 +114,41 @@
                                                 <span>Andre</span>
                                         </div>
                                 </div>
-                                <div class="row dynrow" *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
+                                <div class="row dynrow"
+                                        *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
                                         <div class="col-sm-5">
                                                 <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
                                                         formControlName="AndreBox1" style="display: none">
-                                                <app-workcodes [disabled]="disableWorkCodes" (childEvent)="receiveWorkCode($event,i)" ></app-workcodes>
+                                                <app-workcodes (childEvent)="receiveWorkCode($event,i)"></app-workcodes>
                                         </div>
                                         <div class="col-sm-3">
-                                                <input #amountA (change)="setPgABox2(amountA.value,i)"
-                                                        type="number" formControlName="AndreBox2">
+                                                <input #amountA (change)="setPgABox2(amountA.value,i)" type="number"
+                                                        formControlName="AndreBox2">
                                         </div>
                                         <div class="col-sm-2">
-                                                <select formControlName="currency" id="dd_currency"
-                                                        name="dd_currency" class="currency selectcomponent"
-                                                        (change)="onChangeDropDownCurrencyOther($event,i)"
-                                                        ng-dropdown required="required">
+                                                <select formControlName="currency" id="dd_currency" name="dd_currency"
+                                                        class="currency selectcomponent"
+                                                        (change)="onChangeDropDownCurrencyOther($event,i)" ng-dropdown
+                                                        required="required">
                                                         <option *ngFor="let data of datacurrencyDropDown let i= index"
                                                                 [attr.data-index]="i" [value]="i">{{data}}
                                                         </option>
                                                 </select>
                                         </div>
-                                        <div class="col-sm-2"  *ngIf="(nresult.length === 1 || isLastA) else removeA">
-                                                <button [disabled]="isInvalidOther()" #addButtonA (click)="addAndreRows()" type="button" class="btnAdd">
-                                                        <img src="../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                                        <div class="col-sm-2" *ngIf="(nresult.length === 1 || isLastA) else removeA">
+                                                <button [disabled]="isInvalidOther()" #addButtonA
+                                                        (click)="addAndreRows()" type="button" class="btnAdd">
+                                                        <img src="../../assets/img/add.png" alt="" height="17.5"
+                                                                width="17.5" />
                                                 </button>
                                         </div>
-                                          <ng-template #removeA>
-                                                        <button [disabled]="isInvalidOther()" #buttonA (click)="removeAndreRows(i)" type="button" class="btnRemove">
-                                                                <img src="../../../assets/img/delete.jpg" alt="" height="17.5" width="17.5" />
-                                                        </button>
-                                          </ng-template>
+                                        <ng-template #removeA>
+                                                <button [disabled]="isInvalidOther()" #buttonA
+                                                        (click)="removeAndreRows(i)" type="button" class="btnRemove">
+                                                        <img src="../../../assets/img/delete.jpg" alt="" height="17.5"
+                                                                width="17.5" />
+                                                </button>
+                                        </ng-template>
                                 </div>
                         </div>
                 </div>
