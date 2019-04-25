@@ -6,7 +6,7 @@
                 <hr />
             </div>
             <div class="col col-sm-7">
-                <button class="greenbtn" id="addWorkSchedules">
+                <button class="greenbtn" id="addWorkSchedules" (click)="onClickAdd()">
                     <span>Werkrooster toevoegen</span><img [src]='["assets/svg/addIcon.svg"]'>
                 </button>
             </div>
@@ -17,9 +17,9 @@
         <!--For loop Starts -->
         <div class="row inforow" *ngFor="let data of maindatas | archiveFilter; let i= index;">
             <div class="col col-sm-1 switch">
-                <ui-switch (change)="onUiSwitchChange($event,i)" size="small" [checked]="data.isEnabled"></ui-switch>
+                <ui-switch (change)="onStatusChange($event,i)" size="small" [checked]="data.isEnabled"></ui-switch>
             </div>
-            <div class="col col-sm-5 info">{{data.name}}</div>
+            <div class="col col-sm-8 info">{{data.name}}</div>
             <div class="col col-sm-1 actionbtn">
                 <button (click)="onClickEdit(i)"><img src="../../../../assets/svg/edit.svg"></button>
             </div>

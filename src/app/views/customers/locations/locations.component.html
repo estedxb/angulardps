@@ -6,7 +6,7 @@
                 <hr />
             </div>
             <div class="col col-sm-7">
-                <button class="greenbtn" id="addLocations">
+                <button class="greenbtn" id="addLocations" (click)="onClickAdd()">
                     <span>Vestigingen toevoegen</span><img [src]='["assets/svg/addIcon.svg"]'>
                 </button>
             </div>
@@ -31,6 +31,3 @@
     </div>
 </div>
 <div class="error">{{ errorMsg }}</div>
-<button mat-raised-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
-    Pizza party
-</button>

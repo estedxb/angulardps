@@ -1,7 +1,7 @@
 // import { Component, OnInit } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { User, Language, EmailAddress, PhoneNumber, DpsUser, LoginToken } from '../../shared/models';
+import { User, Language, EmailAddress, PhoneNumber, DpsUser, LoginToken } from '../../../../shared/models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from 'src/app/shared/users.service';
 import { element } from '@angular/core/src/render3';
@@ -9,16 +9,18 @@ import { element } from '@angular/core/src/render3';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
-  styleUrls: ['./createuser.component.css']
+  styleUrls: ['./../../customers.component.css']
 })
 export class CreateuserComponent implements OnInit {
-  public languageString;
-  public languageShortName;
-  //public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
+  public languageString: string;
+  public languageShortName: string;
+  // public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
-  @Input('parentData') public username;
-  @Input() public UserFormData;
+
+  @Input('parentData') public username: string;
+
+  // @Input() public UserFormData: any;
   UserData: any;
   UserForm: FormGroup;
   dpsUser: DpsUser;
@@ -46,7 +48,7 @@ export class CreateuserComponent implements OnInit {
     });
     this.loadUserToEdit(this.VatNumber);
     this.createObjects();  // check validations
-    
+
 
   }
 
@@ -67,17 +69,17 @@ export class CreateuserComponent implements OnInit {
     });
   }
 
-  receiveMessageLanguage($event) {
+  receiveMessageLanguage($event: { name: any; shortName: any; }) {
     this.languageString = $event.name;
     this.languageShortName = $event.shortName;
     this.createObjects();
   }
 
-  
+
 
   createObjects() {
 
-    
+
     this.phoneNumber = new PhoneNumber();
     this.mobileNumber = new PhoneNumber();
     this.contactsEmail = new EmailAddress();
@@ -99,7 +101,7 @@ export class CreateuserComponent implements OnInit {
 
     this.language.name = this.languageString;
     this.language.shortName = this.languageShortName;
-    
+
     this.user.language = this.language;
 
     // dpsuser object
