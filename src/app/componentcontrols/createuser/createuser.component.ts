@@ -145,7 +145,7 @@ export class CreateuserComponent implements OnInit {
       // check if username has value
       // if username has value ==> Update User
       // if username is null ==> Create User
-      if (this.username !== undefined && this.UserData !== null) {
+      if (this.username !== undefined && this.username !== null ) {
         // Update User
         this.userService.updateUser(this.UserData).subscribe(res => {
           console.log('response :: ');

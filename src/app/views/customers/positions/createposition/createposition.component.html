@@ -1,0 +1,106 @@
+<div class="updateModel">
+    <div class="row ">
+        <div class="col-sm-12 center-block head">
+            <img src='../../../assets/svg/PositionHead.svg'>
+            <br /> <label>Functie aanmaken / Wijzigen</label>
+            <hr>
+        </div>
+    </div>
+    <form [formGroup]="PositionForm" novalidate id="PositionForm">
+
+        <div class="customerBox">
+            <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                    <h4>Facturatie parameters</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row customerBoxContect">
+                <div class="col col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 inputWithImg">
+                            <label class="titleBold"> Functiebeschrijiving: </label>
+                            <input formControlName="jobdescription" class="form-control" name="jobdescription" />
+                            <div class="form-control-feedback"
+                                *ngIf="PositionForm.controls.jobdescription.invalid && (PositionForm.controls.jobdescription.dirty || PositionForm.controls.jobdescription.touched) else enewvalid">
+                                <img src="../../assets/img/InvalidIcon.png" alt="">
+                            </div>
+                            <ng-template #enewvalid>
+                                <img src="../../assets/img/ValidIcon.png" alt="">
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 inputWithImg">
+                            <label class="titleBold"> Kostenplaats: </label>
+                            <input formControlName="costcenter" class="form-control" name="costcenter" />
+                            <div class="form-control-feedback"
+                                *ngIf="PositionForm.controls.costcenter.invalid && (PositionForm.controls.costcenter.dirty || PositionForm.controls.costcenter.touched) else enewvalid">
+                                <img src="../../assets/img/InvalidIcon.png" alt="">
+                            </div>
+                            <ng-template #enewvalid>
+                                <img src="../../assets/img/ValidIcon.png" alt="">
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row">
+                          <div class="col-sm-12">
+                               <ui-switch name="costcenterxx" [checked]="costcenterEdit" (change)="onChange($event)" size="small"> </ui-switch>
+                               <label class="titleBold"> Student Toegelaten </label>                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Taakbeschrijiving: </label>
+                    <textarea formControlName="taskdescription" rows="8" class="form-control"
+                        name="taskdescription"></textarea>
+                    <div class="form-control-feedback"
+                        *ngIf="PositionForm.controls.taskdescription.invalid && (PositionForm.controls.taskdescription.dirty || PositionForm.controls.taskdescription.touched) else fnewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #fnewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-12 "></div>
+        </div>
+        <div class="customerBox">
+            <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                    <h4>Facturatie parameters</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row customerBoxContect">
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Upload werkpostfiche: </label>
+                    <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+                    <div class="form-control-feedback"
+                        *ngIf="PositionForm.controls.file.invalid && (PositionForm.controls.file.dirty || PositionForm.controls.file.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <button formControlName="download" class="whitebtn" name="jobdescription"> <span>Download
+                            template</span> 
+                            <img src= "../../../../../assets/svg/Add.svg">
+                        </button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-sm-12 center-block">
+                <button class="greenbtn" id="btnSave" (click)="onSaveUserClick()"><span>Functie opslaan</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

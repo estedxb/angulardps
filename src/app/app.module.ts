@@ -11,9 +11,10 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { AlertsModule } from 'angular-alert-module';
 import { MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
 import { FileuploadComponent } from './componentcontrols/fileupload/fileupload.component';
+import { CreatepositionComponent } from './views/customers/positions/createposition/createposition.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, FileuploadComponent],
+  declarations: [AppComponent, routingComponents, FileuploadComponent, CreatepositionComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
