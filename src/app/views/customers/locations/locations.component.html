@@ -15,11 +15,11 @@
             <div class="col col-sm-12"></div>
         </div>
         <!--For loop Starts -->
-        <div class="row inforow" *ngFor="let data of maindatas; let i= index;">
+        <div class="row inforow" *ngFor="let data of maindatas | archiveFilter; let i= index;">
             <div class="col col-sm-1 switch">
-                <ui-switch (change)="onStatusChange($event,i)" size="small"></ui-switch>
+                <ui-switch (change)="onStatusChange($event,i)" size="small" [checked]="data.isEnabled"></ui-switch>
             </div>
-            <div class="col col-sm-5 info">{{data.name}}</div>
+            <div class="col col-sm-8 info">{{data.name}}</div>
             <div class="col col-sm-1 actionbtn">
                 <button (click)="onClickEdit(i)"><img src="../../../../assets/svg/edit.svg"></button>
             </div>
@@ -31,3 +31,6 @@
     </div>
 </div>
 <div class="error">{{ errorMsg }}</div>
+<button mat-raised-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
+    Pizza party
+</button>

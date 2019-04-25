@@ -150,8 +150,6 @@ export class WorkstationDocument {
     location: string;
     name: string;
 }
-
-
 export class DpsWorkSchedule {
     customerVatNumber: string;
     name: string;
@@ -183,3 +181,10 @@ export class LoginToken {
     dpsUser: DpsUser;
 }
 
+
+/*
+enum AlertType {
+    error = 'error',
+    message = 'message'
+}
+*/

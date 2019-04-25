@@ -15,9 +15,9 @@
             <div class="col col-sm-12"></div>
         </div>
         <!--For loop Starts -->
-        <div class="row inforow" *ngFor="let data of maindatas; let i= index;">
+        <div class="row inforow" *ngFor="let data of maindatas | archiveFilter ; let i= index;">
             <div class="col col-sm-1 switch">
-                <ui-switch (change)="onUiSwitchChange($event,i)" size="small"></ui-switch>
+                <ui-switch (change)="onUiSwitchChange($event,i)" size="small" [checked]="data.isEnabled"></ui-switch>
             </div>
             <div class="col col-sm-5 info">{{data.user.firstName + ' ' + data.user.lastName}}</div>
             <div class="col col-sm-1 actionbtn">

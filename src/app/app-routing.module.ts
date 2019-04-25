@@ -30,11 +30,14 @@ import { EditcustomerComponent } from './views/customers/editcustomer/editcustom
 
 import { CreateuserComponent } from './componentcontrols/createuser/createuser.component';
 import { CreatelocationComponent } from './componentcontrols/createlocation/createlocation.component';
+import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
 
 import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { SchedulerComponent } from './views/scheduler/scheduler.component';
+import { EnableFilterPipe } from './pipes/enable-filter.pipe';
+import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -92,6 +95,15 @@ export const routingComponents = [
   LoginComponent,
   EditcustomerComponent,
   SchedulerComponent,
+  CreateuserComponent,
+  CreatelocationComponent,
+  DPSSystemMessageComponent,
+  EnableFilterPipe,
+  ArchiveFilterPipe
+];
+
+export const entringComponents = [
+  DPSSystemMessageComponent,
   CreateuserComponent,
   CreatelocationComponent
 ];

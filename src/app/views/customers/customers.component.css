@@ -101,8 +101,13 @@
 }
 
 .inforow .switch {
-  text-align: center;
+  text-align: right;
 }
+
+.inforow .info {
+  padding-left: 10px;
+}
+
 .inforow .actionbtn button {
   margin: auto;
 }
