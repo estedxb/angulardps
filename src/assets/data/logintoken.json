@@ -1,7 +1,7 @@
 {
   "accessToken": "Login-Access-Token",
   "dpsUser": {
-    "customerVatNumber": "ABC123456",
+    "customerVatNumber": "B0011",
     "user": {
       "userName": "admin",
       "firstName": "Balaji",

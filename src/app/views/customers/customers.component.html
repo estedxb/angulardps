@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="col col-sm-3">
-        <button class="btn" id="forward" (click)="onFormwardClick()">Volgende stap <img
+        <button (click)="receiveEditCustomerData($event)" class="btn" id="forward">Volgende stap <img
                 src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
         <button class="btn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
                 src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>

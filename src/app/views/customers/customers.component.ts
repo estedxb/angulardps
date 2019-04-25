@@ -3,6 +3,8 @@ import { Customer, LoginToken } from '../../shared/models';
 import { Router } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
 import { AuthService } from '../../shared/auth.service';
+import { EditcustomerComponent } from '../customers/editcustomer/editcustomer.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-customers',
@@ -37,5 +39,5 @@ export class CustomersComponent implements OnInit {
     } catch (e) {
       console.log('Error in Customer Component : ' + e.message);
     }
-  }
+  } 
 }

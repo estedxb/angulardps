@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/htt
 import { LegalComponent } from '../../app/componentcontrols/legal/legal.component';
 import { ChildActivationEnd } from '@angular/router';
 import { load } from '@angular/core/src/render3';
+import { TimeSpan } from '../shared/TimeSpan';
 
 @Component({
 selector: 'app-headquarters',
@@ -96,6 +97,7 @@ export class HeadquartersComponent implements OnInit {
       {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
+        this.updateData();
       }
     }
   }
@@ -155,6 +157,8 @@ export class HeadquartersComponent implements OnInit {
       this.HQForm.controls['generalEmail'].setValue(dpscustomer.customer.email.emailAddress);
       this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
       this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
+
+      console.log("invoice email="+dpscustomer.invoiceEmail.emailAddress);
 
     }
 
@@ -328,8 +332,8 @@ export class HeadquartersComponent implements OnInit {
 
           this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
           this.HQForm.controls['generalEmail'].setValue(verifiedCustomerData.customer.email.emailAddress);
-          //this.HQForm.controls['contractsEmail'].setValue(verifiedCustomerData.contractsEmail.emailAddress);
-          //this.HQForm.controls['invoiceEmail'].setValue(verifiedCustomerData.invoiceEmail.emailAddress);
+          this.HQForm.controls['contractsEmail'].setValue(verifiedCustomerData.contractsEmail.emailAddress);
+          this.HQForm.controls['invoiceEmail'].setValue(verifiedCustomerData.invoiceEmail.emailAddress);
 
         }
       }
@@ -480,11 +484,11 @@ export class HeadquartersComponent implements OnInit {
 
       this.shiftAllowanceObject.amount = 9.3;
       this.shiftAllowanceObject.nominal = false;
-      this.shiftAllowanceObject.timeSpan = "";
+      this.shiftAllowanceObject.timeSpan = new TimeSpan();
       this.shiftAllowanceObject.shiftName = "";
 
       this.otherAllowanceObject.amount = 9.4;
-      this.otherAllowanceObject.codeId = "";
+      this.otherAllowanceObject.codeId = 0;
       this.otherAllowanceObject.nominal = false;
 
       this.shiftAllowance.push(this.shiftAllowanceObject);

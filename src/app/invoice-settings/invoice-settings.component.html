@@ -110,16 +110,16 @@
                                 </div>
                                 <div class="row">
                                         <div class="col-sm-12">
-                                                <ui-switch (change)="onChangeA($event)" size="small"></ui-switch>&nbsp;
+                                                <ui-switch [checked]="loadSwitchOther"  (change)="onChangeA($event)" size="small"></ui-switch>&nbsp;
                                                 <span>Andre</span>
                                         </div>
                                 </div>
                                 <div class="row dynrow"
                                         *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
                                         <div class="col-sm-5">
-                                                <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
+                                                <input #codeA (change)="setPgABox1(codeA.value,i)" type="number"
                                                         formControlName="AndreBox1" style="display: none">
-                                                <app-workcodes (childEvent)="receiveWorkCode($event,i)"></app-workcodes>
+                                                <app-workcodes [disabled]="disableWorkCodes" (childEvent)="receiveWorkCode($event,i)"></app-workcodes>
                                         </div>
                                         <div class="col-sm-3">
                                                 <input #amountA (change)="setPgABox2(amountA.value,i)" type="number"

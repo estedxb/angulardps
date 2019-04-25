@@ -49,7 +49,10 @@ export class CustomersService {
     return result;
   }
 
+  // customer update/Edit 
   public createCustomerUpdate(customer: any): Observable<any> {
+
+    console.log("update / edit called");
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -58,6 +61,7 @@ export class CustomersService {
       headers: httpHeaders,
       observe: 'response'
     });
+
   }
 
   public createCustomer(customer: any): Observable<any> {
@@ -77,7 +81,7 @@ export class CustomersService {
     } else if (error.status === 204) {
       console.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-      console.log('customer exists in the system, dont allow customer to create');
+      console.log('customer exists in the system, customer not allowed');
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }

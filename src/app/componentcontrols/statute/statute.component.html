@@ -2,7 +2,7 @@
 
   <div class="error">{{ errorMsg }}</div>
   <div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox"
-    *ngFor="let statute of statutes; let i= index" [attr.data-index]="i">
+    *ngFor="let statute of statutes; let i= index; trackBy: trackByFn" [attr.data-index]="i">
     <div class="row panelheader">
       <div class="col col-sm-5 fright">
         <h4>{{ statute.name }}</h4>

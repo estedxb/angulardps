@@ -41,7 +41,7 @@
           </button>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
-          <button class="greenbtn" id="btnSave"><span>Gegevens opslaan</span></button>
+          <button class="greenbtn" id="btnSave" (click)="onFormwardClick()" ><span>Gegevens opslaan</span></button>
         </div>
 
       </div>
@@ -61,7 +61,7 @@
           <app-locations></app-locations>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
-          <app-editcustomer></app-editcustomer>
+          <app-editcustomer (childEvent)="receiveEditCustomerData($event)"></app-editcustomer>
         </div>
       </div>
     </div>

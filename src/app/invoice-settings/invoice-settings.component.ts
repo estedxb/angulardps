@@ -8,6 +8,7 @@ import {
 } from '../shared/models';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { element } from '@angular/core/src/render3';
+import { TimeSpan } from '../shared/TimeSpan';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -173,10 +174,14 @@ export class InvoiceSettingsComponent implements OnInit {
           this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
           this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled;
           this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
+
+          this.changeObject();
         }     
       }
     }
   }
+
+
 
   ngOnInit() {
 
@@ -193,7 +198,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceObject = new ShiftAllowance();
     this.otherAllowanceObject = new OtherAllowance();
 
-    this.shiftAllowanceObject.timeSpan = 'nothing';
+    this.shiftAllowanceObject.timeSpan = new TimeSpan();
 
     this.shiftAllowances = [];
     this.otherAllowances = [];
@@ -260,7 +265,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.loadSwitchHolidays = false;
     this.loadSwitchMobility = false;
     this.loadSwitchTeam = false;
-
+    this.loadSwitchOther = false;
   }
 
   onTeamChange($event) {
@@ -321,7 +326,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ISForm.controls['AndreBox2'].setValue('');
 
     for (var j = 0; j < this.otherAllowances.length; j++) {
-      this.otherAllowances[j].codeId = '';
+      this.otherAllowances[j].codeId = 0;
       this.otherAllowances[j].amount = 0;
       this.otherAllowances[j].nominal = true;
     }
@@ -337,7 +342,7 @@ export class InvoiceSettingsComponent implements OnInit {
     for (let i = 0; i < this.shiftAllowances.length; i++) {
       this.shiftAllowances[i].shiftName = '';
       this.shiftAllowances[i].amount = 0;
-      this.shiftAllowances[i].timeSpan = '';
+      this.shiftAllowances[i].timeSpan = new TimeSpan();
       this.shiftAllowances[i].nominal = true;
     }
 
@@ -353,12 +358,12 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
   }
 
-  setPgABox1(value, k: number) {
+  setPgABox1(value:number, k: number) {
     this.otherAllowances[k].codeId = value;
     this.changeObject();
   }
 
-  setPgABox2(value, l: number) {
+  setPgABox2(value:number, l: number) {
     this.otherAllowances[l].amount = value;
     this.changeObject();
   }
@@ -523,9 +528,12 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   addRows() {
+
+    let timeSpanObject:TimeSpan = new TimeSpan();
+
     this.Ploegpremiere.push(this.createServants());
     this.shiftAllowanceObject = new ShiftAllowance();
-    this.shiftAllowanceObject.timeSpan = 'nothing';
+    this.shiftAllowanceObject.timeSpan = new TimeSpan();
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.shiftAllowanceCounter++;
   }
@@ -543,6 +551,8 @@ export class InvoiceSettingsComponent implements OnInit {
   replaceRows(index) {
 
   }
+
+
 
 }
 

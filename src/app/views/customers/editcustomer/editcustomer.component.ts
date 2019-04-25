@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
+import { Component, OnInit, Output, Input,EventEmitter } from '@angular/core';
+import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 
 @Component({
@@ -8,6 +8,10 @@ import { CustomersService } from 'src/app/shared/customers.service';
   styleUrls: ['./../customers.component.css']
 })
 export class EditcustomerComponent implements OnInit {
+
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+
+  @Output() public childEvent = new EventEmitter();
 
   public HQdata:any;
   public CTdata:any;
@@ -21,21 +25,36 @@ export class EditcustomerComponent implements OnInit {
     "page":""
   }
 
+  public oldHQdata:any;
   public dataCustomerEdit:any;
 
   constructor(private customerService:CustomersService) { 
 
-    this.vatNumber = "B0011";
+    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    //this.vatNumber = "B0011";
+
+    console.log(this.vatNumber);
+
     this.editObject = {
       "data":"",
       "page":""
     }
   }
 
+  ngDgCheck() {
+
+      if(this.HQdata !== this.oldHQdata )    
+      {
+        this.oldHQdata = this.HQdata;
+        this.childEvent.emit(this.HQdata);
+      }
+  }
+
   ngOnInit() {
 
     console.log("ngOnInit called");
-    console.log(this.vatNumber);
+    console.log(this.loginuserdetails);
+    console.log("vatNumber="+this.vatNumber);
    //var url = "https://dpsapisdev.azurewebsites.net/api/Customer/B0011";
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
@@ -51,13 +70,27 @@ export class EditcustomerComponent implements OnInit {
     this.HQdata = $event;
     console.log("received in editcustomer component");
     console.log(this.HQdata);
+
+    this.childEvent.emit(this.HQdata);
   }
 
   receiveCTdata($event) {
+
     this.CTdata = $event;
     console.log("updated in editcustomer component");
     console.log(this.CTdata);
 
+    if(this.CTdata !== null && this.CTdata !== undefined)
+    {
+      this.HQdata.contact = this.CTdata.contact;
+      this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+      this.HQdata.formValid = true;
+      // "contact": this.contact,
+      // "formValid": this.validity(),
+      // "activateContactAsUser":this.alsCheck
+      this.childEvent.emit(this.HQdata);
+    }
+        
   }
 
   receiveGeneralObject($event) {
@@ -65,6 +98,17 @@ export class EditcustomerComponent implements OnInit {
     this.GLdata = $event;
     console.log("received in editcustomer component");
     console.log(this.HQdata);
+
+    if(this.HQdata !== null && this.HQdata !== undefined)
+    {
+      if(this.GLdata !== null && this.GLdata !== undefined)
+      {
+          this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+          this.HQdata.bulkContractsEnabled = this.GLdata.blk;
+      }
+    }
+
+    this.childEvent.emit(this.HQdata);
   }
 
   receiveStatuteData($event) {
@@ -73,13 +117,45 @@ export class EditcustomerComponent implements OnInit {
     console.log("received in editcustomer component");
     console.log(this.STdata);
 
+    if(this.HQdata !== null && this.HQdata !== undefined)
+    {
+      if(this.STdata !== null && this.STdata !== undefined)
+      {
+          this.HQdata.statuteSettings = this.STdata;
+      }
+    } 
+
+    this.childEvent.emit(this.HQdata);
   }
 
   receiveInvoiceData($event) {
 
     this.FPdata = $event;
-    console.log("received in editcustomer component");
+    console.log("FP received in editcustomer component");
     console.log(this.HQdata);
+
+    if(this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== "")
+    {
+        console.log("fp data=");
+        console.log(this.FPdata);
+        console.log("HQ data");
+        console.log(this.HQdata);
+
+        this.HQdata.invoiceSettings = new InvoiceSettings();
+        this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
+        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+        this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
+        this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
+        this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
+        this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+        this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
+  
+        this.childEvent.emit(this.HQdata);
+    }
+
+  }
+
+  postData() {
 
   }
 
@@ -120,6 +196,8 @@ export class EditcustomerComponent implements OnInit {
 
   editCustomerApi() {
 
+    console.log("edit customer Api called")
+
     if(this.HQdata !== null && this.HQdata !== undefined)
     {
 
@@ -141,15 +219,24 @@ export class EditcustomerComponent implements OnInit {
       {
         console.log("fp data=");
         console.log(this.FPdata);
+        console.log("HQ data");
+        console.log(this.HQdata);
 
-        this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-        this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-        this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-        this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-        this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-        this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;    
+        if(this.HQdata.invoiceSettings !== undefined && this.HQdata.invoiceSettings !== null)
+        {
+          if(this.HQdata.invoiceSettings.lieuDaysAllowance !== undefined)
+          {
+            this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
+          }
+          this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+          this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
+          this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
+          this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
+          this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+          this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
+        }
 
+        this.childEvent.emit(this.HQdata);
       }
 
       console.log("consolidated json object=");
