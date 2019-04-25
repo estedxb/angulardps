@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
 export class CustomersService {
 
   private getCustomersListUrl = '';
-  private getCustomersByVatNumberUrl = "";
-  private createCustomerURL = "";
-  private getCustomersByVatNumberEditUrl = "";
+  private getCustomersByVatNumberUrl = '';
+  private createCustomerURL = '';
+  private getCustomersByVatNumberEditUrl = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getCustomersByVatNumber !== '') {
@@ -32,17 +32,17 @@ export class CustomersService {
     return result;
   }
 
-  public getCustomersByVatNumberEdit(parameter:string): Observable<DPSCustomer> {
-    
-    console.log("edit call to get customer by vat Number");
-    const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/'+ parameter).catch(this.errorHandler);
-    console.log("result="+result);
+  public getCustomersByVatNumberEdit(parameter: string): Observable<DPSCustomer> {
+
+    console.log('edit call to get customer by vat Number');
+    const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/' + parameter).catch(this.errorHandler);
+    console.log('result=' + result);
     return result;
 
   }
 
-  public getCustomersByVatNumber(parameter:string): Observable<DPSCustomer> {
-      console.log("hello");
+  public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
+    console.log('hello');
 
     const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
     console.log(result);

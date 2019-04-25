@@ -1,0 +1,31 @@
+<div class="updateModel">
+    <div class="row ">
+        <div class="col-sm-12 center-block head">
+            <img src='../../../assets/svg/UserUpdate.svg'>
+            <br /> <label>Medisch attest</label>
+            <hr>
+        </div>
+    </div>
+    <form [formGroup]="FileUploadForm" novalidate id="FileUploadForm">
+        <div class="contactperson">
+            <div class="row">
+              <p>Upload een duidelijke foto/scan of dien aanvraag in.</p>
+              <br/>
+                <div class="form-group">
+                    <label for="file">Choose File</label>
+                    <input type="file"
+                           id="file"
+                           (change)="handleFileInput($event.target.files)">
+                </div>
+            </div>
+         
+        </div>
+
+        <div class="row">
+            <div class="col col-sm-12 center-block">
+                <button class="greenbtn" id="btnSave" (click)="uploadFileToActivity()"><span>Upload attest</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
