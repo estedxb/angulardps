@@ -7,7 +7,7 @@
       </div>
       <div class="col col-sm-7"></div>
     </div>
-    <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+    <app-headquarters [HQFormData]="editObject" (childEvent)="receiveHQdata($event)"></app-headquarters>
   </div>
   <div id="CustomerContact" class="customerBox">
     <div class="row panelheader">
@@ -17,7 +17,7 @@
       </div>
       <div class="col col-sm-7"></div>
     </div>
-    <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+    <app-contactperson [CTFormData]="editObject" (childEvent)="receiveCTdata($event)"></app-contactperson>
   </div>
   <div id="CustomerDetails" class="customerBox">
     <div class="row panelheader">
@@ -27,12 +27,12 @@
       </div>
       <div class="col col-sm-7"></div>
     </div>
-    <app-general (childEvent)="receiveGeneralObject($event)"></app-general>
+    <app-general [GLFormData]="editObject" (childEvent)="receiveGeneralObject($event)"></app-general>
   </div>
   <div id="CustomerContact" class="statuteBox">
-      <app-statute (childEvent)="receiveStatuteData($event)"></app-statute>
-      <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
-    </div>
+      <app-statute [STFormData]="editObject" (childEvent)="receiveStatuteData($event)"></app-statute>
+      <app-invoice-settings [FPFormData]="editObject" (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
+    </div>    
 </div>
 
 

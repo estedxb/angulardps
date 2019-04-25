@@ -11,7 +11,7 @@
                         <div class="col-sm-5">
                                 <div class="row">
                                         <div class="col-sm-12">
-                                                <ui-switch (change)="onChangeI($event)" size="small"></ui-switch>
+                                                <ui-switch [checked]="loadSwitchInhaalrust" (change)="onChangeI($event)" size="small"></ui-switch>
                                                 &nbsp;&nbsp;
                                                 <span>Inhaalrust</span>
                                         </div>
@@ -31,7 +31,7 @@
                                         <div class="col-sm-12">
                                                 <!-- <input #inhaalrust id="inhaalrust" (change)="setInhaalrust(inhaalrust.value)" formControlName="inhaalrust" class="inputBoxInhaalrust" type="text"/> -->
                                                 <div class="ziekte">
-                                                        <ui-switch (change)="onChangeZ($event)" size="small">
+                                                        <ui-switch [checked]="loadSwitchSickness" (change)="onChangeZ($event)" size="small">
                                                         </ui-switch> &nbsp;
                                                         <span>Ziekte</span>
                                                 </div>
@@ -39,14 +39,14 @@
                                 </div>
                                 <div class="row">
                                         <div class="col-sm-12">
-                                                <ui-switch (change)="onChangeF($event)" size="small"></ui-switch> &nbsp;
+                                                <ui-switch [checked]="loadSwitchHolidays" (change)="onChangeF($event)" size="small"></ui-switch> &nbsp;
                                                 <span>Feest</span>
                                         </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-sm-12">
                                                 <div class="mobile">
-                                                        <ui-switch (change)="onChangeM($event)" size="small">
+                                                        <ui-switch [checked]="loadSwitchMobility" (change)="onChangeM($event)" size="small">
                                                         </ui-switch> &nbsp;
                                                         <span>Mobile</span>
                                                 </div>
@@ -68,7 +68,7 @@
                         <div class="col-sm-7">
                                 <div class="row">
                                         <div class="col-sm-12">
-                                                <ui-switch (change)="onTeamChange($event)" size="small"></ui-switch>
+                                                <ui-switch [checked]="loadSwitchTeam" (change)="onTeamChange($event)" size="small"></ui-switch>
                                                 &nbsp;
                                                 <span>Ploegpremie</span>
                                         </div>

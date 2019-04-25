@@ -8,14 +8,16 @@ import { environment } from '../../environments/environment';
 export class CustomersService {
 
   private getCustomersListUrl = '';
-  private getCustomersByVatNumberUrl = '';
-  private createCustomerURL = '';
+  private getCustomersByVatNumberUrl = "";
+  private createCustomerURL = "";
+  private getCustomersByVatNumberEditUrl = "";
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getCustomers !== '') {
+    if (environment.dataFromAPI_JSON && environment.getCustomersByVatNumber !== '') {
       console.log('Data From Remote getCustomers');
       this.getCustomersListUrl = environment.dpsAPI + environment.getCustomers;
       this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
+      this.getCustomersByVatNumberEditUrl = environment.dpsAPI + environment.getCustomerByVatNumberEdit;
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
       console.log('Data From JSON getCustomers');
@@ -30,8 +32,17 @@ export class CustomersService {
     return result;
   }
 
-  public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    console.log('hello');
+  public getCustomersByVatNumberEdit(parameter:string): Observable<DPSCustomer> {
+    
+    console.log("edit call to get customer by vat Number");
+    const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/'+ parameter).catch(this.errorHandler);
+    console.log("result="+result);
+    return result;
+
+  }
+
+  public getCustomersByVatNumber(parameter:string): Observable<DPSCustomer> {
+      console.log("hello");
 
     const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
     console.log(result);
@@ -39,7 +50,7 @@ export class CustomersService {
   }
 
   public createCustomerUpdate(customer: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
+    const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
@@ -50,7 +61,7 @@ export class CustomersService {
   }
 
   public createCustomer(customer: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
+    const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
@@ -61,24 +72,17 @@ export class CustomersService {
   }
 
   errorHandler(error: HttpErrorResponse) {
-    console.log(error.status);
-
-    if (error.status === 400)
+    if (error.status === 400) {
       console.log('vat number not correct format');
-    if (error.status === 204)
+    } else if (error.status === 204) {
       console.log('vat number doesnt exist ');
-    if (error.status === 409)
+    } else if (error.status === 409) {
       console.log('customer exists in the system, dont allow customer to create');
+    } else {
+      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+    }
 
     return Observable.throwError(error);
   }
 
 }
-
-/*
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import { throwError, concat, of } from 'rxjs';
-
-*/

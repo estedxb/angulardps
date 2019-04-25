@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { AlertsModule } from 'angular-alert-module';
+import { MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -27,7 +29,11 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     }),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertsModule.forRoot(),
+    MatAutocompleteModule,
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

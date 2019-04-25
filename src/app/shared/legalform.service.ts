@@ -26,15 +26,3 @@ export class LegalformService {
 
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 }
-
-/*
-  list(): Observable<LegalForm[]> {
-    return this.http.get(this.getLegalFormUrl).pipe(
-      map((data: any[]) => data.map((item: any) => new LegalForm(
-        item.id,
-        item.code,
-        item.name,
-        new Date(item.created),
-      ))),
-    );
-*/

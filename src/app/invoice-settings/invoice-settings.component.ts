@@ -17,6 +17,7 @@ import { element } from '@angular/core/src/render3';
 export class InvoiceSettingsComponent implements OnInit {
 
   @Input() addRow: string;
+  @Input() public FPFormData;
   @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_jointcommittee';
@@ -59,6 +60,13 @@ export class InvoiceSettingsComponent implements OnInit {
 
   public formNew: FormGroup;
   public Andre: FormArray;
+
+  public loadSwitchInhaalrust:boolean;
+  public loadSwitchSickness:boolean;
+  public loadSwitchHolidays:boolean;
+  public loadSwitchMobility:boolean;
+  public loadSwitchTeam:boolean;
+  public loadSwitchOther:boolean;
 
   constructor(private fb: FormBuilder) { }
 
@@ -152,6 +160,24 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.value;
   }
 
+  ngDoCheck() {
+
+    if(this.FPFormData !== undefined && this.FPFormData !== null)
+    {
+      if(this.FPFormData.data !== null && this.FPFormData.page==="edit")
+      {
+        if(this.FPFormData.data.invoiceSettings !== null)
+        {
+          this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+          this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
+          this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
+          this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled;
+          this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
+        }     
+      }
+    }
+  }
+
   ngOnInit() {
 
 
@@ -229,6 +255,12 @@ export class InvoiceSettingsComponent implements OnInit {
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
+    this.loadSwitchInhaalrust = false;
+    this.loadSwitchSickness = false;
+    this.loadSwitchHolidays = false;
+    this.loadSwitchMobility = false;
+    this.loadSwitchTeam = false;
+
   }
 
   onTeamChange($event) {
@@ -255,7 +287,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
     }
 
-    this.changeObject();
+      this.changeObject();
 
   }
 

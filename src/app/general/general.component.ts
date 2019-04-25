@@ -1,4 +1,4 @@
-import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,Output, EventEmitter, Input } from '@angular/core';
 import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
   PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
@@ -14,14 +14,41 @@ export class GeneralComponent implements OnInit {
   vcaObject:VcaCertification;
   blkContracten: boolean;
 
+  public loadVCA:boolean;
+  public loadBlk:boolean;
+
+  @Input() public GLFormData;
   @Output() public childEvent = new EventEmitter();
 
-  constructor() { }
+  constructor() { 
+    this.loadVCA = false;
+    this.loadBlk = false;
+  }
+
+  ngDoCheck() {
+
+    console.log("received in general component");
+    console.log(this.GLFormData);
+
+    if(this.GLFormData !== undefined)
+    {
+      if(this.GLFormData.data !== null)
+      {
+        this.loadBlk = this.GLFormData.data.bulkContractsEnabled;
+        if(this.GLFormData.data.customer !== null && this.GLFormData.page === "edit")
+        {
+         this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
+        }
+      }
+    }
+
+  }
 
   ngOnInit() {
     this.vcaObject = new VcaCertification();
     this.blkContracten = false;
   }
+
 
   changeVca($event){
 

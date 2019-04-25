@@ -76,9 +76,14 @@ export class WorkCodesComponent implements OnInit {
   ngDoCheck() {
 
     if(this.disabled === true)
-    this.HQForm.get('WorkCode').disable();
+    {
+      this.HQForm.get('WorkCode').disable();
+      this.HQForm.controls['WorkCode'].setValue('');
+    }
    else
+   {
     this.HQForm.get('WorkCode').enable();
+   }
 
   }
 
@@ -89,9 +94,14 @@ export class WorkCodesComponent implements OnInit {
     });
 
     if(this.disabled === true)
-    this.HQForm.get('WorkCode').disable();
+    {
+      this.HQForm.get('WorkCode').disable();
+      this.HQForm.controls['WorkCode'].setValue('');
+    }
    else
+   {
     this.HQForm.get('WorkCode').enable();
+   }
 
 
     this.workCodesService.getWorkCodes().subscribe(data => {

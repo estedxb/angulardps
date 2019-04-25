@@ -1,11 +1,11 @@
 <div class="general">
   <div class="row radiorow">
     <div class="col-sm-6">
-        <ui-switch (change)="changeVca($event)" size="small"></ui-switch>&nbsp;&nbsp;
+        <ui-switch [checked]="loadVCA" (change)="changeVca($event)" size="small"></ui-switch>&nbsp;&nbsp;
         <span>VCA gecertificeerd</span>&nbsp;&nbsp;     
     </div>
     <div class="col-sm-6">
-        <ui-switch (change)="changeBlk($event)" size="small"> </ui-switch> &nbsp;&nbsp;
+        <ui-switch [checked]="loadBlk" (change)="changeBlk($event)" size="small"> </ui-switch> &nbsp;&nbsp;
         <span> Bulk Contracten</span>    
     </div>
   </div>    

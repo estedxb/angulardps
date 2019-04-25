@@ -10,17 +10,13 @@ import { environment } from '../../environments/environment';
 export class LocationsService {
 
   private getLocationByVatNumberUrl = '';
-  private updateLocationURL = '';
-  private createLocationURL = '';
-  private getLocationByIdURL = '';
+  private getLocationURL = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getLocations !== '') {
+    if (environment.dataFromAPI_JSON && environment.getLocationsByVatNumber !== '') {
       console.log('Data From Remote');
-      this.getLocationByVatNumberUrl = environment.dpsAPI + environment.getLocations;
-      this.createLocationURL = environment.dpsAPI + environment.getLocations;
-      this.updateLocationURL = environment.dpsAPI + environment.getLocations;
-      this.getLocationByIdURL = environment.dpsAPI + environment.getLocations;
+      this.getLocationByVatNumberUrl = environment.dpsAPI + environment.getLocationsByVatNumber;
+      this.getLocationURL = environment.dpsAPI + environment.getLocation;
     } else {
       console.log('Data From JSON');
       this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
@@ -28,37 +24,37 @@ export class LocationsService {
   }
 
   public getLocationByVatNumber(parameter: string): Observable<Location[]> {
-    console.log('hello');
+    console.log('getLocationByVatNumber');
     const result = this.http.get<Location[]>(this.getLocationByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
 
   public getLocationById(parameter: string): Observable<Location> {
-    console.log('hello');
-
-    const result = this.http.get<any>(this.getLocationByIdURL + '/' + parameter).catch(this.errorHandler);
+    console.log('getLocationById');
+    const result = this.http.get<any>(this.getLocationURL + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
 
   public createLocation(location: any): Observable<any> {
+    console.log('createLocation');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
-    return this.http.post<any>(this.createLocationURL, location, {
+    return this.http.post<any>(this.getLocationURL, location, {
       headers: httpHeaders,
       observe: 'response'
     });
   }
 
   public updateLocation(location: any): Observable<any> {
+    console.log('updateLocation');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    return this.http.put<any>(this.updateLocationURL, location, {
+    return this.http.put<any>(this.getLocationURL, location, {
       headers: httpHeaders,
       observe: 'response'
     });
