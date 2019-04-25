@@ -14,29 +14,10 @@ import { LocationsService } from 'src/app/shared/locations.service';
 export class CreatelocationComponent implements OnInit {
   public languageString;
   public languageShortName;
-  public loginuserdetails: LoginToken = JSON.parse(this.setDummyDpsUserData());
-  public VatNumber = this.loginuserdetails.dpsUser.customerVatNumber;
+  //public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
+  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public VatNumber = this.loginuserdetails.customerVatNumber;
   @Input('parentData') public LocationId;
-
-  setDummyDpsUserData(): string {
-    return `{
-      "accessToken": "Login-Access-Token",      
-      "dpsUser": {     
-        "customerVatNumber": "ABC123456",     
-        "user": {     
-          "userName": "admin",
-          "firstName": "Balaji",     
-          "lastName": "Subbiah",     
-          "email": { "emailAddress": "balaji_sp@yahoo.com" },     
-          "mobile": { "number": "+971505642721" },     
-          "phone": { "number": "+971505642721" }     
-        },     
-        "userRole": "Admin",     
-        "isEnabled": true,     
-        "isArchived": false     
-      }  
-    }`;
-  }
 
   @Input() public LocationFormData;
   LocationData: any;
@@ -104,9 +85,11 @@ export class CreatelocationComponent implements OnInit {
     this.location.isArchived = false;
     this.setJSONObject();
   }
+ 
   setJSONObject() {
     this.LocationData = {
-      "customerId": this.location.name,
+      "id": this.LocationId,
+      "customerVatNumber": this.VatNumber,
       "name": this.location.name,
       "address": this.location.address,
       "isEnabled": this.location.isEnabled,
@@ -124,9 +107,11 @@ export class CreatelocationComponent implements OnInit {
   }
 
   onSaveLocationClick() {
-    console.log("LocationData=" + this.LocationData);
+    
+    this.updateData();
+    console.log('LocationData=' + this.LocationData);
     console.log(this.LocationData);
-
+    
     if (this.LocationData !== undefined && this.LocationData !== null) {
       //check if LocationId has value 
       //if LocationId has value ==> Update Location

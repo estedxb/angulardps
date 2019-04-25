@@ -12,19 +12,13 @@ import { element } from '@angular/core/src/render3';
   styleUrls: ['./createuser.component.css']
 })
 export class CreateuserComponent implements OnInit {
-
   public languageString;
   public languageShortName;
-  // public VatNumber : string ='test1';
-  // public username: string;
-
-  public loginuserdetails: LoginToken = JSON.parse(this.setDummyDpsUserData());
-  public VatNumber = this.loginuserdetails.dpsUser.customerVatNumber;
-  // public username = this.loginuserdetails.dpsUser.user.userName;
+  //public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
+  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public VatNumber = this.loginuserdetails.customerVatNumber;
   @Input('parentData') public username;
-
   @Input() public UserFormData;
-
   UserData: any;
   UserForm: FormGroup;
   dpsUser: DpsUser;
@@ -34,28 +28,7 @@ export class CreateuserComponent implements OnInit {
   mobileNumber: PhoneNumber;
   language: Language;
 
-  setDummyDpsUserData(): string {
-    return `{
-      "accessToken": "Login-Access-Token",
-      "dpsUser": {
-        "customerVatNumber": "ABC123456",
-        "user": {
-          "userName": "admin",
-          "firstName": "Balaji",
-          "lastName": "Subbiah",
-          "email": { "emailAddress": "balaji_sp@yahoo.com" },
-          "mobile": { "number": "+971505642721" },
-          "phone": { "number": "+971505642721" }
-        },
-        "userRole": "Admin",
-        "isEnabled": true,
-        "isArchived": false
-      }
-    }`;
-  }
-
   constructor(private formBuilder: FormBuilder, private userService: UsersService) {
-
   }
 
   ngOnInit() {
@@ -71,8 +44,9 @@ export class CreateuserComponent implements OnInit {
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
 
     });
-    this.createObjects();  // check validations
     this.loadUserToEdit(this.VatNumber);
+    this.createObjects();  // check validations
+    
 
   }
 
@@ -99,8 +73,11 @@ export class CreateuserComponent implements OnInit {
     this.createObjects();
   }
 
+  
+
   createObjects() {
 
+    
     this.phoneNumber = new PhoneNumber();
     this.mobileNumber = new PhoneNumber();
     this.contactsEmail = new EmailAddress();
@@ -120,8 +97,13 @@ export class CreateuserComponent implements OnInit {
     this.user.mobile = this.phoneNumber;
     this.user.phone = this.mobileNumber;
 
+    this.language.name = this.languageString;
+    this.language.shortName = this.languageShortName;
+    
+    this.user.language = this.language;
+
     // dpsuser object
-    this.dpsUser.customerVatNumber = this.UserForm.get('firstname').value;
+    this.dpsUser.customerVatNumber = this.VatNumber;
     this.dpsUser.user = this.user;
     this.dpsUser.userRole = this.UserForm.get('usertype').value;
     this.dpsUser.isEnabled = true;
@@ -153,6 +135,8 @@ export class CreateuserComponent implements OnInit {
   }
 
   onSaveUserClick() {
+
+    this.updateData();
 
     console.log('UserData=' + this.UserData);
     console.log(this.UserData);

@@ -111,6 +111,7 @@ export class User {
     email: EmailAddress;
     mobile: PhoneNumber;
     phone: PhoneNumber;
+    language:Language;
 }
 
 export class DpsUser {
