@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponentComponent implements OnInit {
   public locationid=2;
-  public username = 'lewis@esteinternational.com'
+  public username;// = 'lewis@esteinternational.com';
   constructor() { }
 
   ngOnInit() {
