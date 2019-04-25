@@ -23,7 +23,7 @@ export const environment = {
   getCustomers: 'Customer',
   getCustomerLists: 'Customer/GetAllCustomersPreviewJson',
   getCustomersByVatNumber: 'Customer/GetCustomerByVatNumber',
-  getUsersByVatNumber: 'User​/ForCustomer',
+  getUsersByVatNumber: 'User/ForCustomer',
   getLocationsByVatNumber: 'Location/ForCustomer',
   getWorkSchedulesByVatNumber: 'WorkSchedule/ForCustomer',
   getPositionsByVatNumber: 'Position/ForCustomer',

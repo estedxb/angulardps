@@ -10,9 +10,10 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { AlertsModule } from 'angular-alert-module';
 import { MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { FileuploadComponent } from './componentcontrols/fileupload/fileupload.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, FileuploadComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

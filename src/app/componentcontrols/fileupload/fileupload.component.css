@@ -1,0 +1,57 @@
+.btn {background-image: linear-gradient(104deg, rgba(227, 118, 25, 1),rgba(159, 11, 25, 1));margin:20px 50px 0px 0px;border-radius: 16px;line-height: 17px;height: 32px;  vertical-align: middle;color: #fff; font-size: 17px;font-weight: bold;}
+.btn:disabled{background-image: linear-gradient(104deg,#e1e1e1, #c7c7c7);}
+#forward {width: 260px;text-align: left;}
+#backward {width: 135px;text-align: right;}
+#forward img{float: right;}
+#backward img{float: left;}
+.scrollbar{height: 900px; overflow-y:scroll;padding-right: 20px; overflow-x: hidden}
+#formState{font-weight: bold;font-size: 12px;}
+.force-overflow{min-height: 1000px;}
+#formState{margin-top: 50px ;margin-bottom: 50px;}
+#maincontent::-webkit-scrollbar-track{background-color: transparent;}
+#maincontent::-webkit-scrollbar{width: 1px;	background-color: transparent;}
+#maincontent::-webkit-scrollbar-thumb{background-color: #C7C7C7;}
+#maincontentarea{margin:0px;padding: 0px;}
+.mw-350 {min-width: 350px;padding: 0px; margin:0px;}
+.mw-350 hr {height:.1em; border:none; padding: 0px; margin:10px 0px; }
+.mw-350 img{ width: 10px; height: 10px; position: absolute; bottom: 5px; right: -5px;z-index: 100;}
+.mw-350 input{ width: 16px; height: 16px; position: absolute; bottom: 3px; right: -8px; background: #c7c7c7;z-index: 100;}
+.inputWithImg .titleBold {
+    padding: 5px 0px;
+}
+.inputWithImg .titleBoldNew {
+    padding: 5px 0px 1px 0px;
+}
+
+.updateModel{
+    width: 700px;
+    padding: 40px;
+    background-image: linear-gradient(104deg,#FFFFFF, #D8D8D8);
+    border-radius: 16px;
+}
+.head label{
+    font-weight: bold;
+    padding: 10px;
+}
+.contactperson{
+    width: 100%;
+    padding: 30px;
+    border-radius: 16px;
+    background-image: linear-gradient( 104deg, rgba(227, 118, 25, 0.25), rgba(159, 11, 25, 0.25) );
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16);
+
+}
+
+.greenbtn {
+    float: none;
+    background-image:none;
+    background-color: #0fc600;
+    font-size: 16px;
+    height: 28px;
+}
+
+.center-block {
+    text-align: center;
+    margin: auto;
+    margin:20px 0px;
+}
