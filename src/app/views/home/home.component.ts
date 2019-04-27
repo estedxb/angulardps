@@ -5,6 +5,7 @@ import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../contactperson/contactperson.component';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber, Address } from 'src/app/shared/models';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.HQFormValid =  true;
     this.CTFormValid = true;
+
   }
 
   receiveData($event,i){
@@ -250,9 +252,7 @@ export class HomeComponent implements OnInit {
 
       this.updateData();
     }
-  }
-
-  
+  }  
 
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res =>{
