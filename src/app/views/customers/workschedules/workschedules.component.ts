@@ -29,7 +29,8 @@ export class WorkschedulesComponent implements OnInit {
     this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(workschedules => {
       this.maindatas = workschedules;
       console.log('Work Schedule Forms Data : '); console.log(this.maindatas);
-    }, error => this.errorMsg = error);
+      this.ShowMessage('Work Schedules fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
   }
 
   ShowMessage(MSG, Action) {

@@ -1,15 +1,26 @@
-
 .generalTitle {
-    font-family: Arial;font-size: 15px;font-weight: 400;
- }
- 
- input { outline: none; border: 1px solid orange; }
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: 400;
+}
 
- .titleLabel {
-     width: 175px;height: 25px;font-family: Arial;font-size: 15px;font-weight: 400;
-     margin-left: 10px;margin-top: 15px;text-align: right;vertical-align: text-bottom;
-     border-bottom: 1px solid black;
- }
+input {
+  outline: none;
+  border: 1px solid orange;
+}
+
+.titleLabel {
+  width: 175px;
+  height: 25px;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: 400;
+  margin-left: 10px;
+  margin-top: 15px;
+  text-align: right;
+  vertical-align: text-bottom;
+  border-bottom: 1px solid black;
+}
 /*
  #hqform .form-control-feedback {
     top: 25px;
@@ -18,21 +29,25 @@
 */
 
 #hqform {
-    margin-top: 10px;
-    padding-top: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
-.Hello, .Hi, .How {
-    padding: 0px;
-    background: green;
-    margin-top: 30px;
-    margin-left:15px;
-    height: 40px;
-} 
+.Hello,
+.Hi,
+.How {
+  padding: 0px;
+  background: green;
+  margin-top: 30px;
+  margin-left: 15px;
+  height: 40px;
+}
 
- .generalTitle label { font-weight:bold; }
+.generalTitle label {
+  font-weight: bold;
+}
 
- /*
+/*
  .vatnumberinputbox {
     width: 500px; height: 40px; padding: 7px; border-radius: 5px;    
  }
@@ -59,42 +74,48 @@
  }
 */
 .creditCheck {
-    margin-top:10px; margin-left:10px;
+  /* margin-top:10px; margin-left:10px; */
 }
-.headquarters {    
-    padding: 20px; padding-bottom: 10px;border-radius: 10px;
-    padding-bottom: 0px;
+.headquarters {
+  padding: 20px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  padding-bottom: 0px;
 }
- 
+
 .officialName {
-    width: 300px;
+  width: 300px;
 }
 
 .contractemail {
-    width: 400px; height: 40px; padding: 7px; border-radius: 5px;
-
+  width: 400px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
 
 .validationbox {
-    margin-left: 60px;
-    margin-top: 30px;
+  margin-left: 60px;
+  margin-top: 30px;
 }
 .validationboxnew {
-    width: 100px;
-    height: 25px;
-    margin-top:15px;
-    margin-right: 25px;
-    padding:15px;
+  width: 100px;
+  height: 25px;
+  margin-top: 15px;
+  margin-right: 25px;
+  padding: 15px;
 }
 .generalemail {
-    width: 400px; height: 40px; padding: 7px; border-radius: 5px; 
+  width: 400px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
 .generalEmailTemplate {
-    margin-top:0px;
-    height: 50px;
+  margin-top: 0px;
+  height: 50px;
 }
 
-.emailStyleRequired
-{
-    color: red;
+.emailStyleRequired {
+  color: red;
 }

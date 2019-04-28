@@ -31,7 +31,8 @@ export class UsersComponent implements OnInit {
     this.usersService.getUsersByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(users => {
       this.maindatas = users;
       console.log('Users Form Data : '); console.log(this.maindatas);
-    }, error => this.errorMsg = error);
+      this.ShowMessage('Users fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
   }
 
   ShowMessage(MSG, Action) {

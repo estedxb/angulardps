@@ -70,7 +70,7 @@ body {
 #maincontentarea input[type="text"],
 #maincontentarea input[type="password"],
 #maincontentarea input[type="number"] {
-  width: 98%;
+  width: 100%;
   font-size: 15px;
   font-weight: normal;
   padding: 3px;
@@ -279,7 +279,7 @@ div#CustomerContact {
 .inputWithImg input[type="text"],
 #maincontentarea .inputWithImg input,
 .inputWithImg input[type="number"] {
-  padding-right: 30px;
+  padding-right: 24px;
   padding-left: 5px;
 }
 .inputWithIcon .fa-2 {
@@ -342,6 +342,7 @@ div#CustomerContact {
 }
 .form-control {
   line-height: 22px;
+  height: calc(1.5em + 0.5rem + 2px);
 }
 
 #maincontentarea .radiorow span,
