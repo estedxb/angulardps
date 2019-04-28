@@ -52,6 +52,7 @@ const routes: Routes = [
   { path: 'scheduler', component: SchedulerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'person/addperson', component: AddpersonComponent },
+  { path: 'person/add', component: AddpersonComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
