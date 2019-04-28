@@ -34,6 +34,14 @@ body {
   text-align: center;
   margin: auto;
 }
+.right-block {
+  text-align: right;
+  margin: auto;
+}
+.left-block {
+  text-align: left;
+  margin: auto;
+}
 .pagehead {
   font-size: 20px;
   font-weight: bold;
@@ -127,7 +135,7 @@ div.customerBox {
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
 
-div.customerBox div.customerBoxContect{
+div.customerBox div.customerBoxContect {
   padding: 10px 20px 20px;
 }
 
@@ -356,7 +364,7 @@ div#CustomerContact {
   width: 80%;
 }
 
-.btn,
+.orangebtn,
 .greenbtn,
 .whitebtn {
   background-image: linear-gradient(45deg, #e37619, #b12819);
@@ -372,8 +380,9 @@ div#CustomerContact {
   min-width: 150px;
 }
 
-.btn:hover,
-.greenbtn:hover{
+.orangebtn:hover,
+.greenbtn:hover,
+.whitebtn:hover {
   color: #fff;
   font-weight: 500;
   text-shadow: 0 0 2px #000;
@@ -381,17 +390,17 @@ div#CustomerContact {
   -webkit-text-shadow: 0 0 2px #000;
 }
 
-.btn img,
+.orangebtn img,
 .greenbtn img,
 .whitebtn img {
   float: right;
   padding: 4px 0px 2px 10px;
 }
 
-.btn img {
+.orangebtn img {
   width: 28px;
 }
-.btn-save img {
+.orangebtn-save img {
   width: 28px;
 }
 .greenbtn img {
@@ -410,7 +419,7 @@ div#CustomerContact {
   -webkit-text-shadow: 0 0 2px #ccc;
 }
 
-.whitebtn span{
+.whitebtn span {
   float: left;
 }
 
@@ -425,7 +434,7 @@ div#CustomerContact {
   border-radius: 14px;
 }
 
-.whitebtn{
+.whitebtn {
   background-image: none;
   background-color: #fff;
   border: 1px solid #e37619;
@@ -435,7 +444,7 @@ div#CustomerContact {
   border-radius: 16px;
   min-width: 210px;
 }
-.btn:disabled {
+.orangebtn:disabled {
   background-image: linear-gradient(45deg, #dfdfdf, #b8b8b8);
 }
 .greenbtn:disabled {
@@ -464,7 +473,6 @@ div#CustomerContact {
 /*mat-dialog-container ng-tns-c14-1 ng-trigger ng-trigger-dialogContainer ng-star-inserted*/
 
 .cdk-overlay-pane .mat-dialog-container {
-  width: 700px;
   padding: 40px;
   background-image: linear-gradient(45deg, #fefefe, #b8b8b8);
   border-radius: 16px;
@@ -483,16 +491,16 @@ div#CustomerContact {
   border-radius: 16px;
   min-width: 160px;
   max-width: 210px;
-  padding: 4px 10px 4px 10px;  
+  padding: 4px 10px 4px 10px;
 }
-.inputWrapper:hover{
+.inputWrapper:hover {
   color: #000;
   font-weight: 500;
   text-shadow: 0 0 2px #ccc;
   -moz-text-shadow: 0 0 2px #ccc;
   -webkit-text-shadow: 0 0 2px #ccc;
 }
-.inputWrapper img{  
+.inputWrapper img {
   width: 28px;
   float: right;
   padding: 2px 0px 2px 10px;
@@ -500,7 +508,7 @@ div#CustomerContact {
 
 .inputWrapper .fileInput {
   cursor: pointer;
-  position:absolute;
+  position: absolute;
   top: 0;
   right: 0;
   /*This makes the button huge so that it can be clicked on*/
@@ -509,5 +517,5 @@ div#CustomerContact {
   /*Opacity settings for all browsers*/
   opacity: 0;
   -moz-opacity: 0;
-  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }

@@ -1,3 +1,103 @@
-<p>
-  createworkschedule works!
-</p>
+<div class="updateModel">
+  <div class="mat-dialog-close">
+    <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+  </div>
+  <div class="row ">
+    <div class="col-sm-12 center-block head">
+      <img src='../../../assets/svg/WorkScheduleHead.svg'>
+      <br /> <label>Werkrooster aanmaken / Wijzigen</label>
+      <hr>
+    </div>
+  </div>
+  <form [formGroup]="WorkScheduleForm" novalidate id="WorkScheduleForm">
+    <div class="contactperson">
+      <div class="row">
+        <div class="col-sm-8 inputWithImg">
+          <label class="titleBold"> Naam: </label>
+          <input formControlName="name" class="form-control" name="name" type="text" required />
+          <div class="form-control-feedback"
+            *ngIf="WorkScheduleForm.controls.name.invalid && (WorkScheduleForm.controls.name.dirty || WorkScheduleForm.controls.name.touched) else newvalid">
+            <img src="../../assets/img/InvalidIcon.png" alt="">
+          </div>
+          <ng-template #newvalid>
+            <img src="../../assets/img/ValidIcon.png" alt="">
+          </ng-template>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 RowEmpty">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table width="100%" class="WorkScheduleDiv" cell-padding="0" cell-spacing="0">
+            <thead>
+              <th>Ma</th>
+              <th>Di</th>
+              <th>Woe</th>
+              <th>Don</th>
+              <th>Vrij</th>
+              <th>Zat</th>
+              <th>Zon</th>
+            </thead>
+            <tr>
+              <td>
+                <input name="WorkSchedule_Mon_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Tue_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Wed_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Thr_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Fri_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Sat_HH_1" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Sun_HH_1" value=":" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input name="WorkSchedule_Mon_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Tue_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Wed_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Thr_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Fri_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Sat_HH_2" value=":" />
+              </td>
+              <td>
+                <input name="WorkSchedule_Sun_HH_2" value=":" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-sm-12 mat-dialog-close">
+          <button><img src='../../../../../assets/svg/addblack.svg' /></button>
+        </div>
+      </div>
+    </div>
+    <div class="col col-sm-12 center-block">
+      <button class="greenbtn" id="btnSave" (click)="onSaveWorkScheduleClick()"><span>Gebruiker opslaan</span>
+      </button>
+    </div>
+  </form>
+</div>

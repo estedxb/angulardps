@@ -7,7 +7,7 @@ import { FileuploadService } from 'src/app/shared/fileupload.service';
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
-  styleUrls: ['../../customers.component.css']
+  styleUrls: ['./../../customers.component.css']
 })
 export class CreatepositionComponent implements OnInit {
   PositionForm: FormGroup;

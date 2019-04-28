@@ -18,6 +18,7 @@ export class LanguagesComponent implements OnInit {
   public errorMsg;
   public maindatas: any = [];
   private datas: any = [];
+  public oldLanguageFormData;
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
@@ -43,6 +44,18 @@ export class LanguagesComponent implements OnInit {
 
   constructor(private languagesService: LanguagesService) { }
 
+  ngDoCheck() {
+
+    if(this.LanguageFormData != this.oldLanguageFormData)
+    {
+        console.log("ngDoCheck legalForm data="+this.LanguageFormData);
+        this.oldLanguageFormData = this.LanguageFormData;
+        this.loadInitialData(this.datas);
+    }
+    
+  }
+
+
   ngOnInit() {
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
@@ -50,5 +63,38 @@ export class LanguagesComponent implements OnInit {
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
+
+  ngAfterViewInit() {
+
+    if(this.LanguageFormData != this.oldLanguageFormData)
+    {
+        console.log("ngDoCheck countryForm data="+this.LanguageFormData);
+        this.oldLanguageFormData = this.LanguageFormData;
+        this.loadInitialData(this.datas);
+    }
+  }
+
+  loadInitialData(datas:any) {
+
+    console.log("languageString="+this.LanguageFormData);
+
+    if(datas.length !== 0)
+    {
+      console.log("datas length="+datas.length);
+
+      for(var i=0;i<this.datas.length;i++)
+      {
+        if(this.datas[i].name === this.LanguageFormData)
+            this._selectedIndex = i;
+      }
+
+      console.log("selected index="+this._selectedIndex);
+    }
+    else
+    {
+      console.log("null or undefined");
+    }
+
+}
 }
 

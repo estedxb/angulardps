@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { LocationsService } from '../../../shared/locations.service';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { CreatelocationComponent } from './createlocation/createlocation.component';
 import { Location, LoginToken, DpsUser } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LocationsService } from '../../../shared/locations.service';
+import { CreatelocationComponent } from './createlocation/createlocation.component';
 
 @Component({
   selector: 'app-locations',
@@ -18,6 +18,7 @@ export class LocationsComponent implements OnInit {
   public data;
   public errorMsg;
   public SelectedLocationIndex = 0;
+  public SelectedLocationEnableStatus = true;
   public durationInSeconds = 5;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 

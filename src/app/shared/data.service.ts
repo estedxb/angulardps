@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class DataService {
 
-    private messageService = new BehaviorSubject<string>("default message");
-    currentMessge = this.messageService.asObservable();
+    private messageService = new BehaviorSubject<any>("default message");
+    currentMessage = this.messageService.asObservable();
 
     constructor() {}
 
-    changeMessage(message: string) {
+    changeMessage(message: any) {
         this.messageService.next(message);
-    }    
+    }
+
 }

@@ -185,11 +185,6 @@ button.close {
   border-radius: 16px;
 }
 */
-.head label {
-  font-weight: bold;
-  padding: 10px;
-}
-
 .contactperson {
   width: 100%;
   padding: 30px;
@@ -209,6 +204,35 @@ button.close {
 .center-block {
   text-align: center;
   margin: auto;
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
 }
 /*PopUp Class Ends*/
+
+.head label {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.head {
+  margin: -10px 0px 0px 0px;
+}
+.mat-dialog-close {
+  text-align: right;
+  min-height: none;
+}
+.mat-dialog-close button {
+  background: none;
+  border: none;
+  right: 0px;
+  padding: 0px;
+  margin-top: 5px;
+  margin-bottom: -30px;
+}
+
+.RowEmpty {
+  margin: 20px 0px;
+}
+
+.cdk-overlay-pane .mat-dialog-container {
+  width: 700px;
+}

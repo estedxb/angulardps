@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input,EventEmitter } from '@angular/core';
 import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-editcustomer',
@@ -28,7 +29,7 @@ export class EditcustomerComponent implements OnInit {
   public oldHQdata:any;
   public dataCustomerEdit:any;
 
-  constructor(private customerService:CustomersService) { 
+  constructor(private customerService:CustomersService, private data:DataService) { 
 
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     //this.vatNumber = "B0011";
@@ -41,12 +42,15 @@ export class EditcustomerComponent implements OnInit {
     }
   }
 
-  ngDgCheck() {
+  ngDoCheck() {
 
-      if(this.HQdata !== this.oldHQdata )    
+      if(this.HQdata !== this.oldHQdata)
       {
         this.oldHQdata = this.HQdata;
         this.childEvent.emit(this.HQdata);
+
+        //this.data.currentMessage.subscribe(data => this.HQdata = data);
+
       }
   }
 
