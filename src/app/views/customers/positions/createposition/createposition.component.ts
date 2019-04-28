@@ -12,6 +12,8 @@ export class CreatepositionComponent implements OnInit {
   PositionForm: FormGroup;
   PositionData: any;
   dpsPosition: DpsPostion;
+  public isStudentAllowed;
+
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
   @Input('parentData') public PositionId;
@@ -21,9 +23,9 @@ export class CreatepositionComponent implements OnInit {
   ngOnInit() {
 
     this.PositionForm = new FormGroup({
-      jobdescription: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
-      taskdescription: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
-      costcenter: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
+      name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
+      taskDescription: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
+      costCenter: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
       file: new FormControl('', [Validators.required])
 
 
@@ -37,12 +39,18 @@ export class CreatepositionComponent implements OnInit {
       response.forEach((element) => {
         let object = element.position;
         if (element.id === this.PositionId) {
-          this.PositionForm.controls['jobdescription'].setValue(object.name);
-          this.PositionForm.controls['taskdescription'].setValue(object.taskDescription);
-          this.PositionForm.controls['costcenter'].setValue(object.costCenter);
+          this.PositionForm.controls['name'].setValue(object.name);
+          this.PositionForm.controls['taskDescription'].setValue(object.taskDescription);
+          this.PositionForm.controls['costCenter'].setValue(object.costCenter);          
+          //this.PositionForm.controls['isStudentAllowed'].setValue(object.isStudentAllowed);
+          this.isStudentAllowed = object.isStudentAllowed;
         }
       })
     });
+  }
+
+  onChange($event) {
+    this.dpsPosition.position.isStudentAllowed = $event;
   }
 
   createObjects() {
@@ -52,11 +60,10 @@ export class CreatepositionComponent implements OnInit {
     this.dpsPosition.id = this.PositionId;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;
-    this.dpsPosition.position.costCenter = this.PositionForm.get('costcenter').value;
-    this.dpsPosition.position.taskDescription = this.PositionForm.get('taskdescription').value;
-    this.dpsPosition.position.name = this.PositionForm.get('jobdescription').value;
+    this.dpsPosition.position.costCenter = this.PositionForm.get('costCenter').value;
+    this.dpsPosition.position.taskDescription = this.PositionForm.get('taskDescription').value;
+    this.dpsPosition.position.name = this.PositionForm.get('name').value;
     this.dpsPosition.position.workstationDocument = this.PositionForm.get('file').value;
-    //this.dpsPosition.position.isStudentAllowed =  this.PositionForm.get('file').value;
     this.setJSONObject();
   }
 
