@@ -1,0 +1,40 @@
+@import "../../customers.component.css";
+.cdk-overlay-pane .mat-dialog-container {
+  width: 800px;
+  padding: 20px 40px;
+}
+.WorkScheduleDiv {
+  border: 1px solid #e37619;
+  background: #fff;
+  padding: 0px;
+  margin: 0px;
+}
+.WorkScheduleDiv {
+  font-size: 13px;
+}
+
+.WorkScheduleDiv th {
+  text-align: center;
+  border-right: #ddd 1px solid;
+  border-bottom: #000 1px solid;
+  padding: 7px;
+}
+.WorkScheduleDiv th:last-child {
+  border-right: none;
+}
+.WorkScheduleDiv tr td {
+  line-height: 40px;
+  border-right: #ddd 1px solid;
+  border-top: #ddd 1px solid;
+  vertical-align: middle;
+}
+.WorkScheduleDiv tr td:last-child {
+  border-right: none;
+  border-top: #ddd 1px solid;
+}
+.WorkScheduleDiv tr td input {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  border: 0px;
+}

@@ -1,4 +1,7 @@
 <div class="updateModel">
+    <div class="mat-dialog-close">
+        <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+    </div>
     <div class="row ">
         <div class="col-sm-12 center-block head">
             <img src='../../../assets/svg/UserUpdate.svg'>
@@ -23,7 +26,7 @@
 
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Achternaam: </label>
-                    <input formControlName="lastname"  class="form-control" name="lastname" type="text" required />
+                    <input formControlName="lastname" class="form-control" name="lastname" type="text" required />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.lastname.invalid && (UserForm.controls.lastname.dirty || UserForm.controls.lastname.touched) else anewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">

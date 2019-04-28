@@ -1,0 +1,188 @@
+[
+  {
+    "id": 2,
+    "customerVatNumber": "str vat",
+    "name": "str Name ",
+    "workSchedule": {
+      "workDays": [
+        {
+          "dayOfWeek": 2,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 3,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 4,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        }
+      ]
+    },
+    "isEnabled": true,
+    "isArchived": true
+  },
+  {
+    "id": 5,
+    "customerVatNumber": "str vat",
+    "name": "str Name ",
+    "workSchedule": {
+      "workDays": [
+        {
+          "dayOfWeek": 2,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 3,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 4,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        }
+      ]
+    },
+    "isEnabled": true,
+    "isArchived": true
+  },
+  {
+    "id": 12,
+    "customerVatNumber": "str vat",
+    "name": "str Name ",
+    "workSchedule": {
+      "workDays": [
+        {
+          "dayOfWeek": 2,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 3,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        },
+        {
+          "dayOfWeek": 4,
+          "workTImes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ],
+          "breakTimes": [
+            {
+              "startTime": "02:02:02",
+              "endTime": "01:05:02",
+              "title": "Title"
+            }
+          ]
+        }
+      ]
+    },
+    "isEnabled": true,
+    "isArchived": true
+  }
+]

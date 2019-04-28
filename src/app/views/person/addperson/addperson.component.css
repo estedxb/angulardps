@@ -1,4 +1,4 @@
-.btn {
+.orangebtn {
   background-image: linear-gradient(
     104deg,
     rgba(227, 118, 25, 1),
@@ -13,7 +13,7 @@
   font-size: 17px;
   font-weight: bold;
 }
-.btn:disabled {
+.orangebtn:disabled {
   background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
 }
 #forward {
