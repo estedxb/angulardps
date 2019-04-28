@@ -170,7 +170,7 @@
               
           <div class="col-sm-7 inputWithImg">
                     <label class="titleBold"> Contracten e-mail address: </label>
-                    <input type="email" (blur)="updateData()" formControlName="contractsEmail" class="form-control" name="contractsEmail"  />
+                    <input type="email" (blur)="sendDatatoHome()" formControlName="contractsEmail" class="form-control" name="contractsEmail"  />
                       <div class="form-control-feedback" *ngIf="HQForm.controls.contractsEmail.invalid && (HQForm.controls.contractsEmail.untouched || HQForm.controls.contractsEmail.dirty || HQForm.controls.contractsEmail.touched) else validv"> 
                           <img src="../../assets/img/InvalidIcon.png" alt="" >
                       </div>
