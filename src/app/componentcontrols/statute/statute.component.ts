@@ -22,7 +22,7 @@ export class StatuteComponent implements OnInit {
   public statutes = [];
   public errorMsg;
   public isMealEnabled = [];
-  public coefficientArray:number[] = [];
+  public coefficientArray = [];
   public totalArray = [];
   public wegervaalArray = [];
   public minimumurenArray = [];
@@ -33,6 +33,7 @@ export class StatuteComponent implements OnInit {
   public loadStatuteSettingsArray = [];
   public newIndex;
   public i;
+  public oldSFTFormData;
   
   SForm:FormGroup;
 
@@ -51,62 +52,54 @@ export class StatuteComponent implements OnInit {
     this.createCoefficientArray();
    }
 
-   ngDoCheck() {
-      
+
+   ngDoCheck() {      
     this.createCoefficientArray();
 
-      console.log(" ngDoCheck received data in statute component from edit page");
-      console.log(this.STFormData);
-
-      console.log("ngDoCheck counter="+this.i);
-
-      if(this.STFormData !== undefined)
-      {
-        if(this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit")
+        if(this.STFormData !== undefined)
         {
-            this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
-            console.log(this.loadStatuteSettingsArray.length);
-
-            let counter:number = 0;
-
-            if(this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined)
-            {      
-              this.loadStatuteSettingsArray.forEach(element => {
-        
-                console.log("coefficient="+element.coefficient);
-                console.log("employee share="+element.mealVoucherSettings.employerShare);
-                console.log("element minimumHours="+element.mealVoucherSettings.minimumHours);
-                console.log("element totalWorth="+element.mealVoucherSettings.totalWorth);
-          
-                let employerShare:number = element.mealVoucherSettings.employerShare;
-                let minimumHours: number = element.mealVoucherSettings.minimumHours;
-                let totalWorth:number = element.mealVoucherSettings.totalWorth;
-          
-                this.onloadData(element);
-          
-                  counter += 1;
-              });
-            }
+          if(this.STFormData != this.oldSFTFormData)
+          {  
+            this.oldSFTFormData = this.STFormData;
+            this.loadInitialData(this.statutes);
+          }      
         }
+   }
+  
+
+  ngAfterViewInit() {
+
+    if(this.STFormData !== undefined)
+    {
+      if(this.STFormData != this.oldSFTFormData)
+      {
+          this.oldSFTFormData = this.STFormData;
+          this.loadInitialData(this.statutes);
       }
-   }
+    }
 
-   
+  }
 
-
-   trackByFn(statute, index) {
-   }
+  loadInitialData(datas:any) {
+  
+      if(this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit")
+      {
+          this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
+          if(this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined)
+          {      
+            this.loadStatuteSettingsArray.forEach(element => {        
+              this.onloadData(element);        
+            });
+          }
+      }
+}
+ 
    
    onloadData(arrayElement){
-
-    //load coefficient data
       this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
       this.SForm.controls['Totalwaarde'].setValue(arrayElement.mealVoucherSettings.totalWorth);
       this.SForm.controls['Wergeversdeel'].setValue(arrayElement.mealVoucherSettings.employerShare);
-      this.SForm.controls['minimumHours'].setValue(arrayElement.mealVoucherSettings.minimumHours);  
-
-    //this.replaceArrayCoefficient(coefficient,counter);
-        
+      this.SForm.controls['minimumHours'].setValue(arrayElement.mealVoucherSettings.minimumHours);            
    }
 
   ngOnInit() {
@@ -121,19 +114,11 @@ export class StatuteComponent implements OnInit {
 
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
-      console.log('data from getStatutues(): ')
+      console.log('data from getStatutues(): ');
       console.log(data);
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
-      // this.isMealEnabled[2] = true;
-      // tslint:disable-next-line: prefer-for-of
-      // this.createArrayData(data);
 
-      // for (let Cnt = 0; Cnt < data.length; Cnt++) {
-      //   this.isMealEnabled[Cnt] = data[Cnt].mealstatus;
-      //   // alert(this.isMealEnabled[Cnt] );
-
-      // }
       if (this.statutes.length !== 0) {
         this.emitData();
       }
@@ -145,9 +130,9 @@ export class StatuteComponent implements OnInit {
 
   createCoefficientArray() {
 
-    for (let i = 0; i < this.countStatutes; i++) {
+    for (let i:number = 0; i < this.countStatutes; i++) {     
       this.coefficientArray[i] = 0;
-    }
+    }    
 
   }
 
@@ -173,6 +158,8 @@ export class StatuteComponent implements OnInit {
 
     this.statuteSettings = [];
 
+    console.log("length="+this.arrayParitairCommitee.length);
+
     for (let i = 0; i < data.length; i++) {
       const dataObject = data[i];
 
@@ -183,6 +170,8 @@ export class StatuteComponent implements OnInit {
       this.statuteObject.name = dataObject.name;
       this.statuteObject.type = dataObject.type;
 
+      console.log("paritair committee array");
+      console.log(this.arrayParitairCommitee);
       const dataPtObject = this.arrayParitairCommitee[i];
 
       this.paritarirCommiteeObject = new ParitairCommitee();
@@ -290,11 +279,8 @@ export class StatuteComponent implements OnInit {
     console.log('replacing statute array');
     console.log('item to replace=' + this.coefficientArray[i]);
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      //for (let k = 0; k < this.statuteSettings.length; k++) {
-        //if (i === k) {
           this.statuteSettings[i].coefficient = value;
-        //}
-      //}
+          console.log("value received="+value);
     } else {
       this.createArrayData(this.statutes);
     }
