@@ -49,6 +49,16 @@ export class ContactpersonComponent implements OnInit {
         {
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
+
+          this.createObjects();
+          // this.CTdata =  {
+          //   "contact": this.contact,
+          //   "formValid": this.validity(),
+          //   "activateContactAsUser":this.alsCheck
+          // };
+  
+           //this.childEvent.emit(this.CTdata);
+  
         }
       }
   

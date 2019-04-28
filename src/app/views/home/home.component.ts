@@ -5,6 +5,7 @@ import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../contactperson/contactperson.component';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber, Address } from 'src/app/shared/models';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.HQFormValid =  true;
     this.CTFormValid = true;
+
   }
 
   receiveData($event,i){
@@ -219,30 +221,30 @@ export class HomeComponent implements OnInit {
         console.log("fp data=");
         console.log(this.FPdata);
 
-        // if(this.HQdata !== null)
-        // {
-        //   if(this.HQdata.invoiceSettings !== null && this.HQdata.invoiceSettings !== undefined)
-        //     {
-        //       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-        //       this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-        //       this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-        //       this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-        //       this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-        //       this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-        //       this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;    
-        //     }
-        //   else {
-        //     this.HQdata.customer.vatNumber = "234343434";
-        //     this.HQdata.invoiceSettings = new InvoiceSettings();
-        //     this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-        //     this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-        //     this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-        //     this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-        //     this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-        //     this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-        //     this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;              
-        //   }
-        // }
+        if(this.HQdata !== null)
+        {
+          if(this.HQdata.invoiceSettings !== null && this.HQdata.invoiceSettings !== undefined)
+            {
+              this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
+              this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+              this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
+              this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
+              this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
+              this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+              this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;    
+            }
+          else {
+            this.HQdata.customer.vatNumber = "234343434";
+            this.HQdata.invoiceSettings = new InvoiceSettings();
+            this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
+            this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+            this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
+            this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
+            this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
+            this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+            this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;              
+          }
+        }
 
       }
 
@@ -250,7 +252,7 @@ export class HomeComponent implements OnInit {
 
       this.updateData();
     }
-  }
+  }  
 
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res =>{

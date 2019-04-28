@@ -118,6 +118,6 @@ export class WorkCodesComponent implements OnInit {
     this.value = this.datas[i];
     this.HQForm.controls.WorkCode.setValue(this.value.CodeNumber + ' - ' + this.value.Description);
     this.show = false;
-    this.childEvent.emit(this.value.CodeNumber + ' - '+this.value.Description);
+    this.childEvent.emit(this.value.CodeNumber);
   }
 }

@@ -1,3 +1,5 @@
+import { TimeSpan } from './TimeSpan';
+
 export class DPSCustomer {
     customer: Customer;
     invoiceEmail?: EmailAddress;
@@ -40,9 +42,9 @@ export class LieuDaysAllowance { enabled: boolean; payed: boolean; }
 
 export class MobilityAllowance { enabled: boolean; amountPerKm?: number; }
 
-export class ShiftAllowance { shiftName: string; timeSpan: string; amount: number; nominal?: boolean; }
+export class ShiftAllowance { shiftName: string; timeSpan: TimeSpan; amount: number; nominal?: boolean; }
 
-export class OtherAllowance { codeId: string; amount: number; nominal?: boolean; }
+export class OtherAllowance { codeId: number; amount: number; nominal?: boolean; }
 
 export class MealVoucherSettings { totalWorth?: number; employerShare?: number; minimumHours?: number; }
 
