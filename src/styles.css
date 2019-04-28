@@ -373,8 +373,7 @@ div#CustomerContact {
 }
 
 .btn:hover,
-.greenbtn:hover,
-.whitebtn:hover {
+.greenbtn:hover{
   color: #fff;
   font-weight: 500;
   text-shadow: 0 0 2px #000;
@@ -400,7 +399,19 @@ div#CustomerContact {
 }
 
 .whitebtn img {
-  width: 16px;
+  width: 28px;
+  margin: 0px;
+}
+.whitebtn:hover {
+  color: #000;
+  font-weight: 500;
+  text-shadow: 0 0 2px #ccc;
+  -moz-text-shadow: 0 0 2px #ccc;
+  -webkit-text-shadow: 0 0 2px #ccc;
+}
+
+.whitebtn span{
+  float: left;
 }
 
 .greenbtn {
@@ -422,7 +433,7 @@ div#CustomerContact {
   height: 32px;
   font-size: 16px;
   border-radius: 16px;
-  min-width: 200px;
+  min-width: 210px;
 }
 .btn:disabled {
   background-image: linear-gradient(45deg, #dfdfdf, #b8b8b8);
@@ -457,4 +468,46 @@ div#CustomerContact {
   padding: 40px;
   background-image: linear-gradient(45deg, #fefefe, #b8b8b8);
   border-radius: 16px;
+}
+
+.inputWrapper {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background-image: none;
+  background-color: #fff;
+  border: 1px solid #e37619;
+  color: #000;
+  height: 32px;
+  font-size: 16px;
+  border-radius: 16px;
+  min-width: 160px;
+  max-width: 210px;
+  padding: 4px 10px 4px 10px;  
+}
+.inputWrapper:hover{
+  color: #000;
+  font-weight: 500;
+  text-shadow: 0 0 2px #ccc;
+  -moz-text-shadow: 0 0 2px #ccc;
+  -webkit-text-shadow: 0 0 2px #ccc;
+}
+.inputWrapper img{  
+  width: 28px;
+  float: right;
+  padding: 2px 0px 2px 10px;
+}
+
+.inputWrapper .fileInput {
+  cursor: pointer;
+  position:absolute;
+  top: 0;
+  right: 0;
+  /*This makes the button huge so that it can be clicked on*/
+}
+.inputWrapper .hidden {
+  /*Opacity settings for all browsers*/
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
 }
