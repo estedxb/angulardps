@@ -12,6 +12,7 @@ import { AlertsModule } from 'angular-alert-module';
 import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -26,6 +27,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppRoutingModule,
     AngularFontAwesomeModule,
     AutocompleteLibModule,
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
+    TimepickerModule.forRoot(),
     UiSwitchModule.forRoot({
       size: 'small',
       color: '#fff',

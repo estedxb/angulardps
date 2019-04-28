@@ -6,7 +6,7 @@ import { PositionsService } from 'src/app/shared/positions.service';
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
-  styleUrls: ['../../customers.component.css']
+  styleUrls: ['./../../customers.component.css']
 })
 export class CreatepositionComponent implements OnInit {
   PositionForm: FormGroup;
