@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { User, DpsUser, LoginToken, DpsPostion } from '../../../../shared/models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
+import { FileuploadService } from 'src/app/shared/fileupload.service';
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
@@ -10,6 +11,7 @@ import { PositionsService } from 'src/app/shared/positions.service';
 })
 export class CreatepositionComponent implements OnInit {
   PositionForm: FormGroup;
+  fileToUpload: File = null;
   PositionData: any;
   dpsPosition: DpsPostion;
   public isStudentAllowed;
@@ -18,7 +20,7 @@ export class CreatepositionComponent implements OnInit {
   public VatNumber = this.loginuserdetails.customerVatNumber;
   @Input('parentData') public PositionId;
 
-  constructor(private positionsService: PositionsService) { }
+  constructor(private positionsService: PositionsService, private fileuploadService :FileuploadService ) { }
 
   ngOnInit() {
 
@@ -83,6 +85,24 @@ export class CreatepositionComponent implements OnInit {
     this.createObjects();
   }
 
+  handleFileInput(files: FileList) {
+    if(files.length>0)
+    {
+     if( files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg' || files.item(0).type === 'image/png' )
+      this.fileToUpload = files.item(0);
+   
+    }
+    
+} 
+
+uploadFileToActivity() {
+  this.fileuploadService.postFile(this.fileToUpload).subscribe(data => {
+    // do something, if upload success
+    }, error => {
+      console.log(error);
+    });
+}
+
   onSaveUserClick() {
 
     this.updateData();
@@ -100,6 +120,7 @@ export class CreatepositionComponent implements OnInit {
         this.positionsService.updatePosition(this.PositionId).subscribe(res => {
           console.log('response :: ');
           console.log(res);
+          this.uploadFileToActivity();
         },
           (err: HttpErrorResponse) => {
 
@@ -119,6 +140,7 @@ export class CreatepositionComponent implements OnInit {
         this.positionsService.createPosition(this.PositionData).subscribe(res => {
           console.log('response :: ');
           console.log(res);
+          this.uploadFileToActivity();
         },
           (err: HttpErrorResponse) => {
 
