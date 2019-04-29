@@ -60,9 +60,9 @@ export class UpdateCustomerComponent implements OnInit {
           } else {
             console.log('response code=' + err.status);
             console.log('response body=' + err.error);
+          }
         }
-      }
-      );        
+      );
     }
 
   }
