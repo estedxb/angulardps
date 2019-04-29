@@ -41,8 +41,7 @@ export class WorkschedulesService {
       'Content-Type': 'application/json'
     });
     return this.http.post<any>(this.getWorkscheduleURL, workSchedule, {
-      headers: httpHeaders,
-      observe: 'response'
+      headers: httpHeaders, observe: 'response'
     });
   }
 
@@ -53,8 +52,7 @@ export class WorkschedulesService {
     });
 
     return this.http.put<any>(this.getWorkscheduleURL, workSchedule, {
-      headers: httpHeaders,
-      observe: 'response'
+      headers: httpHeaders, observe: 'response'
     });
   }
 
