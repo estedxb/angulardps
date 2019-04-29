@@ -126,7 +126,7 @@ body {
 }
 .legalform {
   min-width: 100px;
-  max-width: 150px;
+  max-width: 100%;
 }
 div.customerBox {
   min-width: 400px;

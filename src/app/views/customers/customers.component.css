@@ -215,18 +215,20 @@ button.close {
 
 .head {
   margin: -10px 0px 0px 0px;
+  z-index: 0;
 }
 .mat-dialog-close {
   text-align: right;
   min-height: none;
+  margin-bottom: -15px;
+  z-index: 1;
 }
 .mat-dialog-close button {
   background: none;
   border: none;
   right: 0px;
   padding: 0px;
-  margin-top: 5px;
-  margin-bottom: -30px;
+  margin-bottom: 0px;
 }
 
 .RowEmpty {
