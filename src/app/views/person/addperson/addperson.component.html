@@ -25,23 +25,21 @@
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6" id="maincontentarea">
     <div class="scrollbar" id="maincontent">
-
-        <form [formGroup]="AddPersonForm1" novalidate id="AddPersonForm1">
-
-      <div id="from2" *ngIf="showFormIndex === 1">
-        <div id="CustomerDetails" class="customerBox">
-          <div class="row panelheader">
-            <div class="col col-sm-5 fright">
-              <h4>Algemeen</h4>
-              <hr>
+    <form [formGroup]="AddPersonForm1" novalidate id="AddPersonForm1">
+        <div id="from2" *ngIf="showFormIndex === 1">
+          <div id="CustomerDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Algemeen</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
             </div>
-            <div class="col col-sm-7"></div>
-          </div>
 
           <div class="row">
               <div class="col-sm-6 inputWithImg" >
                 <label class="titleBold"> Rijkregisternummer: </label>
-                <input formControlName="socialSecurityNumber" class="form-control" name="socialSecurityNumber" type="text" required/>
+                <input (blur)="setPersonVatNumber(socialSecurityNumber.value)" formControlName="socialSecurityNumber" class="form-control" name="socialSecurityNumber" type="number" required/>
                 <div class="form-control-feedback"
                   *ngIf="AddPersonForm1.controls.socialSecurityNumber.invalid && (AddPersonForm1.controls.socialSecurityNumber.dirty || AddPersonForm1.controls.socialSecurityNumber.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -325,9 +323,8 @@
 
       </div>
 
-     </form>
 
-     <form [formGroup]="AddPersonForm2" novalidate id="AddPersonForm1">
+     <!-- <form [formGroup]="AddPersonForm2" novalidate id="AddPersonForm1"> -->
 
      
       <div id="from1" *ngIf="showFormIndex === 2">
@@ -433,7 +430,8 @@
         </div>
       </div>
 
-</form>
+    </form>
+<!-- </form> -->
      
     </div>
   </div>
