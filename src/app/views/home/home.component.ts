@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.HQFormValid =  true;
     this.CTFormValid = true;
-
   }
 
   receiveData($event,i){

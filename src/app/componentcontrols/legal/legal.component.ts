@@ -14,9 +14,10 @@ export class LegalComponent implements OnInit  {
   public errorMsg;
   public maindatas: any = [];
   private datas: any = [];
+  public oldlegalFormData;
   public selectedString:string;
 
-  @Input('legalFormData') public legalString;
+  @Input() public legalFormData;
   @Output() public childEvent = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
@@ -24,9 +25,9 @@ export class LegalComponent implements OnInit  {
 
   set selectedValue(value: any) { this._selectedValue = value; }
   
-  get selectedValue(): any { return this._selectedValue; }
+  get selectedValue(): any {  return this._selectedValue; }
   
-  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.datas[this.selectedIndex]; }
+  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.datas[this.selectedIndex];  }
   
   get selectedIndex(): number { return this._selectedIndex; }
   
@@ -36,16 +37,49 @@ export class LegalComponent implements OnInit  {
   
   resetToInitValue() { this.value = this.selectedValue; }
 
-  SetInitialValue() { 
+  SetInitialValue() { this.selectedValue = this.datas[this.selectedIndex]; }
 
-    console.log("legal data received="+this.legalString);
+  ngDoCheck() {
 
-     if(this.legalString !== "")
-     {
-        this.selectedValue = this.legalString;
-     }
-     else
-          this.selectedValue = this.datas[this.selectedIndex]; 
+    if(this.legalFormData != this.oldlegalFormData)
+    {
+        console.log("ngDoCheck legalForm data="+this.legalFormData);
+        this.oldlegalFormData = this.legalFormData;
+        this.loadInitialData(this.datas);
+    }
+    
+  }
+
+  ngAfterViewInit() {
+
+    if(this.legalFormData != this.oldlegalFormData)
+    {
+        console.log("ngDoCheck legalForm data="+this.legalFormData);
+        this.oldlegalFormData = this.legalFormData;
+        this.loadInitialData(this.datas);
+    }
+  }
+
+  loadInitialData(datas:any) {
+
+    console.log("legalString="+this.legalFormData);
+
+    if(datas.length !== 0)
+    {
+      console.log("datas length="+datas.length);
+
+      for(var i=0;i<this.datas.length;i++)
+      {
+        if(this.datas[i].FormName === this.legalFormData)
+            this._selectedIndex = i;
+      }
+
+      console.log("selected index="+this._selectedIndex);
+    }
+    else
+    {
+      console.log("null or undefined");
+    }
 
 }
   
@@ -57,22 +91,28 @@ export class LegalComponent implements OnInit  {
 
     this.selectedString = this.value.FormName;
 
-    this.childEvent.emit(this.value.FormName);    
+    this.childEvent.emit(this.value.FormName);
 
     return this.value; 
   }
 
-  constructor(private legalformService: LegalformService) { }
+  constructor(private legalformService: LegalformService) { 
+    console.log("constructor legalString="+this.legalFormData);
+  }
 
   ngOnInit() {
+
+    console.log("init legalString received="+this.legalFormData);
 
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
       this.datas = this.maindatas[this.currentlanguage];
-      console.log('Legal Forms Data : '); console.log(this.datas); 
+      console.log('Legal Forms Data : '); console.log(this.datas);
+
+      this.loadInitialData(this.datas);
     }, error => this.errorMsg = error);
 
-    console.log("legalFormData="+this.legalString);
+    console.log("legalFormData="+this.legalFormData);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }

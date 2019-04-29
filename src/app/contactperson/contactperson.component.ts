@@ -131,6 +131,8 @@ export class ContactpersonComponent implements OnInit {
     this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
     this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
     this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+
+    this.languageString = contactPerson.contact.language.name;
     
   }
 
