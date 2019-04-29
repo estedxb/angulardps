@@ -1,27 +1,28 @@
 // import { Component, OnInit } from '@angular/core';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { User, Language, EmailAddress, PhoneNumber, DpsUser, LoginToken } from '../../../../shared/models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from 'src/app/shared/users.service';
 import { element } from '@angular/core/src/render3';
-
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
   styleUrls: ['./../../customers.component.css']
 })
 export class CreateuserComponent implements OnInit {
-  public languageString: string;
-  public languageShortName: string;
+  public languageString;
+  public languageShortName;
   // public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
 
-  @Input('parentData') public username: string;
+  // @Input('parentData') public username: string;
 
   // @Input() public UserFormData: any;
   UserData: any;
+  oldCurrentUser: any;
   UserForm: FormGroup;
   dpsUser: DpsUser;
   user: User;
@@ -30,11 +31,27 @@ export class CreateuserComponent implements OnInit {
   mobileNumber: PhoneNumber;
   language: Language;
 
-  constructor(private formBuilder: FormBuilder, private userService: UsersService) {
+  constructor(
+    private formBuilder: FormBuilder, private userService: UsersService,
+    public dialogRef: MatDialogRef<CreateuserComponent>, @Inject(MAT_DIALOG_DATA) public currentUser: DpsUser) {
   }
 
+  ngDoCheck() {
+
+    console.log('CTFormData');
+    console.log(this.currentUser);
+
+    if (this.oldCurrentUser !== this.currentUser) {
+      this.oldCurrentUser = this.currentUser;
+      this.loadUserToEdit();
+
+    }
+
+  }
+
+
   ngOnInit() {
-    console.log('Current username : ' + this.username);
+    console.log('Current User :: ', this.currentUser);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.UserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
@@ -46,27 +63,18 @@ export class CreateuserComponent implements OnInit {
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
 
     });
-    this.loadUserToEdit(this.VatNumber);
+    this.loadUserToEdit();
     this.createObjects();  // check validations
-
-
   }
 
-  loadUserToEdit(VatNumber: string) {
-    this.userService.getUsersByVatNumber(VatNumber).subscribe(response => {
-      response.forEach((element) => {
-        let object = element.user;
-        if (object.userName === this.username) {
-          this.UserForm.controls['firstname'].setValue(object.firstName);
-          this.UserForm.controls['lastname'].setValue(object.lastName);
-          this.UserForm.controls['usertype'].setValue(element.userRole);
-          this.UserForm.controls['usertype'].setValue(object.userName);
-          this.UserForm.controls['mobile'].setValue(object.mobile.number);
-          this.UserForm.controls['telephone'].setValue(object.phone.number);
-          this.UserForm.controls['emailaddress'].setValue(object.email.emailAddress);
-        }
-      })
-    });
+  loadUserToEdit() {
+    this.UserForm.controls.firstname.setValue(this.currentUser.user.firstName);
+    this.UserForm.controls.lastname.setValue(this.currentUser.user.lastName);
+    this.UserForm.controls.emailaddress.setValue(this.currentUser.user.email.emailAddress);
+    this.UserForm.controls.usertype.setValue(this.currentUser.userRole);
+    this.UserForm.controls.mobile.setValue(this.currentUser.user.mobile.number);
+    this.UserForm.controls.telephone.setValue(this.currentUser.user.phone.number);
+    this.languageString = 'English';
   }
 
   receiveMessageLanguage($event: { name: any; shortName: any; }) {
@@ -147,7 +155,7 @@ export class CreateuserComponent implements OnInit {
       // check if username has value
       // if username has value ==> Update User
       // if username is null ==> Create User
-      if (this.username !== undefined && this.username !== null ) {
+      if (this.username !== undefined && this.username !== null) {
         // Update User
         this.userService.updateUser(this.UserData).subscribe(res => {
           console.log('response :: ');

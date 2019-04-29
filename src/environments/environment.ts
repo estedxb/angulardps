@@ -29,7 +29,7 @@ export const environment = {
   getPositionsByVatNumber: 'Position/ForCustomer',
   getPersonsByVatNumber: '/api/Person/ForCustomer',
   getPersonBySSIDNVatNumber: '/api/Person/',
-  getPersonById:'/api/Person/',
+  getPersonById: '/api/Person/',
   getUser: 'User',
   getLocation: 'Location',
   getWorkSchedule: 'WorkSchedule',

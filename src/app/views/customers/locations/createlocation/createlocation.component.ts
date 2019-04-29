@@ -86,7 +86,7 @@ export class CreatelocationComponent implements OnInit {
 
   setJSONObject() {
     this.LocationData = {
-      id: this.LocationId,
+      id: this.LocationId === undefined ? 0 : this.LocationId,
       customerVatNumber: this.VatNumber,
       name: this.location.name,
       address: this.location.address,

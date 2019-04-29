@@ -1,23 +1,5 @@
-
-
 .general {
-    font-size: 15px; 
-    padding: 10px; 
-    margin: auto;
-    font-family: Arial;
-    font-weight: bold;
-    border-radius: 10px;
-}
-.label {
-    font-size: 30px;
-}
-
-.vca {
-    font-family: Arial;
-    font-weight: bold;
-}
-
-.blk {
-    font-family: Arial;
-    font-weight: bold;
+  padding: 0px 20px 20px 20px;
+  border-radius: 10px;
+  padding-bottom: 0px;
 }

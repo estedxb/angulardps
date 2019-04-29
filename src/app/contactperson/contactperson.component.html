@@ -3,36 +3,41 @@
         <label class="titleLabel">Contactpersoon</label>
       </div> -->
 
-      <form [formGroup]="CTForm" novalidate id="CTForm">
+    <form [formGroup]="CTForm" novalidate id="CTForm">
         <!-- <pre>{{ CTForm.value | json}}</pre> -->
 
         <pre>{{ CTForm.valid }}</pre>
-          <div class="row">
-              <div class="col-sm-4 inputWithImg" >
+        <div class="row">
+            <div class="col-sm-5 inputWithImg">
                 <label class="titleBold"> Voorname: </label>
-                <input (change)="updateData()" formControlName="firstname" class="form-control" name="firstname" type="text" required/>  
-                <div class="form-control-feedback" *ngIf="CTForm.controls.firstname.invalid && (CTForm.controls.firstname.untouched || CTForm.controls.firstname.dirty || CTForm.controls.firstname.touched) else newvalid"> 
-                    <img src="../../assets/img/InvalidIcon.png" alt="" >
+                <input (change)="updateData()" formControlName="firstname" class="form-control" name="firstname"
+                    type="text" required />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.firstname.invalid && (CTForm.controls.firstname.untouched || CTForm.controls.firstname.dirty || CTForm.controls.firstname.touched) else newvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #newvalid>
-                    <img src="../../assets/img/ValidIcon.png" alt="" >
+                    <img src="../../assets/img/ValidIcon.png" alt="">
                 </ng-template>
-              </div>
-                  
-              <div class="col-sm-3 inputWithImg">
+            </div>
+
+            <div class="col-sm-4 inputWithImg">
                 <label class="titleBold"> naam: </label>
-                <input (change)="updateData()" formControlName="lastname" class="form-control" name="lastname" type="text" required/>
-                <div class="form-control-feedback" *ngIf="CTForm.controls.lastname.invalid && (CTForm.controls.lastname.untouched || CTForm.controls.lastname.dirty || CTForm.controls.lastname.touched) else anewvalid"> 
-                    <img src="../../assets/img/InvalidIcon.png" alt="" >
+                <input (change)="updateData()" formControlName="lastname" class="form-control" name="lastname"
+                    type="text" required />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.lastname.invalid && (CTForm.controls.lastname.untouched || CTForm.controls.lastname.dirty || CTForm.controls.lastname.touched) else anewvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #anewvalid>
-                    <img src="../../assets/img/ValidIcon.png" alt="" >
+                    <img src="../../assets/img/ValidIcon.png" alt="">
                 </ng-template>
-              </div>
+            </div>
 
-              <div class="col-sm-5 inputWithImg">
+            <div class="col-sm-2 inputWithImg">
                 <label class="titleBold"> Taal: </label>
-                <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString"></app-languages>
+                <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString">
+                </app-languages>
                 <!-- <input formControlName="language" class="form-control" name="language" type="text" required/> -->
                 <!-- <div class="form-control-feedback" *ngIf="CTForm.controls.language.invalid && (CTForm.controls.language.dirty || CTForm.controls.language.touched) else bnewvalid"> 
                     <img src="../../assets/img/InvalidIcon.png" alt="" >
@@ -40,66 +45,73 @@
                 <!-- <ng-template #bnewvalid>
                     <img src="../../assets/img/ValidIcon.png" alt="">
                 </ng-template> -->
-              </div>
+            </div>
 
-          </div>
+        </div>
 
 
 
-          <div class="row">
-                <div class="col-sm-5 inputWithImg"> 
-                          <label class="titlebold"> Functie: </label>
-                          <input (change)="updateData()" formControlName="position" class="form-control" name="position" />    
-                          <div class="form-control-feedback" *ngIf="CTForm.controls.position.invalid && (CTForm.controls.position.invalid || CTForm.controls.position.dirty || CTForm.controls.position.touched) else cnewvalid"> 
-                              <img src="../../assets/img/InvalidIcon.png" alt="" >
-                          </div>
-                          <ng-template #cnewvalid>
-                              <img src="../../assets/img/ValidIcon.png" alt="" >
-                          </ng-template>
+        <div class="row">
+            <div class="col-sm-6 inputWithImg">
+                <label class="titleBold"> Functie: </label>
+                <input (change)="updateData()" formControlName="position" class="form-control" name="position"
+                    type="text" required />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.position.invalid && (CTForm.controls.position.invalid || CTForm.controls.position.dirty || CTForm.controls.position.touched) else cnewvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
+                <ng-template #cnewvalid>
+                    <img src="../../assets/img/ValidIcon.png" alt="">
+                </ng-template>
+            </div>
 
-                <div class="col-sm-7 inputWithImg"> 
-                            <label class="titlebold"> E-mail adres: </label>
-                            <input (change)="updateData()" formControlName="emailaddress" class="form-control" name="emailaddress" />
-                            <div class="form-control-feedback" *ngIf="CTForm.controls.emailaddress.invalid && (CTForm.controls.emailaddress.untouched || CTForm.controls.emailaddress.dirty || CTForm.controls.emailaddress.dirty || CTForm.controls.emailaddress.touched) else dnewvalid"> 
-                                <img src="../../assets/img/InvalidIcon.png" alt="">
-                            </div>
-                            <ng-template #dnewvalid>
-                                <img src="../../assets/img/ValidIcon.png" alt="" >
-                            </ng-template>
+            <div class="col-sm-6 inputWithImg">
+                <label class="titleBold"> E-mail adres: </label>
+                <input (change)="updateData()" formControlName="emailaddress" class="form-control" name="emailaddress"
+                    type="email" />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.emailaddress.invalid && (CTForm.controls.emailaddress.untouched || CTForm.controls.emailaddress.dirty || CTForm.controls.emailaddress.dirty || CTForm.controls.emailaddress.touched) else dnewvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
-          </div>
+                <ng-template #dnewvalid>
+                    <img src="../../assets/img/ValidIcon.png" alt="">
+                </ng-template>
+            </div>
+        </div>
 
-          <div class="row">
-                <div class="col-sm-4 inputWithImg">
-                          <label class="titlebold"> Mobiel Nummer: </label>
-                          <input (change)="updateData()" formControlName="mobile" class="form-control" name="mobile" />
-                          <div class="form-control-feedback" *ngIf="CTForm.controls.mobile.invalid && (CTForm.controls.mobile.untouched || CTForm.controls.mobile.dirty || CTForm.controls.mobile.dirty || CTForm.controls.mobile.touched) else enewvalid"> 
-                              <img src="../../assets/img/InvalidIcon.png" alt="" >
-                          </div>
-                          <ng-template #enewvalid>
-                              <img src="../../assets/img/ValidIcon.png" alt="">
-                          </ng-template>
-                   
+        <div class="row">
+            <div class="col-sm-4 inputWithImg">
+                <label class="titleBold"> Mobiel Nummer: </label>
+                <input (change)="updateData()" formControlName="mobile" class="form-control" name="mobile"
+                    type="text" />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.mobile.invalid && (CTForm.controls.mobile.untouched || CTForm.controls.mobile.dirty || CTForm.controls.mobile.dirty || CTForm.controls.mobile.touched) else enewvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
+                <ng-template #enewvalid>
+                    <img src="../../assets/img/ValidIcon.png" alt="">
+                </ng-template>
 
-                <div class="col-sm-4 inputWithImg"> 
-                              <label class="titlebold"> Telefoon Nummer: </label>
-                              <input (change)="updateData()" formControlName="telephone" class="form-control" name="telephone"  />
-                            <div class="form-control-feedback" *ngIf="CTForm.controls.telephone.invalid && (CTForm.controls.telephone.invalid || CTForm.controls.telephone.dirty || CTForm.controls.telephone.dirty || CTForm.controls.telephone.touched) else fnewvalid"> 
-                                <img src="../../assets/img/InvalidIcon.png" alt="">
-                            </div>
-                            <ng-template #fnewvalid>
-                                <img src="../../assets/img/ValidIcon.png" alt="">
-                            </ng-template>
+            </div>
+
+            <div class="col-sm-4 inputWithImg">
+                <label class="titleBold"> Telefoon Nummer: </label>
+                <input (change)="updateData()" formControlName="telephone" class="form-control" name="telephone"
+                    type="text" />
+                <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.telephone.invalid && (CTForm.controls.telephone.invalid || CTForm.controls.telephone.dirty || CTForm.controls.telephone.dirty || CTForm.controls.telephone.touched) else fnewvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
+                <ng-template #fnewvalid>
+                    <img src="../../assets/img/ValidIcon.png" alt="">
+                </ng-template>
+            </div>
 
-                <div class="col-sm-4" style="padding-top:10px;">
-                        <label style="font-weight:bold;"> Als gebruiker activeren </label><br/>
-                    <ui-switch (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
-                </div>
-          </div>
+            <div class="col-sm-4 center-block middle-block">
+                <label class="titleBold"> Als gebruiker activeren </label><br />
+                <ui-switch (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
+            </div>
+        </div>
 
-  </form>
+    </form>
 </div>
-
