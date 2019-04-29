@@ -77,7 +77,7 @@ export class CustomersList {
     item2: string;
     item3?: string;
 }
-export interface WorkCodes {
+export class WorkCodes {
     CodeNumber: number;
     Description: string;
     CodeType: string;
@@ -113,7 +113,7 @@ export class User {
     email: EmailAddress;
     mobile: PhoneNumber;
     phone: PhoneNumber;
-    language:Language;
+    language: Language;
 }
 
 export class DpsUser {
@@ -146,13 +146,9 @@ export class _Position {
     taskDescription: string;
     isStudentAllowed: boolean;
     costCenter: string;
-    workstationDocument: WorkstationDocument;
+    workstationDocument: Documents;
 }
 
-export class WorkstationDocument {
-    location: string;
-    name: string;
-}
 export class DpsWorkSchedule {
     customerVatNumber: string;
     name: string;
@@ -183,6 +179,79 @@ export class LoginToken {
     accessToken: string;
     dpsUser: DpsUser;
 }
+
+export class DpsPerson {
+    customerVatNumber: string;
+    person: Person;
+    customerPostionId: string;
+    statute: Statute;
+    renumeration: Renumeration;
+    addittionalInformation: string;
+    medicalAttestation: MedicalAttestation;
+    vcaAttestation: Documents;
+    constructionProfile: ConstructionProfile;
+    constructionCards: Documents[];
+    studentAtWorkProfile: StudentAtWorkProfile;
+    driverProfiles: DriverProfilesItem[];
+    otherDocuments: Documents[];
+    isEnabled: boolean;
+    isArchived: boolean;
+}
+export class Person {
+    socialSecurityNumber: SocialSecurityNumber;
+    dateOfBirth: string;
+    placeOfBirth: string;
+    countryOfBirth: string;
+    nationality: string;
+    gender: Gender;
+    firstName: string;
+    lastName: string;
+    address: Address;
+    language: Language;
+    email: EmailAddress;
+    mobile: PhoneNumber;
+    phone: PhoneNumber;
+    bankAccount: BankAccount;
+    travelMode: string;
+    status: string;
+}
+export class SocialSecurityNumber {
+    number: string;
+}
+export class Gender {
+    genderId: number;
+    title: string;
+}
+export class BankAccount {
+    bic: string;
+    iban: string;
+}
+export class Renumeration {
+    hourlyWage: number;
+    costReimbursment: boolean;
+    netCostReimbursment: number;
+    transportationAllowance: boolean;
+}
+export class MedicalAttestation {
+    location: string;
+    name: string;
+}
+export class ConstructionProfile { constructionCards: Documents[]; }
+export class StudentAtWorkProfile {
+    attestation: Documents;
+    attestationDate: string;
+    contingent: number;
+    balance: number;
+}
+export class DriverProfilesItem { type: string; attestation: Documents; }
+export class Documents { location: string; name: string; }
+
+/*
+export class Attestation1 { location: string; name: string; }
+export class VcaAttestation1 { location: string; name: string; }
+export class ConstructionCardsItem1 { location: string; name: string; }
+export class OtherDocumentsItem1 { location: string; name: string; }
+*/
 
 
 /*
