@@ -1,5 +1,4 @@
 import { TimeSpan } from './TimeSpan';
-
 export class DPSCustomer {
     customer: Customer;
     invoiceEmail?: EmailAddress;
@@ -25,9 +24,7 @@ export class Customer {
 }
 
 export class EmailAddress { emailAddress: string; }
-
 export class CreditCheck { creditcheck: boolean; creditLimit: number; dateChecked: String; creditCheckPending: boolean; }
-
 export class PhoneNumber { number: string; }
 
 export class Address {
@@ -35,19 +32,12 @@ export class Address {
 }
 
 export class VcaCertification { cerified: boolean; }
-
 export class ParitairCommitee { number: string; name: string; BrightStaffingCommitteeId?: string; type?: string; }
-
 export class LieuDaysAllowance { enabled: boolean; payed: boolean; }
-
 export class MobilityAllowance { enabled: boolean; amountPerKm?: number; }
-
 export class ShiftAllowance { shiftName: string; timeSpan: TimeSpan; amount: number; nominal?: boolean; }
-
 export class OtherAllowance { codeId: number; amount: number; nominal?: boolean; }
-
 export class MealVoucherSettings { totalWorth?: number; employerShare?: number; minimumHours?: number; }
-
 export class StatuteSetting {
     statute: Statute; paritairCommitee?: ParitairCommitee; coefficient?: number; mealVoucherSettings?: MealVoucherSettings;
 }
@@ -72,11 +62,7 @@ export class InvoiceSettings {
     otherAllowances?: OtherAllowance[];
 }
 
-export class CustomersList {
-    item1: string;
-    item2: string;
-    item3?: string;
-}
+export class CustomersList { item1: string; item2: string; item3?: string; }
 export class WorkCodes {
     CodeNumber: number;
     Description: string;
@@ -86,23 +72,12 @@ export class WorkCodes {
     StatuteType?: string;
 }
 
-export class Statute {
-    name: string;
-    type?: string;
-}
+export class Statute { name: string; type?: string; }
 
-export class LegalForm {
-    nl: Forms[];
-    en: Forms[];
-    fr: Forms[];
-}
+export class LegalForm { nl: Forms[]; en: Forms[]; fr: Forms[]; }
 
 export class Forms { name: string; }
-
-export class CountriesList {
-    countryCode: string;
-    countryName: string;
-}
+export class CountriesList { countryCode: string; countryName: string; }
 
 export class Language { name: string; shortName: string; }
 
@@ -150,35 +125,13 @@ export class _Position {
 }
 
 export class DpsWorkSchedule {
-    customerVatNumber: string;
-    name: string;
-    workschedule: WorkSchedule;
-    isEnabled: boolean;
-    isArchived: boolean;
+    customerVatNumber: string; name: string; workschedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
 }
-export class WorkSchedule {
-    workday: WorkDay;
-}
-
-export class WorkDay {
-    DayofWeek: number;
-    WorkTimes?: WorkTime[];
-    BreakTimes?: WorkTime[];
-}
-
-export class WorkTime {
-    timespan: string;
-}
-
-export class Login {
-    userid: string;
-    password: string;
-}
-
-export class LoginToken {
-    accessToken: string;
-    dpsUser: DpsUser;
-}
+export class WorkSchedule { workday: WorkDay; }
+export class WorkDay { DayofWeek: number; WorkTimes?: WorkTime[]; BreakTimes?: WorkTime[]; }
+export class WorkTime { timespan: string; }
+export class Login { userid: string; password: string; }
+export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 
 export class DpsPerson {
     customerVatNumber: string;
@@ -215,27 +168,16 @@ export class Person {
     travelMode: string;
     status: string;
 }
-export class SocialSecurityNumber {
-    number: string;
-}
-export class Gender {
-    genderId: number;
-    title: string;
-}
-export class BankAccount {
-    bic: string;
-    iban: string;
-}
+export class SocialSecurityNumber { number: string; }
+export class Gender { genderId: number; title: string; }
+export class BankAccount { bic: string; iban: string; }
 export class Renumeration {
     hourlyWage: number;
     costReimbursment: boolean;
     netCostReimbursment: number;
     transportationAllowance: boolean;
 }
-export class MedicalAttestation {
-    location: string;
-    name: string;
-}
+export class MedicalAttestation { location: string; name: string; }
 export class ConstructionProfile { constructionCards: Documents[]; }
 export class StudentAtWorkProfile {
     attestation: Documents;
