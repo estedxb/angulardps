@@ -33,7 +33,7 @@ import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
     UiSwitchModule.forRoot({
       size: 'small',
       color: '#fff',
-      switchOffColor: 'red',
+      switchOffColor: '#C7C7C7',
       switchColor: 'limegreen',
       defaultBoColor: '#000',
       defaultBgColor: '#fff'

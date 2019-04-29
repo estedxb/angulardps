@@ -1,6 +1,9 @@
 <div class="updateModel">
-    <div class="mat-dialog-close">
-        <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+    <div class="row ">
+        <div class="col-sm-12 mat-dialog-close">
+            <button mat-button [mat-dialog-close]="" class=""><img
+                    src="../../../../../assets/svg/closebox.svg" /></button>
+        </div>
     </div>
     <div class="row ">
         <div class="col-sm-12 center-block head">
@@ -78,12 +81,13 @@
                 </div>
             </div>
             <div class="row customerBoxContect">
-                <div class="col col-sm-6">                 
+                <div class="col col-sm-6">
                     <div class="inputWrapper">
                         <span>Upload werkpostfiche:</span>
                         <img src="../../../../../assets/svg/Add.svg">
-                        <input class="fileInput hidden" type="file" id="file" (change)="handleFileInput($event.target.files)">
-                    </div>                    
+                        <input class="fileInput hidden" type="file" id="file"
+                            (change)="handleFileInput($event.target.files)">
+                    </div>
                     <div class="form-control-feedback"
                         *ngIf="PositionForm.controls.file.invalid && (PositionForm.controls.file.dirty || PositionForm.controls.file.touched) else enewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -93,7 +97,7 @@
                     </ng-template>
                 </div>
                 <div class="col col-sm-6">
-                    <button formControlName="download" class="whitebtn" name="download"  > <span>Download
+                    <button formControlName="download" class="whitebtn" name="download"> <span>Download
                             template</span>
                         <img src="../../../../../assets/svg/Add.svg">
                     </button>

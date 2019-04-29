@@ -13,7 +13,6 @@ import { CreatelocationComponent } from './createlocation/createlocation.compone
   styleUrls: ['./../customers.component.css']
 })
 export class LocationsComponent implements OnInit {
-  public LocationId = 1;
   public maindatas = [];
   public data;
   public errorMsg;

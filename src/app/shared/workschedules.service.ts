@@ -41,8 +41,7 @@ export class WorkschedulesService {
       'Content-Type': 'application/json'
     });
     return this.http.post<any>(this.getWorkscheduleURL, workSchedule, {
-      headers: httpHeaders,
-      observe: 'response'
+      headers: httpHeaders, observe: 'response'
     });
   }
 
@@ -53,14 +52,12 @@ export class WorkschedulesService {
     });
 
     return this.http.put<any>(this.getWorkscheduleURL, workSchedule, {
-      headers: httpHeaders,
-      observe: 'response'
+      headers: httpHeaders, observe: 'response'
     });
   }
 
   errorHandler(error: HttpErrorResponse) {
     // console.log(error.status);
-
     if (error.status === 400) {
       console.log('vat number not correct format');
     } else if (error.status === 204) {
@@ -70,7 +67,6 @@ export class WorkschedulesService {
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
-
     return Observable.throwError(error.message);
   }
 }

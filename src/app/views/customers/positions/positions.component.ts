@@ -29,7 +29,8 @@ export class PositionsComponent implements OnInit {
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       console.log('Positions Form Data : '); console.log(this.maindatas);
-    }, error => this.errorMsg = error);
+      this.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
   }
 
   ShowMessage(MSG, Action) {

@@ -41,10 +41,10 @@ export class CreatepositionComponent implements OnInit {
       response.forEach((element) => {
         let object = element.position;
         if (element.id === this.PositionId) {
-          this.PositionForm.controls['name'].setValue(object.name);
-          this.PositionForm.controls['taskDescription'].setValue(object.taskDescription);
-          this.PositionForm.controls['costCenter'].setValue(object.costCenter);          
-          //this.PositionForm.controls['isStudentAllowed'].setValue(object.isStudentAllowed);
+          this.PositionForm.controls.name.setValue(object.name);
+          this.PositionForm.controls.taskDescription.setValue(object.taskDescription);
+          this.PositionForm.controls.costCenter.setValue(object.costCenter);
+          // this.PositionForm.controls.isStudentAllowed.setValue(object.isStudentAllowed);
           this.isStudentAllowed = object.isStudentAllowed;
         }
       })

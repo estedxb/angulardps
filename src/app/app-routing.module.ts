@@ -45,6 +45,7 @@ const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
   // { path: 'customer', component: CustomersComponent },
+  { path: 'customer/addcustomer', component: AddCustomerComponent },
   { path: 'customer/add', component: AddCustomerComponent },
   { path: 'customer/update', component: UpdateCustomerComponent },
   { path: 'customer/:id', component: UpdateCustomerComponent },

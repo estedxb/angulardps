@@ -1,6 +1,8 @@
 <div class="updateModel">
-  <div class="mat-dialog-close">
-    <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+  <div class="row ">
+    <div class="col-sm-12 mat-dialog-close">
+      <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+    </div>
   </div>
   <div class="row ">
     <div class="col-sm-12 center-block head">
@@ -12,7 +14,7 @@
   <form [formGroup]="WorkScheduleForm" novalidate id="WorkScheduleForm">
     <div class="contactperson">
       <div class="row">
-        <div class="col-sm-8 inputWithImg">
+        <div class="col-sm-7 inputWithImg">
           <label class="titleBold"> Naam: </label>
           <input formControlName="name" class="form-control" name="name" type="text" required />
           <div class="form-control-feedback"
