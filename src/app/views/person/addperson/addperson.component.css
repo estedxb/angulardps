@@ -31,7 +31,7 @@
   float: left;
 }
 .scrollbar {
-  height: 900px;
+  height: 580px;
   overflow-y: scroll;
   padding-right: 20px;
   overflow-x: hidden;
@@ -88,4 +88,24 @@
   right: -8px;
   background: #c7c7c7;
   z-index: 100;
+}
+
+.DOBCont {
+  border: blue solid 0px;
+}
+
+.DOB {
+  border: red solid 0px;
+  margin: -1px 0px 0px -1px;
+}
+
+.DOB .col {
+  padding: 2px;
+  margin: 0px;
+}
+
+#maincontentarea .DOBCont .inputWithImg img,
+.DOBCont .inputWithImg img {
+  padding: 0px 0px 0px 0px;
+  margin: -21px 8px 0px 0px;
 }

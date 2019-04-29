@@ -9,6 +9,7 @@ body {
   background-attachment: fixed;
   font-family: "Arial Rounded MT Bold", Roboto, "Helvetica Neue", Verdana,
     Geneva, Tahoma, sans-serif;
+
   margin: 0;
 }
 
@@ -17,6 +18,7 @@ body {
   height: 100%;
 }
 .titleBold {
+  font-size: 14px;
   font-weight: bold;
 }
 .panelbg {
@@ -29,6 +31,10 @@ body {
 }
 .boxShadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.middle-block {
+  vertical-align: middle;
+  padding-top: 7px;
 }
 .center-block {
   text-align: center;
@@ -47,7 +53,7 @@ body {
   font-weight: bold;
 }
 .scrollbar {
-  height: 600px;
+  height: 580px;
   overflow-y: scroll;
   padding-right: 20px;
 }
@@ -69,7 +75,8 @@ body {
 
 #maincontentarea input[type="text"],
 #maincontentarea input[type="password"],
-#maincontentarea input[type="number"] {
+#maincontentarea input[type="number"],
+#maincontentarea input[type="email"] {
   width: 100%;
   font-size: 15px;
   font-weight: normal;
@@ -78,6 +85,7 @@ body {
   margin: 4px 0px;
   border: 1px solid #e37619;
 }
+
 #maincontentarea input:hover,
 #maincontentarea input:focus,
 #maincontentarea input::selection,
@@ -243,8 +251,11 @@ div#CustomerContact {
 .inputWithIcon input[type="text"],
 #maincontentarea .inputWithIcon input[type="password"],
 .inputWithIcon input[type="password"],
-#maincontentarea .inputWithIcon input,
-.inputWithIcon input[type="number"] {
+#maincontentarea .inputWithIcon input[type="number"],
+.inputWithIcon input[type="number"],
+#maincontentarea .inputWithIcon input[type="email"],
+.inputWithIcon input[type="email"],
+#maincontentarea .inputWithIcon input {
   padding-left: 20px;
 }
 #maincontentarea .inputWithIcon input[type="text"] + i,
@@ -252,7 +263,9 @@ div#CustomerContact {
 #maincontentarea .inputWithIcon input[type="password"] + i,
 .inputWithIcon input[type="password"] + i,
 #maincontentarea .inputWithIcon input[type="number"] + i,
-.inputWithIcon input[type="number"] + i {
+.inputWithIcon input[type="number"] + i,
+#maincontentarea .inputWithIcon input[type="email"] + i,
+.inputWithIcon input[type="email"] + i {
   padding-left: 20px;
   padding-right: 0px;
 }
@@ -260,11 +273,15 @@ div#CustomerContact {
 #maincontentarea .inputWithImg img,
 .inputWithImg img {
   position: absolute;
-  right: 2px;
-  padding: 7px 25px 7px 0px;
+  right: 0px;
+  padding: 8px 23px 7px 0px;
   color: #9a0c19;
-  top: 35px;
+  top: 33px;
 }
+#maincontentarea .inputWithImg .form-control-feedback img {
+  padding: 10px 20px 7px 0px;
+}
+
 #maincontentarea .inputWithImg div,
 .inputWithImg div {
   position: absolute;
@@ -274,11 +291,15 @@ div#CustomerContact {
   top: 0px;
 }
 #maincontentarea input[type="text"].form-control,
-#maincontentarea input[type="number"].form-control,
 #maincontentarea .inputWithImg input[type="text"],
 .inputWithImg input[type="text"],
-#maincontentarea .inputWithImg input,
-.inputWithImg input[type="number"] {
+#maincontentarea input[type="number"].form-control,
+#maincontentarea .inputWithImg input[type="number"],
+.inputWithImg input[type="number"],
+#maincontentarea input[type="email"].form-control,
+#maincontentarea .inputWithImg input[type="email"],
+.inputWithImg input[type="email"],
+#maincontentarea .inputWithImg input {
   padding-right: 24px;
   padding-left: 5px;
 }
@@ -318,8 +339,11 @@ div#CustomerContact {
 .dialog .inputWithIcon input[type="text"],
 #maincontentarea .dialog .inputWithIcon input[type="password"],
 .dialog .inputWithIcon input[type="password"],
-#maincontentarea .dialog .inputWithIcon input,
-.dialog .inputWithIcon input[type="number"] {
+#maincontentarea .dialog .inputWithIcon input[type="number"],
+.dialog .inputWithIcon input[type="number"],
+#maincontentarea .dialog .inputWithIcon input[type="email"],
+.dialog .inputWithIcon input[type="email"],
+#maincontentarea .dialog .inputWithIcon input {
   padding-right: 42px;
   padding-left: 5px;
 }
@@ -328,12 +352,9 @@ div#CustomerContact {
 #maincontentarea .dialog .inputWithIcon input[type="password"] + i,
 .dialog .inputWithIcon input[type="password"] + i,
 #maincontentarea .dialog .inputWithIcon input[type="number"] + i,
-.dialog .inputWithIcon input[type="number"] + i {
-  padding-right: 42px;
-  padding-left: 5px;
-}
-#maincontentarea .dialog .inputWithIcon input[type="number"] + i,
-.dialog .inputWithIcon input[type="number"] + i {
+.dialog .inputWithIcon input[type="number"] + i,
+#maincontentarea .dialog .inputWithIcon input[type="email"] + i,
+.dialog .inputWithIcon input[type="email"] + i {
   padding-right: 42px;
   padding-left: 5px;
 }
@@ -519,4 +540,8 @@ div#CustomerContact {
   opacity: 0;
   -moz-opacity: 0;
   filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+.fcontent {
+  padding: 20px 20px 0px 20px;
 }
