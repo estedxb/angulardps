@@ -1,7 +1,7 @@
 <div class="updateModel">
     <div class="row ">
         <div class="col-sm-12 mat-dialog-close">
-            <button mat-button [mat-dialog-close]="" class=""><img
+            <button mat-button [mat-dialog-close]="currentlocation" class=""><img
                     src="../../../../../assets/svg/closebox.svg" /></button>
         </div>
     </div>
@@ -12,7 +12,7 @@
             <hr>
         </div>
     </div>
-    <form [formGroup]="LocationForm" novalidate id="LocationForm">
+    <form [formGroup]="LocationForm" novalidate name="LocationForm" id="LocationForm">
         <div class="contactperson">
             <div class="row">
                 <div class="col-sm-12 inputWithImg">
@@ -89,20 +89,15 @@
 
                 <div class="col-sm-4 inputWithImg">
                     <label class="titleBold"> Land: </label>
-                    <input (blur)="updateData()" formControlName="country" class="form-control" name="country" />
-                    <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.country.invalid && (LocationForm.controls.country.dirty || LocationForm.controls.country.touched) else fnewvalid">
-                        <img src="../../assets/img/InvalidIcon.png" alt="">
-                    </div>
-                    <ng-template #fnewvalid>
-                        <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
+                    <app-countries (childEvent)="receiveMessageCountry($event)" [CountryFormData]="countryString">
+                        </app-countries>
                 </div>
             </div>
         </div>
         <div class="col col-sm-12 center-block">
-            <button class="greenbtn" id="btnSave" (click)="onSaveLocationClick()"><span>Gebruiker opslaan</span>
+            <button class="greenbtn" id="btnSave" (click)="onSaveLocationClick()" mat-button [mat-dialog-close]="currentlocation" cdkFocusInitial ><span>Gebruiker opslaan</span>
             </button>
+            {{ LocationForm.valid }}
         </div>
     </form>
 </div>

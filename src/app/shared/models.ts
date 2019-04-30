@@ -128,9 +128,10 @@ export class Location {
     id: number;
     customerVatNumber: string;
     name: string;
-    address?: Address;
+    address?: Address;    
     isEnabled: boolean;
-    isArchived: boolean;
+    isArchive: boolean;
+   
 }
 
 export class DpsPostion {

@@ -29,8 +29,18 @@ export class CountriesComponent implements OnInit {
   set value(value: any) { this._value = value; }
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
-  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
+
+  SetInitialValue() 
+  { 
+    if (this.selectedValue === undefined) 
+    { 
+        this.selectedValue = this.datas[this._selectedIndex]; 
+
+    } 
+
+}
   onChange($event) {
+
     this.selectedIndex = $event.target.value;
     console.log("countries selected=" + this.value);
     console.log(this.value);
@@ -50,10 +60,13 @@ export class CountriesComponent implements OnInit {
 
     this.countriesService.getCountriesList().subscribe(countries => {
       this.datas = countries;
+      this.childEvent.emit(this.datas[0]);
+      this.loadInitialData(this.datas);
       console.log('Countries Forms Data : '); console.log(this.datas);
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
+
   }
 
   ngDoCheck() {
