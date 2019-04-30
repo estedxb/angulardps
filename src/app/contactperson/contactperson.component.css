@@ -1,54 +1,87 @@
 .contactperson {
-    padding: 20px; padding-bottom: 30px;border-radius: 10px;
+  padding: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
 }
-
 .row {
-    margin-top:10px;
+  margin-top: 10px;
 }
-input { outline: none; border: 1px solid orange; }
-
-.inputbox{
-    width: 200px; height: 40px; padding: 7px; border-radius: 5px;
- }
-
- .titleLabel {
-    width: 175px;height: 25px;font-family: Arial;font-size: 15px;font-weight: 400;
-    margin-left: 10px;margin-top: 15px;text-align: right;vertical-align: text-bottom;
-    border-bottom: 1px solid black;
+/*
+input {
+  outline: none;
+  border: 1px solid orange;
 }
 
-.generalTitle label { font-weight:bold; }
-.titlebold { font-weight:bold; }
-.creditCheck { margin-top:10px; margin-left:10px; }
- .inputbox2 { 
-    width: 200px; height: 40px; padding: 7px; border-radius: 5px;
+.inputbox {
+  width: 200px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.titleLabel {
+  width: 175px;
+  height: 25px;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: 400;
+  margin-left: 10px;
+  margin-top: 15px;
+  text-align: right;
+  vertical-align: text-bottom;
+  border-bottom: 1px solid black;
+}
+
+.generalTitle label {
+  font-weight: bold;
+}
+.titlebold {
+  font-weight: bold;
+}
+.creditCheck {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.inputbox2 {
+  width: 200px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
 .lastname {
-    background: palevioletred;
+  background: palevioletred;
 }
 .firstname {
-    background: palevioletred;
+  background: palevioletred;
 }
 .validationbox {
-    margin-left: 60px;
-    margin-top: 30px;
-    border: 1px solid red;
+  margin-left: 60px;
+  margin-top: 30px;
+  border: 1px solid red;
 }
 .validationboxnew {
-    width: 100px;
-    height: 25px;
-    margin-top:15px;
-    margin-right: 25px;
-    padding:15px;
+  width: 100px;
+  height: 25px;
+  margin-top: 15px;
+  margin-right: 25px;
+  padding: 15px;
 }
 .emailbox {
-    width: 350px; height: 40px; padding: 7px; border-radius: 5px;
-
+  width: 350px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
 .telephonebox {
-    width: 250px; height: 40px; padding: 7px; border-radius: 5px;
-
+  width: 250px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
 .inputbox3 {
-    width: 200px; height: 40px; padding: 7px; border-radius: 5px;
+  width: 200px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
 }
+*/

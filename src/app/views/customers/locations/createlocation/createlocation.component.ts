@@ -71,9 +71,21 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   updateData()
   {
     this.createObjects();
+=======
+  setJSONObject() {
+    this.LocationData = {
+      id: this.LocationId === undefined ? 0 : this.LocationId,
+      customerVatNumber: this.VatNumber,
+      name: this.location.name,
+      address: this.location.address,
+      isEnabled: this.location.isEnabled,
+      isArchived: this.location.isArchived,
+    };
+>>>>>>> 77ae9bcb6fa765c70b88c416f9de95ae403b1dcc
   }
 
   createObjects() {  

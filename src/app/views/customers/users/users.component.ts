@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import {
+  MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef, MAT_DIALOG_DATA
+} from '@angular/material';
 import { LoginToken, DpsUser, User } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
@@ -13,7 +15,6 @@ import { CreateuserComponent } from './createuser/createuser.component';
   styleUrls: ['./../customers.component.css']
 })
 export class UsersComponent implements OnInit {
-  public UserId = 1;
   public maindatas = [];
   public data;
   public errorMsg;
@@ -25,8 +26,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
-    // for Testing Only stars
-    this.loginuserdetails.customerVatNumber = 'test1';
     // for Testing Only ends
     this.usersService.getUsersByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(users => {
       this.maindatas = users;

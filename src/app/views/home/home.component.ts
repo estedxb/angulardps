@@ -89,10 +89,7 @@ export class HomeComponent implements OnInit {
       console.log("validity data="+this.HQdata.formValid);
   
      if(this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null)
-       {
-        // if(this.CTdata !== undefined && this.CTdata !== null)
-        // {
-           
+       {           
           if(this.HQdata.formValid === true && this.CTdata.formValid === true)
           {
             this.showFormIndex = 2;
@@ -121,12 +118,9 @@ export class HomeComponent implements OnInit {
                   console.log("response body="+err.error);
                 }
               }
-              );  
-          // }
-                    
+              );                      
         }
       } 
-
       else {
         console.log("HQdata or CTdata is null or undefined !!")
       }
@@ -141,7 +135,6 @@ export class HomeComponent implements OnInit {
       console.log(this.HQdata);
       console.log("this STdata");
       console.log(this.STdata);
-      // "vcaObject": this.vcaObject, "blk": this.blkContracten
       
       if(this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== "")
       {
