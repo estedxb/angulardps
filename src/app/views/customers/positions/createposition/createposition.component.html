@@ -97,16 +97,16 @@
                     </ng-template>
                 </div>
                 <div class="col col-sm-6">
-                    <button formControlName="download" class="whitebtn" name="download"> <span>Download
+                    <button formControlName="download" class="whitebtn" name="download" (click)="downloadfile('{{currentPosition.position.workstationDocument.location}}')" [title]="currentPosition.position.workstationDocument.name"> <span>Download
                             template</span>
                         <img src="../../../../../assets/svg/Add.svg">
                     </button>
-
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col col-sm-12 center-block">
+                    {{ PositionForm.valid }}
                 <button class="greenbtn" id="btnSave" (click)="onSaveUserClick()"><span>Functie opslaan</span>
                 </button>
             </div>
