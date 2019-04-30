@@ -120,16 +120,16 @@ export class PositionsComponent implements OnInit {
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
-      (err: HttpErrorResponse) => {
+    (err: HttpErrorResponse) => {
       console.log('Error :: ', err);
-        if (err.error instanceof Error) {
-          console.log('Error occured=' + err.error.message);
-        } else {
+      if (err.error instanceof Error) {
+        console.log('Error occured=' + err.error.message);
+      } else {
         console.log('response code=' + err.status, 'response body=' + err.error);
-        }
       }
-    );
-  }
+    }
+  );
+}
 
   onClickDelete(i) {
     console.log('Delete Clicked Index:: ' + i);
