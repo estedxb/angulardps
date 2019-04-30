@@ -13,7 +13,7 @@
       "countryCode": "edw"
     },
     "isEnabled": false,
-    "isArchive": true
+    "isArchived": true
   },
   {
     "id": 2,
@@ -29,7 +29,7 @@
       "countryCode": "edw"
     },
     "isEnabled": false,
-    "isArchive": true
+    "isArchived": true
   },
   {
     "id": 3,
@@ -45,6 +45,6 @@
       "countryCode": "edw"
     },
     "isEnabled": false,
-    "isArchive": true
+    "isArchived": true
   }
 ]

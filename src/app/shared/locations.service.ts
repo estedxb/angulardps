@@ -37,7 +37,7 @@ export class LocationsService {
     return result;
   }
 
-  public createLocation(location: any): Observable<any> {
+  public createLocation(location: Location): Observable<any> {
     console.log('createLocation');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ export class LocationsService {
     });
   }
 
-  public updateLocation(location: any): Observable<any> {
+  public updateLocation(location: Location): Observable<any> {
     console.log('updateLocation');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'

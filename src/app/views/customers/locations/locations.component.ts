@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { Location, LoginToken, DpsUser } from '../../../shared/models';
+import { Location, LoginToken, DpsUser, Address } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from '../../../shared/locations.service';
 import { CreatelocationComponent } from './createlocation/createlocation.component';
@@ -14,7 +14,8 @@ import { CreatelocationComponent } from './createlocation/createlocation.compone
 })
 export class LocationsComponent implements OnInit {
   public maindatas = [];
-  public data;
+  public data: Location;
+  public address: Address;
   public errorMsg;
   public SelectedLocationIndex = 0;
   public SelectedLocationEnableStatus = true;
@@ -27,11 +28,16 @@ export class LocationsComponent implements OnInit {
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
     this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(locations => {
-      this.maindatas = locations;
+      this.maindatas =locations ; 
+      this.FilterTheArchive();
       console.log('Locations Forms Data : '); console.log(this.maindatas);
       this.ShowMessage('Locations fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
+FilterTheArchive()
+{
+  this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+}
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -59,35 +65,72 @@ export class LocationsComponent implements OnInit {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
+        if (this.SelectedLocationIndex >0){
+          //maindatas Update location
+          if(this.data.id==this.SelectedLocationIndex )
+          { 
+            this.maindatas[this.SelectedLocationIndex] = this.data;
+            //this.updateLocations();
+            this.FilterTheArchive();
+          }  
+
+        } else {
+          //maindatas Add location
+          console.log('this.data.id :: ' , this.data.id);
+          if(parseInt('0' + this.data.id)>0){
+            this.maindatas.push(this.data); 
+            console.log(' new this.maindatas :: ', this.maindatas);
+            this.FilterTheArchive();
+            //this.updateLocations();         
+          }
+        }
       });
     } catch (e) { }
   }
+ 
 
   onClickAdd() {
+    this.SelectedLocationIndex = 0;
+    
+    this.address = new Address();
+    this.address.street = '';
+    this.address.streetNumber = '';
+    this.address.bus = '';
+    this.address.city = '';
+    this.address.country = 'Belgium';
+    this.address.countryCode = 'nl';
+    this.address.postalCode = '';
+
     this.data = new Location();
+    this.data.id = 0;
+    this.data.name = '';
+    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber ;
+    this.data.address = this.address;
+    this.data.isArchived = false;
+    this.data.isEnabled = true;
     this.openDialog();
   }
 
   onClickEdit(i) {
+    this.SelectedLocationIndex = i;
     console.log('Edit Clicked Index :: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.maindatas[this.SelectedLocationIndex];
     this.openDialog();
     return true;
   }
 
   updateLocations() {
     this.locationsService.updateLocation(this.data).subscribe(res => {
-      console.log('response :: ');
-      console.log(res);
+      console.log('response :: ', res, "Data ::", this.data);
+      this.maindatas[this.SelectedLocationIndex] = this.data;
+      this.FilterTheArchive();
     },
       (err: HttpErrorResponse) => {
-        console.log('Error :: ');
-        console.log(err);
+        console.log('Error :: ', err);
         if (err.error instanceof Error) {
           console.log('Error occured=' + err.error.message);
         } else {
-          console.log('response code=' + err.status);
-          console.log('response body=' + err.error);
+          console.log('response code=' + err.status, 'response body=' + err.error);
         }
       }
     );
@@ -96,7 +139,7 @@ export class LocationsComponent implements OnInit {
   onClickDelete(i) {
     console.log('Delete Clicked Index:: ' + i);
     this.data = this.maindatas[i];
-    this.data.isArchive = true;
+    this.data.isArchived = true;
     this.updateLocations();
   }
 
