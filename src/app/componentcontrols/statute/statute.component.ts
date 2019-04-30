@@ -100,6 +100,8 @@ export class StatuteComponent implements OnInit {
       this.SForm.controls['Totalwaarde'].setValue(arrayElement.mealVoucherSettings.totalWorth);
       this.SForm.controls['Wergeversdeel'].setValue(arrayElement.mealVoucherSettings.employerShare);
       this.SForm.controls['minimumHours'].setValue(arrayElement.mealVoucherSettings.minimumHours);            
+
+      //this.JCString = this.s;
    }
 
   ngOnInit() {
@@ -276,8 +278,10 @@ export class StatuteComponent implements OnInit {
 
 
   replaceArrayCoefficient(value:number,i: number) {
+
     console.log('replacing statute array');
     console.log('item to replace=' + this.coefficientArray[i]);
+
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
           this.statuteSettings[i].coefficient = value;
           console.log("value received="+value);
@@ -285,21 +289,15 @@ export class StatuteComponent implements OnInit {
       this.createArrayData(this.statutes);
     }
     this.emitData();
-    console.log(this.statuteSettings)
+    console.log(this.statuteSettings);
   }
 
   replaceArray(i: number) {
-    // this.createArrayData(this.statutes);
-
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      //for (let k = 0; k < this.statuteSettings.length; k++) {
-        //if (i === k) {
           this.statuteSettings[i].paritairCommitee.BrightStaffingCommitteeId = this.statuteSelectedString.BrightStaffingCommitteeId;
           this.statuteSettings[i].paritairCommitee.name = this.statuteSelectedString.name;
           this.statuteSettings[i].paritairCommitee.type = this.statuteSelectedString.type;
           this.statuteSettings[i].paritairCommitee.number = this.statuteSelectedString.number;
-        //}
-      //}
     }
     this.emitData();
     console.log(this.statuteSettings);

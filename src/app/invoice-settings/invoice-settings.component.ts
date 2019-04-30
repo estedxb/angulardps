@@ -169,18 +169,25 @@ export class InvoiceSettingsComponent implements OnInit {
       {
         if(this.FPFormData.data.invoiceSettings !== null)
         {
-          this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
-          this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
-          this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
-          this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled;
-          this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
+          if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null
+             && this.FPFormData.data.invoiceSettings.sicknessInvoiced !== null
+             && this.FPFormData.data.invoiceSettings.holidayInvoiced !== null
+             && this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled !== null
+             && this.FPFormData.data.invoiceSettings.shiftAllowance !== null
+            )
+          {
+            this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+            this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
+            this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
+            this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled;
+            this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;  
+          }
 
           this.changeObject();
         }     
       }
     }
   }
-
 
 
   ngOnInit() {
@@ -198,7 +205,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceObject = new ShiftAllowance();
     this.otherAllowanceObject = new OtherAllowance();
 
-    this.shiftAllowanceObject.timeSpan = new TimeSpan();
+    this.shiftAllowanceObject.timeSpan = "";
 
     this.shiftAllowances = [];
     this.otherAllowances = [];
@@ -342,7 +349,7 @@ export class InvoiceSettingsComponent implements OnInit {
     for (let i = 0; i < this.shiftAllowances.length; i++) {
       this.shiftAllowances[i].shiftName = '';
       this.shiftAllowances[i].amount = 0;
-      this.shiftAllowances[i].timeSpan = new TimeSpan();
+      this.shiftAllowances[i].timeSpan = "02:02:02";
       this.shiftAllowances[i].nominal = true;
     }
 
@@ -354,7 +361,7 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   setPgBox2(value, j: number) {
-    this.shiftAllowances[j].amount = value;
+    this.shiftAllowances[j].amount = parseInt(value,10);
     this.changeObject();
   }
 
@@ -363,8 +370,8 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
   }
 
-  setPgABox2(value:number, l: number) {
-    this.otherAllowances[l].amount = value;
+  setPgABox2(value, l: number) {
+    this.otherAllowances[l].amount = parseInt(value,10);
     this.changeObject();
   }
 
@@ -529,11 +536,9 @@ export class InvoiceSettingsComponent implements OnInit {
 
   addRows() {
 
-    let timeSpanObject:TimeSpan = new TimeSpan();
-
     this.Ploegpremiere.push(this.createServants());
     this.shiftAllowanceObject = new ShiftAllowance();
-    this.shiftAllowanceObject.timeSpan = new TimeSpan();
+    this.shiftAllowanceObject.timeSpan = "02:02:02";
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.shiftAllowanceCounter++;
   }

@@ -10,7 +10,7 @@ import { LanguagesService } from '../../shared/languages.service';
 })
 export class LanguagesComponent implements OnInit {
 
- @Input() public LanguageFormData;
+ @Input() public LanguageFormData:string;
  @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_languages' ;
@@ -18,7 +18,7 @@ export class LanguagesComponent implements OnInit {
   public errorMsg;
   public maindatas: any = [];
   private datas: any = [];
-  public oldLanguageFormData;
+  public oldLanguageFormData:string;
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
@@ -46,48 +46,55 @@ export class LanguagesComponent implements OnInit {
 
   ngDoCheck() {
 
-    if(this.LanguageFormData != this.oldLanguageFormData)
+    console.log("inside ngDoCheck="+this.LanguageFormData);
+
+    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
     {
-        console.log("ngDoCheck legalForm data="+this.LanguageFormData);
+      console.log("languageFormData="+this.LanguageFormData);
+      if(this.LanguageFormData != this.oldLanguageFormData)
+      {
         this.oldLanguageFormData = this.LanguageFormData;
-        this.loadInitialData(this.datas);
+        this.loadInitialData(this.datas);  
+      }  
     }
     
   }
 
 
   ngOnInit() {
+    console.log("inside ngOnInit="+this.LanguageFormData);
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
+      this.loadInitialData(this.datas);
       console.log('Languages Data : '); console.log(this.datas);
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
   ngAfterViewInit() {
+    console.log("inside ngDoAfterViewInit="+this.LanguageFormData);
 
-    if(this.LanguageFormData != this.oldLanguageFormData)
+    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
     {
-        console.log("ngDoCheck countryForm data="+this.LanguageFormData);
+      if(this.LanguageFormData != this.oldLanguageFormData)
+      {
         this.oldLanguageFormData = this.LanguageFormData;
         this.loadInitialData(this.datas);
+      }  
     }
   }
 
-  loadInitialData(datas:any) {
+  loadInitialData(datas) {
 
-    console.log("languageString="+this.LanguageFormData);
+    console.log("language String="+this.LanguageFormData);
 
     if(datas.length !== 0)
     {
-      console.log("datas length="+datas.length);
-
-      for(var i=0;i<this.datas.length;i++)
+      for(var i=0;i<datas.length;i++)
       {
-        if(this.datas[i].name === this.LanguageFormData)
+        if(datas[i].name === this.LanguageFormData)
             this._selectedIndex = i;
       }
-
       console.log("selected index="+this._selectedIndex);
     }
     else

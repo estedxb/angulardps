@@ -360,10 +360,17 @@ export class HeadquartersComponent implements OnInit {
           this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
           this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);
 
-          this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
-          this.HQForm.controls['generalEmail'].setValue(verifiedCustomerData.customer.email.emailAddress);
-          this.HQForm.controls['contractsEmail'].setValue(verifiedCustomerData.contractsEmail.emailAddress);
-          this.HQForm.controls['invoiceEmail'].setValue(verifiedCustomerData.invoiceEmail.emailAddress);
+          if(verifiedCustomerData.customer.phoneNumber.number !== null)
+            this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
+
+          if(verifiedCustomerData.customer.email !== null)
+            this.HQForm.controls['generalEmail'].setValue(verifiedCustomerData.customer.email.emailAddress);
+
+          if(verifiedCustomerData.contractsEmail !== null)
+            this.HQForm.controls['contractsEmail'].setValue(verifiedCustomerData.contractsEmail.emailAddress);
+
+          if(verifiedCustomerData.invoiceEmail !== null)
+            this.HQForm.controls['invoiceEmail'].setValue(verifiedCustomerData.invoiceEmail.emailAddress);  
 
         }
       }
@@ -514,7 +521,7 @@ export class HeadquartersComponent implements OnInit {
 
       this.shiftAllowanceObject.amount = 9.3;
       this.shiftAllowanceObject.nominal = false;
-      this.shiftAllowanceObject.timeSpan = new TimeSpan();
+      this.shiftAllowanceObject.timeSpan = "";
       this.shiftAllowanceObject.shiftName = "";
 
       this.otherAllowanceObject.amount = 9.4;

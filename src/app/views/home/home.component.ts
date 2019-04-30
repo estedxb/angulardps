@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
             delete this.CTdata.formValid;
 
             this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-            this.HQdata.contact = this.CTdata.contact
+            this.HQdata.contact = this.CTdata.contact;
 
               console.log("updated HQData="+this.HQdata);
               console.log(this.HQdata.contact);    
@@ -226,7 +226,7 @@ export class HomeComponent implements OnInit {
               this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;    
             }
           else {
-            this.HQdata.customer.vatNumber = "234343434";
+            // this.HQdata.customer.vatNumber = "234343434";
             this.HQdata.invoiceSettings = new InvoiceSettings();
             this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
             this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
@@ -244,11 +244,16 @@ export class HomeComponent implements OnInit {
 
       this.updateData();
     }
+    else if( this.showFormIndex === 3)
+    {
+      
+    }
   }  
 
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res =>{
       console.log("response="+res);
+      this.showFormIndex = 3;
     },
      (err:HttpErrorResponse) => {
        if(err.error instanceof Error)
