@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   public email: EmailAddress;
   public mobileNumber: PhoneNumber;
   public phoneNumber: PhoneNumber;
+  public language: Language;
   public errorMsg;
   public SelectedIndex = 0;
   public SelectedEnableStatus = true;
@@ -30,12 +31,16 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
-    // for Testing Only ends
     this.usersService.getUsersByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(users => {
       this.maindatas = users;
+      this.FilterTheArchive();
       console.log('Users Form Data : ', this.maindatas);
       this.ShowMessage('Users fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
+  }
+
+  FilterTheArchive() {
+    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
   ShowMessage(MSG, Action) {
@@ -49,6 +54,11 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  receiveChildMessage($event) {
+    console.log('receiveChildmessage :: ', $event);
+    // this.ShowMessage($event.MSG, $event.Action);
+  }
+
   openDialog(): void {
     try {
       const dialogConfig = new MatDialogConfig();
@@ -56,56 +66,77 @@ export class UsersComponent implements OnInit {
       dialogConfig.autoFocus = true;
       dialogConfig.width = '700px';
       dialogConfig.data = this.data;
-      dialogConfig.ariaLabel = 'Arial Label Users Dialog';
+      dialogConfig.ariaLabel = 'Arial Label Location Dialog';
 
       const dialogRef = this.dialog.open(CreateuserComponent, dialogConfig);
+
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
+        this.ShowMessage($event.MSG, $event.Action);
+      });
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
+        if (this.SelectedIndex > 0) {
+          // maindatas Update User
+          this.maindatas[this.SelectedIndex] = this.data;
+          this.FilterTheArchive();
+          this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is updated successfully.', '');
+        } else {
+          // maindatas Add User
+          console.log('this.data.user :: ', this.data.user);
+          try {
+            if (this.data.user !== null) {
+              if (this.data.user.firstName !== undefined || this.data.user.firstName !== '' || this.data.user.firstName !== null) {
+                this.maindatas.push(this.data);
+                console.log('New User Added Successfully:: ', this.maindatas);
+                this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is added successfully.', '');
+              } else {
+                console.log('New User Added Failed :: ', this.maindatas);
+              }
+            } else {
+              console.log('New User Added Failed :: ', this.maindatas);
+            }
+            this.FilterTheArchive();
+          } catch (e) { }
+        }
       });
     } catch (e) { }
   }
 
+
   onClickAdd() {
 
-    this.email = new EmailAddress();
-    this.email.emailAddress = '';
-
-    this.mobileNumber = new PhoneNumber();
-    this.mobileNumber.number = '';
-
-    this.phoneNumber = new PhoneNumber();
-    this.phoneNumber.number = '';
-
-    this.user = new User();
-    this.user.userName = '';
-    this.user.firstName = '';
-    this.user.lastName = '';
-    this.user.email = this.email;
-    this.mobileNumber = this.mobileNumber;
-    this.phoneNumber = this.phoneNumber;
-    this.addDefaultLaguage();
-
     this.data = new DpsUser();
+    this.user = new User();
+    this.email = new EmailAddress();
+    this.mobileNumber = new PhoneNumber();
+    this.phoneNumber = new PhoneNumber();
+    this.language = new Language();
+
     this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.data.isEnabled = true;
     this.data.isArchived = false;
     this.data.userRole = '';
-    this.data.user = this.user;
-    this.openDialog();
-  }
 
-  addDefaultLaguage() {
-    if (this.data.user.language === null) {
-      this.data.user.language = new Language();
-    }
-    if (this.data.user.language.name === undefined || this.data.user.language.name === null
-      || this.data.user.language.name === '') {
-      this.data.user.language.name = 'Dutch';
-      this.data.user.language.shortName = 'nl';
-    }
+    this.email.emailAddress = '';
+    this.mobileNumber.number = '';
+    this.phoneNumber.number = '';
+
+    this.language.name = 'Dutch';
+    this.language.shortName = 'nl';
+
+    this.user.userName = '';
+    this.user.firstName = '';
+    this.user.lastName = '';
+    this.user.email = this.email;
+    this.user.mobile = this.mobileNumber;
+    this.user.phone = this.phoneNumber;
+    this.user.language = this.language;
+    this.data.user = this.user;
+
+    this.openDialog();
   }
 
   onClickEdit(i) {

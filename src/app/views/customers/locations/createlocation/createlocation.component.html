@@ -90,14 +90,13 @@
                 <div class="col-sm-4 inputWithImg">
                     <label class="titleBold"> Land: </label>
                     <app-countries (childEvent)="receiveMessageCountry($event)" [CountryFormData]="countryString">
-                        </app-countries>
+                    </app-countries>
                 </div>
             </div>
         </div>
         <div class="col col-sm-12 center-block">
             <button class="greenbtn" id="btnSave" (click)="onSaveLocationClick()"><span>Gebruiker opslaan</span>
             </button>
-            {{ LocationForm.valid }}
         </div>
     </form>
 </div>

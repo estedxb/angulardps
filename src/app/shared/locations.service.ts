@@ -38,31 +38,20 @@ export class LocationsService {
   }
 
   public createLocation(location: Location): Observable<any> {
-    console.log('createLocation');
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<any>(this.getLocationURL, location, {
-      headers: httpHeaders,
-      observe: 'response'
-    });
+    // console.log('Create Location Url', this.getLocationURL);
+    // console.log('createLocation', location);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.getLocationURL, location, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateLocation(location: Location): Observable<any> {
-    console.log('updateLocation');
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.put<any>(this.getLocationURL, location, {
-      headers: httpHeaders,
-      observe: 'response'
-    });
+    // console.log('Update Location Url', this.getLocationURL);
+    // console.log('updateLocation', location);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.getLocationURL, location, { headers: httpHeaders, observe: 'response' });
   }
 
   errorHandler(error: HttpErrorResponse) {
-    // console.log(error.status);
-
     if (error.status === 400) {
       console.log('vat number not correct format');
     } else if (error.status === 204) {
@@ -72,7 +61,6 @@ export class LocationsService {
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
-
     return Observable.throwError(error.message);
   }
 }

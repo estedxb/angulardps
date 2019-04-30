@@ -576,3 +576,10 @@ div#CustomerContact {
 .fcontent {
   padding: 20px 20px 0px 20px;
 }
+
+.middlecenter {
+  display: block;
+  margin: auto;
+  padding-top: 10%;
+  text-align: center;
+}

@@ -17,8 +17,8 @@ export class LocationsComponent implements OnInit {
   public data: Location;
   public address: Address;
   public errorMsg;
-  public SelectedLocationIndex = 0;
-  public SelectedLocationEnableStatus = true;
+  public SelectedIndex = 0;
+  public SelectedEnableStatus = true;
   public durationInSeconds = 5;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
@@ -28,18 +28,17 @@ export class LocationsComponent implements OnInit {
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
     this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(locations => {
-      this.maindatas =locations ; 
+      this.maindatas = locations;
       this.FilterTheArchive();
       console.log('Locations Forms Data : '); console.log(this.maindatas);
-      this.ShowMessage('Locations fetched successfully.', '');
+      this.ShowMessage('Locations is listed successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
-FilterTheArchive()
-{
-  this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-}
+  FilterTheArchive() {
+    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+  }
 
-  ShowMessage(MSG, Action) {
+  ShowMessage(MSG, Action = '') {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
@@ -65,33 +64,29 @@ FilterTheArchive()
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedLocationIndex >0){
-          //maindatas Update location
-          if(this.data.id==this.SelectedLocationIndex )
-          { 
-            this.maindatas[this.SelectedLocationIndex] = this.data;
-            //this.updateLocations();
-            this.FilterTheArchive();
-          }  
-
+        if (this.SelectedIndex > 0) {
+          // maindatas Update location
+          this.maindatas[this.SelectedIndex] = this.data;
+          this.FilterTheArchive();
+          this.ShowMessage('Locations "' + this.data.name + '" is updated successfully.', '');
         } else {
-          //maindatas Add location
-          console.log('this.data.id :: ' , this.data.id);
-          if(parseInt('0' + this.data.id)>0){
-            this.maindatas.push(this.data); 
+          // maindatas Add location
+          console.log('this.data.id :: ', this.data.id);
+          if (parseInt('0' + this.data.id, 0) > 0) {
+            this.maindatas.push(this.data);
             console.log(' new this.maindatas :: ', this.maindatas);
             this.FilterTheArchive();
-            //this.updateLocations();         
+            this.ShowMessage('Locations "' + this.data.name + '" is added successfully.', '');
           }
         }
       });
     } catch (e) { }
   }
- 
+
 
   onClickAdd() {
-    this.SelectedLocationIndex = 0;
-    
+    this.SelectedIndex = 0;
+
     this.address = new Address();
     this.address.street = '';
     this.address.streetNumber = '';
@@ -104,7 +99,7 @@ FilterTheArchive()
     this.data = new Location();
     this.data.id = 0;
     this.data.name = '';
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber ;
+    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.data.address = this.address;
     this.data.isArchived = false;
     this.data.isEnabled = true;
@@ -112,17 +107,17 @@ FilterTheArchive()
   }
 
   onClickEdit(i) {
-    this.SelectedLocationIndex = i;
+    this.SelectedIndex = i;
     console.log('Edit Clicked Index :: ' + i);
-    this.data = this.maindatas[this.SelectedLocationIndex];
+    this.data = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
 
   updateLocations() {
     this.locationsService.updateLocation(this.data).subscribe(res => {
-      console.log('response :: ', res, "Data ::", this.data);
-      this.maindatas[this.SelectedLocationIndex] = this.data;
+      console.log('response :: ', res, 'Data ::', this.data);
+      this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
       (err: HttpErrorResponse) => {
@@ -141,13 +136,22 @@ FilterTheArchive()
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updateLocations();
+
+    this.ShowMessage('Locations "' + this.data.name + '" is deleted successfully.', '');
   }
 
   onStatusChange(event, i) {
-    this.SelectedLocationIndex = i;
-    console.log('Location index : ' + this.SelectedLocationIndex + ', Enabled : ' + event);
+    this.SelectedIndex = i;
+    console.log('Location index : ' + this.SelectedIndex + ', Enabled : ' + event);
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updateLocations();
+    let EnabledStatus = '';
+    if (event) {
+      EnabledStatus = 'enabled';
+    } else {
+      EnabledStatus = 'disabled';
+    }
+    this.ShowMessage('Locations "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
   }
 }
