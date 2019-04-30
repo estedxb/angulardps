@@ -59,6 +59,7 @@ export class LanguagesComponent implements OnInit {
   ngOnInit() {
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
+      this.loadInitialData(this.datas);
       console.log('Languages Data : ', this.datas);
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }

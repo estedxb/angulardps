@@ -1,5 +1,5 @@
 [
-    { "shortName": "NL", "name": "Dutch"},
-    { "shortName": "EN", "name": "English"},
-    { "shortName": "FR", "name": "French"}
+  { "shortName": "NL", "name": "Dutch" },
+  { "shortName": "FR", "name": "French" },
+  { "shortName": "EN", "name": "English" }
 ]
