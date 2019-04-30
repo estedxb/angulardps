@@ -71,34 +71,20 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
   updateData()
   {
     this.createObjects();
-=======
-  setJSONObject() {
-    this.LocationData = {
-      id: this.LocationId === undefined ? 0 : this.LocationId,
-      customerVatNumber: this.VatNumber,
-      name: this.location.name,
-      address: this.location.address,
-      isEnabled: this.location.isEnabled,
-      isArchived: this.location.isArchived,
-    };
->>>>>>> 77ae9bcb6fa765c70b88c416f9de95ae403b1dcc
   }
 
   createObjects() {  
-    this.currentlocation.name = this.LocationForm.get('name').value;    
-    this.currentlocation.isEnabled = true;
-    this.currentlocation.isArchive = false;
+    this.currentlocation.name = this.LocationForm.get('name').value;
     this.currentlocation.address.street = this.LocationForm.get('street').value;
     this.currentlocation.address.streetNumber = this.LocationForm.get('number').value;
     this.currentlocation.address.bus = this.LocationForm.get('bus').value;
     this.currentlocation.address.city = this.LocationForm.get('place').value;
     this.currentlocation.address.postalCode = this.LocationForm.get('postcode').value;
-    this.currentlocation.address.country =  this.countryString;
-    this.currentlocation.address.countryCode =  this.countryCode;
+    this.currentlocation.address.country =  this.countryStringR;
+    this.currentlocation.address.countryCode =  this.countryCodeR;
     this.childEvent.emit(this.currentlocation);
   }
 
@@ -118,7 +104,7 @@ export class CreatelocationComponent implements OnInit {
           // Update Location
           this.locationsService.updateLocation(this.currentlocation).subscribe(res => {
             console.log('Update Location Response :: ', res);            
-            this.dialogRef.close();
+            this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
               console.log('Error :: ');
@@ -135,10 +121,9 @@ export class CreatelocationComponent implements OnInit {
         } else {
           console.log('Create Location');          
           this.locationsService.createLocation(this.currentlocation).subscribe(res => {
-            console.log('Create Location Response :: ' , res);
-            this.currentlocation.id = res;
-            
-            this.dialogRef.close();
+            console.log('  Location Response :: ' , res.body);
+            this.currentlocation.id = res.body;            
+            this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {

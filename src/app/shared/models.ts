@@ -105,7 +105,7 @@ export class Location {
     name: string;
     address?: Address;    
     isEnabled: boolean;
-    isArchive: boolean;
+    isArchived: boolean;
    
 }
 
