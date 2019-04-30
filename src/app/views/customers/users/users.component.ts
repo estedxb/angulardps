@@ -4,7 +4,7 @@ import { AlertsService } from 'angular-alert-module';
 import {
   MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef, MAT_DIALOG_DATA
 } from '@angular/material';
-import { LoginToken, DpsUser, User } from '../../../shared/models';
+import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
 import { CreateuserComponent } from './createuser/createuser.component';
@@ -16,7 +16,11 @@ import { CreateuserComponent } from './createuser/createuser.component';
 })
 export class UsersComponent implements OnInit {
   public maindatas = [];
-  public data;
+  public data: DpsUser;
+  public user: User;
+  public email: EmailAddress;
+  public mobileNumber: PhoneNumber;
+  public phoneNumber: PhoneNumber;
   public errorMsg;
   public SelectedIndex = 0;
   public SelectedEnableStatus = true;
@@ -29,7 +33,7 @@ export class UsersComponent implements OnInit {
     // for Testing Only ends
     this.usersService.getUsersByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(users => {
       this.maindatas = users;
-      console.log('Users Form Data : '); console.log(this.maindatas);
+      console.log('Users Form Data : ', this.maindatas);
       this.ShowMessage('Users fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -65,8 +69,43 @@ export class UsersComponent implements OnInit {
   }
 
   onClickAdd() {
-    this.data = new User();
+
+    this.email = new EmailAddress();
+    this.email.emailAddress = '';
+
+    this.mobileNumber = new PhoneNumber();
+    this.mobileNumber.number = '';
+
+    this.phoneNumber = new PhoneNumber();
+    this.phoneNumber.number = '';
+
+    this.user = new User();
+    this.user.userName = '';
+    this.user.firstName = '';
+    this.user.lastName = '';
+    this.user.email = this.email;
+    this.mobileNumber = this.mobileNumber;
+    this.phoneNumber = this.phoneNumber;
+    this.addDefaultLaguage();
+
+    this.data = new DpsUser();
+    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.data.isEnabled = true;
+    this.data.isArchived = false;
+    this.data.userRole = '';
+    this.data.user = this.user;
     this.openDialog();
+  }
+
+  addDefaultLaguage() {
+    if (this.data.user.language === null) {
+      this.data.user.language = new Language();
+    }
+    if (this.data.user.language.name === undefined || this.data.user.language.name === null
+      || this.data.user.language.name === '') {
+      this.data.user.language.name = 'Dutch';
+      this.data.user.language.shortName = 'nl';
+    }
   }
 
   onClickEdit(i) {
@@ -97,7 +136,7 @@ export class UsersComponent implements OnInit {
   onClickDelete(i) {
     console.log('Delete Clicked Index:: ' + i);
     this.data = this.maindatas[i];
-    this.data.isArchive = true;
+    this.data.isArchived = true;
     this.updateUsers();
   }
 
