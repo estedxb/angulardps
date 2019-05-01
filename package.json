@@ -47,7 +47,6 @@
     "ngx-toggle-switch": "^2.0.5",
     "ngx-ui-switch": "^8.0.1",
     "popper.js": "1.15.0",
-    "require": "^2.4.20",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
     "saucelabs": "^2.1.8",

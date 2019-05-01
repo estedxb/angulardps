@@ -87,9 +87,8 @@ export class CreatepositionComponent implements OnInit {
   }
 
   downloadFile() {
-    const FileSaver = require('file-saver');
     this.currentPosition.position.workstationDocument.location = 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf';
-    FileSaver.saveAs(this.currentPosition.position.workstationDocument.location, 'application/pdf;charset=utf-8');
+    saveAs(this.currentPosition.position.workstationDocument.location, 'application/pdf;charset=utf-8');
   }
 
   handleFileInput(files: FileList) {
