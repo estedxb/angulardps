@@ -1,188 +1,116 @@
 [
   {
     "id": 2,
-    "customerVatNumber": "str vat",
-    "name": "str Name ",
+    "customerVatNumber": "B0011",
+    "name": "Sample Work Schedule 2",
     "workSchedule": {
       "workDays": [
         {
           "dayOfWeek": 2,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 3,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 4,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         }
       ]
     },
     "isEnabled": true,
-    "isArchived": true
+    "isArchived": false
   },
   {
     "id": 5,
-    "customerVatNumber": "str vat",
-    "name": "str Name ",
+    "customerVatNumber": "B0011",
+    "name": "Sample Work Schedule 5",
     "workSchedule": {
       "workDays": [
         {
           "dayOfWeek": 2,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 3,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 4,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         }
       ]
     },
     "isEnabled": true,
-    "isArchived": true
+    "isArchived": false
   },
   {
     "id": 12,
-    "customerVatNumber": "str vat",
-    "name": "str Name ",
+    "customerVatNumber": "B0011",
+    "name": "Sample Work Schedule 12",
     "workSchedule": {
       "workDays": [
         {
           "dayOfWeek": 2,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 3,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         },
         {
           "dayOfWeek": 4,
-          "workTImes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+          "workTimes": [
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ],
           "breakTimes": [
-            {
-              "startTime": "02:02:02",
-              "endTime": "01:05:02",
-              "title": "Title"
-            }
+            { "startTime": "02:49", "endTime": "02:49", "title": "Title" }
           ]
         }
       ]
     },
     "isEnabled": true,
-    "isArchived": true
+    "isArchived": false
   }
 ]

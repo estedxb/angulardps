@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { AlertsService } from 'angular-alert-module';
+import { AlertsService } from 'angular-alert-module'; // , private alerts: AlertsService
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { Location, LoginToken, DpsUser, Address } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,26 +17,26 @@ export class LocationsComponent implements OnInit {
   public data: Location;
   public address: Address;
   public errorMsg;
-  public SelectedIndex = 0;
+  public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
-  constructor(private locationsService: LocationsService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
-  // , private alerts: AlertsService
+  constructor(
+    private locationsService: LocationsService,
+    private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     console.log('loginuserdetails ::', this.loginuserdetails);
     this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(locations => {
       this.maindatas = locations;
       this.FilterTheArchive();
-      console.log('Locations Forms Data : '); console.log(this.maindatas);
+      console.log('Locations Forms Data : ', this.maindatas);
       this.ShowMessage('Locations is listed successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
-  FilterTheArchive() {
-    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-  }
+
+  FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
 
   ShowMessage(MSG, Action = '') {
     const snackBarConfig = new MatSnackBarConfig();
@@ -60,11 +60,16 @@ export class LocationsComponent implements OnInit {
 
       const dialogRef = this.dialog.open(CreatelocationComponent, dialogConfig);
 
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
+        this.ShowMessage($event.MSG, $event.Action);
+      });
+
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex > 0) {
+        console.log('this.SelectedIndex ::', this.SelectedIndex);
+        if (this.SelectedIndex >= 0) {
           // maindatas Update location
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
@@ -74,7 +79,7 @@ export class LocationsComponent implements OnInit {
           console.log('this.data.id :: ', this.data.id);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
-            console.log(' new this.maindatas :: ', this.maindatas);
+            console.log('New Location Added Successfully :: ', this.maindatas);
             this.FilterTheArchive();
             this.ShowMessage('Locations "' + this.data.name + '" is added successfully.', '');
           }
@@ -85,8 +90,9 @@ export class LocationsComponent implements OnInit {
 
 
   onClickAdd() {
-    this.SelectedIndex = 0;
+    this.SelectedIndex = -1;
 
+    this.data = new Location();
     this.address = new Address();
     this.address.street = '';
     this.address.streetNumber = '';
@@ -96,7 +102,6 @@ export class LocationsComponent implements OnInit {
     this.address.countryCode = 'nl';
     this.address.postalCode = '';
 
-    this.data = new Location();
     this.data.id = 0;
     this.data.name = '';
     this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
@@ -108,7 +113,7 @@ export class LocationsComponent implements OnInit {
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    console.log('Edit Clicked Index :: ' + i);
+    console.log('Edit Clicked Index :: ' + this.SelectedIndex);
     this.data = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
@@ -136,7 +141,6 @@ export class LocationsComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updateLocations();
-
     this.ShowMessage('Locations "' + this.data.name + '" is deleted successfully.', '');
   }
 
@@ -147,11 +151,7 @@ export class LocationsComponent implements OnInit {
     this.data.isEnabled = event;
     this.updateLocations();
     let EnabledStatus = '';
-    if (event) {
-      EnabledStatus = 'enabled';
-    } else {
-      EnabledStatus = 'disabled';
-    }
+    if (event) { EnabledStatus = 'enabled'; } else { EnabledStatus = 'disabled'; }
     this.ShowMessage('Locations "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
   }
 }

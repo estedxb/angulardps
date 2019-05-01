@@ -19,10 +19,12 @@ export class CreatelocationComponent implements OnInit {
   public countryCodeR;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
+
   LocationForm: FormGroup;
-  location: Location;
+  // location: Location;
   address: Address;
   @Output() public childEvent = new EventEmitter();
+  @Output() showmsg = new EventEmitter<object>();
 
   constructor(
     private formBuilder: FormBuilder, private locationsService: LocationsService,
@@ -66,7 +68,7 @@ export class CreatelocationComponent implements OnInit {
       this.LocationForm.controls.postcode.setValue(this.currentLocation.address.postalCode + '');
       this.LocationForm.controls.country.setValue(this.currentLocation.address.country + '');
       this.countryString = this.currentLocation.address.country;
-      this.createObjects();
+      // this.createObjects();
     } else {
       this.currentLocation.id = 0;
     }
@@ -83,9 +85,11 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
-  updateData() {
-    this.createObjects();
+  ShowMessage(msg, action) {
+    this.showmsg.emit({ MSG: msg, Action: action });
   }
+
+  updateData() { this.createObjects(); }
 
   createObjects() {
     this.currentLocation.name = this.LocationForm.get('name').value;
@@ -131,7 +135,7 @@ export class CreatelocationComponent implements OnInit {
         } else {
           console.log('Create Location');
           this.locationsService.createLocation(this.currentLocation).subscribe(res => {
-            console.log('  Location Response :: ', res.body);
+            console.log('Location Response :: ', res.body);
             this.currentLocation.id = res.body;
             this.dialogRef.close(this.currentLocation);
           },

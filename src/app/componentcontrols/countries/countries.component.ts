@@ -30,19 +30,15 @@ export class CountriesComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
 
-  SetInitialValue() 
-  { 
-    if (this.selectedValue === undefined) 
-    { 
-        this.selectedValue = this.datas[this._selectedIndex]; 
-
-    } 
-
-}
+  SetInitialValue() {
+    if (this.selectedValue === undefined) {
+      this.selectedValue = this.datas[this._selectedIndex];
+    }
+  }
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-    console.log("countries selected=" + this.value);
+    console.log('countries selected=' + this.value);
     console.log(this.value);
 
     // console.log( selected="+this.value.FormName);
@@ -73,48 +69,43 @@ export class CountriesComponent implements OnInit {
 
     console.log(this.CountryFormData);
 
-    if(this.CountryFormData != this.oldCountryFormData)
-    {
-        console.log("ngDoCheck countryForm data="+this.CountryFormData);
-        this.oldCountryFormData = this.CountryFormData;
-        this.loadInitialData(this.datas);
+    if (this.CountryFormData != this.oldCountryFormData) {
+      console.log("ngDoCheck countryForm data=" + this.CountryFormData);
+      this.oldCountryFormData = this.CountryFormData;
+      this.loadInitialData(this.datas);
     }
-    
+
   }
 
   ngAfterViewInit() {
 
-    if(this.CountryFormData != this.oldCountryFormData)
-    {
-        console.log("ngDoCheck countryForm data="+this.CountryFormData);
-        this.oldCountryFormData = this.CountryFormData;
-        this.loadInitialData(this.datas);
+    if (this.CountryFormData != this.oldCountryFormData) {
+      console.log("ngDoCheck countryForm data=" + this.CountryFormData);
+      this.oldCountryFormData = this.CountryFormData;
+      this.loadInitialData(this.datas);
     }
   }
 
-  loadInitialData(datas:any) {
+  loadInitialData(datas: any) {
 
-    console.log("countryString="+this.CountryFormData);
+    console.log("countryString=" + this.CountryFormData);
     console.log(this.datas);
 
-    if(datas.length !== 0)
-    {
+    if (datas.length !== 0) {
       console.log("datas new country string");
 
-      for(var i=0;i<this.datas.length;i++)
-      {
-        console.log("country="+this.CountryFormData);
-        if(this.datas[i].countryName === this.CountryFormData)
-            this._selectedIndex = i;
+      for (var i = 0; i < this.datas.length; i++) {
+        console.log("country=" + this.CountryFormData);
+        if (this.datas[i].countryName === this.CountryFormData)
+          this._selectedIndex = i;
       }
 
-      console.log("selected index="+this._selectedIndex);
+      console.log("selected index=" + this._selectedIndex);
     }
-    else
-    {
+    else {
       console.log("null or undefined");
     }
 
-}
+  }
 
 }

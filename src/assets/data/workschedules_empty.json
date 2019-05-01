@@ -1,0 +1,40 @@
+[
+  {
+    "id": 0,
+    "customerVatNumber": "",
+    "name": "",
+    "workSchedule": {
+      "workDays": [
+        {
+          "dayOfWeek": 2,
+          "workTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ],
+          "breakTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ]
+        },
+        {
+          "dayOfWeek": 3,
+          "workTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ],
+          "breakTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ]
+        },
+        {
+          "dayOfWeek": 4,
+          "workTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ],
+          "breakTimes": [
+            { "startTime": "00:00", "endTime": "00:00", "title": "" }
+          ]
+        }
+      ]
+    },
+    "isEnabled": true,
+    "isArchived": false
+  }
+]

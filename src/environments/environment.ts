@@ -34,7 +34,8 @@ export const environment = {
   getLocation: 'Location',
   getWorkSchedule: 'WorkSchedule',
   getPosition: 'Position',
-  getPerson: 'Person'
+  getPerson: 'Person',
+  getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json'
 };
 
 /*
