@@ -1,95 +1,97 @@
+.facturatieParameters {
+  padding: 0px 20px 20px 20px;
+  border-radius: 10px;
+  padding-bottom: 0px;
+}
 
-
-.leftparameters{
-    width: 100px;
-    height: 70px;
-    display: inline-block;
-    margin:-2px;
-    font-size: 15px;
-    vertical-align: bottom;
-    margin-right: 15px;
-    margin-left: 5px;
-    margin-top: 10px;
+.leftparameters {
+  width: 100px;
+  height: 70px;
+  display: inline-block;
+  margin: -2px;
+  font-size: 15px;
+  vertical-align: bottom;
+  margin-right: 15px;
+  margin-left: 5px;
+  margin-top: 10px;
 }
 
 .rightparameters {
-    width: 100px;
-    height: 50px;
-    display: inline-block;
-    margin:-2px;
-    font-size: 15px;
-    vertical-align: bottom;
-    margin-right: 15px;
-    margin-left: 15px;
-    margin-top: 10px;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+  margin: -2px;
+  font-size: 15px;
+  vertical-align: bottom;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 
 .addRow {
-    width: 450px;   
-    height: 50px;
-    margin-left: 10px;
-    padding:5px;
-    background-color:transparent;
+  width: 450px;
+  height: 50px;
+  margin-left: 10px;
+  padding: 5px;
+  background-color: transparent;
 }
 
 .addButton {
-    width: 80px;
-    height: 80px;
+  width: 80px;
+  height: 80px;
 }
 
 .btnAdd {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background-color:transparent;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
 }
 
 .btnRemove {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background-color:transparent;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
 }
 
 .boxes {
-    background-color:transparent;
+  background-color: transparent;
 }
 
 .addrembuttons {
-   width: 40px;
-   height: 40px;
-}
-
-.facturatieParameters {
-    padding: 15px; 
-    margin: auto; 
-    padding-bottom: 25px; 
-    padding-left: 5px; 
-    margin-left:0px;
-    border-radius: 10px;
-    width: 800px;
-    height: 500px;
-    resize: both;
-    overflow: auto;
+  width: 40px;
+  height: 40px;
 }
 
 .inputBoxInhaalrust {
-    border-radius: 5px; 
-    margin-left: 50px; 
-    padding: 7px;
+  border-radius: 5px;
+  margin-left: 50px;
+  padding: 7px;
 }
 
 .titleBold {
-    font-weight:bold;
-    font-size:15px;
+  font-weight: bold;
+  font-size: 15px;
 }
 
-.floatright{
-    float: left;
+.floatright {
+  float: left;
 }
-.radiorow .dynrow .col-sm-1,.radiorow .dynrow .col-sm-2,.radiorow .dynrow .col-sm-3,.radiorow .dynrow .col-sm-4,.radiorow .dynrow .col-sm-5,.radiorow .dynrow .col-sm-6,.radiorow .dynrow .col-sm-7,.radiorow .dynrow .col-sm-8,.radiorow .dynrow .col-sm-9,.radiorow .dynrow .col-sm-10,.radiorow .dynrow .col-sm-11,.radiorow .dynrow .col-sm-12{
-    padding-right: 3px;
-    padding-left: 3px;
+.radiorow .dynrow .col-sm-1,
+.radiorow .dynrow .col-sm-2,
+.radiorow .dynrow .col-sm-3,
+.radiorow .dynrow .col-sm-4,
+.radiorow .dynrow .col-sm-5,
+.radiorow .dynrow .col-sm-6,
+.radiorow .dynrow .col-sm-7,
+.radiorow .dynrow .col-sm-8,
+.radiorow .dynrow .col-sm-9,
+.radiorow .dynrow .col-sm-10,
+.radiorow .dynrow .col-sm-11,
+.radiorow .dynrow .col-sm-12 {
+  padding-right: 3px;
+  padding-left: 3px;
 }
 
 /* #PloegprimeBox1{

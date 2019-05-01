@@ -103,9 +103,10 @@ export class Location {
     id: number;
     customerVatNumber: string;
     name: string;
-    address?: Address;
+    address?: Address;    
     isEnabled: boolean;
     isArchived: boolean;
+   
 }
 
 export class DpsPostion {

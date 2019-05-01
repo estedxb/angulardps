@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 rb">
                             <ui-switch name="isStudentAllowed" [checked]="isStudentAllowed" (change)="onChange($event)"
                                 size="small"> </ui-switch>
                             <label class="titleBold"> Student Toegelaten </label>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Taakbeschrijiving: </label>
-                    <textarea formControlName="taskDescription" rows="8" class="form-control"
+                    <textarea formControlName="taskDescription" rows="7" class="form-control"
                         name="taskDescription"></textarea>
                     <div class="form-control-feedback"
                         *ngIf="PositionForm.controls.taskDescription.invalid && (PositionForm.controls.taskDescription.dirty || PositionForm.controls.taskDescription.touched) else fnewvalid">
@@ -80,7 +80,7 @@
                     <hr />
                 </div>
             </div>
-            <div class="row customerBoxContect">
+            <div class="row customerBoxContect bottom-15">
                 <div class="col col-sm-6">
                     <div class="inputWrapper">
                         <span>Upload werkpostfiche:</span>
@@ -88,26 +88,19 @@
                         <input class="fileInput hidden" type="file" id="file"
                             (change)="handleFileInput($event.target.files)">
                     </div>
-                    <div class="form-control-feedback"
-                        *ngIf="PositionForm.controls.file.invalid && (PositionForm.controls.file.dirty || PositionForm.controls.file.touched) else enewvalid">
-                        <img src="../../assets/img/InvalidIcon.png" alt="">
-                    </div>
-                    <ng-template #enewvalid>
-                        <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
                 </div>
                 <div class="col col-sm-6">
-                    <button formControlName="download" class="whitebtn" name="download"> <span>Download
+                    <button formControlName="download" class="whitebtn" name="download" (click)="downloadFile()" > <span>Download
                             template</span>
                         <img src="../../../../../assets/svg/Add.svg">
                     </button>
-
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col col-sm-12 center-block">
-                <button class="greenbtn" id="btnSave" (click)="onSaveUserClick()"><span>Functie opslaan</span>
+                {{ PositionForm.valid }}
+                <button class="greenbtn" id="btnSave" (click)="onSavePositionClick()"><span>Functie opslaan</span>
                 </button>
             </div>
         </div>

@@ -114,15 +114,15 @@ body {
 }
 .jointcommittee {
   min-width: 150px;
-  max-width: 500px;
+  max-width: 100%;
 }
 .jointcommittee {
   min-width: 150px;
-  max-width: 500px;
+  max-width: 100%;
 }
 .countries {
   min-width: 100px;
-  max-width: 250px;
+  max-width: 100%;
 }
 .legalform {
   min-width: 100px;
@@ -158,7 +158,7 @@ div#CustomerGeneralDetails {
   min-height: 150px;
 }
 div#CustomerDetails {
-  min-height: 220px;
+  min-height: 150px;
 }
 div#CustomerContact {
   min-height: 220px;
@@ -234,8 +234,10 @@ div#CustomerContact {
 }
 
 #maincontentarea .inputWithIcon,
+#maincontentarea .inputWithEuro,
 #maincontentarea .dialog .inputWithIcon,
-.inputWithIcon {
+.inputWithIcon,
+.inputWithEuro {
   position: relative;
 }
 
@@ -247,6 +249,15 @@ div#CustomerContact {
   color: #000;
 }
 
+#maincontentarea .inputWithEuro i,
+.inputWithEuro i {
+  position: absolute;
+  left: 5px;
+  top: 37px;
+  color: #000;
+}
+
+#maincontentarea .inputWithNoIcon input[type="text"],
 #maincontentarea .inputWithIcon input[type="text"],
 .inputWithIcon input[type="text"],
 #maincontentarea .inputWithIcon input[type="password"],
@@ -255,9 +266,15 @@ div#CustomerContact {
 .inputWithIcon input[type="number"],
 #maincontentarea .inputWithIcon input[type="email"],
 .inputWithIcon input[type="email"],
-#maincontentarea .inputWithIcon input {
+#maincontentarea .inputWithEuro input[type="text"],
+.inputWithEuro input[type="text"],
+#maincontentarea .inputWithEuro input[type="number"],
+.inputWithEuro input[type="number"],
+#maincontentarea .inputWithIcon input,
+#maincontentarea .inputWithEuro input {
   padding-left: 20px;
 }
+
 #maincontentarea .inputWithIcon input[type="text"] + i,
 .inputWithIcon input[type="text"] + i,
 #maincontentarea .inputWithIcon input[type="password"] + i,
@@ -265,7 +282,11 @@ div#CustomerContact {
 #maincontentarea .inputWithIcon input[type="number"] + i,
 .inputWithIcon input[type="number"] + i,
 #maincontentarea .inputWithIcon input[type="email"] + i,
-.inputWithIcon input[type="email"] + i {
+.inputWithIcon input[type="email"] + i,
+#maincontentarea .inputWithEuro input[type="text"] + i,
+.inputWithEuro input[type="text"] + i,
+#maincontentarea .inputWithEuro input[type="number"] + i,
+.inputWithEuro input[type="number"] + i {
   padding-left: 20px;
   padding-right: 0px;
 }
@@ -312,13 +333,32 @@ div#CustomerContact {
   z-index: 10;
 }
 
+#maincontentarea .inputWithEuro input[type="number"].form-control {
+  padding-left: 24px;
+  padding-right: 5px;
+}
+
+#maincontentarea .inputWithNoIcon input[type="number"].form-control {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 #maincontentarea #hqform span,
 #maincontentarea #CTForm span {
   padding: 0px;
 }
+
 #maincontentarea #hqform .switch.switch-small,
 #maincontentarea #CTForm .switch.switch-small {
   margin: 0px;
+}
+
+#PositionForm .rb label, #PositionForm .rb span  {  
+  float: left;
+}
+
+#PositionForm .rb label {
+  padding: 14px 5px;
 }
 
 #maincontentarea .dialog .inputWithIcon,
@@ -544,4 +584,11 @@ div#CustomerContact {
 
 .fcontent {
   padding: 20px 20px 0px 20px;
+}
+
+.middlecenter {
+  display: block;
+  margin: auto;
+  padding-top: 10%;
+  text-align: center;
 }

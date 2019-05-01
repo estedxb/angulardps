@@ -1,3 +1,23 @@
+.headquarters {
+  padding: 0px 20px 20px 20px;
+  border-radius: 10px;
+  padding-bottom: 0px;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+.emailStyleRequired {
+  color: red;
+}
+
+#hqform {
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+/*
 .generalTitle {
   font-family: Arial;
   font-size: 15px;
@@ -21,6 +41,7 @@ input {
   vertical-align: text-bottom;
   border-bottom: 1px solid black;
 }
+*/
 /*
  #hqform .form-control-feedback {
     top: 25px;
@@ -28,11 +49,7 @@ input {
 }
 */
 
-#hqform {
-  margin-top: 10px;
-  padding-top: 10px;
-}
-
+/*
 .Hello,
 .Hi,
 .How {
@@ -46,7 +63,7 @@ input {
 .generalTitle label {
   font-weight: bold;
 }
-
+*/
 /*
  .vatnumberinputbox {
     width: 500px; height: 40px; padding: 7px; border-radius: 5px;    
@@ -72,26 +89,14 @@ input {
  .creditlimit {
     width: 250px; height: 40px; padding: 7px; border-radius: 5px;
  }
-*/
 .creditCheck {
-  /* margin-top:10px; margin-left:10px; */
+   margin-top:10px; margin-left:10px; 
 }
-.headquarters {
-  padding: 20px;
-  padding-bottom: 10px;
-  border-radius: 10px;
-  padding-bottom: 0px;
-}
+*/
 
+/*
 .officialName {
   width: 300px;
-}
-
-.contractemail {
-  width: 400px;
-  height: 40px;
-  padding: 7px;
-  border-radius: 5px;
 }
 
 .validationbox {
@@ -105,6 +110,13 @@ input {
   margin-right: 25px;
   padding: 15px;
 }
+.contractemail {
+  width: 400px;
+  height: 40px;
+  padding: 7px;
+  border-radius: 5px;
+}
+
 .generalemail {
   width: 400px;
   height: 40px;
@@ -116,6 +128,4 @@ input {
   height: 50px;
 }
 
-.emailStyleRequired {
-  color: red;
-}
+*/

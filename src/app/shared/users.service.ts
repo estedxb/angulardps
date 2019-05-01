@@ -30,19 +30,21 @@ export class UsersService {
     return result;
   }
 
-  public createUser(user: any): Observable<any> {
+  public createUser(dpsuser: DpsUser): Observable<any> {
+    console.log('Create User Url', this.getUserUrl);
+    console.log('createUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(this.getUserUrl, user, { headers: httpHeaders, observe: 'response' });
+    return this.http.post<DpsUser>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }
 
-  public updateUser(user: any): Observable<any> {
+  public updateUser(dpsuser: DpsUser): Observable<any> {
+    console.log('Update User Url', this.getUserUrl);
+    console.log('updateUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<any>(this.getUserUrl, user, { headers: httpHeaders, observe: 'response' });
+    return this.http.put<any>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }
 
   errorHandler(error: HttpErrorResponse) {
-    // console.log(error.status);
-
     if (error.status === 400) {
       console.log('vat number not correct format');
     } else if (error.status === 204) {
@@ -52,8 +54,6 @@ export class UsersService {
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
-
-
     return Observable.throwError(error.message);
   }
 }
