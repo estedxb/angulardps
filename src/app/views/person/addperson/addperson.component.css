@@ -109,3 +109,9 @@
   padding: 0px 0px 0px 0px;
   margin: -21px 8px 0px 0px;
 }
+
+.radiorow .dynrow .col-sm-1,.radiorow .dynrow .col-sm-2,.radiorow .dynrow .col-sm-3,.radiorow .dynrow .col-sm-4,.radiorow .dynrow .col-sm-5,.radiorow .dynrow .col-sm-6,.radiorow .dynrow .col-sm-7,.radiorow .dynrow .col-sm-8,.radiorow .dynrow .col-sm-9,.radiorow .dynrow .col-sm-10,.radiorow .dynrow .col-sm-11,.radiorow .dynrow .col-sm-12{
+  padding-right: 3px;
+  padding-left: 3px;
+  background: red;
+}

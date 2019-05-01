@@ -27,15 +27,17 @@ export const environment = {
   getLocationsByVatNumber: 'Location/ForCustomer',
   getWorkSchedulesByVatNumber: 'WorkSchedule/ForCustomer',
   getPositionsByVatNumber: 'Position/ForCustomer',
-  getPersonsByVatNumber: '/api/Person/ForCustomer',
-  getPersonBySSIDNVatNumber: '/api/Person/',
-  getPersonById: '/api/Person/',
+  getPersonsByVatNumber: 'Person/ForCustomer',
+  getPersonBySSIDNVatNumber: 'Person',
+  getPersonById: 'Person',
   getUser: 'User',
   getLocation: 'Location',
   getWorkSchedule: 'WorkSchedule',
   getPosition: 'Position',
   getPerson: 'Person',
-  getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json'
+  getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
+  getFileUploads: '',
+  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/'
 };
 
 /*

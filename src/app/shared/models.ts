@@ -35,7 +35,7 @@ export class VcaCertification { cerified: boolean; }
 export class ParitairCommitee { number: string; name: string; BrightStaffingCommitteeId?: string; type?: string; }
 export class LieuDaysAllowance { enabled: boolean; payed: boolean; }
 export class MobilityAllowance { enabled: boolean; amountPerKm?: number; }
-export class ShiftAllowance { shiftName: string; timeSpan: TimeSpan; amount: number; nominal?: boolean; }
+export class ShiftAllowance { shiftName: string; timeSpan: string; amount: number; nominal?: boolean; }
 export class OtherAllowance { codeId: number; amount: number; nominal?: boolean; }
 export class MealVoucherSettings { totalWorth?: number; employerShare?: number; minimumHours?: number; }
 export class StatuteSetting {

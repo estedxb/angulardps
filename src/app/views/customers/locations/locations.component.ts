@@ -68,8 +68,7 @@ export class LocationsComponent implements OnInit {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        console.log('this.SelectedIndex ::', this.SelectedIndex);
-        if (this.SelectedIndex >= 0) {
+        if (this.SelectedIndex > -1) {
           // maindatas Update location
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();

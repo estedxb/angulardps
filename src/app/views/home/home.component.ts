@@ -34,32 +34,33 @@ export class HomeComponent implements OnInit {
   }
 
   receiveData($event, i) {
-    if (i == 0)
+    if (i === 0) {
       this.HQdata = $event;
-    if (i == 1)
+    } else if (i === 1) {
       this.CTdata = $event;
-    if (i == 2)
+    } else if (i === 2) {
       this.GLdata = $event;
-    if (i === 3)
+    } else if (i === 3) {
       this.STdata = $event;
-    if (i == 4)
+    } else if (i === 4) {
       this.FPdata = $event;
+    }
   }
 
   receiveGeneralObject($event) {
-    console.log("received in home component GL data");
+    console.log('received in home component GL data');
     this.GLdata = $event;
     console.log(this.GLdata);
   }
 
   receiveStatuteData($event) {
-    console.log("received in home component ST data");
+    console.log('received in home component ST data');
     this.STdata = $event;
     console.log(this.STdata);
   }
 
   receiveInvoiceData($event) {
-    console.log("received in home component IS data");
+    console.log('received in home component IS data');
     this.FPdata = $event;
     console.log(this.FPdata);
   }
@@ -67,14 +68,14 @@ export class HomeComponent implements OnInit {
   receiveHQdata($event) {
     this.HQdata = $event;
     this.HQFormValid = this.HQdata.formValid;
-    console.log("received in home component HQ data");
+    console.log('received in home component HQ data');
     console.log(this.HQdata);
   }
 
   receiveCTdata($event) {
     this.CTdata = $event;
     this.CTFormValid = this.CTdata.formValid;
-    console.log("received in home component CT data");
+    console.log('received in home component CT data');
     console.log(this.CTdata);
   }
 
@@ -82,12 +83,12 @@ export class HomeComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      console.log("CTdata=" + this.CTdata);
+      console.log('CTdata=' + this.CTdata);
       console.log(this.CTdata);
-      console.log("HQdata=" + this.HQdata);
+      console.log('HQdata=' + this.HQdata);
       console.log(this.HQdata);
 
-      console.log("validity data=" + this.HQdata.formValid);
+      console.log('validity data=' + this.HQdata.formValid);
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
@@ -97,101 +98,96 @@ export class HomeComponent implements OnInit {
           delete this.CTdata.formValid;
 
           this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-          this.HQdata.contact = this.CTdata.contact
+          this.HQdata.contact = this.CTdata.contact;
 
-          console.log("updated HQData=" + this.HQdata);
+          console.log('updated HQData=' + this.HQdata);
           console.log(this.HQdata.contact);
           console.log(this.CTdata.contact);
 
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
-            console.log("response=" + res);
+            console.log('response=' + res);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log("Error occured=" + err.error.message);
-              }
-              else {
-                console.log("response code=" + err.status);
-                console.log("response body=" + err.error);
+                console.log('Error occured=' + err.error.message);
+              } else {
+                console.log('response code=' + err.status);
+                console.log('response body=' + err.error);
               }
             }
           );
         }
-      }
-      else {
-        console.log("HQdata or CTdata is null or undefined !!")
+      } else {
+        console.log('HQdata or CTdata is null or undefined !!');
       }
 
 
-    }
-    else if (this.showFormIndex === 2) {
-      console.log("Complete data=");
+    } else if (this.showFormIndex === 2) {
+      console.log('Complete data=');
       console.log(this.GLdata);
-      console.log("HQdata");
+      console.log('HQdata');
       console.log(this.HQdata);
-      console.log("this STdata");
+      console.log('this STdata');
       console.log(this.STdata);
 
-      if (this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== "") {
-        if (this.HQdata !== null && this.HQdata !== undefined && this.HQdata !== "") {
+      if (this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== '') {
+        if (this.HQdata !== null && this.HQdata !== undefined && this.HQdata !== '') {
           this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
           this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-        }
-        else {
+        } else {
           this.HQdata = new DPSCustomer();
           this.HQdata.customer = new Customer();
-          this.HQdata.customer.vatNumber = "23232323";
-          this.HQdata.customer.name = "hello";
-          this.HQdata.customer.officialName = "new name";
-          this.HQdata.customer.legalForm = "legal";
+          this.HQdata.customer.vatNumber = '23232323';
+          this.HQdata.customer.name = 'hello';
+          this.HQdata.customer.officialName = 'new name';
+          this.HQdata.customer.legalForm = 'legal';
 
           this.HQdata.customer.creditCheck = new CreditCheck();
           this.HQdata.customer.creditCheck.creditcheck = false;
           this.HQdata.customer.creditCheck.creditLimit = 1000;
-          this.HQdata.customer.creditCheck.dateChecked = "02/19/2019";
+          this.HQdata.customer.creditCheck.dateChecked = '02/19/2019';
           this.HQdata.customer.creditCheck.creditCheckPending = true;
 
           this.HQdata.customer.address = new Address();
-          this.HQdata.customer.address.street = "string";
-          this.HQdata.customer.address.streetNumber = "new string";
-          this.HQdata.customer.address.bus = "232";
-          this.HQdata.customer.address.city = "hello";
-          this.HQdata.customer.address.postalcode = "jshdf2323";
-          this.HQdata.customer.address.country = "canda";
-          this.HQdata.customer.address.countryCode = "AZ";
+          this.HQdata.customer.address.street = 'string';
+          this.HQdata.customer.address.streetNumber = 'new string';
+          this.HQdata.customer.address.bus = '232';
+          this.HQdata.customer.address.city = 'hello';
+          this.HQdata.customer.address.postalcode = 'jshdf2323';
+          this.HQdata.customer.address.country = 'canda';
+          this.HQdata.customer.address.countryCode = 'AZ';
 
           this.HQdata.customer.vcaCertification = { cerified: false };
           this.HQdata.bulkContractsEnabled = false;
         }
 
-        console.log("updated hqdata");
+        console.log('updated hqdata');
         console.log(this.HQdata);
       }
 
       if (this.CTdata !== null && this.CTdata !== undefined) {
         console.log(this.CTdata.contact);
-      }
-      else {
+      } else {
 
-        console.log("no contact data");
+        console.log('no contact data');
         this.HQdata.contact = new Contact();
-        this.HQdata.contact.firstName = "blah";
-        this.HQdata.contact.lastName = "ajsdf";
-        this.HQdata.contact.postion = "asdfs";
+        this.HQdata.contact.firstName = 'blah';
+        this.HQdata.contact.lastName = 'ajsdf';
+        this.HQdata.contact.postion = 'asdfs';
 
         this.HQdata.contact.email = new EmailAddress();
-        this.HQdata.contact.email.emailAddress = "asdfadsf@gmail.com";
+        this.HQdata.contact.email.emailAddress = 'asdfadsf@gmail.com';
 
         this.HQdata.contact.mobile = new PhoneNumber();
-        this.HQdata.contact.mobile.number = "+93434343434";
+        this.HQdata.contact.mobile.number = '+93434343434';
 
         this.HQdata.contact.phoneNumber = new PhoneNumber();
-        this.HQdata.contact.phoneNumber.number = "+93434343434";
+        this.HQdata.contact.phoneNumber.number = '+93434343434';
 
         this.HQdata.contact.language = new Language();
-        this.HQdata.contact.language.name = "asfd";
-        this.HQdata.contact.language.shortName = "ad";
+        this.HQdata.contact.language.name = 'asfd';
+        this.HQdata.contact.language.shortName = 'ad';
 
       }
 
@@ -199,8 +195,8 @@ export class HomeComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
       }
 
-      if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== "") {
-        console.log("fp data=");
+      if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
+        console.log('fp data=');
         console.log(this.FPdata);
 
         if (this.HQdata !== null) {
@@ -212,9 +208,8 @@ export class HomeComponent implements OnInit {
             this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
             this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
             this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-          }
-          else {
-            this.HQdata.customer.vatNumber = "234343434";
+          } else {
+            // this.HQdata.customer.vatNumber = "234343434";
             this.HQdata.invoiceSettings = new InvoiceSettings();
             this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
             this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
@@ -236,15 +231,14 @@ export class HomeComponent implements OnInit {
 
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
-      console.log("response=" + res);
+      console.log('response=' + res);
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Error occured=" + err.error.message);
-        }
-        else {
-          console.log("response code=" + err.status);
-          console.log("response body=" + err.error);
+          console.log('Error occured=' + err.error.message);
+        } else {
+          console.log('response code=' + err.status);
+          console.log('response body=' + err.error);
         }
       }
     );

@@ -4,15 +4,13 @@ import { Address, Location, DpsUser } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from 'src/app/shared/locations.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-
 @Component({
   selector: 'app-createlocation',
   templateUrl: './createlocation.component.html',
   styleUrls: ['./../../customers.component.css']
 })
 export class CreatelocationComponent implements OnInit {
-  public currentLocation: Location;
-  public oldCurrentLocation: any;
+  public currentlocation: Location;
   public countryString;
   public countryCode;
   public countryStringR;
@@ -29,22 +27,11 @@ export class CreatelocationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, private locationsService: LocationsService,
     public dialogRef: MatDialogRef<CreatelocationComponent>, @Inject(MAT_DIALOG_DATA) public locationdata: Location) {
-    this.currentLocation = locationdata;
+    this.currentlocation = locationdata;
   }
 
-  /*
-    ngDoCheck() {
-      console.log('ngDoCheck CreateLocationComponent');
-      console.log(this.currentLocation);
-      if (this.oldCurrentLocation !== this.currentLocation) {
-        this.oldCurrentLocation = this.currentLocation;
-        this.loadLocationToEdit();
-      }
-    }
-  */
-
   ngOnInit() {
-    console.log('Current Location :: ', this.currentLocation);
+    console.log('Current Location :: ', this.currentlocation);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.LocationForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
@@ -59,18 +46,18 @@ export class CreatelocationComponent implements OnInit {
   }
 
   loadLocationToEdit() {
-    if (this.currentLocation.id !== undefined || this.currentLocation.id !== 0) {
-      this.LocationForm.controls.name.setValue(this.currentLocation.name + '');
-      this.LocationForm.controls.street.setValue(this.currentLocation.address.street + '');
-      this.LocationForm.controls.number.setValue(this.currentLocation.address.streetNumber + '');
-      this.LocationForm.controls.bus.setValue(this.currentLocation.address.bus + '');
-      this.LocationForm.controls.place.setValue(this.currentLocation.address.city + '');
-      this.LocationForm.controls.postcode.setValue(this.currentLocation.address.postalCode + '');
-      this.LocationForm.controls.country.setValue(this.currentLocation.address.country + '');
-      this.countryString = this.currentLocation.address.country;
-      // this.createObjects();
+    if (this.currentlocation.id !== undefined || this.currentlocation.id !== 0) {
+      this.LocationForm.controls.name.setValue(this.currentlocation.name + '');
+      this.LocationForm.controls.street.setValue(this.currentlocation.address.street + '');
+      this.LocationForm.controls.number.setValue(this.currentlocation.address.streetNumber + '');
+      this.LocationForm.controls.bus.setValue(this.currentlocation.address.bus + '');
+      this.LocationForm.controls.place.setValue(this.currentlocation.address.city + '');
+      this.LocationForm.controls.postcode.setValue(this.currentlocation.address.postalCode + '');
+      this.LocationForm.controls.country.setValue(this.currentlocation.address.country + '');
+      this.countryString = this.currentlocation.address.country;
+      this.createObjects();
     } else {
-      this.currentLocation.id = 0;
+      this.currentlocation.id = 0;
     }
   }
 
@@ -85,41 +72,39 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
-  ShowMessage(msg, action) {
-    this.showmsg.emit({ MSG: msg, Action: action });
+  updateData() {
+    this.createObjects();
   }
 
-  updateData() { this.createObjects(); }
-
   createObjects() {
-    this.currentLocation.name = this.LocationForm.get('name').value;
-    this.currentLocation.address.street = this.LocationForm.get('street').value;
-    this.currentLocation.address.streetNumber = this.LocationForm.get('number').value;
-    this.currentLocation.address.bus = this.LocationForm.get('bus').value;
-    this.currentLocation.address.city = this.LocationForm.get('place').value;
-    this.currentLocation.address.postalCode = this.LocationForm.get('postcode').value;
-    this.currentLocation.address.country = this.countryStringR;
-    this.currentLocation.address.countryCode = this.countryCodeR;
-    this.childEvent.emit(this.currentLocation);
+    this.currentlocation.name = this.LocationForm.get('name').value;
+    this.currentlocation.address.street = this.LocationForm.get('street').value;
+    this.currentlocation.address.streetNumber = this.LocationForm.get('number').value;
+    this.currentlocation.address.bus = this.LocationForm.get('bus').value;
+    this.currentlocation.address.city = this.LocationForm.get('place').value;
+    this.currentlocation.address.postalCode = this.LocationForm.get('postcode').value;
+    this.currentlocation.address.country = this.countryStringR;
+    this.currentlocation.address.countryCode = this.countryCodeR;
+    this.childEvent.emit(this.currentlocation);
   }
 
   public getJSONObject() {
-    if (this.currentLocation !== undefined && this.currentLocation !== null) {
-      return this.currentLocation;
+    if (this.currentlocation !== undefined && this.currentlocation !== null) {
+      return this.currentlocation;
     }
   }
 
   onSaveLocationClick() {
     this.createObjects();
-    console.log('data ::', this.currentLocation);
+    console.log('data ::', this.currentlocation);
     if (this.LocationForm.valid) {
-      if (this.currentLocation !== undefined && this.currentLocation !== null) {
-        if (this.currentLocation.id !== 0 && this.currentLocation.id !== undefined && this.currentLocation.id !== null) {
+      if (this.currentlocation !== undefined && this.currentlocation !== null) {
+        if (this.currentlocation.id !== 0 && this.currentlocation.id !== undefined && this.currentlocation.id !== null) {
           console.log('Update Location');
           // Update Location
-          this.locationsService.updateLocation(this.currentLocation).subscribe(res => {
+          this.locationsService.updateLocation(this.currentlocation).subscribe(res => {
             console.log('Update Location Response :: ', res);
-            this.dialogRef.close(this.currentLocation);
+            this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
               console.log('Error :: ');
@@ -132,12 +117,13 @@ export class CreatelocationComponent implements OnInit {
               }
             }
           );
+          // this.dialogRef.close();
         } else {
           console.log('Create Location');
-          this.locationsService.createLocation(this.currentLocation).subscribe(res => {
-            console.log('Location Response :: ', res.body);
-            this.currentLocation.id = res.body;
-            this.dialogRef.close(this.currentLocation);
+          this.locationsService.createLocation(this.currentlocation).subscribe(res => {
+            console.log('  Location Response :: ', res.body);
+            this.currentlocation.id = res.body;
+            this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -148,6 +134,7 @@ export class CreatelocationComponent implements OnInit {
               }
             }
           );
+          // this.dialogRef.close();
         }
       }
     } else {

@@ -10,15 +10,15 @@ import { LanguagesService } from '../../shared/languages.service';
 })
 export class LanguagesComponent implements OnInit {
 
-  @Input() public LanguageFormData;
-  @Output() public childEvent = new EventEmitter();
+ @Input() public LanguageFormData:string;
+ @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_languages';
   public currentlanguage = 'nl';
   public errorMsg;
   public maindatas: any = [];
   private datas: any = [];
-  public oldLanguageFormData;
+  public oldLanguageFormData:string;
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -44,55 +44,62 @@ export class LanguagesComponent implements OnInit {
 
   constructor(private languagesService: LanguagesService) { }
 
-  // ngDoCheck() {
+  ngDoCheck() {
 
-  //   if (this.LanguageFormData != this.oldLanguageFormData) {
-  //     console.log('ngDoCheck legalForm data=' + this.LanguageFormData);
-  //     this.oldLanguageFormData = this.LanguageFormData;
-  //     console.log('this.datas=' + this.datas);
-  //     this.loadInitialData(this.datas);
-  //   }
+    console.log("inside ngDoCheck="+this.LanguageFormData);
 
-  // }
+    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
+    {
+      console.log("languageFormData="+this.LanguageFormData);
+      if(this.LanguageFormData != this.oldLanguageFormData)
+      {
+        this.oldLanguageFormData = this.LanguageFormData;
+        this.loadInitialData(this.datas);  
+      }  
+    }
+    
+  }
 
 
   ngOnInit() {
+    console.log("inside ngOnInit="+this.LanguageFormData);
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
       this.loadInitialData(this.datas);
-      console.log('Languages Data : ', this.datas);
+      console.log('Languages Data : '); console.log(this.datas);
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
   ngAfterViewInit() {
+    console.log("inside ngDoAfterViewInit="+this.LanguageFormData);
 
-    if (this.LanguageFormData != this.oldLanguageFormData) {
-      console.log('ngDoCheck countryForm data=' + this.LanguageFormData);
-      this.oldLanguageFormData = this.LanguageFormData;
-      this.loadInitialData(this.datas);
+    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
+    {
+      if(this.LanguageFormData != this.oldLanguageFormData)
+      {
+        this.oldLanguageFormData = this.LanguageFormData;
+        this.loadInitialData(this.datas);
+      }  
     }
   }
 
-  loadInitialData(datas: any) {
-    console.log('loadInitialData datas ::', datas);
+  loadInitialData(datas) {
 
-    console.log('languageString=' + this.LanguageFormData);
-    console.log('datas.length=' + datas.length);
+    console.log("language String="+this.LanguageFormData);
 
-    if (datas.length !== 0) {
-
-      for (let i = 0; i < datas.length; i++) {
-        console.log(datas[i].name + ' :: ' + this.LanguageFormData);
-        if (datas[i].name === this.LanguageFormData) {
-          console.log('Selected Index :: ' + i);
-          this._selectedIndex = i;
-        }
+    if(datas.length !== 0)
+    {
+      for(var i=0;i<datas.length;i++)
+      {
+        if(datas[i].name === this.LanguageFormData)
+            this._selectedIndex = i;
       }
-
-      console.log('selected index=' + this._selectedIndex);
-    } else {
-      console.log('null or undefined');
+      console.log("selected index="+this._selectedIndex);
+    }
+    else
+    {
+      console.log("null or undefined");
     }
 
   }

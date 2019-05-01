@@ -27,7 +27,7 @@ export class PersonService {
       console.log('Data From Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
       this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
-      this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;      
+      this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
     }
     else {
       console.log('Data From JSON');
@@ -36,19 +36,19 @@ export class PersonService {
     
   }
 
-  public getPersonsByVatNumber(parameter: string): Observable<any> {
-    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + parameter);
+  public getPersonsByVatNumber(ssid:string, customervatnumber:string): Observable<any> {
+    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid+'/'+customervatnumber);
 
     const result = this.http.get<DpsPostion[]>(
-      this.getPersonForCustomerbyCustomerVatNumberURL + '/' + environment.getPersonById, this.httpOptions).catch(this.errorHandler);
+      this.getPersonForCustomerbyCustomerVatNumberURL +"/" + ssid + '/'+ customervatnumber, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
 
   }
 
-  public getPersonBySSIDVatnumber(position: any): Observable<any> {
+  public getPersonBySSIDVatnumber(ssid:string, customervatnumber:string): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(this.getPersonForCustomerbySSIdNCVNURL, position, {
+    return this.http.get<any>(this.getPersonForCustomerbySSIdNCVNURL+"/" + ssid + '/'+ customervatnumber, {
       headers: httpHeaders,
       observe: 'response'
     });

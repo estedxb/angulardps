@@ -16,7 +16,8 @@ import {
 export class ContactpersonComponent implements OnInit {
 
   public languageString;
-  public languageShortName;
+  public languageStringNew;
+  public languageShortNameNEw;
 
   @Input() public CTFormData;
   @Output() public childEvent = new EventEmitter();
@@ -37,6 +38,23 @@ export class ContactpersonComponent implements OnInit {
 
   }
 
+  loadEditDetails(contactPerson:any){
+
+    console.log("load details has been called");
+    console.log(contactPerson);
+
+    this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
+    this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
+    this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
+    this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
+    this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
+    this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+
+    this.languageString = contactPerson.contact.language.name;
+    
+  }
+
+  
 
   ngDoCheck() {
 
@@ -48,8 +66,10 @@ export class ContactpersonComponent implements OnInit {
         if (this.CTFormData.data !== '' && this.CTFormData.page === 'edit') {
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
-
+          this.languageString = this.CTFormData.data.contact.language.name;
+          this.languageString = "French";
           this.createObjects();
+          
           // this.CTdata =  {
           //   "contact": this.contact,
           //   "formValid": this.validity(),
@@ -65,6 +85,20 @@ export class ContactpersonComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    console.log("inside ngDoAfterViewInit="+this.CTFormData.data);
+
+    if(this.CTFormData.data !== undefined && this.CTFormData.data !== null)
+    {
+      if(this.CTFormData.data !== this.oldData )
+      {
+        this.oldData = this.CTFormData;
+        this.loadEditDetails(this.CTFormData.data);
+        this.languageString = "French";
+      }  
+    }
+  }
+
   ngOnInit() {
 
     this.CTForm = new FormGroup({
@@ -78,15 +112,15 @@ export class ContactpersonComponent implements OnInit {
       telephone: new FormControl(''),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
-
-    this.alsCheck = false;
-    this.createObjects();  // check validations
+    
+    this.alsCheck  = false;
+    this.createObjects();  //check validations
   }
 
-  receiveMessageLanguage($event) {
+  receiveMessageLanguage($event) {    
 
-    this.languageString = $event.name;
-    this.languageShortName = $event.shortName;
+    this.languageStringNew = $event.name;
+    this.languageShortNameNEw = $event.shortName;
 
     this.createObjects();
 
@@ -105,8 +139,8 @@ export class ContactpersonComponent implements OnInit {
     this.mobileNumber.number = this.CTForm.get('mobile').value;
     this.contactsEmail.emailAddress = this.CTForm.get('emailaddress').value;
 
-    this.language.name = this.languageString;
-    this.language.shortName = this.languageShortName;
+   this.language.name = this.languageStringNew;
+   this.language.shortName = this.languageShortNameNEw;
 
     this.contact.firstName = this.CTForm.get('firstname').value;
     this.contact.lastName = this.CTForm.get('lastname').value;
@@ -116,25 +150,12 @@ export class ContactpersonComponent implements OnInit {
     this.contact.postion = this.CTForm.get('position').value;
     this.contact.language = this.language;
 
-    console.log(this.language);
+   this.languageString = this.language.name;
 
     this.setJSONObject();
   }
 
-  loadEditDetails(contactPerson: any) {
-
-    console.log(contactPerson);
-
-    this.CTForm.controls.firstname.setValue(contactPerson.contact.firstName);
-    this.CTForm.controls.lastname.setValue(contactPerson.contact.lastName);
-    this.CTForm.controls.emailaddress.setValue(contactPerson.contact.email.emailAddress);
-    this.CTForm.controls.position.setValue(contactPerson.contact.postion);
-    this.CTForm.controls.mobile.setValue(contactPerson.contact.mobile.number);
-    this.CTForm.controls.telephone.setValue(contactPerson.contact.phoneNumber.number);
-
-    this.languageString = contactPerson.contact.language.name;
-
-  }
+  
 
   changeAls($event) {
     this.alsCheck = $event;
