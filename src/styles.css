@@ -347,9 +347,18 @@ div#CustomerContact {
 #maincontentarea #CTForm span {
   padding: 0px;
 }
+
 #maincontentarea #hqform .switch.switch-small,
 #maincontentarea #CTForm .switch.switch-small {
   margin: 0px;
+}
+
+#PositionForm .rb label, #PositionForm .rb span  {  
+  float: left;
+}
+
+#PositionForm .rb label {
+  padding: 14px 5px;
 }
 
 #maincontentarea .dialog .inputWithIcon,

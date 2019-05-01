@@ -18,7 +18,7 @@ export class PositionsComponent implements OnInit {
   public position : _Position;
   public workstationDocument: Documents;
   public errorMsg;
-  public SelectedIndex = 0;
+  public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
@@ -66,15 +66,17 @@ export class PositionsComponent implements OnInit {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex >0){           
+        if (this.SelectedIndex >-1){           
             this.maindatas[this.SelectedIndex] = this.data;          
             this.FilterTheArchive();   
+            this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
         } else {    
           console.log('this.data.id :: ' , this.data.id);
-          if(parseInt('0' + this.data.id)>0){
+          if(parseInt('0' + this.data.id,0 )>0){
             this.maindatas.push(this.data); 
             console.log(' new this.maindatas :: ', this.maindatas);
-            this.FilterTheArchive();                 
+            this.FilterTheArchive();   
+            this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');              
           }
         }
       });
@@ -82,7 +84,7 @@ export class PositionsComponent implements OnInit {
   }
 
   onClickAdd() {
-    this.SelectedIndex =0;
+    this.SelectedIndex =-1;
     
     this.data = new DpsPostion();
     this.position = new _Position();

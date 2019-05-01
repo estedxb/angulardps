@@ -238,3 +238,17 @@ button.close {
 .cdk-overlay-pane .mat-dialog-container {
   width: 700px;
 }
+
+.rb{
+  margin-top: 20px;
+}
+
+div.customerBox  div.customerBoxContect{
+  padding: 10px 20px 0px;
+}
+.whitebtn{
+  margin: 0px;
+}
+.bottom-15{
+  margin-bottom: 15px;
+}

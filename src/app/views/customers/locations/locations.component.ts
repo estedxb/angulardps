@@ -17,7 +17,7 @@ export class LocationsComponent implements OnInit {
   public data: Location;
   public address: Address;
   public errorMsg;
-  public SelectedIndex = 0;
+  public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
@@ -64,7 +64,7 @@ export class LocationsComponent implements OnInit {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex > 0) {
+        if (this.SelectedIndex > -1) {
           // maindatas Update location
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
@@ -85,7 +85,7 @@ export class LocationsComponent implements OnInit {
 
 
   onClickAdd() {
-    this.SelectedIndex = 0;
+    this.SelectedIndex = -1;
 
     this.address = new Address();
     this.address.street = '';

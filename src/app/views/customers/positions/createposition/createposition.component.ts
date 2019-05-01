@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { FileuploadService } from 'src/app/shared/fileupload.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-//import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-createposition',
@@ -16,7 +16,8 @@ export class CreatepositionComponent implements OnInit {
   public currentPosition: DpsPostion;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber; 
-
+  public isStudentAllowed:boolean;
+  
   PositionForm: FormGroup;
   position : _Position
   fileToUpload: File = null;
@@ -34,28 +35,38 @@ export class CreatepositionComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
       taskDescription: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
       costCenter: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
-      file: new FormControl('', [Validators.required])
+      file: new FormControl('')
 
     });
     this.loadPositionsToEdit();
   }
 
   loadPositionsToEdit(){
+    console.log("before");
+    console.log(this.currentPosition);    
+
         if (this.currentPosition.id !== undefined || this.currentPosition.id!==0) {
           this.PositionForm.controls.name.setValue(this.currentPosition.position.name);
           this.PositionForm.controls.taskDescription.setValue(this.currentPosition.position.taskDescription);
           this.PositionForm.controls.costCenter.setValue(this.currentPosition.position.costCenter);
-          this.PositionForm.controls.isStudentAllowed.setValue(this.currentPosition.position.isStudentAllowed);          
+          //this.PositionForm.controls.isStudentAllowed.setValue(this.currentPosition.position.isStudentAllowed);          
+          this.isStudentAllowed = this.currentPosition.position.isStudentAllowed;
           this.createObjects(); 
         }
         else{
           this.currentPosition.id = 0;
         }    
+
   }
 
   onChange($event) {
-    this.currentPosition.position.isStudentAllowed = $event;    
+    this.currentPosition.position.isStudentAllowed = $event; 
+    console.log("after");
+    console.log(this.currentPosition);
+
   }
+
+  
 
   public updateData() {
     this.createObjects();
@@ -77,37 +88,45 @@ export class CreatepositionComponent implements OnInit {
     }
   }
 
-  downloadfile(url: string){
-    //var FileSaver = require('file-saver');
-    //FileSaver.saveAs(url,  "application/pdf;charset=utf-8");
+  downloadFile(){
+    var FileSaver = require('file-saver');
+    
+    this.currentPosition.position.workstationDocument.location = 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf';
+    FileSaver.saveAs(this.currentPosition.position.workstationDocument.location,  "application/pdf;charset=utf-8");
   }
+
+
 
   handleFileInput(files: FileList) {
     if(files.length>0)
     {
      if( files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg' || files.item(0).type === 'image/png' )
       this.fileToUpload = files.item(0);   
+      this.workstationDocument.name = files.item(0).name;
+      this.workstationDocument.location = 'https://dpsstorageaccountdev.blob.core.windows.net/postion/';
     }    
 } 
 
 uploadFileToActivity() {
   this.fileuploadService.postFile(this.fileToUpload).subscribe(data => {
+    
     // do something, if upload success
     }, error => {
       console.log(error);
     });
 }
 
-  onSavePositionClick() {
+onSavePositionClick() {
     this.createObjects();
     console.log('PositionData=' + this.currentPosition);
     if (this.PositionForm.valid){
-    if (this.currentPosition !== undefined && this.currentPosition !== null) {   
-      if (this.currentPosition.id !== undefined && this.currentPosition.id !== null) {
+    if (this.currentPosition !== undefined && this.currentPosition !== null) {  
+      console.log('currentPosition.id =' + this.currentPosition.id); 
+      if (this.currentPosition.id !== undefined && this.currentPosition.id !== null  && this.currentPosition.id > 0) {
         console.log('Update Position');
         // Update Position
         this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
-          console.log('Update Location Response :: ', res);            
+          console.log('Update Position Response :: ', res);            
           this.dialogRef.close(this.currentPosition);
           this.uploadFileToActivity();
         },
