@@ -10,13 +10,8 @@ import { LanguagesService } from '../../shared/languages.service';
 })
 export class LanguagesComponent implements OnInit {
 
-<<<<<<< HEAD
- @Input() public LanguageFormData:string;
- @Output() public childEvent = new EventEmitter();
-=======
   @Input() public LanguageFormData;
   @Output() public childEvent = new EventEmitter();
->>>>>>> 1b15f1a1adbb343db73b5128979593f0145a2af0
 
   public id = 'ddl_languages';
   public currentlanguage = 'nl';
@@ -51,21 +46,6 @@ export class LanguagesComponent implements OnInit {
 
   // ngDoCheck() {
 
-<<<<<<< HEAD
-    console.log("inside ngDoCheck="+this.LanguageFormData);
-
-    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
-    {
-      console.log("languageFormData="+this.LanguageFormData);
-      if(this.LanguageFormData != this.oldLanguageFormData)
-      {
-        this.oldLanguageFormData = this.LanguageFormData;
-        this.loadInitialData(this.datas);  
-      }  
-    }
-    
-  }
-=======
   //   if (this.LanguageFormData != this.oldLanguageFormData) {
   //     console.log('ngDoCheck legalForm data=' + this.LanguageFormData);
   //     this.oldLanguageFormData = this.LanguageFormData;
@@ -74,7 +54,6 @@ export class LanguagesComponent implements OnInit {
   //   }
 
   // }
->>>>>>> 1b15f1a1adbb343db73b5128979593f0145a2af0
 
 
   ngOnInit() {
@@ -82,11 +61,7 @@ export class LanguagesComponent implements OnInit {
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
       this.loadInitialData(this.datas);
-<<<<<<< HEAD
-      console.log('Languages Data : '); console.log(this.datas);
-=======
       console.log('Languages Data : ', this.datas);
->>>>>>> 1b15f1a1adbb343db73b5128979593f0145a2af0
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
@@ -94,34 +69,6 @@ export class LanguagesComponent implements OnInit {
   ngAfterViewInit() {
     console.log("inside ngDoAfterViewInit="+this.LanguageFormData);
 
-<<<<<<< HEAD
-    if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
-    {
-      if(this.LanguageFormData != this.oldLanguageFormData)
-      {
-        this.oldLanguageFormData = this.LanguageFormData;
-        this.loadInitialData(this.datas);
-      }  
-    }
-  }
-
-  loadInitialData(datas) {
-
-    console.log("language String="+this.LanguageFormData);
-
-    if(datas.length !== 0)
-    {
-      for(var i=0;i<datas.length;i++)
-      {
-        if(datas[i].name === this.LanguageFormData)
-            this._selectedIndex = i;
-      }
-      console.log("selected index="+this._selectedIndex);
-    }
-    else
-    {
-      console.log("null or undefined");
-=======
     if (this.LanguageFormData != this.oldLanguageFormData) {
       console.log('ngDoCheck countryForm data=' + this.LanguageFormData);
       this.oldLanguageFormData = this.LanguageFormData;
@@ -148,7 +95,6 @@ export class LanguagesComponent implements OnInit {
       console.log('selected index=' + this._selectedIndex);
     } else {
       console.log('null or undefined');
->>>>>>> 1b15f1a1adbb343db73b5128979593f0145a2af0
     }
 
   }
