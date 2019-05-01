@@ -230,7 +230,7 @@ export class StatuteComponent implements OnInit {
     this.statuteSelectedString = $event.selectedObject;
     this.arrayParitairCommitee = $event.arrayObject;
 
-    console.log(this.arrayParitairCommitee);
+    // console.log(this.arrayParitairCommitee);
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.replaceArray(i);

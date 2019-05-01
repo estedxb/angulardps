@@ -32,10 +32,9 @@ export class CountriesComponent implements OnInit {
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
   onChange($event) {
     this.selectedIndex = $event.target.value;
+    
     console.log("countries selected=" + this.value);
     console.log(this.value);
-
-    // console.log( selected="+this.value.FormName);
 
     this.selectedString = this.value;
 

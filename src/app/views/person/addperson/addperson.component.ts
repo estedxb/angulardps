@@ -50,6 +50,7 @@ export class AddpersonComponent implements OnInit {
   public dataDropDown: string[];
   public dropDownMonth:string[];
   public dropDownYear:Array<string>;
+  public dataDropDownStatute:string[];
   public dateofBirth;
 
   public showFormIndex = 1;
@@ -70,9 +71,13 @@ export class AddpersonComponent implements OnInit {
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
 
-  constructor(private personsService: PersonService,private fb: FormBuilder) { }
+  constructor(private personsService: PersonService,private fb: FormBuilder) { 
+    this.setDummyStatute();
+  }
 
   ngOnInit() {
+
+    this.setDummyStatute();
 
     this.dataDropDown = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
     this.dropDownMonth = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
@@ -105,7 +110,7 @@ export class AddpersonComponent implements OnInit {
    });
 
    this.AddPersonForm2 = new FormGroup({
-        txtFunctie: new FormControl('', [Validators.required]),
+        functie: new FormControl('', [Validators.required]),
         statute: new FormControl('', [Validators.required]),
         birthPlace: new FormControl('', [Validators.required]),
         yearOfBirth: new FormControl('', [Validators.required]),
@@ -119,6 +124,7 @@ export class AddpersonComponent implements OnInit {
         postalCode: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
         mobileNumber: new FormControl('', [Validators.required]),
+        netExpenseAllowance: new FormControl(''),
         telephoneNumber: new FormControl('', [Validators.required]),
         emailAddress: new FormControl('', [Validators.required]),
         language: new FormControl('', [Validators.required]),
@@ -232,6 +238,21 @@ export class AddpersonComponent implements OnInit {
     return digitsValid;
   }
 
+  setDummyStatute() {
+    this.dataDropDownStatute = 
+    [
+      "Arbeider",
+      "Bediende",
+      "Jobstudent Arbeider",
+      "Flexijob Arbeider",
+      "Seizoensarbeider",
+      "Gelegenheidsarbeider horeca",
+      "Jobstudent Bediende",
+      "Flexijob Bediende" 
+    ];
+  
+  }
+
   setPersonVatNumber() {
 
     let ssid:number = this.AddPersonForm1.get('socialSecurityNumber').value;
@@ -289,22 +310,24 @@ export class AddpersonComponent implements OnInit {
 
   loadPersonData(response:any){
 
-    this.DpsPersonObject.person.dateOfBirth = response.person.dateOfBirth;
-    this.DpsPersonObject.person.placeOfBirth = response.person.placeOfBirth;
-    this.DpsPersonObject.person.countryOfBirth = response.person.countryOfBirth;
-    this.DpsPersonObject.person.nationality = response.person.nationality;
-    this.DpsPersonObject.person.gender = response.person.gender;
-    this.DpsPersonObject.person.firstName = response.person.firstName;
-    this.DpsPersonObject.person.lastName = response.person.lastName;
+    // this.DpsPersonObject.person.dateOfBirth = response.person.dateOfBirth;
+    // this.DpsPersonObject.person.placeOfBirth = response.person.placeOfBirth;
+    // this.DpsPersonObject.person.countryOfBirth = response.person.countryOfBirth;
+    // this.DpsPersonObject.person.nationality = response.person.nationality;
+    // this.DpsPersonObject.person.gender = response.person.gender;
+    // this.DpsPersonObject.person.firstName = response.person.firstName;
+    // this.DpsPersonObject.person.lastName = response.person.lastName;
   
     this.AddPersonForm1.controls['socialSecurityNumber'].setValue(response.customerVatNumber);
     this.AddPersonForm1.controls['dataOfBirth'].setValue(response.person.dateOfBirth);
     this.AddPersonForm1.controls['countryOfBirth'].setValue(response.person.countryOfBirth);
     this.AddPersonForm1.controls['nationality'].setValue(response.person.nationality);
 
+    this.loadObjects(response);
+
   }
 
-  createObjects(response:any) {
+  loadObjects(response:any) {
 
   this.DpsPersonObject = new DpsPerson();
   this.PersonObject = new Person();
@@ -377,6 +400,133 @@ export class AddpersonComponent implements OnInit {
   this.DpsPersonObject.isEnabled = response.isEnabled;
   this.DpsPersonObject.isArchived = response.isArchived;
 
+}
+
+setPostData() {
+
+  this.DpsPersonObject = new DpsPerson();
+  this.PersonObject = new Person();
+
+  this.SocialSecurityNumberObject = new SocialSecurityNumber();
+  this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
+  this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
+
+  this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+  this.DpsPersonObject.person = this.PersonObject;  
+
+  this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber
+  this.DpsPersonObject.person.dateOfBirth =  this.AddPersonForm1.get('monthOfBirth').value +'/' + this.AddPersonForm1.get('dateOfBirth').value + '/' + this.AddPersonForm1.get('yearOfBirth').value;
+  this.DpsPersonObject.person.placeOfBirth = this.AddPersonForm1.get('placeofBirth').value;
+  this.DpsPersonObject.person.countryOfBirth = this.AddPersonForm1.get('countryOfBirth').value;
+  this.DpsPersonObject.person.nationality = this.AddPersonForm1.get('nationality').value;
+  this.DpsPersonObject.person.gender = this.AddPersonForm1.get('gender').value;
+  this.DpsPersonObject.person.firstName = this.AddPersonForm1.get('firstName').value;
+  this.DpsPersonObject.person.lastName = this.AddPersonForm1.get('lastName').value;
+  
+  this.DpsPersonObject.person.address = new Address();
+  this.DpsPersonObject.person.address.street = this.AddPersonForm1.get('street').value;
+  this.DpsPersonObject.person.address.streetNumber = this.AddPersonForm1.get('streetnumber').value;
+  this.DpsPersonObject.person.address.bus = this.AddPersonForm1.get('bus').value;
+  this.DpsPersonObject.person.address.city = this.AddPersonForm1.get('city').value;
+  this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalcode').value;
+
+  this.DpsPersonObject.person.language = new Language();
+  this.DpsPersonObject.person.language = this.AddPersonForm1.get('streetnumber').value;
+
+  this.DpsPersonObject.person.email = new EmailAddress();
+  this.DpsPersonObject.person.email.emailAddress  = this.AddPersonForm1.get('emailAddress').value;
+
+  this.DpsPersonObject.person.mobile = new PhoneNumber();
+  this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
+
+  this.DpsPersonObject.person.phone = new PhoneNumber();
+  this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
+
+  this.DpsPersonObject.person.bankAccount = new BankAccount();
+  this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
+  this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
+
+  this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
+  this.DpsPersonObject.person.status = "";
+
+  this.DpsPersonObject.customerPostionId = this.AddPersonForm1.get('').value;
+  this.DpsPersonObject.renumeration = new Renumeration();
+  
+  this.DpsPersonObject.addittionalInformation = "";
+  this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
+  this.DpsPersonObject.medicalAttestation.location = "";
+  this.DpsPersonObject.medicalAttestation.name = "";
+
+  this.DpsPersonObject.vcaAttestation = new Documents();
+  this.DpsPersonObject.vcaAttestation.location = "";
+  this.DpsPersonObject.vcaAttestation.name = "";
+
+  this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+  this.DpsPersonObject.constructionCards = [];
+
+  this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
+  this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
+  this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
+  this.DpsPersonObject.studentAtWorkProfile.attestationDate = "";
+  this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
+  this.DpsPersonObject.studentAtWorkProfile.balance = 0;
+
+  this.DpsPersonObject.driverProfiles = [];
+
+  let driverProfilesObject:DriverProfilesItem = new DriverProfilesItem();
+  driverProfilesObject.attestation = new Documents();
+  driverProfilesObject.attestation.location = "";
+  driverProfilesObject.attestation.name = "";
+
+  this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
+
+  this.DpsPersonObject.otherDocuments = [];
+  
+  let otherDocumentsObject:Documents = new Documents();
+  otherDocumentsObject.location="";
+  otherDocumentsObject.name = "";
+
+  this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
+
+  this.DpsPersonObject.isEnabled = false;
+  this.DpsPersonObject.isArchived = false;
+
+}
+
+onChangeDropDownStatute($event) {
+  this.DpsPersonObject.statute = new Statute();
+  this.DpsPersonObject.statute.name = $event;
+  this.DpsPersonObject.statute.type = "";
+}
+
+onCountryReceive($event) {
+  this.DpsPersonObject.person.address.country = $event.countryName;
+  this.DpsPersonObject.person.address.countryCode = $event.countryCode;  
+}
+
+onStatuteReceive($event){
+
+  this.DpsPersonObject.statute = new Statute();
+  this.DpsPersonObject.statute.name = $event.value.name
+  this.DpsPersonObject.statute.type = $event.value.type;
+}
+
+onHourlyWageReceive($event){
+  this.DpsPersonObject.renumeration.hourlyWage = 0;
+}
+
+onNetExpensesReceive($event){
+  this.DpsPersonObject.renumeration.netCostReimbursment = 0;
+}
+
+onChangeCostImbursement($event) {
+  this.DpsPersonObject.renumeration.costReimbursment = $event;
+}
+
+
+changeKM($event){
+
+  this.DpsPersonObject.renumeration.transportationAllowance = $event.value;
 }
 
   onFormwardClick() {
