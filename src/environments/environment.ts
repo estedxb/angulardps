@@ -35,7 +35,7 @@ export const environment = {
   getWorkSchedule: 'WorkSchedule',
   getPosition: 'Position',
   getPerson: 'Person',
-  getFileUploads: '',
+  getPositionFileUploads:'https://dpsstorageaccountdev.blob.core.windows.net/postion/'
 };
 
 /*
