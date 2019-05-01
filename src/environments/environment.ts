@@ -29,13 +29,14 @@ export const environment = {
   getPositionsByVatNumber: 'Position/ForCustomer',
   getPersonsByVatNumber: 'Person/ForCustomer',
   getPersonBySSIDNVatNumber: 'Person',
-  getPersonById:'Person',
+  getPersonById: 'Person',
   getUser: 'User',
   getLocation: 'Location',
   getWorkSchedule: 'WorkSchedule',
   getPosition: 'Position',
   getPerson: 'Person',
-  getFileUploads: ''
+  getFileUploads: '',
+  getPositionFileUploads:'https://dpsstorageaccountdev.blob.core.windows.net/postion/'
 };
 
 /*
