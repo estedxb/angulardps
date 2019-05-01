@@ -82,55 +82,32 @@ export class CountriesList { countryCode: string; countryName: string; }
 export class Language { name: string; shortName: string; }
 
 export class User {
-    userName: string;
-    firstName: string;
-    lastName: string;
-    email: EmailAddress;
-    mobile: PhoneNumber;
-    phone: PhoneNumber;
-    language: Language;
+    userName: string; firstName: string; lastName: string; email: EmailAddress; mobile: PhoneNumber; phone: PhoneNumber; language: Language;
 }
 
 export class DpsUser {
-    customerVatNumber: string;
-    user: User;
-    userRole: string;
-    isEnabled: boolean;
-    isArchived: boolean;
+    customerVatNumber: string; user: User; userRole: string; isEnabled: boolean; isArchived: boolean;
 }
 
 export class Location {
-    id: number;
-    customerVatNumber: string;
-    name: string;
-    address?: Address;    
-    isEnabled: boolean;
-    isArchived: boolean;
-   
+    id: number; customerVatNumber: string; name: string; address?: Address; isEnabled: boolean; isArchived: boolean;
 }
 
 export class DpsPostion {
-    id: number;
-    customerVatNumber: string;
-    position: _Position;
-    isEnabled: boolean;
-    isArchived: boolean;
+    id: number; customerVatNumber: string; position: _Position; isEnabled: boolean; isArchived: boolean;
 }
 // tslint:disable-next-line: class-name
 export class _Position {
-    name: string;
-    taskDescription: string;
-    isStudentAllowed: boolean;
-    costCenter: string;
-    workstationDocument: Documents;
+    name: string; taskDescription: string; isStudentAllowed: boolean; costCenter: string; workstationDocument: Documents;
 }
 
 export class DpsWorkSchedule {
-    customerVatNumber: string; name: string; workschedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
+    id: number; customerVatNumber: string; name: string; workSchedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
 }
-export class WorkSchedule { workday: WorkDay; }
-export class WorkDay { DayofWeek: number; WorkTimes?: WorkTime[]; BreakTimes?: WorkTime[]; }
-export class WorkTime { timespan: string; }
+export class WorkSchedule { workDays: WorkDays[]; }
+export class WorkDays { dayOfWeek: number; workTimes: WorkTimes[]; breakTimes: BreakTimes[]; }
+export class WorkTimes { startTime: string; endTime: string; title: string; }
+export class BreakTimes { startTime: string; endTime: string; title: string; }
 export class Login { userid: string; password: string; }
 export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 
@@ -173,19 +150,11 @@ export class SocialSecurityNumber { number: string; }
 export class Gender { genderId: number; title: string; }
 export class BankAccount { bic: string; iban: string; }
 export class Renumeration {
-    hourlyWage: number;
-    costReimbursment: boolean;
-    netCostReimbursment: number;
-    transportationAllowance: boolean;
+    hourlyWage: number; costReimbursment: boolean; netCostReimbursment: number; transportationAllowance: boolean;
 }
 export class MedicalAttestation { location: string; name: string; }
 export class ConstructionProfile { constructionCards: Documents[]; }
-export class StudentAtWorkProfile {
-    attestation: Documents;
-    attestationDate: string;
-    contingent: number;
-    balance: number;
-}
+export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number; }
 export class DriverProfilesItem { type: string; attestation: Documents; }
 export class Documents { location: string; name: string; }
 
@@ -196,10 +165,4 @@ export class ConstructionCardsItem1 { location: string; name: string; }
 export class OtherDocumentsItem1 { location: string; name: string; }
 */
 
-
-/*
-enum AlertType {
-    error = 'error',
-    message = 'message'
-}
-*/
+// enum AlertType { error = 'error', message = 'message' }

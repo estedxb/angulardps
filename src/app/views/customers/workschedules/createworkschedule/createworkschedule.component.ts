@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Address, Language, WorkSchedule, DpsUser, LoginToken } from '../../../../shared/models';
+import { Address, LoginToken, DpsUser, DpsWorkSchedule, WorkSchedule } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-createworkschedule',
@@ -10,120 +11,110 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
   styleUrls: ['./createworkschedule.component.css']
 })
 export class CreateworkscheduleComponent implements OnInit {
-  public languageString;
-  public languageShortName;
-  // public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
+  public currentDpsWorkSchedule: DpsWorkSchedule;
+  public oldCurrentWorkSchedule: any;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
-  @Input('parentData') public WorkScheduleId;
 
-  @Input() public WorkScheduleFormData;
-  WorkScheduleData: any;
   WorkScheduleForm: FormGroup;
-  location: WorkSchedule;
-  address: Address;
-  language: Language;
+  workSchedule: WorkSchedule;
 
-  constructor(private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService) { }
+  @Output() showmsg = new EventEmitter<object>();
+
+  constructor(
+    private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService,
+    public dialogRef: MatDialogRef<CreateworkscheduleComponent>, @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule) {
+    this.currentDpsWorkSchedule = dpsworkscheduledata;
+  }
+
+  /*
+    ngDoCheck() {
+      console.log('ngDoCheck CreateLocationComponent');
+      console.log(this.currentDpsWorkSchedule);
+      if (this.oldCurrentLocation !== this.currentDpsWorkSchedule) {
+        this.oldCurrentLocation = this.currentDpsWorkSchedule;
+        this.loadLocationToEdit();
+      }
+    }
+  */
 
   ngOnInit() {
-    console.log('Current WorkScheduleID : ' + this.WorkScheduleId);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.WorkScheduleForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      street: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
-      number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-      bus: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-      place: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      postcode: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-z0-9]+$')]),
-      country: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])
+      name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])
     });
-    this.createObjects();  // check validations
-    this.loadWorkScheduleToEdit(this.VatNumber);
+    this.loadWorkScheduleToEdit();
   }
 
-  loadWorkScheduleToEdit(vatNumber: string) {
-    this.workschedulesService.getWorkscheduleByVatNumber(vatNumber).subscribe(response => {
-      response.forEach((element) => {
-
-      });
-    });
-  }
-
-  receiveMessageLanguage($event) {
-    this.languageString = $event.name;
-    this.languageShortName = $event.shortName;
-    this.createObjects();
-  }
-
-  createObjects() {
-    this.setJSONObject();
-  }
-
-  setJSONObject() {
-    this.WorkScheduleData = {
-      id: this.WorkScheduleId,
-      customerVatNumber: this.VatNumber,
-      name: this.WorkScheduleData.name,
-      address: this.WorkScheduleData.address,
-      isEnabled: this.WorkScheduleData.isEnabled,
-      isArchived: this.WorkScheduleData.isArchived,
-    };
-  }
-
-  public updateData() {
-    this.createObjects();
-  }
-
-  public getJSONObject() {
-    if (this.WorkScheduleData !== undefined && this.WorkScheduleData !== null) {
-      return this.WorkScheduleData;
+  loadWorkScheduleToEdit() {
+    if (this.currentDpsWorkSchedule.id !== undefined || this.currentDpsWorkSchedule.id !== 0) {
+      this.WorkScheduleForm.controls.name.setValue(this.currentDpsWorkSchedule.name + '');
+    } else {
+      this.currentDpsWorkSchedule.id = 0;
     }
   }
 
-  onSaveWorkScheduleClick() {
+  ShowMessage(msg, action) {
+    this.showmsg.emit({ MSG: msg, Action: action });
+  }
 
-    this.updateData();
+  updateData() { this.createObjects(); }
 
-    console.log('WorkScheduleData=' + this.WorkScheduleData);
-    console.log(this.WorkScheduleData);
+  createObjects() {
+    this.currentDpsWorkSchedule.name = this.WorkScheduleForm.get('name').value;
+  }
 
-    if (this.WorkScheduleData !== undefined && this.WorkScheduleData !== null) {
-      // check if WorkScheduleId has value
-      // if WorkScheduleId has value ==> Update WorkSchedule
-      // if WorkScheduleId is null ==> Create WorkSchedule
-      if (this.WorkScheduleId !== undefined && this.WorkScheduleId !== null) {
-        // Update WorkSchedule
-        this.workschedulesService.updateWorkschedule(this.WorkScheduleData).subscribe(res => {
-          console.log('response :: ');
-          console.log(res);
-        },
-          (err: HttpErrorResponse) => {
-            console.log('Error :: ');
-            console.log(err);
-            if (err.error instanceof Error) {
-              console.log('Error occured=' + err.error.message);
-            } else {
-              console.log('response code=' + err.status);
-              console.log('response body=' + err.error);
+  public getJSONObject() {
+    if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {
+      return this.currentDpsWorkSchedule;
+    }
+  }
+
+  onSaveLocationClick() {
+    this.createObjects();
+    console.log('data ::', this.currentDpsWorkSchedule);
+    if (this.WorkScheduleForm.valid) {
+      if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {
+        if (
+          this.currentDpsWorkSchedule.id !== 0 && this.currentDpsWorkSchedule.id !== undefined &&
+          this.currentDpsWorkSchedule.id !== null) {
+          console.log('Update Work Schedule');
+          // Update Work Schedule
+          this.workschedulesService.updateWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
+            console.log('Update Work Schedule Response :: ', res);
+            this.dialogRef.close(this.currentDpsWorkSchedule);
+          },
+            (err: HttpErrorResponse) => {
+              console.log('Error :: ');
+              console.log(err);
+              if (err.error instanceof Error) {
+                console.log('Error occured=' + err.error.message);
+              } else {
+                console.log('response code=' + err.status);
+                console.log('response body=' + err.error);
+              }
             }
-          }
-        );
-      } else {
-        // Create WorkSchedule
-        this.workschedulesService.createWorkschedule(this.WorkScheduleData).subscribe(res => {
-          console.log('response=' + res);
-        },
-          (err: HttpErrorResponse) => {
-            if (err.error instanceof Error) {
-              console.log('Error occured=' + err.error.message);
-            } else {
-              console.log('response code=' + err.status);
-              console.log('response body=' + err.error);
+          );
+        } else {
+          console.log('Create Work Schedule');
+          this.workschedulesService.createWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
+            console.log('Work Schedule Response :: ', res.body);
+            this.currentDpsWorkSchedule.id = res.body;
+            this.dialogRef.close(this.currentDpsWorkSchedule);
+          },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log('Error occured=' + err.error.message);
+              } else {
+                console.log('response code=' + err.status);
+                console.log('response body=' + err.error);
+              }
             }
-          }
-        );
+          );
+        }
       }
+    } else {
+      console.log('Form is Not Vaild');
     }
   }
 }

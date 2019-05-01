@@ -16,19 +16,22 @@ export class CreatelocationComponent implements OnInit {
   public countryStringR;
   public countryCodeR;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber; 
+  public VatNumber = this.loginuserdetails.customerVatNumber;
 
   LocationForm: FormGroup;
-  location: Location;
+  // location: Location;
   address: Address;
   @Output() public childEvent = new EventEmitter();
+  @Output() showmsg = new EventEmitter<object>();
 
-  constructor(private formBuilder: FormBuilder, private locationsService: LocationsService, public dialogRef: MatDialogRef<CreatelocationComponent>,@Inject(MAT_DIALOG_DATA) public locationdata: Location) { 
-     this.currentlocation = locationdata;
+  constructor(
+    private formBuilder: FormBuilder, private locationsService: LocationsService,
+    public dialogRef: MatDialogRef<CreatelocationComponent>, @Inject(MAT_DIALOG_DATA) public locationdata: Location) {
+    this.currentlocation = locationdata;
   }
 
   ngOnInit() {
-    console.log('Current Location :: ' , this.currentlocation);
+    console.log('Current Location :: ', this.currentlocation);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.LocationForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
@@ -41,9 +44,9 @@ export class CreatelocationComponent implements OnInit {
     });
     this.loadLocationToEdit();
   }
-  
-  loadLocationToEdit() {    
-    if (this.currentlocation.id !== undefined || this.currentlocation.id!==0){
+
+  loadLocationToEdit() {
+    if (this.currentlocation.id !== undefined || this.currentlocation.id !== 0) {
       this.LocationForm.controls.name.setValue(this.currentlocation.name + '');
       this.LocationForm.controls.street.setValue(this.currentlocation.address.street + '');
       this.LocationForm.controls.number.setValue(this.currentlocation.address.streetNumber + '');
@@ -52,39 +55,36 @@ export class CreatelocationComponent implements OnInit {
       this.LocationForm.controls.postcode.setValue(this.currentlocation.address.postalCode + '');
       this.LocationForm.controls.country.setValue(this.currentlocation.address.country + '');
       this.countryString = this.currentlocation.address.country;
-      this.createObjects();  
-    }
-    else{
+      this.createObjects();
+    } else {
       this.currentlocation.id = 0;
     }
   }
 
-  receiveMessageCountry($event){
-    console.log("recevied event");
+  receiveMessageCountry($event) {
+    console.log('recevied event');
     console.log($event);
-    if($event.countryName !== undefined && $event.countryCode !== undefined)
-    {
+    if ($event.countryName !== undefined && $event.countryCode !== undefined) {
       this.countryStringR = $event.countryName;
       this.countryCodeR = $event.countryCode;
-      console.log("countryString="+this.countryString);
-      this.createObjects();  
+      console.log('countryString=' + this.countryString);
+      this.createObjects();
     }
   }
 
-  updateData()
-  {
+  updateData() {
     this.createObjects();
   }
 
-  createObjects() {  
+  createObjects() {
     this.currentlocation.name = this.LocationForm.get('name').value;
     this.currentlocation.address.street = this.LocationForm.get('street').value;
     this.currentlocation.address.streetNumber = this.LocationForm.get('number').value;
     this.currentlocation.address.bus = this.LocationForm.get('bus').value;
     this.currentlocation.address.city = this.LocationForm.get('place').value;
     this.currentlocation.address.postalCode = this.LocationForm.get('postcode').value;
-    this.currentlocation.address.country =  this.countryStringR;
-    this.currentlocation.address.countryCode =  this.countryCodeR;
+    this.currentlocation.address.country = this.countryStringR;
+    this.currentlocation.address.countryCode = this.countryCodeR;
     this.childEvent.emit(this.currentlocation);
   }
 
@@ -96,14 +96,14 @@ export class CreatelocationComponent implements OnInit {
 
   onSaveLocationClick() {
     this.createObjects();
-    console.log('data ::' , this.currentlocation);
-    if (this.LocationForm.valid){
-      if (this.currentlocation !== undefined && this.currentlocation !== null) { 
-        if (this.currentlocation.id !== 0  && this.currentlocation.id !== undefined && this.currentlocation.id !== null) {
+    console.log('data ::', this.currentlocation);
+    if (this.LocationForm.valid) {
+      if (this.currentlocation !== undefined && this.currentlocation !== null) {
+        if (this.currentlocation.id !== 0 && this.currentlocation.id !== undefined && this.currentlocation.id !== null) {
           console.log('Update Location');
           // Update Location
           this.locationsService.updateLocation(this.currentlocation).subscribe(res => {
-            console.log('Update Location Response :: ', res);            
+            console.log('Update Location Response :: ', res);
             this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
@@ -117,12 +117,12 @@ export class CreatelocationComponent implements OnInit {
               }
             }
           );
-          //this.dialogRef.close();
+          // this.dialogRef.close();
         } else {
-          console.log('Create Location');          
+          console.log('Create Location');
           this.locationsService.createLocation(this.currentlocation).subscribe(res => {
-            console.log('  Location Response :: ' , res.body);
-            this.currentlocation.id = res.body;            
+            console.log('  Location Response :: ', res.body);
+            this.currentlocation.id = res.body;
             this.dialogRef.close(this.currentlocation);
           },
             (err: HttpErrorResponse) => {
@@ -134,11 +134,11 @@ export class CreatelocationComponent implements OnInit {
               }
             }
           );
-          //this.dialogRef.close();
+          // this.dialogRef.close();
         }
       }
     } else {
-        console.log('Form is Not Vaild');
+      console.log('Form is Not Vaild');
     }
   }
 }
