@@ -13,10 +13,9 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
-import { CreateworktimeComponent } from './componentcontrols/createworktime/createworktime.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, CreateworktimeComponent],
+  declarations: [AppComponent, routingComponents],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

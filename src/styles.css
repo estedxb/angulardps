@@ -66,6 +66,12 @@ body {
   padding: 5px 5px 5px 7px;
 }
 
+#maincontentarea .whitebtn span {
+  font-size: 15px;
+  font-weight: normal;
+  padding: 0px;
+}
+
 #maincontentarea #customerUpdate span {
   padding: 0px;
 }
@@ -76,7 +82,8 @@ body {
 #maincontentarea input[type="text"],
 #maincontentarea input[type="password"],
 #maincontentarea input[type="number"],
-#maincontentarea input[type="email"] {
+#maincontentarea input[type="email"],
+#maincontentarea textarea {
   width: 100%;
   font-size: 15px;
   font-weight: normal;
@@ -353,12 +360,18 @@ div#CustomerContact {
   margin: 0px;
 }
 
-#PositionForm .rb label, #PositionForm .rb span  {  
-  float: left;
+#PositionForm .rb label,
+#PositionForm .rb span {
+  /* float: left; */
+}
+#PositionForm .rb span {
+  height: 19px;
+  padding: 0px;
+  margin: 0px;
 }
 
 #PositionForm .rb label {
-  padding: 14px 5px;
+  padding: 0px 5px 14px;
 }
 
 #maincontentarea .dialog .inputWithIcon,
@@ -470,8 +483,9 @@ div#CustomerContact {
 }
 
 .whitebtn img {
-  width: 28px;
-  margin: 0px;
+  position: absolute;
+  width: 10%;
+  padding: 4px 0px 4px 10px;
 }
 .whitebtn:hover {
   color: #000;
@@ -563,6 +577,7 @@ div#CustomerContact {
   -webkit-text-shadow: 0 0 2px #ccc;
 }
 .inputWrapper img {
+  position: absolute;
   width: 28px;
   float: right;
   padding: 2px 0px 2px 10px;

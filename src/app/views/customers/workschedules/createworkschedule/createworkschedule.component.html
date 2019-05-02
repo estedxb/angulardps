@@ -1,7 +1,8 @@
 <div class="updateModel">
   <div class="row ">
     <div class="col-sm-12 mat-dialog-close">
-      <button mat-button [mat-dialog-close]="" class=""><img src="../../../../../assets/svg/closebox.svg" /></button>
+      <button mat-button [mat-dialog-close]="currentDpsWorkSchedule" class=""><img
+          src="../../../../../assets/svg/closebox.svg" /></button>
     </div>
   </div>
   <div class="row ">
@@ -41,51 +42,32 @@
               <th>Vrij</th>
               <th>Zat</th>
               <th>Zon</th>
+              <th></th>
             </thead>
-            <tr>
-              <td>
-                <input name="WorkSchedule_Mon_HH_1" value=":" />
+            <tr *ngFor="let workScheduleRow of workScheduleRows">
+              <td *ngFor="let weekDayOf of workScheduleRow.weekDayOf">
+                <div class="row"
+                  (click)="onWorkTimeSelector(workScheduleRow.rowid,weekDayOf.dayOfWeek,weekDayOf.workTimes)">
+                  <div class="col col-sm-5 start">
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_Start_{{weekDayOf.dayOfWeek}}"
+                      [value]="weekDayOf.workTimes.startTime" [title]="weekDayOf.workTimes.title" placeholder=":"
+                      disabled />
+                  </div>
+                  <div class="col col-sm-2">&nbsp;-&nbsp;</div>
+                  <div class="col col-sm-5 end">
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}"
+                      [value]="weekDayOf.workTimes.endTime" [title]="weekDayOf.workTimes.title" placeholder=":"
+                      disabled />
+                  </div>
+                </div>
               </td>
               <td>
-                <input name="WorkSchedule_Tue_HH_1" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Wed_HH_1" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Thr_HH_1" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Fri_HH_1" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Sat_HH_1" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Sun_HH_1" value=":" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input name="WorkSchedule_Mon_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Tue_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Wed_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Thr_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Fri_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Sat_HH_2" value=":" />
-              </td>
-              <td>
-                <input name="WorkSchedule_Sun_HH_2" value=":" />
+                <div class="row">
+                  <div class="col col-sm-12 mat-dialog-close">
+                    <button (click)="removeRow(workScheduleRow.rowid)"><img
+                        src='../../../../../assets/svg/remove.svg' /></button>
+                  </div>
+                </div>
               </td>
             </tr>
           </table>
@@ -93,7 +75,7 @@
       </div>
       <div class="row">
         <div class="col col-sm-12 mat-dialog-close">
-          <button><img src='../../../../../assets/svg/addblack.svg' /></button>
+          <button (click)="addEmptyRow()"><img src='../../../../../assets/svg/addblack.svg' /></button>
         </div>
       </div>
     </div>

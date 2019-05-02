@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './createworktime.component.html',
   styleUrls: ['./createworktime.component.css']
 })
-export class CreateworktimeComponent implements OnInit {
+export class CreateWorkTimeComponent implements OnInit {
 
   constructor() { }
 

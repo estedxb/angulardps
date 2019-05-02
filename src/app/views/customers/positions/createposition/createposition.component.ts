@@ -66,8 +66,6 @@ export class CreatepositionComponent implements OnInit {
     console.log(this.currentPosition);
   }
 
-
-
   public updateData() {
     this.createObjects();
   }
