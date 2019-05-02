@@ -22,11 +22,9 @@ export class CreateuserComponent implements OnInit {
   // public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
-  @Output()
-  showmsg = new EventEmitter<object>();
+  @Output() showmsg = new EventEmitter<object>();
 
   UserForm: FormGroup;
-  dpsUser: DpsUser;
   user: User;
   contactsEmail: EmailAddress;
   phoneNumber: PhoneNumber;
@@ -51,7 +49,6 @@ export class CreateuserComponent implements OnInit {
   */
 
   ngOnInit() {
-    this.currentUser = this.userData;
     console.log('Current User :: ', this.currentUser);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.UserForm = new FormGroup({
@@ -62,15 +59,13 @@ export class CreateuserComponent implements OnInit {
       telephone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
-
     this.loadUserToEdit();
-    this.createObjects();  // check validations
   }
 
   loadUserToEdit() {
-    try {
-      console.log('this.currentUser.user :: ', this.currentUser.user);
-      if (this.currentUser.user !== null) {
+    console.log('this.currentUser.user :: ', this.currentUser.user);
+    if (this.currentUser.user !== null) {
+      if (this.currentUser.user.firstName !== null && this.currentUser.user.firstName !== '') {
         this.UserForm.controls.firstname.setValue(this.currentUser.user.firstName);
         this.UserForm.controls.lastname.setValue(this.currentUser.user.lastName);
         this.UserForm.controls.emailaddress.setValue(this.currentUser.user.email.emailAddress);
@@ -80,17 +75,24 @@ export class CreateuserComponent implements OnInit {
         this.addDefaultLaguage();
         this.languageString = this.currentUser.user.language.name;
         this.languageShortName = this.currentUser.user.language.shortName;
+        this.isNewUser = false;
       } else {
         this.isNewUser = true;
       }
-    } catch (e) {
-      alert(e.message);
+    } else {
+      this.isNewUser = true;
     }
+    console.log('isNewUser :: ' + this.isNewUser);
   }
 
-  ShowMessage(msg, action) {
-    this.showmsg.emit({ MSG: msg, Action: action });
+  receiveMessageLanguage($event: { name: any; shortName: any; }) {
+    this.languageStringNew = $event.name;
+    this.languageShortNameNew = $event.shortName;
+
+    this.createObjects();
   }
+
+  ShowMessage(msg, action) { this.showmsg.emit({ MSG: msg, Action: action }); }
 
   addDefaultLaguage() {
     if (this.currentUser.user.language === null) {
@@ -103,12 +105,7 @@ export class CreateuserComponent implements OnInit {
     }
   }
 
-  receiveMessageLanguage($event: { name: any; shortName: any; }) {
-    this.languageStringNew = $event.name;
-    this.languageShortNameNew = $event.shortName;
-
-    this.createObjects();
-  }
+  public updateData() { this.createObjects(); }
 
   createObjects() {
     console.log('createObjects :: ', this.UserForm);
@@ -123,10 +120,6 @@ export class CreateuserComponent implements OnInit {
     this.currentUser.userRole = this.UserForm.get('usertype').value;
   }
 
-  public updateData() {
-    this.createObjects();
-  }
-
   public getJSONObject() {
     if (this.currentUser !== undefined && this.currentUser !== null) {
       return this.currentUser;
@@ -138,8 +131,7 @@ export class CreateuserComponent implements OnInit {
     console.log('data ::', this.currentUser);
     if (this.UserForm.valid) {
       if (this.currentUser !== undefined && this.currentUser !== null) {
-        if (this.isNewUser) {
-          // 0 && this.currentUser.id !== undefined && this.currentUser.id !==
+        if (!this.isNewUser) {
           console.log('Update User');
           // Update User
           this.userService.updateUser(this.currentUser).subscribe(res => {

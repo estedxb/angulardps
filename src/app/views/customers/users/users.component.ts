@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
-import {
-  MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef, MAT_DIALOG_DATA
-} from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
@@ -23,7 +20,7 @@ export class UsersComponent implements OnInit {
   public phoneNumber: PhoneNumber;
   public language: Language;
   public errorMsg;
-  public SelectedIndex = 0;
+  public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
@@ -39,9 +36,7 @@ export class UsersComponent implements OnInit {
     }, error => this.ShowMessage(error, 'error'));
   }
 
-  FilterTheArchive() {
-    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-  }
+  FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -54,11 +49,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  receiveChildMessage($event) {
-    console.log('receiveChildmessage :: ', $event);
-    // this.ShowMessage($event.MSG, $event.Action);
-  }
-
   openDialog(): void {
     try {
       const dialogConfig = new MatDialogConfig();
@@ -69,16 +59,13 @@ export class UsersComponent implements OnInit {
       dialogConfig.ariaLabel = 'Arial Label Location Dialog';
 
       const dialogRef = this.dialog.open(CreateuserComponent, dialogConfig);
-
-      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
-        this.ShowMessage($event.MSG, $event.Action);
-      });
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex > 0) {
+        if (this.SelectedIndex >= 0) {
           // maindatas Update User
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
@@ -88,9 +75,10 @@ export class UsersComponent implements OnInit {
           console.log('this.data.user :: ', this.data.user);
           try {
             if (this.data.user !== null) {
-              if (this.data.user.firstName !== undefined || this.data.user.firstName !== '' || this.data.user.firstName !== null) {
+              if (this.data.user.firstName !== undefined && this.data.user.firstName !== '' && this.data.user.firstName !== null) {
                 this.maindatas.push(this.data);
-                console.log('New User Added Successfully:: ', this.maindatas);
+                console.log('New User Added Successfully :: ', this.maindatas);
+                this.FilterTheArchive();
                 this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is added successfully.', '');
               } else {
                 console.log('New User Added Failed :: ', this.maindatas);
@@ -98,7 +86,6 @@ export class UsersComponent implements OnInit {
             } else {
               console.log('New User Added Failed :: ', this.maindatas);
             }
-            this.FilterTheArchive();
           } catch (e) { }
         }
       });
@@ -107,6 +94,7 @@ export class UsersComponent implements OnInit {
 
 
   onClickAdd() {
+    this.SelectedIndex = -1;
 
     this.data = new DpsUser();
     this.user = new User();
@@ -140,25 +128,25 @@ export class UsersComponent implements OnInit {
   }
 
   onClickEdit(i) {
-    console.log('Edit Clicked Index :: ' + i);
-    this.data = this.maindatas[i];
+    this.SelectedIndex = i;
+    console.log('Edit Clicked Index :: ' + this.SelectedIndex);
+    this.data = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
 
   updateUsers() {
     this.usersService.updateUser(this.data).subscribe(res => {
-      console.log('response :: ');
-      console.log(res);
+      console.log('response :: ', res, 'Data ::', this.data);
+      this.maindatas[this.SelectedIndex] = this.data;
+      this.FilterTheArchive();
     },
       (err: HttpErrorResponse) => {
-        console.log('Error :: ');
-        console.log(err);
+        console.log('Error :: ', err);
         if (err.error instanceof Error) {
           console.log('Error occured=' + err.error.message);
         } else {
-          console.log('response code=' + err.status);
-          console.log('response body=' + err.error);
+          console.log('response code=' + err.status, 'response body=' + err.error);
         }
       }
     );
@@ -169,6 +157,7 @@ export class UsersComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updateUsers();
+    this.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is deleted successfully.', '');
   }
 
   onStatusChange(event, i) {
@@ -177,5 +166,14 @@ export class UsersComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updateUsers();
+    let EnabledStatus = '';
+    if (event) {
+      EnabledStatus = 'enabled';
+    } else {
+      EnabledStatus = 'disabled';
+    }
+    this.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName
+      + '" is ' + EnabledStatus + ' successfully.', '');
   }
+
 }
