@@ -125,7 +125,7 @@ export class Person {
     socialSecurityNumber: SocialSecurityNumber;
     dateOfBirth: string;
     placeOfBirth: string;
-    countryOfBirth: string;
+    countryOfBirth: string;    
     nationality: string;
     gender: Gender;
     firstName: string;
