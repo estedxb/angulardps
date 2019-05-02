@@ -28,6 +28,7 @@ export class PersonService {
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
       this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
       this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
+      this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
     }
     else {
       console.log('Data From JSON');
@@ -52,8 +53,17 @@ export class PersonService {
       headers: httpHeaders,
       observe: 'response'
     });
-
   }
+
+  public createPerson(person:any): Observable<any> {
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.postPersonURL, person, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+
   
   public updatePosition(id: any): Observable<any> {
     // const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });

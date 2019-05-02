@@ -45,10 +45,11 @@ export class CreatepositionComponent implements OnInit {
     console.log("before");
     console.log(this.currentPosition);    
 
-        if (this.currentPosition.id !== undefined || this.currentPosition.id!==0) {
-          this.PositionForm.controls.name.setValue(this.currentPosition.position.name);
-          this.PositionForm.controls.taskDescription.setValue(this.currentPosition.position.taskDescription);
-          this.PositionForm.controls.costCenter.setValue(this.currentPosition.position.costCenter);
+        if (this.currentPosition.id !== undefined || this.currentPosition.id!==0) {          
+          if(this.currentPosition.position.name !== undefined)
+            this.PositionForm.controls['name'].setValue(this.currentPosition.position.name);
+          this.PositionForm.controls['taskDescription'].setValue(this.currentPosition.position.taskDescription);
+          this.PositionForm.controls['costCenter'].setValue(this.currentPosition.position.costCenter);
           //this.PositionForm.controls.isStudentAllowed.setValue(this.currentPosition.position.isStudentAllowed);          
           this.isStudentAllowed = this.currentPosition.position.isStudentAllowed;
           this.createObjects(); 

@@ -5,8 +5,11 @@ import {
   HttpHeaders,
   HttpErrorResponse
 } from '@angular/common/http';
-import {  PersonService } from '../../../shared/person.service';
+import { PersonService } from '../../../shared/person.service';
+import { PositionsService } from '../../../shared/positions.service';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { ContactpersonComponent } from '../../../contactperson/contactperson.component';
+import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 
 import { DpsPerson ,Person ,SocialSecurityNumber ,Gender ,BankAccount ,Renumeration ,MedicalAttestation,Language,
   ConstructionProfile, StudentAtWorkProfile , Documents ,DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification } from '../../../shared/models';
@@ -51,7 +54,11 @@ export class AddpersonComponent implements OnInit {
   public dropDownMonth:string[];
   public dropDownYear:Array<string>;
   public dataDropDownStatute:string[];
+  public dataDropDownFunctie:string[];
   public dateofBirth;
+  public SelectedIndexFunctie = 0;
+  public maindatas = [];
+  public datas = [];
 
   public showFormIndex = 1;
 
@@ -59,34 +66,97 @@ export class AddpersonComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
 
+  /***** Drop Down functions and variables for calendar days  ********************************************/
+  
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
+  private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 0; private _Functievalue: any;
+
   set selectedValue(value: any) { this._selectedValuedays = value; }
   get selectedValue(): any { return this._selectedValuedays; }
+
+  set selectedValueFunctie(value: any) { this._selectedIndexFunctie = value; }
+  get selectedValueFunctie(): any { return this._selectedValueFunctie; }
+
   set selectedIndex(value: number) { this._selectedIndexdays = value; this.value = this.dataDropDown[this.selectedIndex]; }
-  set selectedIndexCurrencyShiftAllowance(value: number) { this._selectedIndexdays = value; this.value = this.dataDropDown[this.selectedIndex];}
-  set selectedIndexCurrencyOtherAllowance(value: number) { this._selectedIndexdays = value; this.value = this.dataDropDown[this.selectedIndex]; }
+  set selectedIndexFunctieBox(value: number) { this._selectedIndexFunctie = value; this.valueFunctie = this.dataDropDownFunctie[this.selectedIndex]; }
+
   get selectedIndex(): number { return this._selectedIndexdays; }
+  get selectedIndexFunctieBox() : number { return this._selectedIndexFunctie }
+
   set value(value: any) { this._daysvalue = value; }
   get value(): any { return this._daysvalue; }
-  resetToInitValue() { this.value = this.selectedValue; }
-  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
 
-  constructor(private personsService: PersonService,private fb: FormBuilder) { 
+  set valueFunctie(value: any) { this._Functievalue = value; }
+  get valueFunctie(): any { return this._Functievalue; }
+
+  resetToInitValue() { this.value = this.selectedValue; }
+  SetInitialValue() { if (this.selectedValue === undefined) {   this.selectedValue = this.dataDropDown[this.selectedIndex]; this.selectedValueFunctie = this.dataDropDownFunctie[this.selectedIndexFunctieBox]; }}
+  
+  /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
+
+  constructor(private personsService: PersonService,private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar) { 
     this.setDummyStatute();
+
+    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+      this.maindatas = positions;
+      this.FilterTheArchive();
+      this.fillDataDropDown(this.maindatas);
+      console.log('Positions Form Data : ', this.maindatas);
+      this.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
+
+  }
+
+  openDialog(): void {
+    try {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '700px';
+      dialogConfig.data = this.dataDropDownFunctie;
+      dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
+
+      const dialogRef = this.dialog.open(CreatepositionComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.datas = result;
+        console.log('this.data ::', this.dataDropDownFunctie);
+        // if (this.SelectedIndexFunctie >-1){
+        //     this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
+        //     this.FilterTheArchive();
+        //     this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
+        // } else {
+        //   console.log('this.data.id :: ' , this.data.id);
+        //   if(parseInt('0' + this.data.id,0 )>0){
+        //     this.maindatas.push(this.data); 
+        //     console.log(' new this.maindatas :: ', this.maindatas);
+        //     this.FilterTheArchive();   
+        //     this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');              
+        //   }
+        // }
+      });
+    } catch (e) { }
+  }
+
+  FilterTheArchive() {
+    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
   ngOnInit() {
 
     this.setDummyStatute();
+    this.setDropDownYear();
 
     this.dataDropDown = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
     this.dropDownMonth = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
-
+  
 
     this.AddPersonForm1 = new FormGroup({      
         socialSecurityNumber: new FormControl(''),
         dateOfBirth: new FormControl('', [Validators.required]),
         monthOfBirth: new FormControl('', [Validators.required]),
+        placeofBirth: new FormControl('',[Validators.required]),
         yearOfBirth: new FormControl('', [Validators.required]),
         gender: new FormControl('', [Validators.required]),
         firstName: new FormControl('', [Validators.required]),
@@ -133,13 +203,53 @@ export class AddpersonComponent implements OnInit {
         countryOnetExpenseAllowancefBirth: new FormControl('', [Validators.required]),
         extra: new FormControl('', [Validators.required]),           
     
+
     });
+
+    this.createObjectsForm1();
 
     //this.customSSIDValidator(this.AddPersonForm1.get('socialSecurityNumber').value); 
     this.validSSID = false;
-    this.setDropDownYear();
+
+    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+      this.maindatas = positions;
+      this.FilterTheArchive();
+      this.dataDropDownFunctie = this.maindatas;
+      this.fillDataDropDown(this.maindatas);
+      console.log("drop down functie");
+      console.log(this.dataDropDownFunctie);
+      console.log('Positions Form Data : ', this.maindatas);
+      this.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
 
   }
+
+  fillDataDropDown(maindatas) {
+
+    this.dataDropDownFunctie = [];
+    console.log("main datas");
+    console.log(maindatas);
+
+    for(let i=0;i<maindatas.length;i++){
+        let positionObject = maindatas[i].position.name;
+        this.dataDropDownFunctie.push(positionObject);
+    }
+
+    console.log("positonObject=");
+    console.log(this.dataDropDownFunctie);
+  }
+
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      console.log('Snackbar Action :: ' + Action);
+    });
+  }
+
 
   setDropDownYear() {
 
@@ -173,6 +283,13 @@ export class AddpersonComponent implements OnInit {
           for(let i:number=1;i<=30;i++)
               this.dataDropDown.push(""+i);
       }
+  }
+
+  onChangeDropDownFunctie($event) {
+     console.log("selected functie="+this.dataDropDownFunctie[$event.target.value]);     
+     this.DpsPersonObject.customerPostionId = this.dataDropDownFunctie[$event.target.value];
+
+     console.log(this.DpsPersonObject);
   }
 
   onChangeDropDownYear($event) {
@@ -402,7 +519,7 @@ export class AddpersonComponent implements OnInit {
 
 }
 
-setPostData() {
+createObjectsForm1() {
 
   this.DpsPersonObject = new DpsPerson();
   this.PersonObject = new Person();
@@ -425,13 +542,10 @@ setPostData() {
   
   this.DpsPersonObject.person.address = new Address();
   this.DpsPersonObject.person.address.street = this.AddPersonForm1.get('street').value;
-  this.DpsPersonObject.person.address.streetNumber = this.AddPersonForm1.get('streetnumber').value;
+  this.DpsPersonObject.person.address.streetNumber = this.AddPersonForm1.get('streetNumber').value;
   this.DpsPersonObject.person.address.bus = this.AddPersonForm1.get('bus').value;
   this.DpsPersonObject.person.address.city = this.AddPersonForm1.get('city').value;
-  this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalcode').value;
-
-  this.DpsPersonObject.person.language = new Language();
-  this.DpsPersonObject.person.language = this.AddPersonForm1.get('streetnumber').value;
+  this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalCode').value;
 
   this.DpsPersonObject.person.email = new EmailAddress();
   this.DpsPersonObject.person.email.emailAddress  = this.AddPersonForm1.get('emailAddress').value;
@@ -449,7 +563,7 @@ setPostData() {
   this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
   this.DpsPersonObject.person.status = "";
 
-  this.DpsPersonObject.customerPostionId = this.AddPersonForm1.get('').value;
+  this.DpsPersonObject.customerPostionId = "";
   this.DpsPersonObject.renumeration = new Renumeration();
   
   this.DpsPersonObject.addittionalInformation = "";
@@ -465,6 +579,7 @@ setPostData() {
   this.DpsPersonObject.constructionCards = [];
 
   this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
+  this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
   this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
   this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
   this.DpsPersonObject.studentAtWorkProfile.attestationDate = "";
@@ -493,54 +608,115 @@ setPostData() {
 
 }
 
+setObjectsForm2() {
+ 
+}
+
 onChangeDropDownStatute($event) {
-  this.DpsPersonObject.statute = new Statute();
-  this.DpsPersonObject.statute.name = $event;
-  this.DpsPersonObject.statute.type = "";
+  console.log("dropdown value="+$event.target.value);
+
+  if(this.DpsPersonObject !== null){
+    this.DpsPersonObject.statute = new Statute();
+    this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
+    this.DpsPersonObject.statute.type = "";
+  }
+  console.log(this.DpsPersonObject);
+}
+
+onLanguageReceive($event) {
+
+  console.log("language="+$event.name);
+  console.log("language="+$event.shortName);
+
+  if(this.DpsPersonObject !== null)
+  {
+    this.DpsPersonObject.person.language = new Language();
+    this.DpsPersonObject.person.language.name = $event.name;
+    this.DpsPersonObject.person.language.shortName = $event.shortName;  
+  }
+  console.log(this.DpsPersonObject);
 }
 
 onCountryReceive($event) {
-  this.DpsPersonObject.person.address.country = $event.countryName;
-  this.DpsPersonObject.person.address.countryCode = $event.countryCode;  
+  if(this.DpsPersonObject !== null){
+    if(this.DpsPersonObject.person !== null){
+      this.DpsPersonObject.person.address = new Address();
+    if(this.DpsPersonObject.person.address !== null && this.DpsPersonObject.person.address !== undefined ){
+        this.DpsPersonObject.person.address.country = $event.countryName;
+        this.DpsPersonObject.person.address.countryCode = $event.countryCode;  
+      }
+    }
+  }
+
+  console.log(this.DpsPersonObject);
 }
 
 onStatuteReceive($event){
-
-  this.DpsPersonObject.statute = new Statute();
-  this.DpsPersonObject.statute.name = $event.value.name
-  this.DpsPersonObject.statute.type = $event.value.type;
+  if(this.DpsPersonObject !== null){
+    this.DpsPersonObject.statute = new Statute();
+    this.DpsPersonObject.statute.name = $event.value.name
+    this.DpsPersonObject.statute.type = $event.value.type;  
+  }
 }
 
 onHourlyWageReceive($event){
-  this.DpsPersonObject.renumeration.hourlyWage = 0;
+  console.log("bruo="+$event);
+  this.DpsPersonObject.renumeration.hourlyWage = parseInt($event,10);;
 }
 
 onNetExpensesReceive($event){
-  this.DpsPersonObject.renumeration.netCostReimbursment = 0;
+  this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event,10);
 }
 
 onChangeCostImbursement($event) {
   this.DpsPersonObject.renumeration.costReimbursment = $event;
 }
 
-
 changeKM($event){
+  this.DpsPersonObject.renumeration.transportationAllowance = $event;
+}
 
-  this.DpsPersonObject.renumeration.transportationAllowance = $event.value;
+addittionalInformation($event) {
+  this.DpsPersonObject.addittionalInformation = $event;
+}
+
+openPositionModal() {
+  this.openDialog();
 }
 
   onFormwardClick() {
 
-    //&& this.AddPersonForm1.valid === true
-
     if(this.showFormIndex === 1 )
     {
       this.showFormIndex = 2;
+      this.createObjectsForm1();
     }
     else {
-
+            if(this.showFormIndex === 2)
+            {
+                console.log("dps person object");
+                console.log(this.DpsPersonObject);
+                this.postPersonData();
+            }
     }
 
+  }
+
+  postPersonData() {
+    this.personsService.createPerson(this.DpsPersonObject).subscribe(res =>{
+      console.log("response="+res);
+    },
+    (err:HttpErrorResponse) => {
+      if(err.error instanceof Error)
+      {
+        console.log("Error occured="+err.error.message);
+      }
+      else {
+        console.log("response code="+err.status);
+        console.log("response body="+err.error);
+      }
+    }
+    );                      
   }
 
   onBackwardClick() {
