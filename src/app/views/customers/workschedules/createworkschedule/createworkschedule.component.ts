@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   templateUrl: './createworkschedule.component.html',
   styleUrls: ['./createworkschedule.component.css']
 })
-export class CreateworkscheduleComponent implements OnInit {
+export class CreateWorkScheduleComponent implements OnInit {
   public currentDpsWorkSchedule: DpsWorkSchedule;
   public workScheduleRows = [];
   public SelectedRowID: number;
@@ -30,7 +30,7 @@ export class CreateworkscheduleComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateworkscheduleComponent>,
+    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule) {
     this.currentDpsWorkSchedule = dpsworkscheduledata;
   }
@@ -92,18 +92,18 @@ export class CreateworkscheduleComponent implements OnInit {
     const workScheduleRow = new WorkScheduleRow();
     workScheduleRow.rowid = rowid;
     const weekDayOf: WeekDayOf[] = [];
-    for (let dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) { weekDayOf.push(this.getweekDayOf(dayOfWeek)); }
+    for (let dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) { weekDayOf.push(this.getweekDayOf(dayOfWeek, rowid)); }
     workScheduleRow.weekDayOf = weekDayOf;
     return workScheduleRow;
   }
 
-  getweekDayOf(dayOfWeek) {
+  getweekDayOf(dayOfWeek, rowid) {
     const weekDayOf = new WeekDayOf();
     weekDayOf.dayOfWeek = dayOfWeek;
     weekDayOf.workTimes = new WorkTimes();
-    weekDayOf.workTimes.startTime = '';
-    weekDayOf.workTimes.endTime = '';
-    weekDayOf.workTimes.title = '';
+    weekDayOf.workTimes.startTime = '0' + rowid + ':0' + dayOfWeek;
+    weekDayOf.workTimes.endTime = '0' + rowid + ':0' + dayOfWeek;
+    weekDayOf.workTimes.title = 'Data for Row (' + rowid + ') of weekday(' + dayOfWeek + ')';
     return weekDayOf;
   }
 
@@ -187,13 +187,13 @@ export class CreateworkscheduleComponent implements OnInit {
   }
 
   onWorkTimeSelector(RowId, WeekDay, workTimes: WorkTimes) {
-    console.log('RowId - ' + RowId + ' :: WeekDay - ' + WeekDay);
+    console.log('onWorkTimeSelector (RowId =  ' + RowId + ' :: WeekDay = ' + WeekDay + ' :: workTimes = [OBject Follows])', workTimes);
     this.SelectedRowID = RowId;
     this.SelectedWeekDay = WeekDay;
     this.data = new WorkTimes();
     this.data.title = workTimes.title;
     this.data.startTime = workTimes.startTime;
-    this.data.startTime = workTimes.endTime;
+    this.data.endTime = workTimes.endTime;
     console.log('onClickAdd EmptyData', this.data);
     this.openDialog();
   }

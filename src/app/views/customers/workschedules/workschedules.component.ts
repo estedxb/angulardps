@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@ang
 import { WorkSchedule, LoginToken, DpsUser, DpsWorkSchedule, WorkDays, WorkTimes, BreakTimes } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from '../../../shared/workschedules.service';
-import { CreateworkscheduleComponent } from './createworkschedule/createworkschedule.component';
+import { CreateWorkScheduleComponent } from './createworkschedule/createworkschedule.component';
 
 @Component({
   selector: 'app-workschedules',
@@ -59,7 +59,7 @@ export class WorkschedulesComponent implements OnInit {
       dialogConfig.data = this.data;
       dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
 
-      const dialogRef = this.dialog.open(CreateworkscheduleComponent, dialogConfig);
+      const dialogRef = this.dialog.open(CreateWorkScheduleComponent, dialogConfig);
 
       const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
         this.ShowMessage($event.MSG, $event.Action);

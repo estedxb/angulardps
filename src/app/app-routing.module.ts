@@ -35,8 +35,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { SchedulerComponent } from './views/scheduler/scheduler.component';
 import { FileuploadComponent } from './componentcontrols/fileupload/fileupload.component';
-import { CreateworkscheduleComponent } from './views/customers/workschedules/createworkschedule/createworkschedule.component';
+import { CreateWorkScheduleComponent } from './views/customers/workschedules/createworkschedule/createworkschedule.component';
 import { CreatepositionComponent } from './views/customers/positions/createposition/createposition.component';
+import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
 
 import { EnableFilterPipe } from './pipes/enable-filter.pipe';
 import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
@@ -96,16 +97,18 @@ export const routingComponents = [
   CreatelocationComponent,
   DPSSystemMessageComponent,
   FileuploadComponent,
-  CreateworkscheduleComponent,
+  CreateWorkScheduleComponent,
   CreatepositionComponent,
   EnableFilterPipe,
-  ArchiveFilterPipe
+  ArchiveFilterPipe,
+  CreateWorkTimeComponent
 ];
 
 export const entringComponents = [
   DPSSystemMessageComponent,
   CreateuserComponent,
   CreatelocationComponent,
-  CreateworkscheduleComponent,
-  CreatepositionComponent
+  CreateWorkScheduleComponent,
+  CreatepositionComponent,
+  CreateWorkTimeComponent
 ];
