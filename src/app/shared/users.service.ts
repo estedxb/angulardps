@@ -25,7 +25,8 @@ export class UsersService {
 
   public getUsersByVatNumber(parameter: string): Observable<DpsUser[]> {
     console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
-    const result = this.http.get<DpsUser[]>(this.getUsersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
+    const result = this.http.get<DpsUser[]>(
+      this.getUsersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
