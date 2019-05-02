@@ -1,0 +1,17 @@
+<svg width="17.127" height="17.127" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <style>.cls-1{fill:#1e1e1c;}</style>
+ </defs>
+ <title>seperate-icons</title>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="19.127" width="19.127" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="svg_1">
+   <path stroke="null" id="svg_2" d="m8.563506,0.287263c-4.563288,0 -8.276237,3.712478 -8.276237,8.276237s3.712949,8.276237 8.276237,8.276237s8.276226,-3.71296 8.276226,-8.276237s-3.712478,-8.276237 -8.276226,-8.276237zm0,15.172942c-3.802815,0 -6.896705,-3.09342 -6.896705,-6.896705s3.09389,-6.897176 6.896705,-6.897176s6.897176,3.094832 6.897176,6.897176s-3.094843,6.896705 -6.897176,6.896705z" class="cls-1"/>
+   <rect stroke="null" id="svg_3" height="1.396262" width="8.287493" y="7.865366" x="4.419757" fill-opacity="null" stroke-opacity="null" stroke-width="NaN" fill="null"/>
+  </g>
+ </g>
+</svg>

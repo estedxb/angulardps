@@ -101,13 +101,6 @@ export class _Position {
     name: string; taskDescription: string; isStudentAllowed: boolean; costCenter: string; workstationDocument: Documents;
 }
 
-export class DpsWorkSchedule {
-    id: number; customerVatNumber: string; name: string; workSchedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
-}
-export class WorkSchedule { workDays: WorkDays[]; }
-export class WorkDays { dayOfWeek: number; workTimes: WorkTimes[]; breakTimes: BreakTimes[]; }
-export class WorkTimes { startTime: string; endTime: string; title: string; }
-export class BreakTimes { startTime: string; endTime: string; title: string; }
 export class Login { userid: string; password: string; }
 export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 
@@ -157,6 +150,19 @@ export class ConstructionProfile { constructionCards: Documents[]; }
 export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number; }
 export class DriverProfilesItem { type: string; attestation: Documents; }
 export class Documents { location: string; name: string; }
+
+
+export class DpsWorkSchedule {
+    id: number; customerVatNumber: string; name: string; workSchedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
+}
+export class WorkSchedule { workDays: WorkDays[]; }
+export class WorkDays { dayOfWeek: number; workTimes: WorkTimes[]; breakTimes: BreakTimes[]; }
+export class WorkTimes { startTime: string; endTime: string; title: string; }
+export class BreakTimes { startTime: string; endTime: string; title: string; }
+
+export class WorkScheduleRow { rowid: number; weekDayOf: WeekDayOf[]; }
+export class WeekDayOf { dayOfWeek: number; workTimes: WorkTimes; }
+
 
 /*
 export class Attestation1 { location: string; name: string; }

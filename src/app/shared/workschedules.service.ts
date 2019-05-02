@@ -13,6 +13,7 @@ export class WorkschedulesService {
   private getWorkscheduleURL = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
+    //environment.getWorkSchedulesByVatNumber = '';
     if (environment.dataFromAPI_JSON && environment.getWorkSchedulesByVatNumber !== '') {
       console.log('Data Work Schedules From Remote');
       this.isRemoteURL = true;

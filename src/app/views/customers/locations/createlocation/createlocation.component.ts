@@ -61,6 +61,10 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
+  ShowMessage(msg, action) {
+    this.showmsg.emit({ MSG: msg, Action: action });
+  }
+
   receiveMessageCountry($event) {
     console.log('recevied event');
     console.log($event);
@@ -72,9 +76,7 @@ export class CreatelocationComponent implements OnInit {
     }
   }
 
-  updateData() {
-    this.createObjects();
-  }
+  updateData() { this.createObjects(); }
 
   createObjects() {
     this.currentlocation.name = this.LocationForm.get('name').value;

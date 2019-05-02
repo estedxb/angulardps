@@ -1,4 +1,4 @@
-<div class="updateModel">
+<div id="maincontentarea" class="updateModel">
     <div class="row ">
         <div class="col-sm-12 mat-dialog-close">
             <button mat-button [mat-dialog-close]="" class=""><img
@@ -13,95 +13,100 @@
         </div>
     </div>
     <form [formGroup]="PositionForm" novalidate id="PositionForm">
-        <div class="customerBox">
-            <div class="row panelheader">
-                <div class="col col-sm-5 fright">
-                    <h4>Facturatie parameters</h4>
-                    <hr />
+        <div id="maincontent">
+            <div class="customerBox">
+                <div class="row panelheader">
+                    <div class="col col-sm-5 fright">
+                        <h4>Facturatie parameters</h4>
+                        <hr />
+                    </div>
                 </div>
-            </div>
-            <div class="row customerBoxContect">
-                <div class="col col-sm-6">
-                    <div class="row">
-                        <div class="col-sm-12 inputWithImg">
-                            <label class="titleBold"> Functiebeschrijiving: </label>
-                            <input formControlName="name" class="form-control" name="name" />
-                            <div class="form-control-feedback"
-                                *ngIf="PositionForm.controls.name.invalid && (PositionForm.controls.name.dirty || PositionForm.controls.name.touched) else enewvalid">
-                                <img src="../../assets/img/InvalidIcon.png" alt="">
+                <div class="row customerBoxContect">
+                    <div class="col col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12 inputWithImg">
+                                <label class="titleBold"> Functiebeschrijiving: </label>
+                                <input formControlName="name" class="form-control" name="name" type="text" />
+                                <div class="form-control-feedback"
+                                    *ngIf="PositionForm.controls.name.invalid && (PositionForm.controls.name.dirty || PositionForm.controls.name.touched) else enewvalid">
+                                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                                </div>
+                                <ng-template #enewvalid>
+                                    <img src="../../assets/img/ValidIcon.png" alt="">
+                                </ng-template>
                             </div>
-                            <ng-template #enewvalid>
-                                <img src="../../assets/img/ValidIcon.png" alt="">
-                            </ng-template>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 inputWithImg">
-                            <label class="titleBold"> Kostenplaats: </label>
-                            <input formControlName="costCenter" class="form-control" name="costCenter" />
-                            <div class="form-control-feedback"
-                                *ngIf="PositionForm.controls.costCenter.invalid && (PositionForm.controls.costCenter.dirty || PositionForm.controls.costCenter.touched) else enewvalid">
-                                <img src="../../assets/img/InvalidIcon.png" alt="">
+                        <div class="row">
+                            <div class="col-sm-12 inputWithImg">
+                                <label class="titleBold"> Kostenplaats: </label>
+                                <input formControlName="costCenter" class="form-control" name="costCenter"
+                                    type="text" />
+                                <div class="form-control-feedback"
+                                    *ngIf="PositionForm.controls.costCenter.invalid && (PositionForm.controls.costCenter.dirty || PositionForm.controls.costCenter.touched) else enewvalid">
+                                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                                </div>
+                                <ng-template #enewvalid>
+                                    <img src="../../assets/img/ValidIcon.png" alt="">
+                                </ng-template>
                             </div>
-                            <ng-template #enewvalid>
-                                <img src="../../assets/img/ValidIcon.png" alt="">
-                            </ng-template>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 rb">
+                                <ui-switch name="isStudentAllowed" [checked]="isStudentAllowed"
+                                    (change)="onChange($event)" size="small"> </ui-switch>
+                            </div>
+                            <div class="col-sm-10 rb">
+                                <label class="titleBold"> Student Toegelaten </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 rb">
-                            <ui-switch name="isStudentAllowed" [checked]="isStudentAllowed" (change)="onChange($event)"
-                                size="small"> </ui-switch>
-                            <label class="titleBold"> Student Toegelaten </label>
+                    <div class="col-sm-6 inputWithImg">
+                        <label class="titleBold"> Taakbeschrijiving: </label>
+                        <textarea formControlName="taskDescription" rows="7" class="form-control"
+                            name="taskDescription"></textarea>
+                        <div class="form-control-feedback"
+                            *ngIf="PositionForm.controls.taskDescription.invalid && (PositionForm.controls.taskDescription.dirty || PositionForm.controls.taskDescription.touched) else fnewvalid">
+                            <img src="../../assets/img/InvalidIcon.png" alt="">
+                        </div>
+                        <ng-template #fnewvalid>
+                            <img src="../../assets/img/ValidIcon.png" alt="">
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-12 "></div>
+            </div>
+            <div class="customerBox">
+                <div class="row panelheader">
+                    <div class="col col-sm-5 fright">
+                        <h4>Facturatie parameters</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row customerBoxContect bottom-15">
+                    <div class="col col-sm-6">
+                        <div class="inputWrapper">
+                            <span>Upload werkpostfiche:</span>
+                            <img src="../../../../../assets/svg/Add.svg">
+                            <input class="fileInput hidden" type="file" id="file"
+                                (change)="handleFileInput($event.target.files)">
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Taakbeschrijiving: </label>
-                    <textarea formControlName="taskDescription" rows="7" class="form-control"
-                        name="taskDescription"></textarea>
-                    <div class="form-control-feedback"
-                        *ngIf="PositionForm.controls.taskDescription.invalid && (PositionForm.controls.taskDescription.dirty || PositionForm.controls.taskDescription.touched) else fnewvalid">
-                        <img src="../../assets/img/InvalidIcon.png" alt="">
-                    </div>
-                    <ng-template #fnewvalid>
-                        <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-sm-12 "></div>
-        </div>
-        <div class="customerBox">
-            <div class="row panelheader">
-                <div class="col col-sm-5 fright">
-                    <h4>Facturatie parameters</h4>
-                    <hr />
-                </div>
-            </div>
-            <div class="row customerBoxContect bottom-15">
-                <div class="col col-sm-6">
-                    <div class="inputWrapper">
-                        <span>Upload werkpostfiche:</span>
-                        <img src="../../../../../assets/svg/Add.svg">
-                        <input class="fileInput hidden" type="file" id="file"
-                            (change)="handleFileInput($event.target.files)">
+                    <div class="col col-sm-6">
+                        <button formControlName="download" class="whitebtn" name="download" (click)="downloadFile()">
+                            <span>Download
+                                template</span>
+                            <img src="../../../../../assets/svg/Add.svg">
+                        </button>
                     </div>
                 </div>
-                <div class="col col-sm-6">
-                    <button formControlName="download" class="whitebtn" name="download" (click)="downloadFile()" > <span>Download
-                            template</span>
-                        <img src="../../../../../assets/svg/Add.svg">
+            </div>
+            <div class="row">
+                <div class="col col-sm-12 center-block">
+                    <button class="greenbtn" id="btnSave" (click)="onSavePositionClick()"><span>Functie opslaan</span>
                     </button>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-sm-12 center-block">
-                {{ PositionForm.valid }}
-                <button class="greenbtn" id="btnSave" (click)="onSavePositionClick()"><span>Functie opslaan</span>
-                </button>
             </div>
         </div>
     </form>

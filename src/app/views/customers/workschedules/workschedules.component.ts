@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { WorkSchedule, LoginToken, DpsUser, DpsWorkSchedule, WorkDays, WorkTimes, BreakTimes } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from '../../../shared/workschedules.service';
@@ -17,7 +17,6 @@ export class WorkschedulesComponent implements OnInit {
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;
   public workDays: WorkDays[] = [];
-  public workTimes: WorkTimes[] = [];
   public errorMsg;
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
@@ -56,7 +55,7 @@ export class WorkschedulesComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
-      dialogConfig.width = '800px';
+      dialogConfig.width = '900px';
       dialogConfig.data = this.data;
       dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
 
@@ -71,7 +70,7 @@ export class WorkschedulesComponent implements OnInit {
         this.data = result;
         console.log('this.data ::', this.data);
         console.log('this.SelectedIndex ::', this.SelectedIndex);
-        if (this.SelectedIndex >= 0) {
+        if (this.SelectedIndex >= -1) {
           // maindatas Update Work Schedule
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
@@ -114,16 +113,17 @@ export class WorkschedulesComponent implements OnInit {
   }
 
   LoadEmptyWorkDayof(dayOfWeek) {
-    const workDay = new WorkDays();
+    let workTimes: WorkTimes[] = [];
+    let workDay = new WorkDays();
     workDay.dayOfWeek = parseInt(dayOfWeek, 0);
-    this.workTimes.push(this.LoadEmptyWorkTime());
-    this.workTimes.push(this.LoadEmptyWorkTime());
-    workDay.workTimes = this.workTimes;
+    workTimes.push(this.LoadEmptyWorkTime());
+    workTimes.push(this.LoadEmptyWorkTime());
+    workDay.workTimes = workTimes;
     workDay.breakTimes = null;
     return workDay;
   }
   LoadEmptyWorkTime() {
-    const workTime = new WorkTimes();
+    let workTime = new WorkTimes();
     workTime.startTime = '00:00:00';
     workTime.endTime = '00:00:00';
     workTime.title = '';
