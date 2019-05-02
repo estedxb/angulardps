@@ -6,6 +6,7 @@ import { Address, LoginToken, DpsUser, DpsWorkSchedule, WorkSchedule, WorkDays, 
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { CreateWorkTimeComponent } from '../../../../componentcontrols/createworktime/createworktime.component';
 
 @Component({
   selector: 'app-createworkschedule',
@@ -206,33 +207,21 @@ export class CreateWorkScheduleComponent implements OnInit {
       dialogConfig.width = '500px';
       dialogConfig.data = this.data;
       dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
-      /*
-            const dialogRef = this.dialog.open(CreateworkscheduleComponent, dialogConfig);
-      
-            const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
-      
-            dialogRef.afterClosed().subscribe(result => {
-              console.log('The dialog was closed');
-              this.data = result;
-              console.log('this.data ::', this.data);
-              console.log('this.SelectedIndex ::', this.SelectedIndex);
-              if (this.SelectedIndex >= -1) {
-                // maindatas Update Work Schedule
-                this.maindatas[this.SelectedIndex] = this.data;
-                this.FilterTheArchive();
-                this.ShowMessage('Work Schedules "' + this.data + '" is updated successfully.', '');
-              } else {
-                // maindatas Add Work Schedule
-                console.log('this.data.id :: ', this.data.id);
-                if (parseInt('0' + this.data.id, 0) > 0) {
-                  this.maindatas.push(this.data);
-                  console.log('New Work Schedule Added Successfully :: ', this.maindatas);
-                  this.FilterTheArchive();
-                  this.ShowMessage('Work Schedules "' + this.data.name + '" is added successfully.', '');
-                }
-              }
-            });
-            */
+
+      const dialogRef = this.dialog.open(CreateWorkTimeComponent, dialogConfig);
+
+      //const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.data = result;
+        console.log('this.data ::', this.data);
+        console.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
+        // Need to update currentDpsWorkSchedule and workScheduleRows
+        // this.maindatas[this.SelectedIndex] = this.data;
+        this.ShowMessage('Work Time "' + this.data + '" is updated successfully.', '');
+      });
+
     } catch (e) { }
   }
 
