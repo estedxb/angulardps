@@ -13,10 +13,9 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
-import { CreatecontractComponent } from './componentcontrols/createcontract/createcontract.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, CreatecontractComponent],
+  declarations: [AppComponent, routingComponents],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
