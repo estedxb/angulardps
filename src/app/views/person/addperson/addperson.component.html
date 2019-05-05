@@ -14,10 +14,17 @@
     1. Persoonlijke gegevens
     <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
   </div>
-  <div class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+  <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
     2. Functie
     <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
   </div>
+  <ng-template #secondpage>
+      <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+        2. Functie
+        <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
+      </div>
+    </ng-template>
+  
   <div class="col col-sm-3"></div>
 </div>
 
@@ -54,25 +61,20 @@
                   </label>
                   <div class="row DOB">
                     <div class="col col-sm-3">
-                      <select formControlName="dateOfBirth" id="dd_days" name="dd_days"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown
-                        required="required">
-                        <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i" [value]="i">
+                      <select formControlName="dateOfBirth" id="dd_days" [(ngModel)]="selectedIndex" name="dd_days" class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown required="required">
+                        <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i">
                           {{data}}</option>
                       </select>
                     </div>
                     <div class="col col-sm-5">
-                      <select formControlName="monthOfBirth" id="dd_months" name="dd_months"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
+                      <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="selectedIndexMonth" name="dd_months" class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
                         required="required">
                         <option *ngFor="let data of dropDownMonth let i= index" [attr.data-index]="i" [value]="i">
                           {{data}}</option>
                       </select>
                     </div>
                     <div class="col col-sm-4">
-                      <select formControlName="yearOfBirth" id="dd_year" name="dd_year"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown
-                        required="required">
+                      <select formControlName="yearOfBirth" id="dd_year" name="dd_year" [(ngModel)]="selectedIndexYear" class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown required="required">
                         <option *ngFor="let data of dropDownYear let i= index" [attr.data-index]="i" [value]="i">
                           {{data}}</option>
                       </select>
@@ -81,9 +83,9 @@
                 </div>
                 <div class="col-sm-2 inputWithImg">
                   <label class="titleBold">Geslacht </label>
-                  <select name="gender" class="gender selectcomponent">
-                    <option value="Male">Man</option>
-                    <option value="Female">Vrouw</option>
+                  <select formControlName="gender" id="gender" (change)="onChangeDropDownGender($event)" name="gender" class="gender selectcomponent" [(ngModel)]="selectedGenderIndex">
+                    <option *ngFor="let data of dataDropDownGender let i= index" [attr.data-index]="i" [value]="i">
+                      {{data}}</option>
                   </select>
                 </div>
               </div>
@@ -159,8 +161,7 @@
                 <div class="col-sm-3 inputWithImg">
                   <label class="titleBold"> Postcode: </label>
                   <input formControlName="postalCode" class="form-control" name="postalCode" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.postalCode.invalid && (AddPersonForm1.controls.postalCode.dirty || AddPersonForm1.controls.postalCode.touched) else newvalidpostalCode">
+                  <div class="form-control-feedback" *ngIf="AddPersonForm1.controls.postalCode.invalid && (AddPersonForm1.controls.postalCode.dirty || AddPersonForm1.controls.postalCode.touched) else newvalidpostalCode">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidpostalCode>
@@ -187,8 +188,7 @@
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Vast nummer: </label>
                   <input formControlName="telephoneNumber" class="form-control" name="telephoneNumber" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.telephoneNumber.invalid && (AddPersonForm1.controls.telephoneNumber.dirty || AddPersonForm1.controls.telephoneNumber.touched) else newvalidtelephoneNumber">
+                  <div class="form-control-feedback" *ngIf="AddPersonForm1.controls.telephoneNumber.invalid && (AddPersonForm1.controls.telephoneNumber.dirty || AddPersonForm1.controls.telephoneNumber.touched) else newvalidtelephoneNumber">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidtelephoneNumber>
@@ -239,9 +239,9 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Geboorteplaats: </label>
-                  <input formControlName="birthPlace" class="form-control" name="birthPlace" type="text" required />
+                  <input formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text" required />
                   <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.birthPlace.invalid && (AddPersonForm1.controls.birthPlace.dirty || AddPersonForm1.controls.birthPlace.touched) else newvalidbirthPlace">
+                    *ngIf="AddPersonForm1.controls.placeOfBirth.invalid && (AddPersonForm1.controls.placeOfBirth.dirty || AddPersonForm1.controls.placeOfBirth.touched) else newvalidbirthPlace">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidbirthPlace>
@@ -252,8 +252,7 @@
                   <label class="titleBold"> Geboorteland: </label>
                   <input formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text"
                     required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.countryOfBirth.invalid && (AddPersonForm1.controls.countryOfBirth.dirty || AddPersonForm1.controls.countryOfBirth.touched) else newvalidcountryOfBirth">
+                  <div class="form-control-feedback" *ngIf="AddPersonForm1.controls.countryOfBirth.invalid && (AddPersonForm1.controls.countryOfBirth.dirty || AddPersonForm1.controls.countryOfBirth.touched) else newvalidcountryOfBirth">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidcountryOfBirth>
@@ -264,7 +263,7 @@
               <div class="row">
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> IBAN: </label>
-                  <input formControlName="iban" class="form-control" name="iban" type="text" required />
+                  <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban" type="text" required />
                   <div class="form-control-feedback" *ngIf="AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
@@ -332,7 +331,7 @@
                   </div>
 
                   <div class="col-sm-7">
-                    <button [disabled]="isInvalid()" #addButton (click)="openPositionModal()" type="button" class="btnAdd">
+                    <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
                       <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
                     </button>
                   </div>
@@ -390,8 +389,7 @@
                 <label class="titleBold"> Bruto uurloon: </label>
                 <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control" (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
                   required />
-                <div class="form-control-feedback"
-                  *ngIf="AddPersonForm2.controls.grossHourlyWage.invalid && (AddPersonForm2.controls.grossHourlyWage.dirty || AddPersonForm2.controls.grossHourlyWage.touched) else newvalid">
+                <div class="form-control-feedback" *ngIf="AddPersonForm2.controls.grossHourlyWage.invalid && (AddPersonForm2.controls.grossHourlyWage.dirty || AddPersonForm2.controls.grossHourlyWage.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #newvalid>
@@ -400,10 +398,9 @@
               </div>
               <div class="col-sm-4 inputWithImg">
                 <label class="titleBold"> Netto onkostenvergoeding: </label>
-                <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="text"
-                  required />
-                <div class="form-control-feedback"
-                  *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
+                <!-- <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch> &nbsp; -->
+                <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="text" required />
+                <div class="form-control-feedback" *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #newvalid>
@@ -439,6 +436,19 @@
             </div>
           </div>
         </div>
+
+        <div id="from1" *ngIf="showFormIndex === 3">
+            <div id="CustomerDetails" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Person Created</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
+                  <label class="center-block">Thank You For creating Person!!</label>
+              </div>
+            </div>
+          </div>  
 
       </form>
 

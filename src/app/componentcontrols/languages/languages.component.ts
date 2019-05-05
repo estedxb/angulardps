@@ -31,13 +31,12 @@ export class LanguagesComponent implements OnInit {
   get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
+
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-
     console.log('language=' + this.value);
     this.childEvent.emit(this.value);
-
     return this.value;
 
   }
