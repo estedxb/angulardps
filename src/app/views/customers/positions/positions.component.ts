@@ -37,6 +37,7 @@ export class PositionsComponent implements OnInit {
 
   FilterTheArchive()
   {
+    console.log('Positions Form Data : ', this.maindatas);
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
@@ -61,12 +62,13 @@ export class PositionsComponent implements OnInit {
       dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
       const dialogRef = this.dialog.open(CreatepositionComponent, dialogConfig);
-
+      
+      
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex >-1){           
+        if (this.SelectedIndex >=0){           
             this.maindatas[this.SelectedIndex] = this.data;          
             this.FilterTheArchive();   
             this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
@@ -146,5 +148,6 @@ export class PositionsComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updatePositions();
+   
   }
 }

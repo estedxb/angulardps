@@ -42,7 +42,8 @@
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> E-mail adres: </label>
-                    <input formControlName="emailaddress" class="form-control" name="emailaddress" />
+                    <input formControlName="emailaddress" class="form-control" name="emailaddress" type="email"
+                        readonly />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.emailaddress.invalid && (UserForm.controls.emailaddress.dirty || UserForm.controls.emailaddress.touched) else dnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -53,7 +54,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold">Type gebruiker: </label>
-                    <input formControlName="usertype" class="form-control" name="usertype" />
+                    <input formControlName="usertype" class="form-control" name="usertype" type="text" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.usertype.invalid && (UserForm.controls.usertype.dirty || UserForm.controls.usertype.touched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -67,7 +68,7 @@
             <div class="row">
                 <div class="col-sm-4 inputWithImg">
                     <label class="titleBold"> Mobiel nummer: </label>
-                    <input formControlName="mobile" class="form-control" name="mobile" />
+                    <input formControlName="mobile" class="form-control" name="mobile" type="number" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.mobile.invalid && (UserForm.controls.mobile.dirty || UserForm.controls.mobile.touched) else enewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -78,7 +79,8 @@
                 </div>
                 <div class="col-sm-4 inputWithImg">
                     <label class="titleBold"> Vast nummer: </label>
-                    <input (blur)="updateData()" formControlName="telephone" class="form-control" name="telephone" />
+                    <input (blur)="updateData()" formControlName="telephone" class="form-control" name="telephone"
+                        type="text" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.telephone.invalid && (UserForm.controls.telephone.dirty || UserForm.controls.telephone.touched) else fnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
