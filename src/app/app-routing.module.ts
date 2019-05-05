@@ -38,6 +38,8 @@ import { FileuploadComponent } from './componentcontrols/fileupload/fileupload.c
 import { CreateWorkScheduleComponent } from './views/customers/workschedules/createworkschedule/createworkschedule.component';
 import { CreatepositionComponent } from './views/customers/positions/createposition/createposition.component';
 import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
+import { CreatecontractComponent } from './componentcontrols/createcontract/createcontract.component';
+import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
 
 import { EnableFilterPipe } from './pipes/enable-filter.pipe';
 import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
@@ -101,7 +103,9 @@ export const routingComponents = [
   CreatepositionComponent,
   EnableFilterPipe,
   ArchiveFilterPipe,
-  CreateWorkTimeComponent
+  CreateWorkTimeComponent,
+  CalendarComponent, 
+  CreatecontractComponent
 ];
 
 export const entringComponents = [
