@@ -84,22 +84,11 @@
                         <hr />
                     </div>
                 </div>
-                <div class="row customerBoxContect bottom-15">
-                    <div class="col col-sm-6">
-                        <div class="inputWrapper">
-                            <span>Upload werkpostfiche:</span>
-                            <img src="../../../../../assets/svg/Add.svg">
-                            <input class="fileInput hidden" type="file" id="file"
-                                (change)="handleFileInput($event.target.files)">
-                        </div>
-                    </div>
-                    <div class="col col-sm-6">
-                        <button formControlName="download" class="whitebtn" name="download" (click)="downloadFile()">
-                            <span>Download
-                                template</span>
-                            <img src="../../../../../assets/svg/Add.svg">
-                        </button>
-                    </div>
+                <div class="col col-sm-6">
+                    <button class="whitebtn" name="download" (click)="downloadFile()" > <span>Download
+                            template</span>
+                        <img src="../../../../../assets/svg/Add.svg">
+                    </button>
                 </div>
             </div>
             <div class="row">

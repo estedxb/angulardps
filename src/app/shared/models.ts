@@ -97,6 +97,17 @@ export class Person {
     travelMode: string;
     status: string;
 }
+
+export class Contract {
+    name: string;
+    timeSpan: TimeSpan;
+    workSchedule: WorkSchedule;
+    position: Position;    
+    person: Person;
+    statute: Statute;
+    status: string;
+    cancelReason: string;    
+}
 export class SocialSecurityNumber { number: string; }
 export class Gender { genderId: number; title: string; }
 export class BankAccount { bic: string; iban: string; }
