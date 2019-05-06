@@ -1,0 +1,157 @@
+<div id="maincontentarea" class="updateModel">
+    <div class="row ">
+        <div class="col-sm-12 mat-dialog-close">
+            <button mat-button [mat-dialog-close]="currentUser" class=""><img
+                    src="../../../../../assets/svg/closebox.svg" /></button>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12 center-block head">
+            <img src='../../../assets/svg/UserUpdate.svg'>
+            <br /> <label>Contract raadplegen</label>
+            <hr>
+        </div>
+    </div>
+    <form [formGroup]="ContractForm" novalidate id="ContractForm">
+        <div class="contactperson" id="maincontent">
+            <div class="row">
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Voorname: </label>
+                    <input formControlName="firstname" class="form-control" name="firstname" type="text" required />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.firstname.invalid && (ContractForm.controls.firstname.dirty || ContractForm.controls.firstname.touched) else newvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Naam: </label>
+                    <input formControlName="lastname" class="form-control" name="lastname" type="text" required />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.lastname.invalid && (ContractForm.controls.lastname.dirty || ContractForm.controls.lastname.touched) else anewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #anewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Functie: </label>
+                    <input formControlName="position" class="form-control" name="position" type="email"
+                        readonly />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.position.invalid && (ContractForm.controls.position.dirty || ContractForm.controls.position.touched) else dnewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #dnewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+               
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold"> Start date: </label>
+                    <input formControlName="startDateDay" class="form-control" name="startDateDay" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.startDateDay.invalid && (ContractForm.controls.startDateDay.dirty || ContractForm.controls.startDateDay.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold">  </label>
+                    <input formControlName="startDateMonth" class="form-control" name="startDateMonth" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.startDateMonth.invalid && (ContractForm.controls.startDateMonth.dirty || ContractForm.controls.startDateMonth.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold"> </label>
+                    <input formControlName="startDateYear" class="form-control" name="startDateYear" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.startDateYear.invalid && (ContractForm.controls.startDateYear.dirty || ContractForm.controls.startDateYear.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold"> End date: </label>
+                    <input formControlName="endDateDay" class="form-control" name="endDateDay" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.endDateDay.invalid && (ContractForm.controls.endDateDay.dirty || ContractForm.controls.endDateDay.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold">  </label>
+                    <input formControlName="endDateMonth" class="form-control" name="endDateMonth" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.endDateMonth.invalid && (ContractForm.controls.endDateMonth.dirty || ContractForm.controls.endDateMonth.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold">  </label>
+                    <input formControlName="endDateYear" class="form-control" name="endDateYear" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.endDateYear.invalid && (ContractForm.controls.endDateYear.dirty || ContractForm.controls.endDateYear.touched) else enewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #enewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold"> Werkrooster: </label>
+                    <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString">
+                    </app-languages>
+                </div>
+                <div class="col-sm-4 inputWithImg">
+                    <label class="titleBold"> Vestiging: </label>
+                    <input formControlName="location" class="form-control" name="location" type="text" />
+                    <div class="form-control-feedback"
+                        *ngIf="ContractForm.controls.telephone.invalid && (ContractForm.controls.telephone.dirty || ContractForm.controls.telephone.touched) else fnewvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #fnewvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-sm-12 center-block">
+                <button class="greenbtn" id="btnSave" (click)="onSaveContractClick()"><span>Gebruiker opslaan</span>
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
