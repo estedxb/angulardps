@@ -43,6 +43,9 @@ import { CalendarComponent } from './componentcontrols/calendar/calendar.compone
 
 import { EnableFilterPipe } from './pipes/enable-filter.pipe';
 import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
+import { UpdatePersonComponent } from './views/person/update-person/update-person.component';
+import { EditpersonComponent } from './views/person/editperson/editperson.component';
+import { PersonpositionComponent } from './views/person/personposition/personposition.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -50,13 +53,15 @@ const routes: Routes = [
   // { path: 'customer', component: CustomersComponent },
   { path: 'customer/addcustomer', component: AddCustomerComponent },
   { path: 'customer/add', component: AddCustomerComponent },
-  { path: 'customer/update', component: UpdateCustomerComponent },
   { path: 'customer/:id', component: UpdateCustomerComponent },
+  { path: 'customer/:id/:page', component: UpdateCustomerComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'scheduler', component: SchedulerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'person/addperson', component: AddpersonComponent },
   { path: 'person/add', component: AddpersonComponent },
+  { path: 'person/:id', component: UpdatePersonComponent },
+  { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
@@ -104,8 +109,11 @@ export const routingComponents = [
   EnableFilterPipe,
   ArchiveFilterPipe,
   CreateWorkTimeComponent,
-  CalendarComponent, 
-  CreatecontractComponent
+  CalendarComponent,
+  CreatecontractComponent,
+  UpdatePersonComponent,
+  EditpersonComponent,
+  PersonpositionComponent
 ];
 
 export const entringComponents = [

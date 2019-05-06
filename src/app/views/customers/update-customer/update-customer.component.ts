@@ -25,6 +25,7 @@ export class UpdateCustomerComponent implements OnInit {
   constructor(private customerService: CustomersService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
+      this.currentPage = params.page;
       console.log('ID :: ' + this.Id);
     });
   }
@@ -40,8 +41,10 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' ||
-      this.Id === 'positions' || this.Id === 'users' || this.Id === 'workschedules') {
+    if (this.Id === 'locations' ||
+      this.Id === 'positions' ||
+      this.Id === 'users' ||
+      this.Id === 'workschedules') {
       this.currentPage = this.Id;
       this.vatNumber = this.loginuserdetails.customerVatNumber;
     } else {

@@ -3,41 +3,39 @@
 <div class="container">
   <div class="row">
     <div class="col col-sm-12 center-block">
-      <img src="../../assets/svg/updateCustomer.svg" style="left:-15" /><br />
-      <div class="pagehead">{{ CustomerName }}</div>
+      <img src="./assets/svg/updatePerson.svg" style="left:-15" /><br />
+      <div class="pagehead">PERSOON AANPASSEN</div>
     </div>
   </div>
-  <div class="row" id="formState">
-    <div class="col col-sm-12"></div>
+  <div class="row">
+    <div class="col col-sm-12 emptyrow"></div>
+  </div>
+  <div class="row">
+    <div class="col col-sm-4 offset-sm-4">
+      <div class="PersonData">
+        <div class="PersonInitial showborder-orange">{{PersonInitial}}</div>
+        <div class="PersonTitle">{{PersonName}}</div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="container-fluid">
   <div class="row">
     <div class="col col-sm-4">
       <div class="rline">
-        <div class="sidemenus" [ngClass]="{active: currentPage==='workschedules'}">
-          <button (click)="currentPage='workschedules'">
-            <img src="./assets/svg/calander.svg" />Mijn Werkroosters
+        <div class="sidemenus" [ngClass]="{active: currentPage==='editperson'}">
+          <button (click)="currentPage='editperson'">
+            <img src="./assets/svg/users.svg" />Persoonlijke gegevens
           </button>
         </div>
         <div class="sidemenus" [ngClass]="{active: currentPage==='positions'}">
           <button (click)="currentPage='positions'">
-            <img src="./assets/svg/position.svg" />Mijn Functies
+            <img src="./assets/svg/position.svg" />Functie
           </button>
         </div>
-        <div class="sidemenus" [ngClass]="{active: currentPage==='users'}">
-          <button (click)="currentPage='users'">
-            <img src="./assets/svg/users.svg" />Mijn Gebruikers
-          </button>
-        </div>
-        <div class="sidemenus" [ngClass]="{active: currentPage==='locations'}">
-          <button (click)="currentPage='locations'">
-            <img src="./assets/svg/location.svg" />Mijn Vestigingen
-          </button>
-        </div>
-        <div class="sidemenus" [ngClass]="{active: currentPage==='editcustomer'}">
-          <button (click)="currentPage='editcustomer'">
-            <img src="./assets/svg/customers.svg" />Mijn Bedrijfsgegevens
+        <div class="sidemenus" [ngClass]="{active: currentPage==='documents'}">
+          <button (click)="currentPage='documents'">
+            <img src="./assets/svg/documents.svg" />Documenten
           </button>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
@@ -48,20 +46,14 @@
     </div>
     <div class="col col-sm-8" id="maincontentarea">
       <div class="scrollbar" id="maincontent">
-        <div *ngIf="currentPage==='workschedules'">
-          <app-workschedules></app-workschedules>
+        <div *ngIf="currentPage==='editperson'">
+          <app-editperson></app-editperson>
         </div>
         <div *ngIf="currentPage==='positions'">
-          <app-positions></app-positions>
+          <app-personposition></app-personposition>
         </div>
-        <div *ngIf="currentPage==='users'">
-          <app-users></app-users>
-        </div>
-        <div *ngIf="currentPage==='locations'">
-          <app-locations></app-locations>
-        </div>
-        <div *ngIf="currentPage==='editcustomer'">
-          <app-editcustomer (childEvent)="receiveEditCustomerData($event)"></app-editcustomer>
+        <div *ngIf="currentPage==='documents'">
+          <app-persondocument></app-persondocument>
         </div>
       </div>
     </div>
