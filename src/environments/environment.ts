@@ -38,7 +38,8 @@ export const environment = {
   getPerson: 'Person',
   getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
   getFileUploads: '',
-  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/'
+  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
+  getContract: ''
 };
 
 /*

@@ -142,7 +142,7 @@ export class Person {
 
 export class Contract {
     name: string;
-    timeSpan: TimeSpan;
+    timeSpan: string;
     workSchedule: WorkSchedule;
     position: Position;    
     person: Person;

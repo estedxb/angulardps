@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Contract, DpsUser } from 'src/app/shared/models';
 import { MatDialog, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ContractService } from 'src/app/shared/contract.service';
+
 
 @Component({
   selector: 'app-createcontract',
@@ -11,13 +14,23 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class CreatecontractComponent implements OnInit {
   ContractForm: FormGroup
   public currentContract: Contract;
-  public maindatas = []; 
+  Cdata : any;
   public errorMsg;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
+  public selectedStartMonth;
+  public selectedStartDay;
+  public selectedStartYear;
 
-  constructor( private formBuilder: FormBuilder,public dialogRef: MatDialogRef<CreatecontractComponent>, @Inject(MAT_DIALOG_DATA) public contractData: Contract) { 
-    this.currentContract = contractData;
+  public selectedEndMonth;
+  public selectedEndDay;
+  public selectedEndYear;
+
+  constructor(
+    private formBuilder: FormBuilder, private contractService: ContractService,
+    public dialogRef: MatDialogRef<CreatecontractComponent>, @Inject(MAT_DIALOG_DATA) public locationdata: Location
+  ) { 
+  
   }
 
   ngOnInit() {
@@ -27,29 +40,69 @@ export class CreatecontractComponent implements OnInit {
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      // startDateDay: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
-      // startDateMonth: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
-      // startDateYear: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
-      // endDateDay: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
-      // endDateMonth: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
-      // endDateYear: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')])     
-    });    
-    this.loadUserToEdit();
+      workSchedule: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
+     location: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])  
+    });   
   }
 
-  loadUserToEdit() {
-    console.log('this.currentContract :: ', this.currentContract);
-    if (this.currentContract !== null) {
-      
-        this.ContractForm.controls.firstname.setValue(this.currentContract.name);
-        this.ContractForm.controls.lastname.setValue(this.currentContract.name);
-        this.ContractForm.controls.position.setValue(this.currentContract.position);
-        // this.ContractForm.controls.startDateDay.setValue(this.currentUser.userRole);
-        // this.ContractForm.controls.startDateMonth.setValue(this.currentUser.user.mobile.number);
-        // this.ContractForm.controls.startDateYear.setValue(this.currentUser.user.phone.number);
-        this.ContractForm.controls.position.setValue(this.currentContract.position);
+  receiveMessageStartDate($event) {
+     console.log('received in create contract component Cdata');
+     if ($event !== undefined && $event !== undefined) {
+      this.selectedStartDay = $event.dayString;
+      this.selectedStartMonth = $event.monthString;
+      this.selectedStartYear = $event.yearString;  
+      this.createObjects();
+    }   
+   }
+   receiveMessageEndDate($event) {
+    if ($event !== undefined && $event !== undefined) {
+      this.selectedEndDay = $event.dayString;
+      this.selectedEndMonth = $event.monthString;
+      this.selectedEndYear = $event.yearString;   
+      this.createObjects();
+    }    
   }
-}
+
+  updateData() { this.createObjects(); }
+
+  createObjects() {
+    this.currentContract.name = this.ContractForm.get('firstname').value +" "+ this.ContractForm.get('lastname').value;
+    this.currentContract.position = this.ContractForm.get('position').value;
+    this.currentContract.workSchedule = this.ContractForm.get('workSchedule').value;
+    this.currentContract.timeSpan = this.selectedStartDay+""+this.selectedStartMonth+""+this.selectedStartYear+"-" +this.selectedEndDay+""+this.selectedEndMonth+""+this.selectedEndYear;
+    this.currentContract.workSchedule = this.ContractForm.get('workSchedule').value;
+  
+  }
+
+  onApproveContractClick() {
+    this.createObjects();
+    console.log('data ::', this.currentContract);
+    if (this.ContractForm.valid) {
+      if (this.currentContract !== undefined && this.currentContract !== null) {
+          console.log('Create Contract');
+          this.contractService.createContract(this.currentContract).subscribe(res => {
+            console.log('  Location Response :: ', res.body);
+            this.currentContract = res.body;
+            this.dialogRef.close(this.currentContract);
+          },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log('Error occured=' + err.error.message);
+              } else {
+                console.log('response code=' + err.status);
+                console.log('response body=' + err.error);
+              }
+            }
+          );
+          // this.dialogRef.close();
+        }
+      
+    } else {
+      console.log('Form is Not Vaild');
+    }
+  }
+
+
 }
 
     
