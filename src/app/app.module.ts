@@ -13,9 +13,10 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
+import { UpdatePersonComponent } from './views/person/update-person/update-person.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, UpdatePersonComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

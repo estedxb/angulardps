@@ -16,7 +16,6 @@ export class WorkschedulesComponent implements OnInit {
   public maindatas = [];
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;
-  public workDays: WorkDays[] = [];
   public errorMsg;
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
@@ -61,15 +60,13 @@ export class WorkschedulesComponent implements OnInit {
 
       const dialogRef = this.dialog.open(CreateWorkScheduleComponent, dialogConfig);
 
-      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
-        this.ShowMessage($event.MSG, $event.Action);
-      });
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        // console.log('The dialog was closed');
         this.data = result;
-        console.log('this.data ::', this.data);
-        console.log('this.SelectedIndex ::', this.SelectedIndex);
+        // console.log('this.data ::', this.data);
+        // console.log('this.SelectedIndex ::', this.SelectedIndex);
         if (this.SelectedIndex >= -1) {
           // maindatas Update Work Schedule
           this.maindatas[this.SelectedIndex] = this.data;
@@ -77,7 +74,7 @@ export class WorkschedulesComponent implements OnInit {
           this.ShowMessage('Work Schedules "' + this.data + '" is updated successfully.', '');
         } else {
           // maindatas Add Work Schedule
-          console.log('this.data.id :: ', this.data.id);
+          // console.log('this.data.id :: ', this.data.id);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
             console.log('New Work Schedule Added Successfully :: ', this.maindatas);
@@ -89,7 +86,6 @@ export class WorkschedulesComponent implements OnInit {
     } catch (e) { }
   }
 
-
   onClickAdd() {
     this.SelectedIndex = -1;
     this.data = new DpsWorkSchedule();
@@ -99,41 +95,51 @@ export class WorkschedulesComponent implements OnInit {
     this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.data.isArchived = false;
     this.data.isEnabled = true;
-    this.workSchedule.workDays = this.LoadEmptyWorkDays();
+    this.workSchedule.workDays = [];
+    this.LoadEmptyWorkDays(this.workSchedule.workDays);
     this.data.workSchedule = this.workSchedule;
-    console.log('onClickAdd EmptyData', this.data);
+    console.log('EmptyData :: ', this.data);
     this.openDialog();
   }
 
-  LoadEmptyWorkDays() {
+  LoadEmptyWorkDays(workDays) {
     for (let weekDay = 1; weekDay <= 7; weekDay++) {
-      this.workDays.push(this.LoadEmptyWorkDayof(weekDay));
+      workDays.push(
+        {
+          dayOfWeek: weekDay,
+          workTimes: [
+            { startTime: '00:00', endTime: '00:00', title: '' },
+            { startTime: '00:00', endTime: '00:00', title: '' }
+          ],
+          breakTimes: null
+        }
+      );
     }
-    return this.workDays;
   }
 
   LoadEmptyWorkDayof(dayOfWeek) {
-    let workTimes: WorkTimes[] = [];
-    let workDay = new WorkDays();
+    const workDay = new WorkDays();
     workDay.dayOfWeek = parseInt(dayOfWeek, 0);
-    workTimes.push(this.LoadEmptyWorkTime());
-    workTimes.push(this.LoadEmptyWorkTime());
-    workDay.workTimes = workTimes;
     workDay.breakTimes = null;
+    workDay.workTimes = [];
+    workDay.workTimes.push({ startTime: '00:00', endTime: '00:00', title: '' });
+    workDay.workTimes.push({ startTime: '00:00', endTime: '00:00', title: '' });
+    // workDay.workTimes.push(this.LoadEmptyWorkTime());
     return workDay;
   }
+
   LoadEmptyWorkTime() {
     let workTime = new WorkTimes();
-    workTime.startTime = '00:00:00';
-    workTime.endTime = '00:00:00';
+    workTime.startTime = '00:00';
+    workTime.endTime = '00:00';
     workTime.title = '';
     return workTime;
   }
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    console.log('Edit Clicked Index :: ' + i);
     this.data = this.maindatas[i];
+    // console.log('Edit Data :: ', this.data);
     this.openDialog();
     return true;
   }
