@@ -607,3 +607,31 @@ div#CustomerContact {
   padding-top: 10%;
   text-align: center;
 }
+
+#maincontentarea .netExpense .switch{
+  height: 14px;
+  padding: 0px;
+ }
+
+ #maincontentarea .netExpense .switch.switch-small {
+  margin: 0px;
+  height: 19px;
+  border-radius: 19px;
+  min-width: 35px;
+}
+
+#maincontentarea .inputWithImg1 img,
+.inputWithImg1 img {
+  position: absolute;
+  right: 0px;
+  padding: 10px 23px 7px 0px;
+  color: #9a0c19;
+  top: 33px;
+}
+#maincontentarea .inputWithImg1 .form-control-feedback img {
+  padding: 12px 20px 7px 0px;
+}
+
+div#CustomerContact1 {
+  min-height: 80px;
+}

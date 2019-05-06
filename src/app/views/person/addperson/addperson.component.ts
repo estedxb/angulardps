@@ -163,6 +163,7 @@ export class AddpersonComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.datas = result;
+        //this.maindatas = result;
         console.log('this.data ::', this.datas);
 
         if(this.datas !== null && this.datas !== undefined)
@@ -259,16 +260,16 @@ export class AddpersonComponent implements OnInit {
   fillDataDropDown(maindatas) {
 
     this.dataDropDownFunctie = [];
-    console.log("main datas");
-    console.log(maindatas);
+    // console.log("main datas");
+    // console.log(maindatas);
 
     for(let i=0;i<maindatas.length;i++){
         let positionObject = maindatas[i].position.name;
         this.dataDropDownFunctie.push(positionObject);
     }
 
-    console.log("positonObject=");
-    console.log(this.dataDropDownFunctie);
+    // console.log("positonObject=");
+    // console.log(this.dataDropDownFunctie);
   }
 
   ShowMessage(MSG, Action) {
@@ -334,7 +335,7 @@ export class AddpersonComponent implements OnInit {
     this.yearString = $event.value;
   }
 
-  onChangeDropDownMonth($event){    
+  onChangeDropDownMonth($event){
     console.log("selected month="+$event.target.value);
     this.changeDropDownDateArray($event.target.value);
     this.monthString = $event.value;
@@ -345,8 +346,12 @@ export class AddpersonComponent implements OnInit {
     this.dayString = $event.value;
   }
 
-  customSSIDValidator(ssid:string) {
+  switchNetExpense($event) {
+    this.DpsPersonObject.renumeration.costReimbursment = $event;
+    console.log("event="+$event);
+  }
 
+  customSSIDValidator(ssid:string) {
     this.validSSID = false;
     let validSPCharacters:boolean = false;
     
@@ -431,8 +436,8 @@ export class AddpersonComponent implements OnInit {
     this.DpsPersonObject.customerVatNumber = "123456789101";
     this.DpsPersonObject.person = this.PersonObject;
     
-    console.log("dps person object customer object=");
-    console.log(this.DpsPersonObject);
+    // console.log("dps person object customer object=");
+    // console.log(this.DpsPersonObject);
 
   }
 
@@ -808,8 +813,8 @@ onLanguageReceive($event) {
 
 onCountryReceive($event) {
 
-  console.log("on Country Receive");
-  console.log(this.DpsPersonObject);
+  // console.log("on Country Receive");
+  // console.log(this.DpsPersonObject);
 
   if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined){
     if(this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null){
@@ -836,7 +841,7 @@ onHourlyWageReceive($event){
 }
 
 onNetExpensesReceive($event){
-  this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event,10);
+  this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event,10);  
 }
 
 onChangeCostImbursement($event) {

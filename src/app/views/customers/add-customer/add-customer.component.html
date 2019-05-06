@@ -62,7 +62,6 @@
                 <span style="color:red;"> *All Fields are required in Contactpersoon </span>
             </div> -->
             <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
-
           </div>
         </div>
         <div id="from2" *ngIf="showFormIndex === 2">
@@ -74,7 +73,6 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-
             <app-general (childEvent)="receiveGeneralObject($event)"></app-general>
           </div>
           <div id="CustomerContact" class="statuteBox">
@@ -82,6 +80,17 @@
           </div>
           <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
 
+        </div>
+        <div id="from2" *ngIf="showFormIndex === 3">
+          <div id="CustomerGeneralDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Thank You For Updating your Details!!</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

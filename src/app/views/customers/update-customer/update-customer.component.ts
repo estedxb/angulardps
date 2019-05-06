@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Customer, DPSCustomer } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactpersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-update-customer',
@@ -11,26 +13,51 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./../customers.component.css']
 })
 export class UpdateCustomerComponent implements OnInit {
-  public CustomerName = 'SB Graphics bvba';
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsCustomer: any;
+  public vatNumber: string;
+  public CustomerName = '';
   public currentPage = 'editcustomer';
   public Id = '';
 
   public editCustomerData: any;
 
-  constructor(private customerService: CustomersService, private route: ActivatedRoute) {
+  constructor(private customerService: CustomersService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
       console.log('ID :: ' + this.Id);
     });
-
+  }
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      console.log('Snackbar Action :: ' + Action);
+    });
   }
 
   ngOnInit() {
     if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'update' ||
       this.Id === 'positions' || this.Id === 'users' || this.Id === 'workschedules') {
       this.currentPage = this.Id;
+      this.vatNumber = this.loginuserdetails.customerVatNumber;
     } else {
       this.currentPage = 'editcustomer';
+      this.vatNumber = this.loginuserdetails.customerVatNumber;
+    }
+    try {
+      console.log('this.vatNumber :: ' + this.vatNumber);
+      this.customerService.getCustomersByVatNumber(this.vatNumber).subscribe(dpscustomer => {
+        this.dpsCustomer = dpscustomer;
+        console.log('Customer Form Data : ', this.dpsCustomer);
+        this.CustomerName = this.dpsCustomer.customer.name;
+        this.ShowMessage('Customer fetched successfully.', '');
+      }, error => this.ShowMessage(error, 'error'));
+    } catch (e) {
+      this.CustomerName = 'Error!!';
     }
   }
 

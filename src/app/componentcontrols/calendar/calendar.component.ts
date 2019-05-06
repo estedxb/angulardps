@@ -15,7 +15,7 @@ export class CalendarComponent implements OnInit {
   public yearString;
   public selectedMonth;
   public selectedIndexDays;
-  public selectedYear;
+  public selectedYear;  
 
    /***** Drop Down functions and variables for calendar days  ********************************************/
    private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -59,6 +59,25 @@ export class CalendarComponent implements OnInit {
 
    }
 
+   checkLeapYear(year:number):boolean  
+    {  
+        // If a year is multiple of 400,  
+        // then it is a leap year  
+        if (year % 400 == 0)  
+            return true;  
+      
+        // Else If a year is muliplt of 100,  
+        // then it is not a leap year  
+        if (year % 100 == 0)  
+            return false;  
+      
+        // Else If a year is muliplt of 4,  
+        // then it is a leap year  
+        if (year % 4 == 0)  
+            return true;  
+        return false;  
+    }
+
    changeDropDownDateArray(event) {
 
     let month:string = event;
@@ -66,9 +85,17 @@ export class CalendarComponent implements OnInit {
 
     this.dataDropDown = [];
 
+    let currentYear = parseInt(this.dropDownYear[this.selectedYear],10);
+    console.log("currentYear="+currentYear);
+
     if(month==="1")
     {
-      for(let i:number=1;i<=28;i++)
+      let noDays = 28;
+
+      if(this.checkLeapYear(currentYear))
+        noDays = 29;
+
+      for(let i:number=1;i<=noDays;i++)
         this.dataDropDown.push(""+i);
     }
     else
