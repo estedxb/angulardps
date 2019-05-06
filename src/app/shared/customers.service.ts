@@ -42,9 +42,9 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    console.log('hello');
+    console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersListUrl + '/' + parameter);
 
-    const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
+    const result = this.http.get<any>(this.getCustomersListUrl + '/' + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }

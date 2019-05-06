@@ -9,7 +9,6 @@ import {
 } from 'src/app/shared/models';
 import { DataService } from '../../../shared/data.service';
 
-
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
@@ -37,17 +36,13 @@ export class AddCustomerComponent implements OnInit {
   receiveData($event, i) {
     if (i === 0) {
       this.HQdata = $event;
-    }
-    if (i === 1) {
+    } else if (i === 1) {
       this.CTdata = $event;
-    }
-    if (i === 2) {
+    } else if (i === 2) {
       this.GLdata = $event;
-    }
-    if (i === 3) {
+    } else if (i === 3) {
       this.STdata = $event;
-    }
-    if (i === 4) {
+    } else if (i === 4) {
       this.FPdata = $event;
     }
   }
@@ -96,9 +91,6 @@ export class AddCustomerComponent implements OnInit {
       console.log('validity data=' + this.HQdata.formValid);
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
-        // if(this.CTdata !== undefined && this.CTdata !== null)
-        // {
-
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
           this.showFormIndex = 2;
 
@@ -125,8 +117,6 @@ export class AddCustomerComponent implements OnInit {
               }
             }
           );
-          // }
-
         }
       } else {
         console.log('HQdata or CTdata is null or undefined !!');
@@ -140,7 +130,6 @@ export class AddCustomerComponent implements OnInit {
       console.log(this.HQdata);
       console.log('this STdata');
       console.log(this.STdata);
-      // "vcaObject": this.vcaObject, "blk": this.blkContracten
 
       if (this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== '') {
         if (this.HQdata !== null && this.HQdata !== undefined && this.HQdata !== '') {
@@ -220,7 +209,7 @@ export class AddCustomerComponent implements OnInit {
             this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
             this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
           } else {
-            this.HQdata.customer.vatNumber = '234343434';
+            // this.HQdata.customer.vatNumber = "234343434";
             this.HQdata.invoiceSettings = new InvoiceSettings();
             this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
             this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;

@@ -102,11 +102,11 @@ export class Contract {
     name: string;
     timeSpan: TimeSpan;
     workSchedule: WorkSchedule;
-    position: Position;    
+    position: Position;
     person: Person;
     statute: Statute;
     status: string;
-    cancelReason: string;    
+    cancelReason: string;
 }
 export class SocialSecurityNumber { number: string; }
 export class Gender { genderId: number; title: string; }
