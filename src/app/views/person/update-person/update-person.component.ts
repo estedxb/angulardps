@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DpsPerson, Person } from 'src/app/shared/models';
 import { PersonService } from 'src/app/shared/person.service';
-import { ContactpersonComponent } from '../../../contactperson/contactperson.component';
+import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
@@ -35,6 +35,7 @@ export class UpdatePersonComponent implements OnInit {
     console.log('SocialSecurityId :: ' + this.SocialSecurityId);
     console.log('CurrentPage :: ' + this.currentPage);
   }
+
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;

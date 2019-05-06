@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CustomersService } from 'src/app/shared/customers.service';
-import { ContactpersonComponent } from './../../../contactperson/contactperson.component';
+import { ContactPersonComponent } from './../../../contactperson/contactperson.component';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import {
   Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber, Address

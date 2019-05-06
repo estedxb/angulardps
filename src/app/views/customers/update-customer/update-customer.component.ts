@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Customer, DPSCustomer } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
-import { ContactpersonComponent } from '../../../contactperson/contactperson.component';
+import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
