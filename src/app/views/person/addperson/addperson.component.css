@@ -1,3 +1,5 @@
+
+
 .orangebtn {
   background-image: linear-gradient(
     104deg,
@@ -115,3 +117,29 @@
   padding-left: 3px;
   background: red;
 }
+
+.btnAdd {
+  background: transparent;
+  border:0px solid red;
+}
+
+.netExpense {
+  border:0px solid red;
+  margin-top:36px;
+}
+
+.red {
+  border:0px solid blue;
+}
+
+.newCol {
+  height: 10px;
+}
+
+.switch.switch-small {
+  margin: 0px;
+  height: 19px;
+  border-radius: 19px;
+  min-width: 40px;
+}
+

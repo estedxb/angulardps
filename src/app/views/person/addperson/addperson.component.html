@@ -323,43 +323,19 @@
               <div class="col col-sm-9">
                 <div class="row dynrow">
 
-                  <div class="col-sm-5">
+                  <div class="col-sm-8">
                     <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent" (change)="onChangeDropDownFunctie($event)" ng-dropdown>
                           <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
                             {{data}}</option>
                      </select>
                   </div>
 
-                  <div class="col-sm-7">
+                  <div class="col-sm-4">
                     <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
                       <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
                     </button>
                   </div>
-
-                  <!-- <div class="col-sm-2" style="background-color: #9A0C19; border-color: #9A0C19" *ngIf="(result.length === 1 || isLast) else remove">
-                            <button [disabled]="isInvalid()" #addButton (click)="addRows()"
-                                    type="button" class="btnAdd">
-                                    <img src="../../../assets/img/add.png" alt="" height="17.5"
-                                            width="17.5" />
-                            </button>
-                    </div>
-
-                    <ng-template #remove>
-                              <button [disabled]="isInvalid()" #removeButton (click)="removeRows(i)"
-                                      type="button" class="btnRemove">
-                                      <img src="../../../assets/img/delete.jpg" alt="" height="17.5"
-                                              width="17.5" />
-                              </button>
-                    </ng-template> -->
                 </div>
-
-                <!-- <div class="form-control-feedback"
-                  *ngIf="AddPersonForm2.controls.txtFunctie.invalid && (AddPersonForm2.controls.txtFunctie.dirty || AddPersonForm2.controls.txtFunctie.touched) else newvalid">
-                  <img src="../../assets/img/InvalidIcon.png" alt="">
-                </div>
-                <ng-template #newvalid>
-                  <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template> -->
               </div>
               <div class="col col-sm-3 inputWithImg">
               </div>
@@ -375,17 +351,16 @@
               <div class="col col-sm-7"></div>
             </div>
             <div class="row">
-              <div class="col-sm-3 inputWithImg">
+              <div class="col-sm-3 inputWithImg" style="margin-top:38px;">
                 <label class="titleBold"> Statuut: </label>
-                <!-- <input formControlName="statute" class="form-control" name="statute" type="text" required /> -->
-
+                
                 <select formControlName="statute" id="dd_statute" name="dd_statute" class="inhaalrust selectcomponent" (change)="onChangeDropDownStatute($event)" ng-dropdown required="required">
                     <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
                       {{data}}</option>
                </select>
 
               </div>
-              <div class="col-sm-3 inputWithImg">
+              <div class="col-sm-3 inputWithImg" style="margin-top:38px;">
                 <label class="titleBold"> Bruto uurloon: </label>
                 <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control" (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
                   required />
@@ -396,25 +371,31 @@
                   <img src="../../assets/img/ValidIcon.png" alt="">
                 </ng-template>
               </div>
-              <div class="col-sm-4 inputWithImg">
-                <label class="titleBold"> Netto onkostenvergoeding: </label>
-                <!-- <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch> &nbsp; -->
-                <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="text" required />
-                <div class="form-control-feedback" *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
-                  <img src="../../assets/img/InvalidIcon.png" alt="">
-                </div>
-                <ng-template #newvalid>
-                  <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template>
+              <div class="col-sm-4 inputWithImg1 netExpense">
+                   <div class="row">
+                      <div class="col-sm-2">
+                          <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch>
+                      </div>
+                      <div class="col-sm-10">
+                          <label class="titleBold"> onkostenvergoeding: </label>  
+                      </div>
+                   </div>
+                    <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="text" required />
+                    <div style="margin-top:10px;" class="form-control-feedback" *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalid>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>        
               </div>
             </div>
           </div>
-          <div id="CustomerContact" class="customerBox">
-            <div class="row">
-              <div class="col col-sm-2">
-              </div>
-              <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
+          <div id="CustomerContact1" class="customerBox">
+            <div class="row netExpense" style="padding-left: 10px;">
+              <!-- <div class="col col-sm-2">
+              </div> -->
                   <ui-switch (change)="changeKM($event)" size="small"> </ui-switch> &nbsp;
+                  <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
             </div>
           </div>
           <div id="CustomerContact" class="customerBox">
