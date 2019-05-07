@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-calendar',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+
+  @Output() public childEvent = new EventEmitter();
 
   public dataDropDown:String[];
   public dropDownMonth:string[];
@@ -16,6 +18,7 @@ export class CalendarComponent implements OnInit {
   public selectedMonth;
   public selectedIndexDays;
   public selectedYear;  
+  public calendarObject:any;
 
    /***** Drop Down functions and variables for calendar days  ********************************************/
    private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -56,6 +59,13 @@ export class CalendarComponent implements OnInit {
     this.dropDownYear = [""+today.getFullYear(),""+(today.getFullYear() +1)];
     this.dataDropDown = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
     this.dropDownMonth = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
+    this.selectedYear = 0;
+
+    this.calendarObject = {
+       "dayString":"",
+       "monthString":"",
+       "yearString":""
+    }
 
    }
 
@@ -113,19 +123,33 @@ export class CalendarComponent implements OnInit {
   }
 
   onChangeDropDownYear($event) {
-    this.yearString = $event.value;    
+    this.yearString = this.dropDownYear[$event.target.value];    
+    console.log("selected year="+ this.yearString);
+    this.selectedYear = $event.target.value;
+
+    this.calendarObject.yearString = this.yearString;
+    this.childEvent.emit(this.calendarObject);
+
   }
 
   onChangeDropDownMonth($event){
     
-    console.log("selected month="+$event.target.value);
     this.changeDropDownDateArray($event.target.value);
-    this.monthString = $event.value;
+    this.monthString = this.dropDownMonth[$event.target.value];
+    console.log("selected month="+this.monthString);
 
+    this.calendarObject.monthString = this.monthString;
+    this.childEvent.emit(this.calendarObject);
   }
 
   onChangeDropDownDate($event){
-    this.dayString = $event.value;
+    //console.log("selected date="+$event.target.value);
+    this.dayString = this.dataDropDown[$event.target.value - 1];
+    console.log("selected date="+ this.dayString);
+
+    this.calendarObject.dayString = this.dayString;
+    this.childEvent.emit(this.calendarObject);
+
   }
 
   ngOnInit() {
