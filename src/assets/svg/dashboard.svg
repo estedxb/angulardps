@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-name="Laag 1" width="40.21163748845822" height="40.21163748845834" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none" class="" style=""/>
+    <defs>
+        <style>.a{fill:url(#a);}</style>
+        <linearGradient xmlns="http://www.w3.org/2000/svg" id="a" gradientTransform="rotate(110)">
+            <stop offset="0" stop-color="#E37619"/>
+            <stop offset="1" stop-color="#9F0B19"/>
+        </linearGradient>
+    </defs>
+    <title>dashboard-icons</title>
+    
+<g class="currentLayer" style=""><title>Layer 1</title><path class="a" d="M3.5767652518162327,24.481074142008758 l2.1221142298773605,-2.1221142298773605 V38.122917933441414 H35.31242510851904 V22.354492303226394 l2.1221142298773605,2.1221142298773605 l2.3253904350550867,-2.3253904350550867 L20.507886099558814,2.9047569352872546 l-8.224867994114149,8.223751091887896 V8.514956817747244 H8.993741049134757 V14.40884986567505 L1.2513748167611465,22.15568370695366 zm28.44526589816664,-5.415858895092274 V34.83252397490526 H8.993741049134757 V19.065215246916477 L20.507886099558814,7.551070196492428 z" id="svg_1"/></g></svg>

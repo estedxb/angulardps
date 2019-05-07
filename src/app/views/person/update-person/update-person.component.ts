@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
   styleUrls: ['./../person.component.css']
 })
 export class UpdatePersonComponent implements OnInit {
+  public loginaccessToken: string = localStorage.getItem('accesstoken');
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public PersonInitial = 'VM';
   public PersonName = 'Vanessa Martens';
@@ -26,6 +27,9 @@ export class UpdatePersonComponent implements OnInit {
   public editPersonData: any;
 
   constructor(private personService: PersonService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+    console.log('InSide :: Update Person');
+
+    this.validateLogin();
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
@@ -34,6 +38,19 @@ export class UpdatePersonComponent implements OnInit {
 
     console.log('SocialSecurityId :: ' + this.SocialSecurityId);
     console.log('CurrentPage :: ' + this.currentPage);
+
+  }
+
+  validateLogin() {
+    try {
+      console.log('this.loginaccessToken :: ' + this.loginaccessToken);
+      if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
+        this.router.navigate(['./login']);
+      }
+    } catch (e) {
+      this.router.navigate(['./login']);
+      alert(e.message);
+    }
   }
 
   ShowMessage(MSG, Action) {
@@ -48,8 +65,9 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   ngOnInit() {
+
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
-      this.router.navigate(['/404']);
+      this.router.navigate(['./404']);
     } else { this.SocialSecurityId = this.Id; }
     if (this.currentPage === 'documents' || this.currentPage === 'document') {
       this.currentPage = 'documents';
@@ -76,6 +94,7 @@ export class UpdatePersonComponent implements OnInit {
     } catch (e) {
       this.PersonName = 'Error!!';
     }
+
   }
 
 }

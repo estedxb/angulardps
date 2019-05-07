@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cleanWindows": "rmdir /s /q node_modules",
-    "rebuild": "npm run cleanWindows && npm install && npm audit fix && npm run build && ng serve"
+    "rebuild": "npm run cleanWindows && npm install && ng serve"
   },
   "private": true,
   "dependencies": {

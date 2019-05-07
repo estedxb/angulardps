@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Customer, DPSCustomer } from 'src/app/shared/models';
+import { Customer, DPSCustomer, LoginToken, DpsUser } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { LoginComponent } from '../../login/login.component';
 
 @Component({
   selector: 'app-update-customer',
@@ -13,6 +14,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
   styleUrls: ['./../customers.component.css']
 })
 export class UpdateCustomerComponent implements OnInit {
+  public loginaccessToken: string = localStorage.getItem('accesstoken');
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public dpsCustomer: any;
   public vatNumber: string;
@@ -22,13 +24,33 @@ export class UpdateCustomerComponent implements OnInit {
 
   public editCustomerData: any;
 
-  constructor(private customerService: CustomersService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+  constructor(
+    private customerService: CustomersService, private router: Router,
+    private route: ActivatedRoute, private snackBar: MatSnackBar
+  ) {
+
+    this.validateLogin();
+
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
       this.currentPage = params.page;
       console.log('ID :: ' + this.Id);
     });
+
   }
+
+  validateLogin() {
+    try {
+      console.log('this.loginaccessToken :: ' + this.loginaccessToken);
+      if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
+        this.router.navigate(['./login']);
+      }
+    } catch (e) {
+      this.router.navigate(['./login']);
+      alert(e.message);
+    }
+  }
+
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
@@ -41,6 +63,7 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
+
     if (this.Id === 'locations' ||
       this.Id === 'positions' ||
       this.Id === 'users' ||
