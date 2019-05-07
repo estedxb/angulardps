@@ -15,7 +15,7 @@
             <div *ngFor="let customer of customernames">
                 <div id="customersList"
                     *ngIf="customer && customer.item1 != null && customer.item1 != undefined && customer.item1 != '' && customer.item1 != 'undefined'  ">
-                    <a [routerLink]='["/customer/" + customer.item1]'
+                    <a [routerLink]='["/customer/" + customer.item1]' (click)="closeMe()"
                         title=" {{ customer.item1 }} -  {{ customer.item2 }} - {{ customer.item3 }}">{{customer.item2}}</a>
                 </div>
             </div>

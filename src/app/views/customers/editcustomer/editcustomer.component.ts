@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
@@ -10,31 +10,24 @@ import { DataService } from 'src/app/shared/data.service';
 })
 export class EditCustomerComponent implements OnInit {
 
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
-
+  // public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  @Input() CustomerVatNumber: string;
   @Output() public childEvent = new EventEmitter();
-
   public HQdata: any;
   public CTdata: any;
   public GLdata: any;
   public STdata: any;
   public FPdata: any;
   public vatNumber: string;
-
-  public editObject: any = {
-    data: '',
-    page: ''
-  };
-
+  public editObject: any = { data: '', page: '' };
   public oldHQdata: any;
   public dataCustomerEdit: any;
 
   constructor(private customerService: CustomersService, private data: DataService) {
 
-    this.vatNumber = this.loginuserdetails.customerVatNumber;
     // this.vatNumber = "B0011";
 
-    console.log(this.vatNumber);
+    // console.log(this.vatNumber);
 
     this.editObject = {
       data: '',
@@ -50,12 +43,14 @@ export class EditCustomerComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-    console.log('ngOnInit called');
-    console.log(this.loginuserdetails);
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    this.vatNumber = this.CustomerVatNumber;
+    console.log('ngOnInit called editcustomer');
     console.log('vatNumber=' + this.vatNumber);
-    // var url = "https://dpsapisdev.azurewebsites.net/api/Customer/B0011";
     this.getCustomerByVatNumberEdit(this.vatNumber);
   }
 

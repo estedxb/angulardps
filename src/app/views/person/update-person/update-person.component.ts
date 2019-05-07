@@ -45,10 +45,10 @@ export class UpdatePersonComponent implements OnInit {
     try {
       console.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
-        this.router.navigate(['./login']);
+        this.router.navigate(['/login']);
       }
     } catch (e) {
-      this.router.navigate(['./login']);
+      this.router.navigate(['/login']);
       alert(e.message);
     }
   }
@@ -67,7 +67,7 @@ export class UpdatePersonComponent implements OnInit {
   ngOnInit() {
 
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
-      this.router.navigate(['./404']);
+      this.router.navigate(['/404']);
     } else { this.SocialSecurityId = this.Id; }
     if (this.currentPage === 'documents' || this.currentPage === 'document') {
       this.currentPage = 'documents';

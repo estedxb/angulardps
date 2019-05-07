@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -13,6 +13,7 @@ import { CreateWorkScheduleComponent } from './createworkschedule/createworksche
   styleUrls: ['./../customers.component.css']
 })
 export class WorkSchedulesComponent implements OnInit {
+  @Input() CustomerVatNumber: string;
   public maindatas = [];
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;
@@ -20,15 +21,19 @@ export class WorkSchedulesComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
   constructor(
     private workschedulesService: WorkschedulesService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    console.log('loginuserdetails ::', this.loginuserdetails);
-    this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(dpsWorkSchedules => {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.workschedulesService.getWorkscheduleByVatNumber(this.CustomerVatNumber).subscribe(dpsWorkSchedules => {
       this.maindatas = dpsWorkSchedules;
       console.log('Work Schedule Forms Data : ', this.maindatas);
       this.FilterTheArchive();
@@ -92,7 +97,7 @@ export class WorkSchedulesComponent implements OnInit {
     this.workSchedule = new WorkSchedule();
     this.data.id = 0;
     this.data.name = '';
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.data.customerVatNumber = this.CustomerVatNumber;
     this.data.isArchived = false;
     this.data.isEnabled = true;
     this.workSchedule.workDays = [];

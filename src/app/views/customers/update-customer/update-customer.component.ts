@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Customer, DPSCustomer, LoginToken, DpsUser } from 'src/app/shared/models';
@@ -14,40 +14,29 @@ import { LoginComponent } from '../../login/login.component';
   styleUrls: ['./../customers.component.css']
 })
 export class UpdateCustomerComponent implements OnInit {
+
   public loginaccessToken: string = localStorage.getItem('accesstoken');
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public dpsCustomer: any;
   public vatNumber: string;
   public CustomerName = '';
-  public currentPage = 'editcustomer';
+  public currentPage = '';
   public Id = '';
 
   public editCustomerData: any;
 
-  constructor(
-    private customerService: CustomersService, private router: Router,
-    private route: ActivatedRoute, private snackBar: MatSnackBar
-  ) {
-
-    this.validateLogin();
-
-    const sub = this.route.params.subscribe((params: any) => {
-      this.Id = params.id;
-      this.currentPage = params.page;
-      console.log('ID :: ' + this.Id);
-    });
-
-  }
+  constructor(// private routerEvent: RouterEvent,
+    private customerService: CustomersService, private snackBar: MatSnackBar,
+    private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
     try {
       console.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
-        this.router.navigate(['./login']);
+        this.router.navigate(['/login']);
       }
     } catch (e) {
-      this.router.navigate(['./login']);
-      alert(e.message);
+      this.router.navigate(['/login']); alert(e.message);
     }
   }
 
@@ -63,24 +52,38 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activeRoute.params.subscribe((routeParams: any) => {
+      console.log('routeParams :: ', routeParams);
+      this.Id = routeParams.id; this.currentPage = routeParams.page;
+      console.log('this.Id  :: ', this.Id, 'this.currentPage :: ', this.currentPage);
 
-    if (this.Id === 'locations' ||
-      this.Id === 'positions' ||
-      this.Id === 'users' ||
-      this.Id === 'workschedules') {
-      this.currentPage = this.Id;
-      this.vatNumber = this.loginuserdetails.customerVatNumber;
-    } else {
-      this.currentPage = 'editcustomer';
-      this.vatNumber = this.loginuserdetails.customerVatNumber;
-    }
+      if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'users' ||
+        this.Id === 'workschedules' || this.Id === 'update' || this.Id === 'edit') {
+        if (this.Id === 'update' || this.Id === 'edit') {
+          this.currentPage = 'editcustomer';
+        } else {
+          this.currentPage = this.Id;
+        }
+        this.vatNumber = this.loginuserdetails.customerVatNumber;
+      } else {
+        this.vatNumber = this.Id;
+        if (this.currentPage === undefined) {
+          this.currentPage = 'editcustomer';
+        }
+      }
+      console.log('ID :: ' + this.Id, 'CurrentPage :: ' + this.currentPage);
+      this.onPageInit();
+    });
+  }
+
+  onPageInit() {
     try {
-      console.log('this.vatNumber :: ' + this.vatNumber);
+      console.log('this.vatNumber pageInit :: ' + this.vatNumber);
       this.customerService.getCustomersByVatNumber(this.vatNumber).subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer;
         console.log('Customer Form Data : ', this.dpsCustomer);
         this.CustomerName = this.dpsCustomer.customer.name;
-        this.ShowMessage('Customer fetched successfully.', '');
+        this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.ShowMessage(error, 'error'));
     } catch (e) {
       this.CustomerName = 'Error!!';
@@ -88,17 +91,12 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   receiveEditCustomerData($event) {
-
     console.log('received data in update customer=');
     this.editCustomerData = $event;
-
   }
 
   onFormwardClick() {
-
-    console.log('forward click');
-    console.log(this.editCustomerData);
-
+    console.log('forward click', this.editCustomerData);
     if (this.editCustomerData.formValid !== null) {
       delete this.editCustomerData.formValid;
     }
@@ -111,13 +109,10 @@ export class UpdateCustomerComponent implements OnInit {
           if (err.error instanceof Error) {
             console.log('Error occured=' + err.error.message);
           } else {
-            console.log('response code=' + err.status);
-            console.log('response body=' + err.error);
+            console.log('response code=' + err.status, 'response body=' + err.error);
           }
         }
       );
     }
-
   }
-
 }
