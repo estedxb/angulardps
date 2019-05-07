@@ -13,7 +13,7 @@ import {
   styleUrls: ['./contactperson.component.css']
 })
 
-export class ContactpersonComponent implements OnInit {
+export class ContactPersonComponent implements OnInit {
 
   public languageString;
   public languageStringNew;
@@ -38,7 +38,7 @@ export class ContactpersonComponent implements OnInit {
 
   }
 
-  loadEditDetails(contactPerson:any){
+  loadEditDetails(contactPerson: any) {
 
     console.log("load details has been called");
     console.log(contactPerson);
@@ -51,10 +51,10 @@ export class ContactpersonComponent implements OnInit {
     this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
     this.languageString = contactPerson.contact.language.name;
-    
+
   }
 
-  
+
 
   ngDoCheck() {
 
@@ -69,7 +69,7 @@ export class ContactpersonComponent implements OnInit {
           this.languageString = this.CTFormData.data.contact.language.name;
           this.languageString = "French";
           this.createObjects();
-          
+
           // this.CTdata =  {
           //   "contact": this.contact,
           //   "formValid": this.validity(),
@@ -86,16 +86,14 @@ export class ContactpersonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log("inside ngDoAfterViewInit="+this.CTFormData.data);
+    console.log("inside ngDoAfterViewInit=" + this.CTFormData.data);
 
-    if(this.CTFormData.data !== undefined && this.CTFormData.data !== null)
-    {
-      if(this.CTFormData.data !== this.oldData )
-      {
+    if (this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
+      if (this.CTFormData.data !== this.oldData) {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
         this.languageString = "French";
-      }  
+      }
     }
   }
 
@@ -112,12 +110,12 @@ export class ContactpersonComponent implements OnInit {
       telephone: new FormControl(''),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
-    
-    this.alsCheck  = false;
+
+    this.alsCheck = false;
     this.createObjects();  //check validations
   }
 
-  receiveMessageLanguage($event) {    
+  receiveMessageLanguage($event) {
 
     this.languageStringNew = $event.name;
     this.languageShortNameNEw = $event.shortName;
@@ -139,8 +137,8 @@ export class ContactpersonComponent implements OnInit {
     this.mobileNumber.number = this.CTForm.get('mobile').value;
     this.contactsEmail.emailAddress = this.CTForm.get('emailaddress').value;
 
-   this.language.name = this.languageStringNew;
-   this.language.shortName = this.languageShortNameNEw;
+    this.language.name = this.languageStringNew;
+    this.language.shortName = this.languageShortNameNEw;
 
     this.contact.firstName = this.CTForm.get('firstname').value;
     this.contact.lastName = this.CTForm.get('lastname').value;
@@ -150,12 +148,12 @@ export class ContactpersonComponent implements OnInit {
     this.contact.postion = this.CTForm.get('position').value;
     this.contact.language = this.language;
 
-   this.languageString = this.language.name;
+    this.languageString = this.language.name;
 
     this.setJSONObject();
   }
 
-  
+
 
   changeAls($event) {
     this.alsCheck = $event;

@@ -12,7 +12,7 @@ import { CreateWorkScheduleComponent } from './createworkschedule/createworksche
   templateUrl: './workschedules.component.html',
   styleUrls: ['./../customers.component.css']
 })
-export class WorkschedulesComponent implements OnInit {
+export class WorkSchedulesComponent implements OnInit {
   public maindatas = [];
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;

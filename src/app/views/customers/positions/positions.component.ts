@@ -14,8 +14,8 @@ import { CreatepositionComponent } from './createposition/createposition.compone
 })
 export class PositionsComponent implements OnInit {
   public maindatas = [];
-  public data : DpsPostion;
-  public position : _Position;
+  public data: DpsPostion;
+  public position: _Position;
   public workstationDocument: Documents;
   public errorMsg;
   public SelectedIndex = -1;
@@ -35,8 +35,7 @@ export class PositionsComponent implements OnInit {
     }, error => this.ShowMessage(error, 'error'));
   }
 
-  FilterTheArchive()
-  {
+  FilterTheArchive() {
     console.log('Positions Form Data : ', this.maindatas);
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
@@ -62,23 +61,23 @@ export class PositionsComponent implements OnInit {
       dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
       const dialogRef = this.dialog.open(CreatepositionComponent, dialogConfig);
-      
-      
+
+
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.data = result;
         console.log('this.data ::', this.data);
-        if (this.SelectedIndex >=0){           
-            this.maindatas[this.SelectedIndex] = this.data;          
-            this.FilterTheArchive();   
-            this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
-        } else {    
-          console.log('this.data.id :: ' , this.data.id);
-          if(parseInt('0' + this.data.id,0 )>0){
-            this.maindatas.push(this.data); 
+        if (this.SelectedIndex >= 0) {
+          this.maindatas[this.SelectedIndex] = this.data;
+          this.FilterTheArchive();
+          this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
+        } else {
+          console.log('this.data.id :: ', this.data.id);
+          if (parseInt('0' + this.data.id, 0) > 0) {
+            this.maindatas.push(this.data);
             console.log(' new this.maindatas :: ', this.maindatas);
-            this.FilterTheArchive();   
-            this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');              
+            this.FilterTheArchive();
+            this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
           }
         }
       });
@@ -86,8 +85,8 @@ export class PositionsComponent implements OnInit {
   }
 
   onClickAdd() {
-    this.SelectedIndex =-1;
-    
+    this.SelectedIndex = -1;
+
     this.data = new DpsPostion();
     this.position = new _Position();
     this.workstationDocument = new Documents();
@@ -95,18 +94,18 @@ export class PositionsComponent implements OnInit {
     this.workstationDocument.name = '';
     this.workstationDocument.location = '';
 
-    this.position.costCenter = '';    
+    this.position.costCenter = '';
     this.position.isStudentAllowed = false;
     this.position.name = '';
     this.position.taskDescription = '';
     this.position.workstationDocument = this.workstationDocument;
-    
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber ;
+
+    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.data.id = 0;
     this.data.isArchived = false;
-    this.data.isEnabled =true;
+    this.data.isEnabled = true;
 
-    this.data.position = this.position;  
+    this.data.position = this.position;
     this.openDialog();
   }
 
@@ -124,16 +123,16 @@ export class PositionsComponent implements OnInit {
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
-    (err: HttpErrorResponse) => {
-      console.log('Error :: ', err);
-      if (err.error instanceof Error) {
-        console.log('Error occured=' + err.error.message);
-      } else {
-        console.log('response code=' + err.status, 'response body=' + err.error);
+      (err: HttpErrorResponse) => {
+        console.log('Error :: ', err);
+        if (err.error instanceof Error) {
+          console.log('Error occured=' + err.error.message);
+        } else {
+          console.log('response code=' + err.status, 'response body=' + err.error);
+        }
       }
-    }
-  );
-}
+    );
+  }
 
   onClickDelete(i) {
     console.log('Delete Clicked Index:: ' + i);
@@ -148,6 +147,5 @@ export class PositionsComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updatePositions();
-   
   }
 }

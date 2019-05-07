@@ -96,7 +96,7 @@ export class CreatecontractComponent implements OnInit {
     if ($event !== undefined && $event !== null) {
       this.selectedEndDate =$event;     
       this.createObjects();
-    }    
+    }
   }
 
   updateData() 

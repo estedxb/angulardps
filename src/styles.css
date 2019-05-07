@@ -608,12 +608,12 @@ div#CustomerContact {
   text-align: center;
 }
 
-#maincontentarea .netExpense .switch{
+#maincontentarea .netExpense .switch {
   height: 14px;
   padding: 0px;
- }
+}
 
- #maincontentarea .netExpense .switch.switch-small {
+#maincontentarea .netExpense .switch.switch-small {
   margin: 0px;
   height: 19px;
   border-radius: 19px;
@@ -634,4 +634,20 @@ div#CustomerContact {
 
 div#CustomerContact1 {
   min-height: 80px;
+}
+
+.showborder-red {
+  border: 1px solid red;
+}
+.showborder-green {
+  border: 1px solid green;
+}
+.showborder-blue {
+  border: 1px solid blue;
+}
+.showborder-yellow {
+  border: 1px solid yellow;
+}
+.showborder-orange {
+  border: 1px solid orange;
 }

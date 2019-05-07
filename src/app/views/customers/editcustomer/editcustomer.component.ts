@@ -8,7 +8,7 @@ import { DataService } from 'src/app/shared/data.service';
   templateUrl: './editcustomer.component.html',
   styleUrls: ['./../customers.component.css']
 })
-export class EditcustomerComponent implements OnInit {
+export class EditCustomerComponent implements OnInit {
 
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
 

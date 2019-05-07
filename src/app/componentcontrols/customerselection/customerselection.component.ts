@@ -7,7 +7,7 @@ import { CustomerListsService } from '../../shared/customerlists.service';
   styleUrls: ['./customerselection.component.css']
 })
 
-export class CustomerselectionComponent implements OnInit {
+export class CustomerSelectionComponent implements OnInit {
   public customers = [];
   public customernames = [];
   public errorMsg;
