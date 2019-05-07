@@ -14,7 +14,7 @@ import {
   templateUrl: './editperson.component.html',
   styleUrls: ['./../person.component.css']
 })
-export class EditpersonComponent implements OnInit {
+export class EditPersonComponent implements OnInit {
 
   editPersonForm:FormGroup;
   editPersonForm2: FormGroup;
