@@ -28,7 +28,7 @@ export class WorkschedulesService {
     }
   }
 
-  public getWorkscheduleByVatNumber(parameter: string): Observable<any[]> {
+  public getWorkscheduleByVatNumber(parameter: string): Observable<DpsWorkSchedule[]> {
     let WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl;
     if (this.isRemoteURL) { WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl + '/' + parameter; }
     console.log('Get Work Schedule By Vat Number Url', WorkscheduleByVatNumberUrl);
