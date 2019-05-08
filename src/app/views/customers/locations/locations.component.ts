@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module'; // , private alerts: AlertsService
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
@@ -13,6 +13,7 @@ import { CreatelocationComponent } from './createlocation/createlocation.compone
   styleUrls: ['./../customers.component.css']
 })
 export class LocationsComponent implements OnInit {
+  @Input() CustomerVatNumber: string;
   public maindatas = [];
   public data: Location;
   public address: Address;
@@ -20,15 +21,19 @@ export class LocationsComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
   constructor(
     private locationsService: LocationsService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    console.log('loginuserdetails ::', this.loginuserdetails);
-    this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(locations => {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.locationsService.getLocationByVatNumber(this.CustomerVatNumber).subscribe(locations => {
       this.maindatas = locations;
       this.FilterTheArchive();
       console.log('Locations Forms Data : ', this.maindatas);
@@ -103,7 +108,7 @@ export class LocationsComponent implements OnInit {
 
     this.data.id = 0;
     this.data.name = '';
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.data.customerVatNumber = this.CustomerVatNumber;
     this.data.address = this.address;
     this.data.isArchived = false;
     this.data.isEnabled = true;

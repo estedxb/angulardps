@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
@@ -12,6 +12,7 @@ import { CreateuserComponent } from './createuser/createuser.component';
   styleUrls: ['./../customers.component.css']
 })
 export class UsersComponent implements OnInit {
+  @Input() CustomerVatNumber: string;
   public maindatas = [];
   public data: DpsUser;
   public user: User;
@@ -22,13 +23,17 @@ export class UsersComponent implements OnInit {
   public errorMsg;
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
   constructor(private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    console.log('loginuserdetails ::', this.loginuserdetails);
-    this.usersService.getUsersByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(users => {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.usersService.getUsersByVatNumber(this.CustomerVatNumber).subscribe(users => {
       this.maindatas = users;
       this.FilterTheArchive();
       console.log('Users Form Data : ', this.maindatas);
@@ -103,7 +108,7 @@ export class UsersComponent implements OnInit {
     this.phoneNumber = new PhoneNumber();
     this.language = new Language();
 
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.data.customerVatNumber = this.CustomerVatNumber;
     this.data.isEnabled = true;
     this.data.isArchived = false;
     this.data.userRole = '';

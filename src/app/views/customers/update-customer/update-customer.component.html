@@ -41,7 +41,7 @@
           </button>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
-          <button class="greenbtn" id="btnSave" (click)="onFormwardClick()" ><span>Gegevens opslaan</span></button>
+          <button class="greenbtn" id="btnSave" (click)="onFormwardClick()"><span>Gegevens opslaan</span></button>
         </div>
 
       </div>
@@ -49,19 +49,21 @@
     <div class="col col-sm-8" id="maincontentarea">
       <div class="scrollbar" id="maincontent">
         <div *ngIf="currentPage==='workschedules'">
-          <app-workschedules></app-workschedules>
+          <app-workschedules [CustomerVatNumber]="vatNumber">
+          </app-workschedules>
         </div>
         <div *ngIf="currentPage==='positions'">
-          <app-positions></app-positions>
+          <app-positions [CustomerVatNumber]="vatNumber"></app-positions>
         </div>
         <div *ngIf="currentPage==='users'">
-          <app-users></app-users>
+          <app-users [CustomerVatNumber]="vatNumber"></app-users>
         </div>
         <div *ngIf="currentPage==='locations'">
-          <app-locations></app-locations>
+          <app-locations [CustomerVatNumber]="vatNumber"></app-locations>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
-          <app-editcustomer (childEvent)="receiveEditCustomerData($event)"></app-editcustomer>
+          <app-editcustomer (childEvent)="receiveEditCustomerData($event)" [CustomerVatNumber]="vatNumber">
+          </app-editcustomer>
         </div>
       </div>
     </div>

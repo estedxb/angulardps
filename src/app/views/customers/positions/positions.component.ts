@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
@@ -13,6 +13,7 @@ import { CreatepositionComponent } from './createposition/createposition.compone
   styleUrls: ['./../customers.component.css']
 })
 export class PositionsComponent implements OnInit {
+  @Input() CustomerVatNumber: string;
   public maindatas = [];
   public data: DpsPostion;
   public position: _Position;
@@ -21,13 +22,17 @@ export class PositionsComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
   constructor(private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    console.log('loginuserdetails ::', this.loginuserdetails);
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.positionsService.getPositionsByVatNumber(this.CustomerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       console.log('Positions Form Data : ', this.maindatas);
@@ -100,7 +105,7 @@ export class PositionsComponent implements OnInit {
     this.position.taskDescription = '';
     this.position.workstationDocument = this.workstationDocument;
 
-    this.data.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.data.customerVatNumber = this.CustomerVatNumber;
     this.data.id = 0;
     this.data.isArchived = false;
     this.data.isEnabled = true;
