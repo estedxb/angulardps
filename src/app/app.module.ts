@@ -50,10 +50,3 @@ import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 })
 export class AppModule { }
 
-/*
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UiSwitchModule } from 'ngx-toggle-switch';
-import { MatAutocompleteModule,MatInputModule } from '@angular/material';
-MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule,
-NgbModule ,
-*/

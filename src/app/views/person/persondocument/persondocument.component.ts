@@ -12,6 +12,7 @@ import { PersonService } from '../../../shared/person.service';
   styleUrls: ['./../person.component.css']
 })
 export class PersonDocumentComponent implements OnInit {
+  @Input() SocialSecurityId: string;
   public maindatas = [];
   public data: DpsPerson;
   constructor(private personService: PersonService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
