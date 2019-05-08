@@ -125,7 +125,7 @@ export class Person {
     socialSecurityNumber: SocialSecurityNumber;
     dateOfBirth: string;
     placeOfBirth: string;
-    countryOfBirth: string;    
+    countryOfBirth: string;
     nationality: string;
     gender: Gender;
     firstName: string;
@@ -140,16 +140,6 @@ export class Person {
     status: string;
 }
 
-export class Contract {
-    name: string;
-    timeSpan: string;
-    workSchedule: WorkSchedule;
-    position: _Position;    
-    person: Person;
-    statute: Statute;
-    status: string;
-    cancelReason: string;    
-}
 export class SocialSecurityNumber { number: string; }
 export class Gender { genderId: number; title: string; }
 export class BankAccount { bic: string; iban: string; }
@@ -174,6 +164,67 @@ export class BreakTimes { startTime: string; endTime: string; title: string; }
 export class WorkScheduleRow { rowid: number; weekDayOf: WeekDayOf[]; }
 export class WeekDayOf { dayOfWeek: number; workTimes: WorkTimes; }
 
+
+
+export class DpsContract {
+    id: number;
+    customerVatNumber: string;
+    personId: string;
+    positionId: number;
+    locationId: number;
+    workScheduleId: number;
+    parentContractId: number;
+    contract: Contract;
+    timeSheet: TimeSheet;
+}
+export class Contract {
+    name: string;
+    startDate: Date;
+    endDate: Date;
+    workSchedule: WorkSchedule;
+    position: _Position;
+    statute: Statute;
+    status: string;
+    cancelReason: string;
+}
+
+export class TimeSheet {
+    dayValues: DayValue[];
+    standAloneValues: StandAloneValue[];
+    information: string;
+    status: string;
+}
+export class DayValue {
+    date: Date;
+    values: Value[];
+}
+export class Value {
+    code: Code;
+    value: number;
+    mandatory: boolean;
+}
+export class Code {
+    codeNumber: number;
+    description: string;
+    codeType: string;
+    valueType: string;
+    isDefaultForCodeType: string;
+    statuteType: string;
+}
+export class StandAloneValue {
+    code: Code2;
+    value: number;
+    mandatory: boolean;
+}
+
+export class Code2 {
+    codeNumber: number;
+    description: string;
+    codeType: string;
+    valueType: string;
+    isDefaultForCodeType: string;
+    statuteType: string;
+}
 
 /*
 export class Attestation1 { location: string; name: string; }

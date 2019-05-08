@@ -17,7 +17,7 @@ export class UpdatePersonComponent implements OnInit {
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public PersonInitial = 'VM';
   public PersonName = 'Vanessa Martens';
-  public currentPage = 'editperson';
+  public currentPage = '';
   public dpsPerson: any;
   public vatNumber: string;
   public SocialSecurityId: string;
@@ -58,17 +58,17 @@ export class UpdatePersonComponent implements OnInit {
 
   ngOnInit() {
 
-
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
       this.currentPage = params.page;
       this.onPageInit();
     });
-    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    console.log('CurrentPage :: ' + this.currentPage);
   }
 
   onPageInit() {
+    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    console.log('CurrentPage :: ' + this.currentPage);
+
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
       this.router.navigate(['/404']);
     } else { this.SocialSecurityId = this.Id; }
