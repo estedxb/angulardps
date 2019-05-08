@@ -69,7 +69,7 @@ export class CalendarComponent implements OnInit {
 
    }
 
-   checkLeapYear(year:number):boolean  
+   checkLeapYear(year:number):boolean
     {  
         // If a year is multiple of 400,  
         // then it is a leap year  

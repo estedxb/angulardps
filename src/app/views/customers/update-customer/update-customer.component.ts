@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Customer, DPSCustomer, LoginToken, DpsUser } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
-import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginComponent } from '../../login/login.component';
@@ -43,7 +42,7 @@ export class UpdateCustomerComponent implements OnInit {
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.horizontalPosition = 'center'; 
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
