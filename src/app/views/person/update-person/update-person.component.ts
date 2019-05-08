@@ -28,17 +28,9 @@ export class UpdatePersonComponent implements OnInit {
 
   constructor(private personService: PersonService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     console.log('InSide :: Update Person');
-
     this.validateLogin();
     this.vatNumber = this.loginuserdetails.customerVatNumber;
-    const sub = this.route.params.subscribe((params: any) => {
-      this.Id = params.id;
-      this.currentPage = params.page;
-    });
-
-    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    console.log('CurrentPage :: ' + this.currentPage);
-
+    console.log('vatNumber :: ' + this.vatNumber);
   }
 
   validateLogin() {
@@ -66,6 +58,17 @@ export class UpdatePersonComponent implements OnInit {
 
   ngOnInit() {
 
+
+    const sub = this.route.params.subscribe((params: any) => {
+      this.Id = params.id;
+      this.currentPage = params.page;
+      this.onPageInit();
+    });
+    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    console.log('CurrentPage :: ' + this.currentPage);
+  }
+
+  onPageInit() {
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
       this.router.navigate(['/404']);
     } else { this.SocialSecurityId = this.Id; }
@@ -94,7 +97,6 @@ export class UpdatePersonComponent implements OnInit {
     } catch (e) {
       this.PersonName = 'Error!!';
     }
-
   }
 
 }

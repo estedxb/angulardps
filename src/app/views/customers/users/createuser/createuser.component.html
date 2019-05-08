@@ -43,7 +43,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> E-mail adres: </label>
                     <input formControlName="emailaddress" class="form-control" name="emailaddress" type="email"
-                        readonly />
+                        [readonly]="!isNewUser" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.emailaddress.invalid && (UserForm.controls.emailaddress.dirty || UserForm.controls.emailaddress.touched) else dnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">

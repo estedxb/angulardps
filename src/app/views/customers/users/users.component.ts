@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
 import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
@@ -27,7 +27,11 @@ export class UsersComponent implements OnInit {
 
   constructor(private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
     console.log('CustomerVatNumber ::', this.CustomerVatNumber);
     this.usersService.getUsersByVatNumber(this.CustomerVatNumber).subscribe(users => {
       this.maindatas = users;

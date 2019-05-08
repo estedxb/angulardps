@@ -54,9 +54,7 @@ export class EditCustomerComponent implements OnInit {
     this.getCustomerByVatNumberEdit(this.vatNumber);
   }
 
-  ngOnDestroy() {
-    console.log('object destroyed');
-  }
+  ngOnDestroy() { console.log('object destroyed'); }
 
   receiveHQdata($event) {
 
