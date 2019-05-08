@@ -228,6 +228,22 @@ export class EditPersonComponent implements OnInit {
     }
   }
 
+  onChangeDropDownGender($event) {
+
+    console.log("selected index="+$event.target.value);
+    console.log("selected value="+this.dataDropDownGender[$event.target.value]);
+    
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null)
+    {
+        if(this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
+        {
+          this.DpsPersonObject.person.gender = new Gender();
+          this.DpsPersonObject.person.gender.genderId  = $event.target.value;
+          this.DpsPersonObject.person.gender.title = this.dataDropDownGender[$event.target.value];      
+        }
+    }
+  }
+
   resetPeronData() {
 
     this.editPersonForm.controls.placeOfBirth.setValue('');
@@ -303,6 +319,16 @@ export class EditPersonComponent implements OnInit {
     if (data.person.phone !== null) {
       this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
     }
+
+  }
+
+  receiveDOBDate($event){    
+    console.log("recevied date=");
+    console.log($event);
+
+    this.monthString = $event.monthString;
+    this.dayString = $event.dayString;
+    this.yearString = $event.yearString;
 
   }
 

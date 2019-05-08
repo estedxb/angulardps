@@ -1,19 +1,19 @@
 <div class="row DOB">
   <div class="col col-sm-3">
-    <select formControlName="dateOfBirth" id="dd_days" [(ngModel)]="selectedIndex" name="dd_days" class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown required="required">
+    <select id="dd_days" [(ngModel)]="selectedIndex" name="dd_days" class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown required="required">
       <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i">
         {{data}}</option>
     </select>
   </div>
   <div class="col col-sm-5">
-    <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="selectedMonth" name="dd_months" class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
+    <select id="dd_months" [(ngModel)]="selectedMonth" name="dd_months" class="inhaalrust1 selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
       required="required">
       <option *ngFor="let data of dropDownMonth let i= index" [attr.data-index]="i" [value]="i">
         {{data}}</option>
     </select>
   </div>
   <div class="col col-sm-4">
-    <select formControlName="yearOfBirth" id="dd_year" name="dd_year" [(ngModel)]="selectedYear" class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown required="required">
+    <select id="dd_year" name="dd_year" [(ngModel)]="selectedYear" class="inhaalrust2 selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown required="required">
       <option *ngFor="let data of dropDownYear let i= index" [attr.data-index]="i" [value]="i">
         {{data}}</option>
     </select>

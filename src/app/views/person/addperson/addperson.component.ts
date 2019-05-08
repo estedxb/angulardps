@@ -9,7 +9,6 @@ import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 
 import {
