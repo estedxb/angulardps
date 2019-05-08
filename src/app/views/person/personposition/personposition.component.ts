@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
+import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-personposition',
@@ -7,6 +7,7 @@ import { FormGroup,FormControl,Validators } from '@angular/forms';
   styleUrls: ['./../person.component.css']
 })
 export class PersonPositionComponent implements OnInit {
+  @Input() SocialSecurityId: string;
 
   public PersonPositionForm: FormGroup;
 
@@ -19,7 +20,11 @@ export class PersonPositionComponent implements OnInit {
 
    }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
   }
 
 }

@@ -50,13 +50,13 @@
     <div class="col col-sm-8" id="maincontentarea">
       <div class="scrollbar" id="maincontent">
         <div *ngIf="currentPage==='editperson'">
-          <app-editperson></app-editperson>
+          <app-editperson [SocialSecurityId]="SocialSecurityId"></app-editperson>
         </div>
         <div *ngIf="currentPage==='positions'">
-          <app-personposition></app-personposition>
+          <app-personposition [SocialSecurityId]="SocialSecurityId"></app-personposition>
         </div>
         <div *ngIf="currentPage==='documents'">
-          <app-persondocument></app-persondocument>
+          <app-persondocument [SocialSecurityId]="SocialSecurityId"></app-persondocument>
         </div>
       </div>
     </div>
