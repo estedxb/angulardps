@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup,FormControl,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-personposition',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonPositionComponent implements OnInit {
 
-  constructor() { }
+  public PersonPositionForm: FormGroup;
+
+  constructor() {
+    
+    this.PersonPositionForm = new FormGroup({
+      grossHourlyWage: new FormControl('', [Validators.required]),
+      extraRef: new FormControl('', [Validators.required]),
+    });
+
+   }
 
   ngOnInit() {
   }
