@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-personposition',
@@ -9,7 +9,12 @@ export class PersonPositionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
   }
 
 }
