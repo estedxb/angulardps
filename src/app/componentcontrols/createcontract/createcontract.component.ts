@@ -115,9 +115,9 @@ export class CreateContractComponent implements OnInit {
     console.log('  end yearString :: ', this.selectedEndDate.yearString);
 
     this.currentContract.position.name = this.positionSelected;
-    //this.currentContract.workSchedule = this.workScheduleSelected;   
-    this.currentContract.timeSpan = this.selectedStartDate.dayString + " " + this.selectedStartDate.monthString + " " + this.selectedStartDate.yearString + "-" + this.selectedEndDate.dayString + " " + this.selectedEndDate.monthString + " " + this.selectedEndDate.yearString;
-    this.currentContract.person = this.currentPerson;
+    // this.currentContract.workSchedule = this.workScheduleSelected; 
+    // this.currentContract.timeSpan = this.selectedStartDate.dayString + " " + this.selectedStartDate.monthString + " " + this.selectedStartDate.yearString + "-" + this.selectedEndDate.dayString + " " + this.selectedEndDate.monthString + " " + this.selectedEndDate.yearString;
+    // this.currentContract.person = this.currentPerson;
     this.currentContract.statute = new Statute();
     this.currentContract.status = "status";
   }
