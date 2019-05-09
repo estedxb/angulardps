@@ -65,7 +65,7 @@ export class AddPersonComponent implements OnInit {
   public datas: DpsPostion;
   public selectedGenderIndex;
 
-  public showFormIndex = 1;
+  public showFormIndex = 2;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
@@ -313,8 +313,7 @@ export class AddPersonComponent implements OnInit {
     }
     else
       if (month === "11" || month === "0" || month === "4" || month === "6" ||
-          month === "7" || month === "9" ||  month === "2") 
-        {
+        month === "7" || month === "9" || month === "2") {
         for (let i: number = 1; i <= 31; i++)
           this.dataDropDown.push("" + i);
       }

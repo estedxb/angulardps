@@ -108,6 +108,8 @@ body {
   border-radius: 4px;
   margin: 4px 0px;
   border: 1px solid #e37619;
+  line-height: 22px;
+  height: calc(1.5em + 0.5rem + 2px);
 }
 .selectcomponent:hover {
   box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4);
@@ -167,6 +169,9 @@ div#CustomerDetails {
   min-height: 150px;
 }
 div#CustomerContact {
+  min-height: 220px;
+}
+div#PersonContact {
   min-height: 220px;
 }
 .panelheader hr {
@@ -617,15 +622,14 @@ div#CustomerContact {
 #maincontentarea .netExpense .switch {
   height: 14px;
   padding: 0px;
-  border:1px solid blue;
-  width: 50px;
+  border: 1px solid #00032b;
 }
 
 #maincontentarea .netExpense .switch.switch-small {
   margin: 0px;
   height: 19px;
   border-radius: 19px;
-  min-width: 35px;
+  min-width: 40px;
 }
 
 #maincontentarea .inputWithImg1 img,
@@ -636,8 +640,20 @@ div#CustomerContact {
   color: #9a0c19;
   top: 33px;
 }
+
+#maincontentarea .inputWithImgNew img,
+.inputWithImgNew img {
+  position: absolute;
+  right: 0px;
+  padding: 0px 23px 7px 0px;
+  color: #9a0c19;
+  top: 10px;
+}
 #maincontentarea .inputWithImg1 .form-control-feedback img {
   padding: 12px 20px 7px 0px;
+}
+#maincontentarea .inputWithImgNew .form-control-feedback img {
+  padding: 2px 23px 7px 0px;
 }
 
 div#CustomerContact1 {
