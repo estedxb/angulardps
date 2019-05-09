@@ -29,20 +29,6 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
-#maincontent::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-#maincontent::-webkit-scrollbar {
-  width: 1px;
-  background-color: transparent;
-}
-#maincontent::-webkit-scrollbar-thumb {
-  background-color: #c7c7c7;
-}
-#maincontentarea {
-  margin: 0px;
-  padding: 0px;
-}
 .mw-350 {
   min-width: 350px;
   padding: 0px;
@@ -284,4 +270,52 @@ div.customerBox div.customerBoxContect {
 }
 .emptyrow {
   height: 50px;
+}
+
+.netExpense {
+  border:1px solid red;
+  margin-top:36px;
+}
+
+.red {
+  border:0px solid blue;
+}
+
+.newCol {
+  height: 10px;
+}
+
+/* .switch.switch-small {
+  margin: 0px;
+  height: 19px;
+  border-radius: 19px;
+  min-width: 40px;
+} */
+
+ #maincontentarea .netExpense .switch.switch-small {
+  margin: 0px;
+  height: 19px;
+  border-radius: 19px;
+  min-width: 35px;
+}
+
+.inputWithImg1 img {
+  position: absolute;
+  right: 0px;
+  padding: 10px 23px 7px 0px;
+  color: #9a0c19;
+  top: 33px;
+}
+
+.inputWithImg1 .form-control-feedback img {
+  padding: 12px 20px 7px 0px;
+}
+
+div#CustomerContact1 {
+  min-height: 80px;
+}
+
+.btnAdd {
+  background: transparent;
+  border:0px solid red;
 }

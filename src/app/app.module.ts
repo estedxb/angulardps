@@ -51,10 +51,3 @@ import { CancelcontractComponent } from './componentcontrols/cancelcontract/canc
 })
 export class AppModule { }
 
-/*
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UiSwitchModule } from 'ngx-toggle-switch';
-import { MatAutocompleteModule,MatInputModule } from '@angular/material';
-MatAutocompleteModule, MatInputModule, FormsModule, ReactiveFormsModule,
-NgbModule ,
-*/

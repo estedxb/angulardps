@@ -1,0 +1,2297 @@
+[
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "91.10.18-035.58"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "38.09.16-343.34"
+      },
+      "dateOfBirth": "1938-09-16T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "84.09.10-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "84.11.04-343.34"
+      },
+      "dateOfBirth": "1984-01-04T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Jobstudent Arbeider",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 0,
+      "costReimbursment": false,
+      "netCostReimbursment": 0,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfasfasdfasfasdfa",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "41.09.16-343.34"
+      },
+      "dateOfBirth": "1938-09-16T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "46.09.16-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Arbeider",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "41.09.15-343.34"
+      },
+      "dateOfBirth": "1941-01-15T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Jobstudent Arbeider",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "12.09.21-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "38.09.12-343.34"
+      },
+      "dateOfBirth": "1938-09-12T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "73.09.16-343.34"
+      },
+      "dateOfBirth": "1976-09-09T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "",
+    "statute": {
+      "name": "",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 0,
+      "costReimbursment": false,
+      "netCostReimbursment": 0,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "99.10.18-035.58"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "39.09.16-343.34"
+      },
+      "dateOfBirth": "1941-09-16T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "12.09.16-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "87.10.18-035.58"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "82.10.18-035.58"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "12.34.09-343.09"
+      },
+      "dateOfBirth": "2012-01-09T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asfasdfasfdasdfasfdasfdasfasfasf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "84.09.34-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": null,
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": null,
+        "countryCode": null
+      },
+      "language": null,
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-01-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "79.10.16-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Jobstudent Arbeider",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfdasfasfdasfasfasfasdfasfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "42.09.16-343.34"
+      },
+      "dateOfBirth": "1942-01-16T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Three",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "81.09.12-343.34"
+      },
+      "dateOfBirth": "1981-01-12T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfasfasfdasfasdfasfdasfdasdfasdfasdfasfasfdsafa",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "84.10.18-035.58"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function Two",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "44.09.16-343.34"
+      },
+      "dateOfBirth": "1944-01-16T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "1234343434343434",
+        "iban": "BE1234343434343434"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "New position",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "84.09.16-343.34"
+      },
+      "dateOfBirth": "2019-01-01T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": null,
+        "countryCode": null
+      },
+      "language": null,
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "Function One",
+    "statute": {
+      "name": "Bediende",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 1,
+      "costReimbursment": false,
+      "netCostReimbursment": 2,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfdasfd asdfasfasfasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  },
+  {
+    "customerVatNumber": "123456789101",
+    "person": {
+      "socialSecurityNumber": {
+        "number": "82.11.04-343.34"
+      },
+      "dateOfBirth": "1982-01-04T00:00:00",
+      "placeOfBirth": "asdfasfd",
+      "countryOfBirth": "asdf",
+      "nationality": "asdfasdf",
+      "gender": {
+        "genderId": 0,
+        "title": "Male"
+      },
+      "firstName": "asdfsafd",
+      "lastName": "asdsdf",
+      "address": {
+        "street": "Magic Street",
+        "streetNumber": "232",
+        "bus": "56",
+        "city": "Magic City",
+        "postalCode": "asdfasdf",
+        "country": "New country",
+        "countryCode": "NX"
+      },
+      "language": {
+        "name": "",
+        "shortName": ""
+      },
+      "email": {
+        "emailAddress": "asdfasfafds@gmaill.com"
+      },
+      "mobile": {
+        "number": "97823232323"
+      },
+      "phone": {
+        "number": "32452344352355"
+      },
+      "bankAccount": {
+        "bic": "asdf",
+        "iban": "asdf"
+      },
+      "travelMode": "asdf",
+      "status": ""
+    },
+    "customerPostionId": "New position",
+    "statute": {
+      "name": "Flexijob Arbeider",
+      "type": ""
+    },
+    "renumeration": {
+      "hourlyWage": 0,
+      "costReimbursment": false,
+      "netCostReimbursment": 0,
+      "transportationAllowance": true
+    },
+    "addittionalInformation": "Extra .....asdfasfsafasfasdasdf",
+    "medicalAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "vcaAttestation": {
+      "location": "",
+      "name": ""
+    },
+    "constructionProfile": {
+      "constructionCards": null
+    },
+    "constructionCards": [],
+    "studentAtWorkProfile": {
+      "attestation": {
+        "location": "",
+        "name": ""
+      },
+      "attestationDate": "2019-10-10T00:00:00",
+      "contingent": 0,
+      "balance": 0
+    },
+    "driverProfiles": [
+      {
+        "type": null,
+        "attestation": {
+          "location": "",
+          "name": ""
+        }
+      }
+    ],
+    "otherDocuments": [
+      {
+        "location": "",
+        "name": ""
+      }
+    ],
+    "isEnabled": false,
+    "isArchived": false
+  }
+]

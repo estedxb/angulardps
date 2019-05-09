@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
@@ -18,7 +18,8 @@ import {
   styleUrls: ['./../person.component.css']
 })
 export class EditPersonComponent implements OnInit {
-
+  @Input() public SocialSecurityId: string;
+  
   editPersonForm: FormGroup;
   editPersonForm2: FormGroup;
 
@@ -70,8 +71,11 @@ export class EditPersonComponent implements OnInit {
 
   setDropDownYear() {
   }
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() {
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
     this.setDummyStatute();
     this.setDropDownYear();
 
@@ -230,17 +234,15 @@ export class EditPersonComponent implements OnInit {
 
   onChangeDropDownGender($event) {
 
-    console.log("selected index="+$event.target.value);
-    console.log("selected value="+this.dataDropDownGender[$event.target.value]);
-    
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null)
-    {
-        if(this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
-        {
-          this.DpsPersonObject.person.gender = new Gender();
-          this.DpsPersonObject.person.gender.genderId  = $event.target.value;
-          this.DpsPersonObject.person.gender.title = this.dataDropDownGender[$event.target.value];      
-        }
+    console.log("selected index=" + $event.target.value);
+    console.log("selected value=" + this.dataDropDownGender[$event.target.value]);
+
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
+      if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.gender = new Gender();
+        this.DpsPersonObject.person.gender.genderId = $event.target.value;
+        this.DpsPersonObject.person.gender.title = this.dataDropDownGender[$event.target.value];
+      }
     }
   }
 
@@ -322,7 +324,7 @@ export class EditPersonComponent implements OnInit {
 
   }
 
-  receiveDOBDate($event){    
+  receiveDOBDate($event) {
     console.log("recevied date=");
     console.log($event);
 

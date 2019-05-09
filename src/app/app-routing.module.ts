@@ -48,6 +48,8 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 import { PersonPositionComponent } from './views/person/personposition/personposition.component';
 import { PersonDocumentComponent } from './views/person/persondocument/persondocument.component';
+import { DashboardActionComponent } from './views/dashboard/dashboardaction/dashboardaction.component';
+import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -106,8 +108,9 @@ export const routingComponents = [
   ArchiveFilterPipe,
   CreateWorkTimeComponent,
   CalendarComponent,
-  CreateContractComponent
-
+  CreateContractComponent,
+  DashboardActionComponent,
+  DashboardPersonComponent
 ];
 
 export const entringComponents = [
