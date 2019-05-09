@@ -66,8 +66,6 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   onPageInit() {
-    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    console.log('CurrentPage :: ' + this.currentPage);
 
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
       this.router.navigate(['/404']);
@@ -80,8 +78,11 @@ export class UpdatePersonComponent implements OnInit {
       this.currentPage = 'editperson';
     }
 
+    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    console.log('CurrentPage :: ' + this.currentPage);
+
     try {
-      console.log('this.SocialSecurityId :: ' + this.SocialSecurityId);
+      console.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
         this.dpsPerson = dpsperson;
         console.log('Person Form Data : ', this.dpsPerson);

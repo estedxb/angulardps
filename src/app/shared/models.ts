@@ -94,7 +94,7 @@ export class DpsContract {
     parentContractId: number; contract: Contract; timeSheet: TimeSheet;
 }
 export class Contract {
-    name: string; startDate: Date; endDate: Date; workSchedule: WorkSchedule; position: _Position; statute: Statute;
+    name: string; startDate: string; endDate: string; workSchedule: WorkSchedule; position: _Position; statute: Statute;
     status: string; cancelReason: string;
 }
 export class TimeSheet { dayValues: DayValue[]; standAloneValues: StandAloneValue[]; information: string; status: string; }
