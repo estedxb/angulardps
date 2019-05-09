@@ -45,7 +45,7 @@
             </div>
             <div class="fcontent">
               <div class="row">
-                <div class="col col-sm-5 inputWithImg">
+                <div class="col-sm-5 inputWithImg">
                   <label class="titleBold"> Rijkregisternummer: </label>
                   <input (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber" class="form-control"
                     name="socialSecurityNumber" type="text" required />
@@ -310,11 +310,8 @@
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
-
       </form>
 
       <form [formGroup]="AddPersonForm2" novalidate id="AddPersonForm1">
@@ -328,31 +325,23 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-            <div class="row panelheader">
-              <div class="col col-sm-12">
+            <div class="row PersonContactContent">
+              <div class="col-sm-12">
                 <label class="titleBold">Functie</label>
               </div>
             </div>
-            <div class="row">
-              <div class="col col-sm-9">
-                <div class="row dynrow">
-
-                  <div class="col-sm-8">
-                    <select formControlName="functie" id="dd_functie" name="dd_functie"
-                      class="inhaalrust selectcomponent" (change)="onChangeDropDownFunctie($event)" ng-dropdown>
-                      <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
-                        {{data}}</option>
-                    </select>
-                  </div>
-
-                  <div class="col-sm-4">
-                    <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
-                      <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
-                    </button>
-                  </div>
-                </div>
+            <div class="row PersonContactContent">
+              <div class="col-sm-7">
+                <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                  (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+                  <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
+                    {{data}}</option>
+                </select>
               </div>
-              <div class="col col-sm-3 inputWithImg">
+              <div class="col col-sm-1">
+                <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                  <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                </button>
               </div>
             </div>
           </div>
@@ -366,15 +355,15 @@
               <div class="col col-sm-7"></div>
             </div>
 
-            <div class="row ccc">
-              <div class="col col-sm-3">
+            <div class="row PersonContactContent">
+              <div class="col-sm-3">
                 <div class="row">
-                  <div class="col col-sm-12">
+                  <div class="col-sm-12">
                     <label class="titleBold"> Statuut: </label>
                   </div>
                 </div>
                 <div class="row ">
-                  <div class="col col-sm-12">
+                  <div class="col-sm-12">
                     <select formControlName="statute" id="dd_statute" name="dd_statute"
                       class="inhaalrust selectcomponent" (change)="onChangeDropDownStatute($event)" ng-dropdown
                       required="required">
@@ -384,14 +373,14 @@
                   </div>
                 </div>
               </div>
-              <div class="col col-sm-3">
+              <div class="col-sm-3">
                 <div class="row">
-                  <div class="col col-sm-12">
+                  <div class="col-sm-12">
                     <label class="titleBold"> Bruto uurloon: </label>
                   </div>
                 </div>
                 <div class="row inputWithImgNew">
-                  <div class="col col-sm-12">
+                  <div class="col-sm-12">
                     <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control"
                       (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
                       required />
@@ -403,17 +392,17 @@
                   </div>
                 </div>
               </div>
-              <div class="col col-sm-6">
+              <div class="col-sm-6">
                 <div class="row">
-                  <div class="col col-sm-2  netExpense">
+                  <div class="col-sm-2 netExpense">
                     <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch>
                   </div>
-                  <div class="col col-sm-10">
-                    <label class="titleBold"> onkostenvergoeding: </label>
+                  <div class="col-sm-10">
+                    <label class="titleBold">onkostenvergoeding: </label>
                   </div>
                 </div>
                 <div class="row inputWithImgNew">
-                  <div class="col col-sm-12">
+                  <div class="col-sm-12">
                     <input #netExpenseAllowance formControlName="netExpenseAllowance"
                       (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
                       name="netExpenseAllowance" type="text" required />
@@ -430,19 +419,23 @@
             </div>
           </div>
           <div id="CustomerContact1" class="customerBox">
-            <div class="row netExpense" style="padding-left: 10px;">
-              <!-- <div class="col col-sm-2">
-              </div> -->
-              <ui-switch (change)="changeKM($event)" size="small"> </ui-switch> &nbsp;
-              <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
+            <div class="row PersonContactContent">
+              <div class="col col-sm-6">
+                <div class="row netExpense">
+                  <div class="col col-sm-2">
+                    <ui-switch (change)="changeKM($event)" size="small"> </ui-switch>
+                  </div>
+                  <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
+                </div>
+              </div>
             </div>
           </div>
           <div id="CustomerContact" class="customerBox">
-            <div class="row">
-              <div class="col col-sm-12"><label class="titleBold">Extra informatie</label></div>
+            <div class="row PersonContactContent">
+              <div class="col-sm-12"><label class="titleBold">Extra informatie</label></div>
             </div>
-            <div class="row">
-              <div class="col col-sm-12">
+            <div class="row inputWithImgNew PersonContactContent">
+              <div class="col-sm-12 ">
                 <textarea rows="6" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
                   name="extra">Extra .....</textarea>
                 <div class="form-control-feedback"

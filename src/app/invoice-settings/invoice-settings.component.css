@@ -1,7 +1,15 @@
 .facturatieParameters {
-  padding: 0px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
   border-radius: 10px;
   padding-bottom: 0px;
+}
+.facturatieParameters .panelheader hr {
+  margin-top: 20px;
+  margin-left: -20px;
+}
+
+.facturatieParameters .col {
+  /* padding: 0px;*/
 }
 
 .leftparameters {

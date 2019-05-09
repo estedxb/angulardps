@@ -133,9 +133,23 @@
   min-width: 40px;
 }
 
+.customerBox .PersonContactContent {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#CustomerDetails.customerBox .col {
+  padding: 0px 0px;
+}
+#CustomerDetails.customerBox .col .btnAdd {
+  padding: 8px 0px;
+}
+
 #PersonContact.customerBox .col {
-  padding: 0px 4px;
+  padding: 0px 0px;
 }
 #PersonContact.customerBox .ccc {
   margin-top: 20px;
+}
+#maincontentarea #CustomerContact1.customerBox .netExpense span {
+  padding: 12px 0px;
 }

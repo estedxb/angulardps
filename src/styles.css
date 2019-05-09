@@ -172,10 +172,9 @@ div#CustomerContact {
   min-height: 220px;
 }
 div#PersonContact {
-  min-height: 220px;
+  min-height: 180px;
 }
 .panelheader hr {
-  margin-top: 10px;
   margin-bottom: 1rem;
   margin-left: -15px;
   padding: 0px;
@@ -209,8 +208,10 @@ div#PersonContact {
 }
 .row {
   border-color: green;
+  /*
   margin-left: 0px;
   margin-right: 0px;
+  */
 }
 .col {
   border-color: yellow;
@@ -657,7 +658,7 @@ div#PersonContact {
 }
 
 div#CustomerContact1 {
-  min-height: 80px;
+  min-height: 50px;
 }
 
 .showborder-red {
