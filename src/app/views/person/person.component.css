@@ -229,9 +229,6 @@ button.close {
   margin-top: 20px;
 }
 
-div.customerBox div.customerBoxContect {
-  padding: 10px 20px 0px;
-}
 .whitebtn {
   margin: 0px;
 }
@@ -315,6 +312,26 @@ div#CustomerContact1 {
   min-height: 80px;
 }
 
+.customerBox .PersonContactContent {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#CustomerDetails.customerBox .col {
+  padding: 0px 0px;
+}
+#CustomerDetails.customerBox .col .btnAdd {
+  padding: 8px 0px;
+}
+
+#PersonContact.customerBox .col {
+  padding: 0px 0px;
+}
+#PersonContact.customerBox .ccc {
+  margin-top: 20px;
+}
+#maincontentarea #CustomerContact1.customerBox .netExpense span {
+  padding: 12px 0px;
+}
 .btnAdd {
   background: transparent;
   border: 0px solid red;

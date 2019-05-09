@@ -140,7 +140,7 @@ div.customerBox {
   min-width: 400px;
   max-width: 810px;
   margin: 0px 0px 30px 0px;
-  padding: 15px;
+  padding: 15px 15px 30px 15px;
   border-radius: 10px;
   background: #fff;
   background-image: linear-gradient(
@@ -361,14 +361,12 @@ div#PersonContact {
 }
 
 #maincontentarea #hqform span,
-#maincontentarea #CTForm span,
-#maincontentarea #PersonPositionForm span {
+#maincontentarea #CTForm span {
   padding: 0px;
 }
 
 #maincontentarea #hqform .switch.switch-small,
-#maincontentarea #CTForm .switch.switch-small,
-#maincontentarea #PersonPositionForm .switch.switch-small {
+#maincontentarea #CTForm .switch.switch-small {
   margin: 0px;
 }
 
