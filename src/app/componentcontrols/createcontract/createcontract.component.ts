@@ -104,22 +104,22 @@ export class CreateContractComponent implements OnInit {
 
   createObjects() {
 
-    // console.log('  positionSelected :: ', this.positionSelected);
-    // console.log('  workScheduleSelected :: ', this.workScheduleSelected);
-    // console.log('  start dayString :: ', this.selectedStartDate.dayString);
-    // console.log('  start monthString :: ', this.selectedStartDate.monthString);
-    // console.log('  start yearString :: ', this.selectedStartDate.yearString);
+    console.log('  positionSelected :: ', this.positionSelected);
+    console.log('  workScheduleSelected :: ', this.workScheduleSelected);
+    console.log('  start dayString :: ', this.selectedStartDate.dayString);
+    console.log('  start monthString :: ', this.selectedStartDate.monthString);
+    console.log('  start yearString :: ', this.selectedStartDate.yearString);
 
-    // console.log('  end dayString :: ', this.selectedEndDate.dayString);
-    // console.log('  end monthString :: ', this.selectedEndDate.monthString);
-    // console.log('  end yearString :: ', this.selectedEndDate.yearString);
+    console.log('  end dayString :: ', this.selectedEndDate.dayString);
+    console.log('  end monthString :: ', this.selectedEndDate.monthString);
+    console.log('  end yearString :: ', this.selectedEndDate.yearString);
 
-    // this.currentContract.position.name = this.positionSelected;
-    // //this.currentContract.workSchedule = this.workScheduleSelected;   
+    this.currentContract.position.name = this.positionSelected;
+    // this.currentContract.workSchedule = this.workScheduleSelected; 
     // this.currentContract.timeSpan = this.selectedStartDate.dayString + " " + this.selectedStartDate.monthString + " " + this.selectedStartDate.yearString + "-" + this.selectedEndDate.dayString + " " + this.selectedEndDate.monthString + " " + this.selectedEndDate.yearString;
     // this.currentContract.person = this.currentPerson;
-    // this.currentContract.statute = new Statute();
-    // this.currentContract.status = "status";
+    this.currentContract.statute = new Statute();
+    this.currentContract.status = "status";
   }
 
   onApproveContractClick() {
