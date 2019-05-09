@@ -79,6 +79,8 @@ export class AddPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
+  public message;
+
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;

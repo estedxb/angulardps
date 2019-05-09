@@ -10,12 +10,16 @@ import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
+import { DataService } from 'src/app/shared/data.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-personposition',
   templateUrl: './personposition.component.html',
   styleUrls: ['./../person.component.css']
 })
+
 export class PersonPositionComponent implements OnInit {
   @Input() SocialSecurityId: string;
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
@@ -30,7 +34,41 @@ export class PersonPositionComponent implements OnInit {
   public _position;
   public workstationDocument;
 
-  constructor(private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+  public DpsPersonObject: DpsPerson;
+  public PersonObject: Person;
+  public SocialSecurityNumberObject: SocialSecurityNumber;
+  public GenderObject: Gender;
+  public BankAccountObject: BankAccount;
+  public RenumerationObject: Renumeration;
+  public MedicalAttestationObject: MedicalAttestation;
+  public ConstructionProfileObject: ConstructionProfile;
+  public studentsAtWorkProfileObject: StudentAtWorkProfile;
+  public driverProfiles: DriverProfilesItem[];
+  public driverProfilesObject: DriverProfilesItem;
+  public otherDocumentsObject: Document;
+  public attestation: Document;
+  public constructionCardObject: Document;
+  public constructionCardArray: Document[];
+  public dataDropDown: string[];
+  public dropDownMonth: string[];
+  public dropDownYear: Array<string>;
+  public dataDropDownGender: string[];
+  public dateofBirth;
+  public selectedGenderIndex;
+
+  public showFormIndex = 1;
+
+  public id = 'dd_days';
+  public currentlanguage = 'nl';
+  public errorMsg;
+
+  public dayString;
+  public monthString;
+  public yearString;
+
+  public message:any;
+
+  constructor(private personsService: PersonService,private data:DataService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
     this.setDummyStatute();
 
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
@@ -123,6 +161,7 @@ export class PersonPositionComponent implements OnInit {
   ngOnInit() {
     
     this.onPageInit();
+
     this.PersonPositionForm = new FormGroup({
       functie: new FormControl('', [Validators.required]),
       statute: new FormControl('', [Validators.required]),
@@ -133,6 +172,8 @@ export class PersonPositionComponent implements OnInit {
       extra: new FormControl('', [Validators.required])
     });
 
+    this.data.currentMessage.subscribe(message => this.message = message);
+    this.createObjects();
    }
 
    onClickAdd() {
@@ -164,12 +205,120 @@ export class PersonPositionComponent implements OnInit {
   onPageInit() {
   }
 
+  // createObjectsForm() {
+
+  //   this.DpsPersonObject = new DpsPerson();
+  //   this.PersonObject = new Person();
+
+  //   this.SocialSecurityNumberObject = new SocialSecurityNumber();
+  //   this.SocialSecurityNumberObject.number = this.PersonPositionForm.get('socialSecurityNumber').value;
+  //   this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
+
+  //   this.DpsPersonObject.customerVatNumber = "123456789101";
+  //   this.DpsPersonObject.person = this.PersonObject;
+
+  //   this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
+  //   this.DpsPersonObject.person.placeOfBirth = this.PersonPositionForm.get('placeOfBirth').value;
+  //   this.DpsPersonObject.person.countryOfBirth = this.PersonPositionForm.get('countryOfBirth').value;
+  //   this.DpsPersonObject.person.nationality = this.PersonPositionForm.get('nationality').value;
+
+  //   this.DpsPersonObject.person.gender = new Gender();
+  //   this.DpsPersonObject.person.gender.genderId = 0;
+  //   this.DpsPersonObject.person.gender.title = "Male";
+
+  //   this.DpsPersonObject.person.firstName = this.AddPersonForm1.get('firstName').value;
+  //   this.DpsPersonObject.person.lastName = this.AddPersonForm1.get('lastName').value;
+
+  //   this.DpsPersonObject.person.address = new Address();
+  //   this.DpsPersonObject.person.address.street = this.AddPersonForm1.get('street').value;
+  //   this.DpsPersonObject.person.address.streetNumber = this.AddPersonForm1.get('streetNumber').value;
+  //   this.DpsPersonObject.person.address.bus = this.AddPersonForm1.get('bus').value;
+  //   this.DpsPersonObject.person.address.city = this.AddPersonForm1.get('city').value;
+  //   this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalCode').value;
+  //   this.DpsPersonObject.person.address.country = "New country";
+  //   this.DpsPersonObject.person.address.countryCode = "NX";
+
+  //   this.DpsPersonObject.person.email = new EmailAddress();
+  //   this.DpsPersonObject.person.email.emailAddress = this.AddPersonForm1.get('emailAddress').value;
+
+  //   this.DpsPersonObject.person.mobile = new PhoneNumber();
+  //   this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
+
+  //   this.DpsPersonObject.person.phone = new PhoneNumber();
+  //   this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
+
+  //   this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+  //   this.DpsPersonObject.person.language = new Language();
+  //   this.DpsPersonObject.person.language.name = "";
+  //   this.DpsPersonObject.person.language.shortName = "";
+
+  //   this.DpsPersonObject.person.bankAccount = new BankAccount();
+  //   this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
+  //   this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
+
+  //   this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
+  //   this.DpsPersonObject.person.status = "";
+
+  //   this.DpsPersonObject.statute = new Statute();
+  //   this.DpsPersonObject.statute.name = "";
+  //   this.DpsPersonObject.statute.type = "";
+
+  //   this.DpsPersonObject.customerPostionId = "";
+  //   this.DpsPersonObject.renumeration = new Renumeration();
+  //   this.DpsPersonObject.renumeration.costReimbursment = false;
+
+  //   this.DpsPersonObject.addittionalInformation = "";
+  //   this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
+  //   this.DpsPersonObject.medicalAttestation.location = "";
+  //   this.DpsPersonObject.medicalAttestation.name = "";
+
+  //   this.DpsPersonObject.vcaAttestation = new Documents();
+  //   this.DpsPersonObject.vcaAttestation.location = "";
+  //   this.DpsPersonObject.vcaAttestation.name = "";
+
+  //   this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+  //   this.DpsPersonObject.constructionCards = [];
+
+  //   this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
+  //   this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
+  //   this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
+  //   this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
+  //   this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
+  //   this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
+  //   this.DpsPersonObject.studentAtWorkProfile.balance = 0;
+
+  //   this.DpsPersonObject.driverProfiles = [];
+
+  //   let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
+  //   driverProfilesObject.attestation = new Documents();
+  //   driverProfilesObject.attestation.location = "";
+  //   driverProfilesObject.attestation.name = "";
+
+  //   this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
+
+  //   this.DpsPersonObject.otherDocuments = [];
+
+  //   let otherDocumentsObject: Documents = new Documents();
+  //   otherDocumentsObject.location = "";
+  //   otherDocumentsObject.name = "";
+
+  //   this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
+
+  //   this.DpsPersonObject.isEnabled = false;
+  //   this.DpsPersonObject.isArchived = false;
+
+  // }
+
   createObjects() {
+
+    console.log("message=");
+    console.log(this.message);
 
   }
 
   postData() {
-    
+
   }
 
 }

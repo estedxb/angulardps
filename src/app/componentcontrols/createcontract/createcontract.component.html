@@ -43,55 +43,55 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
                     <select class='form-control' required [(ngModel)]='positionSelected' (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let position of positionsdata' [value]="position">{{position}}</option>
+                        <option class='option' *ngFor='let position of positionsData' [value]="position">{{position}}</option>
                     </select>
                     
                 </div>               
             </div>
-              <div>
+
+        
+                  
                   <label class="titleBold"> Start Date: </label>
                   <app-calendar (childEvent)="receiveMessageStartDate($event)">                      
                   </app-calendar> 
-              </div>
-            <div>
+                
+          
+                    
                 <label class="titleBold"> End Date: </label>
-                <app-calendar (childEvent)="receiveMessageEndDate($event)"></app-calendar> 
-            </div>
+                <app-calendar (childEvent)="receiveMessageEndDate($event)">                    
+                </app-calendar> 
+
+           
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Werkrooster: </label>                  
                     <select class='form-control' required [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let workSchedule of workSchedulesdata' [value]="workSchedule">{{workSchedule.name}}</option>
+                        <option class='option' *ngFor='let workSchedule of workSchedulesData' [value]="workSchedule">{{workSchedule}} </option>
                     </select>
                 </div> 
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
-                    <input formControlName="location" class="form-control" name="location" type="text" />
-                    <div class="form-control-feedback"
-                        *ngIf="ContractForm.controls.location.invalid && (ContractForm.controls.location.dirty || ContractForm.controls.location.touched) else fnewvalid">
-                        <img src="../../assets/img/InvalidIcon.png" alt="">
-                    </div>
-                    <ng-template #fnewvalid>
-                        <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
+                    <select class='form-control' required [(ngModel)]='locationSelected' (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}">
+                            <option class='option' *ngFor='let location of locationsData' [value]="location">{{location}} </option>
+                        </select>
                 </div>           
                
             </div>
         </div>
 
         <div class="row">
-            <!-- <div class="col col-sm-4 center-block">
+             <div class="col col-sm-4 center-block">
                 <button class="greenbtn" id="btnPrint" (click)="onPrintContractClick()"><span>Afdrukken</span>
                 </button>
-            </div> -->
+            </div> 
             <div class="col col-sm-4 center-block">
                 <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"><span>Goedkeuren</span>
                 </button>
             </div>
-            <!-- <div class="col col-sm-4 center-block">
+             <div class="col col-sm-4 center-block">
                 <button class="greenbtn" id="btnCancel" (click)="onCancelContractClick()"><span>Annuleren</span>
                 </button>
-            </div> -->
+            </div> 
 
         </div>
     </form>

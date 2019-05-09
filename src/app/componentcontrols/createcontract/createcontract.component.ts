@@ -1,11 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Contract, DpsUser, Statute, Person, DpsWorkSchedule } from 'src/app/shared/models';
-import { MatDialog, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Contract, DpsUser, Statute, Person, WorkDays, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule } from 'src/app/shared/models';
+import { MatDialog,MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { ContractService } from 'src/app/shared/contract.service';
+import { LocationsService } from 'src/app/shared/locations.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
+import { CancelcontractComponent } from '../cancelcontract/cancelcontract.component';
 
 
 @Component({
@@ -16,11 +18,23 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 
 export class CreateContractComponent implements OnInit {
   ContractForm: FormGroup
-  public positionsdata = [];
+  public maindatas = [];
+  public SelectedIndex = -1;
+  public positionsData = [];
+  public dpsPositionsData = [];
+  public dpsPosition : DpsPostion;
+  public location : Location;
   positionSelected: string;
-  public workSchedulesdata = [];
-  workScheduleSelected: DpsWorkSchedule[];
-  public currentContract: Contract;
+  public dpsWorkSchedulesData = [];
+  public workSchedulesData = [];
+  public locationsData = [];
+  public locationsMainData = [];
+  workScheduleSelected: any;
+  locationSelected : any;
+  public dpsWorkSchedule : DpsWorkSchedule;
+  public workDays : WorkDays
+  public currentContract: DpsContract;
+  public contract: Contract;
   public currentPerson: Person;
   public errorMsg;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
@@ -29,13 +43,17 @@ export class CreateContractComponent implements OnInit {
   public selectedStartDate: any;
   public selectedEndDate: any;
   public statute: Statute;
+  @Input() personId: any;
+  @Input() contractId: any;
 
 
 
 
   constructor(private positionsService: PositionsService,
+    private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private contractService: ContractService,
   ) {
 
@@ -54,24 +72,68 @@ export class CreateContractComponent implements OnInit {
 
     this.getPositionsByVatNumber();
     this.getWorkscheduleByVatNumber();
+    this.getLocationsByVatNumber();
 
   }
 
-  loadPerson() {
-    console.log('currentPerson :: ', this.currentPerson);
-    if (this.currentPerson !== null && this.currentPerson !== undefined) {
-      this.ContractForm.controls.firstname.setValue(this.currentPerson.firstName);
-      this.ContractForm.controls.lastname.setValue(this.currentPerson.lastName);
-    }
+   loadPerson() {
+     console.log('currentPerson :: ', this.currentPerson);
+     if (this.currentPerson !== null && this.currentPerson !== undefined) {
+       this.ContractForm.controls.firstname.setValue(this.currentPerson.firstName);
+       this.ContractForm.controls.lastname.setValue(this.currentPerson.lastName);
+     }
+   }
+  loadContract() {
+    this.contractService.getContractById(this.contractId).subscribe(response => {
+      this.selectedStartDate = response.contract.startDate;
+      this.selectedEndDate = response.contract.endDate;
+      this.dpsPosition.position = response.contract.position;
+      this.location.id = response.locationId;
+      this.dpsWorkSchedule.id = response.workScheduleId    
+      });     
   }
 
-  onPositionsSelected(event) {
-    console.log(event); //option value will be sent as event
+
+
+  openDialog(): void {
+    try {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '700px';
+      dialogConfig.data = this.currentContract;
+      dialogConfig.ariaLabel = 'Arial Label Location Dialog';
+
+      const dialogRef = this.dialog.open(CancelcontractComponent, dialogConfig);
+
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
+        this.ShowMessage($event.MSG, $event.Action);
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.currentContract = result;
+        console.log('this.data ::', this.currentContract);
+        if (this.SelectedIndex > -1) {
+          // maindatas Update location
+          this.maindatas[this.SelectedIndex] = this.currentContract;
+         // this.FilterTheArchive();
+          this.ShowMessage('cancelReason "' + this.currentContract.contract.cancelReason + '" is updated successfully.', '');
+        } else {
+          // maindatas Add location
+          console.log('this.data.id :: ', this.currentContract.id);
+          if (parseInt('0' + this.currentContract.id, 0) > 0) {
+            this.maindatas.push(this.currentContract);
+            console.log('New Location Added Successfully :: ', this.maindatas);
+           //this.FilterTheArchive();
+            this.ShowMessage('Locations "' + this.currentContract.contract.name + '" is added successfully.', '');
+          }
+        }
+      });
+    } catch (e) { }
   }
 
-  onWorkScheduleSelected(event) {
-    console.log(event); //option value will be sent as event
-  }
+
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -102,30 +164,59 @@ export class CreateContractComponent implements OnInit {
     this.createObjects();
   }
 
-  createObjects() {
+  public getPosition() : DpsPostion{
+    let dpsPositions = this.dpsPositionsData.filter(c => c.position.name == this.positionSelected);
+    console.log('  dpsPositions :: ', dpsPositions[0]);   
+    return  dpsPositions[0];
+  }
 
-    console.log('  positionSelected :: ', this.positionSelected);
-    console.log('  workScheduleSelected :: ', this.workScheduleSelected);
-    console.log('  start dayString :: ', this.selectedStartDate.dayString);
-    console.log('  start monthString :: ', this.selectedStartDate.monthString);
-    console.log('  start yearString :: ', this.selectedStartDate.yearString);
+  public getWorkSchedule(): DpsWorkSchedule
+  {
+    let  dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.name == this.workScheduleSelected);
+    console.log('  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
+    return dpsWorkSchedules[0];
+  }
 
-    console.log('  end dayString :: ', this.selectedEndDate.dayString);
-    console.log('  end monthString :: ', this.selectedEndDate.monthString);
-    console.log('  end yearString :: ', this.selectedEndDate.yearString);
+  public getLocation(): Location{
+    let locations = this.locationsMainData.filter(c => c.name == this.locationSelected);
+    console.log('  locations :: ', locations[0]);
+    return locations[0];
+  }
 
-    this.currentContract.position.name = this.positionSelected;
-    // this.currentContract.workSchedule = this.workScheduleSelected; 
-    // this.currentContract.timeSpan = this.selectedStartDate.dayString + " " + this.selectedStartDate.monthString + " " + this.selectedStartDate.yearString + "-" + this.selectedEndDate.dayString + " " + this.selectedEndDate.monthString + " " + this.selectedEndDate.yearString;
-    // this.currentContract.person = this.currentPerson;
-    this.currentContract.statute = new Statute();
-    this.currentContract.status = "status";
+  createObjects() {  
+
+    this.currentContract = new DpsContract();
+    this.contract = new Contract();
+    console.log('  createObjects  :: ');   
+     //this.contract.name = "";
+     this.contract.startDate =  this.selectedStartDate.dayString + " " + this.selectedStartDate.monthString + " " + this.selectedStartDate.yearString;
+     console.log('  contract.startDate  :: ', this.contract.startDate);
+     this.contract.endDate = this.selectedEndDate.dayString + " " + this.selectedEndDate.monthString + " " + this.selectedEndDate.yearString;
+     console.log('  contract.endDate  :: ', this.contract.endDate);
+     this.contract.workSchedule = this.getWorkSchedule().workSchedule;
+     console.log('  this.contract.workSchedule  :: ', this.contract.workSchedule);
+     this.contract.position = this.getPosition().position;
+     console.log('  this.contract.position  :: ', this.contract.position );
+     this.contract.statute = new Statute(); 
+     this.contract.status = "";
+     this.contract.cancelReason = "";
+    
+     this.currentContract.id = 0;
+     this.currentContract.customerVatNumber = this.VatNumber;
+     this.currentContract.personId = this.personId;
+     this.currentContract.positionId = this.getPosition().id;
+     this.currentContract.locationId = this.getLocation().id;
+     this.currentContract.workScheduleId = this.getWorkSchedule().id;
+     this.currentContract.parentContractId = 0;
+     this.currentContract.contract = this.contract;
+     this.currentContract.timeSheet = new TimeSheet();
+
   }
 
   onApproveContractClick() {
     this.createObjects();
     console.log('currentContract ::', this.currentContract);
-    if (this.ContractForm.valid) {
+    // if (this.ContractForm.valid) {
       if (this.currentContract !== undefined && this.currentContract !== null) {
         console.log('Create Contract');
         this.contractService.createContract(this.currentContract).subscribe(res => {
@@ -145,33 +236,77 @@ export class CreateContractComponent implements OnInit {
 
       }
 
-    } else {
-      console.log('Form is Not Vaild');
-    }
+    // } else {
+    //   console.log('Form is Not Vaild');
+    // }
+  }
+
+
+  onCancelContractClick(i) {
+    this.SelectedIndex = this.contractId;
+    console.log('Edit Clicked Index :: ' + this.SelectedIndex);
+    this.currentContract = this.maindatas[this.SelectedIndex];
+    this.openDialog();
+    return true;
   }
 
 
   getPositionsByVatNumber() {
-    this.positionsdata = [];
+    this.positionsData = [];
+    this.dpsPositionsData = [];
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
       response.forEach(element => {
-        this.positionsdata.push(element.position.name);
+        this.positionsData.push(element.position.name);
+        this.dpsPositionsData.push(element);
       });
-      console.log('Positions Form Data : ', this.positionsdata);
+      console.log('Positions Form Data : ', this.positionsData);
+      console.log('Positions Form Data : ', this.dpsPositionsData);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
   getWorkscheduleByVatNumber() {
-    this.workSchedulesdata = [];
+    this.dpsWorkSchedulesData = [];
+    this.workSchedulesData = [];
     this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
-
+      
       response.forEach(element => {
-        this.workSchedulesdata.push(element);
+        this.dpsWorkSchedulesData.push(element);
+        this.workSchedulesData.push(element.name);
+        
       });
-      console.log('WorkSchedule Form Data : ', this.workSchedulesdata);
+      console.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);
+      console.log('workSchedulesData Form Data : ', this.workSchedulesData);
       this.ShowMessage('WorkSchedules fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
+  }
+
+  getLocationsByVatNumber() {
+     this.locationsData = [];
+     this.locationsMainData = [];
+
+    this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
+      
+      response.forEach(element => {
+        this.locationsMainData.push(element);
+        this.locationsData.push(element.name);
+        
+      });
+      console.log('locationsMainData Form Data : ', this.locationsMainData);
+      console.log('locationsData Form Data : ', this.locationsData);
+      this.ShowMessage('locationsData fetched successfully.', '');
+    }, error => this.ShowMessage(error, 'error'));
+  }
+
+  onPositionsSelected(event) {
+    console.log(event); //option value will be sent as event
+  }
+
+  onWorkScheduleSelected(event) {
+    console.log(event); //option value will be sent as event
+  }
+  onLocationSelected(event) {
+    console.log(event); //option value will be sent as event
   }
 }
 
