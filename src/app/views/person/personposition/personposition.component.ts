@@ -11,8 +11,6 @@ import {
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-personposition',
@@ -65,6 +63,8 @@ export class PersonPositionComponent implements OnInit {
   public dayString;
   public monthString;
   public yearString;
+  public positionChosen:string;
+  public statuteChosen:string;
 
   public message:any;
 
@@ -172,8 +172,10 @@ export class PersonPositionComponent implements OnInit {
       extra: new FormControl('', [Validators.required])
     });
 
+    this.positionChosen = "";
+
     this.data.currentMessage.subscribe(message => this.message = message);
-    this.createObjects();
+    this.updatePosition();
    }
 
    onClickAdd() {
@@ -310,15 +312,56 @@ export class PersonPositionComponent implements OnInit {
 
   // }
 
-  createObjects() {
+  onChangeDropDownFunctie($event) {
+
+    this.positionChosen = this.dataDropDownFunctie[$event.target.value];
+    this.updatePosition();
+
+  }
+
+  updatePosition() {
 
     console.log("message=");
     console.log(this.message);
+
+    this.DpsPersonObject = this.message;
+
+    console.log("copied into DpsPersonObject local");
+    console.log(this.DpsPersonObject);
+
+    this.DpsPersonObject.customerPostionId = this.positionChosen;
+
+  }
+
+  onChangeDropDownStatute($event) {    
+
+    console.log("event="+$event.target.value);
+
+    this.statuteChosen = "";
+    if(this.DpsPersonObject !== null)
+    {
+      this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
+      this.DpsPersonObject.statute.type = "";
+  
+    }
+
+    console.log("copied into DpsPersonObject local");
+    console.log(this.DpsPersonObject);
 
   }
 
   postData() {
 
+  }
+
+  
+
+  onNetExpensesReceive(netExpenseAllowance:number){
+      this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+  }
+
+  onHourlyWageReceive(grossHourlyWage:number) {  
+    this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;  
   }
 
 }

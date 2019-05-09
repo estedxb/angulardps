@@ -23,7 +23,7 @@
                  </select>
               </div>
               <div class="col-sm-4">
-                <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                <button #addButton (click)="onClickAdd()" type="button" class="btnAdd">
                   <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
                 </button>
               </div>
@@ -52,8 +52,7 @@
           </div>
           <div class="col-sm-3 inputWithImg" style="margin-top:38px;">
             <label class="titleBold"> Bruto uurloon: </label>
-            <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control" (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
-              required />
+            <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control" (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="number" required />
             <div class="form-control-feedback" *ngIf="PersonPositionForm.controls.grossHourlyWage.invalid && (PersonPositionForm.controls.grossHourlyWage.dirty || PersonPositionForm.controls.grossHourlyWage.touched) else newvalid">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
@@ -70,7 +69,7 @@
                       <label class="titleBold"> onkostenvergoeding: </label>
                   </div>
                </div>
-                <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="text" required />
+                <input #netExpenseAllowance formControlName="netExpenseAllowance" (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control" name="netExpenseAllowance" type="number" required />
                 <div style="margin-top:10px;" class="form-control-feedback" *ngIf="PersonPositionForm.controls.netExpenseAllowance.invalid && (PersonPositionForm.controls.netExpenseAllowance.dirty || PersonPositionForm.controls.netExpenseAllowance.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
