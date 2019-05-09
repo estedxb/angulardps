@@ -178,9 +178,9 @@ export class DpsContract {
     timeSheet: TimeSheet;
 }
 export class Contract {
-    name: string;
-    startDate: Date;
-    endDate: Date;
+    name?: string;
+    startDate: string;
+    endDate: string;
     workSchedule: WorkSchedule;
     position: _Position;
     statute: Statute;
