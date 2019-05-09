@@ -14,48 +14,43 @@ export class PersonService {
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
-  private getPersonbyIdURL = "";
-  private postPersonURL = "";
-  private putPersonURL = "";
-  private deletePersonURL = "";
+  private getPersonbyIdURL = '';
+  private postPersonURL = '';
+  private putPersonURL = '';
+  private deletePersonURL = '';
 
   constructor(private http: HttpClient) {
 
     // , private header: HttpHeaders
-    if (environment.dataFromAPI_JSON && environment.getPerson !== '') 
-    {
+    if (environment.dataFromAPI_JSON && environment.getPerson !== '') {
       console.log('Data From Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
       this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
       this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
       this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
-    }
-    else {
+    } else {
       console.log('Data From JSON');
-      //this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
+      // this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
     }
-    
   }
 
-  public getPersonsByVatNumber(ssid:string, customervatnumber:string): Observable<any> {
-    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid+'/'+customervatnumber);
-
+  public getPersonsByVatNumber(ssid: string, customervatnumber: string): Observable<any> {
+    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid + '/' + customervatnumber);
     const result = this.http.get<DpsPostion[]>(
-      this.getPersonForCustomerbyCustomerVatNumberURL +"/" + ssid + '/'+ customervatnumber, this.httpOptions).catch(this.errorHandler);
+      this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
-
   }
 
-  public getPersonBySSIDVatnumber(ssid:string, customervatnumber:string): Observable<any> {
+  public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.get<any>(this.getPersonForCustomerbySSIdNCVNURL+"/" + ssid + '/'+ customervatnumber, {
+    return this.http.get<any>(this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, {
       headers: httpHeaders,
       observe: 'response'
     });
   }
 
-  public createPerson(person:any): Observable<any> {
+  public createPerson(person: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.postPersonURL, person, {
       headers: httpHeaders,
@@ -64,7 +59,7 @@ export class PersonService {
   }
 
 
-  
+
   public updatePosition(id: any): Observable<any> {
     // const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     // return this.http.put<any>(this.getPersonbyIdURL, position, {
