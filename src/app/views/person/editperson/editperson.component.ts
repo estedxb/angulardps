@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
@@ -18,7 +18,8 @@ import {
   styleUrls: ['./../person.component.css']
 })
 export class EditPersonComponent implements OnInit {
-  @Input() SocialSecurityId: string;
+  @Input() public SocialSecurityId: string;
+  
   editPersonForm: FormGroup;
   editPersonForm2: FormGroup;
 
@@ -70,8 +71,11 @@ export class EditPersonComponent implements OnInit {
 
   setDropDownYear() {
   }
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() {
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
     this.setDummyStatute();
     this.setDropDownYear();
 

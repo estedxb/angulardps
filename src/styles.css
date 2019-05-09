@@ -351,12 +351,14 @@ div#CustomerContact {
 }
 
 #maincontentarea #hqform span,
-#maincontentarea #CTForm span {
+#maincontentarea #CTForm span,
+#maincontentarea #PersonPositionForm span {
   padding: 0px;
 }
 
 #maincontentarea #hqform .switch.switch-small,
-#maincontentarea #CTForm .switch.switch-small {
+#maincontentarea #CTForm .switch.switch-small,
+#maincontentarea #PersonPositionForm .switch.switch-small {
   margin: 0px;
 }
 
@@ -611,6 +613,8 @@ div#CustomerContact {
 #maincontentarea .netExpense .switch {
   height: 14px;
   padding: 0px;
+  border:1px solid blue;
+  width: 50px;
 }
 
 #maincontentarea .netExpense .switch.switch-small {
