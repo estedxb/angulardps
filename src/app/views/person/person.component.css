@@ -229,9 +229,6 @@ button.close {
   margin-top: 20px;
 }
 
-.whitebtn {
-  margin: 0px;
-}
 .bottom-15 {
   margin-bottom: 15px;
 }
@@ -335,4 +332,41 @@ div#CustomerContact1 {
 .btnAdd {
   background: transparent;
   border: 0px solid red;
+}
+#personDocument .inforow .actionbtn {
+  border: 1px solid blue;
+  line-height: 15px;
+  vertical-align: middle;
+  padding: 0px;
+  margin: 0px auto;
+  border: 1px solid red;
+  padding: 4px;
+}
+#personDocument .inforow .actioneyebtn button img {
+  width: 24px;
+}
+#personDocument .inforow .actiondelbtn button img {
+  width: 20px;
+}
+.inforow {
+  border: 1px solid red;
+  line-height: 18px;
+  vertical-align: middle;
+}
+.UploadedFiles {
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 30px 0px;
+  padding: 15px 15px 30px 15px;
+}
+.whitebtn {
+  width: 100%;
+}
+::ng-deep #maincontentarea .whitebtn span {
+  width: 83%;
+  text-align: left;
+}
+.whitebtn img {
+  width: 13%;
+  padding: 2px 0px;
 }
