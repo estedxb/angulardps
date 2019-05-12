@@ -229,12 +229,6 @@ button.close {
   margin-top: 20px;
 }
 
-div.customerBox div.customerBoxContect {
-  padding: 10px 20px 0px;
-}
-.whitebtn {
-  margin: 0px;
-}
 .bottom-15 {
   margin-bottom: 15px;
 }
@@ -272,13 +266,8 @@ div.customerBox div.customerBoxContect {
   height: 50px;
 }
 
-.netExpense {
-  border:1px solid red;
-  margin-top:36px;
-}
-
 .red {
-  border:0px solid blue;
+  border: 0px solid blue;
 }
 
 .newCol {
@@ -292,13 +281,6 @@ div.customerBox div.customerBoxContect {
   min-width: 40px;
 } */
 
- #maincontentarea .netExpense .switch.switch-small {
-  margin: 0px;
-  height: 19px;
-  border-radius: 19px;
-  min-width: 35px;
-}
-
 .inputWithImg1 img {
   position: absolute;
   right: 0px;
@@ -311,11 +293,80 @@ div.customerBox div.customerBoxContect {
   padding: 12px 20px 7px 0px;
 }
 
+.inputWithImgNew img {
+  position: absolute;
+  right: 0px;
+  padding: 10px 23px 7px 0px;
+  color: #9a0c19;
+  top: 33px;
+}
+
+.inputWithImgNew .form-control-feedback img {
+  padding: 12px 20px 7px 0px;
+}
+
 div#CustomerContact1 {
   min-height: 80px;
 }
 
+.customerBox .PersonContactContent {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#CustomerDetails.customerBox .col {
+  padding: 0px 0px;
+}
+#CustomerDetails.customerBox .col .btnAdd {
+  padding: 8px 0px;
+}
+
+#PersonContact.customerBox .col {
+  padding: 0px 0px;
+}
+#PersonContact.customerBox .ccc {
+  margin-top: 20px;
+}
+#maincontentarea #CustomerContact1.customerBox .netExpense span {
+  padding: 12px 0px;
+}
 .btnAdd {
   background: transparent;
-  border:0px solid red;
+  border: 0px solid red;
+}
+#personDocument .inforow .actionbtn {
+  border: 1px solid blue;
+  line-height: 15px;
+  vertical-align: middle;
+  padding: 0px;
+  margin: 0px auto;
+  border: 1px solid red;
+  padding: 4px;
+}
+#personDocument .inforow .actioneyebtn button img {
+  width: 24px;
+}
+#personDocument .inforow .actiondelbtn button img {
+  width: 20px;
+}
+.inforow {
+  border: 1px solid red;
+  line-height: 18px;
+  vertical-align: middle;
+}
+.UploadedFiles {
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 30px 0px;
+  padding: 15px 15px 30px 15px;
+}
+.whitebtn {
+  width: 100%;
+}
+::ng-deep #maincontentarea .whitebtn span {
+  width: 83%;
+  text-align: left;
+}
+.whitebtn img {
+  width: 13%;
+  padding: 2px 0px;
 }

@@ -79,6 +79,8 @@ export class AddPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
+  public message;
+
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -313,8 +315,7 @@ export class AddPersonComponent implements OnInit {
     }
     else
       if (month === "11" || month === "0" || month === "4" || month === "6" ||
-          month === "7" || month === "9" ||  month === "2") 
-        {
+        month === "7" || month === "9" || month === "2") {
         for (let i: number = 1; i <= 31; i++)
           this.dataDropDown.push("" + i);
       }

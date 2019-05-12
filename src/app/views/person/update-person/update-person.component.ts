@@ -15,15 +15,15 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 export class UpdatePersonComponent implements OnInit {
   public loginaccessToken: string = localStorage.getItem('accesstoken');
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
-  public PersonInitial = 'VM';
-  public PersonName = 'Vanessa Martens';
+  public PersonInitial = '';
+  public PersonName = '';
   public currentPage = '';
   public dpsPerson: any;
+  public person: any;
   public vatNumber: string;
   public SocialSecurityId: string;
   public Action = '';
   public Id = '';
-
   public editPersonData: any;
 
   constructor(private personService: PersonService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
@@ -57,7 +57,6 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   ngOnInit() {
-
     const sub = this.route.params.subscribe((params: any) => {
       this.Id = params.id;
       this.currentPage = params.page;
@@ -66,7 +65,6 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   onPageInit() {
-
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
       this.router.navigate(['/404']);
     } else { this.SocialSecurityId = this.Id; }
@@ -84,8 +82,10 @@ export class UpdatePersonComponent implements OnInit {
     try {
       console.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
-        this.dpsPerson = dpsperson;
-        console.log('Person Form Data : ', this.dpsPerson);
+        this.dpsPerson = dpsperson.body;
+        this.person = this.dpsPerson.person;
+        console.log('DPS Person Form Data : ', dpsperson);
+        console.log('Person Form Data : ', this.person);
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
         if (this.dpsPerson.person.lastName === '' || this.dpsPerson.person.lastName === null ||
           this.dpsPerson.person.lastName === undefined) {

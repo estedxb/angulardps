@@ -11,6 +11,7 @@ import {
   HttpHeaders,
   HttpErrorResponse
 } from '@angular/common/http';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-editperson',
@@ -19,7 +20,7 @@ import {
 })
 export class EditPersonComponent implements OnInit {
   @Input() public SocialSecurityId: string;
-  
+
   editPersonForm: FormGroup;
   editPersonForm2: FormGroup;
 
@@ -64,7 +65,9 @@ export class EditPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
-  constructor(private personsService: PersonService) { }
+  public message;
+
+  constructor(private personsService: PersonService, private data:DataService) { }
 
   setDummyStatute() {
   }
@@ -73,7 +76,21 @@ export class EditPersonComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() { this.onPageInit(); }
+  ngOnInit() { 
+    this.onPageInit();
+
+    this.data.currentMessage.subscribe(message => this.message = message);
+
+    this.createObjectsForm1();
+  }
+
+  changeMessage() {
+
+    console.log(this.DpsPersonObject);
+    if(this.DpsPersonObject !== null){
+      this.data.changeMessage(this.DpsPersonObject);
+    }
+  }
 
   onPageInit() {
     this.setDummyStatute();
@@ -188,13 +205,7 @@ export class EditPersonComponent implements OnInit {
 
     const ssid: string = this.editPersonForm.get('socialSecurityNumber').value;
     const dobString: string = ssid.substring(0, 8);
-
     const stringData = dobString.split('.');
-    // let dobArray = stringData.split('T');
-    // let dobString:string = dobArray[0];
-
-    // this.loadDOBData(stringData);
-
 
   }
 
@@ -206,10 +217,6 @@ export class EditPersonComponent implements OnInit {
     const yearString: string = dobArrayData[0];
     const monthString: string = dobArrayData[1];
     const dayString: string = dobArrayData[2];
-
-    // this._selectedIndexdays = parseInt(dayString, 10);
-    // this._selectedIndexMonth = parseInt(monthString, 10) - 1;
-    // this._selectedIndexYear = (parseInt(yearString, 10) - 1900);
 
     this.monthString = monthString;
     this.dayString = dayString;
@@ -341,6 +348,7 @@ export class EditPersonComponent implements OnInit {
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
+    this.createObjectsForm1();
   }
 
   customSSIDValidator(ssid: string) {
@@ -378,4 +386,115 @@ export class EditPersonComponent implements OnInit {
 
     return this.validSSID;
   }
+  
+  createObjectsForm1() {
+
+    console.log("create objects form1 called");
+
+    this.DpsPersonObject = new DpsPerson();
+    this.PersonObject = new Person();
+
+    this.SocialSecurityNumberObject = new SocialSecurityNumber();
+    this.SocialSecurityNumberObject.number = this.editPersonForm.get('socialSecurityNumber').value;
+    this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
+
+    this.DpsPersonObject.customerVatNumber = "123456789101";
+    this.DpsPersonObject.person = this.PersonObject;
+
+    this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
+    this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
+    this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
+    this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
+
+    this.DpsPersonObject.person.gender = new Gender();
+    this.DpsPersonObject.person.gender.genderId = 0;
+    this.DpsPersonObject.person.gender.title = "Male";
+
+    this.DpsPersonObject.person.firstName = this.editPersonForm.get('firstName').value;
+    this.DpsPersonObject.person.lastName = this.editPersonForm.get('lastName').value;
+
+    this.DpsPersonObject.person.address = new Address();
+    this.DpsPersonObject.person.address.street = this.editPersonForm.get('street').value;
+    this.DpsPersonObject.person.address.streetNumber = this.editPersonForm.get('streetNumber').value;
+    this.DpsPersonObject.person.address.bus = this.editPersonForm.get('bus').value;
+    this.DpsPersonObject.person.address.city = this.editPersonForm.get('city').value;
+    this.DpsPersonObject.person.address.postalCode = this.editPersonForm.get('postalCode').value;
+    this.DpsPersonObject.person.address.country = "New country";
+    this.DpsPersonObject.person.address.countryCode = "NX";
+
+    this.DpsPersonObject.person.email = new EmailAddress();
+    this.DpsPersonObject.person.email.emailAddress = this.editPersonForm.get('emailAddress').value;
+
+    this.DpsPersonObject.person.mobile = new PhoneNumber();
+    this.DpsPersonObject.person.mobile.number = this.editPersonForm.get('mobileNumber').value;
+
+    this.DpsPersonObject.person.phone = new PhoneNumber();
+    this.DpsPersonObject.person.phone.number = this.editPersonForm.get('telephoneNumber').value;
+
+    this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+    this.DpsPersonObject.person.language = new Language();
+    this.DpsPersonObject.person.language.name = "";
+    this.DpsPersonObject.person.language.shortName = "";
+
+    this.DpsPersonObject.person.bankAccount = new BankAccount();
+    this.DpsPersonObject.person.bankAccount.iban = this.editPersonForm.get('iban').value;
+    this.DpsPersonObject.person.bankAccount.bic = this.editPersonForm.get('bic').value;
+
+    this.DpsPersonObject.person.travelMode = this.editPersonForm.get('travelMode').value;
+    this.DpsPersonObject.person.status = "";
+
+    this.DpsPersonObject.statute = new Statute();
+    this.DpsPersonObject.statute.name = "";
+    this.DpsPersonObject.statute.type = "";
+
+    this.DpsPersonObject.customerPostionId = "";
+    this.DpsPersonObject.renumeration = new Renumeration();
+    this.DpsPersonObject.renumeration.costReimbursment = false;
+
+    this.DpsPersonObject.addittionalInformation = "";
+    this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
+    this.DpsPersonObject.medicalAttestation.location = "";
+    this.DpsPersonObject.medicalAttestation.name = "";
+
+    this.DpsPersonObject.vcaAttestation = new Documents();
+    this.DpsPersonObject.vcaAttestation.location = "";
+    this.DpsPersonObject.vcaAttestation.name = "";
+
+    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    this.DpsPersonObject.constructionCards = [];
+
+    this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
+    this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
+    this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
+    this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
+    this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
+    this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
+    this.DpsPersonObject.studentAtWorkProfile.balance = 0;
+
+    this.DpsPersonObject.driverProfiles = [];
+
+    let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
+    driverProfilesObject.attestation = new Documents();
+    driverProfilesObject.attestation.location = "";
+    driverProfilesObject.attestation.name = "";
+
+    this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
+
+    this.DpsPersonObject.otherDocuments = [];
+
+    let otherDocumentsObject: Documents = new Documents();
+    otherDocumentsObject.location = "";
+    otherDocumentsObject.name = "";
+
+    this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
+
+    this.DpsPersonObject.isEnabled = false;
+    this.DpsPersonObject.isArchived = false;
+
+    this.changeMessage();
+
+  }
+  
+  
 }

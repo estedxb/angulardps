@@ -42,9 +42,9 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersListUrl + '/' + parameter);
+    console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
 
-    const result = this.http.get<any>(this.getCustomersListUrl + '/' + parameter).catch(this.errorHandler);
+    const result = this.http.get<any>(this.getCustomersByVatNumberUrl +"?VatNumber=" + parameter).catch(this.errorHandler);
     console.log(result);
     return result;
   }
@@ -56,6 +56,8 @@ export class CustomersService {
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+
+    console.log(this.createCustomerURL);
 
     return this.http.put<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
