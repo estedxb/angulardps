@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { Contract, DpsUser, Statute, Person, WorkDays, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule } from 'src/app/shared/models';
+import { Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule } from 'src/app/shared/models';
 import { MatDialog,MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
+
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
@@ -18,39 +19,37 @@ import { CancelContractComponent } from '../cancelcontract/cancelcontract.compon
 
 export class CreateContractComponent implements OnInit {
   ContractForm: FormGroup
+  
+  selectedYear: any;
+  selectedMonth: any;
+  selectedIndex: any;
+
   public maindatas = [];
   public SelectedIndex = -1;
-  public positionsData = [];
   public dpsPositionsData = [];
   public dpsPosition : DpsPostion;
-  public location : Location;
   positionSelected: string;
-  public dpsWorkSchedulesData = [];
-  public workSchedulesData = [];
+  public location : Location;
   public locationsData = [];
-  public locationsMainData = [];
+  locationSelected : any;  
   workScheduleSelected: any;
-  locationSelected : any;
+  public dpsWorkSchedulesData = []; 
   public dpsWorkSchedule : DpsWorkSchedule;
-  public workDays : WorkDays
   public currentContract: DpsContract;
   public contract: Contract;
   public currentPerson: Person;
   public errorMsg;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
-
   public selectedStartDate: any;
   public selectedEndDate: any;
   public statute: Statute;
+  
   @Input() personId: any;
   @Input() contractId: any;
 
 
-
-
-  constructor(private positionsService: PositionsService,
-   
+  constructor(private positionsService: PositionsService,   
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
@@ -59,6 +58,7 @@ export class CreateContractComponent implements OnInit {
   ) {
   
   }
+  
 
   ngOnInit() {
     console.log('Current Contract :: ', this.currentContract);
@@ -68,7 +68,7 @@ export class CreateContractComponent implements OnInit {
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl('', [Validators.required]),
       workSchedule: new FormControl('', [Validators.required]),
-      location: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])
+      location: new FormControl('', [Validators.required])
     });
 
     this.getPositionsByVatNumber();
@@ -82,6 +82,8 @@ export class CreateContractComponent implements OnInit {
 
   }
 
+  
+
    loadPerson() {
      console.log('currentPerson :: ', this.currentPerson);
      if (this.currentPerson !== null && this.currentPerson !== undefined) {
@@ -93,8 +95,14 @@ export class CreateContractComponent implements OnInit {
     this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
       console.log('loadContract :: ', response);
       this.currentContract = response;
-      console.log('this.currentContract :: ', this.currentContract );
-      this.selectedStartDate = response.contract.startDate;
+      
+      this.selectedYear =  new Date(response.contract.startDate).getFullYear();
+      console.log('this.selectedYear  :: ', this.selectedYear  );
+      this.selectedMonth =  this.monthNames[new Date(response.contract.startDate).getMonth()]
+      console.log('this.selectedMonth :: ', this.selectedMonth );
+      this.selectedIndex =  new Date(response.contract.startDate).getDate();
+      console.log('this.selectedIndex :: ', this.selectedIndex);
+
       this.selectedEndDate = response.contract.endDate;
       this.positionSelected = response.contract.position.name;
       this.locationSelected = response.locationId;
@@ -102,6 +110,9 @@ export class CreateContractComponent implements OnInit {
       });     
   }
 
+  monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 
   openDialog(): void {
@@ -140,7 +151,6 @@ export class CreateContractComponent implements OnInit {
       });
     } catch (e) { }
   }
-
 
 
   ShowMessage(MSG, Action) {
@@ -186,7 +196,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   public getLocation(): Location{
-    let locations = this.locationsMainData.filter(c => c.name == this.locationSelected);
+    let locations = this.locationsData.filter(c => c.name == this.locationSelected);
     console.log('  locations :: ', locations[0]);
     return locations[0];
   }
@@ -206,7 +216,7 @@ export class CreateContractComponent implements OnInit {
      this.contract.position = this.getPosition().position;
      console.log('  this.contract.position  :: ', this.contract.position );
      this.contract.statute = new Statute(); 
-     this.contract.status = "Active";
+     this.contract.status = ContractStatus.Active;
      this.contract.cancelReason = "";
     
      this.currentContract.id = 0;
@@ -260,14 +270,11 @@ export class CreateContractComponent implements OnInit {
 
 
   getPositionsByVatNumber() {
-  //  this.positionsData = [];
     this.dpsPositionsData = [];
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
-      response.forEach(element => {
-    //    this.positionsData.push(element.position.name);
+      response.forEach(element => { 
         this.dpsPositionsData.push(element);
-      });
-     // console.log('Positions Form Data : ', this.positionsData);
+      });  
       console.log('Positions Form Data : ', this.dpsPositionsData);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
@@ -275,33 +282,22 @@ export class CreateContractComponent implements OnInit {
 
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
-   // this.workSchedulesData = [];
-    this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
-      
+    this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {      
       response.forEach(element => {
-        this.dpsWorkSchedulesData.push(element);
-      //  this.workSchedulesData.push(element.name);
-        
+        this.dpsWorkSchedulesData.push(element);  
       });
-      console.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);
-     // console.log('workSchedulesData Form Data : ', this.workSchedulesData);
+      console.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);   
       this.ShowMessage('WorkSchedules fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
-  getLocationsByVatNumber() {
-     //this.locationsData = [];
-     this.locationsMainData = [];
-
-    this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
-      
+  getLocationsByVatNumber() {  
+     this.locationsData = [];
+    this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {      
       response.forEach(element => {
-        this.locationsMainData.push(element);
-       //this.locationsData.push(element.name);
-        
+        this.locationsData.push(element);        
       });
-      console.log('locationsMainData Form Data : ', this.locationsMainData);
-      //console.log('locationsData Form Data : ', this.locationsData);
+      console.log('locationsData Form Data : ', this.locationsData);
       this.ShowMessage('locationsData fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }

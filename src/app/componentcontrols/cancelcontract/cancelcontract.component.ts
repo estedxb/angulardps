@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DpsContract, Contract } from 'src/app/shared/models';
+import { DpsContract, ContractStatus } from 'src/app/shared/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContractService } from 'src/app/shared/contract.service';
@@ -34,7 +34,7 @@ export class CancelContractComponent implements OnInit {
   createObjects() { 
   
      this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value; 
-     this.currentContract.contract.status = "Cancelled";  
+     this.currentContract.contract.status = ContractStatus.Active;  
 
   }
 

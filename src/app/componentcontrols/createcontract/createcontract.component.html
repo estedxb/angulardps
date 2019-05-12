@@ -72,7 +72,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
                     <select class='form-control' required [(ngModel)]='locationSelected' (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}">
-                            <option class='option' *ngFor='let location of locationsMainData' [value]="location.id">{{location.name}} </option>
+                            <option class='option' *ngFor='let location of locationsData' [value]="location.id">{{location.name}} </option>
                         </select>
                 </div>           
                
