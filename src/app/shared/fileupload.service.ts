@@ -16,7 +16,7 @@ export class FileuploadService {
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getFileUploads !== '') {
       console.log('Data From Remote');
-      this.getFileUploadsURL = environment.dpsAPI + environment.getFileUploads;
+      this.getFileUploadsURL = environment.dpsAPI + environment.getPosition;
 
     } else {
       console.log('Data From JSON');
@@ -25,11 +25,11 @@ export class FileuploadService {
   }
 
 
-  postFile(fileToUpload: File): Observable<boolean> {
+  updatePositionFile(fileToUpload: File): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
-    return this.http.post(this.getFileUploadsURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+    return this.http.put(this.getFileUploadsURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
   handleError(e: any): import('rxjs').ObservableInput<boolean> {
