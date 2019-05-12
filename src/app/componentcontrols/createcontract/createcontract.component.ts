@@ -80,9 +80,7 @@ export class CreateContractComponent implements OnInit {
       this.loadContract(this.VatNumber, this.contractId) ;
     }
 
-  }
-
-  
+  }  
 
    loadPerson() {
      console.log('currentPerson :: ', this.currentPerson);
