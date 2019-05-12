@@ -34,10 +34,10 @@ export class PersonService {
     }
   }
 
-  public getPersonsByVatNumber(ssid: string, customervatnumber: string): Observable<any> {
-    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid + '/' + customervatnumber);
+  public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
+    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + customervatnumber);
     const result = this.http.get<DpsPostion[]>(
-      this.getPersonForCustomerbyCustomerVatNumberURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
+      this.getPersonForCustomerbyCustomerVatNumberURL + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
   }

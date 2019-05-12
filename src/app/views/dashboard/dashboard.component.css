@@ -180,3 +180,28 @@ sup.notify {
 .dashboardactioncontent::-webkit-scrollbar-thumb {
   background-color: #ebebeb;
 }
+
+.Header .col .headIcon {
+  width: 40px;
+  margin: 0px 15px 0px 50px;
+}
+
+.Header .col.Heading,
+.Header .col .weeks {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 5px;
+}
+.Header .col .weeks {
+  float: left;
+  margin: -5px 0px 0px 0px;
+  width: 150px;
+  text-align: center;
+}
+.Header .col .calenderLeft,
+.Header .col .calenderRight {
+  width: 30px;
+  padding: 0px 5px;
+  float: left;
+}
