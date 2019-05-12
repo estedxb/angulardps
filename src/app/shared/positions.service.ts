@@ -45,6 +45,19 @@ export class PositionsService {
     });
   }
 
+  public updatePositionWithFile(position: any, fileToUpload: File): Observable<any> {
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    console.log('updatePosition position::', position);
+    console.log('formData', formData);
+   
+    return this.http.put<any>(this.getPositionUrl, position, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
       console.log('vat number not correct format');
