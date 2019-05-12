@@ -1,53 +1,242 @@
-<div id="personDocument">
-  <div id="CustomerDetails" class="customerBox">
-    <div class="row panelheader">
-      <div class="col col-sm-5 fright">
-        <h4>Medisch attest</h4>
-        <hr />
+<form>
+  <div id="personDocument">
+    <div id="CustomerDetails" class="customerBox">
+      <div class="row panelheader">
+        <div class="col col-sm-5 fright">
+          <h4>Medisch attest</h4>
+          <hr />
+        </div>
+      </div>
+      <div class="row PersonContactContent">
+        <div class="col-sm-12">Upload een duidelijke foto/scan of dien aanvraag in.</div>
+      </div>
+      <div class="row PersonContactContent">
+        <div class="col-sm-3"><button class="whitebtn" name="Upload"><span>Upload attest</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3"><button class="whitebtn" name="Upload"><span>Vraag attest aan</span><img
+              src="../../../../../assets/svg/request.svg"></button></div>
       </div>
     </div>
-    <div class="row PersonContactContent">
-      <div class="col-sm-12">Upload een duidelijke foto/scan of dien aanvraag in.</div>
+    <div class="row UploadedFiles">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-7">
+        <!--For loop Starts -->
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Medisch attest 1</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Medisch attest 2</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Medisch attest 3</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+      </div>
+      <!--For loop Ends -->
     </div>
-    <div class="row PersonContactContent">
-      <div class="col-sm-3"><button class="whitebtn" name="download"><span>Upload attest</span><img
-            src="../../../../../assets/svg/CircleUp.svg"></button></div>
-      <div class="col-sm-1"></div>
-      <div class="col-sm-3"><button class="whitebtn" name="download"><span>Vraag attest aan</span><img
-            src="../../../../../assets/svg/request.svg"></button></div>
+    <div class="general">
+      <div class="row radiorow">
+        <div class="col-sm-12">
+          <ui-switch size="small"></ui-switch>
+          <div class="gap">&nbsp;</div><span class="titleBold">Bouwsector</span>
+        </div>
+      </div>
+    </div>
+    <div id="VCAAttest" class="customerBox">
+      <div class="row">
+        <div class="col col-sm-8 fleft">
+          <h4>VCA attest</h4>
+        </div>
+        <div class="col col-sm-3 fright"><button class="whitebtn" name="download"><span>Upload</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+      </div>
+    </div>
+    <div class="row UploadedFiles">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-7">
+        <!--For loop Starts -->
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">VCA attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">VCA attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">VCA attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+      </div>
+      <!--For loop Ends -->
+    </div>
+    <div id="BuildingCards" class="customerBox">
+      <div class="row">
+        <div class="col col-sm-8 fleft">
+          <h4>Bouwkaart(en)</h4>
+        </div>
+        <div class="col col-sm-3 fright"><button class="whitebtn" name="Upload"><span>Upload</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+      </div>
+    </div>
+    <div class="row UploadedFiles">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-7">
+        <!--For loop Starts -->
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Bouwkaart 1</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Bouwkaart 2</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Bouwkaart 3</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+      </div>
+      <!--For loop Ends -->
+    </div>
+    <div class="general">
+      <div class="row radiorow">
+        <div class="col-sm-12">
+          <ui-switch size="small"></ui-switch>
+          <div class="gap">&nbsp;</div><span class="titleBold">Student @Work</span>
+        </div>
+      </div>
+    </div>
+    <div id="StudentAttest" class="customerBox">
+      <div class="row">
+        <div class="col col-sm-5 fleft">
+          <h4>Student @work attest</h4>
+        </div>
+        <div class="col col-sm-3 fright"><button class="whitebtn" name="Upload"><span>Upload</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+        <div class="col col-sm-3 fright"><button class="whitebtn" name="download"><span>Download</span><img
+              src="../../../../../assets/svg/CircleDown.svg"></button></div>
+      </div>
+    </div>
+    <div class="general">
+      <div class="row radiorow">
+        <div class="col-sm-12">
+          <ui-switch size="small"></ui-switch>
+          <div class="gap">&nbsp;</div><span class="titleBold">Chauffeur / bestuurder</span>
+        </div>
+      </div>
+    </div>
+    <div id="DrivingLicense" class="customerBox">
+      <div class="row">
+        <div class="col col-sm-6 fleft">
+          <select class="drivinglicenses selectcomponent" id="ddl_drivinglicense" name="ddl_drivinglicense" required="">
+            <option value="0" selected>Kies een voertuig</option>
+            <option value="1">Zware Vrachtwagen</option>
+            <option value="2">Auto</option>
+            <option value="2">Kraan</option>
+            <option value="2">Heftruck</option>
+            <option value="2">Zware Bus</option>
+            <option value="2">JCB</option>
+          </select>
+        </div>
+        <div class="col col-sm-2 fleft"></div>
+        <div class="col col-sm-3 fright"><button class="whitebtn" name="download"><span>Upload</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+      </div>
+    </div>
+    <div class="row UploadedFiles">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-7">
+        <!--For loop Starts -->
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Chauffeur 1 attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Chauffeur 2 attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Chauffeur 3 attest</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+      </div>
+      <!--For loop Ends -->
+    </div>
+    <div id="BuildingCards" class="customerBox">
+      <div class="row">
+        <div class="col col-sm-7 fleft">
+          <h4>Andere nuttige documenten</h4>
+        </div>
+        <div class="col col-sm-4 fright"><button class="whitebtn" name="download"><span>Upload document</span><img
+              src="../../../../../assets/svg/CircleUp.svg"></button></div>
+      </div>
+    </div>
+    <div class="row UploadedFiles">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-7">
+        <!--For loop Starts -->
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Document 1</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Document2</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+        <div class="row inforow">
+          <div class="col-sm-1 actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
+          </div>
+          <div class="col-sm-10 actioncontent">Document 3</div>
+          <div class="col-sm-1 actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
+          </div>
+        </div>
+      </div>
+      <!--For loop Ends -->
     </div>
   </div>
-  <div class="row UploadedFiles">
-    <div class="col-sm-5"></div>
-    <div class="col-sm-7">
-      <!--For loop Starts -->
-      <div class="row inforow">
-        <div class="col-sm-1 actionbtn actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
-        </div>
-        <div class="col-sm-10">VCA attest</div>
-        <div class="col-sm-1 actionbtn actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
-        </div>
-      </div>
-      <div class="row inforow">
-        <div class="col-sm-1 actionbtn actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
-        </div>
-        <div class="col-sm-10">VCA attest</div>
-        <div class="col-sm-1 actionbtn actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
-        </div>
-      </div>
-      <div class="row inforow">
-        <div class="col-sm-1 actionbtn actioneyebtn"><button><img src="../../../../assets/svg/eye_big.svg"></button>
-        </div>
-        <div class="col-sm-10">VCA attest</div>
-        <div class="col-sm-1 actionbtn actiondelbtn"><button><img src="../../../../assets/svg/delete_big.svg"></button>
-        </div>
-      </div>
-    </div>
-    <!--For loop Ends -->
-  </div>
-  <div class="row">
-    <div class="col col-sm-1 switch">
-      <ui-switch size="small"></ui-switch>
-    </div>
-  </div>
-</div>
+</form>
