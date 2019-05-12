@@ -64,6 +64,8 @@ export class DpsPerson {
     constructionProfile: ConstructionProfile; constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
     driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
 }
+
+
 export class Person {
     socialSecurityNumber: SocialSecurityNumber; dateOfBirth: string; placeOfBirth: string; countryOfBirth: string; nationality: string;
     gender: Gender; firstName: string; lastName: string; address: Address; language: Language; email: EmailAddress; mobile: PhoneNumber;
@@ -106,4 +108,9 @@ export class Code {
 export class StandAloneValue { code: Code2; value: number; mandatory: boolean; }
 export class Code2 {
     codeNumber: number; description: string; codeType: string; valueType: string; isDefaultForCodeType: string; statuteType: string;
+}
+
+export enum ContractStatus {
+    Active ="Active",
+    Cancelled = "Cancelled"   
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CancelcontractComponent } from './cancelcontract.component';
+import { CancelContractComponent } from './cancelcontract.component';
 
-describe('CancelcontractComponent', () => {
-  let component: CancelcontractComponent;
-  let fixture: ComponentFixture<CancelcontractComponent>;
+describe('CancelContractComponent', () => {
+  let component: CancelContractComponent;
+  let fixture: ComponentFixture<CancelContractComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CancelcontractComponent ]
+      declarations: [ CancelContractComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CancelcontractComponent);
+    fixture = TestBed.createComponent(CancelContractComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

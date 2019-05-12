@@ -84,12 +84,25 @@
                         <hr />
                     </div>
                 </div>
+                <div class="row">
+                <div class="col col-sm-6">
+                      <input type="file"
+           id="file" class="whitebtn" img src="../../../../../assets/svg/Add.svg"
+           (change)="handleFileInput($event.target.files)">
+<!-- 
+                    <button class="whitebtn" name="upload" (click)="uploadFileToActivity()" > <span>upload
+                            </span>
+                        <img src="../../../../../assets/svg/Add.svg">
+                    </button> -->
+                </div>
+
                 <div class="col col-sm-6">
                     <button class="whitebtn" name="download" (click)="downloadFile()"> <span>Download
                             template</span>
                         <img src="../../../../../assets/svg/Add.svg">
                     </button>
                 </div>
+            </div>
             </div>
             <div class="row">
                 <div class="col col-sm-12 center-block">

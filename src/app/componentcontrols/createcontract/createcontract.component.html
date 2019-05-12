@@ -43,7 +43,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
                     <select class='form-control' required [(ngModel)]='positionSelected' (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let position of positionsData' [value]="position">{{position}}</option>
+                        <option class='option' *ngFor='let position of dpsPositionsData' [value]="position.position.name">{{position.position.name}}</option>
                     </select>
                     
                 </div>               
@@ -66,13 +66,13 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Werkrooster: </label>                  
                     <select class='form-control' required [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let workSchedule of workSchedulesData' [value]="workSchedule">{{workSchedule}} </option>
+                        <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData' [value]="workSchedule.id">{{workSchedule.name}} </option>
                     </select>
                 </div> 
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
                     <select class='form-control' required [(ngModel)]='locationSelected' (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}">
-                            <option class='option' *ngFor='let location of locationsData' [value]="location">{{location}} </option>
+                            <option class='option' *ngFor='let location of locationsData' [value]="location.id">{{location.name}} </option>
                         </select>
                 </div>           
                
