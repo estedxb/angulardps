@@ -50,6 +50,7 @@ import { PersonPositionComponent } from './views/person/personposition/personpos
 import { PersonDocumentComponent } from './views/person/persondocument/persondocument.component';
 import { DashboardActionComponent } from './views/dashboard/dashboardaction/dashboardaction.component';
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
+import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -110,7 +111,8 @@ export const routingComponents = [
   CalendarComponent,
   CreateContractComponent,
   DashboardActionComponent,
-  DashboardPersonComponent
+  DashboardPersonComponent,
+  CancelContractComponent
 ];
 
 export const entringComponents = [
@@ -119,5 +121,6 @@ export const entringComponents = [
   CreatelocationComponent,
   CreateWorkScheduleComponent,
   CreatepositionComponent,
-  CreateWorkTimeComponent
+  CreateWorkTimeComponent,
+  CancelContractComponent
 ];

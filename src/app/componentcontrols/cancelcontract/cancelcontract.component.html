@@ -1,13 +1,19 @@
-<div class="updateModel">
+<!-- <div class="updateModel"> -->
 
     <form [formGroup]="CancelContractForm" novalidate name="CancelContractForm" id="CancelContractForm">
+            <div class="row center-block" >
+                    <div class="col-sm-12 mat-dialog-close">
+                        <button mat-button [mat-dialog-close]="currentContract" class=""><img
+                                src="../../../../../assets/svg/closebox.svg" /></button>
+                    </div>
+                </div>
         <div class="contactperson">
             <div class="row">
                 <div class="col-sm-12 inputWithImg">
-                    <label class="titleBold"> Reden voor annulatie contract: </label>
-                    <textarea formControlName="name" class="form-control" name="name" type="text" required ></textarea>
+                    <label class="titleBold"> Reden voor annulatie contract: </label>                    
+                    <textarea formControlName="reasonForcancellation" class="form-control" rows="5" name="reasonForcancellation" ></textarea>
                     <div class="form-control-feedback"
-                        *ngIf="CancelContractForm.controls.name.invalid && (CancelContractForm.controls.name.dirty || LocationForm.controls.name.touched) else newvalid">
+                        *ngIf="CancelContractForm.controls.reasonForcancellation.invalid && (CancelContractForm.controls.reasonForcancellation.dirty || LocationForm.controls.reasonForcancellation.touched) else newvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #newvalid>
@@ -17,8 +23,8 @@
             </div>           
         </div>
         <div class="col col-sm-12 center-block">
-            <button class="greenbtn" id="btnSave" (click)="onSaveLocationClick()"><span>Contract annuleren</span>
+            <button class="greenbtn" id="btnSave" (click)="onCancelContractClick()" mat-button [mat-dialog-close]="currentContract"><span>Contract annuleren</span>
             </button>
         </div>
     </form>
-</div>
+<!-- </div> -->

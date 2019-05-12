@@ -7,13 +7,13 @@ import { PositionsService } from 'src/app/shared/positions.service';
 import { ContractService } from 'src/app/shared/contract.service';
 import { LocationsService } from 'src/app/shared/locations.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
-import { CancelcontractComponent } from '../cancelcontract/cancelcontract.component';
+import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 
 
 @Component({
   selector: 'app-createcontract',
   templateUrl: './createcontract.component.html',
-  styleUrls: ['./createcontract.component.css']
+  styleUrls: ['./createcontract.component.css'] 
 })
 
 export class CreateContractComponent implements OnInit {
@@ -50,13 +50,14 @@ export class CreateContractComponent implements OnInit {
 
 
   constructor(private positionsService: PositionsService,
+   
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private contractService: ContractService,
   ) {
-
+  
   }
 
   ngOnInit() {
@@ -74,6 +75,11 @@ export class CreateContractComponent implements OnInit {
     this.getWorkscheduleByVatNumber();
     this.getLocationsByVatNumber();
 
+    if(this.contractId !== null && this.contractId !== undefined  && this.contractId !== 0 )
+    {
+      this.loadContract(this.VatNumber, this.contractId) ;
+    }
+
   }
 
    loadPerson() {
@@ -83,13 +89,16 @@ export class CreateContractComponent implements OnInit {
        this.ContractForm.controls.lastname.setValue(this.currentPerson.lastName);
      }
    }
-  loadContract() {
-    this.contractService.getContractById(this.contractId).subscribe(response => {
+  loadContract(vatNumber : string , cid: string) {    
+    this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
+      console.log('loadContract :: ', response);
+      this.currentContract = response;
+      console.log('this.currentContract :: ', this.currentContract );
       this.selectedStartDate = response.contract.startDate;
       this.selectedEndDate = response.contract.endDate;
-      this.dpsPosition.position = response.contract.position;
-      this.location.id = response.locationId;
-      this.dpsWorkSchedule.id = response.workScheduleId    
+      this.positionSelected = response.contract.position.name;
+      this.locationSelected = response.locationId;
+      this.workScheduleSelected = response.workScheduleId;    
       });     
   }
 
@@ -103,8 +112,8 @@ export class CreateContractComponent implements OnInit {
       dialogConfig.width = '700px';
       dialogConfig.data = this.currentContract;
       dialogConfig.ariaLabel = 'Arial Label Location Dialog';
-
-      const dialogRef = this.dialog.open(CancelcontractComponent, dialogConfig);
+      console.log('dialogConfig.data :: ', dialogConfig.data);
+      const dialogRef = this.dialog.open(CancelContractComponent, dialogConfig);
 
       const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
         this.ShowMessage($event.MSG, $event.Action);
@@ -115,18 +124,17 @@ export class CreateContractComponent implements OnInit {
         this.currentContract = result;
         console.log('this.data ::', this.currentContract);
         if (this.SelectedIndex > -1) {
-          // maindatas Update location
-          this.maindatas[this.SelectedIndex] = this.currentContract;
-         // this.FilterTheArchive();
+          // maindatas Update Contract
+          this.maindatas[this.SelectedIndex] = this.currentContract;        
           this.ShowMessage('cancelReason "' + this.currentContract.contract.cancelReason + '" is updated successfully.', '');
         } else {
-          // maindatas Add location
+          // maindatas Add Contract
           console.log('this.data.id :: ', this.currentContract.id);
           if (parseInt('0' + this.currentContract.id, 0) > 0) {
             this.maindatas.push(this.currentContract);
-            console.log('New Location Added Successfully :: ', this.maindatas);
+            console.log('New Contract Added Successfully :: ', this.maindatas);
            //this.FilterTheArchive();
-            this.ShowMessage('Locations "' + this.currentContract.contract.name + '" is added successfully.', '');
+            this.ShowMessage('Contract "' + this.currentContract.contract.name + '" is added successfully.', '');
           }
         }
       });
@@ -198,7 +206,7 @@ export class CreateContractComponent implements OnInit {
      this.contract.position = this.getPosition().position;
      console.log('  this.contract.position  :: ', this.contract.position );
      this.contract.statute = new Statute(); 
-     this.contract.status = "";
+     this.contract.status = "Active";
      this.contract.cancelReason = "";
     
      this.currentContract.id = 0;
@@ -245,21 +253,21 @@ export class CreateContractComponent implements OnInit {
   onCancelContractClick(i) {
     this.SelectedIndex = this.contractId;
     console.log('Edit Clicked Index :: ' + this.SelectedIndex);
-    this.currentContract = this.maindatas[this.SelectedIndex];
+    //this.currentContract = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
 
 
   getPositionsByVatNumber() {
-    this.positionsData = [];
+  //  this.positionsData = [];
     this.dpsPositionsData = [];
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
       response.forEach(element => {
-        this.positionsData.push(element.position.name);
+    //    this.positionsData.push(element.position.name);
         this.dpsPositionsData.push(element);
       });
-      console.log('Positions Form Data : ', this.positionsData);
+     // console.log('Positions Form Data : ', this.positionsData);
       console.log('Positions Form Data : ', this.dpsPositionsData);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
@@ -267,33 +275,33 @@ export class CreateContractComponent implements OnInit {
 
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
-    this.workSchedulesData = [];
+   // this.workSchedulesData = [];
     this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
       
       response.forEach(element => {
         this.dpsWorkSchedulesData.push(element);
-        this.workSchedulesData.push(element.name);
+      //  this.workSchedulesData.push(element.name);
         
       });
       console.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);
-      console.log('workSchedulesData Form Data : ', this.workSchedulesData);
+     // console.log('workSchedulesData Form Data : ', this.workSchedulesData);
       this.ShowMessage('WorkSchedules fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
   getLocationsByVatNumber() {
-     this.locationsData = [];
+     //this.locationsData = [];
      this.locationsMainData = [];
 
     this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
       
       response.forEach(element => {
         this.locationsMainData.push(element);
-        this.locationsData.push(element.name);
+       //this.locationsData.push(element.name);
         
       });
       console.log('locationsMainData Form Data : ', this.locationsMainData);
-      console.log('locationsData Form Data : ', this.locationsData);
+      //console.log('locationsData Form Data : ', this.locationsData);
       this.ShowMessage('locationsData fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }

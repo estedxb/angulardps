@@ -27,10 +27,15 @@ export class ContractService {
     return this.http.post<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
+  public updateContract(contract: DpsContract): Observable<any> {
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
+  }
 
-  public getContractById(parameter: string): Observable<DpsContract> {
+
+  public getContractByVatNoAndId(vatNumber: string,contractId: string): Observable<DpsContract> {
     console.log('getContractById');
-    const result = this.http.get<any>(this.getContractURL + '/' + parameter).catch(this.errorHandler);
+    const result = this.http.get<any>(this.getContractURL + '/' + vatNumber +'/' + contractId).catch(this.errorHandler);
     console.log(result);
     return result;
   }
