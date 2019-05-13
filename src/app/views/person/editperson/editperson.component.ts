@@ -19,6 +19,7 @@ import { DataService } from 'src/app/shared/data.service';
   styleUrls: ['./../person.component.css']
 })
 export class EditPersonComponent implements OnInit {
+
   @Input() public SocialSecurityId: string;
 
   editPersonForm: FormGroup;
@@ -65,6 +66,8 @@ export class EditPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
+  public calendarData:string;
+
   public message;
 
   constructor(private personsService: PersonService, private data:DataService) { }
@@ -77,19 +80,26 @@ export class EditPersonComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   ngOnInit() { 
-    this.onPageInit();
 
     this.data.currentMessage.subscribe(message => this.message = message);
 
+    this.onPageInit();
+    this.loadDOBFromSSID();
     this.createObjectsForm1();
+
   }
 
   changeMessage() {
 
-    console.log(this.DpsPersonObject);
-    if(this.DpsPersonObject !== null){
-      this.data.changeMessage(this.DpsPersonObject);
+    if(this.DpsPersonObject !== null)
+    {
+      let newmessage:any = {
+        "page": "edit",
+        "data": this.DpsPersonObject
+      };  
+      this.data.changeMessage(newmessage);
     }
+
   }
 
   onPageInit() {
@@ -99,7 +109,7 @@ export class EditPersonComponent implements OnInit {
     this.dataDropDown = ['1', '2', "3", "4", "5", '6', '7', '8', '9', "10", "11", '12', "13", "14", "15", '16', "17", "18", '19', '20', '21', '22', "23", "24", "25", '26', '27', '28', '29', "30", '31'];
     this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", 'September', 'October', 'November', "December"];
     this.dataDropDownGender = ['Man', "Vrouw"];
-    this.validSSID = false;
+    this.validSSID = true;
 
     this.editPersonForm = new FormGroup({
       socialSecurityNumber: new FormControl(''),
@@ -136,6 +146,12 @@ export class EditPersonComponent implements OnInit {
       countryOnetExpenseAllowancefBirth: new FormControl('', [Validators.required]),
       extra: new FormControl('', [Validators.required]),
     });
+
+    this.editPersonForm.controls.socialSecurityNumber.setValue(this.SocialSecurityId);
+    this.editPersonForm.controls.socialSecurityNumber.disable();
+
+    this.setPersonVatNumber();
+
   }
 
 
@@ -161,26 +177,24 @@ export class EditPersonComponent implements OnInit {
     this.PersonObject = new Person();
 
     this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.editPersonForm.get('socialSecurityNumber').value;
+    this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    // this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.DpsPersonObject.customerVatNumber = '123456789101';
     this.DpsPersonObject.person = this.PersonObject;
-
-    // console.log("dps person object customer object=");
-    // console.log(this.DpsPersonObject);
 
   }
 
   getPersonbySSIDVatNumber() {
 
     if (this.validSSID === true) {
-      const ssid: string = this.editPersonForm.get('socialSecurityNumber').value;
-      const customerVatNumber = '123456789101';
-      console.log('customerVatNumber=' + customerVatNumber);
 
-      this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
+      const customerVatNumber = '123456789101';
+
+      console.log('customerVatNumber=' + customerVatNumber);
+      console.log('social security id=' + this.SocialSecurityId);
+
+      this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         console.log('response=' + res);
         console.log(res);
         this.loadPersonData(res);
@@ -203,7 +217,7 @@ export class EditPersonComponent implements OnInit {
 
   loadDOBFromSSID() {
 
-    const ssid: string = this.editPersonForm.get('socialSecurityNumber').value;
+    const ssid: string = this.SocialSecurityId;
     const dobString: string = ssid.substring(0, 8);
     const stringData = dobString.split('.');
 
@@ -222,7 +236,9 @@ export class EditPersonComponent implements OnInit {
     this.dayString = dayString;
     this.yearString = yearString;
 
-    this.DpsPersonObject.person.dateOfBirth = monthString + '/' + dayString + '/' + yearString;
+    this.calendarData = this.monthString + "/" + this.dayString + "/" + this.yearString;
+
+    console.log("setting calendar data="+this.calendarData);
 
   }
 
@@ -237,6 +253,9 @@ export class EditPersonComponent implements OnInit {
 
       }
     }
+
+    this.changeMessage();
+
   }
 
   onChangeDropDownGender($event) {
@@ -251,6 +270,8 @@ export class EditPersonComponent implements OnInit {
         this.DpsPersonObject.person.gender.title = this.dataDropDownGender[$event.target.value];
       }
     }
+
+    this.changeMessage();
   }
 
   resetPeronData() {
@@ -329,6 +350,8 @@ export class EditPersonComponent implements OnInit {
       this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
+    this.createObjectsForm1();
+
   }
 
   receiveDOBDate($event) {
@@ -339,16 +362,73 @@ export class EditPersonComponent implements OnInit {
     this.dayString = $event.dayString;
     this.yearString = $event.yearString;
 
+    let monthInNumber:number = -1;
+    let counter:number = 0;
+
+    console.log("monthString="+this.monthString);
+
+    this.dropDownMonth.forEach(element => {
+      
+      console.log("month="+element);
+      if(element === this.monthString)
+      {
+        monthInNumber = counter;
+      }
+
+      counter++;
+    });
+
+     this.DpsPersonObject.person.dateOfBirth = (monthInNumber+1) + '/' + this.dayString + '/' + this.yearString;
+    //this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+    this.changeMessage();
+
   }
 
+  onCountryReceive($event) {
+
+    console.log("Received Country");
+    console.log("country="+$event.countryName);
+    console.log("countryName="+$event.countryCode);
+
+    if(this.DpsPersonObject.person.address !== null)
+    {
+      this.DpsPersonObject.person.address.country = $event.countryName;
+      this.DpsPersonObject.person.address.countryCode = $event.countryCode;  
+    }
+
+    this.changeMessage();
+
+  }
+
+  onLanguageReceive($event) {
+
+    console.log("Received Language");
+    console.log("name="+$event.name);
+    console.log("short name="+$event.shortName);
+
+    if(this.DpsPersonObject.person.language === null) {
+      this.DpsPersonObject.person.language = new Language();
+      this.DpsPersonObject.person.language.name = $event.name;
+      this.DpsPersonObject.person.language.shortName = $event.shortName;  
+    }
+    else {
+      this.DpsPersonObject.person.language.name = $event.name;
+      this.DpsPersonObject.person.language.shortName = $event.shortName;  
+    }
+
+    this.changeMessage();
+
+  }
 
   setPersonVatNumber() {
 
-    const ssid: number = this.editPersonForm.get('socialSecurityNumber').value;
+    console.log("calling set person vat number method");
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
     this.createObjectsForm1();
+
   }
 
   customSSIDValidator(ssid: string) {
@@ -395,7 +475,7 @@ export class EditPersonComponent implements OnInit {
     this.PersonObject = new Person();
 
     this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.editPersonForm.get('socialSecurityNumber').value;
+    this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
     this.DpsPersonObject.customerVatNumber = "123456789101";
@@ -494,7 +574,6 @@ export class EditPersonComponent implements OnInit {
 
     this.changeMessage();
 
-  }
-  
+  }  
   
 }

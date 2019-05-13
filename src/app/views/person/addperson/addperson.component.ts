@@ -467,6 +467,7 @@ export class AddPersonComponent implements OnInit {
       console.log("invalid SSN format");
       this.resetPeronData();
     }
+    
   }
 
   loadDOBFromSSID() {

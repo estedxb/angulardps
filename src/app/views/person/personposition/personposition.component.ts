@@ -11,6 +11,9 @@ import {
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { isObject } from 'ngx-bootstrap/chronos/utils/type-checks';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-personposition',
@@ -19,7 +22,7 @@ import { DataService } from 'src/app/shared/data.service';
 })
 
 export class PersonPositionComponent implements OnInit {
-  @Input() SocialSecurityId: string;
+  @Input() public SocialSecurityId: string;
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
 
   public PersonPositionForm: FormGroup;
@@ -53,6 +56,10 @@ export class PersonPositionComponent implements OnInit {
   public dataDropDownGender: string[];
   public dateofBirth;
   public selectedGenderIndex;
+  public selectedIndexFunctie;
+  public selectedIndexStatute;
+  public kmtoggle;
+  public nettoggle;
 
   public showFormIndex = 1;
 
@@ -65,11 +72,24 @@ export class PersonPositionComponent implements OnInit {
   public yearString;
   public positionChosen:string;
   public statuteChosen:string;
+  public statutes = [];
+  public countStatutes:number;
 
   public message:any;
 
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
+
+  set selectedValue(value: any) { this._selectedValue = value; }
+  get selectedValue(): any { return this._selectedValue; }
+  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dataDropDownFunctie[this.selectedIndex]; }
+  get selectedIndex(): number { return this._selectedIndex; }
+  set value(value: any) { this._value = value; }
+  get value(): any { return this._value; }
+  resetToInitValue() { this.value = this.selectedValue; }
+  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDownFunctie[this.selectedIndex]; } }
+
+
   constructor(private personsService: PersonService,private data:DataService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
-    this.setDummyStatute();
 
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
@@ -80,6 +100,7 @@ export class PersonPositionComponent implements OnInit {
     }, error => this.ShowMessage(error, 'error'));
 
     //SetInitialValue();
+    console.log("social security id="+this.SocialSecurityId);
   }
 
   fillDataDropDown(maindatas) {
@@ -90,6 +111,8 @@ export class PersonPositionComponent implements OnInit {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
     }
+
+    this.getPersonbySSIDVatNumber();
   }
 
   openDialog(): void {
@@ -143,19 +166,39 @@ export class PersonPositionComponent implements OnInit {
     });
   }
 
-  setDummyStatute() {
-    this.dataDropDownStatute =
-      [
-        "Arbeider",
-        "Bediende",
-        "Jobstudent Arbeider",
-        "Flexijob Arbeider",
-        "Seizoensarbeider",
-        "Gelegenheidsarbeider horeca",
-        "Jobstudent Bediende",
-        "Flexijob Bediende"
-      ];
+  setDummyStatute(data) {
+    // this.dataDropDownStatute =
+    //   [
+    //     "Arbeider",
+    //     "Bediende",
+    //     "Jobstudent Arbeider",
+    //     "Flexijob Arbeider",
+    //     "Seizoensarbeider",
+    //     "Gelegenheidsarbeider horeca",
+    //     "Jobstudent Bediende",
+    //     "Flexijob Bediende"
+    //   ];
 
+    this.dataDropDownStatute = [];
+
+      data.forEach(element => {
+        this.dataDropDownStatute.push(element.name);
+      });
+  }
+  
+  changeMessage() {
+
+    console.log(this.DpsPersonObject);
+
+      if(this.DpsPersonObject !== null)
+      {
+        let newmessage:any = {
+          "page": "position",
+          "data": this.DpsPersonObject
+        };  
+        this.data.changeMessage(newmessage);
+      }
+  
   }
 
   ngOnInit() {
@@ -173,6 +216,14 @@ export class PersonPositionComponent implements OnInit {
     });
 
     this.positionChosen = "";
+
+    this.statuteService.getStatutes().subscribe(data => {
+      this.statutes = data;
+      this.setDummyStatute(this.statutes);
+      console.log('data from getStatutues(): ');
+      console.log(data);
+      this.countStatutes = data.length;
+    }, error => this.errorMsg = error);
 
     this.data.currentMessage.subscribe(message => this.message = message);
     this.updatePosition();
@@ -205,6 +256,91 @@ export class PersonPositionComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   onPageInit() {
+  }
+
+  switchNetExpense($event) {
+    this.DpsPersonObject.renumeration.costReimbursment = $event;
+
+    this.changeMessage();
+  }
+
+  getPersonbySSIDVatNumber() {
+
+      const customerVatNumber = '123456789101';
+
+      console.log('customerVatNumber=' + customerVatNumber);
+      console.log('social security id=' + this.SocialSecurityId);
+
+      this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
+        console.log('response=' + res);
+        console.log(res);
+        this.loadPersonData(res);
+      },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log('Error occured=' + err.error.message);
+          } else {
+            console.log('response code=' + err.status);
+            console.log('response body=' + err.error);
+          }
+        }
+      );
+  }
+  
+  // set positions
+  // statute
+  // coefficients
+  // cost toggle
+  // km toggle
+  // extra information
+  loadPersonData(response) {
+
+    console.log(response.body);
+    const data = response.body;
+    let counter:number = 0;
+
+    if(data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined)
+    {
+      console.log("loading position data ="+this.maindatas.length);
+
+      counter = 0;
+      this.maindatas.forEach((element) => {
+
+          if(element.position.name === data.customerPostionId)
+            this.selectedIndexFunctie = counter;
+
+        counter++;
+
+        console.log("counter="+counter);
+        console.log("selectedIndex="+ this._selectedIndex);
+        console.log("element="+element.position.name);
+        console.log("customerPositionId from data="+data.customerPostionId);
+      });
+    }
+
+    if(data.statute !== null && data.statute !== undefined && data.statute !== "") {
+    
+      counter = 0;
+      this.statutes.forEach((element)=>{
+
+          if(element.name === data.statute.name)
+             this.selectedIndexStatute = counter;
+          counter++;
+      });
+    }
+
+
+    //hourlyWage
+    //netCostReimbursment
+    this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
+    this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
+        
+    //transportationAllowance
+    //costReimbursment
+    this.kmtoggle = data.renumeration.transportationAllowance;
+    this.nettoggle  = data.renumeration.costReimbursment;
+
+    this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
   }
 
   // createObjectsForm() {
@@ -324,44 +460,75 @@ export class PersonPositionComponent implements OnInit {
     console.log("message=");
     console.log(this.message);
 
-    this.DpsPersonObject = this.message;
+    this.DpsPersonObject = this.message.data;
 
     console.log("copied into DpsPersonObject local");
     console.log(this.DpsPersonObject);
 
     this.DpsPersonObject.customerPostionId = this.positionChosen;
 
+    this.changeMessage();
+
   }
 
-  onChangeDropDownStatute($event) {    
+  changeKM($event) {
+    this.DpsPersonObject.renumeration.transportationAllowance = $event;
+    this.changeMessage();
+  }
+
+  onChangeDropDownStatute($event) {
 
     console.log("event="+$event.target.value);
 
     this.statuteChosen = "";
     if(this.DpsPersonObject !== null)
     {
+      this.DpsPersonObject.statute = new Statute();      
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
-      this.DpsPersonObject.statute.type = "";
-  
+      this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
     }
 
     console.log("copied into DpsPersonObject local");
     console.log(this.DpsPersonObject);
 
+    this.changeMessage();
+
+  }
+
+  addittionalInformation(value:string) {
+    this.DpsPersonObject.addittionalInformation = value;
+
+    this.changeMessage();
   }
 
   postData() {
 
+    // this.personsService.updatePosition(this.DpsPersonObject).subscribe(res => {
+    //   console.log("response=" + res);
+    // },
+    //   (err: HttpErrorResponse) => {
+    //     if (err.error instanceof Error) {
+    //       console.log("Error occured=" + err.error.message);
+    //     }
+    //     else {
+    //       console.log("response code=" + err.status);
+    //       console.log("response body=" + err.error);
+    //     }
+    //   }
+    // );
+
   }
 
-  
+
 
   onNetExpensesReceive(netExpenseAllowance:number){
       this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+      this.changeMessage();
   }
 
   onHourlyWageReceive(grossHourlyWage:number) {  
     this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;  
+    this.changeMessage();
   }
 
 }

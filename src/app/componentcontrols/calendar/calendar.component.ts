@@ -1,4 +1,4 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-calendar',
@@ -7,6 +7,7 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
 
+  @Input() public CalendarData:string;
   @Output() public childEvent = new EventEmitter();
 
   public dataDropDown:String[];
@@ -19,6 +20,7 @@ export class CalendarComponent implements OnInit {
   public selectedIndexDays;
   public selectedYear;  
   public calendarObject:any;
+  public oldCalendarData:string;
 
    /***** Drop Down functions and variables for calendar days  ********************************************/
    private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -39,7 +41,7 @@ export class CalendarComponent implements OnInit {
    get selectedIndexMonth(): number { return this._selectedIndexMonth; }
    set valueMonth(value: any) { this._selectedValueMonth = value; }
    get valueMonth(): any { return this._selectedValueMonth; }
-   resetToInitValueMonth() { this.value = this.selectedValue; }
+   resetToInitValueMonth() { this.value = this.selectedValueMonth; }
    SetInitialValueMonth() { if (this.selectedValueMonth === undefined) {   this.selectedValueMonth = this.dropDownMonth[this.selectedIndexMonth]; }}
  
    /***** Drop Down functions and variables for calendar year  ********************************************/
@@ -50,8 +52,36 @@ export class CalendarComponent implements OnInit {
    get selectedIndexYear(): number { return this._selectedIndexYear; }
    set valueYear(value: any) { this._selectedValueYear = value; }
    get valueYear(): any { return this._selectedValueYear; }
-   resetToInitValueYear() { this.value = this.selectedValue; }
+   resetToInitValueYear() { this.value = this.selectedValueYear; }
    SetInitialValueYear() { if (this.selectedValueYear === undefined) {   this.selectedValueYear = this.dropDownYear[this.selectedIndexYear]; }}
+
+   ngDoCheck() {
+
+      if (this.CalendarData !== this.oldCalendarData) {
+
+        console.log("check Calendar Data="+this.CalendarData);
+        this.oldCalendarData = this.CalendarData;
+
+        this.loadDOBData(this.CalendarData);
+
+      }
+  
+   }
+
+   loadDOBData(calendarData) {
+
+    let calendarArray = calendarData.split("/");
+    console.log("calendarArray");
+    console.log(calendarArray);
+
+    this._selectedIndexdays = parseInt(calendarArray[0],10);
+    // this._selectedIndexMonth = parseInt(calendarArray[1],10);
+    this.selectedMonth = parseInt(calendarArray[1],10) - 1;
+    this._selectedIndexYear = parseInt(calendarArray[2],10);
+
+    console.log("selected month="+this._selectedIndexMonth);
+
+   }
 
   constructor() {
 
@@ -62,11 +92,12 @@ export class CalendarComponent implements OnInit {
     this.selectedYear = 0;
 
     this.calendarObject = {
-       "dayString":"",
-       "monthString":"",
-       "yearString":""
+       "dayString":"1",
+       "monthString":"1",
+       "yearString":"2019"
     }
 
+    console.log("calendar data received="+this.CalendarData);
    }
 
    checkLeapYear(year:number):boolean
@@ -153,6 +184,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("calendar data received="+this.CalendarData);
 
   }
 }

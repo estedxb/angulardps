@@ -6,6 +6,7 @@ import { PersonService } from 'src/app/shared/person.service';
 import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-update-person',
@@ -25,8 +26,9 @@ export class UpdatePersonComponent implements OnInit {
   public Id = '';
 
   public editPersonData: any;
+  public personpositionData: any;
 
-  constructor(private personService: PersonService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private personService: PersonService, private data: DataService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     console.log('InSide :: Update Person');
     this.validateLogin();
     this.vatNumber = this.loginuserdetails.customerVatNumber;
@@ -63,6 +65,18 @@ export class UpdatePersonComponent implements OnInit {
       this.currentPage = params.page;
       this.onPageInit();
     });
+
+    this.data.currentMessage.subscribe(message => this.filterData(message));
+
+  }
+
+  filterData(message:any) {
+
+      if(message.page === "edit")
+        this.editPersonData = message.data;
+
+      if(message.page === "position")
+        this.personpositionData = message.data;
   }
 
   onPageInit() {
@@ -98,6 +112,55 @@ export class UpdatePersonComponent implements OnInit {
     } catch (e) {
       this.PersonName = 'Error!!';
     }
+  }
+
+  onFormwardClick() {
+
+    if(this.currentPage === "editperson")
+    {
+      console.log("data collected");
+      console.log(this.editPersonData);
+
+      this.personService.updatePosition(this.editPersonData).subscribe(res => {
+        console.log("response=" + res);
+      },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Error occured=" + err.error.message);
+          }
+          else {
+            console.log("response code=" + err.status);
+            console.log("response body=" + err.error);
+          }
+        }
+      );
+
+    }
+
+    if(this.currentPage === "positions")
+    {
+      console.log("data collected for positions");
+      console.log(this.personpositionData);
+
+      this.personService.updatePosition(this.personpositionData).subscribe(res => {
+        console.log("response=" + res);
+      },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Error occured=" + err.error.message);
+          }
+          else {
+            console.log("response code=" + err.status);
+            console.log("response body=" + err.error);
+          }
+        }
+      );
+    }
+
+    if(this.currentPage === "documents"){
+
+    }
+
   }
 
 }
