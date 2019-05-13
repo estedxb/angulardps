@@ -180,3 +180,82 @@ sup.notify {
 .dashboardactioncontent::-webkit-scrollbar-thumb {
   background-color: #ebebeb;
 }
+.Header {
+  padding: 5px 0px 20px 0px;
+  border-bottom: 1px groove #707070;
+}
+.Header .col .headIcon {
+  width: 32px;
+  margin: 8px 0px;
+}
+.Dates {
+  padding: 10px 20px;
+}
+.col {
+  padding: 0px 15px 0px 0px;
+  margin: 0px;
+}
+
+.Header .col.Heading,
+.Header .col .week {
+  color: #fff;
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0px;
+  padding: 12px 15px 0px 15px;
+}
+.Header .col .weeks {
+  margin: auto;
+  width: 200px;
+}
+.Header .col .week {
+  float: left;
+  font-size: 15px;
+  width: 140px;
+  text-align: center;
+  line-height: 18px;
+  vertical-align: middle;
+}
+.Header .col .calenderLeft button,
+.Header .col .calenderRight button {
+  padding: 0px;
+  margin: 0px;
+  width: 30px;
+  height: 42px;
+  background: transparent;
+  border: 0px;
+}
+.Header .col .calenderLeft,
+.Header .col .calenderRight {
+  width: 30px;
+  padding: 0px;
+  float: left;
+  vertical-align: middle;
+}
+
+::ng-deep #maincontentarea .Dates input[type="text"] {
+  border-radius: 22px;
+  line-height: 22px;
+  padding: 2px 0px 2px 25px;
+}
+
+#PersonContents {
+  margin: 0px -20px 10px;
+  padding: 0px;
+  border-top: 3px solid #707070;
+  border-bottom: 3px solid #707070;
+  min-height: 300px;
+}
+
+#PersonButtons {
+  padding: 0px;
+  margin: 0px 40px;
+}
+
+#PersonButtons button {
+  padding: 5px 20px;
+  border-radius: 22px;
+  border: 0px solid #fff;
+  background: rgba(255, 255, 255, 0.29);
+  color: #fff;
+}

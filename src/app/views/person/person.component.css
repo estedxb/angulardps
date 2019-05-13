@@ -77,13 +77,9 @@
 .inforow .switch,
 .inforow .info,
 .inforow .actionbtn {
-  min-height: 18px;
-  line-height: 18px;
+  min-height: 15px;
+  line-height: 15px;
   vertical-align: middle;
-  padding: 15px 5px 5px 5px;
-}
-.inforow .actionbtn {
-  padding: 10px 5px 5px 5px;
 }
 
 .inforow .switch {
@@ -229,9 +225,6 @@ button.close {
   margin-top: 20px;
 }
 
-.whitebtn {
-  margin: 0px;
-}
 .bottom-15 {
   margin-bottom: 15px;
 }
@@ -335,4 +328,103 @@ div#CustomerContact1 {
 .btnAdd {
   background: transparent;
   border: 0px solid red;
+}
+
+.inforow .actioneyebtn button,
+.inforow .actiondelbtn button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  float: left;
+  width: 100%;
+  text-align: right;
+  margin: 0px;
+  padding: 5px 2px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 30px;
+  vertical-align: middle;
+  color: #21252938;
+}
+
+.inforow .actioneyebtn button,
+.inforow .actiondelbtn button {
+  width: 25px;
+  padding: 0px;
+  line-height: 25px;
+  vertical-align: middle;
+}
+
+#personDocument .inforow .actioneyebtn,
+#personDocument .inforow .actiondelbtn {
+  line-height: 15px;
+  vertical-align: middle;
+  padding: 0px;
+  margin: 0px auto;
+  padding: 2px 4px;
+}
+#personDocument .inforow .actioneyebtn button img {
+  width: 24px;
+}
+#personDocument .inforow .actiondelbtn button img {
+  width: 20px;
+}
+#personDocument .inforow .actioncontent {
+  line-height: 28px;
+  padding: 2px;
+  vertical-align: middle;
+  overflow: hidden;
+  max-height: 28px;
+}
+#personDocument .inforow .actioncontent::after {
+  content: " --------------------------------------------------------------------------------------------------------";
+}
+.inforow {
+  line-height: 18px;
+  vertical-align: middle;
+}
+.UploadedFiles {
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+}
+.whitebtn {
+  width: 100%;
+  min-width: 180px;
+}
+::ng-deep #maincontentarea .whitebtn span {
+  width: 83%;
+  text-align: left;
+}
+.whitebtn img {
+  width: 25px;
+  padding: 2px 0px;
+}
+.radiorow .gap {
+  float: left;
+  width: 20px;
+}
+#VCAAttest .row,
+#BuildingCards .row,
+#StudentAttest .row,
+#DrivingLicense .row {
+  margin: 15px 0px 0px 0px;
+}
+#VCAAttest .row .col.fleft,
+#BuildingCards .row .col.fleft,
+#StudentAttest .row .col.fleft,
+#DrivingLicense .row .col.fleft {
+  padding: 0px 0px 0px 50px;
+}
+#VCAAttest .row .col button.whitebtn,
+#BuildingCards .row .col button.whitebtn,
+#StudentAttest .row .col button.whitebtn,
+#DrivingLicense .row .col button.whitebtn {
+  margin: 5px 0px 0px 0px;
+}
+#personDocument .general {
+  margin: 0px 0px 5px 0px;
 }

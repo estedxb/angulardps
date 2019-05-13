@@ -101,7 +101,7 @@ export class CreatepositionComponent implements OnInit {
   }
 
   uploadFileToActivity() {
-    this.fileuploadService.postFile(this.fileToUpload).subscribe(data => {
+    this.fileuploadService.updatePositionFile(this.fileToUpload).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
@@ -117,7 +117,7 @@ export class CreatepositionComponent implements OnInit {
         if (this.currentPosition.id !== undefined && this.currentPosition.id !== null && this.currentPosition.id > 0) {
           console.log('Update Position');
           // Update Position
-          this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
+          this.positionsService.updatePositionWithFile(this.currentPosition, this.fileToUpload).subscribe(res => {
             console.log('Update Position Response :: ', res);
             this.dialogRef.close(this.currentPosition);
             this.uploadFileToActivity();
