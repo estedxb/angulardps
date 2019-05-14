@@ -91,7 +91,7 @@ export class PersonPositionComponent implements OnInit {
 
   constructor(private personsService: PersonService,private data:DataService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+    this.positionsService.getPositionsByVatNumber("123456789101").subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
@@ -243,7 +243,7 @@ export class PersonPositionComponent implements OnInit {
     this._position.taskDescription = '';
     this._position.workstationDocument = this.workstationDocument;
 
-    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.dpsPosition.customerVatNumber = "12345689101";
     this.dpsPosition.id = 0;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;
@@ -266,9 +266,6 @@ export class PersonPositionComponent implements OnInit {
   getPersonbySSIDVatNumber() {
 
       const customerVatNumber = '123456789101';
-
-      console.log('customerVatNumber=' + customerVatNumber);
-      console.log('social security id=' + this.SocialSecurityId);
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         console.log('response=' + res);
@@ -335,7 +332,7 @@ export class PersonPositionComponent implements OnInit {
 
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject = data;
-    
+
   }
 
   // createObjectsForm() {
@@ -452,14 +449,7 @@ export class PersonPositionComponent implements OnInit {
 
   updatePosition() {
 
-    console.log("message=");
-    console.log(this.message);
-
     this.DpsPersonObject = this.message.data;
-
-    console.log("copied into DpsPersonObject local");
-    console.log(this.DpsPersonObject);
-
     this.DpsPersonObject.customerPostionId = this.positionChosen;
 
     this.changeMessage();
@@ -473,8 +463,6 @@ export class PersonPositionComponent implements OnInit {
 
   onChangeDropDownStatute($event) {
 
-    console.log("event="+$event.target.value);
-
     this.statuteChosen = "";
     if(this.DpsPersonObject !== null)
     {
@@ -482,9 +470,6 @@ export class PersonPositionComponent implements OnInit {
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
     }
-
-    console.log("copied into DpsPersonObject local");
-    console.log(this.DpsPersonObject);
 
     this.changeMessage();
 
