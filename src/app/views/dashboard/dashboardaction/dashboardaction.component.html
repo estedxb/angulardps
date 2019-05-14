@@ -9,108 +9,17 @@
 </div>
 <div class="row">
   <div class="col col-sm-12 dashboardactioncontent">
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
+    <div class="row" *ngFor="let data of datas let i= index">
+      <div class="col col-sm-7">
+        <span class="dot_{{data.priority}}"></span>
+        <span>{{data.message}}</span>
       </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col col-sm-3">
-        <img src="../../../../assets/svg/circle.svg" style="width:12px">
-        <span>Vanessa Martens</span>
-      </div>
-      <div class="col col-sm-3"><span>Poetsdame</span></div>
-      <div class="col col-sm-2 dt"><span>11/02/2019 - 15/02/2019</span></div>
-      <div class="col col-sm-4">
-        <span>Student@work gegevens toevoegen</span>
-        <button><img src="../../../../assets/svg/eye.svg"></button>
+      <div class="col col-sm-4 dt"><span>{{data.date}}</span></div>
+      <div class="col col-sm-1">
+        <button (click)="goToAction(data.actionid,data.id,data.others)"><img
+            src="../../../../assets/svg/eye.svg"></button>
       </div>
     </div>
   </div>
 </div>
+{{errorMsg}}

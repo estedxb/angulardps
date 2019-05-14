@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { User, DpsUser, DpsPostion } from './models';
+import { User, DpsUser, DpsPostion, DpsPerson } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,9 @@ export class PersonService {
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
+  private requestCertificateURL = '';
   private getPersonbyIdURL = '';
+  private getPersonURL = ''
   private postPersonURL = '';
   private putPersonURL = '';
   private deletePersonURL = '';
@@ -24,24 +26,50 @@ export class PersonService {
 
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getPerson !== '') {
-      console.log('Data From Remote');
+      console.log('Data From getPerson Remote');
+      this.getPersonURL = environment.dpsAPI + environment.getPerson;
+    } else {
+      console.log('Data From getPerson JSON');
+      this.getPersonURL = '../../assets/data/locations.json';
+    }
+
+    if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
+      console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
       this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
       this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
       this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
+      this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
+      this.requestCertificateURL = "";
     } else {
-      console.log('Data From JSON');
-      // this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
+      console.log('Data From getPersonsByVatNumber JSON');
+      this.getPersonForCustomerbyCustomerVatNumberURL = '../../assets/data/persons.json';
     }
+
   }
 
   public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
-    console.log('PositionsService Data From = ' + this.getPersonForCustomerbyCustomerVatNumberURL + '/' + customervatnumber);
-    const result = this.http.get<DpsPostion[]>(
-      this.getPersonForCustomerbyCustomerVatNumberURL + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
+    let getURL = this.getPersonForCustomerbyCustomerVatNumberURL;
+    if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
+      getURL = getURL + '/' + customervatnumber;
+    }
+    console.log('PositionsService Data From = ' + getURL);
+    const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
   }
+
+  public getPersonsContractsByVatNumber(customervatnumber: string, startdate: Date, enddate: Date): Observable<any> {
+    let getURL = this.getPersonForCustomerbyCustomerVatNumberURL;
+    if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
+      getURL = getURL + '/' + customervatnumber + '?startdate=' + startdate + '&enddate=' + enddate;
+    }
+    console.log('PositionsService Data From = ' + getURL);
+    const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
+    console.log(result);
+    return result;
+  }
+
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -61,6 +89,14 @@ export class PersonService {
     });
   }
 
+  public requestCertificate(details:any ): Observable<any> {
+    // customerVatNumber, socialSecurityId, action
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.requestCertificateURL, details, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
 
   updateMedicalAttestationFile(fileToUpload: File): Observable<boolean> {
     const formData: FormData = new FormData();
@@ -116,14 +152,13 @@ export class PersonService {
   
   
 
-  public updatePosition(id: any): Observable<any> {
-    // const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // return this.http.put<any>(this.getPersonbyIdURL, position, {
-    //   headers: httpHeaders,
-    //   observe: 'response'
-    // });
-
-    return null;
+  public updatePosition(person: any): Observable<any> {
+    console.log("in update position call:");
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.putPersonURL, person, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
   }
 
   errorHandler(error: HttpErrorResponse) {

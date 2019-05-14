@@ -15,14 +15,14 @@
       </div>
       <div class="row PersonContactContent">
         <div class="col-sm-7">
-          <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+          <select formControlName="functie" [(ngModel)]="selectedIndexFunctie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
             (change)="onChangeDropDownFunctie($event)" ng-dropdown>
             <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
               {{data}}</option>
           </select>
         </div>
         <div class="col col-sm-1">
-          <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+          <button #addButton (click)="onClickAdd()" type="button" class="btnAdd">
             <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
           </button>
         </div>
@@ -47,7 +47,7 @@
           </div>
           <div class="row ">
             <div class="col-sm-12">
-              <select formControlName="statute" id="dd_statute" name="dd_statute" class="inhaalrust selectcomponent"
+              <select formControlName="statute" [(ngModel)]="selectedIndexStatute" id="dd_statute" name="dd_statute" class="inhaalrust selectcomponent"
                 (change)="onChangeDropDownStatute($event)" ng-dropdown required="required">
                 <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
                   {{data}}</option>
@@ -66,7 +66,7 @@
               <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control"
                 (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text" required />
               <div class="form-control-feedback"
-                *ngIf="AddPersonForm2.controls.grossHourlyWage.invalid && (AddPersonForm2.controls.grossHourlyWage.dirty || AddPersonForm2.controls.grossHourlyWage.touched) else newvalid">
+                *ngIf="PersonPositionForm.controls.grossHourlyWage.invalid && (PersonPositionForm.controls.grossHourlyWage.dirty || PersonPositionForm.controls.grossHourlyWage.touched) else newvalid">
                 <img src="../../assets/img/InvalidIcon.png" alt="">
               </div>
               <ng-template #newvalid><img src="../../assets/img/ValidIcon.png" alt=""></ng-template>
@@ -76,7 +76,7 @@
         <div class="col-sm-6">
           <div class="row">
             <div class="col-sm-2 netExpense">
-              <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch>
+              <ui-switch [checked]="nettoggle" (change)="switchNetExpense($event)" size="small"> </ui-switch>
             </div>
             <div class="col-sm-10">
               <label class="titleBold">onkostenvergoeding: </label>
@@ -88,7 +88,7 @@
                 (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
                 name="netExpenseAllowance" type="text" required />
               <div class="form-control-feedback"
-                *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
+                *ngIf="PersonPositionForm.controls.netExpenseAllowance.invalid && (PersonPositionForm.controls.netExpenseAllowance.dirty || PersonPositionForm.controls.netExpenseAllowance.touched) else newvalid">
                 <img src="../../assets/img/InvalidIcon.png" alt="">
               </div>
               <ng-template #newvalid>
@@ -104,7 +104,7 @@
         <div class="col col-sm-6">
           <div class="row netExpense">
             <div class="col col-sm-2">
-              <ui-switch (change)="changeKM($event)" size="small"> </ui-switch>
+              <ui-switch [checked]="kmtoggle" (change)="changeKM($event)" size="small"> </ui-switch>
             </div>
             <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
           </div>
@@ -117,10 +117,10 @@
       </div>
       <div class="row inputWithImgNew PersonContactContent">
         <div class="col-sm-12 ">
-          <textarea rows="6" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
+          <textarea rows="6" formControlName="extra" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
             name="extra">Extra .....</textarea>
           <div class="form-control-feedback"
-            *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">
+            *ngIf="PersonPositionForm.controls.extra.invalid && (PersonPositionForm.controls.extra.dirty || PersonPositionForm.controls.extra.touched) else newvalid">
             <img src="../../assets/img/InvalidIcon.png" alt="">
           </div>
           <ng-template #newvalid>

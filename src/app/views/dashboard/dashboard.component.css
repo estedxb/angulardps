@@ -80,31 +80,153 @@
   background-image: linear-gradient(107deg, #fff, #dddddd);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   width: 100%;
-  height: 480px;
+  height: 380px;
   border-radius: 25px;
   padding: 20px 50px;
-  margin: 50px 0px;
+  margin: 40px 0px;
   border: 1px solid rgba(230, 228, 228, 0.25);
 }
 .dashboardperson {
   background-color: #00032b;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   width: 100%;
-  min-height: 480px;
+  min-height: 380px;
   border-radius: 25px;
   padding: 20px;
   margin: 50px 0px;
 }
+
+.Dates {
+  padding: 0px 25px;
+}
+
+.Dates img {
+  width: 18px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background-color: transparent;
+  color: #fff;
+  overflow: hidden;
+  outline: none;
+  border: none;
+}
+
+::ng-deep #maincontentarea .Dates input[type="text"] {
+  border-radius: 22px;
+  line-height: 22px;
+  padding: 2px 0px 2px 25px;
+  background-color: #00032b;
+  border: 1px solid #595a64;
+  font-weight: 500;
+  color: #fff;
+  outline: 0px;
+  width: 90%;
+}
+.Dates .col-split {
+  color: #e37619;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 5px;
+  text-align: center;
+}
+.Contents .col-split {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px;
+  text-align: center;
+}
+
+.Contents .col-split-n {
+  text-align: left;
+}
+.Contents .col-split .name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 5px;
+  text-align: center;
+  clear: both;
+}
+.Contents .col-split .position {
+  color: #646464;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 5px;
+  text-align: center;
+  clear: both;
+}
+.col-split-t {
+  width: 25%;
+}
+.col-split-n {
+  width: 21%;
+}
+.col-split-f {
+  width: 4%;
+  padding: 20px;
+}
+.col-split-m {
+  width: 9%;
+}
+.col-split-l {
+  width: 12%;
+}
+
 .dashboardactionhead {
   line-height: 50px;
   vertical-align: middle;
 }
+
+#PersonContents {
+  margin: 0px -20px 10px;
+  padding: 0px;
+  border-top: 3px solid #707070;
+  border-bottom: 3px solid #707070;
+  min-height: 300px;
+}
+#PersonContents .row {
+  margin: 0px;
+}
+
+.dashboardactioncontent table .Contents button {
+  padding: 0px;
+  margin: 15px 0px;
+  border: 0px;
+  background: transparent;
+  outline: 0px;
+}
+
+.dashboardactioncontent table .Contents button img {
+  width: 40px;
+}
+
 .dashboardactioncontent {
-  padding: 8px 0px;
+  padding: 0px;
   border-top: 1px solid #707070;
   border-bottom: 1px solid #707070;
-  height: 390px;
+  height: 300px;
   overflow: auto;
+}
+.dashboardactioncontent table {
+  width: 100%;
+  margin: auto;
+}
+.dashboardactioncontent table,
+.dashboardactioncontent table tr,
+.dashboardactioncontent table tr td {
+  border-right: 0.5px dotted rgba(255, 255, 255, 0.5);
+  border-left: 0.5px dotted rgba(255, 255, 255, 0.5);
+  border-top: 0.5px dotted rgba(159, 11, 25, 0.5);
+  border-bottom: 0.5px dotted rgba(159, 11, 25, 0.5);
+  padding: 0px;
+  margin: 0px;
+}
+
+.dashboardactioncontent table tr td {
+  vertical-align: middle;
+  padding: 5px 20px;
 }
 .notify {
   float: left;
@@ -133,7 +255,7 @@ sup.notify {
   background-attachment: fixed;
 }
 .dashboardactioncontent div.row {
-  margin: 20px 0px;
+  margin: 15px 0px;
 }
 .dashboardactioncontent div div.col {
   vertical-align: middle;
@@ -164,6 +286,7 @@ sup.notify {
   float: right;
   border: 0px;
   background: transparent;
+  outline: 0px;
 }
 .dashboardactioncontent div div.col button img {
   width: 30px;
@@ -181,27 +304,75 @@ sup.notify {
   background-color: #ebebeb;
 }
 
+.Header {
+  padding: 5px 0px 20px 0px;
+  border-bottom: 1px groove #707070;
+}
 .Header .col .headIcon {
-  width: 40px;
-  margin: 0px 15px 0px 50px;
+  width: 32px;
+  margin: 8px 0px;
+}
+.col {
+  padding: 0px 15px 0px 0px;
+  margin: 0px;
 }
 
 .Header .col.Heading,
-.Header .col .weeks {
+.Header .col .week {
   color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  margin: 5px;
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0px;
+  padding: 12px 15px 0px 15px;
 }
 .Header .col .weeks {
+  margin: auto;
+  width: 200px;
+}
+.Header .col .week {
   float: left;
-  margin: -5px 0px 0px 0px;
-  width: 150px;
+  font-size: 15px;
+  width: 140px;
   text-align: center;
+  line-height: 18px;
+  vertical-align: middle;
+}
+.Header .col .calenderLeft button,
+.Header .col .calenderRight button {
+  padding: 0px;
+  margin: 0px;
+  width: 30px;
+  height: 42px;
+  background: transparent;
+  border: 0px;
 }
 .Header .col .calenderLeft,
 .Header .col .calenderRight {
   width: 30px;
-  padding: 0px 5px;
+  padding: 0px;
   float: left;
+  vertical-align: middle;
+}
+
+#PersonButtons {
+  padding: 0px;
+  margin: 0px 40px;
+}
+
+#PersonButtons button {
+  padding: 5px 15px;
+  border-radius: 22px;
+  border: 0px solid #fff;
+  background: rgba(255, 255, 255, 0.29);
+  color: #fff;
+  line-height: 30px;
+  vertical-align: middle;
+  float: left;
+  margin: 0px 40px 0px 0px;
+}
+#PersonButtons button img {
+  padding: 2px 20px 2px 0px;
+}
+#PersonButtons button:focus {
+  outline: 0px;
 }
