@@ -18,6 +18,9 @@ export class DashboardPersonComponent implements OnInit {
   public Id = '';
   public SelectedIndex = 0;
   public errorMsg;
+  public loginaccessToken: string = localStorage.getItem('accesstoken');
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public vatNumber: string;
 
   constructor(
     private personService: PersonService, private route: ActivatedRoute,
@@ -29,10 +32,17 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   onPageInit() {
+    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    console.log('this.vatNumber : ' + this.vatNumber);
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
-
+        this.personService.getPersonsByVatNumber(this.vatNumber)
+          .subscribe(persons => {
+            this.maindatas = persons;
+            console.log('getPersonsByVatNumber in dashboard-person.component ::');
+            console.log(persons);
+          }, error => this.errorMsg = error);
       }
     }
   }
