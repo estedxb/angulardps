@@ -24,17 +24,20 @@ export class ContractService {
 
   public createContract(contract: DpsContract): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log('createContract Data From = ' + this.getContractURL);
     return this.http.post<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateContract(contract: DpsContract): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log('updateContract Data From = ' + this.getContractURL);
     return this.http.put<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
 
   public getContractByVatNoAndId(vatNumber: string,contractId: string): Observable<DpsContract> {
     console.log('getContractById');
+    console.log('getContractByVatNoAndId Data From = ' + this.getContractURL + '/' + vatNumber +'/' + contractId);
     const result = this.http.get<any>(this.getContractURL + '/' + vatNumber +'/' + contractId).catch(this.errorHandler);
     console.log(result);
     return result;

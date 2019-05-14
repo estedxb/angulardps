@@ -116,6 +116,7 @@ export class CreatepositionComponent implements OnInit {
         console.log('currentPosition.id =' + this.currentPosition.id);
         if (this.currentPosition.id !== undefined && this.currentPosition.id !== null && this.currentPosition.id > 0) {
           console.log('Update Position');
+          console.log(' this.fileToUpload :: ', this.fileToUpload);
           // Update Position
           this.positionsService.updatePositionWithFile(this.currentPosition, this.fileToUpload).subscribe(res => {
             console.log('Update Position Response :: ', res);

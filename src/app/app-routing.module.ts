@@ -57,6 +57,7 @@ const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/:page/:id', component: DashboardComponent },
   { path: 'customer', component: AddCustomerComponent },
   { path: 'customer/addcustomer', component: AddCustomerComponent },
   { path: 'customer/add', component: AddCustomerComponent },
@@ -124,5 +125,6 @@ export const entringComponents = [
   CreateWorkScheduleComponent,
   CreatepositionComponent,
   CreateWorkTimeComponent,
-  CancelContractComponent
+  CancelContractComponent,
+  CreateContractComponent
 ];

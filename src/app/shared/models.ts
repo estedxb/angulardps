@@ -109,8 +109,11 @@ export class StandAloneValue { code: Code2; value: number; mandatory: boolean; }
 export class Code2 {
     codeNumber: number; description: string; codeType: string; valueType: string; isDefaultForCodeType: string; statuteType: string;
 }
+export enum ContractStatus { Active = 'Active', Cancelled = 'Cancelled' }
+export class Summaries { actionid: string; message: string; date: string; id: string; others: string; priority: number; }
 
-export enum ContractStatus {
-    Active ="Active",
-    Cancelled = "Cancelled"   
-}
+export class SelectedContract { contractId: number; personId: string; }
+
+export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File}
+
+export enum FileType { Medical = 'Medical', StudentAtWork = 'StudentAtWork', ConstructionCard = 'ConstructionCard'  }

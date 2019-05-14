@@ -46,13 +46,19 @@ export class PositionsService {
   }
 
   public updatePositionWithFile(position: any, fileToUpload: File): Observable<any> {
-    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
     const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    console.log('updatePosition position::', position);
-    console.log('formData', formData);
-   
-    return this.http.put<any>(this.getPositionUrl, position, {
+    
+    //formData.append('data', JSON.stringify(position));
+    if(fileToUpload.size>0)
+    {
+      formData.append('file', fileToUpload, fileToUpload.name);
+    }
+
+    console.log('formData:::', formData);
+    new Response(formData).text().then(console.log)
+
+    return this.http.put<any>(this.getPositionUrl, JSON.stringify(position)+""+ formData ,{
       headers: httpHeaders,
       observe: 'response'
     });
