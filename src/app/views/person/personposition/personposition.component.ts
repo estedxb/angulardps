@@ -195,10 +195,9 @@ export class PersonPositionComponent implements OnInit {
         let newmessage:any = {
           "page": "position",
           "data": this.DpsPersonObject
-        };  
+        };
         this.data.changeMessage(newmessage);
       }
-  
   }
 
   ngOnInit() {
@@ -305,16 +304,9 @@ export class PersonPositionComponent implements OnInit {
 
       counter = 0;
       this.maindatas.forEach((element) => {
-
           if(element.position.name === data.customerPostionId)
             this.selectedIndexFunctie = counter;
-
         counter++;
-
-        console.log("counter="+counter);
-        console.log("selectedIndex="+ this._selectedIndex);
-        console.log("element="+element.position.name);
-        console.log("customerPositionId from data="+data.customerPostionId);
       });
     }
 
@@ -329,7 +321,6 @@ export class PersonPositionComponent implements OnInit {
       });
     }
 
-
     //hourlyWage
     //netCostReimbursment
     this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
@@ -341,6 +332,10 @@ export class PersonPositionComponent implements OnInit {
     this.nettoggle  = data.renumeration.costReimbursment;
 
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
+
+    this.DpsPersonObject = new DpsPerson();
+    this.DpsPersonObject = data;
+    
   }
 
   // createObjectsForm() {
