@@ -12,8 +12,6 @@ import {
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { isObject } from 'ngx-bootstrap/chronos/utils/type-checks';
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-personposition',
