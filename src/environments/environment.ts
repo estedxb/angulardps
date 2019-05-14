@@ -39,7 +39,17 @@ export const environment = {
   getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
   getFileUploads: '',
   getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
-  getContract: 'Contract'
+  getContract: 'Contract',
+  getSummaryURL: '',
+  actionURL_1: 'customer/edit',
+  actionURL_2: 'customer/position',
+  actionURL_3: 'customer/user',
+  actionURL_4: 'customer/location',
+  actionURL_5: 'customer/work',
+  actionURL_6: 'person/$id$/',
+  actionURL_7: 'person/$id$/position',
+  actionURL_8: 'person/$id$/document',
+  actionURL_9: 'dashboard/contract/$id$'
 };
 
 /*

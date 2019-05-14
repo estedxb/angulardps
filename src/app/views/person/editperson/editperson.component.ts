@@ -66,11 +66,11 @@ export class EditPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
-  public calendarData:string;
+  public calendarData: string;
 
   public message;
 
-  constructor(private personsService: PersonService, private data:DataService) { }
+  constructor(private personsService: PersonService, private data: DataService) { }
 
   setDummyStatute() {
   }
@@ -79,8 +79,8 @@ export class EditPersonComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() { 
-
+  ngOnInit() {
+    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
     this.data.currentMessage.subscribe(message => this.message = message);
 
     this.onPageInit();
@@ -90,13 +90,12 @@ export class EditPersonComponent implements OnInit {
   }
 
   changeMessage() {
-
-    if(this.DpsPersonObject !== null)
-    {
-      let newmessage:any = {
-        "page": "edit",
-        "data": this.DpsPersonObject
-      };  
+    console.log(this.DpsPersonObject);
+    if (this.DpsPersonObject !== null) {
+      const newmessage: any = {
+        page: 'edit',
+        data: this.DpsPersonObject
+      };
       this.data.changeMessage(newmessage);
     }
 
@@ -106,9 +105,11 @@ export class EditPersonComponent implements OnInit {
     this.setDummyStatute();
     this.setDropDownYear();
 
-    this.dataDropDown = ['1', '2', "3", "4", "5", '6', '7', '8', '9', "10", "11", '12', "13", "14", "15", '16', "17", "18", '19', '20', '21', '22', "23", "24", "25", '26', '27', '28', '29', "30", '31'];
-    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", 'September', 'October', 'November', "December"];
-    this.dataDropDownGender = ['Man', "Vrouw"];
+    // tslint:disable-next-line: max-line-length
+    this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+    // tslint:disable-next-line: max-line-length
+    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.dataDropDownGender = ['Man', 'Vrouw'];
     this.validSSID = true;
 
     this.editPersonForm = new FormGroup({
@@ -162,8 +163,7 @@ export class EditPersonComponent implements OnInit {
     for (let index = 0; index < digitString.length; index++) {
       if (digitString[index] >= '0' && digitString[index] <= '9') {
         digitsValid = true;
-      }
-      else {
+      } else {
         digitsValid = false;
       }
     }
@@ -236,9 +236,9 @@ export class EditPersonComponent implements OnInit {
     this.dayString = dayString;
     this.yearString = yearString;
 
-    this.calendarData = this.monthString + "/" + this.dayString + "/" + this.yearString;
+    this.calendarData = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
-    console.log("setting calendar data="+this.calendarData);
+    console.log('setting calendar data=' + this.calendarData);
 
   }
 
@@ -260,8 +260,8 @@ export class EditPersonComponent implements OnInit {
 
   onChangeDropDownGender($event) {
 
-    console.log("selected index=" + $event.target.value);
-    console.log("selected value=" + this.dataDropDownGender[$event.target.value]);
+    console.log('selected index=' + $event.target.value);
+    console.log('selected value=' + this.dataDropDownGender[$event.target.value]);
 
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -355,31 +355,30 @@ export class EditPersonComponent implements OnInit {
   }
 
   receiveDOBDate($event) {
-    console.log("recevied date=");
+    console.log('recevied date=');
     console.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
     this.yearString = $event.yearString;
 
-    let monthInNumber:number = -1;
-    let counter:number = 0;
+    let monthInNumber = -1;
+    let counter = 0;
 
-    console.log("monthString="+this.monthString);
+    console.log('monthString=' + this.monthString);
 
     this.dropDownMonth.forEach(element => {
-      
-      console.log("month="+element);
-      if(element === this.monthString)
-      {
+
+      console.log('month=' + element);
+      if (element === this.monthString) {
         monthInNumber = counter;
       }
 
       counter++;
     });
 
-     this.DpsPersonObject.person.dateOfBirth = (monthInNumber+1) + '/' + this.dayString + '/' + this.yearString;
-    //this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+    this.DpsPersonObject.person.dateOfBirth = (monthInNumber + 1) + '/' + this.dayString + '/' + this.yearString;
+    // this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
     this.changeMessage();
 
@@ -387,14 +386,13 @@ export class EditPersonComponent implements OnInit {
 
   onCountryReceive($event) {
 
-    console.log("Received Country");
-    console.log("country="+$event.countryName);
-    console.log("countryName="+$event.countryCode);
+    console.log('Received Country');
+    console.log('country=' + $event.countryName);
+    console.log('countryName=' + $event.countryCode);
 
-    if(this.DpsPersonObject.person.address !== null)
-    {
+    if (this.DpsPersonObject.person.address !== null) {
       this.DpsPersonObject.person.address.country = $event.countryName;
-      this.DpsPersonObject.person.address.countryCode = $event.countryCode;  
+      this.DpsPersonObject.person.address.countryCode = $event.countryCode;
     }
 
     this.changeMessage();
@@ -403,18 +401,17 @@ export class EditPersonComponent implements OnInit {
 
   onLanguageReceive($event) {
 
-    console.log("Received Language");
-    console.log("name="+$event.name);
-    console.log("short name="+$event.shortName);
+    console.log('Received Language');
+    console.log('name=' + $event.name);
+    console.log('short name=' + $event.shortName);
 
-    if(this.DpsPersonObject.person.language === null) {
+    if (this.DpsPersonObject.person.language === null) {
       this.DpsPersonObject.person.language = new Language();
       this.DpsPersonObject.person.language.name = $event.name;
-      this.DpsPersonObject.person.language.shortName = $event.shortName;  
-    }
-    else {
+      this.DpsPersonObject.person.language.shortName = $event.shortName;
+    } else {
       this.DpsPersonObject.person.language.name = $event.name;
-      this.DpsPersonObject.person.language.shortName = $event.shortName;  
+      this.DpsPersonObject.person.language.shortName = $event.shortName;
     }
 
     this.changeMessage();
@@ -423,7 +420,7 @@ export class EditPersonComponent implements OnInit {
 
   setPersonVatNumber() {
 
-    console.log("calling set person vat number method");
+    console.log('calling set person vat number method');
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
@@ -466,10 +463,10 @@ export class EditPersonComponent implements OnInit {
 
     return this.validSSID;
   }
-  
+
   createObjectsForm1() {
 
-    console.log("create objects form1 called");
+    console.log('create objects form1 called');
 
     this.DpsPersonObject = new DpsPerson();
     this.PersonObject = new Person();
@@ -478,7 +475,7 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = "123456789101";
+    this.DpsPersonObject.customerVatNumber = '123456789101';
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -488,7 +485,7 @@ export class EditPersonComponent implements OnInit {
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
-    this.DpsPersonObject.person.gender.title = "Male";
+    this.DpsPersonObject.person.gender.title = 'Male';
 
     this.DpsPersonObject.person.firstName = this.editPersonForm.get('firstName').value;
     this.DpsPersonObject.person.lastName = this.editPersonForm.get('lastName').value;
@@ -499,8 +496,8 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.address.bus = this.editPersonForm.get('bus').value;
     this.DpsPersonObject.person.address.city = this.editPersonForm.get('city').value;
     this.DpsPersonObject.person.address.postalCode = this.editPersonForm.get('postalCode').value;
-    this.DpsPersonObject.person.address.country = "New country";
-    this.DpsPersonObject.person.address.countryCode = "NX";
+    this.DpsPersonObject.person.address.country = 'New country';
+    this.DpsPersonObject.person.address.countryCode = 'NX';
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.editPersonForm.get('emailAddress').value;
@@ -514,58 +511,58 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
     this.DpsPersonObject.person.language = new Language();
-    this.DpsPersonObject.person.language.name = "";
-    this.DpsPersonObject.person.language.shortName = "";
+    this.DpsPersonObject.person.language.name = '';
+    this.DpsPersonObject.person.language.shortName = '';
 
     this.DpsPersonObject.person.bankAccount = new BankAccount();
     this.DpsPersonObject.person.bankAccount.iban = this.editPersonForm.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.editPersonForm.get('bic').value;
 
     this.DpsPersonObject.person.travelMode = this.editPersonForm.get('travelMode').value;
-    this.DpsPersonObject.person.status = "";
+    this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
-    this.DpsPersonObject.statute.name = "";
-    this.DpsPersonObject.statute.type = "";
+    this.DpsPersonObject.statute.name = '';
+    this.DpsPersonObject.statute.type = '';
 
-    this.DpsPersonObject.customerPostionId = "";
+    this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = "";
+    this.DpsPersonObject.addittionalInformation = '';
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
-    this.DpsPersonObject.medicalAttestation.location = "";
-    this.DpsPersonObject.medicalAttestation.name = "";
+    this.DpsPersonObject.medicalAttestation.location = '';
+    this.DpsPersonObject.medicalAttestation.name = '';
 
     this.DpsPersonObject.vcaAttestation = new Documents();
-    this.DpsPersonObject.vcaAttestation.location = "";
-    this.DpsPersonObject.vcaAttestation.name = "";
+    this.DpsPersonObject.vcaAttestation.location = '';
+    this.DpsPersonObject.vcaAttestation.name = '';
 
     this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
     this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
-    this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
+    this.DpsPersonObject.studentAtWorkProfile.attestation.location = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestation.name = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestationDate = '10/10/2019';
     this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
     this.DpsPersonObject.studentAtWorkProfile.balance = 0;
 
     this.DpsPersonObject.driverProfiles = [];
 
-    let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
+    const driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
     driverProfilesObject.attestation = new Documents();
-    driverProfilesObject.attestation.location = "";
-    driverProfilesObject.attestation.name = "";
+    driverProfilesObject.attestation.location = '';
+    driverProfilesObject.attestation.name = '';
 
     this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
 
     this.DpsPersonObject.otherDocuments = [];
 
-    let otherDocumentsObject: Documents = new Documents();
-    otherDocumentsObject.location = "";
-    otherDocumentsObject.name = "";
+    const otherDocumentsObject: Documents = new Documents();
+    otherDocumentsObject.location = '';
+    otherDocumentsObject.name = '';
 
     this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
 
@@ -574,6 +571,12 @@ export class EditPersonComponent implements OnInit {
 
     this.changeMessage();
 
-  }  
-  
+<<<<<<< HEAD
+  }
+
+
+=======
+  }
+
+>>>>>>> 909b6c6b23864331a13504acce86f141a58a44b0
 }
