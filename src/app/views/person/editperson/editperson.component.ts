@@ -571,12 +571,6 @@ export class EditPersonComponent implements OnInit {
 
     this.changeMessage();
 
-<<<<<<< HEAD
   }
 
-
-=======
-  }
-
->>>>>>> 909b6c6b23864331a13504acce86f141a58a44b0
 }
