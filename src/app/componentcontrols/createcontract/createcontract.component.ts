@@ -77,8 +77,9 @@ export class CreateContractComponent implements OnInit {
     });
 
     this.getPositionsByVatNumber();
-    this.getWorkscheduleByVatNumber();
     this.getLocationsByVatNumber();
+    this.getWorkscheduleByVatNumber();
+   
 
     if(this.contractId !== null && this.contractId !== undefined  && this.contractId !== 0 )
     {
@@ -96,8 +97,8 @@ export class CreateContractComponent implements OnInit {
      this.personService.getPersonBySSIDVatnumber(personid,vatNumber).subscribe(response => {
       console.log('personid :: ', personid);  
       console.log('loadPerson :: ', response);   
-       this.ContractForm.controls.firstname.setValue(response.person.firstName);
-       this.ContractForm.controls.lastname.setValue(response.person.lastName);
+       this.ContractForm.controls.firstname.setValue(response.body.person.firstName);
+       this.ContractForm.controls.lastname.setValue(response.body.person.lastName);
      });
    }
 
@@ -201,13 +202,16 @@ export class CreateContractComponent implements OnInit {
 
   public getWorkSchedule(): DpsWorkSchedule
   {
-    let  dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.name == this.workScheduleSelected);
+    console.log('  this.workScheduleSelected :: ', this.workScheduleSelected);
+    console.log('  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
+    let  dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.id == this.workScheduleSelected);
     console.log('  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
     return dpsWorkSchedules[0];
   }
 
   public getLocation(): Location{
-    let locations = this.locationsData.filter(c => c.name == this.locationSelected);
+    console.log('  this.locationSelected :: ', this.locationSelected);
+    let locations = this.locationsData.filter(c => c.id == this.locationSelected);
     console.log('  locations :: ', locations[0]);
     return locations[0];
   }

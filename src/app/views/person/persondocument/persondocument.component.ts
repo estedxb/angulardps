@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { _Position, DpsPostion, LoginToken, DriverProfilesItem, DpsUser, Documents, DpsPerson } from '../../../shared/models';
+import { _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { forEach } from '@angular/router/src/utils/collection';
@@ -20,8 +20,13 @@ export class PersonDocumentComponent implements OnInit {
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   public VatNumber = this.loginuserdetails.customerVatNumber;
   PersonDocumentForm : FormGroup;
-  public isConstructionSector: boolean;
   
+  public isConstructionSector: boolean;
+  public isStudentAtWork : boolean;
+  public isDriver : boolean;
+
+  public medicchAttest: string;
+
   medicalAttestationFileToUpload: File = null;
   vcaAttestationFileToUpload: File = null;
   constructionCardsToUpload: File = null;
@@ -30,8 +35,8 @@ export class PersonDocumentComponent implements OnInit {
   driversFileToUpload: File = null;
 
   ddl_drivinglicenseSelected: string;
-
   public documents : Documents;
+  public personDocuments : PersonDocuments;
   public driverProfilesItem : DriverProfilesItem
   public currentPerson : DpsPerson;
 
@@ -72,7 +77,14 @@ export class PersonDocumentComponent implements OnInit {
     // console.log('after');
     // console.log(this.currentPerson);
   }
-  
+
+  onisStudentAtWorkChange($event) {
+    // this.currentPerson.constructionProfile. = $event;
+    // console.log('after');
+    // console.log(this.currentPerson);
+  }
+
+
 
   getPersonBySSIDVatnumber(ssid: string, customervatnumber: string) {    
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
@@ -100,11 +112,16 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.medicalAttestationFileToUpload = files.item(0);
-      }
+
       this.currentPerson.medicalAttestation.name = files.item(0).name;
       this.currentPerson.medicalAttestation.location ="";
 
-      this.uploadMedicalAttestationFileToActivity();
+      this.personDocuments.customerVatNumber = this.VatNumber;
+      this.personDocuments.fileName = files.item(0).name;
+      this.personDocuments.file = files.item(0);
+      this.personDocuments.fileType = FileType.Medical;
+      this.personDocuments.personId = this.SocialSecurityId;
+      }
     }
   }
 
@@ -129,10 +146,16 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.vcaAttestationFileToUpload = files.item(0);
-      }
+
       this.currentPerson.vcaAttestation.name = files.item(0).name;
       this.currentPerson.vcaAttestation.location ="";
-      this.uploadVcaAttestationFileToActivity();
+
+      this.personDocuments.customerVatNumber = this.VatNumber;
+      this.personDocuments.fileName = files.item(0).name;
+      this.personDocuments.file = files.item(0);
+      this.personDocuments.fileType = files.item(0).name;
+      this.personDocuments.personId = this.SocialSecurityId;
+      }         
     }
   }
 
@@ -157,12 +180,18 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.constructionCardsToUpload = files.item(0);
-      }
-      this.documents = new Documents();
-      this.documents.name = files.item(0).name;
-      this.documents.location = "";
-      this.currentPerson.constructionProfile.constructionCards.push(this.documents);
-      this.uploadConstructionCardsFileToActivity();   
+
+        this.documents = new Documents();
+        this.documents.name = files.item(0).name;
+        this.documents.location = "";
+        this.currentPerson.constructionProfile.constructionCards.push(this.documents);
+  
+        this.personDocuments.customerVatNumber = this.VatNumber;
+        this.personDocuments.fileName = files.item(0).name;
+        this.personDocuments.file = files.item(0);
+        this.personDocuments.fileType = FileType.ConstructionCard;
+        this.personDocuments.personId = this.SocialSecurityId;
+      } 
     }
   }
 
@@ -189,13 +218,19 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.studentAtWorkFileToUpload = files.item(0);
-      }  
+
       this.currentPerson.studentAtWorkProfile.attestation.name = files.item(0).name;   
       this.currentPerson.studentAtWorkProfile.attestation.location ="";
       this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
       this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
-      this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;;
-      this.uploadStudentAtWorkFileToActivity();
+      this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+
+      this.personDocuments.customerVatNumber = this.VatNumber;
+      this.personDocuments.fileName = files.item(0).name;
+      this.personDocuments.file = files.item(0);
+      this.personDocuments.fileType = FileType.StudentAtWork;
+      this.personDocuments.personId = this.SocialSecurityId;
+      }
     }
   }
 
@@ -220,15 +255,20 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.driversFileToUpload = files.item(0);
-      }  
-          
+
       this.driverProfilesItem = new DriverProfilesItem ();
       this.driverProfilesItem.type =""
       this.driverProfilesItem.attestation.name =files.item(0).name;
       this.driverProfilesItem.attestation.location ="";
       this.driverProfilesItem.type = this.ddl_drivinglicenseSelected;
       this.currentPerson.driverProfiles.push(this.driverProfilesItem);
-      this.uploadDriversFileToActivity();
+
+      this.personDocuments.customerVatNumber = this.VatNumber;
+      this.personDocuments.fileName = files.item(0).name;
+      this.personDocuments.file = files.item(0);
+      this.personDocuments.fileType = this.ddl_drivinglicenseSelected;
+      this.personDocuments.personId = this.SocialSecurityId;
+      } 
     }
   }
 
@@ -254,12 +294,18 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.otherDocumentsToUpload = files.item(0);
-      }  
+       
       this.documents = new Documents();
       this.documents.name = files.item(0).name;
       this.documents.location = "";
       this.currentPerson.otherDocuments.push(this.documents);
-      this.uploadOtherDocumentsToActivity();
+
+      this.personDocuments.customerVatNumber = this.VatNumber;
+      this.personDocuments.fileName = files.item(0).name;
+      this.personDocuments.file = files.item(0);
+      this.personDocuments.fileType = files.item(0).name;
+      this.personDocuments.personId = this.SocialSecurityId;  
+    } 
     }
   }
   
