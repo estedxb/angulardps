@@ -38,7 +38,7 @@
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <app-calendar (childEvent)="receiveDOBDate($event)"></app-calendar>
+                <app-calendar [CalendarData]="calendarData" (childEvent)="receiveDOBDate($event)"></app-calendar>
               </div>
             </div>
           </div>

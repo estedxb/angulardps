@@ -19,6 +19,7 @@ import { DataService } from 'src/app/shared/data.service';
   styleUrls: ['./../person.component.css']
 })
 export class EditPersonComponent implements OnInit {
+
   @Input() public SocialSecurityId: string;
 
   editPersonForm: FormGroup;
@@ -65,6 +66,8 @@ export class EditPersonComponent implements OnInit {
   public monthString;
   public yearString;
 
+  public calendarData: string;
+
   public message;
 
   constructor(private personsService: PersonService, private data: DataService) { }
@@ -78,29 +81,36 @@ export class EditPersonComponent implements OnInit {
 
   ngOnInit() {
     console.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    this.onPageInit();
-
     this.data.currentMessage.subscribe(message => this.message = message);
 
+    this.onPageInit();
+    this.loadDOBFromSSID();
     this.createObjectsForm1();
+
   }
 
   changeMessage() {
-
     console.log(this.DpsPersonObject);
     if (this.DpsPersonObject !== null) {
-      this.data.changeMessage(this.DpsPersonObject);
+      const newmessage: any = {
+        page: 'edit',
+        data: this.DpsPersonObject
+      };
+      this.data.changeMessage(newmessage);
     }
+
   }
 
   onPageInit() {
     this.setDummyStatute();
     this.setDropDownYear();
 
-    this.dataDropDown = ['1', '2', "3", "4", "5", '6', '7', '8', '9', "10", "11", '12', "13", "14", "15", '16', "17", "18", '19', '20', '21', '22', "23", "24", "25", '26', '27', '28', '29', "30", '31'];
-    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", 'September', 'October', 'November', "December"];
-    this.dataDropDownGender = ['Man', "Vrouw"];
-    this.validSSID = false;
+    // tslint:disable-next-line: max-line-length
+    this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+    // tslint:disable-next-line: max-line-length
+    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.dataDropDownGender = ['Man', 'Vrouw'];
+    this.validSSID = true;
 
     this.editPersonForm = new FormGroup({
       socialSecurityNumber: new FormControl(''),
@@ -137,6 +147,12 @@ export class EditPersonComponent implements OnInit {
       countryOnetExpenseAllowancefBirth: new FormControl('', [Validators.required]),
       extra: new FormControl('', [Validators.required]),
     });
+
+    this.editPersonForm.controls.socialSecurityNumber.setValue(this.SocialSecurityId);
+    this.editPersonForm.controls.socialSecurityNumber.disable();
+
+    this.setPersonVatNumber();
+
   }
 
 
@@ -147,8 +163,7 @@ export class EditPersonComponent implements OnInit {
     for (let index = 0; index < digitString.length; index++) {
       if (digitString[index] >= '0' && digitString[index] <= '9') {
         digitsValid = true;
-      }
-      else {
+      } else {
         digitsValid = false;
       }
     }
@@ -162,26 +177,24 @@ export class EditPersonComponent implements OnInit {
     this.PersonObject = new Person();
 
     this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.editPersonForm.get('socialSecurityNumber').value;
+    this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    // this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.DpsPersonObject.customerVatNumber = '123456789101';
     this.DpsPersonObject.person = this.PersonObject;
-
-    // console.log("dps person object customer object=");
-    // console.log(this.DpsPersonObject);
 
   }
 
   getPersonbySSIDVatNumber() {
 
     if (this.validSSID === true) {
-      const ssid: string = this.editPersonForm.get('socialSecurityNumber').value;
-      const customerVatNumber = '123456789101';
-      console.log('customerVatNumber=' + customerVatNumber);
 
-      this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
+      const customerVatNumber = '123456789101';
+
+      console.log('customerVatNumber=' + customerVatNumber);
+      console.log('social security id=' + this.SocialSecurityId);
+
+      this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         console.log('response=' + res);
         console.log(res);
         this.loadPersonData(res);
@@ -204,7 +217,7 @@ export class EditPersonComponent implements OnInit {
 
   loadDOBFromSSID() {
 
-    const ssid: string = this.editPersonForm.get('socialSecurityNumber').value;
+    const ssid: string = this.SocialSecurityId;
     const dobString: string = ssid.substring(0, 8);
     const stringData = dobString.split('.');
 
@@ -223,7 +236,9 @@ export class EditPersonComponent implements OnInit {
     this.dayString = dayString;
     this.yearString = yearString;
 
-    this.DpsPersonObject.person.dateOfBirth = monthString + '/' + dayString + '/' + yearString;
+    this.calendarData = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+    console.log('setting calendar data=' + this.calendarData);
 
   }
 
@@ -238,12 +253,15 @@ export class EditPersonComponent implements OnInit {
 
       }
     }
+
+    this.changeMessage();
+
   }
 
   onChangeDropDownGender($event) {
 
-    console.log("selected index=" + $event.target.value);
-    console.log("selected value=" + this.dataDropDownGender[$event.target.value]);
+    console.log('selected index=' + $event.target.value);
+    console.log('selected value=' + this.dataDropDownGender[$event.target.value]);
 
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -252,6 +270,8 @@ export class EditPersonComponent implements OnInit {
         this.DpsPersonObject.person.gender.title = this.dataDropDownGender[$event.target.value];
       }
     }
+
+    this.changeMessage();
   }
 
   resetPeronData() {
@@ -330,26 +350,82 @@ export class EditPersonComponent implements OnInit {
       this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
+    this.createObjectsForm1();
+
   }
 
   receiveDOBDate($event) {
-    console.log("recevied date=");
+    console.log('recevied date=');
     console.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
     this.yearString = $event.yearString;
 
+    let monthInNumber = -1;
+    let counter = 0;
+
+    console.log('monthString=' + this.monthString);
+
+    this.dropDownMonth.forEach(element => {
+
+      console.log('month=' + element);
+      if (element === this.monthString) {
+        monthInNumber = counter;
+      }
+
+      counter++;
+    });
+
+    this.DpsPersonObject.person.dateOfBirth = (monthInNumber + 1) + '/' + this.dayString + '/' + this.yearString;
+    // this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+    this.changeMessage();
+
   }
 
+  onCountryReceive($event) {
+
+    console.log('Received Country');
+    console.log('country=' + $event.countryName);
+    console.log('countryName=' + $event.countryCode);
+
+    if (this.DpsPersonObject.person.address !== null) {
+      this.DpsPersonObject.person.address.country = $event.countryName;
+      this.DpsPersonObject.person.address.countryCode = $event.countryCode;
+    }
+
+    this.changeMessage();
+
+  }
+
+  onLanguageReceive($event) {
+
+    console.log('Received Language');
+    console.log('name=' + $event.name);
+    console.log('short name=' + $event.shortName);
+
+    if (this.DpsPersonObject.person.language === null) {
+      this.DpsPersonObject.person.language = new Language();
+      this.DpsPersonObject.person.language.name = $event.name;
+      this.DpsPersonObject.person.language.shortName = $event.shortName;
+    } else {
+      this.DpsPersonObject.person.language.name = $event.name;
+      this.DpsPersonObject.person.language.shortName = $event.shortName;
+    }
+
+    this.changeMessage();
+
+  }
 
   setPersonVatNumber() {
 
-    const ssid: number = this.editPersonForm.get('socialSecurityNumber').value;
+    console.log('calling set person vat number method');
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
     this.createObjectsForm1();
+
   }
 
   customSSIDValidator(ssid: string) {
@@ -390,16 +466,16 @@ export class EditPersonComponent implements OnInit {
 
   createObjectsForm1() {
 
-    console.log("create objects form1 called");
+    console.log('create objects form1 called');
 
     this.DpsPersonObject = new DpsPerson();
     this.PersonObject = new Person();
 
     this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.editPersonForm.get('socialSecurityNumber').value;
+    this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = "123456789101";
+    this.DpsPersonObject.customerVatNumber = '123456789101';
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -409,7 +485,7 @@ export class EditPersonComponent implements OnInit {
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
-    this.DpsPersonObject.person.gender.title = "Male";
+    this.DpsPersonObject.person.gender.title = 'Male';
 
     this.DpsPersonObject.person.firstName = this.editPersonForm.get('firstName').value;
     this.DpsPersonObject.person.lastName = this.editPersonForm.get('lastName').value;
@@ -420,8 +496,8 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.address.bus = this.editPersonForm.get('bus').value;
     this.DpsPersonObject.person.address.city = this.editPersonForm.get('city').value;
     this.DpsPersonObject.person.address.postalCode = this.editPersonForm.get('postalCode').value;
-    this.DpsPersonObject.person.address.country = "New country";
-    this.DpsPersonObject.person.address.countryCode = "NX";
+    this.DpsPersonObject.person.address.country = 'New country';
+    this.DpsPersonObject.person.address.countryCode = 'NX';
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.editPersonForm.get('emailAddress').value;
@@ -435,58 +511,58 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
     this.DpsPersonObject.person.language = new Language();
-    this.DpsPersonObject.person.language.name = "";
-    this.DpsPersonObject.person.language.shortName = "";
+    this.DpsPersonObject.person.language.name = '';
+    this.DpsPersonObject.person.language.shortName = '';
 
     this.DpsPersonObject.person.bankAccount = new BankAccount();
     this.DpsPersonObject.person.bankAccount.iban = this.editPersonForm.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.editPersonForm.get('bic').value;
 
     this.DpsPersonObject.person.travelMode = this.editPersonForm.get('travelMode').value;
-    this.DpsPersonObject.person.status = "";
+    this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
-    this.DpsPersonObject.statute.name = "";
-    this.DpsPersonObject.statute.type = "";
+    this.DpsPersonObject.statute.name = '';
+    this.DpsPersonObject.statute.type = '';
 
-    this.DpsPersonObject.customerPostionId = "";
+    this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = "";
+    this.DpsPersonObject.addittionalInformation = '';
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
-    this.DpsPersonObject.medicalAttestation.location = "";
-    this.DpsPersonObject.medicalAttestation.name = "";
+    this.DpsPersonObject.medicalAttestation.location = '';
+    this.DpsPersonObject.medicalAttestation.name = '';
 
     this.DpsPersonObject.vcaAttestation = new Documents();
-    this.DpsPersonObject.vcaAttestation.location = "";
-    this.DpsPersonObject.vcaAttestation.name = "";
+    this.DpsPersonObject.vcaAttestation.location = '';
+    this.DpsPersonObject.vcaAttestation.name = '';
 
     this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
     this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
-    this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
+    this.DpsPersonObject.studentAtWorkProfile.attestation.location = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestation.name = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestationDate = '10/10/2019';
     this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
     this.DpsPersonObject.studentAtWorkProfile.balance = 0;
 
     this.DpsPersonObject.driverProfiles = [];
 
-    let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
+    const driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
     driverProfilesObject.attestation = new Documents();
-    driverProfilesObject.attestation.location = "";
-    driverProfilesObject.attestation.name = "";
+    driverProfilesObject.attestation.location = '';
+    driverProfilesObject.attestation.name = '';
 
     this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
 
     this.DpsPersonObject.otherDocuments = [];
 
-    let otherDocumentsObject: Documents = new Documents();
-    otherDocumentsObject.location = "";
-    otherDocumentsObject.name = "";
+    const otherDocumentsObject: Documents = new Documents();
+    otherDocumentsObject.location = '';
+    otherDocumentsObject.name = '';
 
     this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
 
@@ -495,7 +571,12 @@ export class EditPersonComponent implements OnInit {
 
     this.changeMessage();
 
+<<<<<<< HEAD
   }
 
 
+=======
+  }
+
+>>>>>>> 909b6c6b23864331a13504acce86f141a58a44b0
 }
