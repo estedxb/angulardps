@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { ContractService } from 'src/app/shared/contract.service';
 import { LocationsService } from 'src/app/shared/locations.service';
+import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 
@@ -45,11 +46,12 @@ export class CreateContractComponent implements OnInit {
   public selectedEndDate: any;
   public statute: Statute;
   
-  @Input() personId: any;
+  @Input() SSID: any;
   @Input() contractId: any;
 
 
-  constructor(private positionsService: PositionsService,   
+  constructor(private positionsService: PositionsService, 
+    private personService : PersonService, 
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
@@ -80,20 +82,28 @@ export class CreateContractComponent implements OnInit {
       this.loadContract(this.VatNumber, this.contractId) ;
     }
 
+    if(this.SSID !== null && this.SSID !== undefined  && this.SSID !== 0 )
+    {
+      this.loadPerson(this.SSID, this.VatNumber) ;
+    }
+
   }  
 
-   loadPerson() {
-     console.log('currentPerson :: ', this.currentPerson);
-     if (this.currentPerson !== null && this.currentPerson !== undefined) {
-       this.ContractForm.controls.firstname.setValue(this.currentPerson.firstName);
-       this.ContractForm.controls.lastname.setValue(this.currentPerson.lastName);
-     }
+   loadPerson(ssid: string, vatNumber : string) {
+     this.personService.getPersonBySSIDVatnumber(ssid,vatNumber).subscribe(response => {
+      console.log('ssid :: ', ssid);  
+      console.log('loadPerson :: ', response);   
+       this.ContractForm.controls.firstname.setValue(response.person.firstName);
+       this.ContractForm.controls.lastname.setValue(response.person.lastName);
+     });
    }
+
   loadContract(vatNumber : string , cid: string) {    
     this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
       console.log('loadContract :: ', response);
+     
       this.currentContract = response;
-      
+      //this.SSID = response.personId;
       this.selectedYear =  new Date(response.contract.startDate).getFullYear();
       console.log('this.selectedYear  :: ', this.selectedYear  );
       this.selectedMonth =  this.monthNames[new Date(response.contract.startDate).getMonth()]
@@ -219,7 +229,7 @@ export class CreateContractComponent implements OnInit {
     
      this.currentContract.id = 0;
      this.currentContract.customerVatNumber = this.VatNumber;
-     this.currentContract.personId = this.personId;
+     this.currentContract.personId = this.SSID;
      this.currentContract.positionId = this.getPosition().id;
      this.currentContract.locationId = this.getLocation().id;
      this.currentContract.workScheduleId = this.getWorkSchedule().id;

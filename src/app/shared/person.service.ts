@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { User, DpsUser, DpsPostion } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,8 @@ export class PersonService {
     });
   }
 
+
+
   public createPerson(person: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.postPersonURL, person, {
@@ -59,6 +62,59 @@ export class PersonService {
   }
 
 
+  updateMedicalAttestationFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+  handleError(e: any): import('rxjs').ObservableInput<boolean> {
+    throw new Error('Method not implemented.');
+  }
+
+  vcaAttestationFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+
+  constructionCardsFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+
+  
+  studentAtWorkFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+
+  otherDocumentsFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+  
+  driversFile(fileToUpload: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+  
+  
 
   public updatePosition(id: any): Observable<any> {
     // const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
