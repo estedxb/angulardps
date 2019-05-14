@@ -14,6 +14,7 @@ export class PersonService {
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
+  private requestCertificateURL = '';
   private getPersonbyIdURL = '';
   private getPersonURL = ''
   private postPersonURL = '';
@@ -34,15 +35,16 @@ export class PersonService {
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
+      this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
+      this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
+      this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
+      this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
+      this.requestCertificateURL = "";
     } else {
       console.log('Data From getPersonsByVatNumber JSON');
       this.getPersonForCustomerbyCustomerVatNumberURL = '../../assets/data/persons.json';
     }
 
-    this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
-    this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
-    this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
-    this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
   }
 
   public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
@@ -79,6 +81,15 @@ export class PersonService {
   public createPerson(person: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.postPersonURL, person, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+  public requestCertificate(details:any ): Observable<any> {
+    // customerVatNumber, socialSecurityId, action
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.requestCertificateURL, details, {
       headers: httpHeaders,
       observe: 'response'
     });
