@@ -42,7 +42,7 @@ export class UpdateCustomerComponent implements OnInit {
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center'; 
+    snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
@@ -56,17 +56,41 @@ export class UpdateCustomerComponent implements OnInit {
       this.Id = routeParams.id; this.currentPage = routeParams.page;
       console.log('this.Id  :: ', this.Id, 'this.currentPage :: ', this.currentPage);
 
-      if (this.Id === 'locations' || this.Id === 'positions' || this.Id === 'users' ||
-        this.Id === 'workschedules' || this.Id === 'update' || this.Id === 'edit') {
-        if (this.Id === 'update' || this.Id === 'edit') {
-          this.currentPage = 'editcustomer';
-        } else {
-          this.currentPage = this.Id;
-        }
+      if (this.Id === 'locations' || this.Id === 'location' || this.Id === 'positions' || this.Id === 'position' ||
+        this.Id === 'users' || this.Id === 'user' || this.Id === 'workschedules' || this.Id === 'works' || this.Id === 'work' ||
+        this.Id === 'update' || this.Id === 'updatecustomer' || this.Id === 'edit' || this.Id === 'editcustomer') {
         this.vatNumber = this.loginuserdetails.customerVatNumber;
+
+        if (this.Id === 'locations' || this.Id === 'location') {
+          this.currentPage = 'locations';
+        } else if (this.Id === 'users' || this.Id === 'user') {
+          this.currentPage = 'users';
+        } else if (this.Id === 'workschedules' || this.Id === 'works' || this.Id === 'work') {
+          this.currentPage = 'workschedules';
+        } else if (this.Id === 'positions' || this.Id === 'position') {
+          this.currentPage = 'positions';
+        } else {
+          this.currentPage = 'editcustomer';
+        }
       } else {
         this.vatNumber = this.Id;
-        if (this.currentPage === undefined) {
+        if (
+          this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
+          this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||
+          this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
+
+          if (this.currentPage === 'locations' || this.currentPage === 'location') {
+            this.currentPage = 'locations';
+          } else if (this.currentPage === 'users' || this.currentPage === 'user') {
+            this.currentPage = 'users';
+          } else if (this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
+            this.currentPage = 'workschedules';
+          } else if (this.currentPage === 'positions' || this.currentPage === 'position') {
+            this.currentPage = 'positions';
+          } else {
+            this.currentPage = 'editcustomer';
+          }
+        } else {
           this.currentPage = 'editcustomer';
         }
       }
@@ -78,7 +102,7 @@ export class UpdateCustomerComponent implements OnInit {
   onPageInit() {
     try {
       console.log('this.vatNumber pageInit :: ' + this.vatNumber);
-      this.customerService.getCustomersByVatNumber(this.vatNumber).subscribe(dpscustomer => {
+      this.customerService.getCustomersByVatNumberEdit(this.vatNumber).subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer;
         console.log('Customer Form Data : ', this.dpsCustomer);
         this.CustomerName = this.dpsCustomer.customer.name;

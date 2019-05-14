@@ -67,7 +67,7 @@ export class EditPersonComponent implements OnInit {
 
   public message;
 
-  constructor(private personsService: PersonService, private data:DataService) { }
+  constructor(private personsService: PersonService, private data: DataService) { }
 
   setDummyStatute() {
   }
@@ -76,7 +76,8 @@ export class EditPersonComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() { 
+  ngOnInit() {
+    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
     this.onPageInit();
 
     this.data.currentMessage.subscribe(message => this.message = message);
@@ -87,7 +88,7 @@ export class EditPersonComponent implements OnInit {
   changeMessage() {
 
     console.log(this.DpsPersonObject);
-    if(this.DpsPersonObject !== null){
+    if (this.DpsPersonObject !== null) {
       this.data.changeMessage(this.DpsPersonObject);
     }
   }
@@ -386,7 +387,7 @@ export class EditPersonComponent implements OnInit {
 
     return this.validSSID;
   }
-  
+
   createObjectsForm1() {
 
     console.log("create objects form1 called");
@@ -495,6 +496,6 @@ export class EditPersonComponent implements OnInit {
     this.changeMessage();
 
   }
-  
-  
+
+
 }
