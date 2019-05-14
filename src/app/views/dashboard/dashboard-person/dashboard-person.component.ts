@@ -54,13 +54,14 @@ export class DashboardPersonComponent implements OnInit {
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
-      selectedContract.contractid = contractid;
-      selectedContract.personid = personid;
+      selectedContract.contractId = contractid;
+      selectedContract.personId = personid;
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
       dialogConfig.width = '700px';
       dialogConfig.data = selectedContract;
+      console.log('selectedContract :: ', selectedContract);
       dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
       const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
@@ -86,7 +87,7 @@ export class DashboardPersonComponent implements OnInit {
         }
         */
       });
-    } catch (e) { }
+    } catch (e) { alert(e.message);}
   }
 
 }

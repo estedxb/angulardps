@@ -123,5 +123,6 @@ export const entringComponents = [
   CreateWorkScheduleComponent,
   CreatepositionComponent,
   CreateWorkTimeComponent,
-  CancelContractComponent
+  CancelContractComponent,
+  CreateContractComponent
 ];
