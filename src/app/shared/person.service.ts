@@ -14,6 +14,7 @@ export class PersonService {
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
+  private requestCertificateURL = '';
   private getPersonbyIdURL = '';
   private postPersonURL = '';
   private putPersonURL = '';
@@ -29,6 +30,7 @@ export class PersonService {
       this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
       this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
       this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
+      this.requestCertificateURL = "";
     } else {
       console.log('Data From JSON');
       // this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
@@ -54,6 +56,15 @@ export class PersonService {
   public createPerson(person: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.postPersonURL, person, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+  public requestCertificate(details:any ): Observable<any> {
+    // customerVatNumber, socialSecurityId, action
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.requestCertificateURL, details, {
       headers: httpHeaders,
       observe: 'response'
     });
