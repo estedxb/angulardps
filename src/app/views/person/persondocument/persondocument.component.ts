@@ -28,4 +28,9 @@ export class PersonDocumentComponent implements OnInit {
     console.log('Position index : ' + i + ', Enabled : ' + event);
   }
 
+  onClickPost(){
+    //this.personService.medicalAttestation()
+    
+  }
+
 }
