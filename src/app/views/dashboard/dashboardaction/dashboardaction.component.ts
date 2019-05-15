@@ -19,11 +19,12 @@ export class DashboardActionComponent implements OnInit {
   constructor(public summaryService: SummaryService, private router: Router) { }
 
   ngOnInit() {
-    this.vatNumber = this.loginuserdetails.customerVatNumber; console.log('this.vatNumber : ' + this.vatNumber);
+    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries;
       this.notificationcount = summaries.length;
-      console.log('Summaries Forms Data : ', this.datas);
+      console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
   }
 

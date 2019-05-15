@@ -16,6 +16,7 @@ export class PersonService {
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
   private requestCertificateURL = '';
+  private getPersonsContractsURL = '';
   private getPersonbyIdURL = '';
   private getPersonURL = ''
   private postPersonURL = '';
@@ -45,15 +46,24 @@ export class PersonService {
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
-      this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
-      this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
-      this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
-      this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
-      this.requestCertificateURL = "";
     } else {
       console.log('Data From getPersonsByVatNumber JSON');
       this.getPersonForCustomerbyCustomerVatNumberURL = '../../assets/data/persons.json';
     }
+
+    if (environment.dataFromAPI_JSON && environment.getPersonsContracts !== '') {
+      console.log('Data From getPersonsContracts Remote');
+      this.getPersonsContractsURL = environment.dpsAPI + environment.getPersonsContracts;
+    } else {
+      console.log('Data From getPersonsContracts JSON');
+      this.getPersonsContractsURL = '../../assets/data/personscontracts.json';
+    }
+
+    this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
+    this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
+    this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
+    this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
+    this.requestCertificateURL = "";
 
   }
 
@@ -75,8 +85,8 @@ export class PersonService {
   }
 
   public getPersonsContractsByVatNumber(customervatnumber: string, startdate: Date, enddate: Date): Observable<any> {
-    let getURL = this.getPersonForCustomerbyCustomerVatNumberURL;
-    if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
+    let getURL = this.getPersonsContractsURL;
+    if (environment.dataFromAPI_JSON && environment.getPersonsContracts !== '') {
       getURL = getURL + '/' + customervatnumber + '?startdate=' + startdate + '&enddate=' + enddate;
     }
     console.log('PositionsService Data From = ' + getURL);
@@ -84,7 +94,6 @@ export class PersonService {
     console.log(result);
     return result;
   }
-
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -104,7 +113,7 @@ export class PersonService {
     });
   }
 
-  public requestCertificate(details:any ): Observable<any> {
+  public requestCertificate(details: any): Observable<any> {
     // customerVatNumber, socialSecurityId, action
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.requestCertificateURL, details, {
@@ -140,7 +149,7 @@ export class PersonService {
       .catch((e) => this.handleError(e));
   }
 
-  
+
   studentAtWorkFile(fileToUpload: File): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
@@ -156,7 +165,7 @@ export class PersonService {
     return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
-  
+
   driversFile(fileToUpload: File): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
@@ -164,8 +173,8 @@ export class PersonService {
     return this.http.put(this.postPersonURL, formData, { headers: httpHeaders, observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
-  
-  
+
+
 
   public updatePosition(person: any): Observable<any> {
     console.log("in update position call:");

@@ -96,15 +96,15 @@
   margin: 50px 0px;
 }
 
-.Dates {
-  padding: 0px 25px;
+.search {
+  padding: 0px 0px;
 }
 
-.Dates img {
-  width: 18px;
+.search img {
+  width: 20px;
   position: absolute;
-  left: 20px;
-  top: 20px;
+  left: 44px;
+  top: 15px;
   background-color: transparent;
   color: #fff;
   overflow: hidden;
@@ -112,7 +112,7 @@
   border: none;
 }
 
-::ng-deep #maincontentarea .Dates input[type="text"] {
+::ng-deep #maincontentarea .search input[type="text"] {
   border-radius: 22px;
   line-height: 22px;
   padding: 2px 0px 2px 25px;
@@ -122,6 +122,7 @@
   color: #fff;
   outline: 0px;
   width: 90%;
+  min-width: 100px;
 }
 .Dates .col-split {
   color: #e37619;
@@ -323,7 +324,7 @@ sup.notify {
   font-size: 19px;
   font-weight: 400;
   margin: 0px;
-  padding: 12px 15px 0px 15px;
+  padding: 5px 0px;
 }
 .Header .col .weeks {
   margin: auto;

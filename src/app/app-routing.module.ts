@@ -115,7 +115,8 @@ export const routingComponents = [
   CreateContractComponent,
   DashboardActionComponent,
   DashboardPersonComponent,
-  CancelContractComponent
+  CancelContractComponent,
+  BulkContractComponent
 ];
 
 export const entringComponents = [
