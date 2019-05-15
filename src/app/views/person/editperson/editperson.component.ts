@@ -536,7 +536,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = '';
     this.DpsPersonObject.vcaAttestation.name = '';
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
