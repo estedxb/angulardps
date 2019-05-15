@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule } from 'src/app/shared/models';
+import { Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule, SelectedContract } from 'src/app/shared/models';
 import { MatDialog,MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { ContractService } from 'src/app/shared/contract.service';
 import { LocationsService } from 'src/app/shared/locations.service';
+import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 
@@ -44,23 +45,27 @@ export class CreateContractComponent implements OnInit {
   public selectedStartDate: any;
   public selectedEndDate: any;
   public statute: Statute;
-  
-  @Input() personId: any;
-  @Input() contractId: any;
+    
+  public personid: string;
+  public contractId: number;
 
 
-  constructor(private positionsService: PositionsService,   
+  constructor(private positionsService: PositionsService, 
+    private personService : PersonService, 
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private contractService: ContractService,
+    @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract
   ) {
-  
   }
   
 
   ngOnInit() {
+    console.log('SelectedContract :: ' , this.selectedContract);
+    this.contractId = this.selectedContract.contractId;
+    this.personid = this.selectedContract.personId;
     console.log('Current Contract :: ', this.currentContract);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.ContractForm = new FormGroup({
@@ -72,28 +77,37 @@ export class CreateContractComponent implements OnInit {
     });
 
     this.getPositionsByVatNumber();
-    this.getWorkscheduleByVatNumber();
     this.getLocationsByVatNumber();
+    this.getWorkscheduleByVatNumber();
+   
 
     if(this.contractId !== null && this.contractId !== undefined  && this.contractId !== 0 )
     {
-      this.loadContract(this.VatNumber, this.contractId) ;
+      this.loadContract(this.VatNumber, this.contractId.toString()) ;
+    }
+
+    if(this.personid !== null && this.personid !== undefined  && this.personid !== '' )
+    {
+      this.loadPerson(this.personid, this.VatNumber) ;
     }
 
   }  
 
-   loadPerson() {
-     console.log('currentPerson :: ', this.currentPerson);
-     if (this.currentPerson !== null && this.currentPerson !== undefined) {
-       this.ContractForm.controls.firstname.setValue(this.currentPerson.firstName);
-       this.ContractForm.controls.lastname.setValue(this.currentPerson.lastName);
-     }
+   loadPerson(personid: string, vatNumber : string) {
+     this.personService.getPersonBySSIDVatnumber(personid,vatNumber).subscribe(response => {
+      console.log('personid :: ', personid);  
+      console.log('loadPerson :: ', response);   
+       this.ContractForm.controls.firstname.setValue(response.body.person.firstName);
+       this.ContractForm.controls.lastname.setValue(response.body.person.lastName);
+     });
    }
+
   loadContract(vatNumber : string , cid: string) {    
     this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
       console.log('loadContract :: ', response);
+     
       this.currentContract = response;
-      
+      //this.personid = response.personId;
       this.selectedYear =  new Date(response.contract.startDate).getFullYear();
       console.log('this.selectedYear  :: ', this.selectedYear  );
       this.selectedMonth =  this.monthNames[new Date(response.contract.startDate).getMonth()]
@@ -188,13 +202,16 @@ export class CreateContractComponent implements OnInit {
 
   public getWorkSchedule(): DpsWorkSchedule
   {
-    let  dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.name == this.workScheduleSelected);
+    console.log('  this.workScheduleSelected :: ', this.workScheduleSelected);
+    console.log('  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
+    let  dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.id == this.workScheduleSelected);
     console.log('  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
     return dpsWorkSchedules[0];
   }
 
   public getLocation(): Location{
-    let locations = this.locationsData.filter(c => c.name == this.locationSelected);
+    console.log('  this.locationSelected :: ', this.locationSelected);
+    let locations = this.locationsData.filter(c => c.id == this.locationSelected);
     console.log('  locations :: ', locations[0]);
     return locations[0];
   }
@@ -219,7 +236,7 @@ export class CreateContractComponent implements OnInit {
     
      this.currentContract.id = 0;
      this.currentContract.customerVatNumber = this.VatNumber;
-     this.currentContract.personId = this.personId;
+     this.currentContract.personId = this.personid;
      this.currentContract.positionId = this.getPosition().id;
      this.currentContract.locationId = this.getLocation().id;
      this.currentContract.workScheduleId = this.getWorkSchedule().id;

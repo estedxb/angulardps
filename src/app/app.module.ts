@@ -13,9 +13,10 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
+import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, BulkContractComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

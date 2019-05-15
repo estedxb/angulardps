@@ -18,6 +18,9 @@ export class DashboardPersonComponent implements OnInit {
   public Id = '';
   public SelectedIndex = 0;
   public errorMsg;
+  public loginaccessToken: string = localStorage.getItem('accesstoken');
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public vatNumber: string;
 
   constructor(
     private personService: PersonService, private route: ActivatedRoute,
@@ -29,10 +32,17 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   onPageInit() {
+    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    console.log('this.vatNumber : ' + this.vatNumber);
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
-
+        this.personService.getPersonsByVatNumber(this.vatNumber)
+          .subscribe(persons => {
+            this.maindatas = persons;
+            console.log('getPersonsByVatNumber in dashboard-person.component ::');
+            console.log(persons);
+          }, error => this.errorMsg = error);
       }
     }
   }
@@ -44,13 +54,14 @@ export class DashboardPersonComponent implements OnInit {
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
-      selectedContract.contractid = contractid;
-      selectedContract.personid = personid;
+      selectedContract.contractId = contractid;
+      selectedContract.personId = personid;
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
       dialogConfig.width = '700px';
       dialogConfig.data = selectedContract;
+      console.log('selectedContract :: ', selectedContract);
       dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
       const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
@@ -76,7 +87,7 @@ export class DashboardPersonComponent implements OnInit {
         }
         */
       });
-    } catch (e) { }
+    } catch (e) { alert(e.message);}
   }
 
 }

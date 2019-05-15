@@ -51,6 +51,7 @@ import { PersonDocumentComponent } from './views/person/persondocument/persondoc
 import { DashboardActionComponent } from './views/dashboard/dashboardaction/dashboardaction.component';
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
 import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
+import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -72,6 +73,7 @@ const routes: Routes = [
   // { path: 'person/update', component: UpdatePersonComponent },
   // { path: 'person/edit', component: UpdatePersonComponent },
   { path: 'person/:id', component: UpdatePersonComponent },
+  { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
@@ -123,5 +125,6 @@ export const entringComponents = [
   CreateWorkScheduleComponent,
   CreatepositionComponent,
   CreateWorkTimeComponent,
-  CancelContractComponent
+  CancelContractComponent,
+  CreateContractComponent
 ];
