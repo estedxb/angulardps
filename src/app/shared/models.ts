@@ -61,7 +61,7 @@ export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
-    constructionProfile: ConstructionProfile; constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
+    constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
     driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
 }
 

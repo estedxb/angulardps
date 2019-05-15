@@ -25,7 +25,11 @@ export class PersonDocumentComponent implements OnInit {
   public isStudentAtWork : boolean;
   public isDriver : boolean;
 
-  public medicchAttest: string;
+  public medicalAttestationDocumentName: string;  
+  public vcaAttestationDocumentName: string;  
+  public constructionCardsDocumentName: string;  
+  public drivingLicenseDocumentName: string;
+  public otherDocumentName: string;
 
   medicalAttestationFileToUpload: File = null;
   vcaAttestationFileToUpload: File = null;
@@ -45,10 +49,15 @@ export class PersonDocumentComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
-  ngOnInit() { this.onPageInit(); }
+  ngOnInit() { 
+    
+    this.onPageInit(); 
+  }
 
   onPageInit() {
     this.getPersonBySSIDVatnumber(this.SocialSecurityId, this.VatNumber);
+
+    this.loadDocuments();
    
     this.PersonDocumentForm = new FormGroup({
       UploadMedicalAttestation: new FormControl(''),
@@ -84,11 +93,33 @@ export class PersonDocumentComponent implements OnInit {
     // console.log(this.currentPerson);
   }
 
+ loadDocuments(){
+    if (this.currentPerson !== null  || this.currentPerson !== undefined ){
 
+      this.medicalAttestationDocumentName = this.currentPerson.medicalAttestation.name;
+      this.vcaAttestationDocumentName = this.currentPerson.vcaAttestation.name;
+      
+      this.currentPerson.constructionCards.forEach((doc) => {   
+        this.constructionCardsDocumentName = doc.name;  
+    }) 
+
+    this.currentPerson.driverProfiles.forEach((doc) => {   
+      this.drivingLicenseDocumentName = doc.attestation.name;  
+  }) 
+    this.currentPerson.otherDocuments.forEach((doc) => {   
+      this.otherDocumentName= doc.name;  
+  }) 
+     
+
+    }
+
+ }
 
   getPersonBySSIDVatnumber(ssid: string, customervatnumber: string) {    
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
-    this.currentPerson = response.body;   
+    this.currentPerson = response.body; 
+   
+
     console.log('this.currentPerson::: ',this.currentPerson);   
     this.ShowMessage('Person fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
@@ -137,7 +168,7 @@ export class PersonDocumentComponent implements OnInit {
     //delete
   }
 
-  downloadMedicalAttestation() {   
+  downloadMedicalAttestationFile() {   
     saveAs( this.currentPerson.medicalAttestation.location, 'application/pdf;charset=utf-8');
   }
 
@@ -184,7 +215,7 @@ export class PersonDocumentComponent implements OnInit {
         this.documents = new Documents();
         this.documents.name = files.item(0).name;
         this.documents.location = "";
-        this.currentPerson.constructionProfile.constructionCards.push(this.documents);
+        this.currentPerson.constructionCards.push(this.documents);
   
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
