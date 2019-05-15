@@ -90,15 +90,6 @@ export class DashboardPersonComponent implements OnInit {
     return date.toLocaleString('nl-NL', { month: 'long' });
   }
 
-  OpenAddPersonURL() {
-    this.router.navigate(['./person/add']);
-  }
-  OpenBulkContractURL() {
-    this.router.navigate(['./bulkcontract']);
-  }
-  OpenUpdatePerson(SSID: string) {
-    this.router.navigate(['./person/' + SSID]);
-  }
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
@@ -136,6 +127,16 @@ export class DashboardPersonComponent implements OnInit {
         */
       });
     } catch (e) { alert(e.message); }
+  }
+
+  OpenAddPersonURL() {
+    this.router.navigate(['./person/add']);
+  }
+  OpenBulkContractURL() {
+    this.router.navigate(['./bulkcontract']);
+  }
+  OpenUpdatePerson(SSID: string) {
+    this.router.navigate(['./person/' + SSID]);
   }
 
 }
