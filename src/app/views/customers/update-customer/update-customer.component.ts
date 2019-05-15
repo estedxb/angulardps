@@ -74,6 +74,7 @@ export class UpdateCustomerComponent implements OnInit {
         }
       } else {
         this.vatNumber = this.Id;
+        
         if (
           this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
           this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||

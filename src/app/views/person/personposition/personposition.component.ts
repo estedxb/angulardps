@@ -89,7 +89,7 @@ export class PersonPositionComponent implements OnInit {
 
   constructor(private personsService: PersonService,private data:DataService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
-    this.positionsService.getPositionsByVatNumber("123456789101").subscribe(positions => {
+    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
@@ -241,7 +241,7 @@ export class PersonPositionComponent implements OnInit {
     this._position.taskDescription = '';
     this._position.workstationDocument = this.workstationDocument;
 
-    this.dpsPosition.customerVatNumber = "12345689101";
+    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumbe;
     this.dpsPosition.id = 0;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;
@@ -263,7 +263,7 @@ export class PersonPositionComponent implements OnInit {
 
   getPersonbySSIDVatNumber() {
 
-      const customerVatNumber = '123456789101';
+      const customerVatNumber = this.loginuserdetails.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         console.log('response=' + res);
@@ -295,7 +295,6 @@ export class PersonPositionComponent implements OnInit {
 
     if(data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined)
     {
-      console.log("loading position data ="+this.maindatas.length);
 
       counter = 0;
       this.maindatas.forEach((element) => {
@@ -478,26 +477,6 @@ export class PersonPositionComponent implements OnInit {
 
     this.changeMessage();
   }
-
-  postData() {
-
-    // this.personsService.updatePosition(this.DpsPersonObject).subscribe(res => {
-    //   console.log("response=" + res);
-    // },
-    //   (err: HttpErrorResponse) => {
-    //     if (err.error instanceof Error) {
-    //       console.log("Error occured=" + err.error.message);
-    //     }
-    //     else {
-    //       console.log("response code=" + err.status);
-    //       console.log("response body=" + err.error);
-    //     }
-    //   }
-    // );
-
-  }
-
-
 
   onNetExpensesReceive(netExpenseAllowance:number){
       this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
