@@ -114,8 +114,10 @@ export class PersonDocumentComponent implements OnInit {
       console.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
       this.ShowMessage('vehicles fetched successfully.', ''); 
       // Remove the  Vehicles with License in this.currentPerson
-      //....................
-      
+      this.vehiclesForLicense.forEach((c) => {
+        
+      })
+
     }, error => this.ShowMessage(error, 'error'));
 
   }
@@ -156,6 +158,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.Medical;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadMedicalAttestationFileToActivity();
       }
     }
   }
@@ -190,6 +194,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = files.item(0).name;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadVcaAttestationFileToActivity();
       }
     }
   }
@@ -226,6 +232,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.ConstructionCard;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadConstructionCardsFileToActivity();
       }
     }
   }
@@ -265,6 +273,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.StudentAtWork;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadStudentAtWorkFileToActivity();
       }
     }
   }
@@ -303,6 +313,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = this.ddl_drivinglicenseSelected;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadDriversFileToActivity();
       }
     }
   }
@@ -340,6 +352,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = files.item(0).name;
         this.personDocuments.personId = this.SocialSecurityId;
+
+        this.uploadOtherDocumentsToActivity();
       }
     }
   }
@@ -354,9 +368,8 @@ export class PersonDocumentComponent implements OnInit {
   }
 
 
-  downloadOtherDocumentsFile() {
-    // download by selected index
-    //saveAs( this.currentPerson.constructionProfile.constructionCards[0], 'application/pdf;charset=utf-8');
+  downloadOtherDocumentsFile(downloadfilepath: string) {
+    saveAs(downloadfilepath);
   }
 
   deleteOtherDocuments() {
