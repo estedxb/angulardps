@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './dashboardaction.component.html',
   styleUrls: ['./../dashboard.component.css']
 })
+
 export class DashboardActionComponent implements OnInit {
   public notificationcount = 0;
   public currentlanguage = 'nl';
