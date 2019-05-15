@@ -167,12 +167,13 @@ export class InvoiceSettingsComponent implements OnInit {
     {
       if(this.FPFormData.data !== null && this.FPFormData.page==="edit")
       {
-        if(this.FPFormData.data.invoiceSettings !== null)
+        if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
         {
           if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null
              && this.FPFormData.data.invoiceSettings.sicknessInvoiced !== null
              && this.FPFormData.data.invoiceSettings.holidayInvoiced !== null
-             && this.FPFormData.data.invoiceSettings.MobilityAllowance.enabled !== null
+             && this.FPFormData.data.invoiceSettings.MobilityAllowance !== null
+             && this.FPFormData.data.invoiceSettings.MobilityAllowance !== undefined
              && this.FPFormData.data.invoiceSettings.shiftAllowance !== null
             )
           {
@@ -187,6 +188,7 @@ export class InvoiceSettingsComponent implements OnInit {
         }     
       }
     }
+
   }
 
 

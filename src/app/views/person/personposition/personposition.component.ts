@@ -165,18 +165,6 @@ export class PersonPositionComponent implements OnInit {
   }
 
   setDummyStatute(data) {
-    // this.dataDropDownStatute =
-    //   [
-    //     "Arbeider",
-    //     "Bediende",
-    //     "Jobstudent Arbeider",
-    //     "Flexijob Arbeider",
-    //     "Seizoensarbeider",
-    //     "Gelegenheidsarbeider horeca",
-    //     "Jobstudent Bediende",
-    //     "Flexijob Bediende"
-    //   ];
-
     this.dataDropDownStatute = [];
 
       data.forEach(element => {
