@@ -121,7 +121,6 @@ export class CreateContractComponent implements OnInit {
       console.log('this.selectedStartDay :: ', this.selectedStartDay);
       
       this.calendarData = this.selectedStartDay + "/" + (this.selectedStartMonth+1) + "/" + this.selectedStartYear;
-
       console.log("calendar data="+this.calendarData);
 
       this.selectedEndYear =  new Date(response.contract.endDate).getFullYear();
@@ -144,7 +143,6 @@ export class CreateContractComponent implements OnInit {
   monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-
 
   openDialog(): void {
     try {
