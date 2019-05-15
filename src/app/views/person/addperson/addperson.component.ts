@@ -661,7 +661,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation = new Documents();
     this.DpsPersonObject.vcaAttestation = response.vcaAttestation;
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    //this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = response.constructionCards;
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
@@ -747,7 +747,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = "";
     this.DpsPersonObject.vcaAttestation.name = "";
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
