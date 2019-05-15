@@ -146,17 +146,19 @@
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  padding: 5px;
-  text-align: center;
+  padding: 5px 5px 0px 5px;
+  text-align: left;
   clear: both;
+  cursor: pointer;
 }
 .Contents .col-split .position {
   color: #646464;
   font-size: 13px;
   font-weight: normal;
-  padding: 5px;
-  text-align: center;
+  padding: 0px 5px 5px 5px;
+  text-align: left;
   clear: both;
+  cursor: pointer;
 }
 .col-split-t {
   width: 25%;

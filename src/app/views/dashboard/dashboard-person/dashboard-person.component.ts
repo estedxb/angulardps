@@ -96,6 +96,9 @@ export class DashboardPersonComponent implements OnInit {
   OpenBulkContractURL() {
     this.router.navigate(['./bulkcontract']);
   }
+  OpenUpdatePerson(SSID: string) {
+    this.router.navigate(['./person/' + SSID]);
+  }
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
