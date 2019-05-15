@@ -35,9 +35,9 @@
           <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
           <td class="col-split col-split-l"></td>
         </tr>
-        <tr class="Contents" *ngFor="let personContract of maindatas"
-          (click)="OpenUpdatePerson(personContract.dpsPerson.person.socialSecurityNumber.number)">
-          <td class="col-split col-split-n">
+        <tr class="Contents" *ngFor="let personContract of maindatas">
+          <td class="col-split col-split-n"
+            (click)="OpenUpdatePerson(personContract.dpsPerson.person.socialSecurityNumber.number)">
             <div class="name">
               {{personContract.dpsPerson.person.firstName + ' '+ personContract.dpsPerson.person.lastName}}</div>
             <div class="position">{{personContract.PositionName}}</div>
