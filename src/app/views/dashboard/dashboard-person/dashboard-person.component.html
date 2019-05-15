@@ -42,8 +42,10 @@
             <div class="position">{{personContract.PositionName}}</div>
           </td>
           <td class="col-split col-split-f"><button
-              (click)="openContractDialog(personContract.dpsPerson.socialSecurityNumber,personContract.dpsContractid)"><img
-                src="../../../../assets/svg/checklist_add.svg"></button>{{personContract.dpsPerson.socialSecurityNumber}}
+              (click)="openContractDialog(personContract.dpsPerson.person.socialSecurityNumber.number,personContract.dpsContractid)">
+              <img src="../../../../assets/svg/checklist_add.svg" *ngIf="personContract.dpsContractid === 0">
+              <img src="../../../../assets/svg/checklist_eye.svg" *ngIf="personContract.dpsContractid !== 0">
+            </button>
           </td>
           <td class="col-split col-split-m"></td>
           <td class="col-split col-split-m"></td>
@@ -62,7 +64,7 @@
   <div class="col col-sm-12 ">
     <button class="greybtn" (click)="OpenAddPersonURL()"><img src="../../../../assets/svg/AddPerson.svg" alt="">Persoon
       toevoegen</button>
-    <button class="greybtn"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
+    <button class="greybtn" (click)="OpenBulkContractURL()"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
       contracten aanmaken</button>
   </div>
 </div>
