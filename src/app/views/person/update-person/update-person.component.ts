@@ -27,6 +27,7 @@ export class UpdatePersonComponent implements OnInit {
   public Id = '';
   public editPersonData: any;
   public personpositionData: any;
+  public personDocumentsData: any;
 
   constructor(private personService: PersonService, private data: DataService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     console.log('InSide :: Update Person');
@@ -139,9 +140,6 @@ export class UpdatePersonComponent implements OnInit {
 
     if(this.currentPage === "positions")
     {
-      console.log("data collected for positions");
-      console.log(this.personpositionData);
-
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         console.log("response=" + res);
       },
@@ -158,6 +156,13 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if(this.currentPage === "documents"){
+     
+      console.log("data collected for person documents");
+      console.log(this.personDocumentsData);
+
+
+      
+
 
     }
 

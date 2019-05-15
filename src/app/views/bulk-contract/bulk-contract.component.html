@@ -1,0 +1,102 @@
+<app-headers></app-headers>
+<app-menu></app-menu>
+<div class="row">
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br />
+    <div class="pagehead">Bulk contracten</div>
+  </div>
+  <div class="col col-sm-3"></div>
+</div>
+<div class="row" id="formState">
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+    1. Gegevens
+    <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
+  </div>
+  <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+    2. Bevestigen
+    <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
+  </div>
+  <ng-template #secondpage>
+    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+      2. Bevestigen
+      <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
+    </div>
+  </ng-template>
+  <div class="col col-sm-3"></div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-3"></div>
+  <div class="col col-sm-6" id="maincontentarea">
+    <div class="scrollbar" id="maincontent">
+      <div class="force-overflow">
+        <div id="from1" *ngIf="showFormIndex === 1">
+          <div id="CustomerDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Contractdauur selecteren</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+
+            <!-- <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters> -->
+            <h4>StartDatum</h4>
+            <app-calendar></app-calendar>
+            <h4>EndDatum</h4>
+            <app-calendar></app-calendar>
+
+          </div>
+
+          <div id="CustomerContact" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Selecteer contract werkrooster en locatie</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+            <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+
+          </div>
+        </div>
+        <div id="from2" *ngIf="showFormIndex === 2">
+          <div id="CustomerGeneralDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Algemeen</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+
+            <app-general (childEvent)="receiveGeneralObject($event)"></app-general>
+          </div>
+          <div id="CustomerContact" class="statuteBox">
+            <app-statute (childEvent)="receiveStatuteData($event)"></app-statute>
+          </div>
+          <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
+
+        </div>
+        <div id="from2" *ngIf="showFormIndex === 3">
+          <div id="CustomerGeneralDetails" class="customerBox">
+            <div class="row panelheader">
+              <div class="col col-sm-5 fright">
+                <h4>Thank You For Updating your Details!!</h4>
+                <hr>
+              </div>
+              <div class="col col-sm-7"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-sm-3">
+    <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
+        src="../../assets/svg/right-arrow.svg" /></button><br />
+    <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+        src="../../assets/svg/left-arrow.svg" /> Terug</button>
+  </div>
+</div>

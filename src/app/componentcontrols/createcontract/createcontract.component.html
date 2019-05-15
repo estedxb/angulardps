@@ -52,13 +52,13 @@
         
                   
                   <label class="titleBold"> Start Date: </label>
-                  <app-calendar (childEvent)="receiveMessageStartDate($event)">                      
+                  <app-calendar (childEvent)="receiveMessageStartDate($event)" [CalendarData]="calendarData">                      
                   </app-calendar> 
                 
           
                     
                 <label class="titleBold"> End Date: </label>
-                <app-calendar (childEvent)="receiveMessageEndDate($event)">                    
+                <app-calendar (childEvent)="receiveMessageEndDate($event)" [CalendarData]="calendarDataNew">                    
                 </app-calendar> 
 
            

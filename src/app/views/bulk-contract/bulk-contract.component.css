@@ -1,0 +1,60 @@
+#forward {
+    width: 260px;
+    text-align: left;
+  }
+  #backward {
+    width: 135px;
+    text-align: right;
+  }
+  #forward img {
+    float: right;
+  }
+  #backward img {
+    float: left;
+  }
+  .scrollbar {
+    height: 900px;
+    overflow-y: scroll;
+    padding-right: 20px;
+    overflow-x: hidden;
+  }
+  #formState {
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .force-overflow {
+    min-height: 1000px;
+  }
+  #formState {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .mw-350 {
+    min-width: 350px;
+    padding: 0px;
+    margin: 0px;
+  }
+  .mw-350 hr {
+    height: 0.1em;
+    border: none;
+    padding: 0px;
+    margin: 10px 0px;
+  }
+  .mw-350 img {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: 5px;
+    right: -5px;
+    z-index: 100;
+  }
+  .mw-350 input {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    bottom: 3px;
+    right: -8px;
+    background: #c7c7c7;
+    z-index: 100;
+  }
+  

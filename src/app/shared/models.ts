@@ -61,7 +61,7 @@ export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
-    constructionProfile: ConstructionProfile; constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
+    constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
     driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
 }
 
@@ -114,11 +114,7 @@ export class Summaries { actionid: string; message: string; date: string; id: st
 
 export class SelectedContract { contractId: number; personId: string; }
 
-export class DpsPersonsContracts {
-    personsContracts: PersonsContracts[];
-}
-export class PersonsContracts {
-    dpsPerson: DpsPerson;
-    dpsContractid: number;
-    PositionName: string;
-}
+export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
+export class PersonsContracts { dpsPerson: DpsPerson; dpsContractid: number; PositionName: string; }
+export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File }
+export enum FileType { Medical = 'Medical', StudentAtWork = 'StudentAtWork', ConstructionCard = 'ConstructionCard' }

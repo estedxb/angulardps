@@ -141,6 +141,8 @@ export class AddPersonComponent implements OnInit {
   constructor(private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
     this.setDummyStatute();
 
+    console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
+
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
@@ -256,6 +258,8 @@ export class AddPersonComponent implements OnInit {
       console.log('Positions Form Data : ', this.maindatas);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
+
+    console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
 
   }
 
@@ -430,8 +434,8 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    //this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
-    this.DpsPersonObject.customerVatNumber = "123456789101";
+    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    //this.DpsPersonObject.customerVatNumber = "123456789101";
     this.DpsPersonObject.person = this.PersonObject;
 
     // console.log("dps person object customer object=");
@@ -443,7 +447,7 @@ export class AddPersonComponent implements OnInit {
 
     if (this.validSSID === true) {
       let ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
-      let customerVatNumber = "123456789101";
+      let customerVatNumber = this.loginuserdetails.customerVatNumber;
       console.log("customerVatNumber=" + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
@@ -467,7 +471,7 @@ export class AddPersonComponent implements OnInit {
       console.log("invalid SSN format");
       this.resetPeronData();
     }
-    
+
   }
 
   loadDOBFromSSID() {
@@ -680,7 +684,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = "123456789101";
+    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
