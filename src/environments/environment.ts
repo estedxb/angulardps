@@ -40,6 +40,7 @@ export const environment = {
   getFileUploads: '',
   getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
   getContract: 'Contract',
+  getPersonsContracts: '',
   getSummaryURL: '',
   actionURL_1: 'customer/edit',
   actionURL_2: 'customer/position',
@@ -49,7 +50,8 @@ export const environment = {
   actionURL_6: 'person/$id$/',
   actionURL_7: 'person/$id$/position',
   actionURL_8: 'person/$id$/document',
-  actionURL_9: 'dashboard/contract/$id$'
+  actionURL_9: 'dashboard/contract/$id$',
+  getVehicles: ''
 };
 
 /*

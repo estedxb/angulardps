@@ -13,10 +13,10 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
-import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
+import { WeekPipe } from './pipes/week.pipe';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, BulkContractComponent],
+  declarations: [AppComponent, routingComponents, WeekPipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

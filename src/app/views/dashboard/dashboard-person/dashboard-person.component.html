@@ -5,12 +5,15 @@
   <div class="col col-sm-8 Heading">PLANNING</div>
   <div class="col col-sm-3">
     <div class="weeks">
-      <div class="calenderLeft"><button><img src="../../../../assets/svg/arrow-left.svg" /></button></div>
-      <div class="week">
-        <div class="weekdates">11-17 feb. 2019</div>
-        <div class="weekno">Week - 7</div>
+      <div class="calenderLeft"><button (click)="minusWeek()"><img
+            src="../../../../assets/svg/arrow-left.svg" /></button>
       </div>
-      <div class="calenderRight"><button><img src="../../../../assets/svg/arrow-right.svg" /></button></div>
+      <div class="week">
+        <div class="weekdates"> {{SelectedDates}}</div>
+        <div class="weekno">Week - {{ startDate | week }}</div>
+      </div>
+      <div class="calenderRight"><button (click)="addWeek()"><img
+            src="../../../../assets/svg/arrow-right.svg" /></button></div>
     </div>
   </div>
 </div>
@@ -19,128 +22,31 @@
     <div class="col-sm-12 dashboardactioncontent">
       <table>
         <tr class="Dates">
-          <td colspan="2" class="col-split col-split-t"><img src="../../../../assets/svg/search_white.svg">
-            <input type="text" class="search-form" placeholder="Zoeken…" /></td>
-          <td class="col-split col-split-m">Ma. 11/02</td>
-          <td class="col-split col-split-m">Din. 12/02</td>
-          <td class="col-split col-split-m">Woe. 13/02</td>
-          <td class="col-split col-split-m">Don. 14/02</td>
-          <td class="col-split col-split-m">Vrij. 15/02</td>
-          <td class="col-split col-split-m">Zat. 16/02</td>
-          <td class="col-split col-split-m">Zon. 17/02</td>
+          <td colspan="2" class="col-split col-split-t">
+            <div class="search"><img src="../../../../assets/svg/search_white.svg">
+              <input type="text" class="search-form" placeholder="Zoeken…" /></div>
+          </td>
+          <td class="col-split col-split-m">Ma. {{SelectedMonday}}</td>
+          <td class="col-split col-split-m">Din. {{SelectedTuesday}}</td>
+          <td class="col-split col-split-m">Woe. {{SelectedWednesday}}</td>
+          <td class="col-split col-split-m">Don. {{SelectedThursday}}</td>
+          <td class="col-split col-split-m">Vrij. {{SelectedFriday}}</td>
+          <td class="col-split col-split-m">Zat. {{SelectedSaturday}}</td>
+          <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
           <td class="col-split col-split-l"></td>
         </tr>
-        <tr class="Contents">
+        <tr class="Contents" *ngFor="let personContract of maindatas">
           <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
+            <div class="name">
+              {{personContract.dpsPerson.person.firstName + ' '+ personContract.dpsPerson.person.lastName}}</div>
+            <div class="position">{{personContract.PositionName}}</div>
           </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('38.09.16-343.34',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
+          <td class="col-split col-split-f"><button
+              (click)="openContractDialog(personContract.dpsPerson.person.socialSecurityNumber.number,personContract.dpsContractid)">
+              <img src="../../../../assets/svg/checklist_add.svg" *ngIf="personContract.dpsContractid === 0">
+              <img src="../../../../assets/svg/checklist_eye.svg" *ngIf="personContract.dpsContractid !== 0">
+            </button>
           </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',1)"><img src="../../../../assets/svg/checklist_eye.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-m"></td>
-          <td class="col-split col-split-l"></td>
-        </tr>
-        <tr class="Contents">
-          <td class="col-split col-split-n">
-            <div class="name">Vanessa Martens</div>
-            <div class="position">Freelance designer</div>
-          </td>
-          <td class="col-split col-split-f"><button (click)="openContractDialog('91.10.18-035.58',0)"><img src="../../../../assets/svg/checklist_add.svg"></button></td>
           <td class="col-split col-split-m"></td>
           <td class="col-split col-split-m"></td>
           <td class="col-split col-split-m"></td>
@@ -158,7 +64,7 @@
   <div class="col col-sm-12 ">
     <button class="greybtn" (click)="OpenAddPersonURL()"><img src="../../../../assets/svg/AddPerson.svg" alt="">Persoon
       toevoegen</button>
-    <button class="greybtn"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
+    <button class="greybtn" (click)="OpenBulkContractURL()"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
       contracten aanmaken</button>
   </div>
 </div>
