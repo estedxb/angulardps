@@ -58,3 +58,28 @@
     z-index: 100;
   }
   
+  .btnAdd {
+    background: transparent;
+    border: 0px solid red;
+
+  }
+
+  #maincontentarea #CustomerContact1.customerBox .netExpense span {
+    padding: 12px 0px;
+  }
+
+  .rowsnew {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .colsnew {
+
+    display: flex;
+    flex-direction: column;
+    flex-basis:100%;
+    flex:1;
+
+  }

@@ -26,6 +26,7 @@
   <div class="col col-sm-3"></div>
 </div>
 
+<form [formGroup]="blkForm" id="blkForm">
 <div class="row">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6" id="maincontentarea">
@@ -41,15 +42,14 @@
               <div class="col col-sm-7"></div>
             </div>
 
-            <!-- <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters> -->
-            <h4>StartDatum</h4>
-            <app-calendar></app-calendar>
-            <h4>EndDatum</h4>
-            <app-calendar></app-calendar>
+            <h6>StartDatum</h6>
+            <app-calendar (childEvent)="receiveStartDate($event)" [CalendarData]="startDate" ></app-calendar>
+            <h6>EndDatum</h6>
+            <app-calendar (childEvent)="receiveEndDate($event)" [CalendarData]="endDate" ></app-calendar>
 
           </div>
 
-          <div id="CustomerContact" class="customerBox">
+          <div id="CustomerContact1" class="customerBox">
             <div class="row panelheader">
               <div class="col col-sm-5 fright">
                 <h4>Selecteer contract werkrooster en locatie</h4>
@@ -57,10 +57,101 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-            <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+
+            <div class="row">
+                <div class="col col-sm-9">
+
+                  <div class="row dynrow">
+                    <div class="col-sm-8">
+                      <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                        (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+                        <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
+                          {{data}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-4">
+                          <button #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                            <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                          </button>
+                    </div>
+                  </div>
+
+                  <div class="row dynrow">
+                      <div class="col-sm-8">
+                        <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                          (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+                          <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
+                            {{data}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                            <button #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                              <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                            </button>
+                      </div>
+                    </div>
+
+                    <div class="row dynrow">
+                        <div class="col-sm-8">
+                          <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                            (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+                            <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
+                              {{data}}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-4">
+                              <button #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                                <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                              </button>
+                        </div>
+                      </div>    
+                </div>
+                <div class="col col-sm-3 inputWithImg">
+                </div>
+              </div>
+          </div>
+
+          <div id="CustomerContact" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Selecteer 1 of meerdere werknemers</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
+              </div>
+
+              <div class="rowsnew">
+                  <div class="colsnew">
+                      <label></label>
+                  </div>
+                  <div class="colsnew">
+                      <label>Naam</label>
+                  </div>
+                  <div class="colsnew">
+                      <label>Functie</label>
+                  </div>
+              </div>
+
+              <div class="rowsnew">
+                  <div class="colsnew">
+                      <label>*</label>
+                  </div>
+                  <div class="colsnew">
+                      <label>Vanessa Martens</label>
+                  </div>
+                  <div class="colsnew">
+                      <label>Poetsdame</label>
+                  </div>
+                  <div class="colsnew netExpense">
+                      <ui-switch [checked]="loadSwitchperson" (change)="onChangeI($event)" size="small"></ui-switch>
+                  </div>
+
+              </div>
 
           </div>
+
         </div>
+
         <div id="from2" *ngIf="showFormIndex === 2">
           <div id="CustomerGeneralDetails" class="customerBox">
             <div class="row panelheader">
@@ -79,7 +170,8 @@
           <app-invoice-settings (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
 
         </div>
-        <div id="from2" *ngIf="showFormIndex === 3">
+
+        <!-- <div id="from2" *ngIf="showFormIndex === 3">
           <div id="CustomerGeneralDetails" class="customerBox">
             <div class="row panelheader">
               <div class="col col-sm-5 fright">
@@ -89,7 +181,8 @@
               <div class="col col-sm-7"></div>
             </div>
           </div>
-        </div>
+        </div> -->
+
       </div>
     </div>
   </div>
@@ -100,3 +193,4 @@
         src="../../assets/svg/left-arrow.svg" /> Terug</button>
   </div>
 </div>
+</form>
