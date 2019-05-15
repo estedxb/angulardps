@@ -74,6 +74,7 @@ export class UpdateCustomerComponent implements OnInit {
         }
       } else {
         this.vatNumber = this.Id;
+        this.updateLocalStorage();
         if (
           this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
           this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||
@@ -113,6 +114,12 @@ export class UpdateCustomerComponent implements OnInit {
     }
   }
 
+  updateLocalStorage() {
+    console.log('updateLocalStorage :: ');
+    this.loginuserdetails.customerVatNumber = this.vatNumber;
+    console.log('lsDPUser :: ', this.loginuserdetails);
+    localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
+  }
   receiveEditCustomerData($event) {
     console.log('received data in update customer=');
     this.editCustomerData = $event;
