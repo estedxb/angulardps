@@ -106,6 +106,7 @@ export class CreateContractComponent implements OnInit {
        this.ContractForm.controls.lastname.setValue(response.body.person.lastName);
      });
    }
+  
 
   loadContract(vatNumber : string , cid: string) {    
     this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
