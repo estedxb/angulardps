@@ -73,10 +73,16 @@ export class UpdatePersonComponent implements OnInit {
   filterData(message:any) {
 
       if(message.page === "edit")
+      {
         this.editPersonData = message.data;
+        console.log("received person data="+this.editPersonData);
+      }
 
       if(message.page === "position")
+      {
         this.personpositionData = message.data;
+        console.log("received person data="+this.editPersonData);
+      }
   }
 
   onPageInit() {
