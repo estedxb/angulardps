@@ -140,9 +140,6 @@ export class UpdatePersonComponent implements OnInit {
 
     if(this.currentPage === "positions")
     {
-      console.log("data collected for positions");
-      console.log(this.personpositionData);
-
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         console.log("response=" + res);
       },
@@ -162,6 +159,9 @@ export class UpdatePersonComponent implements OnInit {
      
       console.log("data collected for person documents");
       console.log(this.personDocumentsData);
+
+
+      
 
 
     }

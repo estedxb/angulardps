@@ -21,6 +21,7 @@ import { DataService } from 'src/app/shared/data.service';
 export class EditPersonComponent implements OnInit {
 
   @Input() public SocialSecurityId: string;
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
 
   editPersonForm: FormGroup;
   editPersonForm2: FormGroup;
@@ -180,7 +181,7 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = '123456789101';
+    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
   }
@@ -189,10 +190,7 @@ export class EditPersonComponent implements OnInit {
 
     if (this.validSSID === true) {
 
-      const customerVatNumber = '123456789101';
-
-      console.log('customerVatNumber=' + customerVatNumber);
-      console.log('social security id=' + this.SocialSecurityId);
+      const customerVatNumber = this.loginuserdetails.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         console.log('response=' + res);
@@ -475,7 +473,7 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = '123456789101';
+    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
