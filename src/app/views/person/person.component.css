@@ -400,8 +400,11 @@ div#CustomerContact1 {
   text-align: left;
 }
 .whitebtn img {
+  position: absolute;
+  right: 3px;
   width: 25px;
-  padding: 2px 0px;
+  padding: 0px;
+  margin-top: 1px;
 }
 .radiorow .gap {
   float: left;
@@ -427,4 +430,16 @@ div#CustomerContact1 {
 }
 #personDocument .general {
   margin: 0px 0px 5px 0px;
+}
+
+.inputWrapper{
+  margin-top: 10px;
+}
+#VCAAttest h4,
+#BuildingCards h4,
+#StudentAttest h4{
+  margin-top: 5px;
+}
+#StudentAttest .inputWrapper{
+  margin-top: 5px;
 }

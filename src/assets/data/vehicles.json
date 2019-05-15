@@ -1,0 +1,13 @@
+[
+    { "vehicleValue": "0", "vehicleName": "selecteer het voertuig"},
+    { "vehicleValue": "1", "vehicleName": "Kies een voertuig"},
+    { "vehicleValue": "2", "vehicleName": "Zware Vrachtwagen"},
+    { "vehicleValue": "3", "vehicleName": "Auto"},
+    { "vehicleValue": "4", "vehicleName": "Kraan"},
+    { "vehicleValue": "5", "vehicleName": "Heftruck"},
+    { "vehicleValue": "6", "vehicleName": "Zware Bus"},
+    { "vehicleValue": "7", "vehicleName": "JCB"},
+    { "vehicleValue": "8", "vehicleName": "Zware voertuigen"},
+    { "vehicleValue": "9", "vehicleName": "industriële voertuigen"},
+    { "vehicleValue": "10", "vehicleName": "andere voertuigen"}
+]

@@ -1,4 +1,5 @@
-<form [formGroup]="PersonDocumentForm" novalidate id="PersonDocumentForm">
+<form [formGroup]="PersonDocumentForm" novalidate id="PersonDocumentForm"
+  *ngIf="currentPerson !== null && currentPerson != undefined">
   <div id="personDocument">
     <div id="CustomerDetails" class="customerBox">
       <div class="row panelheader">
@@ -12,26 +13,22 @@
       </div>
       <div class="row PersonContactContent">
         <div class="col-sm-3">
-          <!-- <button class="whitebtn" name="Upload"><span>Upload attest</span><img
-              src="../../../../../assets/svg/CircleUp.svg"></button> -->
-          <input class="whitebtn" type="file" name="UploadMedicalAttestation" id="UploadMedicalAttestation" img
-            src="../../../../../assets/svg/CircleUp.svg"
-            (change)="handleMedicalAttestationFileInput($event.target.files)">
-
-
-
+          <div class="inputWrapper"><span>Upload attest</span><img src="../../../../../assets/svg/CircleUp.svg">
+            <input type="file" id="UploadMedicalAttestation" class="fileInput hidden" name="UploadMedicalAttestation"
+              (change)="handleMedicalAttestationFileInput($event.target.files)">
+          </div>
         </div>
-        <div class="col-sm-1"></div>
         <div class="col-sm-3"><button class="whitebtn" (click)="onClickPost()" name="Upload"><span>Vraag attest
               aan</span><img src="../../../../../assets/svg/request.svg"></button></div>
       </div>
     </div>
-    <div class="row UploadedFiles">
+    <div class="row UploadedFiles"
+      *ngIf="currentPerson.medicalAttestation !== null && currentPerson.medicalAttestation != undefined">
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
         <div
-          *ngIf="currentPerson.medicalAttestation.name !== undefined || currentPerson.medicalAttestation.name !== null || currentPerson.medicalAttestation.name !== ''"
+          *ngIf="currentPerson.medicalAttestation.name !== undefined && currentPerson.medicalAttestation.name !== null && currentPerson.medicalAttestation.name !== ''"
           class="row inforow">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadMedicalAttestation" id="downloadMedicalAttestation"
@@ -63,16 +60,16 @@
         <div class="col col-sm-8 fleft">
           <h4>VCA attest</h4>
         </div>
-        <div class="col col-sm-3 fright">
-          <!-- <button class="whitebtn" name="download"><span>Upload</span><img
-              src="../../../../../assets/svg/CircleUp.svg"></button> -->
-          <input class="whitebtn" type="file" name="UploadVcaAttestation" id="UploadVcaAttestation" img
-            src="../../../../../assets/svg/CircleUp.svg" (change)="handleVcaAttestationFileInput($event.target.files)">
-
+        <div class="col col-sm-3">    
+            <div class="inputWrapper"><span>Upload</span><img src="../../../../../assets/svg/CircleUp.svg">
+              <input type="file" id="UploadVcaAttestation" class="fileInput hidden" name="UploadVcaAttestation"
+                (change)="handleVcaAttestationFileInput($event.target.files)">
+            </div>
         </div>
       </div>
     </div>
-    <div class="row UploadedFiles">
+    <div class="row UploadedFiles"
+      *ngIf="currentPerson.vcaAttestation !== null && currentPerson.vcaAttestation != undefined">
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
@@ -98,15 +95,11 @@
         <div class="col col-sm-8 fleft">
           <h4>Bouwkaart(en)</h4>
         </div>
-        <div class="col col-sm-3 fright">
-
-          <!-- <button class="whitebtn" name="Upload"><span>Upload</span><img
-              src="../../../../../assets/svg/CircleUp.svg">
-            </button> -->
-          <input class="whitebtn" type="file" name="UploadConstructionCards" id="UploadConstructionCards" img
-            src="../../../../../assets/svg/CircleUp.svg"
-            (change)="handleConstructionCardsFileInput($event.target.files)">
-
+        <div class="col col-sm-3">
+            <div class="inputWrapper"><span>Upload</span><img src="../../../../../assets/svg/CircleUp.svg">
+              <input type="file" id="UploadConstructionCards" class="fileInput hidden" name="UploadConstructionCards"
+                (change)="handleConstructionCardsFileInput($event.target.files)">
+            </div>
         </div>
       </div>
     </div>
@@ -114,15 +107,14 @@
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
-        <div class="row inforow" *ngIf="currentPerson.currentPerson.constructionCards.length">
+        <div class="row inforow" *ngFor="let constructionCard of currentPerson.constructionCards ; let i = index">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadConstructionCard" id="downloadConstructionCard"
-              (click)="downloadConstructionCardFile()">
+              (click)="downloadConstructionCardFile(constructionCard.location)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
-          <div class="col-sm-10 actioncontent"
-            *ngFor="let constructionCard of currentPerson.constructionCards ; let i = index">{{constructionCard.name}}
+          <div class="col-sm-10 actioncontent">{{constructionCard.name}}
           </div>
           <div class="col-sm-1 actiondelbtn">
             <button name="deleteConstructionCard" id="deleteConstructionCard" (click)="deleteConstructionCard()">
@@ -147,13 +139,11 @@
         <div class="col col-sm-5 fleft">
           <h4>Student @work attest</h4>
         </div>
-        <div class="col col-sm-3 fright">
-          <!-- <button class="whitebtn" name="Upload"><span>Upload</span><img
-              src="../../../../../assets/svg/CircleUp.svg"></button> -->
-
-          <input class="whitebtn" type="file" name="UploadStudentAtWork" id="UploadStudentAtWork" img
-            src="../../../../../assets/svg/CircleUp.svg" (change)="handleStudentAtWorkFileInput($event.target.files)">
-
+        <div class="col col-sm-3">
+          <div class="inputWrapper"><span>Upload</span><img src="../../../../../assets/svg/CircleUp.svg">
+            <input type="file" id="UploadStudentAtWork" class="fileInput hidden" name="UploadStudentAtWork"
+              (change)="handleStudentAtWorkFileInput($event.target.files)">
+          </div>
         </div>
         <div class="col col-sm-3 fright">
           <button class="whitebtn" name="downloadStudentAtWork" id="downloadStudentAtWork"
@@ -193,25 +183,17 @@
     <div id="DrivingLicense" class="customerBox">
       <div class="row">
         <div class="col col-sm-6 fleft">
-          <select class="drivinglicenses selectcomponent" [(ngModel)]='ddl_drivinglicenseSelected'
-            id="ddl_drivinglicense" name="ddl_drivinglicense" required="">
-            <option value="0" selected>Kies een voertuig</option>
-            <option value="1">Zware Vrachtwagen</option>
-            <option value="2">Auto</option>
-            <option value="2">Kraan</option>
-            <option value="2">Heftruck</option>
-            <option value="2">Zware Bus</option>
-            <option value="2">JCB</option>
+          <select class="drivinglicenses selectcomponent" id="ddl_drivinglicense" name="ddl_drivinglicense" required="">
+            <option [value]="vehicle.vehicleValue" *ngFor="let vehicle of vehiclesForLicense">{{vehicle.vehicleName}}
+            </option>
           </select>
         </div>
         <div class="col col-sm-2 fleft"></div>
-        <div class="col col-sm-3 fright">
-
-          <!-- <button class="whitebtn" name="download"><span>Upload</span><img
-              src="../../../../../assets/svg/CircleUp.svg"></button> -->
-
-          <input class="whitebtn" type="file" name="UploadDriversLicense" id="UploadDriversLicense" img
-            src="../../../../../assets/svg/CircleUp.svg" (change)="handleDriversLicenseFileInput($event.target.files)">
+        <div class="col col-sm-3">
+          <div class="inputWrapper"><span>Upload</span><img src="../../../../../assets/svg/CircleUp.svg">
+            <input type="file" id="UploadDriversLicense" class="fileInput hidden" name="UploadDriversLicense"
+              (change)="handleDriversLicenseFileInput($event.target.files)">
+          </div>
         </div>
       </div>
     </div>
@@ -219,14 +201,13 @@
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
-        <div class="row inforow" *ngIf="currentPerson.currentPerson.driverProfiles.length">
+        <div class="row inforow" *ngFor="let driverProfile of currentPerson.driverProfiles ; let i = index">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadDriversLicense" id="downloadDriversLicense" (click)="downloadDriversLicenseFile()">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
-          <div class="col-sm-10 actioncontent"
-            *ngFor="let driverProfile of currentPerson.driverProfiles ; let i = index">{{driverProfile.name}}</div>
+          <div class="col-sm-10 actioncontent">{{driverProfile.attestation.name}}</div>
           <div class="col-sm-1 actiondelbtn">
             <button name="deleteDriversLicense" id="deleteDriversLicense" (click)="deleteDriversLicense()">
               <img src="../../../../assets/svg/delete_big.svg">
@@ -242,14 +223,11 @@
         <div class="col col-sm-7 fleft">
           <h4>Andere nuttige documenten</h4>
         </div>
-        <div class="col col-sm-4 fright">
-
-          <!-- <button class="whitebtn" name="download"><span>Upload document</span><img
-              src="../../../../../assets/svg/CircleUp.svg">
-            </button> -->
-          <input class="whitebtn" type="file" name="UploadOtherDocuments" id="UploadOtherDocuments" img
-            src="../../../../../assets/svg/CircleUp.svg" (change)="handleOtherDocumentsInput($event.target.files)">
-
+        <div class="col col-sm-4">
+          <div class="inputWrapper"><span>Upload</span><img src="../../../../../assets/svg/CircleUp.svg">
+            <input type="file" id="UploadOtherDocuments" class="fileInput hidden" name="UploadOtherDocuments"
+              (change)="handleOtherDocumentsInput($event.target.files)">
+          </div>
         </div>
       </div>
     </div>
@@ -257,14 +235,13 @@
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
-        <div class="row inforow" *ngIf="currentPerson.currentPerson.otherDocuments.length">
+        <div class="row inforow" *ngFor="let document of currentPerson.otherDocuments ; let i = index">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadOtherDocuments" id="downloadOtherDocuments" (click)="downloadOtherDocumentsFile()">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
-          <div class="col-sm-10 actioncontent" *ngFor="let document of currentPerson.otherDocuments ; let i = index">
-            {{document.name}}</div>
+          <div class="col-sm-10 actioncontent">{{document.name}}</div>
           <div class="col-sm-1 actiondelbtn">
             <button name="deleteOtherDocuments" id="deleteOtherDocuments" (click)="deleteOtherDocuments()">
               <img src="../../../../assets/svg/delete_big.svg">

@@ -20,6 +20,7 @@ export class PersonService {
   private getPersonURL = ''
   private postPersonURL = '';
   private putPersonURL = '';
+  private getVehiclesURL = '';
   private deletePersonURL = '';
 
   constructor(private http: HttpClient) {
@@ -33,6 +34,14 @@ export class PersonService {
       this.getPersonURL = '../../assets/data/locations.json';
     }
 
+    if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
+      console.log('Data From getVehicles Remote');
+      this.getVehiclesURL = environment.dpsAPI + environment.getVehicles;
+    } else {
+      console.log('Data From getVehicles JSON');
+      this.getVehiclesURL = '../../assets/data/vehicles.json';
+    }
+    
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
@@ -48,6 +57,12 @@ export class PersonService {
 
   }
 
+  public getVehiclesForLicense(): Observable<any> {
+    console.log('getVehiclesForLicense Data From = ' + this.getVehiclesURL);
+    const result = this.http.get<DpsPerson[]>(this.getVehiclesURL, this.httpOptions).catch(this.errorHandler);
+    console.log(result);
+    return result;
+  }
   public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
     let getURL = this.getPersonForCustomerbyCustomerVatNumberURL;
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
