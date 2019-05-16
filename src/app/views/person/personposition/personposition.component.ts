@@ -52,6 +52,8 @@ export class PersonPositionComponent implements OnInit {
   public dropDownMonth: string[];
   public dropDownYear: Array<string>;
   public dataDropDownGender: string[];
+  public dialogConfig = new MatDialogConfig();
+
   public dateofBirth;
   public selectedGenderIndex;
   public selectedIndexFunctie;
@@ -113,6 +115,7 @@ export class PersonPositionComponent implements OnInit {
     this.getPersonbySSIDVatNumber();
   }
 
+
   openDialog(): void {
     try {
       const dialogConfig = new MatDialogConfig();
@@ -127,13 +130,16 @@ export class PersonPositionComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.datas = result;
+
         //this.maindatas = result;
         console.log('this.data ::', this.datas);
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
-            this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
+            //this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
+            this.maindatas.push(this.datas);            
             this.FilterTheArchive();
+            this.fillDataDropDown(this.maindatas);
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
             console.log('this.data.id :: ', this.datas.id);
@@ -229,7 +235,7 @@ export class PersonPositionComponent implements OnInit {
     this._position.taskDescription = '';
     this._position.workstationDocument = this.workstationDocument;
 
-    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumbe;
+    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumber;
     this.dpsPosition.id = 0;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;
@@ -245,6 +251,13 @@ export class PersonPositionComponent implements OnInit {
 
   switchNetExpense($event) {
     this.DpsPersonObject.renumeration.costReimbursment = $event;
+
+    if($event === true) {
+      this.PersonPositionForm.controls.netExpenseAllowance.enable();
+    }
+    else {
+      this.PersonPositionForm.controls.netExpenseAllowance.disable();
+    }
 
     this.changeMessage();
   }
@@ -312,6 +325,14 @@ export class PersonPositionComponent implements OnInit {
     //costReimbursment
     this.kmtoggle = data.renumeration.transportationAllowance;
     this.nettoggle  = data.renumeration.costReimbursment;
+
+
+    if(this.nettoggle === true) {
+      this.PersonPositionForm.controls.netExpenseAllowance.enable();
+    }
+    else {
+      this.PersonPositionForm.controls.netExpenseAllowance.disable();
+    }
 
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
 

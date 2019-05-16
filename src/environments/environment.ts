@@ -51,7 +51,8 @@ export const environment = {
   actionURL_7: 'person/$id$/position',
   actionURL_8: 'person/$id$/document',
   actionURL_9: 'dashboard/contract/$id$',
-  getVehicles: ''
+  getVehicles: '',
+  getPositionsDownloadTemplate : 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf'
 };
 
 /*

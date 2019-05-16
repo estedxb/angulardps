@@ -44,6 +44,7 @@
     "jquery": "^3.3.1",
     "ngx-bootstrap": "^4.0.0",
     "ngx-filesaver": "^2.2.1",
+    "ngx-spinner": "^7.1.4",
     "ngx-toggle-switch": "^2.0.5",
     "ngx-ui-switch": "^8.0.1",
     "popper.js": "1.15.0",
