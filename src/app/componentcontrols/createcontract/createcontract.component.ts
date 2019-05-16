@@ -71,6 +71,7 @@ export class CreateContractComponent implements OnInit {
     console.log('SelectedContract :: ' , this.selectedContract);
     this.contractId = this.selectedContract.contractId;
     this.personid = this.selectedContract.personId;
+    
     console.log('Current Contract :: ', this.currentContract);
     console.log('Current VatNumber : ' + this.VatNumber);
     this.ContractForm = new FormGroup({
@@ -78,8 +79,11 @@ export class CreateContractComponent implements OnInit {
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl('', [Validators.required]),
       workSchedule: new FormControl('', [Validators.required]),
-      location: new FormControl('', [Validators.required])
+      location: new FormControl('', [Validators.required]),
+      btnCancel: new FormControl('')
     });
+    
+    this.disableCancelButton();
 
     this.getPositionsByVatNumber();
     this.getLocationsByVatNumber();
@@ -141,10 +145,7 @@ export class CreateContractComponent implements OnInit {
       });     
   }
 
-  monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-
+ 
   openDialog(): void {
     try {
       const dialogConfig = new MatDialogConfig();
@@ -261,13 +262,12 @@ export class CreateContractComponent implements OnInit {
      this.currentContract.parentContractId = 0;
      this.currentContract.contract = this.contract;
      this.currentContract.timeSheet = new TimeSheet();
-
   }
 
   onApproveContractClick() {
     this.createObjects();
     console.log('currentContract ::', this.currentContract);
-    // if (this.ContractForm.valid) {
+     if (this.ContractForm.valid) {
       if (this.currentContract !== undefined && this.currentContract !== null) {
         console.log('Create Contract');
         this.contractService.createContract(this.currentContract).subscribe(res => {
@@ -287,18 +287,31 @@ export class CreateContractComponent implements OnInit {
 
       }
 
-    // } else {
-    //   console.log('Form is Not Vaild');
-    // }
+     } else {
+       console.log('Form is Not Vaild');
+     }
   }
 
 
-  onCancelContractClick(i) {
-    this.SelectedIndex = this.contractId;
-    console.log('Edit Clicked Index :: ' + this.SelectedIndex);
-    //this.currentContract = this.maindatas[this.SelectedIndex];
-    this.openDialog();
-    return true;
+  onCancelContractClick() {
+  
+      this.SelectedIndex = this.contractId;
+      console.log('Edit Clicked Index :: ' + this.SelectedIndex);
+      //this.currentContract = this.maindatas[this.SelectedIndex];
+      this.openDialog();
+      return true;
+    }
+  
+    
+  
+
+
+  disableCancelButton()
+  {
+    if(this.contractId ===0 || this.contractId === null || this.contractId === undefined )
+    {
+      (<HTMLInputElement> document.getElementById("btnCancel")).disabled = true;
+    }
   }
 
 

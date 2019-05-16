@@ -203,7 +203,7 @@
         <!--For loop Starts -->
         <div class="row inforow" *ngFor="let driverProfile of currentPerson.driverProfiles ; let i = index">
           <div class="col-sm-1 actioneyebtn">
-            <button name="downloadDriversLicense" id="downloadDriversLicense" (click)="downloadDriversLicenseFile()">
+            <button name="downloadDriversLicense" id="downloadDriversLicense" (click)="downloadDriversLicenseFile(driverProfile.attestation.location)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
@@ -237,7 +237,7 @@
         <!--For loop Starts -->
         <div class="row inforow" *ngFor="let document of currentPerson.otherDocuments ; let i = index">
           <div class="col-sm-1 actioneyebtn">
-            <button name="downloadOtherDocuments" id="downloadOtherDocuments" (click)="downloadOtherDocumentsFile()">
+            <button name="downloadOtherDocuments" id="downloadOtherDocuments" (click)="downloadOtherDocumentsFile(document.location)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>

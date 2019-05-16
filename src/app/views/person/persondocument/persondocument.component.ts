@@ -114,9 +114,12 @@ export class PersonDocumentComponent implements OnInit {
       console.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
       this.ShowMessage('vehicles fetched successfully.', ''); 
       // Remove the  Vehicles with License in this.currentPerson
-      this.vehiclesForLicense.forEach((c) => {
-        
-      })
+      //this.vehiclesForLicense = this.vehiclesForLicense.filter( function( el ) {
+        //return !this.currentPerson.driverProfiles.includes( el );
+
+        this.vehiclesForLicense  = this.vehiclesForLicense .filter( ( el ) => !this.currentPerson.driverProfiles.includes( el ) );
+
+     // } );
 
     }, error => this.ShowMessage(error, 'error'));
 
@@ -246,8 +249,7 @@ export class PersonDocumentComponent implements OnInit {
     });
   }
 
-  downloadConstructionCardFile( downloadfilepath: string) {
-    // download by selected index
+  downloadConstructionCardFile( downloadfilepath: string) {   
     saveAs(downloadfilepath);
   }
 
@@ -291,10 +293,6 @@ export class PersonDocumentComponent implements OnInit {
     saveAs(this.currentPerson.studentAtWorkProfile.attestation.location, 'application/pdf;charset=utf-8');
   }
 
-
-
-
-
   handleDriversLicenseFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
@@ -327,9 +325,8 @@ export class PersonDocumentComponent implements OnInit {
     });
   }
 
-  downloadDriversLicenseFile() {
-    // download by selected index
-    //saveAs( this.currentPerson.constructionProfile.constructionCards[0], 'application/pdf;charset=utf-8');
+  downloadDriversLicenseFile(downloadfilepath: string) {
+    saveAs(downloadfilepath);
   }
 
   deleteDriversLicense() {
