@@ -326,6 +326,14 @@ export class PersonPositionComponent implements OnInit {
     this.kmtoggle = data.renumeration.transportationAllowance;
     this.nettoggle  = data.renumeration.costReimbursment;
 
+
+    if(this.nettoggle === true) {
+      this.PersonPositionForm.controls.netExpenseAllowance.enable();
+    }
+    else {
+      this.PersonPositionForm.controls.netExpenseAllowance.disable();
+    }
+
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
 
     this.DpsPersonObject = new DpsPerson();

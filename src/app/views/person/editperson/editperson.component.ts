@@ -391,7 +391,6 @@ export class EditPersonComponent implements OnInit {
     });
 
     this.DpsPersonObject.person.dateOfBirth = (monthInNumber + 1) + '/' + this.dayString + '/' + this.yearString;
-    // this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
     this.changeMessage();
 
