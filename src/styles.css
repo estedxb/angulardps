@@ -588,9 +588,10 @@ div#PersonContact {
 }
 .inputWrapper img {
   position: absolute;
-  width: 28px;
-  float: right;
-  padding: 2px 0px 2px 10px;
+  width: 25px;
+  right: 3px;
+  top: 3px;
+  padding: 0px;
 }
 
 .inputWrapper .fileInput {

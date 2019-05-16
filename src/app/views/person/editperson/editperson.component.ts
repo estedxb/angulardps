@@ -65,9 +65,11 @@ export class EditPersonComponent implements OnInit {
 
   public dayString;
   public monthString;
-  public yearString;
+  public yearString;  
 
   public calendarData: string;
+  public countryString: string;
+  public languageString:string;
 
   public message;
 
@@ -333,8 +335,6 @@ export class EditPersonComponent implements OnInit {
       this.editPersonForm.controls.emailAddress.setValue(data.person.email.emailAddress);
     }
 
-    // this.languageString = data.person.language.name;
-
     if (data.person.bankAccount !== null) {
       this.editPersonForm.controls.iban.setValue(data.person.bankAccount.iban);
       this.editPersonForm.controls.bic.setValue(data.person.bankAccount.bic);
@@ -348,7 +348,12 @@ export class EditPersonComponent implements OnInit {
       this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
-    this.createObjectsForm1();
+    this.countryString = data.person.address.country;
+    this.languageString = data.person.language.name;
+
+    this.DpsPersonObject = data;
+
+    this.changeMessage();
 
   }
 
@@ -462,6 +467,86 @@ export class EditPersonComponent implements OnInit {
     return this.validSSID;
   }
 
+  updateMobileNumber(value:string){
+    this.DpsPersonObject.person.mobile.number = value;
+    this.changeMessage();
+  }
+
+  updatePostalCode(value:string){
+    this.DpsPersonObject.person.address.postalCode = value;
+    this.changeMessage();
+  }
+
+  updateCity(value:string){
+    this.DpsPersonObject.person.address.city = value;
+    this.changeMessage();
+  }
+
+  updateBus(value:string){
+    this.DpsPersonObject.person.address.bus = value;
+    this.changeMessage();
+  }
+
+  updateStreetNumber(value:string) {
+    this.DpsPersonObject.person.address.streetNumber = value;
+    this.changeMessage();
+  }
+
+  updateStreet(value:string) {
+    this.DpsPersonObject.person.address.street = value;
+    this.changeMessage();
+  }
+
+  updateFirstName(value:string) {
+    this.DpsPersonObject.person.firstName = value;
+    this.changeMessage();
+  }
+
+  updateLastName(value:string) {
+    this.DpsPersonObject.person.lastName = value;
+    this.changeMessage();
+  }
+
+  updateEmailAddress(value:string) {
+    this.DpsPersonObject.person.email.emailAddress = value;
+    this.changeMessage();
+  }
+
+  updateTelephoneNumber(value:string) {
+    this.DpsPersonObject.person.phone.number = value;
+    this.changeMessage();
+  }
+
+  updateNationality(value:string){
+    this.DpsPersonObject.person.nationality = value;
+    this.changeMessage();
+  }
+
+  updatePOB(value:string){
+    this.DpsPersonObject.person.placeOfBirth = value;
+    this.changeMessage();
+  }
+
+  updateCOB(value:string){
+    this.DpsPersonObject.person.countryOfBirth = value;
+    this.changeMessage();
+  }
+
+  updateIban(value:string){
+    this.DpsPersonObject.person.bankAccount.iban = value;
+    this.changeMessage();
+  }
+
+  updateBIC(value:string){
+    this.DpsPersonObject.person.bankAccount.bic = value;
+    this.changeMessage();
+  }
+
+  updatetravelMode(value:string){
+    this.DpsPersonObject.person.travelMode = value;
+    this.changeMessage();
+  }
+
   createObjectsForm1() {
 
     console.log('create objects form1 called');
@@ -536,7 +621,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = '';
     this.DpsPersonObject.vcaAttestation.name = '';
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();

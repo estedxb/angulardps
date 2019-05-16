@@ -18,7 +18,7 @@
             </div>
             <div class="row">
               <div class="col-sm-12 inputWithImgNew">
-                <input (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber" class="form-control"
+                <input formControlName="socialSecurityNumber" class="form-control"
                   name="socialSecurityNumber" type="text" required />
                 <div class="form-control-feedback"
                   *ngIf="!customSSIDValidator(editPersonForm.controls.socialSecurityNumber.value) else newvalid">
@@ -62,7 +62,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Voornaam: </label>
-            <input formControlName="firstName" class="form-control" name="firstName" type="text" required />
+            <input #firstName (change)="updateFirstName(firstName.value)" formControlName="firstName" class="form-control" name="firstName" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.firstName.invalid && (editPersonForm.controls.firstName.dirty || editPersonForm.controls.firstName.touched) else newvalidfirstname">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -73,7 +73,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Familienaam: </label>
-            <input formControlName="lastName" class="form-control" name="lastName" type="text" required />
+            <input #lastName (change)="updateLastName(lastName.value)" formControlName="lastName" class="form-control" name="lastName" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.lastName.invalid && (editPersonForm.controls.lastName.dirty || editPersonForm.controls.lastName.touched) else newvalidlastName">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -86,7 +86,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Straat: </label>
-            <input formControlName="street" class="form-control" name="street" type="text" required />
+            <input #street (change)="updateStreet(street.value)" formControlName="street" class="form-control" name="street" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.street.invalid && (editPersonForm.controls.street.dirty || editPersonForm.controls.street.touched) else newvalidstreet">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -97,7 +97,7 @@
           </div>
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Nr: </label>
-            <input formControlName="streetNumber" class="form-control" name="streetNumber" type="text" required />
+            <input #streetNumber (change)="updateStreetNumber(streetNumber.value)" formControlName="streetNumber" class="form-control" name="streetNumber" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.streetNumber.invalid && (editPersonForm.controls.streetNumber.dirty || editPersonForm.controls.streetNumber.touched) else newvalidstreetNumber">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -108,7 +108,7 @@
           </div>
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Bus: </label>
-            <input formControlName="bus" class="form-control" name="bus" type="text" required />
+            <input #bus (change)="updateBus(bus.value)" formControlName="bus" class="form-control" name="bus" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.bus.invalid && (editPersonForm.controls.bus.dirty || editPersonForm.controls.bus.touched) else newvalidbus">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -121,7 +121,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Plaats: </label>
-            <input formControlName="city" class="form-control" name="city" type="text" required />
+            <input #city (change)="updateCity(city.value)" formControlName="city" class="form-control" name="city" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.city.invalid && (editPersonForm.controls.city.dirty || editPersonForm.controls.city.touched) else newvalidcity">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -132,7 +132,7 @@
           </div>
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Postcode: </label>
-            <input formControlName="postalCode" class="form-control" name="postalCode" type="text" required />
+            <input #postalCode (change)="updatePostalCode(postalCode.value)" formControlName="postalCode" class="form-control" name="postalCode" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.postalCode.invalid && (editPersonForm.controls.postalCode.dirty || editPersonForm.controls.postalCode.touched) else newvalidpostalCode">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -143,13 +143,13 @@
           </div>
           <div class="col-sm-3 inputWithImg">
             <label class="titleBold"> Land: </label>
-            <app-countries (childEvent)="onCountryReceive($event)"></app-countries>
+            <app-countries [CountryFormData]="countryString" (childEvent)="onCountryReceive($event)"></app-countries>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Mobiel nummer: </label>
-            <input formControlName="mobileNumber" class="form-control" name="mobileNumber" type="text" required />
+            <input #mobileNumber (change)="updateMobileNumber(mobileNumber.value)" formControlName="mobileNumber" class="form-control" name="mobileNumber" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.mobileNumber.invalid && (editPersonForm.controls.mobileNumber.dirty || editPersonForm.controls.mobileNumber.touched) else newvalidmobileNumber">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -160,7 +160,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Vast nummer: </label>
-            <input formControlName="telephoneNumber" class="form-control" name="telephoneNumber" type="text" required />
+            <input #telephoneNumber (change)="updateTelephoneNumber(telephoneNumber.value)" formControlName="telephoneNumber" class="form-control" name="telephoneNumber" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.telephoneNumber.invalid && (editPersonForm.controls.telephoneNumber.dirty || editPersonForm.controls.telephoneNumber.touched) else newvalidtelephoneNumber">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -173,7 +173,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> E-mail adres: </label>
-            <input formControlName="emailAddress" class="form-control" name="emailAddress" type="text" required />
+            <input #emailAddress (change)="updateEmailAddress(emailAddress.value)" formControlName="emailAddress" class="form-control" name="emailAddress" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.emailAddress.invalid && (editPersonForm.controls.emailAddress.dirty || editPersonForm.controls.emailAddress.touched) else newvalidemailAddress">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -184,7 +184,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Taal: </label>
-            <app-languages (childEvent)="onLanguageReceive($event)"></app-languages>
+            <app-languages [LanguageFormData]="languageString" (childEvent)="onLanguageReceive($event)"></app-languages>
           </div>
         </div>
       </div>
@@ -202,7 +202,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Nationaliteit: </label>
-            <input formControlName="nationality" class="form-control" name="nationality" type="text" required />
+            <input #nationality (change)="updateNationality(nationality.value)" formControlName="nationality" class="form-control" name="nationality" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.nationality.invalid && (editPersonForm.controls.nationality.dirty || editPersonForm.controls.nationality.touched) else newvalidnationality">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -213,7 +213,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteplaats: </label>
-            <input formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text" required />
+            <input #placeOfBirth (change)="updatePOB(placeOfBirth.value)" formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.placeOfBirth.invalid && (editPersonForm.controls.placeOfBirth.dirty || editPersonForm.controls.placeOfBirth.touched) else newvalidbirthPlace">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -224,7 +224,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteland: </label>
-            <input formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required />
+            <input #countryOfBirth (change)="updateCOB(countryOfBirth.value)" formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.countryOfBirth.invalid && (editPersonForm.controls.countryOfBirth.dirty || editPersonForm.controls.countryOfBirth.touched) else newvalidcountryOfBirth">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -237,7 +237,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> IBAN: </label>
-            <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban"
+            <input (change)="updateIban(iban.value)" #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban"
               type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.iban.invalid && (editPersonForm.controls.iban.dirty || editPersonForm.controls.iban.touched) else newvalidiban">
@@ -249,7 +249,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> BIC: </label>
-            <input formControlName="bic" class="form-control" name="bic" type="text" required />
+            <input #bic (change)="updateBIC(bic.value)" formControlName="bic" class="form-control" name="bic" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.bic.invalid && (editPersonForm.controls.bic.dirty || editPersonForm.controls.bic.touched) else newvalidbic">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -260,7 +260,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Verplaatst zich met:: </label>
-            <input formControlName="travelMode" class="form-control" name="travelMode" type="text" required />
+            <input #travelMode (change)="updatetravelMode(travelMode.value)" formControlName="travelMode" class="form-control" name="travelMode" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.travelMode.invalid && (editPersonForm.controls.travelMode.dirty || editPersonForm.controls.travelMode.touched) else newvalidtravelMode">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -279,8 +279,7 @@
 
 </form>
 
-<form [formGroup]="editPersonForm2" novalidate id="AddPersonForm1">
-
+<!-- <form [formGroup]="editPersonForm2" novalidate id="AddPersonForm1">
   <div id="from1" *ngIf="showFormIndex === 2">
     <div id="CustomerDetails" class="customerBox">
       <div class="row panelheader">
@@ -374,8 +373,6 @@
     </div>
     <div id="CustomerContact1" class="customerBox">
       <div class="row netExpense" style="padding-left: 10px;">
-        <!-- <div class="col col-sm-2">
-              </div> -->
         <ui-switch (change)="changeKM($event)" size="small"> </ui-switch> &nbsp;
         <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
       </div>
@@ -414,7 +411,7 @@
     </div>
   </div>
 
-</form>
+</form> -->
 
 <!-- <div class="col col-sm-3">
     <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img

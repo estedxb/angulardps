@@ -21,34 +21,73 @@ export class DashboardPersonComponent implements OnInit {
   public loginaccessToken: string = localStorage.getItem('accesstoken');
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public vatNumber: string;
+  public startDate: Date;
+  public endDate: Date;
+  public WeekDiff = 0;
+  public SelectedDates = '';
+  public SelectedMonday = '';
+  public SelectedTuesday = '';
+  public SelectedWednesday = '';
+  public SelectedThursday = '';
+  public SelectedFriday = '';
+  public SelectedSaturday = '';
+  public SelectedSunday = '';
 
-  constructor(
-    private personService: PersonService, private route: ActivatedRoute,
-    private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar
-  ) { }
+  // tslint:disable-next-line: max-line-length
+  constructor(private personService: PersonService, private route: ActivatedRoute, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    this.onPageInit();
-  }
+  ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
-    console.log('this.vatNumber : ' + this.vatNumber);
+    this.SelectedDates = this.getSelectedDates();
+    console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
+
+    this.personService.getPersonsContractsByVatNumber(this.vatNumber, this.startDate, this.endDate)
+      .subscribe(persons => {
+        this.maindatas = persons;
+        console.log('getPersonsContractsByVatNumber in DashboardPersonComponent ::', this.maindatas);
+      }, error => this.errorMsg = error);
+
+    console.log('this.currentPage : ' + this.currentPage);
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
-        this.personService.getPersonsByVatNumber(this.vatNumber)
-          .subscribe(persons => {
-            this.maindatas = persons;
-            console.log('getPersonsByVatNumber in dashboard-person.component ::');
-            console.log(persons);
-          }, error => this.errorMsg = error);
       }
     }
   }
 
-  OpenAddPersonURL() {
-    this.router.navigate(['./person/add']);
+  addWeek() {
+    this.WeekDiff += 1;
+    this.SelectedDates = this.getSelectedDates();
+  }
+
+  minusWeek() {
+    this.WeekDiff -= 1;
+    this.SelectedDates = this.getSelectedDates();
+  }
+
+  getSelectedDates() {
+    const curr = new Date();
+    let first = curr.getDate() - curr.getDay() + (this.WeekDiff * 7);
+    console.log('curr.getDate :: ', curr.getDate());
+    console.log('curr.getDay :: ', curr.getDay());
+    console.log('first :: ', first);
+    first = first + 1;
+    console.log('first 2 :: ', first);
+    const last = first + 6;
+
+    const monday = new Date(curr.setDate(first)).toUTCString();
+    const sunday = new Date(curr.setDate(last)).toUTCString();
+    console.log(monday + ' ' + sunday);
+
+    this.startDate = new Date(monday);
+    this.endDate = new Date(sunday);
+    // tslint:disable-next-line: max-line-length
+    return this.startDate.getUTCDate().toString() + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + '. ' + this.endDate.getUTCFullYear();
+  }
+  getShortMonth(date) {
+    return date.toLocaleString('nl-NL', { month: 'long' });
   }
 
   openContractDialog(personid, contractid): void {
@@ -87,7 +126,17 @@ export class DashboardPersonComponent implements OnInit {
         }
         */
       });
-    } catch (e) { alert(e.message);}
+    } catch (e) { alert(e.message); }
+  }
+
+  OpenAddPersonURL() {
+    this.router.navigate(['./person/add']);
+  }
+  OpenBulkContractURL() {
+    this.router.navigate(['./bulkcontract']);
+  }
+  OpenUpdatePerson(SSID: string) {
+    this.router.navigate(['./person/' + SSID]);
   }
 
 }

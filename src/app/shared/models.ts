@@ -61,16 +61,16 @@ export class LoginToken { accessToken: string; dpsUser: DpsUser; }
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
-    constructionProfile: ConstructionProfile; constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
+    constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
     driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
 }
-
 
 export class Person {
     socialSecurityNumber: SocialSecurityNumber; dateOfBirth: string; placeOfBirth: string; countryOfBirth: string; nationality: string;
     gender: Gender; firstName: string; lastName: string; address: Address; language: Language; email: EmailAddress; mobile: PhoneNumber;
     phone: PhoneNumber; bankAccount: BankAccount; travelMode: string; status: string;
 }
+
 export class SocialSecurityNumber { number: string; }
 export class Gender { genderId: number; title: string; }
 export class BankAccount { bic: string; iban: string; }
@@ -114,6 +114,7 @@ export class Summaries { actionid: string; message: string; date: string; id: st
 
 export class SelectedContract { contractId: number; personId: string; }
 
-export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File}
-
-export enum FileType { Medical = 'Medical', StudentAtWork = 'StudentAtWork', ConstructionCard = 'ConstructionCard'  }
+export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
+export class PersonsContracts { dpsPerson: DpsPerson; dpsContractid: number; PositionName: string; }
+export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File }
+export enum FileType { Medical = 'Medical', StudentAtWork = 'StudentAtWork', ConstructionCard = 'ConstructionCard' }

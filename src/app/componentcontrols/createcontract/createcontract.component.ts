@@ -21,9 +21,13 @@ import { CancelContractComponent } from '../cancelcontract/cancelcontract.compon
 export class CreateContractComponent implements OnInit {
   ContractForm: FormGroup
   
-  selectedYear: any;
-  selectedMonth: any;
-  selectedIndex: any;
+  selectedStartYear: any;
+  selectedStartMonth: any;
+  selectedStartDay: any;
+
+  selectedEndYear: any;
+  selectedEndMonth: any;
+  selectedEndDay: any;
 
   public maindatas = [];
   public SelectedIndex = -1;
@@ -48,7 +52,8 @@ export class CreateContractComponent implements OnInit {
     
   public personid: string;
   public contractId: number;
-
+  public calendarData:string;
+  public calendarDataNew:string;
 
   constructor(private positionsService: PositionsService, 
     private personService : PersonService, 
@@ -101,21 +106,35 @@ export class CreateContractComponent implements OnInit {
        this.ContractForm.controls.lastname.setValue(response.body.person.lastName);
      });
    }
+  
 
   loadContract(vatNumber : string , cid: string) {    
     this.contractService.getContractByVatNoAndId( vatNumber, cid).subscribe(response => {
       console.log('loadContract :: ', response);
      
       this.currentContract = response;
-      //this.personid = response.personId;
-      this.selectedYear =  new Date(response.contract.startDate).getFullYear();
-      console.log('this.selectedYear  :: ', this.selectedYear  );
-      this.selectedMonth =  this.monthNames[new Date(response.contract.startDate).getMonth()]
-      console.log('this.selectedMonth :: ', this.selectedMonth );
-      this.selectedIndex =  new Date(response.contract.startDate).getDate();
-      console.log('this.selectedIndex :: ', this.selectedIndex);
+     
+      this.selectedStartYear =  new Date(response.contract.startDate).getFullYear();
+      console.log('this.selectedStartYear  :: ', this.selectedStartYear  );
+      this.selectedStartMonth =  new Date(response.contract.startDate).getMonth();
+      console.log('this.selectedStartMonth :: ', this.selectedStartMonth );
+      this.selectedStartDay =  new Date(response.contract.startDate).getDate();
+      console.log('this.selectedStartDay :: ', this.selectedStartDay);
+      
+      this.calendarData = this.selectedStartDay + "/" + (this.selectedStartMonth+1) + "/" + this.selectedStartYear;
+      console.log("calendar data="+this.calendarData);
 
-      this.selectedEndDate = response.contract.endDate;
+      this.selectedEndYear =  new Date(response.contract.endDate).getFullYear();
+      console.log('this.selectedEndYear  :: ', this.selectedEndYear  );
+      this.selectedEndMonth =  new Date(response.contract.endDate).getMonth();
+      console.log('this.selectedEndMonth :: ', this.selectedEndMonth );
+      this.selectedEndDay =  new Date(response.contract.endDate).getDate();
+      console.log('this.selectedEndDay :: ', this.selectedEndDay);
+      
+      this.calendarDataNew = this.selectedEndDay + "/" + (this.selectedEndMonth+1) + "/" + this.selectedEndYear;
+
+      console.log(" calendarDataNew="+this.calendarDataNew);
+
       this.positionSelected = response.contract.position.name;
       this.locationSelected = response.locationId;
       this.workScheduleSelected = response.workScheduleId;    
@@ -125,7 +144,6 @@ export class CreateContractComponent implements OnInit {
   monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-
 
   openDialog(): void {
     try {

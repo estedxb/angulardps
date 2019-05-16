@@ -1,0 +1,1502 @@
+[
+  {
+    "dpsContractid": 1,
+    "PositionName": "Freelance designer",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "91.10.18-035.58"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Dubai",
+        "countryOfBirth": "UAE",
+        "nationality": "UAE",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Vanessa",
+        "lastName": "Martens",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 1,
+    "PositionName": "Marketing assistant",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "38.09.16-343.34"
+        },
+        "dateOfBirth": "1938-09-16T00:00:00",
+        "placeOfBirth": "Chennai",
+        "countryOfBirth": "India",
+        "nationality": "Indian",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Simon",
+        "lastName": "Blondeel",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "CIO",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "84.09.10-343.34"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Jannes",
+        "lastName": "Labaere",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Receptie",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "84.11.04-343.34"
+        },
+        "dateOfBirth": "1984-01-04T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Lieven",
+        "lastName": "Bonamie",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Jobstudent Arbeider",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 0,
+        "costReimbursment": false,
+        "netCostReimbursment": 0,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....asdfasfasfasdfasfasdfa",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "41.09.16-343.34"
+        },
+        "dateOfBirth": "1938-09-16T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "asdfsafd",
+        "lastName": "asdsdf",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Receptie",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "46.09.16-343.34"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Robert",
+        "lastName": "Martens",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Arbeider",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Zaalverantwoordelijke",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "41.09.15-343.34"
+        },
+        "dateOfBirth": "1941-01-15T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Charlotte",
+        "lastName": "De Pestel",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Jobstudent Arbeider",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Cleaning",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "12.09.21-343.34"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Jan Pier",
+        "lastName": "Klaai",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Chef kok",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "38.09.12-343.34"
+        },
+        "dateOfBirth": "1938-09-12T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Pis Pan",
+        "lastName": "Pot",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Tuinman",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "73.09.16-343.34"
+        },
+        "dateOfBirth": "1976-09-09T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Jean",
+        "lastName": "Mars",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "",
+      "statute": {
+        "name": "",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 0,
+        "costReimbursment": false,
+        "netCostReimbursment": 0,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Event medewerkster",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "99.10.18-035.58"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Robin",
+        "lastName": "Hoedt",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Chef kok",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "39.09.16-343.34"
+        },
+        "dateOfBirth": "1941-09-16T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Hoedt",
+        "lastName": "Robin",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "DJ",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "63.09.11-343.34"
+        },
+        "dateOfBirth": "2020-03-03T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Mars",
+        "lastName": "James",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "",
+        "status": ""
+      },
+      "customerPostionId": "Balaji Subbiah",
+      "statute": {
+        "name": "Flexijob Arbeider",
+        "type": "Blue"
+      },
+      "renumeration": {
+        "hourlyWage": 1.324,
+        "costReimbursment": true,
+        "netCostReimbursment": 2.354,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "extra extra extra extra extra extra extra extra extra extra extra extra extra extra extra extra extra extra ",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Team Leader",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "12.09.16-343.34"
+        },
+        "dateOfBirth": "2018-09-16T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Balaji",
+        "lastName": "Subbiah",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "1234343434343434",
+          "iban": "BE1234343434343434"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Three",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....Extra .....",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  },
+  {
+    "dpsContractid": 0,
+    "PositionName": "Computer Engineer",
+    "dpsPerson": {
+      "customerVatNumber": "123456789101",
+      "person": {
+        "socialSecurityNumber": {
+          "number": "87.10.18-035.58"
+        },
+        "dateOfBirth": "2019-01-01T00:00:00",
+        "placeOfBirth": "Bruges",
+        "countryOfBirth": "Belgium",
+        "nationality": "Belgium",
+        "gender": {
+          "genderId": 0,
+          "title": "Male"
+        },
+        "firstName": "Faisal",
+        "lastName": "Faisal",
+        "address": {
+          "street": "Magic Street",
+          "streetNumber": "232",
+          "bus": "56",
+          "city": "Magic City",
+          "postalCode": "asdfasdf",
+          "country": "New country",
+          "countryCode": "NX"
+        },
+        "language": {
+          "name": "",
+          "shortName": ""
+        },
+        "email": {
+          "emailAddress": "asdfasfafds@gmaill.com"
+        },
+        "mobile": {
+          "number": "97823232323"
+        },
+        "phone": {
+          "number": "32452344352355"
+        },
+        "bankAccount": {
+          "bic": "asdf",
+          "iban": "asdf"
+        },
+        "travelMode": "asdf",
+        "status": ""
+      },
+      "customerPostionId": "Function Two",
+      "statute": {
+        "name": "Bediende",
+        "type": ""
+      },
+      "renumeration": {
+        "hourlyWage": 1,
+        "costReimbursment": false,
+        "netCostReimbursment": 2,
+        "transportationAllowance": true
+      },
+      "addittionalInformation": "Extra .....adsfafasfdasdfasdf",
+      "medicalAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "vcaAttestation": {
+        "location": "",
+        "name": ""
+      },
+      "constructionProfile": {
+        "constructionCards": null
+      },
+      "constructionCards": [],
+      "studentAtWorkProfile": {
+        "attestation": {
+          "location": "",
+          "name": ""
+        },
+        "attestationDate": "2019-10-10T00:00:00",
+        "contingent": 0,
+        "balance": 0
+      },
+      "driverProfiles": [
+        {
+          "type": null,
+          "attestation": {
+            "location": "",
+            "name": ""
+          }
+        }
+      ],
+      "otherDocuments": [
+        {
+          "location": "",
+          "name": ""
+        }
+      ],
+      "isEnabled": false,
+      "isArchived": false
+    }
+  }
+]
