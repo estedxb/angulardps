@@ -13,6 +13,7 @@ import {
 } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-editperson',
