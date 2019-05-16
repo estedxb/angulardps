@@ -246,6 +246,13 @@ export class PersonPositionComponent implements OnInit {
   switchNetExpense($event) {
     this.DpsPersonObject.renumeration.costReimbursment = $event;
 
+    if($event === true) {
+      this.PersonPositionForm.controls.netExpenseAllowance.enable();
+    }
+    else {
+      this.PersonPositionForm.controls.netExpenseAllowance.disable();
+    }
+
     this.changeMessage();
   }
 

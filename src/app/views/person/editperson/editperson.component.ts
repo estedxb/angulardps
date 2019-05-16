@@ -12,6 +12,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-editperson',
@@ -73,7 +74,7 @@ export class EditPersonComponent implements OnInit {
 
   public message;
 
-  constructor(private personsService: PersonService, private data: DataService) { }
+  constructor(private personsService: PersonService, private data: DataService,private spinner: NgxSpinnerService) { }
 
   setDummyStatute() {
   }
@@ -89,6 +90,14 @@ export class EditPersonComponent implements OnInit {
     this.onPageInit();
     this.loadDOBFromSSID();
     this.createObjectsForm1();
+
+      /** spinner starts on init */
+      this.spinner.show();
+ 
+      // setTimeout(() => {
+      //     /** spinner ends after 5 seconds */
+      //     this.spinner.hide();
+      // }, 15000);
 
   }
 
