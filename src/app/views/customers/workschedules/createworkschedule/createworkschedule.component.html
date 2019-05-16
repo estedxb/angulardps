@@ -15,7 +15,7 @@
   <form [formGroup]="WorkScheduleForm" novalidate id="WorkScheduleForm">
     <div class="contactperson">
       <div class="row">
-        <div class="col-sm-7 inputWithImg">
+        <div class="col-sm-6 inputWithImg">
           <label class="titleBold"> Naam: </label>
           <input formControlName="name" class="form-control" name="name" type="text" required />
           <div class="form-control-feedback"
@@ -46,18 +46,29 @@
             </thead>
             <tr *ngFor="let workScheduleRow of workScheduleRows">
               <td *ngFor="let weekDayOf of workScheduleRow.weekDayOf">
-                <div class="row"
-                  (click)="onWorkTimeSelector(workScheduleRow.rowid,weekDayOf.dayOfWeek,weekDayOf.workTimes)">
-                  <div class="col col-sm-5 start">
-                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_Start_{{weekDayOf.dayOfWeek}}"
-                      [value]="weekDayOf.workTimes.startTime" [title]="weekDayOf.workTimes.title" placeholder=":"
-                      disabled />
+                <div class="row bg">
+                  <div class="start bg">
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_Start_{{weekDayOf.dayOfWeek}}_HH"
+                      [value]="weekDayOf.workTimes.startTime | timeSpliter: 1" [title]="weekDayOf.workTimes.title"
+                      placeholder="00" maxlength="2" min="0" max="11" type="number"
+                      (blur)="OnTextBoxBlur($event,workScheduleRow.rowid,weekDayOf.dayOfWeek,'S','H')" />
+                    <div class="mid">:</div>
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_Start_{{weekDayOf.dayOfWeek}}_MM"
+                      [value]="weekDayOf.workTimes.startTime | timeSpliter: 2" [title]="weekDayOf.workTimes.title"
+                      placeholder="00" maxlength="2" min="0" max="59" type="number"
+                      (blur)="OnTextBoxBlur($event,workScheduleRow.rowid,weekDayOf.dayOfWeek,'S','M')" />
                   </div>
-                  <div class="col col-sm-2">&nbsp;-&nbsp;</div>
-                  <div class="col col-sm-5 end">
+                  <div class="mid bg">-</div>
+                  <div class="end bg">
                     <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}"
-                      [value]="weekDayOf.workTimes.endTime" [title]="weekDayOf.workTimes.title" placeholder=":"
-                      disabled />
+                      [value]="weekDayOf.workTimes.endTime | timeSpliter: 1" [title]="weekDayOf.workTimes.title"
+                      placeholder="00" maxlength="2" min="0" max="11" type="number"
+                      (blur)="OnTextBoxBlur($event,workScheduleRow.rowid,weekDayOf.dayOfWeek,'E','H')" />
+                    <div class="mid">:</div>
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}"
+                      [value]="weekDayOf.workTimes.endTime | timeSpliter: 2" [title]="weekDayOf.workTimes.title"
+                      placeholder="00" maxlength="2" min="0" max="59" type="number"
+                      (blur)="OnTextBoxBlur($event,workScheduleRow.rowid,weekDayOf.dayOfWeek,'E','M')" />
                   </div>
                 </div>
               </td>

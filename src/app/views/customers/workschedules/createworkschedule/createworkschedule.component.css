@@ -23,20 +23,23 @@
   border-right: none;
 }
 .WorkScheduleDiv tr td {
-  line-height: 34px;
+  line-height: 24px;
   border-right: #ddd 1px solid;
   border-top: #ddd 1px solid;
   vertical-align: middle;
+  padding: 10px 0px;
+  margin: 0px;
 }
 .WorkScheduleDiv tr td:last-child {
   border-right: none;
   border-top: #ddd 1px solid;
 }
 .WorkScheduleDiv tr td input {
-  width: 100%;
+  width: 23px;
   margin: auto;
   text-align: center;
-  border: 0px;
+  border: rgba(228, 228, 228, 0) 1px solid;
+  float: left;
 }
 .WorkScheduleDiv .row,
 .WorkScheduleDiv .col {
@@ -47,7 +50,6 @@
 
 .WorkScheduleDiv .row {
   margin: auto;
-  padding: 2px;
 }
 
 .WorkScheduleDiv .row .col input:disabled {
@@ -58,4 +60,27 @@
 .WorkScheduleDiv .row .col,
 .WorkScheduleDiv .row .col input {
   cursor: pointer;
+  background-color: #fff;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.bg {
+  border: 0px solid red;
+}
+
+.WorkScheduleDiv .start,
+.WorkScheduleDiv .end {
+  padding: 0px;
+  margin: 0px;
+}
+.WorkScheduleDiv .mid {
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  width: 8px;
+  text-align: center;
 }

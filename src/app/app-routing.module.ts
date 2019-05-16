@@ -52,6 +52,8 @@ import { DashboardActionComponent } from './views/dashboard/dashboardaction/dash
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
 import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
+import { WeekPipe } from './pipes/week.pipe';
+import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -116,9 +118,10 @@ export const routingComponents = [
   DashboardActionComponent,
   DashboardPersonComponent,
   CancelContractComponent,
-  BulkContractComponent
+  BulkContractComponent,
+  WeekPipe,
+  TimeSpliterPipe
 ];
-
 export const entringComponents = [
   DPSSystemMessageComponent,
   CreateuserComponent,
