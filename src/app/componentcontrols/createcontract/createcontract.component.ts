@@ -33,7 +33,7 @@ export class CreateContractComponent implements OnInit {
   public SelectedIndex = -1;
   public dpsPositionsData = [];
   public dpsPosition : DpsPostion;
-  positionSelected: string;
+  positionSelected: any;
   public location : Location;
   public locationsData = [];
   locationSelected : any;  
@@ -140,8 +140,11 @@ export class CreateContractComponent implements OnInit {
       console.log(" calendarDataNew="+this.calendarDataNew);
 
       this.positionSelected = response.contract.position.name;
+      console.log('this.positionSelected :: ', this.positionSelected);
       this.locationSelected = response.locationId;
+      console.log('this.locationSelected :: ', this.locationSelected);
       this.workScheduleSelected = response.workScheduleId;    
+      console.log('this.workScheduleSelected :: ', this.workScheduleSelected);
       });     
   }
 
@@ -321,7 +324,7 @@ export class CreateContractComponent implements OnInit {
       response.forEach(element => { 
         this.dpsPositionsData.push(element);
       });  
-      console.log('Positions Form Data : ', this.dpsPositionsData);
+      console.log('dpsPositionsData : ', this.dpsPositionsData);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }

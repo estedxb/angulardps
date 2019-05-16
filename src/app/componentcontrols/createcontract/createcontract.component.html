@@ -43,7 +43,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
                     <select class='form-control' required [(ngModel)]='positionSelected' (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let position of dpsPositionsData' [value]="position.position.name">{{position.position.name}}</option>
+                        <option class='option' *ngFor='let dpsPosition of dpsPositionsData' [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
                     </select>
                     
                 </div>               

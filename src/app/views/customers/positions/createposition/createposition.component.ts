@@ -85,8 +85,8 @@ export class CreatepositionComponent implements OnInit {
   }
 
   downloadFile() {
-    this.currentPosition.position.workstationDocument.location = 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf';
-    saveAs(this.currentPosition.position.workstationDocument.location, 'application/pdf;charset=utf-8');
+    this.currentPosition.position.workstationDocument.location = environment.getPositionsDownloadTemplate;
+    saveAs(this.currentPosition.position.workstationDocument.location);
   }
 
   handleFileInput(files: FileList) {
