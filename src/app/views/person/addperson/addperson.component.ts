@@ -62,6 +62,8 @@ export class AddPersonComponent implements OnInit {
   public dateofBirth;
   public SelectedIndexFunctie = 0;
   public maindatas = [];
+  public statutes = [];
+  public countStatutes:number;
   public datas: DpsPostion;
   public selectedGenderIndex;
 
@@ -139,7 +141,6 @@ export class AddPersonComponent implements OnInit {
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
   constructor(private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
-    this.setDummyStatute();
 
     console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
 
@@ -151,7 +152,16 @@ export class AddPersonComponent implements OnInit {
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
-    //SetInitialValue();
+
+    this.statuteService.getStatutes().subscribe(data => {
+      this.statutes = data;
+      this.setDummyStatute(this.statutes);
+      console.log('data from getStatutues(): ');
+      console.log(data);
+      this.countStatutes = data.length;
+    }, error => this.errorMsg = error);
+
+
   }
 
   openDialog(): void {
@@ -196,7 +206,6 @@ export class AddPersonComponent implements OnInit {
 
   ngOnInit() {
 
-    this.setDummyStatute();
     this.setDropDownYear();
 
     this.dataDropDown = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
@@ -259,7 +268,16 @@ export class AddPersonComponent implements OnInit {
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
-    console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
+    this.statuteService.getStatutes().subscribe(data => {
+      this.statutes = data;
+      this.setDummyStatute(this.statutes);
+      console.log('data from getStatutues(): ');
+      console.log(data);
+      this.countStatutes = data.length;
+    }, error => this.errorMsg = error);
+
+
+    //console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
 
   }
 
@@ -402,20 +420,14 @@ export class AddPersonComponent implements OnInit {
     return digitsValid;
   }
 
-  setDummyStatute() {
-    this.dataDropDownStatute =
-      [
-        "Arbeider",
-        "Bediende",
-        "Jobstudent Arbeider",
-        "Flexijob Arbeider",
-        "Seizoensarbeider",
-        "Gelegenheidsarbeider horeca",
-        "Jobstudent Bediende",
-        "Flexijob Bediende"
-      ];
+  setDummyStatute(data) {
+    this.dataDropDownStatute = [];
 
+      data.forEach(element => {
+        this.dataDropDownStatute.push(element.name);
+      });
   }
+
 
   setPersonVatNumber() {
 
@@ -661,7 +673,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation = new Documents();
     this.DpsPersonObject.vcaAttestation = response.vcaAttestation;
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    //this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = response.constructionCards;
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
@@ -747,7 +759,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = "";
     this.DpsPersonObject.vcaAttestation.name = "";
 
-    this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
