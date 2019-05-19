@@ -84,3 +84,6 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 8px;
   text-align: center;
 }
+.ErrorMsg {
+  color: red;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 // tslint:disable-next-line: max-line-length
@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CreateWorkTimeComponent } from '../../../../componentcontrols/createworktime/createworktime.component';
+import { copyObj } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-createworkschedule',
@@ -20,6 +21,13 @@ export class CreateWorkScheduleComponent implements OnInit {
   public SelectedRowID: number;
   public SelectedWeekDay: number;
   public data: WorkTimes;
+  public isValidMon = true;
+  public isValidTue = true;
+  public isValidWed = true;
+  public isValidThu = true;
+  public isValidFri = true;
+  public isValidSat = true;
+  public isValidSun = true;
   // public workScheduleRow: WorkScheduleRow;
 
   public oldCurrentWorkSchedule: any;
@@ -35,9 +43,8 @@ export class CreateWorkScheduleComponent implements OnInit {
     private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
-    this.currentDpsWorkSchedule = dpsworkscheduledata;
+    this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));
   }
-
 
   /*
     ngDoCheck() {
@@ -50,18 +57,17 @@ export class CreateWorkScheduleComponent implements OnInit {
     }
   */
 
-  ngOnInit() {
-    // console.log('Current VatNumber : ' + this.VatNumber);
-    // console.log('ngOnInit currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule.workSchedule);
-    this.WorkScheduleForm = new FormGroup({ name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]) });
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
+
+  onPageInit() {
+    this.WorkScheduleForm = new FormGroup({ name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]) });
     this.loadWorkScheduleToEdit();
-    // this.getDummyRows();
-    // console.log('getDummyRows Data :: ', this.workScheduleRows);
   }
 
 
   loadWorkScheduleToEdit() {
-    // console.log('currentDpsWorkSchedule id :: ', this.currentDpsWorkSchedule.id);
     if (this.currentDpsWorkSchedule.id !== undefined || this.currentDpsWorkSchedule.id !== 0) {
       this.WorkScheduleForm.controls.name.setValue(this.currentDpsWorkSchedule.name + '');
       this.TransposeCurrentDpsWorkScheduleToWorkScheduleRows();
@@ -102,7 +108,7 @@ export class CreateWorkScheduleComponent implements OnInit {
             isMissing = true;
           }
         } catch (e) {
-          console.log('Error ! ' + e.message);
+          console.error('Error ! ' + e.message);
           isMissing = true;
         }
 
@@ -151,13 +157,6 @@ export class CreateWorkScheduleComponent implements OnInit {
         this.currentDpsWorkSchedule.workSchedule.workDays[w].workTimes[k].startTime = '00:00';
         this.currentDpsWorkSchedule.workSchedule.workDays[w].workTimes[k].endTime = '00:00';
       }
-
-      /*
-      console.log('StartTime & EndTime AM/PM Found After',
-        this.currentDpsWorkSchedule.workSchedule.workDays[w].workTimes[k].startTime,
-        this.currentDpsWorkSchedule.workSchedule.workDays[w].workTimes[k].endTime
-      );
-      */
     }
   }
 
@@ -306,31 +305,128 @@ export class CreateWorkScheduleComponent implements OnInit {
     if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) { return this.currentDpsWorkSchedule; }
   }
 
-  OnTextBoxBlur(event, rowid, dayOfWeek, SE, HM) {
-    console.log('OnTextBoxBlur(event, rowid, dayOfWeek, SE, HM);');
-    console.log('OnTextBoxBlur(' + event.target.value + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
-
-    this.currentDpsWorkSchedule.workSchedule.workDays.forEach(
-      function (wday) {
+  OnTextBoxBlur(InputValue, rowid, dayOfWeek, SE, HM) {
+    // console.log('OnTextBoxBlur(' + InputValue + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
+    this.currentDpsWorkSchedule.workSchedule.workDays.forEach(wday => {
+      if (dayOfWeek === wday.dayOfWeek) {
+        // console.log('wday(' + (rowid + 1) + ')', wday);
         let i = 0;
         let breaked = false;
-        wday.workTimes.forEach(
-          function (wTimes) {
-            i += 1;
-            if (rowid === i && !breaked) {
-              console.log('OnTextBoxBlur :: ', wTimes);
-
-              breaked = true;
+        wday.workTimes.forEach(wTimes => {
+          i += 1;
+          // console.log('wTimes (' + i + ')', wTimes);
+          // console.log('i - ' + i + ' :: rowid+1 - ' + rowid + 1, wTimes);
+          if (rowid + 1 === i && !breaked) {
+            // console.log('OnTextBoxBlur wTimes :: ', wTimes);
+            if (SE === 'E') { // EndTime
+              // console.log('updateWorkScheduleWorkTime EndTime');
+              if (HM === 'M') { // EndTime Min
+                // console.log('updateWorkScheduleWorkTime EndTime Min');
+                wTimes.endTime = wTimes.endTime.split(':')[0] + ':' + InputValue;
+              } else {// EndTime Hour
+                // console.log('updateWorkScheduleWorkTime EndTime Hour');
+                wTimes.endTime = InputValue + ':' + wTimes.endTime.split(':')[1];
+              }
+            } else {// StartTime
+              // console.log('updateWorkScheduleWorkTime StartTime');
+              if (HM === 'M') { // StartTime Min
+                // console.log('updateWorkScheduleWorkTime StartTime Min');
+                wTimes.startTime = wTimes.startTime.split(':')[0] + ':' + InputValue;
+              } else {// StartTime Hour
+                // console.log('updateWorkScheduleWorkTime StartTime Hour');
+                wTimes.startTime = InputValue + ':' + wTimes.startTime.split(':')[1];
+              }
             }
-          });
-      });
+            breaked = true;
+            this.updateVaild(wday.workTimes, wTimes, dayOfWeek, rowid);
+          }
+        });
+      }
+    });
+    console.log('OnTextBoxBlur currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule.workSchedule);
+  }
 
+  updateVaild(wday_workTimes, wTimes, dayOfWeek, rowid) {
+    let isValid = true;
+    const STSplit = wTimes.startTime.split(':');
+    const ETSplit = wTimes.endTime.split(':');
+    const sTime = new Date(2019, 5, 1, parseInt(STSplit[0], 0), parseInt(STSplit[1], 0), 0);
+    const eTime = new Date(2019, 5, 1, parseInt(ETSplit[0], 0), parseInt(ETSplit[1], 0), 0);
+    if (sTime > eTime) {
+      isValid = false;
+    } else {
+      let i = 0;
+      let breaked = false;
+      wday_workTimes.forEach(wwTimes => {
+        i += 1;
+        if (rowid + 1 !== i) {
+          const CSTSplit = wwTimes.startTime.split(':');
+          const CETSplit = wwTimes.endTime.split(':');
+          const csTime = new Date(2019, 5, 1, parseInt(CSTSplit[0], 0), parseInt(CSTSplit[1], 0), 0);
+          const ceTime = new Date(2019, 5, 1, parseInt(CETSplit[0], 0), parseInt(CETSplit[1], 0), 0);
+          if ((sTime > csTime) && (sTime < ceTime)) {
+            isValid = false;
+          } else {
+            if ((eTime > csTime) && (eTime < ceTime)) {
+              isValid = false;
+            }
+          }
+        }
+      });
+    }
+
+    if (dayOfWeek === 1) {
+      this.isValidMon = isValid;
+    } else if (dayOfWeek === 2) {
+      this.isValidTue = isValid;
+    } else if (dayOfWeek === 3) {
+      this.isValidWed = isValid;
+    } else if (dayOfWeek === 4) {
+      this.isValidThu = isValid;
+    } else if (dayOfWeek === 5) {
+      this.isValidFri = isValid;
+    } else if (dayOfWeek === 6) {
+      this.isValidSat = isValid;
+    } else {
+      this.isValidSun = isValid;
+    }
+  }
+
+  onKey(e) {
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  onHourKey(e) {
+    console.log(e.target.value);
+    if (e.target.value < 23) {
+      return true;
+    } else {
+      let s = (e.target.value % 24).toString();
+      if (s.length < 2) { s = '0' + s; };
+      e.target.value = s;
+      return false;
+    }
+  }
+
+  onMinKey(e) {
+    console.log(e.target.value);
+    if (e.target.value < 59) {
+      return true;
+    } else {
+      let s = (e.target.value % 60).toString();
+      if (s.length < 2) { s = '0' + s; };
+      e.target.value = s;
+      return false;
+    }
   }
 
   onSaveWorkScheduleClick() {
     this.createObjects();
     console.log('data ::', this.currentDpsWorkSchedule);
-    if (this.WorkScheduleForm.valid) {
+    if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
       if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {
         if (
           this.currentDpsWorkSchedule.id !== 0 && this.currentDpsWorkSchedule.id !== undefined &&
@@ -377,56 +473,56 @@ export class CreateWorkScheduleComponent implements OnInit {
 }
 
 /*
-  getDummyRows() {
-    console.log('getDummyRows :: ');
-    this.workScheduleRows.push(this.getDummyRowOf(1));
-    this.workScheduleRows.push(this.getDummyRowOf(2));
-  }
+getDummyRows() {
+console.log('getDummyRows :: ');
+this.workScheduleRows.push(this.getDummyRowOf(1));
+this.workScheduleRows.push(this.getDummyRowOf(2));
+}
 
-  onWorkTimeSelector(RowId, WeekDay, workTimes: WorkTimes) {
-    console.log('onWorkTimeSelector (RowId =  ' + RowId + ' :: WeekDay = ' + WeekDay + ' :: workTimes = [OBject Follows])', workTimes);
-    this.SelectedRowID = RowId;
-    this.SelectedWeekDay = WeekDay;
-    this.data = new WorkTimes();
-    this.data.title = workTimes.title;
-    this.data.startTime = workTimes.startTime;
-    this.data.endTime = workTimes.endTime;
-    console.log('onClickAdd EmptyData', this.data);
-    this.openDialog();
-  }
+onWorkTimeSelector(RowId, WeekDay, workTimes: WorkTimes) {
+console.log('onWorkTimeSelector (RowId =  ' + RowId + ' :: WeekDay = ' + WeekDay + ' :: workTimes = [OBject Follows])', workTimes);
+this.SelectedRowID = RowId;
+this.SelectedWeekDay = WeekDay;
+this.data = new WorkTimes();
+this.data.title = workTimes.title;
+this.data.startTime = workTimes.startTime;
+this.data.endTime = workTimes.endTime;
+console.log('onClickAdd EmptyData', this.data);
+this.openDialog();
+}
 
-  openDialog(): void {
-    try {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = false;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '500px';
-      dialogConfig.data = this.data;
-      dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
+openDialog(): void {
+try {
+const dialogConfig = new MatDialogConfig();
+dialogConfig.disableClose = false;
+dialogConfig.autoFocus = true;
+dialogConfig.width = '500px';
+dialogConfig.data = this.data;
+dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
 
-      const dialogRef = this.dialog.open(CreateWorkTimeComponent, dialogConfig);
+const dialogRef = this.dialog.open(CreateWorkTimeComponent, dialogConfig);
 
-      // const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
+// const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        this.data = result;
-        console.log('this.data ::', this.data);
-        console.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
-        // Need to update currentDpsWorkSchedule and workScheduleRows
-        // this.maindatas[this.SelectedIndex] = this.data;
-        this.ShowMessage('Work Time "' + this.data + '" is updated successfully.', '');
-      });
+dialogRef.afterClosed().subscribe(result => {
+  console.log('The dialog was closed');
+  this.data = result;
+  console.log('this.data ::', this.data);
+  console.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
+  // Need to update currentDpsWorkSchedule and workScheduleRows
+  // this.maindatas[this.SelectedIndex] = this.data;
+  this.ShowMessage('Work Time "' + this.data + '" is updated successfully.', '');
+});
 
-    } catch (e) { }
-  }
+} catch (e) { }
+}
 
 
-  getWorkTimeOf() {
-    const workTimes: WorkTimes = new WorkTimes();
-    workTimes.startTime = '10:20'; // '0' + rowid + ':0' + dayOfWeek;
-    workTimes.endTime = '30:40'; // '0' + rowid + ':0' + dayOfWeek;
-    workTimes.title = ''; // 'Data for Row (' + rowid + ') of weekday(' + dayOfWeek + ')';
-    return workTimes;
-  }
-  */
+getWorkTimeOf() {
+const workTimes: WorkTimes = new WorkTimes();
+workTimes.startTime = '10:20'; // '0' + rowid + ':0' + dayOfWeek;
+workTimes.endTime = '30:40'; // '0' + rowid + ':0' + dayOfWeek;
+workTimes.title = ''; // 'Data for Row (' + rowid + ') of weekday(' + dayOfWeek + ')';
+return workTimes;
+}
+*/
