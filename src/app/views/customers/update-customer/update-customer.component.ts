@@ -121,8 +121,9 @@ export class UpdateCustomerComponent implements OnInit {
     localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
   }
   receiveEditCustomerData($event) {
-    console.log('received data in update customer=');
+    console.log('received editCustomerData in update customer=');
     this.editCustomerData = $event;
+    console.log(this.editCustomerData);
   }
 
   onFormwardClick() {
