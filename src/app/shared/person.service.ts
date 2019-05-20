@@ -42,7 +42,7 @@ export class PersonService {
       console.log('Data From getVehicles JSON');
       this.getVehiclesURL = '../../assets/data/vehicles.json';
     }
-    
+
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
@@ -88,6 +88,9 @@ export class PersonService {
     let getURL = this.getPersonsContractsURL;
     if (environment.dataFromAPI_JSON && environment.getPersonsContracts !== '') {
       getURL = getURL + '/' + customervatnumber + '?startdate=' + startdate + '&enddate=' + enddate;
+    }
+    if (customervatnumber !== '123456789101') {
+      getURL = this.getPersonsContractsURL.replace('.json', '_empty.json');
     }
     console.log('PositionsService Data From = ' + getURL);
     const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
