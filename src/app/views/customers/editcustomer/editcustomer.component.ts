@@ -10,7 +10,7 @@ import { DataService } from 'src/app/shared/data.service';
 })
 export class EditCustomerComponent implements OnInit {
 
-  // public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   @Input() CustomerVatNumber: string;
   @Output() public childEvent = new EventEmitter();
   public HQdata: any;
@@ -24,6 +24,8 @@ export class EditCustomerComponent implements OnInit {
   public dataCustomerEdit: any;
 
   constructor(private customerService: CustomersService, private data: DataService) {
+
+    //this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.editObject = {
       data: '',
       page: ''

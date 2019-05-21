@@ -8,6 +8,7 @@ import {
   InvoiceSettings, Language, Contact
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
+import { fbind } from 'q';
 
 @Component({
   selector: 'app-statute',
@@ -85,6 +86,7 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
+      this.createFormArray();
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
         this.loadStatuteSettingsArray.forEach(element => {
           this.onloadData(element,counter);
@@ -93,17 +95,28 @@ export class StatuteComponent implements OnInit {
       }
     }
   }
-
    
    onloadData(arrayElement,counter){
 
-      console.log("value of arrayElement");
-      console.log(arrayElement.mealVoucherSettings.totalWorth);
+    console.log("value received="+arrayElement.mealVoucherSettings.totalWorth);
+    console.log("value received="+arrayElement.mealVoucherSettings.employerShare);
+    console.log("value received="+arrayElement.mealVoucherSettings.minimumHours);
 
-      this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
-      this.SForm.controls['Totalwaarde'].setValue(arrayElement.mealVoucherSettings.totalWorth);
-      this.SForm.controls['Wergeversdeel'].setValue(arrayElement.mealVoucherSettings.employerShare);
-      this.SForm.controls['minimumHours'].setValue(arrayElement.mealVoucherSettings.minimumHours);
+    console.log("MealBox");
+    console.log(this.MealBox.length+" "+ counter);
+
+
+    if(this.MealBox.length - 1 > counter)
+    {
+          let controlGroup = this.MealBox.at(counter) as FormGroup;
+          console.log(this.MealBox.length+" "+ counter);
+ 
+          (<FormGroup> this.MealBox.at(counter) as FormGroup).controls.Totalwaarde.setValue(arrayElement.mealVoucherSettings.totalWorth);
+          (<FormGroup> this.MealBox.at(counter) as FormGroup).controls.Wergeversdeel.setValue(arrayElement.mealVoucherSettings.employerShare);
+          (<FormGroup> this.MealBox.at(counter) as FormGroup).controls.minimumHours.setValue(arrayElement.mealVoucherSettings.minimumHours);
+    }
+
+    this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
 
       if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null )
       {
@@ -117,6 +130,27 @@ export class StatuteComponent implements OnInit {
 
     }
 
+createBoxes():FormGroup {
+
+ let formG:FormGroup = this.fb.group({
+  Totalwaarde: new FormControl(''),
+  Wergeversdeel: new FormControl(''),
+  minimumHours: new FormControl(''),  
+});
+
+return formG;
+
+}
+
+newArrayMealBox():FormArray {
+  return this.SForm.get('arrayBox') as FormArray;
+}
+
+arrayMealBox():FormArray {
+  return this.MealBox.get('arrayBox') as FormArray;
+}
+
+
   ngOnInit() {
     this.SForm = new FormGroup({
       CoefficientBox: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
@@ -125,7 +159,13 @@ export class StatuteComponent implements OnInit {
       Wergeversdeel: new FormControl(''),
       minimumHours: new FormControl(''),
 
+      arrayBox: this.fb.array([
+        this.createBoxes()
+      ]),
+
     });
+
+    //this.MealBox.push(this.SForm.get('arrayBox') as FormArray);
 
     this.createCoefficientArray();
 
@@ -136,12 +176,27 @@ export class StatuteComponent implements OnInit {
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
 
+      this.createFormArray();
+
       if (this.statutes.length !== 0) {
         this.emitData();
       }
 
     }, error => this.errorMsg = error);
 
+
+  }
+
+  createFormArray() {
+    let counter:number = 0;
+
+    this.MealBox = this.fb.array([]);
+
+    while(counter < this.statutes.length)
+    {
+      this.MealBox.push(this.SForm.get('arrayBox') as FormArray);
+      counter++;
+    }
 
   }
 
@@ -178,6 +233,9 @@ export class StatuteComponent implements OnInit {
     for (let i = 0; i < data.length; i++) 
     {
       const dataObject = data[i];
+
+      if(i != data.length - 1)
+        this.MealBox.push(this.createBoxes());
 
       this.statuteObject = new Statute();
       this.statuteObject.name = dataObject.name;
@@ -231,6 +289,12 @@ export class StatuteComponent implements OnInit {
       this.replaceArrayTotal(i);  
     }
   }
+
+  changeTotalBox1(value:number, k: number) {
+    this.MealBox[k].Totalwaarde = value;
+    //this.changeObject();
+  }
+
 
   WergeversdeelChange(value: number, i) {
     if(this.isMealEnabled[i]===true)
