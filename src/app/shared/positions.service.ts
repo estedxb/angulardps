@@ -8,6 +8,8 @@ import { environment } from '../../environments/environment';
 export class PositionsService {
   private getPositionsByVatNumberUrl = '';
   private getPositionUrl = '';
+  private getPositionUpdateUrl = '';
+
 
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'my-auth-token' }) };
 
@@ -16,6 +18,9 @@ export class PositionsService {
       console.log('Data From Remote');
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
+      this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
+
+      
     } else {
       console.log('Data From JSON');
       this.getPositionsByVatNumberUrl = '../../assets/data/positions.json';
@@ -30,7 +35,7 @@ export class PositionsService {
     return result;
   }
 
-  public createPosition(position: any): Observable<any> {
+  public createPosition(position: any ): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.getPositionUrl, position, {
       headers: httpHeaders,
@@ -45,21 +50,13 @@ export class PositionsService {
     });
   }
 
-  public updatePositionWithFile(position: any, fileToUpload: File): Observable<any> {
-    const httpHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+  public updatePositionWithFile( fileToUpload: File, vatNumber: string , positionId:number): Observable<any> {   
     const formData: FormData = new FormData();
-    
-    //formData.append('data', JSON.stringify(position));
-    if(fileToUpload.size>0)
-    {
-      formData.append('file', fileToUpload, fileToUpload.name);
-    }
-
+    formData.append('file', fileToUpload, fileToUpload.name);
     console.log('formData:::', formData);
-    new Response(formData).text().then(console.log)
-
-    return this.http.put<any>(this.getPositionUrl, JSON.stringify(position)+""+ formData ,{
-      headers: httpHeaders,
+    new Response(formData).text().then(console.log);
+    return this.http.post<any>(this.getPositionUpdateUrl +'/'+ vatNumber+'/'+ positionId, formData ,
+    {    
       observe: 'response'
     });
   }

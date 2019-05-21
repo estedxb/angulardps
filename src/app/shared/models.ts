@@ -117,4 +117,6 @@ export class SelectedContract { contractId: number; personId: string; }
 export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
 export class PersonsContracts { dpsPerson: DpsPerson; dpsContractid: number; PositionName: string; }
 export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File }
-export enum FileType { Medical = 'Medical', StudentAtWork = 'StudentAtWork', ConstructionCard = 'ConstructionCard' }
+export enum FileType { MedicalAttestation = 'MedicalAttestation', VcaAttestation='VcaAttestation', StudentAtWork = 'StudentAtWork', ConstructionCards = 'ConstructionCards', OtherDocuments='OtherDocuments' ,DriversLicense ='DriversLicense' }
+
+
