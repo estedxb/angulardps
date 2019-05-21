@@ -40,21 +40,21 @@
       </div>
     </div>
 
-    <ng-container *ngIf="isMealEnabled[this.i]===true">
-      <div class=" row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngFor="let mb of SForm.get('arrayBox').controls as nresult; let j=index; first as isFirstA; last as isLastA">
+    <ng-container formArrayName="arrayBox" *ngIf="isMealEnabled[this.i]===true">
+      <div class=" row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngFor="let mb of arrayBox.controls as nresult; let j=index; first as isFirstA; last as isLastA">
         <div class="col col-sm-4 inputWithEuro">Totale waarde<input (change)="totalChange(totalwaarde.value,j)"
-            formControlName="Totalwaarde" class="form-control" type="number" #totalwaarde
+            [formControlName]="Totalwaarde" class="form-control" type="number" #totalwaarde
             id="totalvalue_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0"
             value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
   
         <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,j)"
-            formControlName="Wergeversdeel" class="form-control" type="number" #wergeversdeel
+            [formControlName]="Wergeversdeel" class="form-control" type="number" #wergeversdeel
             id="sharesection_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0"
             value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i>
         </div>
   
         <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,j)"
-            formControlName="minimumHours" class="form-control" type="number" #minimumuren
+            [formControlName]="minimumHours" class="form-control" type="number" #minimumuren
             id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0"
             value="0" step=".01"></div>
       </div>
