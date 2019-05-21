@@ -53,7 +53,6 @@ export class DashboardActionComponent implements OnInit {
       reDirectURL = environment.actionURL_1;
     }
     reDirectURL = reDirectURL.replace('$id$', id);
-    alert(reDirectURL);
     this.router.navigate([reDirectURL]);
   }
 

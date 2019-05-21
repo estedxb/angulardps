@@ -82,6 +82,9 @@ export class AddPersonComponent implements OnInit {
   public yearString;
 
   public message;
+  public bban:any = "";
+  public bbic:any = "";
+  public iban:any = "";
 
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
@@ -99,23 +102,23 @@ export class AddPersonComponent implements OnInit {
   private _selectedValueMonth: any; private _selectedIndexMonth: any = 0; private _monthvalue: any;
   set selectedValueMonth(value: any) { this._selectedValueMonth = value; }
   get selectedValueMonth(): any { return this._selectedValueMonth; }
-  set selectedIndexMonth(value: number) { this._selectedIndexMonth = value; this.value = this.dataDropDown[this.selectedIndexMonth]; }
+  set selectedIndexMonth(value: number) { this._selectedIndexMonth = value; this.value = this.dropDownMonth[this.selectedIndexMonth]; }
   get selectedIndexMonth(): number { return this._selectedIndexMonth; }
   set valueMonth(value: any) { this._selectedValueMonth = value; }
   get valueMonth(): any { return this._selectedValueMonth; }
   resetToInitValueMonth() { this.value = this.selectedValue; }
-  SetInitialValueMonth() { if (this.selectedValueMonth === undefined) { this.selectedValueMonth = this.dataDropDown[this.selectedIndexMonth]; } }
+  SetInitialValueMonth() { if (this.selectedValueMonth === undefined) { this.selectedValueMonth = this.dropDownMonth[this.selectedIndexMonth]; } }
 
   /***** Drop Down functions and variables for calendar year  ********************************************/
   private _selectedValueYear: any; private _selectedIndexYear: any = 0; private _yearvalue: any;
   set selectedValueYear(value: any) { this._selectedValueYear = value; }
   get selectedValueYear(): any { return this._selectedValueYear; }
-  set selectedIndexYear(value: number) { this._selectedIndexYear = value; this.value = this.dataDropDown[this.selectedIndexYear]; }
+  set selectedIndexYear(value: number) { this._selectedIndexYear = value; this.value = this.dropDownYear[this.selectedIndexYear]; }
   get selectedIndexYear(): number { return this._selectedIndexYear; }
   set valueYear(value: any) { this._selectedValueYear = value; }
   get valueYear(): any { return this._selectedValueYear; }
   resetToInitValueYear() { this.value = this.selectedValue; }
-  SetInitialValueYear() { if (this.selectedValueYear === undefined) { this.selectedValueYear = this.dataDropDown[this.selectedIndexYear]; } }
+  SetInitialValueYear() { if (this.selectedValueYear === undefined) { this.selectedValueYear = this.dropDownYear[this.selectedIndexYear]; } }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
   private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 1; private _Functievalue: any;
@@ -140,7 +143,7 @@ export class AddPersonComponent implements OnInit {
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
-  constructor(private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+  constructor(public http:HttpClient, private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
     console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
 
@@ -276,24 +279,17 @@ export class AddPersonComponent implements OnInit {
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
-
-    //console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
-
   }
 
   fillDataDropDown(maindatas) {
 
     this.dataDropDownFunctie = [];
-    // console.log("main datas");
-    // console.log(maindatas);
 
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
     }
 
-    // console.log("positonObject=");
-    // console.log(this.dataDropDownFunctie);
   }
 
   ShowMessage(MSG, Action) {
@@ -511,7 +507,7 @@ export class AddPersonComponent implements OnInit {
 
     this._selectedIndexdays = parseInt(dayString, 10);
     this._selectedIndexMonth = parseInt(monthString, 10) - 1;
-    this._selectedIndexYear = (parseInt(yearString, 10) - 1900);
+    this._selectedIndexYear = (parseInt(yearString, 10) - 1900) - 1;
 
     this.monthString = monthString;
     this.dayString = dayString;
@@ -521,17 +517,89 @@ export class AddPersonComponent implements OnInit {
 
   }
 
-  setIbanNumber(value: string) {
+  // // get bban from iban 
+  // soapCallGetBBAN() {
 
-    if (this.DpsPersonObject !== null) {
-      if (this.DpsPersonObject.person !== null) {
+  //   var xmlHttp = new XMLHttpRequest();
+  //   xmlHttp.open('POST','http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',true);
+
+  //   //let sr = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><getBelgianBBAN xmlns="http://tempuri.org/"><Value>BE46001664436336</Value></getBelgianBBAN></soap:Body></soap:Envelope>';
+  //   let sr = '<?xml version="1.0" encoding="utf-8"?>'
+  //           +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
+  //           +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
+  //           +'<Value>BE46001664436336</Value></getBelgianBBAN>'
+  //           +'</soap12:Body></soap12:Envelope>';
+  //   let reponse:number = 0;
+
+  //   xmlHttp.onreadystatechange = () => {
+  //     if(xmlHttp.readyState == 4) {
+  //        if(xmlHttp.status == 200){
+  //          var xml = xmlHttp.responseXML;
+  //          reponse = parseInt(xml.getElementsByTagName("return")[0].childNodes[0].nodeValue);
+  //          console.log("response="+reponse);
+  //        }
+  //     }
+  //   }
+
+  //   xmlHttp.setRequestHeader('Content-Type','text/xml');
+  //   xmlHttp.responseType = 'document';
+  //   xmlHttp.send(sr);
+
+  // }
+
+soapCallFetchBBAN() {
+
+let parser = new DOMParser();
+let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+                +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
+                +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
+                +'<Value>BE46001664436336</Value>'
+                +'</getBelgianBBAN></soap12:Body></soap12:Envelope>'
+
+let doc = parser.parseFromString(xmlString,'text/xml');
+let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin','*')
+      .set('Content-Type', 'application/soap+xml');
+
+this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
+        console.log("data="+data);
+        this.bban = data;
+        this.soapCallGetBIC();
+});
+  
+}
+
+  // bic from bban
+  soapCallGetBIC(){
+
+    let parser = new DOMParser();
+    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+                    +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+                    +'<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
+                    +'<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
+
+    let headers = new HttpHeaders()
+    .set('Access-Control-Allow-Origin','*')
+    .set('Content-Type', 'application/soap+xml');
+              
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
+            console.log("data="+data);
+            this.bbic = data;
+    });
+
+  if (this.DpsPersonObject !== null) {
+    if (this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.bankAccount = new BankAccount();
-        this.DpsPersonObject.person.bankAccount.iban = value;
-        this.DpsPersonObject.person.bankAccount.bic = value.substring(2);
-        this.AddPersonForm1.controls['bic'].setValue(value.substring(2));
-
+        this.DpsPersonObject.person.bankAccount.iban = this.iban;
+        this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+        this.AddPersonForm1.controls['bic'].setValue(this.bbic);
       }
     }
+  }
+
+  setIbanNumber(value: string) {
+    this.iban = value;
+    this.soapCallFetchBBAN();
   }
 
   resetPeronData() {
@@ -759,7 +827,6 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = "";
     this.DpsPersonObject.vcaAttestation.name = "";
 
-    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();

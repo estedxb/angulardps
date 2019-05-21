@@ -24,11 +24,6 @@ export class EditCustomerComponent implements OnInit {
   public dataCustomerEdit: any;
 
   constructor(private customerService: CustomersService, private data: DataService) {
-
-    // this.vatNumber = "B0011";
-
-    // console.log(this.vatNumber);
-
     this.editObject = {
       data: '',
       page: ''

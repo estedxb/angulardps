@@ -39,7 +39,8 @@
         <span class="titleBold">Maaltijdcheques</span>
       </div>
     </div>
-    <div class=" row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngIf="isMealEnabled[this.i]">
+
+    <div class=" row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngIf="isMealEnabled[this.i]===true">
       <div class="col col-sm-4 inputWithEuro">Totale waarde<input (change)="totalChange(totalwaarde.value,i)"
           formControlName="Totalwaarde" class="form-control" type="number" #totalwaarde
           id="totalvalue_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0"
@@ -54,5 +55,6 @@
           id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0"
           value="0" step=".01"></div>
     </div>
+
   </div>
 </form>

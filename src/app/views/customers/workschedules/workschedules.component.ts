@@ -41,7 +41,9 @@ export class WorkSchedulesComponent implements OnInit {
     }, error => this.ShowMessage(error, 'error'));
   }
 
-  FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
+  FilterTheArchive() {
+    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+  }
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -59,7 +61,7 @@ export class WorkSchedulesComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
-      dialogConfig.width = '900px';
+      dialogConfig.width = '1000px';
       dialogConfig.data = this.data;
       dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
 
@@ -72,6 +74,7 @@ export class WorkSchedulesComponent implements OnInit {
         this.data = result;
         // console.log('this.data ::', this.data);
         // console.log('this.SelectedIndex ::', this.SelectedIndex);
+
         if (this.SelectedIndex >= -1) {
           // maindatas Update Work Schedule
           this.maindatas[this.SelectedIndex] = this.data;

@@ -194,7 +194,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.lieuDaysAllowanceObject = new LieuDaysAllowance();
     this.mobilityAllowanceObject = new MobilityAllowance();
 
@@ -298,7 +297,6 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('currency').disable();
       this.disabled = 'true';
       this.clearShiftAllowances();
-
     }
 
       this.changeObject();

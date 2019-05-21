@@ -1,6 +1,7 @@
 import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
 //import { ParitairCommitee } from '../../shared/models';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
+import { compileBaseDefFromMetadata } from '@angular/compiler';
 // import { $ } from 'jquery';
 
 @Component({
@@ -18,6 +19,7 @@ export class JointcommitteeComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
+  public stringJCReceived:string;
   
   // tslint:disable-next-line: variable-name
   private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
@@ -42,19 +44,17 @@ export class JointcommitteeComponent implements OnInit {
   constructor(private jointcommitteeService: JointcommitteeService) { 
   }
 
-  ngDoCheck() {
-
+  ngDoCheck() 
+  {
     console.log("RECEIVED paritair commitee data");
 
     if(this.JCFormData !== undefined)
     {
-      if(this.JCFormData.data !== null && this.JCFormData.page === "edit")      
-      {
         console.log("data=");
         console.log(this.datas);
 
-        //this.datas = this.JCFormData.data.statuteSettings;
-      }
+        this.loadDropDownData(this.JCFormData);
+
     }
   }
 
@@ -68,9 +68,19 @@ export class JointcommitteeComponent implements OnInit {
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
+    this.loadDropDownData(this.stringJCReceived);
+  }
 
+  loadDropDownData(stringJCReceived) {
+    console.log("received string="+stringJCReceived);
+    
+    for(let i=0;i<this.datas;i++)
+    {
+         if(this.datas[i] === stringJCReceived)
+         {
+           this._selectedIndex = i;
+         }
+    }
   }
 
 }
-// console.log(this.id); console.log($event.target.value);
-// console.log('Joint Committees Selected Data ::'); console.log(this.value);
