@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { _Position, DpsUser, DpsPostion, Documents } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -24,6 +24,11 @@ export class CreatepositionComponent implements OnInit {
   fileToUpload: File = null;
   workstationDocument: Documents;
 
+  public getPositionUpdateUrl;
+  public progress: number;
+  public message: string;
+  @Output() public onUploadFinished = new EventEmitter();
+
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService, private positionsService: PositionsService,
     public dialogRef: MatDialogRef<CreatepositionComponent>, @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
@@ -41,6 +46,7 @@ export class CreatepositionComponent implements OnInit {
       file: new FormControl('')
     });
     this.loadPositionsToEdit();
+    
   }
 
   loadPositionsToEdit() {
@@ -89,24 +95,27 @@ export class CreatepositionComponent implements OnInit {
     saveAs(this.currentPosition.position.workstationDocument.location);
   }
 
-  handleFileInput(files: FileList) {
-    if (files.length > 0) {
-      if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
-        || files.item(0).type === 'image/png') {
-        this.fileToUpload = files.item(0);
-      }
-      this.currentPosition.position.workstationDocument.name = files.item(0).name;
-      this.currentPosition.position.workstationDocument.location = environment.getPositionFileUploads + '' + files.item(0).name;
-    }
-  }
+   handleFileInput(files: FileList) {
+     if (files.length > 0) {
+       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
+         || files.item(0).type === 'image/png') {
+         this.fileToUpload = files.item(0);
+       }
+       this.currentPosition.position.workstationDocument.name = files.item(0).name;
+       this.currentPosition.position.workstationDocument.location = environment.getPositionFileUploads + '' + files.item(0).name;
+     }
+   }
 
-  uploadFileToActivity() {
-    this.fileuploadService.updatePositionFile(this.fileToUpload).subscribe(data => {
-      // do something, if upload success
-    }, error => {
-      console.log(error);
-    });
-  }
+   uploadFileToActivity() {
+     this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id ).subscribe(data => {
+       // do something, if upload success
+     }, error => {
+       console.log(error);
+     });
+   }
+
+
+
 
   onSavePositionClick() {
     this.createObjects();
@@ -115,12 +124,12 @@ export class CreatepositionComponent implements OnInit {
       if (this.currentPosition !== undefined && this.currentPosition !== null) {
         console.log('currentPosition.id =' + this.currentPosition.id);
         if (this.currentPosition.id !== undefined && this.currentPosition.id !== null && this.currentPosition.id > 0) {
-          // Update Position
-         // this.positionsService.updatePositionWithFile(this.currentPosition, this.fileToUpload).subscribe(res => {
+          // Update Position         
             this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
             console.log('Update Position Response :: ', res);
+            this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
-           //this.uploadFileToActivity();
+           
           },
             (err: HttpErrorResponse) => {
 
@@ -137,13 +146,14 @@ export class CreatepositionComponent implements OnInit {
 
         } else {
           // Create Position
-          console.log('Create Position');
+          console.log('Create Position');          
           this.positionsService.createPosition(this.currentPosition).subscribe(res => {
-            console.log('  Location Response :: ', res.body);
+            console.log('create Position  Response :: ', res.body);
             this.currentPosition.id = res.body;
+            this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
 
-           // this.uploadFileToActivity();
+           
           },
             (err: HttpErrorResponse) => {
 
@@ -163,5 +173,4 @@ export class CreatepositionComponent implements OnInit {
       console.log('Form is Not Vaild');
     }
   }
-
 }
