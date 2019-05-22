@@ -66,7 +66,6 @@ export class CreateWorkScheduleComponent implements OnInit {
     this.loadWorkScheduleToEdit();
   }
 
-
   loadWorkScheduleToEdit() {
     if (this.currentDpsWorkSchedule.id !== undefined || this.currentDpsWorkSchedule.id !== 0) {
       this.WorkScheduleForm.controls.name.setValue(this.currentDpsWorkSchedule.name + '');

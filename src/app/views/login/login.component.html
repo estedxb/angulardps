@@ -1,38 +1,82 @@
-<app-headers></app-headers>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron">
-        <div class="container">
-          <div class="col-md-12">
-            <h3 style="text-align: center;">Log In</h3>
+<div id="bgimgs">
+  <div id="LoginDiv">
+    <div id="facebook"><a href="https://facebook.com/" target="_blank"><img
+          src="./../../../assets/svg/FacebookIcon.svg" /></a></div>
+    <div id="linkedin">
+      <a href="https://www.linkedin.com/" target="_blank">
+        <img src="./../../../assets/svg/LinkedinIcon.svg" />
+      </a>
+    </div>
+    <img src="./../../../assets/svg/circle.svg" class="circle" />
+    <img src="./../../../assets/img/loginboxright.png" class="bgimg" />
+    <img src="./../../../assets/svg/LoginRectangle.svg" class="rectangle" />
+    <div class="leftcontainer">
+      <img src="./../../../assets/img/logindpslogo.png" class="dpslogo" />
+      <img src="./../../../assets/svg/BOEMM.svg" class="boemmlogo" />
+    </div>
+    <div class="rightcontainer">
+      <div id="logindetails">
+
+        <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="currentpage==='login'">
+          <h3 class="text-left">LOG IN</h3>
+          <div class="infos">
             <p *ngIf="message" class="text-center error">{{message}}</p>
-            <form [formGroup]="loginForm" (ngSubmit)="login()">
-              <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.userid.errors }">
-                <label for="userid" class="col-md-3 col-sm-5 col-xs-12">Userid</label>
-                <div class="col-md-9 col-sm-7 col-xs-12">
-                  <input type="text" class="form-control" formControlName="userid" />
-                  <div *ngIf="submitted && f.userid.errors" class="help-block">
-                    <div *ngIf="f.userid.errors.required">Userid is required</div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.password.errors }">
-                <label for="password" class="col-md-3 col-sm-5 col-xs-12">Password</label>
-                <div class="col-md-9 col-sm-7 col-xs-12">
-                  <input type="password" class="form-control" formControlName="password" />
-                  <div *ngIf="submitted && f.password.errors" class="help-block">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-12 form-group text-right">
-                <button class="btn btn-success" type="submit">Login</button>
-              </div>
-            </form>
           </div>
+          <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.userid.errors }">
+            <label for="userid" class="col-sm-12">E-mailadres</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control userid" formControlName="userid" />
+              <div *ngIf="submitted && f.userid.errors" class="help-block">
+                <div *ngIf="f.userid.errors.required">E-mailadres is verplicht</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.password.errors }">
+            <label for="password" class="col-sm-12">Wachtwoord</label>
+            <div class="col-sm-12">
+              <input type="password" class="form-control password" formControlName="password" />
+              <div *ngIf="submitted && f.password.errors" class="help-block">
+                <div *ngIf="f.password.errors.required">Een Wachtwoord is verplicht</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 form-group text-center">
+            <button class="login" type="submit"><img src="./../../../assets/svg/LoginArrow.svg" /></button>
+          </div>
+        </form>
+        <form [formGroup]="forgotForm" (ngSubmit)="forgotpassword()" *ngIf="currentpage==='forgotpassword'">
+          <h3 class="text-left">Wachtwoord opnieuw instellen</h3>
+          <div class="infos">
+            <p *ngIf="message" class="text-center error">{{message}}</p>
+          </div>
+          <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.userid.errors }">
+            <label for="userid" class="col-sm-12">E-mailadres</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control userid" formControlName="userid" />
+              <div *ngIf="submitted && f.userid.errors" class="help-block">
+                <div *ngIf="f.userid.errors.required">E-mailadres is verplicht</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.password.errors }">
+            <a href="./dashboard"><label class="col-sm-12">Hulp nodig?</label></a>
+          </div>
+          <div class="col-sm-12 form-group text-center">
+            <div class="backtologin"> Stuur recovery e-mail &nbsp;&nbsp;<button class="login" type="submit"><img
+                  src="./../../../assets/svg/LoginArrow.svg" /></button></div>
+          </div>
+        </form>
+        <div class="col-sm-12 form-group text-center" *ngIf="currentpage==='login'">
+          <button _ngcontent-aym-c20="" class="whitebtn" name="forgotpassword" (click)="ShowForgotPassword()">Wachtwoord
+            vergeten</button>
+        </div>
+        <div class="col-sm-12 form-group text-center forgotpassword" *ngIf="currentpage==='forgotpassword'">
+          <button _ngcontent-aym-c20="" class="whitebtn" name="backtologin" (click)="ShowLogin()"><img
+              _ngcontent-atc-c2="" src="../../assets/svg/left-arrow-black.svg"><span>Terug naar inloggen</span></button>
         </div>
       </div>
     </div>
+    <div id="weblink"><a href="https://www.boemm.eu/nl" target="_blank"><img src="./../../../assets/svg/globle.svg" />
+        Ga naar onze website.</a></div>
   </div>
 </div>

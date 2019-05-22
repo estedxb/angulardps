@@ -103,7 +103,7 @@
 .search img {
   width: 20px;
   position: absolute;
-  left: 44px;
+  left: 23px;
   top: 15px;
   background-color: transparent;
   color: #fff;
@@ -115,7 +115,7 @@
 ::ng-deep #maincontentarea .search input[type="text"] {
   border-radius: 22px;
   line-height: 22px;
-  padding: 2px 0px 2px 25px;
+  padding: 2px 0px 2px 26px;
   background-color: #00032b;
   border: 1px solid #595a64;
   font-weight: 500;
@@ -229,7 +229,7 @@
 
 .dashboardactioncontent table tr td {
   vertical-align: middle;
-  padding: 5px 20px;
+  padding: 5px 5px;
 }
 .notify {
   float: left;
@@ -318,6 +318,10 @@ sup.notify {
 .col {
   padding: 0px 15px 0px 0px;
   margin: 0px;
+}
+.Header .col.WeekCal {
+  margin: 0px;
+  padding: 5px 0px;
 }
 
 .Header .col.Heading,

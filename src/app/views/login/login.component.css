@@ -1,6 +1,184 @@
-::ng-deep body {
-  background-image: url("../../../assets/img/bg.png");
-  background-size: cover;
+/*::ng-deep*/
+body {
+  background-image: url("./../../../assets/img/pagenotfound_bg.png");
+}
+#bgimgs {
+  width: 100%;
+  height: 100%;
+}
+#bgimgs .LoginBgTop {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  top: 0px;
+  right: 0px;
+}
+#bgimgs .LoginBgBottom {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+#LoginDiv {
+  position: absolute;
+  width: 1024px;
+  height: 586px;
+  left: 50%;
+  top: 50%;
+  margin-left: -28%;
+  margin-top: -17%;
+  background-color: #fff;
+  border: 1px rgba(243, 104, 16, 0.25) solid;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);
+  padding: 0px;
+}
+.backtologin {
+  color: rgba(243, 104, 16, 1);
+}
+#LoginDiv a {
+  color: #000;
+}
+.leftcontainer {
+  background-color: #00032b;
+  width: 600px;
+  height: 584px;
+  padding: 0px;
+  margin: 0px;
+  float: left;
+}
+.rightcontainer {
+  background-color: #fff;
+  width: 422px;
+  height: 584px;
+  padding: 0px;
+  margin: 0px;
+  float: left;
+}
+.leftcontainer .dpslogo {
+  position: absolute;
+  width: 225px;
+  padding: 0px;
+  margin: 0px;
+  top: 30px;
+  left: 345px;
+}
+
+.leftcontainer .boemmlogo {
+  position: absolute;
+  width: 72px;
+  padding: 0px;
+  margin: 0px;
+  bottom: 15px;
+  right: 15px;
+}
+
+.bgimg {
+  position: absolute;
+  height: 492px;
+  padding: 0px;
+  margin: 0px;
+  bottom: -1px;
+  left: 0px;
+}
+
+.circle {
+  position: absolute;
+  width: 42px;
+  bottom: 175px;
+  left: 450px;
+}
+.rectangle {
+  position: absolute;
+  width: 60px;
+  top: 275px;
+  left: 555px;
+}
+#logindetails {
+  padding: 100px 60px;
+}
+#facebook {
+  float: left;
+  margin-top: -30px;
+  margin-left: 15px;
+}
+#linkedin {
+  float: left;
+  margin-top: -30px;
+  margin-left: 40px;
+}
+#weblink {
+  margin-bottom: -30px;
+  margin-left: 15px;
+}
+.text-center {
+  text-align: center;
+}
+.infos {
+  min-height: 40px;
+}
+#bgimgs #LoginDiv .rightcontainer #logindetails input {
+  border: 0px;
+  border-bottom: 1px #000 solid;
+  border-radius: 0px;
+  padding-right: 30px;
+}
+#bgimgs #LoginDiv .rightcontainer #logindetails input.userid {
+  background-image: url(./../../../assets/svg/person.svg);
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-position: right;
+}
+#bgimgs #LoginDiv .rightcontainer #logindetails input.password {
+  background-image: url(./../../../assets/svg/lock.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+#bgimgs #LoginDiv .rightcontainer #logindetails button.login {
+  margin-top: 15px;
+  background-image: linear-gradient(270deg, #b2b2b2, #ffffff);
+  border-radius: 26px;
+  border: 0px;
+  width: 52px;
+  height: 52px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);
+}
+#bgimgs #LoginDiv .rightcontainer #logindetails button.login img {
+  width: 24px;
+  height: 24px;
+  margin: auto;
+}
+#bgimgs
+  #LoginDiv
+  .rightcontainer
+  #logindetails
+  .forgotpassword
+  button.whitebtn {
+  padding: 0px;
+  margin: 0px;
+  max-width: 200px;
+}
+
+#bgimgs
+  #LoginDiv
+  .rightcontainer
+  #logindetails
+  .forgotpassword
+  button.whitebtn
+  span {
+  float: left;
+  padding-left: 10px;
+}
+#bgimgs
+  #LoginDiv
+  .rightcontainer
+  #logindetails
+  .forgotpassword
+  button.whitebtn
+  img {
+  float: left;
+  position: inherit;
+  left: 0px;
+  padding: 3px;
+  margin: 4px 4px;
 }

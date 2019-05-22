@@ -1,7 +1,6 @@
 [
   {
-    "dpsContractid": 0,
-    "PositionName": "Freelance designer",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -100,8 +99,99 @@
     }
   },
   {
-    "dpsContractid": 1,
-    "PositionName": "Marketing assistant",
+    "dpsContracts": [
+      {
+        "id": 1,
+        "customerVatNumber": "123456789101",
+        "personId": "38.09.16-343.34",
+        "positionId": 2,
+        "locationId": 1,
+        "workScheduleId": 2,
+        "parentContractId": 0,
+        "contract": {
+          "name": null,
+          "startDate": "2019-02-02T00:00:00",
+          "endDate": "2019-01-20T00:00:00",
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 4,
+                "workTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "Title"
+                  }
+                ]
+              }
+            ]
+          },
+          "position": {
+            "name": "test",
+            "taskDescription": "test",
+            "isStudentAllowed": false,
+            "costCenter": "test",
+            "workstationDocument": {
+              "location": "https://dpsstorageaccountdev.blob.core.windows.net/postion/application_pdf;charset=utf-8.pdf",
+              "name": "application_pdf;charset=utf-8.pdf"
+            }
+          },
+          "statute": {
+            "name": null,
+            "type": null
+          },
+          "status": "Active",
+          "cancelReason": "ffff"
+        },
+        "timeSheet": {
+          "dayValues": null,
+          "standAloneValues": null,
+          "information": null,
+          "status": null
+        }
+      }
+    ],
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -200,8 +290,224 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "CIO",
+    "dpsContracts": [
+      {
+        "id": 2,
+        "customerVatNumber": "123456789101",
+        "personId": "84.09.10-343.34",
+        "positionId": 2,
+        "locationId": 1,
+        "workScheduleId": 5,
+        "parentContractId": 0,
+        "contract": {
+          "name": null,
+          "startDate": "2019-02-10T00:00:00",
+          "endDate": "2019-02-21T00:00:00",
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 1,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 1,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 4,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 5,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 6,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 7,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              }
+            ]
+          },
+          "position": {
+            "name": "test",
+            "taskDescription": "test",
+            "isStudentAllowed": false,
+            "costCenter": "test",
+            "workstationDocument": {
+              "location": "https://dpsstorageaccountdev.blob.core.windows.net/postion/application_pdf;charset=utf-8.pdf",
+              "name": "application_pdf;charset=utf-8.pdf"
+            }
+          },
+          "statute": {
+            "name": null,
+            "type": null
+          },
+          "status": "Active",
+          "cancelReason": ""
+        },
+        "timeSheet": {
+          "dayValues": null,
+          "standAloneValues": null,
+          "information": null,
+          "status": null
+        }
+      }
+    ],
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -300,8 +606,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Receptie",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -400,8 +705,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -500,8 +804,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Receptie",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -600,8 +903,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Zaalverantwoordelijke",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -700,8 +1002,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Cleaning",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -800,8 +1101,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Chef kok",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -900,8 +1200,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Tuinman",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -1000,8 +1299,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Event medewerkster",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -1100,8 +1398,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Chef kok",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -1200,8 +1497,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "DJ",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -1300,8 +1596,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Team Leader",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {
@@ -1400,8 +1695,7 @@
     }
   },
   {
-    "dpsContractid": 0,
-    "PositionName": "Computer Engineer",
+    "dpsContracts": null,
     "dpsPerson": {
       "customerVatNumber": "123456789101",
       "person": {

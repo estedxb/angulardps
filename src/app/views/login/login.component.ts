@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   errorMsg: string;
   private ltkn: LoginToken = new LoginToken();
+  public currentpage = 'login';
 
   constructor(
     private formBuilder: FormBuilder, private router: Router, public authService: AuthService, public customerLists: CustomersService) { }
@@ -33,7 +34,15 @@ export class LoginComponent implements OnInit {
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
-
+  ShowForgotPassword() {
+    this.currentpage = 'forgotpassword';
+  }
+  ShowLogin() {
+    this.currentpage = 'login';
+  }
+  forgotpassword() {
+    return true;
+  }
   login() {
     // stop here if form is invalid
     if (this.loginForm.invalid) { this.message = 'Please enter username and password'; return; } else {

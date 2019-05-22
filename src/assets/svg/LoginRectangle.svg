@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="82" height="38" viewBox="0 0 82 38">
+    <defs>
+        <style>.a{fill:url(#a);}</style>
+        <linearGradient id="a" x1="0.227" x2="1.076" y2="0.793" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#e37619"/><stop offset="1" stop-color="#9f0b19"/>
+        </linearGradient>
+    </defs>
+    <rect class="a" width="82" height="38" rx="19"/>
+</svg>

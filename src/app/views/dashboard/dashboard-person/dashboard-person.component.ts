@@ -60,6 +60,7 @@ export class DashboardPersonComponent implements OnInit {
   addWeek() {
     this.WeekDiff += 1;
     this.SelectedDates = this.getSelectedDates();
+    // console.log('this.SelectedDates ::', this.SelectedDates);
   }
 
   minusWeek() {
@@ -68,21 +69,58 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   getSelectedDates() {
-    const curr = new Date();
-    let first = curr.getDate() - curr.getDay() + (this.WeekDiff * 7);
-    console.log('curr.getDate :: ', curr.getDate());
-    console.log('curr.getDay :: ', curr.getDay());
-    console.log('first :: ', first);
-    first = first + 1;
-    console.log('first 2 :: ', first);
-    const last = first + 6;
+    let curr = new Date();
+    let currl = new Date();
+    // console.log('Today 1 :: ' + curr);
 
-    const monday = new Date(curr.setDate(first)).toUTCString();
-    const sunday = new Date(curr.setDate(last)).toUTCString();
-    console.log(monday + ' ' + sunday);
+    curr = new Date(curr.setDate(curr.getUTCDate() - curr.getUTCDay() + 1));
+    // console.log('This Week Start Date :: ' + curr);
+    const adddays: number = this.WeekDiff * 7;
+    curr = new Date(curr.setDate(curr.getUTCDate() + adddays));
+    // console.log('Selected Week Start Date :: ' + curr);
+    const first = curr.getUTCDate();
 
-    this.startDate = new Date(monday);
-    this.endDate = new Date(sunday);
+    const mon = new Date(curr);
+    const tue = new Date(curr.setDate(first + 1));
+    const wed = new Date(curr.setDate(first + 2));
+    const thu = new Date(curr.setDate(first + 3));
+    const fri = new Date(curr.setDate(first + 4));
+    const sat = new Date(curr.setDate(first + 5));
+    let sun = new Date(curr.setDate(first + 6));
+
+    if (sun.getUTCDay() !== 0) {
+      console.log('Sun :: ' + sun);
+      console.log('Is not Zero :: ' + curr.getUTCDay(), curr);
+      let adddaysl = adddays;
+      if (curr.getUTCDay() <= 2) {
+        console.log('Zero  Less');
+        adddaysl = adddaysl + 7 - curr.getUTCDay();
+      } else {
+        console.log('Zero  More');
+        adddaysl = adddaysl + 8 - curr.getUTCDay();
+      }
+      
+      console.log('adddaysl :: ' + adddaysl);
+      currl = new Date(currl.setDate(currl.getUTCDate() + adddaysl));
+
+      sun = new Date(currl);
+      console.log('New Sun :: ' + sun);
+    }
+
+    // console.log('monday :: sunday');
+    // console.log(mon + ' :: ' + sun);
+
+    this.startDate = mon;
+    this.endDate = sun;
+
+    this.SelectedMonday = mon.getUTCDate().toString() + '/' + mon.getUTCMonth().toString();
+    this.SelectedTuesday = tue.getUTCDate().toString() + '/' + tue.getUTCMonth().toString();
+    this.SelectedWednesday = wed.getUTCDate().toString() + '/' + wed.getUTCMonth().toString();
+    this.SelectedThursday = thu.getUTCDate().toString() + '/' + thu.getUTCMonth().toString();
+    this.SelectedFriday = fri.getUTCDate().toString() + '/' + fri.getUTCMonth().toString();
+    this.SelectedSaturday = sat.getUTCDate().toString() + '/' + sat.getUTCMonth().toString();
+    this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
+
     // tslint:disable-next-line: max-line-length
     return this.startDate.getUTCDate().toString() + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + '. ' + this.endDate.getUTCFullYear();
   }

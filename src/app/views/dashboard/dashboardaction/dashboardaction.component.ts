@@ -23,8 +23,8 @@ export class DashboardActionComponent implements OnInit {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
-      this.datas = summaries;
-      this.notificationcount = summaries.length;
+      this.datas = summaries  .filter(d => d.IsFinished === false);
+      this.notificationcount = this.datas.length;
       console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
   }

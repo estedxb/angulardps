@@ -12,11 +12,11 @@
     <div class="row" *ngFor="let data of datas let i= index">
       <div class="col col-sm-7">
         <span class="dot_{{data.priority}}"></span>
-        <span>{{data.message}}</span>
+        <span>{{data.Message}}</span>
       </div>
-      <div class="col col-sm-4 dt"><span>{{data.date}}</span></div>
+      <div class="col col-sm-4 dt"><span>{{data.DateTime}}</span></div>
       <div class="col col-sm-1">
-        <button (click)="goToAction(data.actionid,data.id,data.others)"><img
+        <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)"><img
             src="../../../../assets/svg/eye.svg"></button>
       </div>
     </div>
