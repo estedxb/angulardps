@@ -74,8 +74,11 @@ export class EditPersonComponent implements OnInit {
   public languageString:string;
 
   public message;
+  public bbic:any;
+  public bban:any;
+  public iban:any;
 
-  constructor(private personsService: PersonService, private data: DataService,private spinner: NgxSpinnerService) { }
+  constructor(public http:HttpClient,private personsService: PersonService, private data: DataService,private spinner: NgxSpinnerService) { }
 
   setDummyStatute() {
   }
@@ -252,20 +255,61 @@ export class EditPersonComponent implements OnInit {
 
   }
 
-  setIbanNumber(value: string) {
+  soapCallFetchBBAN() {
 
-    if (this.DpsPersonObject !== null) {
-      if (this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.bankAccount = new BankAccount();
-        this.DpsPersonObject.person.bankAccount.iban = value;
-        this.DpsPersonObject.person.bankAccount.bic = value.substring(2);
-        this.editPersonForm.controls.bic.setValue(value.substring(2));
-
-      }
+    let parser = new DOMParser();
+    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+                    +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
+                    +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
+                    +'<Value>BE46001664436336</Value>'
+                    +'</getBelgianBBAN></soap12:Body></soap12:Envelope>'
+    
+    let doc = parser.parseFromString(xmlString,'text/xml');
+    let headers = new HttpHeaders()
+          .set('Access-Control-Allow-Origin','*')
+          .set('Content-Type', 'application/soap+xml');
+    
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
+            console.log("data="+data);
+            this.bban = data;
+            this.soapCallGetBIC();
+    });
+      
     }
+    
+      // bic from bban
+soapCallGetBIC()
+{
+  let parser = new DOMParser();
+  let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+                  +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+                  +'<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
+                  +'<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
+    
+  let headers = new HttpHeaders()
+  .set('Access-Control-Allow-Origin','*')
+  .set('Content-Type', 'application/soap+xml');
+                  
+  this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
+          console.log("data="+data);
+          this.bbic = data;
+  });
+    
+  if(this.DpsPersonObject !== null) 
+  {
+          if (this.DpsPersonObject.person !== null) {
+            this.DpsPersonObject.person.bankAccount = new BankAccount();
+            this.DpsPersonObject.person.bankAccount.iban = this.iban;
+            this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+            this.editPersonForm.controls['bic'].setValue(this.bbic);
+          }
+      this.changeMessage();    
+  }
 
-    this.changeMessage();
+}  
 
+  setIbanNumber(value: string) {
+    this.soapCallFetchBBAN();
   }
 
   onChangeDropDownGender($event) {

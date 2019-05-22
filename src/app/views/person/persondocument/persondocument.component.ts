@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRe
 import { _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
-import { forEach } from '@angular/router/src/utils/collection';
+import { environment } from '../../../../environments/environment';;
 
 
 @Component({
@@ -26,7 +26,7 @@ export class PersonDocumentComponent implements OnInit {
   public isStudentAtWork: boolean;
   public isDriver: boolean;
 
-  public medicalAttestationDocumentName: string = 'Testing...';
+  public medicalAttestationDocumentName: string;
   public vcaAttestationDocumentName: string;
   public constructionCardsDocumentName: string;
   public drivingLicenseDocumentName: string;
@@ -39,7 +39,7 @@ export class PersonDocumentComponent implements OnInit {
   otherDocumentsToUpload: File = null;
   driversFileToUpload: File = null;
 
-  ddl_drivinglicenseSelected: string ;
+  selectedOption: any ;
   public documents: Documents;
   public personDocuments: PersonDocuments;
   public driverProfilesItem: DriverProfilesItem
@@ -72,6 +72,10 @@ export class PersonDocumentComponent implements OnInit {
 
   }
 
+  onOptionSelected(event) {
+    console.log(event); //option value will be sent as event
+  }
+
 
   onConstructionSectorChange($event) {
     // this.currentPerson.constructionProfile. = $event;
@@ -91,23 +95,7 @@ export class PersonDocumentComponent implements OnInit {
     // console.log(this.currentPerson);
   }
 
-  loadDocuments() {
-    if (this.currentPerson !== null || this.currentPerson !== undefined) {
-      this.medicalAttestationDocumentName = this.currentPerson.medicalAttestation.name;
-      this.vcaAttestationDocumentName = this.currentPerson.vcaAttestation.name;
-
-      this.currentPerson.constructionCards.forEach((doc) => {
-        this.constructionCardsDocumentName = doc.name;
-      })
-
-      this.currentPerson.driverProfiles.forEach((doc) => {
-        this.drivingLicenseDocumentName = doc.attestation.name;
-      })
-      this.currentPerson.otherDocuments.forEach((doc) => {
-        this.otherDocumentName = doc.name;
-      })
-    }
-  }
+  
   getVehiclesForLicense(){
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
@@ -116,11 +104,7 @@ export class PersonDocumentComponent implements OnInit {
       // Remove the  Vehicles with License in this.currentPerson
       //this.vehiclesForLicense = this.vehiclesForLicense.filter( function( el ) {
         //return !this.currentPerson.driverProfiles.includes( el );
-
         this.vehiclesForLicense  = this.vehiclesForLicense .filter( ( el ) => !this.currentPerson.driverProfiles.includes( el ) );
-
-     // } );
-
     }, error => this.ShowMessage(error, 'error'));
 
   }
@@ -128,8 +112,7 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
       this.currentPerson = response.body;
       console.log('this.currentPerson::: ', this.currentPerson);
-      this.ShowMessage('Person fetched successfully.', '');      
-      this.loadDocuments();
+      this.ShowMessage('Person fetched successfully.', '');  
       this.getVehiclesForLicense();
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -152,35 +135,41 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.medicalAttestationFileToUpload = files.item(0);
-
+        
         this.currentPerson.medicalAttestation.name = files.item(0).name;
         this.currentPerson.medicalAttestation.location = "";
-
+        console.log('this.VatNumber :: ' , this.VatNumber);
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
-        this.personDocuments.fileType = FileType.Medical;
+        this.personDocuments.fileType = FileType.MedicalAttestation;
         this.personDocuments.personId = this.SocialSecurityId;
-
         this.uploadMedicalAttestationFileToActivity();
+       
       }
     }
   }
 
   uploadMedicalAttestationFileToActivity() {
-    this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload).subscribe(data => {
+    this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload,this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.MedicalAttestation, this.currentPerson.medicalAttestation.name ).subscribe(data => {
       // do something, if upload success
+    
     }, error => {
       console.log(error);
     });
   }
 
   deleteMedicalAttestation() {
-    //delete
+    this.currentPerson.medicalAttestation.name ='';
+    this.currentPerson.medicalAttestation.location='';
+    this.updatePerson();
   }
 
   downloadMedicalAttestationFile() {
-    saveAs(this.currentPerson.medicalAttestation.location, 'application/pdf;charset=utf-8');
+    let url = environment.blobStorage +''+ this.currentPerson.medicalAttestation.location;
+    console.log('downloadMedicalAttestationFile() :: ' , url);    
+    saveAs(url,this.currentPerson.medicalAttestation.name);
   }
 
   handleVcaAttestationFileInput(files: FileList) {
@@ -191,7 +180,7 @@ export class PersonDocumentComponent implements OnInit {
 
         this.currentPerson.vcaAttestation.name = files.item(0).name;
         this.currentPerson.vcaAttestation.location = "";
-
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
@@ -199,24 +188,29 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.personId = this.SocialSecurityId;
 
         this.uploadVcaAttestationFileToActivity();
+        
       }
     }
   }
 
   uploadVcaAttestationFileToActivity() {
-    this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload).subscribe(data => {
+    this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload,this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.VcaAttestation, this.currentPerson.vcaAttestation.name).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
     });
   }
 
-  downloadVcaAttestationFile() {
-    saveAs(this.currentPerson.vcaAttestation.location, 'application/pdf;charset=utf-8');
+  downloadVcaAttestationFile() {    
+    let url = environment.blobStorage +''+ this.currentPerson.vcaAttestation.location;
+    console.log('downloadVcaAttestationFile() :: ' , url);    
+    saveAs(url,this.currentPerson.vcaAttestation.name);
   }
 
   deleteVcaAttestation() {
-    //delete
+    this.currentPerson.vcaAttestation.name ='';
+    this.currentPerson.vcaAttestation.location='';
+    this.updatePerson();
   }
 
   handleConstructionCardsFileInput(files: FileList) {
@@ -229,32 +223,38 @@ export class PersonDocumentComponent implements OnInit {
         this.documents.name = files.item(0).name;
         this.documents.location = "";
         this.currentPerson.constructionCards.push(this.documents);
-
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
-        this.personDocuments.fileType = FileType.ConstructionCard;
+        this.personDocuments.fileType = FileType.ConstructionCards;
         this.personDocuments.personId = this.SocialSecurityId;
 
         this.uploadConstructionCardsFileToActivity();
+       
       }
     }
   }
 
   uploadConstructionCardsFileToActivity() {
-    this.personService.constructionCardsFile(this.constructionCardsToUpload).subscribe(data => {
+    this.personService.constructionCardsFile(this.constructionCardsToUpload,this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.ConstructionCards, this.documents.name).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
     });
   }
 
-  downloadConstructionCardFile( downloadfilepath: string) {   
-    saveAs(downloadfilepath);
+  downloadConstructionCardFile( index: number) { 
+    console.log('index :: ' , index); 
+    saveAs(environment.blobStorage +''+ this.currentPerson.constructionCards[index].location, this.currentPerson.constructionCards[index].name );
   }
 
-  deleteConstructionCard() {
-    // delete 
+  deleteConstructionCard(index :number) {  
+    console.log('index :: ' , index);  
+    if (index > -1) {
+      this.currentPerson.constructionCards.splice(index, 1);
+   }
+   this. updatePerson();
   }
 
 
@@ -269,7 +269,7 @@ export class PersonDocumentComponent implements OnInit {
         this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
         this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
         this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
-
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
@@ -277,12 +277,13 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.personId = this.SocialSecurityId;
 
         this.uploadStudentAtWorkFileToActivity();
+       
       }
     }
   }
 
   uploadStudentAtWorkFileToActivity() {
-    this.personService.constructionCardsFile(this.studentAtWorkFileToUpload).subscribe(data => {
+    this.personService.constructionCardsFile(this.studentAtWorkFileToUpload,this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.StudentAtWork, this.currentPerson.studentAtWorkProfile.attestation.name).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
@@ -290,47 +291,65 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   downloadStudentAtWorkAttestationFile() {
-    saveAs(this.currentPerson.studentAtWorkProfile.attestation.location, 'application/pdf;charset=utf-8');
+    saveAs(environment.blobStorage +''+ this.currentPerson.studentAtWorkProfile.attestation.location, this.currentPerson.studentAtWorkProfile.attestation.name);
   }
+
+ 
 
   handleDriversLicenseFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.driversFileToUpload = files.item(0);
+        
 
         this.driverProfilesItem = new DriverProfilesItem();
-        this.driverProfilesItem.type = ""
-        this.driverProfilesItem.attestation.name = files.item(0).name;
-        this.driverProfilesItem.attestation.location = "";
-        this.driverProfilesItem.type = this.ddl_drivinglicenseSelected;
+        this.documents = new Documents();
+        this.documents.name =files.item(0).name;
+        this.documents.location ='';
+        this.driverProfilesItem.attestation = this.documents;
+        this.driverProfilesItem.type = this.selectedOption;
+        
         this.currentPerson.driverProfiles.push(this.driverProfilesItem);
-
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
-        this.personDocuments.fileType = this.ddl_drivinglicenseSelected;
+        this.personDocuments.fileType = this.selectedOption;
         this.personDocuments.personId = this.SocialSecurityId;
 
+        console.log('this.selectedOption; :: ' , this.selectedOption); 
+
         this.uploadDriversFileToActivity();
+   
       }
     }
   }
 
+
+  selectOption(value: string) {   
+    console.log(value);    
+  }
+
   uploadDriversFileToActivity() {
-    this.personService.constructionCardsFile(this.driversFileToUpload).subscribe(data => {
+    this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.DriversLicense, this.driverProfilesItem.attestation.name).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
     });
   }
 
-  downloadDriversLicenseFile(downloadfilepath: string) {
-    saveAs(downloadfilepath);
+  downloadDriversLicenseFile(index: number) {  
+    console.log('index :: ' , index); 
+    saveAs(environment.blobStorage +''+ this.currentPerson.driverProfiles[index].attestation.location, this.currentPerson.driverProfiles[index].attestation.name );
   }
 
-  deleteDriversLicense() {
-    // delete
+  deleteDriversLicense(index :number) {
+    console.log('index :: ' , index);  
+    if (index > -1) {
+      this.currentPerson.driverProfiles.splice(index, 1);
+   }
+   this. updatePerson();
   }
 
   handleOtherDocumentsInput(files: FileList) {
@@ -343,21 +362,40 @@ export class PersonDocumentComponent implements OnInit {
         this.documents.name = files.item(0).name;
         this.documents.location = "";
         this.currentPerson.otherDocuments.push(this.documents);
-
+        this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
         this.personDocuments.fileName = files.item(0).name;
         this.personDocuments.file = files.item(0);
-        this.personDocuments.fileType = files.item(0).name;
+        this.personDocuments.fileType = FileType.OtherDocuments;
         this.personDocuments.personId = this.SocialSecurityId;
 
         this.uploadOtherDocumentsToActivity();
+       
       }
     }
   }
 
+  updatePerson()
+  {
+    this.personService.updatePosition(this.currentPerson).subscribe(res => {
+      console.log("response=" + res);
+      console.log(":::::::::::::::current person updated");
+    },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Error occured=" + err.error.message);
+        }
+        else {
+          console.log("response code=" + err.status);
+          console.log("response body=" + err.error);
+        }
+      }
+    );
+  }
+
 
   uploadOtherDocumentsToActivity() {
-    this.personService.constructionCardsFile(this.otherDocumentsToUpload).subscribe(data => {
+    this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber , this.currentPerson.person.socialSecurityNumber.number , FileType.OtherDocuments, this.documents.name).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
@@ -365,15 +403,20 @@ export class PersonDocumentComponent implements OnInit {
   }
 
 
-  downloadOtherDocumentsFile(downloadfilepath: string) {
-    saveAs(downloadfilepath);
+  downloadOtherDocumentsFile(index :number) {
+    console.log('index :: ' , index); 
+    saveAs(environment.blobStorage +''+ this.currentPerson.otherDocuments[index].location, this.currentPerson.otherDocuments[index].name );
   }
 
-  deleteOtherDocuments() {
-    // delete
+  deleteOtherDocuments(index :number) {
+    console.log('index :: ' , index);  
+    if (index > -1) {
+      this.currentPerson.otherDocuments.splice(index, 1);
+   }
+   this.updatePerson();
   }
 
-
+ 
 
   onStatusChange(event, i) {
     console.log('Position index : ' + i + ', Enabled : ' + event);

@@ -7,6 +7,7 @@ export const environment = {
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
+  blobStorage:'https://dpsstorageaccountdev.blob.core.windows.net',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerByVatNumberEdit: 'Customer/',
   createCustomer: 'Customer',
@@ -35,7 +36,9 @@ export const environment = {
   getLocation: 'Location',
   getWorkSchedule: 'WorkSchedule',
   getPosition: 'Position',
+  getPositionUpdate: 'Position/uploadDocument',
   getPerson: 'Person',
+  postPersonDocuments: 'Person/UpladDocuments',
   getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
   getFileUploads: '',
   getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',

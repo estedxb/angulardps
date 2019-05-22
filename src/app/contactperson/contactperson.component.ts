@@ -43,14 +43,37 @@ export class ContactPersonComponent implements OnInit {
     console.log("load details has been called");
     console.log(contactPerson);
 
-    this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
-    this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
-    this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
-    this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
-    this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
-    this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+    if(contactPerson !== undefined && contactPerson !== null)
+    {
+      if(contactPerson.contact !== undefined && contactPerson.contact !== null)
+      {
+        if(contactPerson.contact.firstName !== undefined && contactPerson.contact.firstName !== null)
+            this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
 
-    this.languageString = contactPerson.contact.language.name;
+        if(contactPerson.contact.lastName !== undefined && contactPerson.contact.lastName !== null)
+            this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
+
+        if(contactPerson.contact.email !== undefined && contactPerson.contact.email !== null)
+        {
+          if(contactPerson.contact.email.emailAddress !== undefined && contactPerson.contact.email.emailAddress !== null)
+          this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
+        }
+
+        if(contactPerson.contact.position !== undefined && contactPerson.contact.position !== null)
+            this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
+
+        if(contactPerson.contact.mobile !== undefined && contactPerson.contact.mobile !== null)
+           if(contactPerson.contact.mobile.number !== undefined && contactPerson.contact.mobile.number !== null)
+              this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
+
+        if(contactPerson.contact.phoneNumber !== null && contactPerson.contact.phoneNumber !== undefined)
+              if(contactPerson.contact.phoneNumber.number !== undefined && contactPerson.contact.phoneNumber.number !== null)
+                    this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+
+        this.languageString = contactPerson.contact.language.name;
+      }
+    }
+
 
   }
 
@@ -67,7 +90,7 @@ export class ContactPersonComponent implements OnInit {
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
           this.languageString = this.CTFormData.data.contact.language.name;
-          this.languageString = "French";
+          // this.languageString = "French";
           this.createObjects();
 
           // this.CTdata =  {
@@ -92,7 +115,7 @@ export class ContactPersonComponent implements OnInit {
       if (this.CTFormData.data !== this.oldData) {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
-        this.languageString = "French";
+        //this.languageString = "French";
       }
     }
   }

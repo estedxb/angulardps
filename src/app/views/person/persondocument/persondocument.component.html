@@ -73,14 +73,14 @@
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
-        <div *ngIf="currentPerson.vcaAttestation.name !== undefined || currentPerson.vcaAttestation.name !== null"
+        <div *ngIf="currentPerson.vcaAttestation.name !== undefined && currentPerson.vcaAttestation.name !== null && currentPerson.vcaAttestation.name !== ''"
           class="row inforow">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadVcaAttestation" id="downloadVcaAttestation" (click)="downloadVcaAttestationFile()">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
-          <div class="col-sm-10 actioncontent">{{vcaAttestationDocumentName}}</div>
+          <div class="col-sm-10 actioncontent">{{currentPerson.vcaAttestation.name}}</div>
           <div class="col-sm-1 actiondelbtn">
             <button name="deleteVcaAttestation" id="deleteVcaAttestation" (click)="deleteVcaAttestation()">
               <img src="../../../../assets/svg/delete_big.svg">
@@ -110,14 +110,14 @@
         <div class="row inforow" *ngFor="let constructionCard of currentPerson.constructionCards ; let i = index">
           <div class="col-sm-1 actioneyebtn">
             <button name="downloadConstructionCard" id="downloadConstructionCard"
-              (click)="downloadConstructionCardFile(constructionCard.location)">
+              (click)="downloadConstructionCardFile(i)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
           <div class="col-sm-10 actioncontent">{{constructionCard.name}}
           </div>
           <div class="col-sm-1 actiondelbtn">
-            <button name="deleteConstructionCard" id="deleteConstructionCard" (click)="deleteConstructionCard()">
+            <button name="deleteConstructionCard" id="deleteConstructionCard" (click)="deleteConstructionCard(i)">
               <img src="../../../../assets/svg/delete_big.svg">
             </button>
           </div>
@@ -183,8 +183,8 @@
     <div id="DrivingLicense" class="customerBox">
       <div class="row">
         <div class="col col-sm-6 fleft">
-          <select class="drivinglicenses selectcomponent" id="ddl_drivinglicense" name="ddl_drivinglicense" required="">
-            <option [value]="vehicle.vehicleValue" *ngFor="let vehicle of vehiclesForLicense">{{vehicle.vehicleName}}
+          <select class="drivinglicenses selectcomponent" [(ngModel)]='selectedOption' (ngModelChange)='onOptionSelected($event)' id="ddl_drivinglicense" name="ddl_drivinglicense"  [ngModelOptions]="{standalone: true}"  required="">
+            <option [value]="vehicle.vehicleName"  *ngFor="let vehicle of vehiclesForLicense">{{vehicle.vehicleName}}
             </option>
           </select>
         </div>
@@ -203,13 +203,13 @@
         <!--For loop Starts -->
         <div class="row inforow" *ngFor="let driverProfile of currentPerson.driverProfiles ; let i = index">
           <div class="col-sm-1 actioneyebtn">
-            <button name="downloadDriversLicense" id="downloadDriversLicense" (click)="downloadDriversLicenseFile(driverProfile.attestation.location)">
+            <button name="downloadDriversLicense" id="downloadDriversLicense" (click)="downloadDriversLicenseFile(i)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
           <div class="col-sm-10 actioncontent">{{driverProfile.attestation.name}}</div>
           <div class="col-sm-1 actiondelbtn">
-            <button name="deleteDriversLicense" id="deleteDriversLicense" (click)="deleteDriversLicense()">
+            <button name="deleteDriversLicense" id="deleteDriversLicense" (click)="deleteDriversLicense(i)">
               <img src="../../../../assets/svg/delete_big.svg">
             </button>
           </div>
@@ -237,13 +237,13 @@
         <!--For loop Starts -->
         <div class="row inforow" *ngFor="let document of currentPerson.otherDocuments ; let i = index">
           <div class="col-sm-1 actioneyebtn">
-            <button name="downloadOtherDocuments" id="downloadOtherDocuments" (click)="downloadOtherDocumentsFile(document.location)">
+            <button name="downloadOtherDocuments" id="downloadOtherDocuments" (click)="downloadOtherDocumentsFile(i)">
               <img src="../../../../assets/svg/eye_big.svg">
             </button>
           </div>
           <div class="col-sm-10 actioncontent">{{document.name}}</div>
           <div class="col-sm-1 actiondelbtn">
-            <button name="deleteOtherDocuments" id="deleteOtherDocuments" (click)="deleteOtherDocuments()">
+            <button name="deleteOtherDocuments" id="deleteOtherDocuments" (click)="deleteOtherDocuments(i)">
               <img src="../../../../assets/svg/delete_big.svg">
             </button>
           </div>

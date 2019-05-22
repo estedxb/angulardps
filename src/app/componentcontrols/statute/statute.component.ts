@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StatuteService } from '../../shared/statute.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
@@ -8,6 +8,7 @@ import {
   InvoiceSettings, Language, Contact
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
+import { fbind } from 'q';
 
 @Component({
   selector: 'app-statute',
@@ -35,6 +36,7 @@ export class StatuteComponent implements OnInit {
   public i;
   public oldSFTFormData;
 
+  public MealBox:FormArray;
   SForm: FormGroup;
 
   public countStatutes: number;
@@ -48,7 +50,7 @@ export class StatuteComponent implements OnInit {
   coefficient: number;
   newCounter: number = 0;
 
-  constructor(private statuteService: StatuteService) {
+  constructor(private statuteService: StatuteService, private fb:FormBuilder) {
     this.createCoefficientArray();
   }
 
@@ -77,34 +79,90 @@ export class StatuteComponent implements OnInit {
   }
 
   loadInitialData(datas: any) {
+    let counter:number = 0;
+
+    console.log("load STFormData=");
+    console.log(this.STFormData);
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
         this.loadStatuteSettingsArray.forEach(element => {
-          this.onloadData(element);
+          this.onloadData(element,counter);
+         
+          counter++;
         });
       }
-}
+    }
   }
- 
    
-   onloadData(arrayElement){
-      this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
-      this.SForm.controls['Totalwaarde'].setValue(arrayElement.mealVoucherSettings.totalWorth);
-      this.SForm.controls['Wergeversdeel'].setValue(arrayElement.mealVoucherSettings.employerShare);
-      this.SForm.controls['minimumHours'].setValue(arrayElement.mealVoucherSettings.minimumHours);            
+   onloadData(arrayElement,counter){
 
-      //this.JCString = this.s;
-   }
+    console.log("value received="+arrayElement.mealVoucherSettings.totalWorth);
+    console.log("value received="+arrayElement.mealVoucherSettings.employerShare);
+    console.log("value received="+arrayElement.mealVoucherSettings.minimumHours);
+
+    // let array = this.SForm.get('arrayBox') as FormArray;
+    // array.push(this.createBoxes());
+
+    let controlArray = <FormArray> this.SForm.get('arrayBox') as FormArray;
+
+    console.log(controlArray.length);
+
+    controlArray.controls[0].get('Totalwaarde').setValue(arrayElement.mealVoucherSettings.totalWorth);
+    // (<FormGroup>controlArray.at(0)).controls.Totalwaarde.setValue(arrayElement.mealVoucherSettings.totalWorth);
+    
+    this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
+
+      if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null )
+      {
+        if(this.STFormData.data.statuteSettings.paritairCommitee !== null && this.STFormData.data.statuteSettings.paritairCommitee !== undefined)
+        {
+          let name = this.STFormData.data.statuteSettings.paritairCommitee.name;
+          let number = this.STFormData.data.statuteSettings.paritairCommitee.number;
+          this.JCString = number + " - " + name;  
+        }
+      }
+
+    }
+
+createBoxes():FormGroup {
+
+ let formG:FormGroup = this.fb.group({
+  Totalwaarde: new FormControl(''),
+  Wergeversdeel: new FormControl(''),
+  minimumHours: new FormControl(''),  
+});
+
+return formG;
+
+}
+
+addArray() {
+  this.arrayBox.push(this.createBoxes());
+}
+
+get arrayBox() {
+  return this.SForm.get('arrayBox') as FormArray;
+}
+
 
   ngOnInit() {
     this.SForm = new FormGroup({
       CoefficientBox: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
+
       Totalwaarde: new FormControl(''),
       Wergeversdeel: new FormControl(''),
-      minimumHours: new FormControl('')
+      minimumHours: new FormControl(''),
+
+      arrayBox: this.fb.array([
+        this.createBoxes()
+      ]),
+
     });
+
+
+    //this.MealBox.push(this.SForm.get('arrayBox') as FormArray);
 
     this.createCoefficientArray();
 
@@ -116,11 +174,28 @@ export class StatuteComponent implements OnInit {
       this.countStatutes = data.length;
 
       if (this.statutes.length !== 0) {
+        //this.createFormArray();
         this.emitData();
       }
 
     }, error => this.errorMsg = error);
 
+  }
+
+  createFormArray() {
+
+    console.log("inside form array");
+
+    let counter:number = 0;
+
+    console.log("formarray length="+this.statutes.length);
+
+    while(counter < this.statutes.length - 1)
+    {
+      let array = this.SForm.get('arrayBox') as FormArray;
+      array.push(this.createBoxes());
+      counter++;
+    }
 
   }
 
@@ -141,7 +216,8 @@ export class StatuteComponent implements OnInit {
 
   onMealChange(event, ctrlid: number) {
     try {
-      this.isMealEnabled[ctrlid] = event; // alert('this.isMealEnabled[' + ctrlid + '] = ' + this.isMealEnabled[ctrlid]);
+      this.isMealEnabled[ctrlid] = event; 
+      // alert('this.isMealEnabled[' + ctrlid + '] = ' + this.isMealEnabled[ctrlid]);
       // this.createArrayData(this.statutes);
       console.log('onChange');
     } catch (ex) {
@@ -150,51 +226,48 @@ export class StatuteComponent implements OnInit {
   }
 
   createArrayData(data: Statute[]) {
-    // this.createCoefficientArray();
 
     this.statuteSettings = [];
 
-    console.log("length=" + this.arrayParitairCommitee.length);
-
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) 
+    {
       const dataObject = data[i];
-
-      console.log('dataObject=');
-      console.log(dataObject);
 
       this.statuteObject = new Statute();
       this.statuteObject.name = dataObject.name;
       this.statuteObject.type = dataObject.type;
 
-      console.log("paritair committee array");
-      console.log(this.arrayParitairCommitee);
-      const dataPtObject = this.arrayParitairCommitee[i];
-
-      this.paritarirCommiteeObject = new ParitairCommitee();
-      this.paritarirCommiteeObject.BrightStaffingCommitteeId = dataPtObject.BrightStaffingCommitteeId;
-      this.paritarirCommiteeObject.name = dataPtObject.name;
-      this.paritarirCommiteeObject.number = dataPtObject.number;
-      this.paritarirCommiteeObject.type = dataPtObject.type;
-
-      this.mealVoucherSettingsObject = new MealVoucherSettings();
-
-      if (this.isMealEnabled[i] === true) {
-        this.mealVoucherSettingsObject.employerShare = this.wegervaalArray[i];
-        this.mealVoucherSettingsObject.minimumHours = this.minimumurenArray[i];
-        this.mealVoucherSettingsObject.totalWorth = this.totalArray[i];
-      } else {
-        this.mealVoucherSettingsObject.employerShare = 0;
-        this.mealVoucherSettingsObject.minimumHours = 0;
-        this.mealVoucherSettingsObject.totalWorth = 0;
+      if(this.arrayParitairCommitee !== null && this.arrayParitairCommitee !== undefined && this.arrayParitairCommitee.length !== 0)
+      {
+        const dataPtObject = this.arrayParitairCommitee[i];
+  
+        this.paritarirCommiteeObject = new ParitairCommitee();
+        this.paritarirCommiteeObject.BrightStaffingCommitteeId = dataPtObject.BrightStaffingCommitteeId;
+        this.paritarirCommiteeObject.name = dataPtObject.name;
+        this.paritarirCommiteeObject.number = dataPtObject.number;
+        this.paritarirCommiteeObject.type = dataPtObject.type;
+  
+        this.mealVoucherSettingsObject = new MealVoucherSettings();
+  
+        if (this.isMealEnabled[i] === true) {
+          this.mealVoucherSettingsObject.employerShare = parseInt(this.wegervaalArray[i],10);
+          this.mealVoucherSettingsObject.minimumHours = parseInt(this.minimumurenArray[i],10);
+          this.mealVoucherSettingsObject.totalWorth = parseInt(this.totalArray[i],10);
+        } else {
+          this.mealVoucherSettingsObject.employerShare = 0;
+          this.mealVoucherSettingsObject.minimumHours = 0;
+          this.mealVoucherSettingsObject.totalWorth = 0;
+        }
+  
+        this.StatuteSettingsObject = new StatuteSetting();
+        this.StatuteSettingsObject.statute = this.statuteObject;
+        this.StatuteSettingsObject.paritairCommitee = this.paritarirCommiteeObject;
+        this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
+        this.StatuteSettingsObject.coefficient = parseInt(this.coefficientArray[i],10);
+  
+        this.statuteSettings.push(this.StatuteSettingsObject);
       }
 
-      this.StatuteSettingsObject = new StatuteSetting();
-      this.StatuteSettingsObject.statute = this.statuteObject;
-      this.StatuteSettingsObject.paritairCommitee = this.paritarirCommiteeObject;
-      this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
-      this.StatuteSettingsObject.coefficient = this.coefficientArray[i];
-
-      this.statuteSettings.push(this.StatuteSettingsObject);
     }
 
     console.log('created array=')
@@ -204,18 +277,38 @@ export class StatuteComponent implements OnInit {
   }
 
   totalChange(value: number, i) {
-    this.totalArray[i] = value;
-    this.replaceArrayTotal(i);
+
+    if(this.isMealEnabled[i]===true)
+    {
+      console.log("totalwaarde value and i:"+value+"  "+ i);
+      this.totalArray[i] = value;    
+      this.replaceArrayTotal(i);  
+    }
   }
 
+  changeTotalBox1(value:number, k: number) {
+    this.MealBox[k].Totalwaarde = value;
+    //this.changeObject();
+  }
+
+
   WergeversdeelChange(value: number, i) {
-    this.wegervaalArray[i] = value;
-    this.replaceArrayWergever(i);
+    if(this.isMealEnabled[i]===true)
+    {
+      console.log("WergeversdeelChange value and i:"+value+"  "+ i);
+      this.wegervaalArray[i] = value;
+      this.replaceArrayWergever(i); 
+    }
   }
 
   minimumUrenChange(value: number, i) {
-    this.minimumurenArray[i] = value;
-    this.replaceArrayMinimum(i);
+    if(this.isMealEnabled[i]===true)
+    {
+      console.log("minimumUrenChange value and i:"+value + " "+i);
+      this.minimumurenArray[i] = value;
+      this.replaceArrayMinimum(i);  
+    }
+
   }
 
   receiveJTdata($event, i) {
@@ -239,7 +332,7 @@ export class StatuteComponent implements OnInit {
   replaceArrayWergever(i: number) {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.employerShare = this.wegervaalArray[i];
+      this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i],10);
     } else {
       this.createArrayData(this.statutes);
     }
@@ -249,9 +342,11 @@ export class StatuteComponent implements OnInit {
 
   replaceArrayTotal(i: number) {
 
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.totalWorth = this.totalArray[i];
+    console.log("i="+i);
 
+    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+    {
+      this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i],10);
     } else {
       this.createArrayData(this.statutes);
     }
@@ -261,8 +356,11 @@ export class StatuteComponent implements OnInit {
 
   replaceArrayMinimum(i: number) {
 
+    console.log("i="+i);
+
+
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.minimumHours = this.minimumurenArray[i];
+      this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i],10);
     } else {
       this.createArrayData(this.statutes);
     }
