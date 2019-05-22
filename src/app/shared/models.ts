@@ -110,14 +110,20 @@ export class Code2 {
     codeNumber: number; description: string; codeType: string; valueType: string; isDefaultForCodeType: string; statuteType: string;
 }
 export enum ContractStatus { Active = 'Active', Cancelled = 'Cancelled' }
-
-export class Summaries { id: number; CustomerVatNumber: string; ActionTypeId: string; Message: string; DateTime: string; ObjectId: string; ObjectDomain: string; SecondId: string; priority: number; IsManual: boolean; IsFinished: boolean; }
+export class Summaries {
+    id: number; customerVatNumber: string; message: string; dateTime: string; actionTypeId: string;
+    objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
+}
 
 export class SelectedContract { contractId: number; personId: string; }
 
 export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
 export class PersonsContracts { dpsPerson: DpsPerson; dpsContracts: DpsContract[]; }
 export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File }
-export enum FileType { MedicalAttestation = 'MedicalAttestation', VcaAttestation='VcaAttestation', StudentAtWork = 'StudentAtWork', ConstructionCards = 'ConstructionCards', OtherDocuments='OtherDocuments' ,DriversLicense ='DriversLicense' }
+export enum FileType {
+    MedicalAttestation = 'MedicalAttestation', VcaAttestation = 'VcaAttestation',
+    StudentAtWork = 'StudentAtWork', ConstructionCards = 'ConstructionCards',
+    OtherDocuments = 'OtherDocuments', DriversLicense = 'DriversLicense'
+}
 
 

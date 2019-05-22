@@ -62,6 +62,9 @@
           <td class="col-split col-split-m"></td>
           <td class="col-split col-split-l"></td>
         </tr>
+        <tr *ngIf="errorMsg!==null">
+          <td class="error" colspan="10">{{errorMsg}}</td>
+        </tr>
       </table>
     </div>
   </div>

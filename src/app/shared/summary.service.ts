@@ -8,9 +8,14 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SummaryService {
-  private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'my-auth-token' }) };
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json', Authorization: 'my-auth-token', observe: 'response'
+    })
+  };
 
   private getSummaryURL = '';
+  private getSummary = '';
 
   constructor(private http: HttpClient) {
 
@@ -22,13 +27,25 @@ export class SummaryService {
       console.log('Data From JSON');
       this.getSummaryURL = '../../assets/data/summary.json';
     }
+
+    this.getSummary = environment.dpsAPI + environment.getSummary;
+
   }
 
   public getSummaryByVatnumber(customervatnumber: string): Observable<any> {
     let getURL = this.getSummaryURL;
-    if (environment.dataFromAPI_JSON && environment.getSummaryURL !== '') { getURL = getURL + + '/' + customervatnumber; }
-    console.log('PositionsService Data From = ' + getURL);
+    if (environment.dataFromAPI_JSON && environment.getSummaryURL !== '') { getURL = getURL + '/' + customervatnumber; }
+    console.log('SummaryService Data From = ' + getURL);
     const result = this.http.get<Summaries[]>(getURL, this.httpOptions).catch(this.errorHandler);
+    console.log(result);
+    return result;
+  }
+
+  public updateSummaryByVatnumberAndSummaryID(summaries: Summaries): Observable<any> {
+    const getURL = this.getSummary;
+    console.log('SummaryService Update Summaries ');
+    console.log('getURL :: ', getURL, summaries);
+    const result = this.http.put<Summaries[]>(getURL, summaries, this.httpOptions).catch(this.errorHandler);
     console.log(result);
     return result;
   }

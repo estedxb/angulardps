@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
+import { Summaries } from '../../../shared/models';
 @Component({
   selector: 'app-dashboardsummary',
   templateUrl: './dashboardaction.component.html',
@@ -23,7 +24,7 @@ export class DashboardActionComponent implements OnInit {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
-      this.datas = summaries  .filter(d => d.IsFinished === false);
+      this.datas = summaries.filter(d => d.isFinished === false);
       this.notificationcount = this.datas.length;
       console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
@@ -54,6 +55,15 @@ export class DashboardActionComponent implements OnInit {
     }
     reDirectURL = reDirectURL.replace('$id$', id);
     this.router.navigate([reDirectURL]);
+  }
+
+  updateAction(index: number) {
+    let summaries: Summaries = this.datas[index];
+    summaries.isFinished = true;
+    this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
+      this.datas.splice(index, 1);
+      console.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
+    }, error => this.errorMsg = error);
   }
 
 }

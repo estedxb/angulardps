@@ -383,3 +383,6 @@ sup.notify {
 #PersonButtons button:focus {
   outline: 0px;
 }
+.error {
+  word-break: break-all;
+}
