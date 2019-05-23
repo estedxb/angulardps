@@ -117,13 +117,16 @@ export class Summaries {
 
 export class SelectedContract { contractId: number; personId: string; }
 
-export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
-export class PersonsContracts { dpsPerson: DpsPerson; dpsContracts: DpsContract[]; }
+// export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
+// export class PersonsContracts { customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string; customerPostionId: string; dpsContracts: DpsContract[];}
 export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File }
 export enum FileType {
     MedicalAttestation = 'MedicalAttestation', VcaAttestation = 'VcaAttestation',
     StudentAtWork = 'StudentAtWork', ConstructionCards = 'ConstructionCards',
     OtherDocuments = 'OtherDocuments', DriversLicense = 'DriversLicense'
 }
-
-
+export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string;}
+export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
+export class DpsScheduleCustomer { customerVatNumber : string; customerName : string; }
+export class DpsSchedulePerson { personId: string; personName: string;positionName: string; contracts: DpsScheduleContract[];}
+export class DpsScheduleContract { customerContractId :string; customerContractName:string; workSchedule:WorkSchedule; }

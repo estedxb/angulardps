@@ -24,9 +24,9 @@ export class CountriesService {
   }
 
   public getCountriesList(): Observable<CountriesList[]> {
-    console.log('CountriesService Data From = ' + this.getCountriesListUrl);
+    // console.log('CountriesService Data From = ' + this.getCountriesListUrl);
     const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

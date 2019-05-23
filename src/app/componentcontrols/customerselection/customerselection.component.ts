@@ -29,8 +29,8 @@ export class CustomerSelectionComponent implements OnInit {
       .subscribe(data => {
         this.customers = data;
         this.customernames = data;
-        console.log('getCustomers in customerselection.component ::');
-        console.log(data);
+        // console.log('getCustomers in customerselection.component ::');
+        // console.log(data);
       }, error => this.errorMsg = error);
   }
 

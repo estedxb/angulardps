@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { User, DpsUser, DpsPostion, DpsPerson } from './models';
+import { User, DpsUser, DpsPostion, DpsPerson, DpsSchedule, DpsScheduleCall } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
@@ -16,9 +16,9 @@ export class PersonService {
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
   private requestCertificateURL = '';
-  private getPersonsContractsURL = '';
+  private getDpsScheduleURL = '';
   private getPersonbyIdURL = '';
-  private getPersonURL = ''
+  private getPersonURL = '';
   private postPersonURL = '';
   private putPersonURL = '';
   private getVehiclesURL = '';
@@ -29,7 +29,7 @@ export class PersonService {
 
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getPerson !== '') {
-      console.log('Data From getPerson Remote');
+      // console.log('Data From getPerson Remote');
       this.getPersonURL = environment.dpsAPI + environment.getPerson;
       this.postPersonDocumentsURL = environment.dpsAPI + environment.postPersonDocuments;
     } else {
@@ -38,7 +38,7 @@ export class PersonService {
     }
 
     if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
-      console.log('Data From getVehicles Remote');
+      // console.log('Data From getVehicles Remote');
       this.getVehiclesURL = environment.dpsAPI + environment.getVehicles;
     } else {
       console.log('Data From getVehicles JSON');
@@ -46,19 +46,19 @@ export class PersonService {
     }
 
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
-      console.log('Data From getPersonsByVatNumber Remote');
+      // console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
     } else {
       console.log('Data From getPersonsByVatNumber JSON');
       this.getPersonForCustomerbyCustomerVatNumberURL = '../../assets/data/persons.json';
     }
 
-    if (environment.dataFromAPI_JSON && environment.getPersonsContracts !== '') {
-      console.log('Data From getPersonsContracts Remote');
-      this.getPersonsContractsURL = environment.dpsAPI + environment.getPersonsContracts;
+    if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
+      // console.log('Data From getDpsSchedule Remote');
+      this.getDpsScheduleURL = environment.dpsAPI + environment.getDpsSchedules;
     } else {
-      console.log('Data From getPersonsContracts JSON');
-      this.getPersonsContractsURL = '../../assets/data/personscontracts.json';
+      console.log('Data From getDpsSchedule JSON');
+      this.getDpsScheduleURL = '../../assets/data/dpsSchedules.json';
     }
 
     this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
@@ -70,9 +70,9 @@ export class PersonService {
   }
 
   public getVehiclesForLicense(): Observable<any> {
-    console.log('getVehiclesForLicense Data From = ' + this.getVehiclesURL);
+    // console.log('PersonService getVehiclesForLicense Data From = ' + this.getVehiclesURL);
     const result = this.http.get<DpsPerson[]>(this.getVehiclesURL, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
   public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
@@ -80,23 +80,32 @@ export class PersonService {
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       getURL = getURL + '/' + customervatnumber;
     }
-    console.log('PositionsService Data From = ' + getURL);
+    // console.log('PersonService getPersonsByVatNumber Data From = ' + getURL);
     const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
-  public getPersonsContractsByVatNumber(customervatnumber: string, startdate: Date, enddate: Date): Observable<any> {
-    let getURL = this.getPersonsContractsURL;
-    if (environment.dataFromAPI_JSON && environment.getPersonsContracts !== '') {
-      getURL = getURL + '/' + customervatnumber + '?startdate=' + startdate + '&enddate=' + enddate;
+  public getDpsScheduleByVatNumber(customerVatNumber: string, startDate: Date, endDate: Date): Observable<any> {
+    let getURL = this.getDpsScheduleURL;
+    let result = null;
+    // console.log('PersonService getDpsScheduleByVatNumber ');
+    if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
+      getURL = getURL + '/{"customerVatNumber" : "' + customerVatNumber + '", "startDate" : "' + startDate + '", "endDate" : "' + endDate + '"}';
+      // console.log('PersonService API getDpsScheduleByVatNumber Data From = ' + getURL);
+      let dpsScheduleCall = new DpsScheduleCall();
+      dpsScheduleCall.customerVatNumber = customerVatNumber;
+      dpsScheduleCall.startDate = startDate.toString();
+      dpsScheduleCall.endDate = endDate.toString();
+      result = this.http.post<any>(getURL, dpsScheduleCall , this.httpOptions).catch(this.errorHandler);
+    } else {
+      if (customerVatNumber !== '123456789101') {
+        getURL = getURL.replace('.json', '_empty.json');
+      }
+      // console.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
+      result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);    
     }
-    if (customervatnumber !== '123456789101') {
-      getURL = this.getPersonsContractsURL.replace('.json', '_empty.json');
-    }
-    console.log('PositionsService Data From = ' + getURL);
-    const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -127,12 +136,12 @@ export class PersonService {
     });
   }
 
-  updateMedicalAttestationFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
+  updateMedicalAttestationFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    console.log('formData:::', formData);
-    return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData,
-     { observe: 'response'}).pipe(map(() => true))
+    // console.log('formData:::', formData);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
+      { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
   handleError(e: any): import('rxjs').ObservableInput<boolean> {
@@ -140,43 +149,43 @@ export class PersonService {
   }
 
 
-  vcaAttestationFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
-                 const formData: FormData = new FormData();
-            formData.append('file', fileToUpload, fileToUpload.name);   
-      return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData, 
-          { observe: 'response' }).pipe(map(() => true))
+  vcaAttestationFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
+      { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
 
-  constructionCardsFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
+  constructionCardsFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);    
-    return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData,  
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
       { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
 
 
-  studentAtWorkFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
+  studentAtWorkFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);  
-    return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData,  
-      {observe: 'response' }).pipe(map(() => true))
-      .catch((e) => this.handleError(e));
-  }
-
-  otherDocumentsFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
-    const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);   
-    return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData,  
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
       { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
 
-  driversFile(fileToUpload: File, CustomerVatNumber: string , ssid:string , fileType:string , fileName: string ): Observable<boolean> {
+  otherDocumentsFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);   
-    return this.http.post<any>(this.postPersonDocumentsURL +'/'+ CustomerVatNumber+'/'+ ssid +'/'+ fileType+'/'+ fileName, formData, 
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
+      { observe: 'response' }).pipe(map(() => true))
+      .catch((e) => this.handleError(e));
+  }
+
+  driversFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
       { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
   }
@@ -184,7 +193,7 @@ export class PersonService {
 
 
   public updatePosition(person: any): Observable<any> {
-    console.log("in update position call:");
+    // console.log("in update position call:");
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.putPersonURL, person, {
       headers: httpHeaders,

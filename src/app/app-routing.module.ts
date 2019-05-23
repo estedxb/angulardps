@@ -54,6 +54,7 @@ import { CancelContractComponent } from './componentcontrols/cancelcontract/canc
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
 import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
+import { NumPipe } from './pipes/num.pipe';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -120,7 +121,8 @@ export const routingComponents = [
   CancelContractComponent,
   BulkContractComponent,
   WeekPipe,
-  TimeSpliterPipe
+  TimeSpliterPipe,
+  NumPipe
 ];
 export const entringComponents = [
   DPSSystemMessageComponent,

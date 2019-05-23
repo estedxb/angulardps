@@ -191,7 +191,7 @@
     "objectDomain": "Person",
     "secondId": 0,
     "priority": 0,
-    "isManual": false,
+    "isManual": true,
     "isFinished": false
   },
   {
@@ -204,7 +204,7 @@
     "objectDomain": "Person",
     "secondId": 0,
     "priority": 0,
-    "isManual": false,
+    "isManual": true,
     "isFinished": true
   },
   {

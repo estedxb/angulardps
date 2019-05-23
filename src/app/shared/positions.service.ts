@@ -15,7 +15,7 @@ export class PositionsService {
 
   constructor(private http: HttpClient) {
     if (environment.dataFromAPI_JSON && environment.getPositionsByVatNumber !== '') {
-      console.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
       this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
@@ -28,10 +28,10 @@ export class PositionsService {
   }
 
   public getPositionsByVatNumber(parameter: string): Observable<DpsPostion[]> {
-    console.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + parameter);
+    // console.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + parameter);
     const result = this.http.get<DpsPostion[]>(
       this.getPositionsByVatNumberUrl + '/' + parameter, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -53,7 +53,7 @@ export class PositionsService {
   public updatePositionWithFile( fileToUpload: File, vatNumber: string , positionId:number): Observable<any> {   
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    console.log('formData:::', formData);
+    // console.log('formData:::', formData);
     new Response(formData).text().then(console.log);
     return this.http.post<any>(this.getPositionUpdateUrl +'/'+ vatNumber+'/'+ positionId, formData ,
     {    

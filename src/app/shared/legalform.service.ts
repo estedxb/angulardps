@@ -18,9 +18,9 @@ export class LegalformService {
   }
 
   public getLegalForms(): Observable<LegalForm[]> {
-    console.log('LegalformService Data From = ' + this.getLegalFormUrl);
+    // console.log('LegalformService Data From = ' + this.getLegalFormUrl);
     const result = this.http.get<LegalForm[]>(this.getLegalFormUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

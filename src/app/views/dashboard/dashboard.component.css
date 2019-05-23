@@ -135,14 +135,31 @@
   color: #fff;
   font-size: 12px;
   font-weight: 600;
-  padding: 5px;
+  padding: 0px;
   text-align: center;
+  height: 102px;
+}
+.Contents .col-split .centerline {
+  width: 1px;
+  height: 102px;
+  border-right: 0.5px dotted rgba(255, 255, 255, 0.15);
+  margin: auto;
+}
+
+.Contents .col-split .workbar {
+  height: 3px;
+  background-color: limegreen;
+  position: absolute;
+  vertical-align: middle;
+  margin-top: 50px;
+  cursor: pointer;
 }
 
 .Contents .col-split-n {
   text-align: left;
 }
-.Contents .col-split .name {
+.Contents .col-split .name,
+.Contents .col-split .position {
   color: #fff;
   font-size: 15px;
   font-weight: 500;
@@ -153,28 +170,25 @@
 }
 .Contents .col-split .position {
   color: #646464;
-  font-size: 13px;
   font-weight: normal;
   padding: 0px 5px 5px 5px;
-  text-align: left;
-  clear: both;
-  cursor: pointer;
 }
 .col-split-t {
-  width: 25%;
+  width: auto;
 }
 .col-split-n {
-  width: 21%;
+  width: auto;
 }
 .col-split-f {
-  width: 4%;
-  padding: 20px;
+  width: 40px;
+  padding: 0px;
 }
 .col-split-m {
-  width: 9%;
+  width: 135px;
 }
 .col-split-l {
-  width: 12%;
+  width: 135px;
+  display: none;
 }
 
 .dashboardactionhead {
@@ -185,8 +199,6 @@
 #PersonContents {
   margin: 0px -20px 10px;
   padding: 0px;
-  border-top: 3px solid #707070;
-  border-bottom: 3px solid #707070;
   min-height: 300px;
 }
 #PersonContents .row {
@@ -207,11 +219,16 @@
 
 .dashboardactioncontent {
   padding: 0px;
-  border-top: 1px solid #707070;
-  border-bottom: 1px solid #707070;
+  border-top: 3px solid rgba(112, 112, 112, 0.75);
+  border-bottom: 3px solid rgba(112, 112, 112, 0.75);
   height: 300px;
   overflow: auto;
 }
+.dashboardpersoncontent {
+  height: auto;
+  max-height: 800px;
+}
+
 .dashboardactioncontent table {
   width: 100%;
   margin: auto;
@@ -229,7 +246,6 @@
 
 .dashboardactioncontent table tr td {
   vertical-align: middle;
-  padding: 5px 5px;
 }
 .notify {
   float: left;

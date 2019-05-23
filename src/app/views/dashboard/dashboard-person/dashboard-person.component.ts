@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DpsPerson, Person, SelectedContract } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 
@@ -31,8 +31,12 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedThursday = '';
   public SelectedFriday = '';
   public SelectedSaturday = '';
-  public SelectedSunday = '';
-
+  public SelectedSunday = '';  
+  public ShowMorningDiff = 6;
+  public ShowNightDiff = 2;
+  public CellWidth = 135;
+  // public TimeConverterToPx = 0.09375;
+  public TimeConverterToPx = this.CellWidth / ((24-this.ShowMorningDiff - this.ShowNightDiff) * 60 );
   // tslint:disable-next-line: max-line-length
   constructor(private personService: PersonService, private route: ActivatedRoute, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
@@ -41,12 +45,13 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
+    // console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
 
-    this.personService.getPersonsContractsByVatNumber(this.vatNumber, this.startDate, this.endDate)
-      .subscribe(persons => {
-        this.maindatas = persons;
-        console.log('getPersonsContractsByVatNumber in DashboardPersonComponent ::', this.maindatas);
+    this.personService.getDpsScheduleByVatNumber(this.vatNumber, this.startDate, this.endDate)
+      .subscribe(dpsSchedule => {
+        console.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
+        this.maindatas = dpsSchedule.persons;
+        console.log('maindatas ::', this.maindatas);
       }, error => this.errorMsg = error);
 
     console.log('this.currentPage : ' + this.currentPage);

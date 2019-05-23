@@ -15,7 +15,7 @@ export class WorkschedulesService {
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     //environment.getWorkSchedulesByVatNumber = '';
     if (environment.dataFromAPI_JSON && environment.getWorkSchedulesByVatNumber !== '') {
-      console.log('Data Work Schedules From Remote');
+      // console.log('Data Work Schedules From Remote');
       this.isRemoteURL = true;
       this.getWorkscheduleByVatNumberUrl = environment.dpsAPI + environment.getWorkSchedulesByVatNumber;
       this.getWorkscheduleURL = environment.dpsAPI + environment.getWorkSchedule;
@@ -31,36 +31,36 @@ export class WorkschedulesService {
   public getWorkscheduleByVatNumber(parameter: string): Observable<DpsWorkSchedule[]> {
     let WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl;
     if (this.isRemoteURL) { WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl + '/' + parameter; }
-    console.log('Get Work Schedule By Vat Number Url', WorkscheduleByVatNumberUrl);
+    // console.log('Get Work Schedule By Vat Number Url', WorkscheduleByVatNumberUrl);
     const result = this.http.get<any[]>(WorkscheduleByVatNumberUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public getWorkscheduleEmpty(parameter: string = ''): Observable<any[]> {
-    console.log('Get Work Schedule Empty Url', this.getWorkscheduleEmptyUrl);
+    // console.log('Get Work Schedule Empty Url', this.getWorkscheduleEmptyUrl);
     const result = this.http.get<any[]>(this.getWorkscheduleEmptyUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public getWorkscheduleById(parameter: string): Observable<any> {
-    console.log('Get Work Schedule By Id Url', this.getWorkscheduleURL + '/' + parameter);
+    // console.log('Get Work Schedule By Id Url', this.getWorkscheduleURL + '/' + parameter);
     let WorkscheduleURL = this.getWorkscheduleURL;
     if (this.isRemoteURL) { WorkscheduleURL = this.getWorkscheduleURL + '/' + parameter; }
     const result = this.http.get<any>(WorkscheduleURL).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public createWorkschedule(workSchedule: any): Observable<any> {
-    console.log('Create Work Schedule Url', this.getWorkscheduleURL);
+    // console.log('Create Work Schedule Url', this.getWorkscheduleURL);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.getWorkscheduleURL, workSchedule, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateWorkschedule(workSchedule: any): Observable<any> {
-    console.log('Update Work Schedule Url', this.getWorkscheduleURL, workSchedule);
+    // console.log('Update Work Schedule Url', this.getWorkscheduleURL, workSchedule);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.getWorkscheduleURL, workSchedule, { headers: httpHeaders, observe: 'response' });
   }

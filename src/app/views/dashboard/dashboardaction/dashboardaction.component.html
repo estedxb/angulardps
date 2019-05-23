@@ -21,7 +21,8 @@
       <div class="col col-sm-1">
         <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)"><img
             src="../../../../assets/svg/eye.svg"></button>
-        <button (click)="updateAction(i)"><img src="../../../../assets/svg/revertsuccess.svg"></button>
+        <button (click)="updateAction(i)" *ngIf="data.isManual"><img
+            src="../../../../assets/svg/revertsuccess.svg"></button>
       </div>
     </div>
   </div>

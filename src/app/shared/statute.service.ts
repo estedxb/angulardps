@@ -14,13 +14,13 @@ export class StatuteService {
     } else {
       this.getStatuteUrl = '../../assets/data/statute.json';
     }
-    console.log('Data From = ' + this.getStatuteUrl);
+    // console.log('Data From = ' + this.getStatuteUrl);
   }
 
   public getStatutes(): Observable<Statute[]> {
-    console.log('LegalformService Data From = ' + this.getStatuteUrl);
+    // console.log('LegalformService Data From = ' + this.getStatuteUrl);
     const result = this.http.get<Statute[]>(this.getStatuteUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

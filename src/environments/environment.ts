@@ -30,7 +30,7 @@ export const environment = {
   getWorkSchedulesByVatNumber: 'WorkSchedule/ForCustomer',
   getPositionsByVatNumber: 'Position/ForCustomer',
   getPersonsByVatNumber: 'Person/ForCustomer',
-  getSummaryURL: '', // ToDo​/ForCustomer​
+  getSummaryURL: 'ToDo/ForCustomer',
   getPersonBySSIDNVatNumber: 'Person',
   getPersonById: 'Person',
   getUser: 'User',
@@ -45,7 +45,7 @@ export const environment = {
   getFileUploads: '',
   getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
   getContract: 'Contract',
-  getPersonsContracts: '',
+  getDpsSchedules: '',// 'Schedule'
   actionURL_1: 'customer/edit',
   actionURL_2: 'customer/position',
   actionURL_3: 'customer/user',

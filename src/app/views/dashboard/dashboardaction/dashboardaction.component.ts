@@ -22,11 +22,11 @@ export class DashboardActionComponent implements OnInit {
 
   ngOnInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
-    console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
+    // console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);
       this.notificationcount = this.datas.length;
-      console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
+      // console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
   }
 
@@ -62,7 +62,7 @@ export class DashboardActionComponent implements OnInit {
     summaries.isFinished = true;
     this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
       this.datas.splice(index, 1);
-      console.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
+      // console.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
     }, error => this.errorMsg = error);
   }
 

@@ -14,7 +14,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getUsersByVatNumber !== '') {
-      console.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getUsersByVatNumberUrl = environment.dpsAPI + environment.getUsersByVatNumber;
       this.getUserUrl = environment.dpsAPI + environment.getUser;
     } else {
@@ -24,23 +24,23 @@ export class UsersService {
   }
 
   public getUsersByVatNumber(parameter: string): Observable<DpsUser[]> {
-    console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
+    // console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
     const result = this.http.get<DpsUser[]>(
       this.getUsersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public createUser(dpsuser: DpsUser): Observable<any> {
-    console.log('Create User Url', this.getUserUrl);
-    console.log('createUser', dpsuser);
+    // console.log('Create User Url', this.getUserUrl);
+    // console.log('createUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<DpsUser>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateUser(dpsuser: DpsUser): Observable<any> {
-    console.log('Update User Url', this.getUserUrl);
-    console.log('updateUser', dpsuser);
+    // console.log('Update User Url', this.getUserUrl);
+    // console.log('updateUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }

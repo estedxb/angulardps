@@ -14,26 +14,26 @@ export class LocationsService {
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getLocationsByVatNumber !== '') {
-      console.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getLocationByVatNumberUrl = environment.dpsAPI + environment.getLocationsByVatNumber;
       this.getLocationURL = environment.dpsAPI + environment.getLocation;
     } else {
-      console.log('Data From JSON');
+      // console.log('Data From JSON');
       this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
     }
   }
 
   public getLocationByVatNumber(parameter: string): Observable<Location[]> {
-    console.log('getLocationByVatNumber');
+    // console.log('getLocationByVatNumber');
     const result = this.http.get<Location[]>(this.getLocationByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public getLocationById(parameter: string): Observable<Location> {
-    console.log('getLocationById');
+    // console.log('getLocationById');
     const result = this.http.get<any>(this.getLocationURL + '/' + parameter).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
