@@ -3,7 +3,7 @@ export const environment = {
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisstg.azurewebsites.net/api/',
   boemmAPI : 'https://boemmapistg.azurewebsites.net/api/',
-  blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
+  blobStorage: 'https://dpsstorageaccountstg.blob.core.windows.net',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerByVatNumberEdit: 'Customer/',
   createCustomer: 'Customer',
@@ -39,7 +39,7 @@ export const environment = {
   postPersonDocuments: 'Person/UpladDocuments',
   getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
   getFileUploads: '',
-  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
+  getPositionFileUploads: 'https://dpsstorageaccountstg.blob.core.windows.net/position/',
   getContract: 'Contract',
   getDpsSchedules: '',// 'Schedule'
   actionURL_1: 'customer/edit',
@@ -52,5 +52,5 @@ export const environment = {
   actionURL_8: 'person/$id$/document',
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: '',
-  getPositionsDownloadTemplate: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf'
+  getPositionsDownloadTemplate: 'https://dpsstorageaccountstg.blob.core.windows.net/position/Position1.pdf'
 };
