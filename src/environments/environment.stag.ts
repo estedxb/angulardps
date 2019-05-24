@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
-  dpsAPI: 'https://dpsapisstg.azurewebsites.net/api/',
+  dpsAPI: 'https://dpsapistg.azurewebsites.net/api/',
   boemmAPI : 'https://boemmapistg.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountstg.blob.core.windows.net',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
