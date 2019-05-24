@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisstg.azurewebsites.net/api/',
   boemmAPI : 'https://boemmapistg.azurewebsites.net/api/',
