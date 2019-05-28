@@ -34,7 +34,7 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedSunday = '';
   public ShowMorningDiff = 6;
   public ShowNightDiff = 2;
-  public CellWidth = 135;
+  public CellWidth = 140;
   // public TimeConverterToPx = 0.09375;
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
@@ -75,14 +75,15 @@ export class DashboardPersonComponent implements OnInit {
 
   getSelectedDates() {
     let curr = new Date();
-    let currl = new Date();
-    // console.log('Today 1 :: ' + curr);
+    let curre = new Date();
+    const adjustDaysForWeekStartDate = curr.getUTCDay() - 1;
 
-    curr = new Date(curr.setDate(curr.getUTCDate() - curr.getUTCDay() + 1));
-    // console.log('This Week Start Date :: ' + curr);
+    curr.setDate(curr.getUTCDate() - adjustDaysForWeekStartDate);
+    curre.setDate(curr.getUTCDate() - (adjustDaysForWeekStartDate - 7));
     const adddays: number = this.WeekDiff * 7;
-    curr = new Date(curr.setDate(curr.getUTCDate() + adddays));
-    // console.log('Selected Week Start Date :: ' + curr);
+    curr.setDate(curr.getUTCDate() + adddays);
+    curre.setDate(curre.getUTCDate() + adddays);
+
     const first = curr.getUTCDate();
 
     const mon = new Date(curr);
@@ -91,29 +92,7 @@ export class DashboardPersonComponent implements OnInit {
     const thu = new Date(curr.setDate(first + 3));
     const fri = new Date(curr.setDate(first + 4));
     const sat = new Date(curr.setDate(first + 5));
-    let sun = new Date(curr.setDate(first + 6));
-
-    if (sun.getUTCDay() !== 0) {
-      console.log('Sun :: ' + sun);
-      console.log('Is not Zero :: ' + curr.getUTCDay(), curr);
-      let adddaysl = adddays;
-      if (curr.getUTCDay() <= 2) {
-        console.log('Zero  Less');
-        adddaysl = adddaysl + 7 - curr.getUTCDay();
-      } else {
-        console.log('Zero  More');
-        adddaysl = adddaysl + 8 - curr.getUTCDay();
-      }
-
-      console.log('adddaysl :: ' + adddaysl);
-      currl = new Date(currl.setDate(currl.getUTCDate() + adddaysl));
-
-      sun = new Date(currl);
-      console.log('New Sun :: ' + sun);
-    }
-
-    // console.log('monday :: sunday');
-    // console.log(mon + ' :: ' + sun);
+    const sun = new Date(curre);
 
     this.startDate = mon;
     this.endDate = sun;
@@ -127,11 +106,9 @@ export class DashboardPersonComponent implements OnInit {
     this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
 
     // tslint:disable-next-line: max-line-length
-    return this.startDate.getUTCDate().toString() + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + '. ' + this.endDate.getUTCFullYear();
+    return this.startDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.endDate) + '. ' + this.endDate.getUTCFullYear();
   }
-  getShortMonth(date) {
-    return date.toLocaleString('nl-NL', { month: 'long' });
-  }
+  getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
 
   openContractDialog(personid, contractid): void {
     try {

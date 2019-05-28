@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Contract, DpsContract } from './models';
+import { Contract, DpsContract, PrintContractPDF, ApproveContractSuccess, ApproveContract } from './models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -11,14 +11,32 @@ import { environment } from 'src/environments/environment';
 export class ContractService {
   private getContractByVatNumberUrl = '';
   private getContractURL = '';
+  private getPrintContractFileURL = '';
+  public getApproveContractURL = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getContract !== '') {
       // console.log('Data From Remote');      
       this.getContractURL = environment.dpsAPI + environment.getContract;
     } else {
-      console.log('Data From JSON');
+      // console.log('Data From JSON');
       this.getContractByVatNumberUrl = '';
+    }
+
+    if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
+      console.log('getPrintContractFileURL Data From Remote');
+      this.getPrintContractFileURL = environment.dpsAPI + environment.getPrintContractFileURL;
+    } else {
+      console.log('getPrintContractFileURL Data From JSON');
+      this.getPrintContractFileURL = '../../assets/data/printContract.json';
+    }
+
+    if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
+      console.log('getApproveContractURL Data From Remote');
+      this.getApproveContractURL = environment.dpsAPI + environment.getApproveContractURL;
+    } else {
+      console.log('getApproveContractURL Data From JSON');
+      this.getApproveContractURL = '../../assets/data/approveContract.json';
     }
   }
 
@@ -35,10 +53,44 @@ export class ContractService {
   }
 
 
-  public getContractByVatNoAndId(vatNumber: string,contractId: string): Observable<DpsContract> {
+  public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<PrintContractPDF> {
+    // console.log('getContractById');
+    let result: any = null;
+    if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
+      console.log('getPrintContractPDFFileURL Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
+      result = this.http.get<any>(this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
+    } else {
+      console.log('getPrintContractPDFFileURL Data From = ' + this.getPrintContractFileURL);
+      result = this.http.get<any>(this.getPrintContractFileURL).catch(this.errorHandler);
+    }
+    console.log(result);
+    return result;
+  }
+
+
+  public getApproveContract(vatNumber: string, contractId: number): Observable<ApproveContractSuccess> {
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let result: any = null;
+    const approveContract = new ApproveContract();
+    approveContract.customerVatNumber = vatNumber;
+    approveContract.contractId = contractId.toString();
+    console.log('getApproveContract Data From = ' + this.getApproveContractURL);
+
+    if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
+      result = this.http.post<any>(this.getApproveContractURL, approveContract, {
+        headers: httpHeaders, observe: 'response'
+      }).catch(this.errorHandler);
+    } else {
+      result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
+    }
+    console.log(result);
+    return result;
+  }
+
+  public getContractByVatNoAndId(vatNumber: string, contractId: string): Observable<DpsContract> {
     // console.log('getContractById');
     // console.log('getContractByVatNoAndId Data From = ' + this.getContractURL + '/' + vatNumber +'/' + contractId);
-    const result = this.http.get<any>(this.getContractURL + '/' + vatNumber +'/' + contractId).catch(this.errorHandler);
+    const result = this.http.get<any>(this.getContractURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     // console.log(result);
     return result;
   }

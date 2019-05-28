@@ -10,6 +10,7 @@ import { LocationsService } from 'src/app/shared/locations.service';
 import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-createcontract',
@@ -62,6 +63,7 @@ export class CreateContractComponent implements OnInit {
   public dpsPositionsData = [];
   public dpsPosition: DpsPostion;
   positionSelected: any;
+  positionSelectedId: any;
   public location: Location;
   public locationsData = [];
   locationSelected: any;
@@ -83,15 +85,15 @@ export class CreateContractComponent implements OnInit {
   public calendarData: string;
   public calendarDataNew: string;
 
-  constructor(private positionsService: PositionsService,
+  constructor(
+    private positionsService: PositionsService,
     private personService: PersonService,
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private contractService: ContractService,
-    @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract
-  ) {
+    @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) {
   }
 
   ngOnInit() {
@@ -134,31 +136,10 @@ export class CreateContractComponent implements OnInit {
     this.getLocationsByVatNumber();
     this.getWorkscheduleByVatNumber();
 
-    console.log('ngOnInit this.contractId', this.contractId);
-    if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
-      this.SetMode('update');
-    } else {
-      this.SetMode('new');
-    }
-
     if (this.personid !== null && this.personid !== undefined && this.personid !== '') {
       this.loadPerson(this.personid, this.VatNumber);
     }
 
-  }
-
-  onEnableEdit() {
-    this.SetMode('edit');
-  }
-  onCancelEdit() {
-    if (this.mode === 'edit' || this.mode === 'extend') {
-      this.SetMode('update');
-    } else {
-      this.dialog.closeAll();
-    }
-  }
-  onExtented() {
-    this.SetMode('extend');
   }
 
   SetMode(mode: string) {
@@ -166,7 +147,8 @@ export class CreateContractComponent implements OnInit {
     if (mode === 'update') {
       this.loadContract(this.VatNumber, this.contractId.toString());
     } else if (mode === 'edit') {
-
+      this.selectedStartDate = this.allowedExtentedStartDate;
+      this.selectedEndDate = this.allowedExtentedEndDate;
     } else if (mode === 'extend') {
       this.selectedStartDate = this.allowedExtentedStartDate;
       this.selectedEndDate = this.allowedExtentedEndDate;
@@ -227,6 +209,9 @@ export class CreateContractComponent implements OnInit {
 
       this.currentContract = response;
 
+      this.selectedStartDate = response.contract.startDate;
+      this.selectedEndDate = response.contract.endDate;
+
       this.selectedStartYear = new Date(response.contract.startDate).getFullYear();
       console.log('this.selectedStartYear  :: ', this.selectedStartYear);
       this.selectedStartMonth = new Date(response.contract.startDate).getMonth();
@@ -248,12 +233,19 @@ export class CreateContractComponent implements OnInit {
 
       console.log(' calendarDataNew=' + this.calendarDataNew);
 
-      this.positionSelected = response.contract.position.name;
-      console.log('this.positionSelected :: ', this.positionSelected);
+      this.positionSelectedId = response.positionId;
+      console.log('this.positionSelectedId :: ', this.positionSelectedId);
       this.locationSelected = response.locationId;
       console.log('this.locationSelected :: ', this.locationSelected);
+
       this.workScheduleSelected = response.workScheduleId;
       console.log('this.workScheduleSelected :: ', this.workScheduleSelected);
+
+      let p: DpsPostion = this.getPosition();
+      console.log('Position :: ', p);
+      this.positionSelected = p.position.name; //  response.contract.position.name; //
+      console.log('this.positionSelected :: ', this.positionSelected);
+
     });
   }
 
@@ -329,23 +321,25 @@ export class CreateContractComponent implements OnInit {
   }
 
   public getPosition(): DpsPostion {
-    const dpsPositions = this.dpsPositionsData.filter(c => c.position.name == this.positionSelected);
-    console.log('  dpsPositions :: ', dpsPositions[0]);
+    console.log('getPosition of ' + this.positionSelectedId);
+    console.log('getPosition dpsPositionsData ', this.dpsPositionsData);
+    const dpsPositions = this.dpsPositionsData.filter(p => p.id === this.positionSelectedId);
+    console.log('getPosition  dpsPositions :: ', dpsPositions[0]);
     return dpsPositions[0];
   }
 
   public getWorkSchedule(): DpsWorkSchedule {
-    console.log('  this.workScheduleSelected :: ', this.workScheduleSelected);
-    console.log('  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
-    const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.id == this.workScheduleSelected);
-    console.log('  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
+    console.log('getWorkSchedule  this.workScheduleSelected :: ', this.workScheduleSelected);
+    console.log('getWorkSchedule  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
+    const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.id === this.workScheduleSelected);
+    console.log('getWorkSchedule  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
     return dpsWorkSchedules[0];
   }
 
   public getLocation(): Location {
-    console.log('  this.locationSelected :: ', this.locationSelected);
-    const locations = this.locationsData.filter(c => c.id == this.locationSelected);
-    console.log('  locations :: ', locations[0]);
+    console.log('getLocation  this.locationSelected :: ', this.locationSelected);
+    const locations = this.locationsData.filter(c => c.id === this.locationSelected);
+    console.log('getLocation  locations :: ', locations[0]);
     return locations[0];
   }
 
@@ -353,12 +347,12 @@ export class CreateContractComponent implements OnInit {
 
     this.currentContract = new DpsContract();
     this.contract = new Contract();
-    console.log('  createObjects  :: ');
+    console.log('createObjects  :: ' + this.selectedStartDate + ' :: ' + this.selectedEndDate);
     // this.contract.name = "";
-    this.contract.startDate = this.selectedStartDate.dayString + ' ' + this.selectedStartDate.monthString + ' ' + this.selectedStartDate.yearString;
-    console.log('  contract.startDate  :: ', this.contract.startDate);
-    this.contract.endDate = this.selectedEndDate.dayString + ' ' + this.selectedEndDate.monthString + ' ' + this.selectedEndDate.yearString;
-    console.log('  contract.endDate  :: ', this.contract.endDate);
+    this.contract.startDate = this.selectedStartDate.getDate() + ' ' + this.selectedStartDate.getMonth() + ' ' + this.selectedStartDate.getFullYear();
+    console.log('createObjects  contract.startDate  :: ', this.contract.startDate);
+    this.contract.endDate = this.selectedEndDate.getDate() + ' ' + this.selectedEndDate.getMonth() + ' ' + this.selectedEndDate.getFullYear();
+    console.log('createObjects  contract.endDate  :: ', this.contract.endDate);
     this.contract.workSchedule = this.getWorkSchedule().workSchedule;
     console.log('  this.contract.workSchedule  :: ', this.contract.workSchedule);
     this.contract.position = this.getPosition().position;
@@ -378,8 +372,21 @@ export class CreateContractComponent implements OnInit {
     this.currentContract.timeSheet = new TimeSheet();
   }
 
+  onPrintContractClick() {
+    console.log('onPrintContractClick :: ');
+    this.contractService.getPrintContractPDFFileURL(this.VatNumber, this.contractId).subscribe(printContractPDF => {
+      console.log(printContractPDF);
+      const FileURL = printContractPDF.fileUrl;
+      saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
+    });
+  }
   onApproveContractClick() {
-
+    console.log('onApproveContractClick :: ');
+    this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(approveContractSuccess => {
+      console.log(approveContractSuccess);
+      this.ShowMessage(approveContractSuccess.message, approveContractSuccess.accessStatus);
+      this.dialog.closeAll();
+    });
   }
 
   onCreateOrUpdateContractClick() {
@@ -410,6 +417,21 @@ export class CreateContractComponent implements OnInit {
     }
   }
 
+  onEnableEdit() {
+    this.SetMode('edit');
+  }
+
+  onCancelEdit() {
+    if (this.mode === 'edit' || this.mode === 'extend') {
+      this.SetMode('update');
+    } else {
+      this.dialog.closeAll();
+    }
+  }
+  onExtented() {
+    this.SetMode('extend');
+  }
+
   onCancelContractClick() {
     this.SelectedIndex = this.contractId;
     console.log('Edit Clicked Index :: ' + this.SelectedIndex);
@@ -417,6 +439,8 @@ export class CreateContractComponent implements OnInit {
     this.openDialog();
     return true;
   }
+
+
 
   disableCancelButton() {
     if (this.contractId === 0 || this.contractId === null || this.contractId === undefined) {
@@ -432,7 +456,13 @@ export class CreateContractComponent implements OnInit {
         this.dpsPositionsData.push(element);
       });
       console.log('dpsPositionsData : ', this.dpsPositionsData);
-      this.ShowMessage('Positions fetched successfully.', '');
+      this.ShowMessage('Contract Positions fetched successfully.', '');
+      console.log('getPositionsByVatNumber this.contractId', this.contractId);
+      if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
+        this.SetMode('update');
+      } else {
+        this.SetMode('new');
+      }
     }, error => this.ShowMessage(error, 'error'));
   }
 
