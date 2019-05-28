@@ -31,12 +31,12 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedThursday = '';
   public SelectedFriday = '';
   public SelectedSaturday = '';
-  public SelectedSunday = '';  
+  public SelectedSunday = '';
   public ShowMorningDiff = 6;
   public ShowNightDiff = 2;
   public CellWidth = 135;
   // public TimeConverterToPx = 0.09375;
-  public TimeConverterToPx = this.CellWidth / ((24-this.ShowMorningDiff - this.ShowNightDiff) * 60 );
+  public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
   constructor(private personService: PersonService, private route: ActivatedRoute, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
@@ -104,7 +104,7 @@ export class DashboardPersonComponent implements OnInit {
         console.log('Zero  More');
         adddaysl = adddaysl + 8 - curr.getUTCDay();
       }
-      
+
       console.log('adddaysl :: ' + adddaysl);
       currl = new Date(currl.setDate(currl.getUTCDate() + adddaysl));
 
@@ -138,6 +138,8 @@ export class DashboardPersonComponent implements OnInit {
       const selectedContract = new SelectedContract();
       selectedContract.contractId = contractid;
       selectedContract.personId = personid;
+      selectedContract.startDate = this.startDate;
+      selectedContract.endDate = this.endDate;
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;

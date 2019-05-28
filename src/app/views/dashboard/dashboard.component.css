@@ -147,7 +147,7 @@
 }
 
 .Contents .col-split .workbar {
-  height: 3px;
+  height: 5px;
   background-color: limegreen;
   position: absolute;
   vertical-align: middle;
@@ -180,7 +180,7 @@
   width: auto;
 }
 .col-split-f {
-  width: 40px;
+  width: 50px;
   padding: 0px;
 }
 .col-split-m {
@@ -188,14 +188,11 @@
 }
 .col-split-l {
   width: 135px;
-  display: none;
 }
-
 .dashboardactionhead {
   line-height: 50px;
   vertical-align: middle;
 }
-
 #PersonContents {
   margin: 0px -20px 10px;
   padding: 0px;
@@ -204,7 +201,6 @@
 #PersonContents .row {
   margin: 0px;
 }
-
 .dashboardactioncontent table .Contents button {
   padding: 0px;
   margin: 15px 0px;

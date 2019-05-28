@@ -28,7 +28,6 @@ export class DashboardComponent implements OnInit {
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
-
       }
     }
   }

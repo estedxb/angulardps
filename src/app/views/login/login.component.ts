@@ -56,6 +56,13 @@ export class LoginComponent implements OnInit {
               this.message = 'Logged in success please wait...';
               localStorage.setItem('isLoggedIn', 'true');
               localStorage.setItem('accesstoken', this.ltkn.accessToken);
+
+              if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
+                this.ltkn.dpsUser.userRole = 'DPSUser';
+              } else {
+                this.ltkn.dpsUser.userRole = 'Customer';
+              }
+
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
               this.router.navigate([this.returnUrl]);
             } else {

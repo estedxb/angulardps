@@ -45,7 +45,7 @@ export const environment = {
   getFileUploads: '',
   getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
   getContract: 'Contract',
-  getDpsSchedules: '',// 'Schedule'
+  getDpsSchedules: '', // 'Schedule'
   actionURL_1: 'customer/edit',
   actionURL_2: 'customer/position',
   actionURL_3: 'customer/user',

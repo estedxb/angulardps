@@ -115,7 +115,7 @@ export class Summaries {
     objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
 }
 
-export class SelectedContract { contractId: number; personId: string; }
+export class SelectedContract { contractId: number; personId: string; startDate: Date; endDate: Date }
 
 // export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
 // export class PersonsContracts { customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string; customerPostionId: string; dpsContracts: DpsContract[];}
@@ -125,8 +125,8 @@ export enum FileType {
     StudentAtWork = 'StudentAtWork', ConstructionCards = 'ConstructionCards',
     OtherDocuments = 'OtherDocuments', DriversLicense = 'DriversLicense'
 }
-export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string;}
+export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string; }
 export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
-export class DpsScheduleCustomer { customerVatNumber : string; customerName : string; }
-export class DpsSchedulePerson { personId: string; personName: string;positionName: string; contracts: DpsScheduleContract[];}
-export class DpsScheduleContract { customerContractId :string; customerContractName:string; workSchedule:WorkSchedule; }
+export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
+export class DpsSchedulePerson { personId: string; personName: string; positionName: string; contracts: DpsScheduleContract[]; }
+export class DpsScheduleContract { customerContractId: string; customerContractName: string; workSchedule: WorkSchedule; }

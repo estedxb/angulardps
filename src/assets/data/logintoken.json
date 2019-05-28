@@ -10,7 +10,7 @@
       "mobile": { "number": "+971505642721" },
       "phone": { "number": "+971505642721" }
     },
-    "userRole": "Admin",
+    "userRole": "DPSUser",
     "isEnabled": true,
     "isArchived": false
   }

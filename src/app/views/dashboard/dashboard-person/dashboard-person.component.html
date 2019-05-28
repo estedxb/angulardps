@@ -1,4 +1,3 @@
-TimeConverterToPx :: {{TimeConverterToPx}}
 <div class="row Header">
   <div class="col col-sm-1 fright">
     <img src="../../../../assets/svg/schedule.svg" class="headIcon">
@@ -34,7 +33,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
           <td class="col-split col-split-m">Vrij. {{SelectedFriday}}</td>
           <td class="col-split col-split-m">Zat. {{SelectedSaturday}}</td>
           <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
-          <td class="col-split col-split-l"></td>
+          <td class="col-split col-split-l">&nbsp;</td>
         </tr>
         <tr class="Contents" *ngFor="let personContract of maindatas">
           <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
@@ -46,10 +45,6 @@ TimeConverterToPx :: {{TimeConverterToPx}}
           </td>
           <td class="col-split col-split-f"><button (click)="openContractDialog(personContract.personId,0 )">
               <img src="../../../../assets/svg/checklist_add.svg" />
-              <!--personContract.dpsContract !==null ? personContract.dpsContract.id : 0
-                <img src="../../../../assets/svg/checklist_add.svg" *ngIf="personContract.dpsContract === null">
-                <img src="../../../../assets/svg/checklist_eye.svg" *ngIf="personContract.dpsContract !== null">
-              -->
             </button>
           </td>
           <td class="col-split col-split-m">
@@ -59,7 +54,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 0">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -80,7 +75,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 1">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -101,7 +96,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 2">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -122,7 +117,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 3">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -143,7 +138,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 4">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -164,7 +159,7 @@ TimeConverterToPx :: {{TimeConverterToPx}}
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 5">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
@@ -181,11 +176,11 @@ TimeConverterToPx :: {{TimeConverterToPx}}
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 6">
                       <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar"
+                        <div class="workbar" style="border-radius: 2.5px;"
                           (click)="openContractDialog(personContract.personId,contract.customerContractId)"
                           [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
                           [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
