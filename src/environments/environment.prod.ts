@@ -40,7 +40,7 @@ export const environment = {
   getPerson: 'Person',
   getSummary: 'ToDo',
   postPersonDocuments: 'Person/UpladDocuments',
-  getWorkscheduleEmpty: environment.getAssetsDataPath + 'workschedules_empty.json',
+  getWorkscheduleEmpty: 'workschedules_empty.json',
   getFileUploads: '',
   getContract: 'Contract',
   getDpsSchedules: '', // 'Schedule'
