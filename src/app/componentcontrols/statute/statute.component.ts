@@ -8,7 +8,6 @@ import {
   InvoiceSettings, Language, Contact
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
-import { fbind } from 'q';
 
 @Component({
   selector: 'app-statute',
@@ -35,6 +34,7 @@ export class StatuteComponent implements OnInit {
   public newIndex;
   public i;
   public oldSFTFormData;
+  public titles=[];
 
   public MealBox:FormArray;
   SForm: FormGroup;
@@ -87,9 +87,9 @@ export class StatuteComponent implements OnInit {
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
+
         this.loadStatuteSettingsArray.forEach(element => {
-          this.onloadData(element,counter);
-         
+          this.onloadData(element,counter);         
           counter++;
         });
       }
@@ -98,21 +98,9 @@ export class StatuteComponent implements OnInit {
    
    onloadData(arrayElement,counter){
 
-    console.log("value received="+arrayElement.mealVoucherSettings.totalWorth);
-    console.log("value received="+arrayElement.mealVoucherSettings.employerShare);
-    console.log("value received="+arrayElement.mealVoucherSettings.minimumHours);
+    this.titles[counter] = this.statutes[counter].name;
 
-    // let array = this.SForm.get('arrayBox') as FormArray;
-    // array.push(this.createBoxes());
-
-    let controlArray = <FormArray> this.SForm.get('arrayBox') as FormArray;
-
-    console.log(controlArray.length);
-
-    controlArray.controls[0].get('Totalwaarde').setValue(arrayElement.mealVoucherSettings.totalWorth);
-    // (<FormGroup>controlArray.at(0)).controls.Totalwaarde.setValue(arrayElement.mealVoucherSettings.totalWorth);
-    
-    this.SForm.controls['CoefficientBox'].setValue(arrayElement.coefficient);
+    this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
 
       if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null )
       {
@@ -123,46 +111,52 @@ export class StatuteComponent implements OnInit {
           this.JCString = number + " - " + name;  
         }
       }
+}
 
-    }
+createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
 
-createBoxes():FormGroup {
+  return this.fb.group({
+     CoefficientBox: new FormControl(Coefficient, [Validators.required, Validators.pattern('^[0-9]$')]),
+     arrayBox: this.fb.array([
+       this.createBox(TotalWorth,EmployerShare,MinimumHours)
+     ]),
+   });
 
- let formG:FormGroup = this.fb.group({
-  Totalwaarde: new FormControl(''),
-  Wergeversdeel: new FormControl(''),
-  minimumHours: new FormControl(''),  
-});
+ }
 
-return formG;
+createBox(TotalWorth,EmployerShare,MinimumHours) {
+
+  return this.fb.group({
+    TotalWaarde: new FormControl(TotalWorth),
+    Wergeversdeel: new FormControl(EmployerShare),
+    minimumHours: new FormControl(MinimumHours)
+  });
 
 }
 
 addArray() {
-  this.arrayBox.push(this.createBoxes());
+  //this.arrayBox.push(this.createBox());
 }
 
 get arrayBox() {
   return this.SForm.get('arrayBox') as FormArray;
 }
 
+get statuteArray() {
+  return this.SForm.get('statuteArray') as FormArray;
+}
 
-  ngOnInit() {
+addControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
+
+  if(this.statuteArray.length !== this.statutes.length)
+      this.statuteArray.push(this.createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours));
+
+}
+
+ngOnInit() {
     this.SForm = new FormGroup({
-      CoefficientBox: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
-
-      Totalwaarde: new FormControl(''),
-      Wergeversdeel: new FormControl(''),
-      minimumHours: new FormControl(''),
-
-      arrayBox: this.fb.array([
-        this.createBoxes()
-      ]),
-
+      statuteArray: this.fb.array([]),
     });
-
-
-    //this.MealBox.push(this.SForm.get('arrayBox') as FormArray);
 
     this.createCoefficientArray();
 
@@ -174,28 +168,10 @@ get arrayBox() {
       this.countStatutes = data.length;
 
       if (this.statutes.length !== 0) {
-        //this.createFormArray();
         this.emitData();
-      }
+      }      
 
     }, error => this.errorMsg = error);
-
-  }
-
-  createFormArray() {
-
-    console.log("inside form array");
-
-    let counter:number = 0;
-
-    console.log("formarray length="+this.statutes.length);
-
-    while(counter < this.statutes.length - 1)
-    {
-      let array = this.SForm.get('arrayBox') as FormArray;
-      array.push(this.createBoxes());
-      counter++;
-    }
 
   }
 
@@ -231,6 +207,7 @@ get arrayBox() {
 
     for (let i = 0; i < data.length; i++) 
     {
+
       const dataObject = data[i];
 
       this.statuteObject = new Statute();
@@ -308,7 +285,6 @@ get arrayBox() {
       this.minimumurenArray[i] = value;
       this.replaceArrayMinimum(i);  
     }
-
   }
 
   receiveJTdata($event, i) {
@@ -316,8 +292,6 @@ get arrayBox() {
     console.log('i=' + i);
     this.statuteSelectedString = $event.selectedObject;
     this.arrayParitairCommitee = $event.arrayObject;
-
-    // console.log(this.arrayParitairCommitee);
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.replaceArray(i);

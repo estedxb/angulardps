@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="col col-sm-2">
                                                 <select formControlName="currency" id="dd_currency" name="dd_currency"
-                                                        class="currency selectcomponent"
+                                                        class="currency selectcomponent" [(ngModel)]="currencyChoice"
                                                         (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown
                                                         required="required">
                                                         <option *ngFor="let data of datacurrencyDropDown let i= index"
@@ -123,7 +123,7 @@
                                 <div class="row dynrow"
                                         *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
                                         <div class="col col-sm-5">
-                                                <input #codeA (change)="setPgABox1(codeA.value,i)" type="number"
+                                                <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
                                                         formControlName="AndreBox1" style="display: none">
                                                 <app-workcodes [disabled]="disableWorkCodes"
                                                         (childEvent)="receiveWorkCode($event,i)"></app-workcodes>
@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="col col-sm-2">
                                                 <select formControlName="currency" id="dd_currency" name="dd_currency"
-                                                        class="currency selectcomponent"
+                                                        class="currency selectcomponent"  [(ngModel)]="currencyNewChoice"
                                                         (change)="onChangeDropDownCurrencyOther($event,i)" ng-dropdown
                                                         required="required">
                                                         <option *ngFor="let data of datacurrencyDropDown let i= index"
@@ -145,7 +145,7 @@
                                         <div class="col col-sm-2"
                                                 *ngIf="(nresult.length === 1 || isLastA) else removeA">
                                                 <button [disabled]="isInvalidOther()" #addButtonA
-                                                        (click)="addAndreRows()" type="button" class="btnAdd">
+                                                        (click)="addAndreRows('','')" type="button" class="btnAdd">
                                                         <img src="../../assets/img/add.png" alt="" height="17.5"
                                                                 width="17.5" />
                                                 </button>
