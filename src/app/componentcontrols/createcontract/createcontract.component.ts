@@ -139,7 +139,6 @@ export class CreateContractComponent implements OnInit {
     if (this.personid !== null && this.personid !== undefined && this.personid !== '') {
       this.loadPerson(this.personid, this.VatNumber);
     }
-
   }
 
   SetMode(mode: string) {
@@ -147,8 +146,7 @@ export class CreateContractComponent implements OnInit {
     if (mode === 'update') {
       this.loadContract(this.VatNumber, this.contractId.toString());
     } else if (mode === 'edit') {
-      this.selectedStartDate = this.allowedExtentedStartDate;
-      this.selectedEndDate = this.allowedExtentedEndDate;
+
     } else if (mode === 'extend') {
       this.selectedStartDate = this.allowedExtentedStartDate;
       this.selectedEndDate = this.allowedExtentedEndDate;
@@ -167,7 +165,6 @@ export class CreateContractComponent implements OnInit {
     } else {
       this.selectedStartDate = this.allowedStartDate;
       this.selectedEndDate = this.allowedEndDate;
-
       this.selectedStartYear = this.allowedStartYear;
       this.selectedStartMonth = this.allowedStartMonth;
       this.selectedStartDay = this.allowedStartDay;
@@ -180,6 +177,9 @@ export class CreateContractComponent implements OnInit {
       this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
       console.log('SetMode calendarDataNew=' + this.calendarDataNew);
     }
+
+    console.log('SetMode mode this.selectedStartDate  :: ' + mode, this.selectedStartDate);
+    console.log('SetMode mode this.selectedEndDate  :: ' + mode, this.selectedEndDate);
 
     if (this.selectedStartYear === this.selectedEndYear) {
       this.calendaryearDisableStatus = true;
@@ -211,40 +211,42 @@ export class CreateContractComponent implements OnInit {
 
       this.selectedStartDate = response.contract.startDate;
       this.selectedEndDate = response.contract.endDate;
+      console.log('loadContract this.selectedStartDate  :: ', this.selectedStartDate);
+      console.log('loadContract this.selectedEndDate  :: ', this.selectedEndDate);
 
       this.selectedStartYear = new Date(response.contract.startDate).getFullYear();
-      console.log('this.selectedStartYear  :: ', this.selectedStartYear);
+      console.log('loadContract this.selectedStartYear  :: ', this.selectedStartYear);
       this.selectedStartMonth = new Date(response.contract.startDate).getMonth();
-      console.log('this.selectedStartMonth :: ', this.selectedStartMonth);
+      console.log('loadContract this.selectedStartMonth :: ', this.selectedStartMonth);
       this.selectedStartDay = new Date(response.contract.startDate).getDate();
-      console.log('this.selectedStartDay :: ', this.selectedStartDay);
+      console.log('loadContract this.selectedStartDay :: ', this.selectedStartDay);
 
       this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
-      console.log('calendar data=' + this.calendarData);
+      console.log('loadContract calendar data=' + this.calendarData);
 
       this.selectedEndYear = new Date(response.contract.endDate).getFullYear();
-      console.log('this.selectedEndYear  :: ', this.selectedEndYear);
+      console.log('loadContract this.selectedEndYear  :: ', this.selectedEndYear);
       this.selectedEndMonth = new Date(response.contract.endDate).getMonth();
-      console.log('this.selectedEndMonth :: ', this.selectedEndMonth);
+      console.log('loadContract this.selectedEndMonth :: ', this.selectedEndMonth);
       this.selectedEndDay = new Date(response.contract.endDate).getDate();
-      console.log('this.selectedEndDay :: ', this.selectedEndDay);
+      console.log('loadContract this.selectedEndDay :: ', this.selectedEndDay);
 
       this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
 
-      console.log(' calendarDataNew=' + this.calendarDataNew);
+      console.log('loadContract calendarDataNew=' + this.calendarDataNew);
 
       this.positionSelectedId = response.positionId;
-      console.log('this.positionSelectedId :: ', this.positionSelectedId);
+      console.log('loadContract this.positionSelectedId :: ', this.positionSelectedId);
       this.locationSelected = response.locationId;
-      console.log('this.locationSelected :: ', this.locationSelected);
+      console.log('loadContract this.locationSelected :: ', this.locationSelected);
 
       this.workScheduleSelected = response.workScheduleId;
-      console.log('this.workScheduleSelected :: ', this.workScheduleSelected);
+      console.log('loadContract this.workScheduleSelected :: ', this.workScheduleSelected);
 
-      let p: DpsPostion = this.getPosition();
-      console.log('Position :: ', p);
+      const p: DpsPostion = this.getPosition();
+      console.log('loadContract Position :: ', p);
       this.positionSelected = p.position.name; //  response.contract.position.name; //
-      console.log('this.positionSelected :: ', this.positionSelected);
+      console.log('loadContract this.positionSelected :: ', this.positionSelected);
 
     });
   }
@@ -304,14 +306,14 @@ export class CreateContractComponent implements OnInit {
   receiveMessageStartDate($event) {
     console.log('start date ', $event);
     if ($event !== undefined && $event !== null) {
-      this.selectedStartDate = $event;
+      this.selectedStartDate = new Date($event.yearString + '-' + this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
       this.createObjects();
     }
   }
   receiveMessageEndDate($event) {
     console.log('end date ', $event);
     if ($event !== undefined && $event !== null) {
-      this.selectedEndDate = $event;
+      this.selectedEndDate = new Date($event.yearString + '-' + this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
       this.createObjects();
     }
   }
@@ -320,26 +322,30 @@ export class CreateContractComponent implements OnInit {
     this.createObjects();
   }
 
+  formateZero(n) {
+    return n > 9 ? n : '0' + n;
+  }
+
   public getPosition(): DpsPostion {
     console.log('getPosition of ' + this.positionSelectedId);
-    console.log('getPosition dpsPositionsData ', this.dpsPositionsData);
-    const dpsPositions = this.dpsPositionsData.filter(p => p.id === this.positionSelectedId);
-    console.log('getPosition  dpsPositions :: ', dpsPositions[0]);
+    console.log('getPosition dpsPositionsData :: ', this.dpsPositionsData);
+    const dpsPositions = this.dpsPositionsData.filter(p => p.id === parseInt(this.positionSelectedId, 0));
+    console.log('getPosition  dpsPositions by positionSelectedId :: ' + this.positionSelectedId, dpsPositions[0]);
     return dpsPositions[0];
   }
 
   public getWorkSchedule(): DpsWorkSchedule {
     console.log('getWorkSchedule  this.workScheduleSelected :: ', this.workScheduleSelected);
     console.log('getWorkSchedule  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
-    const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(c => c.id === this.workScheduleSelected);
-    console.log('getWorkSchedule  dpsWorkSchedules :: ', dpsWorkSchedules[0]);
+    const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(w => w.id === parseInt(this.workScheduleSelected, 0));
+    console.log('getWorkSchedule  dpsWorkSchedules by workScheduleSelected  :: ' + this.workScheduleSelected, dpsWorkSchedules[0]);
     return dpsWorkSchedules[0];
   }
 
   public getLocation(): Location {
     console.log('getLocation  this.locationSelected :: ', this.locationSelected);
-    const locations = this.locationsData.filter(c => c.id === this.locationSelected);
-    console.log('getLocation  locations :: ', locations[0]);
+    const locations = this.locationsData.filter(l => l.id === parseInt(this.locationSelected, 0));
+    console.log('getLocation  locations by locations  :: ' + this.locationSelected, locations[0]);
     return locations[0];
   }
 
@@ -347,16 +353,19 @@ export class CreateContractComponent implements OnInit {
 
     this.currentContract = new DpsContract();
     this.contract = new Contract();
-    console.log('createObjects  :: ' + this.selectedStartDate + ' :: ' + this.selectedEndDate);
+    console.log('createObjects  :: ', this.selectedStartDate, this.selectedEndDate);
     // this.contract.name = "";
-    this.contract.startDate = this.selectedStartDate.getDate() + ' ' + this.selectedStartDate.getMonth() + ' ' + this.selectedStartDate.getFullYear();
+    this.contract.startDate = this.selectedStartDate;
     console.log('createObjects  contract.startDate  :: ', this.contract.startDate);
-    this.contract.endDate = this.selectedEndDate.getDate() + ' ' + this.selectedEndDate.getMonth() + ' ' + this.selectedEndDate.getFullYear();
+    this.contract.endDate = this.selectedEndDate;
     console.log('createObjects  contract.endDate  :: ', this.contract.endDate);
+
     this.contract.workSchedule = this.getWorkSchedule().workSchedule;
-    console.log('  this.contract.workSchedule  :: ', this.contract.workSchedule);
+    console.log('createObjects this.contract.workSchedule  :: ', this.contract.workSchedule);
+
     this.contract.position = this.getPosition().position;
-    console.log('  this.contract.position  :: ', this.contract.position);
+    console.log('createObjects this.contract.position  :: ', this.contract.position);
+
     this.contract.statute = new Statute();
     this.contract.status = ContractStatus.Active;
     this.contract.cancelReason = '';
@@ -395,6 +404,7 @@ export class CreateContractComponent implements OnInit {
 
   onCreateOrUpdateContractClick() {
     this.createObjects();
+
     console.log('currentContract ::', this.currentContract);
     if (this.ContractForm.valid) {
       if (this.currentContract !== undefined && this.currentContract !== null) {
@@ -462,11 +472,13 @@ export class CreateContractComponent implements OnInit {
       console.log('dpsPositionsData : ', this.dpsPositionsData);
       this.ShowMessage('Contract Positions fetched successfully.', '');
       console.log('getPositionsByVatNumber this.contractId', this.contractId);
+
       if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
         this.SetMode('update');
       } else {
         this.SetMode('new');
       }
+
     }, error => this.ShowMessage(error, 'error'));
   }
 

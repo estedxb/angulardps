@@ -21,7 +21,7 @@
 <div id="PersonContents">
   <div class="row">
     <div class="col-sm-12 dashboardactioncontent dashboardpersoncontent">
-      <table style="min-width:1300px">
+      <table style="min-width:1250px">
         <tr class="Dates">
           <td colspan="2" class="col-split col-split-t">
             <div class="search"><img src="../../../../assets/svg/search_white.svg">
@@ -54,14 +54,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 0">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -75,14 +75,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 1">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -96,14 +96,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 2">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -117,14 +117,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 3">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -138,14 +138,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 4">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -159,14 +159,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 5">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -180,14 +180,14 @@
                 <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 6">
-                      <ng-container *ngFor="let workTime of workday.workTimes">
-                        <div class="workbar" style="border-radius: 2.5px;"
-                          (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                          [style.margin-left.px]="((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workTime.endTime.split(':')[0] * 60 | num) + (workTime.endTime.split(':')[1] | num)) - ((workTime.startTime.split(':')[0] * 60 | num) + (workTime.startTime.split(':')[1] | num))) * TimeConverterToPx"
-                          matTooltip="{{workTime.title + ' :: ' + workTime.startTime + ' - ' + workTime.endTime}}">
-                        </div>
-                      </ng-container>
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
                     </ng-container>
                   </ng-container>
                 </ng-container>

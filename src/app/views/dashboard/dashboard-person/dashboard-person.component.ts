@@ -34,7 +34,7 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedSunday = '';
   public ShowMorningDiff = 6;
   public ShowNightDiff = 2;
-  public CellWidth = 140;
+  public CellWidth = 130;
   // public TimeConverterToPx = 0.09375;
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
