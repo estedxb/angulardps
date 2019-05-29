@@ -15,7 +15,7 @@ export class LanguagesService {
     if (environment.dataFromAPI_JSON && environment.getLanguages !== '') {
       this.getLanguagesUrl = environment.dpsAPI + environment.getLanguages;
     } else {
-      this.getLanguagesUrl = '../../assets/data/languages.json';
+      this.getLanguagesUrl = environment.getAssetsDataPath + 'languages.json';
     }
   }
 

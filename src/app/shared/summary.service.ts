@@ -25,7 +25,7 @@ export class SummaryService {
       this.getSummaryURL = environment.dpsAPI + environment.getSummaryURL;
     } else {
       console.log('Data From JSON');
-      this.getSummaryURL = '../../assets/data/summary.json';
+      this.getSummaryURL = environment.getAssetsDataPath + 'summary.json';
     }
 
     this.getSummary = environment.dpsAPI + environment.getSummary;

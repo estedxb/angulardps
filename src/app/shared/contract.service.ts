@@ -28,7 +28,7 @@ export class ContractService {
       this.getPrintContractFileURL = environment.dpsAPI + environment.getPrintContractFileURL;
     } else {
       console.log('getPrintContractFileURL Data From JSON');
-      this.getPrintContractFileURL = '../../assets/data/printContract.json';
+      this.getPrintContractFileURL = environment.getAssetsDataPath + 'printContract.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
@@ -36,7 +36,7 @@ export class ContractService {
       this.getApproveContractURL = environment.dpsAPI + environment.getApproveContractURL;
     } else {
       console.log('getApproveContractURL Data From JSON');
-      this.getApproveContractURL = '../../assets/data/approveContract.json';
+      this.getApproveContractURL = environment.getAssetsDataPath + 'approveContract.json';
     }
   }
 
@@ -66,7 +66,6 @@ export class ContractService {
     console.log(result);
     return result;
   }
-
 
   public getApproveContract(vatNumber: string, contractId: number): Observable<ApproveContractSuccess> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });

@@ -19,12 +19,12 @@ export class WorkschedulesService {
       this.isRemoteURL = true;
       this.getWorkscheduleByVatNumberUrl = environment.dpsAPI + environment.getWorkSchedulesByVatNumber;
       this.getWorkscheduleURL = environment.dpsAPI + environment.getWorkSchedule;
-      this.getWorkscheduleEmptyUrl = environment.getWorkscheduleEmpty;
+      this.getWorkscheduleEmptyUrl = environment.getAssetsDataPath + environment.getWorkscheduleEmpty;
     } else {
       console.log('Data Work Schedules From JSON');
       this.isRemoteURL = false;
-      this.getWorkscheduleByVatNumberUrl = '../../assets/data/workschedules.json';
-      this.getWorkscheduleEmptyUrl = '../../assets/data/workschedules_empty.json';
+      this.getWorkscheduleByVatNumberUrl = environment.getAssetsDataPath + 'workschedules.json';
+      this.getWorkscheduleEmptyUrl = environment.getAssetsDataPath + 'workschedules_empty.json';
     }
   }
 

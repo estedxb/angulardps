@@ -34,7 +34,7 @@ export class PersonService {
       this.postPersonDocumentsURL = environment.dpsAPI + environment.postPersonDocuments;
     } else {
       console.log('Data From getPerson JSON');
-      this.getPersonURL = '../../assets/data/locations.json';
+      this.getPersonURL = environment.getAssetsDataPath + 'locations.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
@@ -42,7 +42,7 @@ export class PersonService {
       this.getVehiclesURL = environment.dpsAPI + environment.getVehicles;
     } else {
       console.log('Data From getVehicles JSON');
-      this.getVehiclesURL = '../../assets/data/vehicles.json';
+      this.getVehiclesURL = environment.getAssetsDataPath + 'vehicles.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
@@ -50,7 +50,7 @@ export class PersonService {
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
     } else {
       console.log('Data From getPersonsByVatNumber JSON');
-      this.getPersonForCustomerbyCustomerVatNumberURL = '../../assets/data/persons.json';
+      this.getPersonForCustomerbyCustomerVatNumberURL = environment.getAssetsDataPath + 'persons.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
@@ -58,7 +58,7 @@ export class PersonService {
       this.getDpsScheduleURL = environment.dpsAPI + environment.getDpsSchedules;
     } else {
       console.log('Data From getDpsSchedule JSON');
-      this.getDpsScheduleURL = '../../assets/data/dpsSchedules.json';
+      this.getDpsScheduleURL = environment.getAssetsDataPath + 'dpsSchedules.json';
     }
 
     this.getPersonForCustomerbySSIdNCVNURL = environment.dpsAPI + environment.getPersonBySSIDNVatNumber;
@@ -97,13 +97,13 @@ export class PersonService {
       dpsScheduleCall.customerVatNumber = customerVatNumber;
       dpsScheduleCall.startDate = startDate.toString();
       dpsScheduleCall.endDate = endDate.toString();
-      result = this.http.post<any>(getURL, dpsScheduleCall , this.httpOptions).catch(this.errorHandler);
+      result = this.http.post<any>(getURL, dpsScheduleCall, this.httpOptions).catch(this.errorHandler);
     } else {
       if (customerVatNumber !== '123456789101') {
         getURL = getURL.replace('.json', '_empty.json');
       }
       // console.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
-      result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);    
+      result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);
     }
     // console.log(result);
     return result;

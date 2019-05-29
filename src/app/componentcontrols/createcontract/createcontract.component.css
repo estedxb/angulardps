@@ -259,3 +259,7 @@ div.customerBox div.customerBoxContect {
 .NewRow .col #btnSave.greenbtn {
   min-width: 150px;
 }
+
+#errorDisplay {
+  margin: 10px 0px 0px 0px;
+}

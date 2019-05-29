@@ -12,7 +12,7 @@ export class WorkCodesService {
     if (environment.dataFromAPI_JSON && environment.getCodes !== '') {
       this.getWorkCodeUrl = environment.boemmAPI + environment.getCodes;
     } else {
-      this.getWorkCodeUrl = '../../assets/data/jointcommittee.json';
+      this.getWorkCodeUrl = environment.getAssetsDataPath + 'jointcommittee.json';
     }
     // console.log('Data From = ' + this.getWorkCodeUrl);
   }

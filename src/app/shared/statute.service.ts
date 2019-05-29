@@ -12,7 +12,7 @@ export class StatuteService {
     if (environment.dataFromAPI_JSON && environment.getStatute !== '') {
       this.getStatuteUrl = environment.boemmAPI + environment.getStatute;
     } else {
-      this.getStatuteUrl = '../../assets/data/statute.json';
+      this.getStatuteUrl = environment.getAssetsDataPath + 'statute.json';
     }
     // console.log('Data From = ' + this.getStatuteUrl);
   }

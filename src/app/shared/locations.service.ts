@@ -19,7 +19,7 @@ export class LocationsService {
       this.getLocationURL = environment.dpsAPI + environment.getLocation;
     } else {
       // console.log('Data From JSON');
-      this.getLocationByVatNumberUrl = '../../assets/data/locations.json';
+      this.getLocationByVatNumberUrl = environment.getAssetsDataPath + 'locations.json';
     }
   }
 

@@ -20,10 +20,10 @@ export class PositionsService {
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
       this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
 
-      
+
     } else {
       console.log('Data From JSON');
-      this.getPositionsByVatNumberUrl = '../../assets/data/positions.json';
+      this.getPositionsByVatNumberUrl = environment.getAssetsDataPath + 'positions.json';
     }
   }
 
@@ -35,7 +35,7 @@ export class PositionsService {
     return result;
   }
 
-  public createPosition(position: any ): Observable<any> {
+  public createPosition(position: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.getPositionUrl, position, {
       headers: httpHeaders,
@@ -50,15 +50,15 @@ export class PositionsService {
     });
   }
 
-  public updatePositionWithFile( fileToUpload: File, vatNumber: string , positionId:number): Observable<any> {   
+  public updatePositionWithFile(fileToUpload: File, vatNumber: string, positionId: number): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     // console.log('formData:::', formData);
     new Response(formData).text().then(console.log);
-    return this.http.post<any>(this.getPositionUpdateUrl +'/'+ vatNumber+'/'+ positionId, formData ,
-    {    
-      observe: 'response'
-    });
+    return this.http.post<any>(this.getPositionUpdateUrl + '/' + vatNumber + '/' + positionId, formData,
+      {
+        observe: 'response'
+      });
   }
 
   errorHandler(error: HttpErrorResponse) {

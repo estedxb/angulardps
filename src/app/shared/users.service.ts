@@ -19,7 +19,7 @@ export class UsersService {
       this.getUserUrl = environment.dpsAPI + environment.getUser;
     } else {
       console.log('Data From JSON');
-      this.getUsersByVatNumberUrl = '../../assets/data/users.json';
+      this.getUsersByVatNumberUrl = environment.getAssetsDataPath + 'users.json';
     }
   }
 

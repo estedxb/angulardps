@@ -21,7 +21,7 @@ export class CustomersService {
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
       console.log('Data From JSON getCustomers');
-      this.getCustomersListUrl = '../../assets/data/customers.json';
+      this.getCustomersListUrl = environment.getAssetsDataPath + 'customers.json';
     }
   }
 
@@ -43,7 +43,7 @@ export class CustomersService {
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
     // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
-    const result = this.http.get<any>(this.getCustomersByVatNumberUrl +"?VatNumber=" + parameter).catch(this.errorHandler);
+    const result = this.http.get<any>(this.getCustomersByVatNumberUrl + "?VatNumber=" + parameter).catch(this.errorHandler);
     // console.log(result);
     return result;
   }

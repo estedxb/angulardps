@@ -8,6 +8,9 @@ export const environment = {
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
+  getAssetsDataPath: '../../assets/data/',
+  getPositionFileUploads: 'postion/',
+  getPositionsDownloadTemplate: 'postion/Position1.pdf',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerByVatNumberEdit: 'Customer/',
   createCustomer: 'Customer',
@@ -41,9 +44,8 @@ export const environment = {
   getPerson: 'Person',
   getSummary: 'ToDo',
   postPersonDocuments: 'Person/UpladDocuments',
-  getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
+  getWorkscheduleEmpty: 'workschedules_empty.json',
   getFileUploads: '',
-  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
   getContract: 'Contract',
   getDpsSchedules: '', // 'Schedule'
   actionURL_1: 'customer/edit',
@@ -56,7 +58,6 @@ export const environment = {
   actionURL_8: 'person/$id$/document',
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: '',
-  getPositionsDownloadTemplate: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf',
   getPrintContractFileURL: '',
   getApproveContractURL: ''
 };

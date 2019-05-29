@@ -13,7 +13,7 @@ export class LegalformService {
     if (environment.dataFromAPI_JSON && environment.getLegalForm !== '') {
       this.getLegalFormUrl = environment.dpsAPI + environment.getLegalForm;
     } else {
-      this.getLegalFormUrl = '../../assets/data/legalform.json';
+      this.getLegalFormUrl = environment.getAssetsDataPath + 'legalform.json';
     }
   }
 

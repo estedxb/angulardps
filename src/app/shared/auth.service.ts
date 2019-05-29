@@ -21,7 +21,7 @@ export class AuthService {
     if (environment.dataFromAPI_JSON && environment.verifylogin !== '') {
       this.getVerifyLoginUrl = environment.dpsAPI + environment.verifylogin;
     } else {
-      this.getVerifyLoginUrl = '../../assets/data/logintoken.json';
+      this.getVerifyLoginUrl = environment.getAssetsDataPath + 'logintoken.json';
     }
   }
 

@@ -15,7 +15,7 @@ export class CustomerListsService {
     if (environment.dataFromAPI_JSON && environment.getCustomerLists !== '') {
       this.getCustomerListUrl = environment.dpsAPI + environment.getCustomerLists;
     } else {
-      this.getCustomerListUrl = '../../assets/data/customerlists.json';
+      this.getCustomerListUrl = environment.getAssetsDataPath + 'customerlists.json';
     }
     // console.log('Data From = ' + this.getCustomerListUrl);
   }

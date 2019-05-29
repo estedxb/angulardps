@@ -384,8 +384,12 @@ export class CreateContractComponent implements OnInit {
     console.log('onApproveContractClick :: ');
     this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(approveContractSuccess => {
       console.log(approveContractSuccess);
-      this.ShowMessage(approveContractSuccess.message, approveContractSuccess.accessStatus);
-      this.dialog.closeAll();
+      this.ShowMessage(approveContractSuccess.message, '');
+      if (approveContractSuccess.accessStatus) {
+        this.dialog.closeAll();
+      } else {
+        this.errorMsg = approveContractSuccess.message;
+      }
     });
   }
 
