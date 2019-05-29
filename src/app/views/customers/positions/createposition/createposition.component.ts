@@ -46,7 +46,7 @@ export class CreatepositionComponent implements OnInit {
       file: new FormControl('')
     });
     this.loadPositionsToEdit();
-    
+
   }
 
   loadPositionsToEdit() {
@@ -91,28 +91,28 @@ export class CreatepositionComponent implements OnInit {
   }
 
   downloadFile() {
-    this.currentPosition.position.workstationDocument.location = environment.getPositionsDownloadTemplate;
+    this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionsDownloadTemplate;
     saveAs(this.currentPosition.position.workstationDocument.location);
   }
 
-   handleFileInput(files: FileList) {
-     if (files.length > 0) {
-       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
-         || files.item(0).type === 'image/png') {
-         this.fileToUpload = files.item(0);
-       }
-       this.currentPosition.position.workstationDocument.name = files.item(0).name;
-       this.currentPosition.position.workstationDocument.location = environment.getPositionFileUploads + '' + files.item(0).name;
-     }
-   }
+  handleFileInput(files: FileList) {
+    if (files.length > 0) {
+      if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
+        || files.item(0).type === 'image/png') {
+        this.fileToUpload = files.item(0);
+      }
+      this.currentPosition.position.workstationDocument.name = files.item(0).name;
+      this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionFileUploads + '' + files.item(0).name;
+    }
+  }
 
-   uploadFileToActivity() {
-     this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id ).subscribe(data => {
-       // do something, if upload success
-     }, error => {
-       console.log(error);
-     });
-   }
+  uploadFileToActivity() {
+    this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
+      // do something, if upload success
+    }, error => {
+      console.log(error);
+    });
+  }
 
 
 
@@ -125,11 +125,11 @@ export class CreatepositionComponent implements OnInit {
         console.log('currentPosition.id =' + this.currentPosition.id);
         if (this.currentPosition.id !== undefined && this.currentPosition.id !== null && this.currentPosition.id > 0) {
           // Update Position         
-            this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
+          this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
             console.log('Update Position Response :: ', res);
             this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
-           
+
           },
             (err: HttpErrorResponse) => {
 
@@ -146,14 +146,14 @@ export class CreatepositionComponent implements OnInit {
 
         } else {
           // Create Position
-          console.log('Create Position');          
+          console.log('Create Position');
           this.positionsService.createPosition(this.currentPosition).subscribe(res => {
             console.log('create Position  Response :: ', res.body);
             this.currentPosition.id = res.body;
             this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
 
-           
+
           },
             (err: HttpErrorResponse) => {
 

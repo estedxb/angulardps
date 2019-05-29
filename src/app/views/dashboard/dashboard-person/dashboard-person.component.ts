@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DpsPerson, Person, SelectedContract } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 
@@ -32,7 +32,11 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedFriday = '';
   public SelectedSaturday = '';
   public SelectedSunday = '';
-
+  public ShowMorningDiff = 6;
+  public ShowNightDiff = 2;
+  public CellWidth = 140;
+  // public TimeConverterToPx = 0.09375;
+  public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
   constructor(private personService: PersonService, private route: ActivatedRoute, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
@@ -41,12 +45,13 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
+    // console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
 
-    this.personService.getPersonsContractsByVatNumber(this.vatNumber, this.startDate, this.endDate)
-      .subscribe(persons => {
-        this.maindatas = persons;
-        console.log('getPersonsContractsByVatNumber in DashboardPersonComponent ::', this.maindatas);
+    this.personService.getDpsScheduleByVatNumber(this.vatNumber, this.startDate, this.endDate)
+      .subscribe(dpsSchedule => {
+        console.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
+        this.maindatas = dpsSchedule.persons;
+        console.log('maindatas ::', this.maindatas);
       }, error => this.errorMsg = error);
 
     console.log('this.currentPage : ' + this.currentPage);
@@ -60,6 +65,7 @@ export class DashboardPersonComponent implements OnInit {
   addWeek() {
     this.WeekDiff += 1;
     this.SelectedDates = this.getSelectedDates();
+    // console.log('this.SelectedDates ::', this.SelectedDates);
   }
 
   minusWeek() {
@@ -68,33 +74,49 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   getSelectedDates() {
-    const curr = new Date();
-    let first = curr.getDate() - curr.getDay() + (this.WeekDiff * 7);
-    console.log('curr.getDate :: ', curr.getDate());
-    console.log('curr.getDay :: ', curr.getDay());
-    console.log('first :: ', first);
-    first = first + 1;
-    console.log('first 2 :: ', first);
-    const last = first + 6;
+    let curr = new Date();
+    let curre = new Date();
+    const adjustDaysForWeekStartDate = curr.getUTCDay() - 1;
 
-    const monday = new Date(curr.setDate(first)).toUTCString();
-    const sunday = new Date(curr.setDate(last)).toUTCString();
-    console.log(monday + ' ' + sunday);
+    curr.setDate(curr.getUTCDate() - adjustDaysForWeekStartDate);
+    curre.setDate(curr.getUTCDate() - (adjustDaysForWeekStartDate - 7));
+    const adddays: number = this.WeekDiff * 7;
+    curr.setDate(curr.getUTCDate() + adddays);
+    curre.setDate(curre.getUTCDate() + adddays);
 
-    this.startDate = new Date(monday);
-    this.endDate = new Date(sunday);
+    const first = curr.getUTCDate();
+
+    const mon = new Date(curr);
+    const tue = new Date(curr.setDate(first + 1));
+    const wed = new Date(curr.setDate(first + 2));
+    const thu = new Date(curr.setDate(first + 3));
+    const fri = new Date(curr.setDate(first + 4));
+    const sat = new Date(curr.setDate(first + 5));
+    const sun = new Date(curre);
+
+    this.startDate = mon;
+    this.endDate = sun;
+
+    this.SelectedMonday = mon.getUTCDate().toString() + '/' + mon.getUTCMonth().toString();
+    this.SelectedTuesday = tue.getUTCDate().toString() + '/' + tue.getUTCMonth().toString();
+    this.SelectedWednesday = wed.getUTCDate().toString() + '/' + wed.getUTCMonth().toString();
+    this.SelectedThursday = thu.getUTCDate().toString() + '/' + thu.getUTCMonth().toString();
+    this.SelectedFriday = fri.getUTCDate().toString() + '/' + fri.getUTCMonth().toString();
+    this.SelectedSaturday = sat.getUTCDate().toString() + '/' + sat.getUTCMonth().toString();
+    this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
+
     // tslint:disable-next-line: max-line-length
-    return this.startDate.getUTCDate().toString() + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + '. ' + this.endDate.getUTCFullYear();
+    return this.startDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.endDate) + '. ' + this.endDate.getUTCFullYear();
   }
-  getShortMonth(date) {
-    return date.toLocaleString('nl-NL', { month: 'long' });
-  }
+  getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
 
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
       selectedContract.contractId = contractid;
       selectedContract.personId = personid;
+      selectedContract.startDate = this.startDate;
+      selectedContract.endDate = this.endDate;
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;

@@ -13,14 +13,14 @@ export class LegalformService {
     if (environment.dataFromAPI_JSON && environment.getLegalForm !== '') {
       this.getLegalFormUrl = environment.dpsAPI + environment.getLegalForm;
     } else {
-      this.getLegalFormUrl = '../../assets/data/legalform.json';
+      this.getLegalFormUrl = environment.getAssetsDataPath + 'legalform.json';
     }
   }
 
   public getLegalForms(): Observable<LegalForm[]> {
-    console.log('LegalformService Data From = ' + this.getLegalFormUrl);
+    // console.log('LegalformService Data From = ' + this.getLegalFormUrl);
     const result = this.http.get<LegalForm[]>(this.getLegalFormUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

@@ -1,7 +1,7 @@
 nav {
   position: fixed;
   background: #00032b;
-  z-index: 100000;
+  z-index: 999;
 }
 nav a {
   display: inline-block;

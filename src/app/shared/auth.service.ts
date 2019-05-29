@@ -21,15 +21,15 @@ export class AuthService {
     if (environment.dataFromAPI_JSON && environment.verifylogin !== '') {
       this.getVerifyLoginUrl = environment.dpsAPI + environment.verifylogin;
     } else {
-      this.getVerifyLoginUrl = '../../assets/data/logintoken.json';
+      this.getVerifyLoginUrl = environment.getAssetsDataPath + 'logintoken.json';
     }
   }
 
   public verifyLogin(userid: string, Password: string): Observable<LoginToken> {
     try {
-      console.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
+      // console.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
       const result = this.http.get<LoginToken>(this.getVerifyLoginUrl, this.httpOptions).catch(this.errorHandler);
-      console.log(result);
+      // console.log(result);
       return result;
     } catch (e) {
       console.log('Error verifyLogin !' + e.message);

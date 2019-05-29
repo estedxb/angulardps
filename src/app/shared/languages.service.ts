@@ -15,14 +15,14 @@ export class LanguagesService {
     if (environment.dataFromAPI_JSON && environment.getLanguages !== '') {
       this.getLanguagesUrl = environment.dpsAPI + environment.getLanguages;
     } else {
-      this.getLanguagesUrl = '../../assets/data/languages.json';
+      this.getLanguagesUrl = environment.getAssetsDataPath + 'languages.json';
     }
   }
 
   public getLanguages(): Observable<Language[]> {
-    console.log('LanguagesService Data From = ' + this.getLanguagesUrl);
+    // console.log('LanguagesService Data From = ' + this.getLanguagesUrl);
     const result = this.http.get<Language[]>(this.getLanguagesUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

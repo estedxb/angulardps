@@ -15,15 +15,15 @@ export class CustomerListsService {
     if (environment.dataFromAPI_JSON && environment.getCustomerLists !== '') {
       this.getCustomerListUrl = environment.dpsAPI + environment.getCustomerLists;
     } else {
-      this.getCustomerListUrl = '../../assets/data/customerlists.json';
+      this.getCustomerListUrl = environment.getAssetsDataPath + 'customerlists.json';
     }
-    console.log('Data From = ' + this.getCustomerListUrl);
+    // console.log('Data From = ' + this.getCustomerListUrl);
   }
 
   public getCustomers(): Observable<CustomersList[]> {
-    console.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
+    // console.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
     const result = this.http.get<CustomersList[]>(this.getCustomerListUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

@@ -14,51 +14,47 @@ export class CustomersService {
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getCustomersByVatNumber !== '') {
-      console.log('Data From Remote getCustomers');
+      // console.log('Data From Remote getCustomers');
       this.getCustomersListUrl = environment.dpsAPI + environment.getCustomers;
       this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
       this.getCustomersByVatNumberEditUrl = environment.dpsAPI + environment.getCustomerByVatNumberEdit;
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
       console.log('Data From JSON getCustomers');
-      this.getCustomersListUrl = '../../assets/data/customers.json';
+      this.getCustomersListUrl = environment.getAssetsDataPath + 'customers.json';
     }
   }
 
   public getCustomers(): Observable<DPSCustomer[]> {
-    console.log('CustomersService Data From = ' + this.getCustomersListUrl);
+    // console.log('CustomersService Data From = ' + this.getCustomersListUrl);
     const result = this.http.get<any>(this.getCustomersListUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
   public getCustomersByVatNumberEdit(parameter: string): Observable<DPSCustomer> {
 
-    console.log('edit call to get customer by vat Number');
+    // console.log('edit call to get customer by vat Number');
     const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/' + parameter).catch(this.errorHandler);
-    console.log('result=' + result);
+    // console.log('result=' + result);
     return result;
 
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
-
-    const result = this.http.get<any>(this.getCustomersByVatNumberUrl +"?VatNumber=" + parameter).catch(this.errorHandler);
-    console.log(result);
+    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
+    const result = this.http.get<any>(this.getCustomersByVatNumberUrl + "?VatNumber=" + parameter).catch(this.errorHandler);
+    // console.log(result);
     return result;
   }
 
   // customer update/Edit 
   public createCustomerUpdate(customer: any): Observable<any> {
-
-    console.log("update / edit called");
+    // console.log("update / edit called");
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
-    console.log(this.createCustomerURL);
-
+    // console.log(this.createCustomerURL);
     return this.http.put<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
       observe: 'response'

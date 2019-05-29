@@ -1,0 +1,360 @@
+{
+  "startDate": "2019-05-20T00:00:00",
+  "endDate": "2019-05-25T00:00:00",
+  "customer": {
+    "customerVatpersonId": "123456789101",
+    "customerName": "CustomerTestName"
+  },
+  "persons": [
+    {
+      "personId": "91.10.18-035.58",
+      "personName": "Vanessa Martens",
+      "positionName": "Function Two",
+      "contracts": null
+    },
+    {
+      "personId": "38.09.16-343.34",
+      "personName": "Simon Blondeel",
+      "positionName": "Function Two",
+      "contracts": [
+        {
+          "customerContractId": "1",
+          "customerContractName": "123456789101",
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "08:00",
+                    "endTime": "12:00",
+                    "title": "Title"
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "16:00",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:00",
+                    "endTime": "13:00",
+                    "title": "Title"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "08:00",
+                    "endTime": "12:00",
+                    "title": "Title"
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "16:00",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:00",
+                    "endTime": "13:00",
+                    "title": "Title"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 4,
+                "workTimes": [
+                  {
+                    "startTime": "08:00",
+                    "endTime": "12:00",
+                    "title": "Title"
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "16:00",
+                    "title": "Title"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:00",
+                    "endTime": "13:00",
+                    "title": "Title"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "personId": "84.09.10-343.34",
+      "personName": "Jannes Labaere",
+      "positionName": "Function Two",
+      "contracts": [
+        {
+          "customerContractId": 2,
+          "customerContractName": "123456789101",
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 0,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 1,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 4,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 5,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 6,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              },
+              {
+                "dayOfWeek": 7,
+                "workTimes": [
+                  {
+                    "startTime": "8:30",
+                    "endTime": "12:45",
+                    "title": "morning"
+                  },
+                  {
+                    "startTime": "13:30",
+                    "endTime": "17:30",
+                    "title": "Evening"
+                  }
+                ],
+                "breakTimes": [
+                  {
+                    "startTime": "12:46",
+                    "endTime": "13:29",
+                    "title": "Lunch"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "personId": "84.11.04-343.34",
+      "personName": "Lieven Bonamie",
+      "positionName": "Function Three",
+      "contracts": null
+    },
+    {
+      "personId": "41.09.16-343.34",
+      "personName": "asdfsafd asdsdf",
+      "positionName": "Function Three",
+      "contracts": null
+    },
+    {
+      "personId": "46.09.16-343.34",
+      "personName": "Robert Martens",
+      "positionName": "Function Two",
+      "contracts": null
+    },
+    {
+      "personId": "41.09.15-343.34",
+      "personName": "Charlotte De Pestel",
+      "positionName": "Function Two",
+      "contracts": null
+    },
+    {
+      "personId": "12.09.21-343.34",
+      "personName": "Jan Pier Klaai",
+      "positionName": "Function Two",
+      "contracts": null
+    },
+    {
+      "personId": "38.09.12-343.34",
+      "personName": "Pis Pan Pot",
+      "positionName": "Function Three",
+      "contracts": null
+    },
+    {
+      "personId": "73.09.16-343.34",
+      "personName": "Jean Mars",
+      "positionName": "",
+      "contracts": null
+    },
+    {
+      "personId": "99.10.18-035.58",
+      "personName": "Robin Hoedt",
+      "positionName": "Function Two",
+      "contracts": null
+    },
+    {
+      "personId": "39.09.16-343.34",
+      "personName": "Hoedt Robin",
+      "positionName": "Function Three",
+      "contracts": null
+    },
+    {
+      "personId": "63.09.11-343.34",
+      "personName": "Mars James",
+      "positionName": "Balaji Subbiah",
+      "contracts": null
+    },
+    {
+      "personId": "12.09.16-343.34",
+      "personName": "Balaji Subbiah",
+      "positionName": "Function Three",
+      "contracts": null
+    },
+    {
+      "personId": "87.10.18-035.58",
+      "personName": "Faisal Faisal",
+      "positionName": "Function Two",
+      "contracts": null
+    }
+  ]
+}

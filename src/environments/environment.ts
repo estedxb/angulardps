@@ -7,7 +7,10 @@ export const environment = {
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
-  blobStorage:'https://dpsstorageaccountdev.blob.core.windows.net',
+  blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
+  getAssetsDataPath: '../../assets/data/',
+  getPositionFileUploads: 'postion/',
+  getPositionsDownloadTemplate: 'postion/Position1.pdf',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerByVatNumberEdit: 'Customer/',
   createCustomer: 'Customer',
@@ -30,6 +33,7 @@ export const environment = {
   getWorkSchedulesByVatNumber: 'WorkSchedule/ForCustomer',
   getPositionsByVatNumber: 'Position/ForCustomer',
   getPersonsByVatNumber: 'Person/ForCustomer',
+  getSummaryURL: 'ToDo/ForCustomer',
   getPersonBySSIDNVatNumber: 'Person',
   getPersonById: 'Person',
   getUser: 'User',
@@ -38,13 +42,12 @@ export const environment = {
   getPosition: 'Position',
   getPositionUpdate: 'Position/uploadDocument',
   getPerson: 'Person',
+  getSummary: 'ToDo',
   postPersonDocuments: 'Person/UpladDocuments',
-  getWorkscheduleEmpty: '../../assets/data/workschedules_empty.json',
+  getWorkscheduleEmpty: 'workschedules_empty.json',
   getFileUploads: '',
-  getPositionFileUploads: 'https://dpsstorageaccountdev.blob.core.windows.net/postion/',
   getContract: 'Contract',
-  getPersonsContracts: '',
-  getSummaryURL: '',
+  getDpsSchedules: '', // 'Schedule'
   actionURL_1: 'customer/edit',
   actionURL_2: 'customer/position',
   actionURL_3: 'customer/user',
@@ -55,7 +58,8 @@ export const environment = {
   actionURL_8: 'person/$id$/document',
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: '',
-  getPositionsDownloadTemplate : 'https://dpsstorageaccountdev.blob.core.windows.net/postion/Position1.pdf'
+  getPrintContractFileURL: '',
+  getApproveContractURL: ''
 };
 
 /*

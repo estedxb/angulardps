@@ -13,15 +13,15 @@ export class JointcommitteeService {
     if (environment.dataFromAPI_JSON && environment.getParitairCommitee !== '') {
       this.getJointCommiteeUrl = environment.boemmAPI + environment.getParitairCommitee;
     } else {
-      this.getJointCommiteeUrl = '../../assets/data/jointcommittee.json';
+      this.getJointCommiteeUrl = environment.getAssetsDataPath + 'jointcommittee.json';
     }
-    console.log('Data From = ' + this.getJointCommiteeUrl);
+    // console.log('Data From = ' + this.getJointCommiteeUrl);
   }
 
   public getJointCommitees(): Observable<ParitairCommitee[]> {
-    console.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
+    // console.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
     const result = this.http.get<ParitairCommitee[]>(this.getJointCommiteeUrl).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

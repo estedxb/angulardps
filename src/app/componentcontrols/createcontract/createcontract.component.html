@@ -2,22 +2,31 @@
     <div class="row ">
         <div class="col-sm-12 mat-dialog-close">
             <button mat-button [mat-dialog-close]="currentContract" class=""><img
-                    src="../../../../../assets/svg/closebox.svg" /></button>
+                    src="../../../assets/svg/closebox.svg" /></button>
         </div>
     </div>
     <div class="row ">
         <div class="col-sm-12 center-block head">
-            <img src='../../../assets/svg/UserUpdate.svg'>
+            <img src='../../../assets/svg/checklist_add.svg' *ngIf="mode==='new' || mode==='extend'">
+            <img src='../../../assets/svg/checklist_eye.svg' *ngIf="mode==='update'">
+            <img src='../../../assets/svg/checklist_edit.svg' *ngIf="mode==='edit'">
             <br /> <label>Contract raadplegen</label>
             <hr>
         </div>
     </div>
     <form [formGroup]="ContractForm" novalidate id="ContractForm">
         <div class="contactperson" id="maincontent">
+            <div class="row editicon" *ngIf="mode==='update'">
+                <div class="col-sm-12">
+                    <button name="EditContract" (click)="onEnableEdit()" class=""><img
+                            src="../../../assets/svg/editbox.svg" /></button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Voorname: </label>
-                    <input formControlName="firstname" class="form-control" name="firstname" type="text" required />
+                    <input formControlName="firstname" class="form-control" name="firstname" type="text" required
+                        [attr.disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null" />
                     <div class="form-control-feedback"
                         *ngIf="ContractForm.controls.firstname.invalid && (ContractForm.controls.firstname.dirty || ContractForm.controls.firstname.touched) else newvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -29,7 +38,8 @@
 
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Naam: </label>
-                    <input formControlName="lastname" class="form-control" name="lastname" type="text" required />
+                    <input formControlName="lastname" class="form-control" name="lastname" type="text" required
+                        [attr.disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null" />
                     <div class="form-control-feedback"
                         *ngIf="ContractForm.controls.lastname.invalid && (ContractForm.controls.lastname.dirty || ContractForm.controls.lastname.touched) else anewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -42,56 +52,82 @@
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
-                    <select class='form-control' required [(ngModel)]='positionSelected' (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let dpsPosition of dpsPositionsData' [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
+                    <select class='form-control' required [(ngModel)]='positionSelected'
+                        (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}"
+                        [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
+                        <option class='option' *ngFor='let dpsPosition of dpsPositionsData'
+                            [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
                     </select>
-                    
-                </div>               
-            </div>
-     
-                  
-                  <label class="titleBold"> Start Date: </label>
-                  <app-calendar (childEvent)="receiveMessageStartDate($event)" [CalendarData]="calendarData">                      
-                  </app-calendar> 
-                
-          
-                    
-                <label class="titleBold"> End Date: </label>
-                <app-calendar (childEvent)="receiveMessageEndDate($event)" [CalendarData]="calendarDataNew">                    
-                </app-calendar> 
 
-           
+                </div>
+            </div>
+
+            <label class="titleBold"> Start Date: </label>
+            <app-calendar (childEvent)="receiveMessageStartDate($event)" [CalendarData]="calendarData"
+                [calendarDisableStatus]="this.mode=='update' ? true : null">
+            </app-calendar>
+
+            <label class="titleBold"> End Date: </label>
+            <app-calendar (childEvent)="receiveMessageEndDate($event)" [CalendarData]="calendarDataNew"
+                [calendarDisableStatus]="this.mode=='update' ? true : null"
+                [calendardayDisableStatus]="this.calendardayDisableStatus"
+                [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
+                [calendaryearDisableStatus]="this.calendaryearDisableStatus">
+            </app-calendar>
+
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Werkrooster: </label>                  
-                    <select class='form-control' required [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleSelected($event)' [ngModelOptions]="{standalone: true}">
-                        <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData' [value]="workSchedule.id">{{workSchedule.name}} </option>
+                    <label class="titleBold"> Werkrooster: </label>
+                    <select class='form-control' required [(ngModel)]='workScheduleSelected'
+                        (ngModelChange)='onWorkScheduleSelected($event)' [ngModelOptions]="{standalone: true}"
+                        [disabled]="this.mode=='update' ? true : null">
+                        <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData'
+                            [value]="workSchedule.id">
+                            {{workSchedule.name}} </option>
                     </select>
-                </div> 
+                </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
-                    <select class='form-control' required [(ngModel)]='locationSelected' (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}">
-                            <option class='option' *ngFor='let location of locationsData' [value]="location.id">{{location.name}} </option>
-                        </select>
-                </div>           
-               
+                    <select class='form-control' required [(ngModel)]='locationSelected'
+                        (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}"
+                        [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
+                        <option class='option' *ngFor='let location of locationsData' [value]="location.id">
+                            {{location.name}} </option>
+                    </select>
+                </div>
+
             </div>
         </div>
-
-        <div class="row">
-             <div class="col col-sm-4 center-block">
-                <button class="greenbtn" id="btnPrint" (click)="onPrintContractClick()"><span>Afdrukken</span>
+        <div class="row NewRow" *ngIf="mode==='new' || mode==='edit' || mode==='extend'">
+            <div class="col col-sm-12 center-block">
+                <button class="greenbtn" id="btnSave" (click)="onCreateOrUpdateContractClick()"><span>Contract
+                        opslaan</span>
                 </button>
-            </div> 
-            <div class="col col-sm-4 center-block">
-                <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"><span>Goedkeuren</span>
+                &nbsp;
+                <button class="greenbtn redbtn" id="btnCancelEdit" name="btnCancelEdit"
+                    (click)="onCancelEdit()"><span>Annuleren</span>
                 </button>
             </div>
-             <div class="col col-sm-4 center-block">
-                <button class="greenbtn" id="btnCancel" name="btnCancel" (click)="onCancelContractClick()"><span>Annuleren</span>
-                </button>
-            </div> 
-
         </div>
+        <div class="row UpdateRow" *ngIf="mode==='update'">
+            <div class="col col-sm-3 center-block">
+                <button class="greenbtn transbtn" id="btnPrint" (click)="onPrintContractClick()"><span>Afdrukken</span>
+                </button>
+            </div>
+            <div class="col col-sm-3 center-block">
+                <button class="greenbtn greenbtn" id="btnExtened" (click)="onExtented()"><span>Verlengen</span>
+                </button>
+            </div>
+            <div class="col col-sm-3 center-block"><button class="greenbtn" id="btnApprove"
+                    (click)="onApproveContractClick()" *ngIf="this.isDpsUser"><span>Goedkeuren</span>
+                </button>
+            </div>
+            <div class="col col-sm-3 center-block">
+                <button class="greenbtn redbtn" id="btnCancelContract" name="btnCancelContract"
+                    (click)="onCancelContractClick()"><span>Annuleren</span>
+                </button>
+            </div>
+        </div>
+        <div id="errorDisplay" class="error">{{errorMsg}}</div>
     </form>
 </div>

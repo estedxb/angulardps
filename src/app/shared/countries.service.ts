@@ -19,14 +19,14 @@ export class CountriesService {
     if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
       this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
     } else {
-      this.getCountriesListUrl = '../../assets/data/countries.json';
+      this.getCountriesListUrl = environment.getAssetsDataPath + 'countries.json';
     }
   }
 
   public getCountriesList(): Observable<CountriesList[]> {
-    console.log('CountriesService Data From = ' + this.getCountriesListUrl);
+    // console.log('CountriesService Data From = ' + this.getCountriesListUrl);
     const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 

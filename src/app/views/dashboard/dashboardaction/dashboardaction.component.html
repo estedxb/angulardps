@@ -9,17 +9,21 @@
 </div>
 <div class="row">
   <div class="col col-sm-12 dashboardactioncontent">
+    <div *ngIf="errorMsg!==null">
+      <div class="error">{{errorMsg}}</div>
+    </div>
     <div class="row" *ngFor="let data of datas let i= index">
       <div class="col col-sm-7">
         <span class="dot_{{data.priority}}"></span>
         <span>{{data.message}}</span>
       </div>
-      <div class="col col-sm-4 dt"><span>{{data.date}}</span></div>
+      <div class="col uk-column-small-1-4 dt"><span>{{data.dateTime | date :'dd MMM yyyy'}}</span></div>
       <div class="col col-sm-1">
-        <button (click)="goToAction(data.actionid,data.id,data.others)"><img
+        <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)"><img
             src="../../../../assets/svg/eye.svg"></button>
+        <button (click)="updateAction(i)" *ngIf="data.isManual"><img
+            src="../../../../assets/svg/revertsuccess.svg"></button>
       </div>
     </div>
   </div>
 </div>
-{{errorMsg}}

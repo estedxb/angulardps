@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   errorMsg: string;
   private ltkn: LoginToken = new LoginToken();
+  public currentpage = 'login';
 
   constructor(
     private formBuilder: FormBuilder, private router: Router, public authService: AuthService, public customerLists: CustomersService) { }
@@ -33,7 +34,15 @@ export class LoginComponent implements OnInit {
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
-
+  ShowForgotPassword() {
+    this.currentpage = 'forgotpassword';
+  }
+  ShowLogin() {
+    this.currentpage = 'login';
+  }
+  forgotpassword() {
+    return true;
+  }
   login() {
     // stop here if form is invalid
     if (this.loginForm.invalid) { this.message = 'Please enter username and password'; return; } else {
@@ -47,6 +56,13 @@ export class LoginComponent implements OnInit {
               this.message = 'Logged in success please wait...';
               localStorage.setItem('isLoggedIn', 'true');
               localStorage.setItem('accesstoken', this.ltkn.accessToken);
+
+              if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
+                this.ltkn.dpsUser.userRole = 'DPSUser';
+              } else {
+                this.ltkn.dpsUser.userRole = 'Customer';
+              }
+
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
               this.router.navigate([this.returnUrl]);
             } else {

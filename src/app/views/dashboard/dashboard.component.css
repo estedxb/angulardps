@@ -103,7 +103,7 @@
 .search img {
   width: 20px;
   position: absolute;
-  left: 44px;
+  left: 23px;
   top: 15px;
   background-color: transparent;
   color: #fff;
@@ -115,7 +115,7 @@
 ::ng-deep #maincontentarea .search input[type="text"] {
   border-radius: 22px;
   line-height: 22px;
-  padding: 2px 0px 2px 25px;
+  padding: 2px 0px 2px 26px;
   background-color: #00032b;
   border: 1px solid #595a64;
   font-weight: 500;
@@ -135,14 +135,31 @@
   color: #fff;
   font-size: 12px;
   font-weight: 600;
-  padding: 5px;
+  padding: 0px;
   text-align: center;
+  height: 102px;
+}
+.Contents .col-split .centerline {
+  width: 1px;
+  height: 102px;
+  border-right: 0.5px dotted rgba(255, 255, 255, 0.15);
+  margin: auto;
+}
+
+.Contents .col-split .workbar {
+  height: 5px;
+  background-color: limegreen;
+  position: absolute;
+  vertical-align: middle;
+  margin-top: 50px;
+  cursor: pointer;
 }
 
 .Contents .col-split-n {
   text-align: left;
 }
-.Contents .col-split .name {
+.Contents .col-split .name,
+.Contents .col-split .position {
   color: #fff;
   font-size: 15px;
   font-weight: 500;
@@ -153,46 +170,39 @@
 }
 .Contents .col-split .position {
   color: #646464;
-  font-size: 13px;
   font-weight: normal;
   padding: 0px 5px 5px 5px;
-  text-align: left;
-  clear: both;
-  cursor: pointer;
 }
 .col-split-t {
-  width: 25%;
+  width: auto;
 }
 .col-split-n {
-  width: 21%;
+  width: auto;
 }
 .col-split-f {
-  width: 4%;
-  padding: 20px;
+  min-width: 40px;
+  width: 40px;
+  padding: 0px;
+  margin: 0px;
 }
 .col-split-m {
-  width: 9%;
+  width: 140px;
 }
 .col-split-l {
-  width: 12%;
+  width: 5%;
 }
-
 .dashboardactionhead {
   line-height: 50px;
   vertical-align: middle;
 }
-
 #PersonContents {
   margin: 0px -20px 10px;
   padding: 0px;
-  border-top: 3px solid #707070;
-  border-bottom: 3px solid #707070;
   min-height: 300px;
 }
 #PersonContents .row {
   margin: 0px;
 }
-
 .dashboardactioncontent table .Contents button {
   padding: 0px;
   margin: 15px 0px;
@@ -207,11 +217,16 @@
 
 .dashboardactioncontent {
   padding: 0px;
-  border-top: 1px solid #707070;
-  border-bottom: 1px solid #707070;
+  border-top: 3px solid rgba(112, 112, 112, 0.75);
+  border-bottom: 3px solid rgba(112, 112, 112, 0.75);
   height: 300px;
   overflow: auto;
 }
+.dashboardpersoncontent {
+  height: auto;
+  max-height: 800px;
+}
+
 .dashboardactioncontent table {
   width: 100%;
   margin: auto;
@@ -229,7 +244,6 @@
 
 .dashboardactioncontent table tr td {
   vertical-align: middle;
-  padding: 5px 20px;
 }
 .notify {
   float: left;
@@ -301,6 +315,7 @@ sup.notify {
 }
 .dashboardactioncontent::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
   background-color: transparent;
 }
 .dashboardactioncontent::-webkit-scrollbar-thumb {
@@ -319,6 +334,10 @@ sup.notify {
   padding: 0px 15px 0px 0px;
   margin: 0px;
 }
+.Header .col.WeekCal {
+  margin: 0px;
+  padding: 5px 0px;
+}
 
 .Header .col.Heading,
 .Header .col .week {
@@ -326,35 +345,39 @@ sup.notify {
   font-size: 19px;
   font-weight: 400;
   margin: 0px;
-  padding: 5px 0px;
+  padding: 11px 0px;
 }
 .Header .col .weeks {
   margin: auto;
-  width: 200px;
+  width: 82%;
 }
 .Header .col .week {
   float: left;
   font-size: 15px;
-  width: 140px;
+  width: 80%;
   text-align: center;
   line-height: 18px;
   vertical-align: middle;
+  padding: 5px 0px;
+  border: 0px solid red;
 }
 .Header .col .calenderLeft button,
 .Header .col .calenderRight button {
   padding: 0px;
   margin: 0px;
   width: 30px;
-  height: 42px;
+  height: 46px;
   background: transparent;
   border: 0px;
 }
 .Header .col .calenderLeft,
 .Header .col .calenderRight {
-  width: 30px;
   padding: 0px;
+  margin: 0px;
+  width: 10%;
   float: left;
   vertical-align: middle;
+  border: 0px solid greenyellow;
 }
 
 #PersonButtons {
@@ -378,4 +401,7 @@ sup.notify {
 }
 #PersonButtons button:focus {
   outline: 0px;
+}
+.error {
+  word-break: break-all;
 }
