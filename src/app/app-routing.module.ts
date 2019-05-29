@@ -54,6 +54,7 @@ import { CancelContractComponent } from './componentcontrols/cancelcontract/canc
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
 import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
+import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 
 const routes: Routes = [
@@ -76,6 +77,7 @@ const routes: Routes = [
   // { path: 'person/update', component: UpdatePersonComponent },
   // { path: 'person/edit', component: UpdatePersonComponent },
   { path: 'person/:id', component: UpdatePersonComponent },
+  { path: 'TestArrays', component: TestArraysComponent }, 
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

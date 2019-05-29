@@ -14,9 +14,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TestArraysComponent } from './test-arrays/test-arrays.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, TestArraysComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

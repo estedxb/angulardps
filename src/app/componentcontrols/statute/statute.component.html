@@ -1,29 +1,27 @@
 <form [formGroup]="SForm" novalidate id="SForm">
 
   <div class="error">{{ errorMsg }}</div>
-  <div [id]="'statutes_' + statute.name.replace(' ','_') " class="customerBox"
-    *ngFor="let statute of statutes; let i= index; trackBy: trackByFn" [attr.data-index]="i">
-
+  <div formArrayName="statuteArray">
+  <div class="customerBox" *ngFor="let statute of SForm.controls.statuteArray.controls; let i= index; trackBy: trackByFn" [attr.data-index]="i">
+   <div [formGroupName]="i">
     <div class="row panelheader">
       <div class="col col-sm-5 fright">
-        <h4>{{ statute.name }}</h4>
+        <h4> {{ titles[i] }} </h4>
         <hr>
       </div>
       <div class="col col-sm-7"></div>
     </div>
     <div class="row">
       <div class="col col-sm-8"><label class="titleBold">Paritair Comité</label>
-        <app-jointcommittee (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"
-          [id]="'jointcommittee_'+  statute.name.replace(' ','_')"></app-jointcommittee>
+        <app-jointcommittee (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"></app-jointcommittee>
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
 
         <div class="row inputWithImg">
-          <input formControlName="CoefficientBox" class="form-control" #coefficient
-            (change)="onChangeCoefficient(coefficient.value,i)" [id]="'coefficient_' + statute.name.replace(' ','_')"
-            type="number" onfocus="this.select();" onmouseup="return false;" min="0" value="0" step=".01">
-          <div class="col-sm-2 form-control-feedback"
-            *ngIf="SForm.controls.CoefficientBox.invalid && (SForm.controls.CoefficientBox.untouched || SForm.controls.CoefficientBox.dirty || SForm.controls.CoefficientBox.touched) else valida">
+          <input formControlName="CoefficientBox" class="form-control" #coefficientBox
+            (change)="onChangeCoefficient(coefficientBox.value,i)"
+            type="number" onfocus="this.select();" onmouseup="return false;">
+          <div class="col-sm-2 form-control-feedback" *ngIf="statute.controls.CoefficientBox.invalid && (statute.controls.CoefficientBox.untouched || statute.controls.CoefficientBox.dirty || statute.controls.CoefficientBox.touched) else valida">
             <img src="../../assets/img/InvalidIcon.png" alt="">
           </div>
           <ng-template #valida>
@@ -34,30 +32,31 @@
     </div>
     <div class="row mealrow">
       <div class="col col-sm-12 ">
-        <input id="meal_{{ statute.name.replace(' ','_') }}_status" type="hidden" value="{{isMealEnabled[this.i]}}">
-        <ui-switch id="'meal_{{ statute.name.replace(' ','_') }}" (change)="onMealChange($event,i)"></ui-switch>
+        <input type="hidden" value="{{isMealEnabled[this.i]}}">
+        <ui-switch (change)="onMealChange($event,i)"></ui-switch>
         <span class="titleBold">Maaltijdcheques</span>
       </div>
     </div>
 
     <ng-container formArrayName="arrayBox" *ngIf="isMealEnabled[this.i]===true">
-      <div class=" row" [id]="'meal_' + statute.name.replace(' ','_') +'_details'" *ngFor="let mb of arrayBox.controls as nresult; let j=index; first as isFirstA; last as isLastA">
-        <div class="col col-sm-4 inputWithEuro">Totale waarde<input (change)="totalChange(totalwaarde.value,j)"
-            [formControlName]="Totalwaarde" class="form-control" type="number" #totalwaarde
-            id="totalvalue_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0"
-            value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i></div>
-  
-        <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,j)"
-            [formControlName]="Wergeversdeel" class="form-control" type="number" #wergeversdeel
-            id="sharesection_' + statute.name.replace(' ','_')" onfocus="this.select();" onmouseup="return false;" min="0"
-            value="0" step=".01"><i class="fa fa-eur" aria-hidden="true"></i>
+      <div class="row" *ngFor="let mb of statute.controls.arrayBox.controls; let j=index; first as isFirstA; last as isLastA">
+        <div [formGroupName]="j" style="display: flex; justify-content: space-evenly;">
+            <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,j)"
+              formControlName="TotalWaarde" class="form-control" type="number" #totalwaarde
+              onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i></div>
+
+          <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,j)"
+              formControlName="Wergeversdeel" class="form-control" type="number" #wergeversdeel
+              onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i>
+          </div>
+
+          <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,j)"
+              formControlName="minimumHours" class="form-control" type="number" #minimumuren
+              onfocus="this.select();" onmouseup="return false;"></div>
         </div>
-  
-        <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,j)"
-            [formControlName]="minimumHours" class="form-control" type="number" #minimumuren
-            id="minhours_' + statute.name.replace(' ','_') + '" onfocus="this.select();" onmouseup="return false;" min="0"
-            value="0" step=".01"></div>
       </div>
     </ng-container>
+  </div>
+</div>
   </div>
 </form>

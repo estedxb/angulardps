@@ -1,0 +1,52 @@
+<form [formGroup]="SForm" novalidate id="SForm">
+
+  <div class="error">{{ errorMsg }}</div>
+  <div formArrayName="statuteArray">
+  <div class="customerBox" *ngFor="let statute of SForm.controls.statuteArray.controls; let i= index; trackBy: trackByFn" [attr.data-index]="i">
+    <div [formGroupName]="i">
+    <div class="row panelheader">
+      <div class="col col-sm-5 fright">
+         <!-- <h4>{{ statute.name }}</h4> -->
+         <!-- <label formControlName="name">  </label> -->
+         <input type="text" formControlName="name" class="form-control" value="">
+        <hr>
+      </div>
+      <div class="col col-sm-7"></div>
+    </div>
+
+    <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
+      <div class="row inputWithImg">
+        <input formControlName="CoefficientBox" class="form-control" #coefficient
+          (change)="onChangeCoefficient(coefficient.value,i)" type="number">
+      </div>
+    </div>
+
+    <div class="row mealrow">
+      <div class="col col-sm-12 ">
+        <input type="hidden" value="{{isMealEnabled[this.i]}}">
+        <ui-switch  (change)="onMealChange($event,i)"></ui-switch>
+        <span class="titleBold">Maaltijdcheques</span>
+      </div>
+    </div>
+
+    <div *ngIf="isMealEnabled[this.i]===true">
+      <div formArrayName="arrayBox" class="row" *ngFor="let mb of statute.controls.arrayBox.controls; let j=index">
+          <div [formGroupName]="j">
+              <div class="col col-sm-5 inputWithEuro">Totale waarde
+                <input formControlName="TotalWaarde" class="form-control" type="number" value="0">
+                <i class="fa fa-eur" aria-hidden="true"></i></div>
+        
+              <div class="col col-sm-5 inputWithEuro">Wergeversdeel
+                <input formControlName="Wergeversdeel" class="form-control" type="number" value="0">
+                <i class="fa fa-eur" aria-hidden="true"></i>
+              </div>
+        
+              <div class="col col-sm-5 inputWithNoIcon">Minimum uren
+                <input formControlName="minimumHours" class="form-control" type="number" value="0"></div>
+              </div>
+            </div>
+          </div>
+  </div>
+</div>
+</div>
+</form>
