@@ -19,10 +19,15 @@
       </div>
       <div class="col uk-column-small-1-4 dt"><span>{{data.dateTime | date :'dd MMM yyyy'}}</span></div>
       <div class="col col-sm-1">
-        <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)"><img
+        <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)" *ngIf="!data.isManual"><img
             src="../../../../assets/svg/eye.svg"></button>
         <button (click)="updateAction(i)" *ngIf="data.isManual"><img
             src="../../../../assets/svg/revertsuccess.svg"></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-12 emptysummary">
+
       </div>
     </div>
   </div>

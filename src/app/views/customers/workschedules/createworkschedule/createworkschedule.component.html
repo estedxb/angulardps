@@ -86,7 +86,7 @@
           </table>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="workScheduleRows.length<2">
         <div class="col col-sm-12 mat-dialog-close">
           <button (click)="addEmptyRow()"><img src='../../../../../assets/svg/addblack.svg' /></button>
         </div>
