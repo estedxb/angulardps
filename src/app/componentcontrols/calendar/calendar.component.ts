@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 
 @Component({
   selector: 'app-calendar',
@@ -28,10 +29,18 @@ export class CalendarComponent implements OnInit {
   constructor() {
 
     const today: Date = new Date();
-    this.dropDownYear = ['' + today.getFullYear(), '' + (today.getFullYear() + 1)];
     this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
     this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.selectedYear = 0;
+    this.dropDownYear = [];
+
+    if (this.componentType === "Contract")
+      this.dropDownYear = ['' + today.getFullYear(), '' + (today.getFullYear() + 1)];
+    else {
+      for (let i: number = 1900; i <= 2020; i++)
+        this.dropDownYear.push("" + i);
+    }
+
 
     this.calendarObject = {
       dayString: '1',
@@ -116,9 +125,22 @@ export class CalendarComponent implements OnInit {
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
     this._selectedIndexYear = parseInt(calendarArray[2], 10);
 
+    this.calendarObject.dayString = "" + calendarArray[0];
+    this.calendarObject.monthString = "" + calendarArray[1];
+    this.calendarObject.yearString = "" + calendarArray[2];
 
-    console.log('selected month=' + this._selectedIndexMonth);
+    this.selectedYear = this.findIndex(parseInt(calendarArray[2], 10));
 
+  }
+
+  findIndex(yearString) {
+
+    for (let i: number = 0; i < this.dropDownYear.length; i++) {
+      if (yearString === parseInt(this.dropDownYear[i], 10))
+        return i;
+    }
+
+    return -1;
   }
 
   checkLeapYear(year: number): boolean {
@@ -197,6 +219,7 @@ export class CalendarComponent implements OnInit {
     this.dayString = this.dataDropDown[$event.target.value - 1];
     console.log('onChangeDropDownDate selected date=' + this.dayString);
     this.calendarObject.dayString = this.dayString;
+
     this.childEvent.emit(this.calendarObject);
   }
 

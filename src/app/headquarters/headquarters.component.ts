@@ -133,6 +133,7 @@ export class HeadQuartersComponent implements OnInit {
     });
 
     this.HQForm.get('creditLimit').disable();
+    // this.HQForm.get('vatNumber').disable();
     this.allowCustomer = false;
     //this.legalString = "BVBA";
     this.createObjects();  //check validations
