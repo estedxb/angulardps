@@ -5,7 +5,7 @@ import {
   PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
-} from '../shared/models';
+} from '../shared/models';f
 
 @Component({
   selector: 'app-contactperson',

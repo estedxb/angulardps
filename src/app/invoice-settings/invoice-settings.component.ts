@@ -47,8 +47,8 @@ export class InvoiceSettingsComponent implements OnInit {
   shiftAllowance: boolean;
   shiftAllowanceObject: ShiftAllowance;
   otherAllowanceObject: OtherAllowance;
-  shiftAllowances: ShiftAllowance[];
-  otherAllowances: OtherAllowance[];
+  shiftAllowances: ShiftAllowance[] = [];
+  otherAllowances: OtherAllowance[] = [];
   shiftAllowanceCounter: number;
   otherAllowanceCounter: number;
   dataDropDown: string[];
@@ -245,6 +245,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
             if(this.loadSwitchOther === true)
             {
+
               this.ISForm.get('AndreBox1').enable();
               this.ISForm.get('AndreBox2').enable();
               this.ISForm.get('currency').enable();
@@ -257,13 +258,21 @@ export class InvoiceSettingsComponent implements OnInit {
                   if(this.otherAllowanceCounter < lengthOtherAllowance)
                   {
 
-                    //this.otherAllowances[counter].codeId = element.codeId;
-                    //this.otherAllowances[counter].amount = element.amount;
-                   
-                    //this.addAndreRows(element.codeId,element.amount);
+                    this.otherAllowanceObject = new OtherAllowance();
+                    this.otherAllowanceObject.codeId = element.codeId;
+                    this.otherAllowanceObject.amount = element.amount;
+                    this.otherAllowances.push(this.otherAllowanceObject);
 
-                     this.ISForm.controls['AndreBox1'].setValue('232323');
-                    //  this.ISForm.get('AndreBox2').setValue();
+                    counter += 1;
+
+                    console.log("codeId="+element.codeId);
+                  
+                    // this.ISForm.get('AndreBox1').setValue(element.codeId);
+                    // this.ISForm.get('AndreBox2').setValue(element.amount);
+
+                    this.ISForm.controls.AndreBox1.setValue(element.amount);                    
+ 
+                    //this.addAndreRows(element.codeId,element.amount);
 
                     if(element.nominal === true)
                         this.currencyNewChoice = 0;
@@ -284,6 +293,36 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
+  pushOtherAllowancesData() {
+    this.disableWorkCodes = false;
+
+    let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
+
+    let counter:number =  0;
+    this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
+        if(this.otherAllowanceCounter < lengthOtherAllowance)
+        {
+
+          this.otherAllowanceObject = new OtherAllowance();
+          this.otherAllowanceObject.codeId = element.codeId;
+          this.otherAllowanceObject.amount = element.amount;
+          this.otherAllowances.push(this.otherAllowanceObject);
+
+          counter += 1;
+
+          console.log("otherAllowanceObject="+this.otherAllowanceObject);
+         
+          //this.addAndreRows(element.codeId,element.amount);
+
+          if(element.nominal === true)
+              this.currencyNewChoice = 0;
+          else 
+              this.currencyNewChoice = 1;
+        }
+
+    });
+  }
+
 
   ngOnInit() {
 
@@ -302,22 +341,25 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceObject.timeSpan = "";
 
     this.shiftAllowances = [];
-    this.otherAllowances = [];
 
     this.shiftAllowanceCounter = 1;
     this.otherAllowanceCounter = 1;
 
     this.shiftAllowances.push(this.shiftAllowanceObject);
-    this.otherAllowances.push(this.otherAllowanceObject);
+
+    if(this.otherAllowances.length === 0)
+      this.otherAllowances.push(this.otherAllowanceObject);
 
     this.dataDropDown = ['betaald', 'niet betaald'];
     this.datacurrencyDropDown = ['€', '%'];
+
+    console.log("length="+this.otherAllowances.length);
+    console.log("codeId="+this.otherAllowances[0].codeId + "amount="+this.otherAllowances[0].amount);
 
     this.ISForm = new FormGroup({
 
       inhaalrust: new FormControl(''),
       mobilebox: new FormControl(''),
-
       currency: new FormControl(''),
 
       PloegprimeBox1: new FormControl(''),
@@ -331,10 +373,11 @@ export class InvoiceSettingsComponent implements OnInit {
       AndreBox1: new FormControl(''),
       AndreBox2: new FormControl(''),
       AndreBox3: new FormControl(''),
-
+            
       arrayAndreBox: this.fb.array([
         this.createAndre('','')
       ])
+
     });
 
     // set Ploegpremiere to the form control containing contacts
@@ -347,7 +390,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ISForm.get('PloegprimeBox3').disable();
     this.ISForm.get('inhaalrust').disable();
 
-    // this.ISForm.get('AndreBox1').disable();
+    this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
     this.ISForm.get('currency').disable();
 
@@ -560,13 +603,11 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-
   createAndre(value1,value2): FormGroup {
     this.addNewRow = false;
     this.removeLastRemove = true;
 
-    console.log("value1="+value1);
-    console.log("value2="+value2);
+    console.log("value1="+value1+ " value2="+value2);
 
     return this.fb.group({
       AndreBox1: new FormControl(value1),
@@ -606,6 +647,8 @@ export class InvoiceSettingsComponent implements OnInit {
   addAndreRows(value1,value2) {
     this.Andre.push(this.createAndre(value1,value2));
     this.otherAllowanceObject = new OtherAllowance();
+    this.otherAllowanceObject.codeId = value1;
+    this.otherAllowanceObject.amount = value2;
     this.otherAllowances.push(this.otherAllowanceObject);
     this.otherAllowanceCounter++;
   }
