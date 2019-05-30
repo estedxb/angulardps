@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Login, DPSCustomer, DpsUser } from 'src/app/shared/models';
+import { Login, DPSCustomer, DpsUser, LoginToken } from '../../shared/models';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
-import { LoginToken } from '../../shared/models';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 
@@ -17,6 +16,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
   returnUrl: string;
+  returnaddcustomerUrl: string;
+  dpsuservatnumber = '987654321000';
   errorMsg: string;
   private ltkn: LoginToken = new LoginToken();
   public currentpage = 'login';
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
     this.returnUrl = './dashboard';
+    this.returnaddcustomerUrl = './customer/add';
     this.authService.logout();
   }
 
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
-      // for Real Login 
+      // for Real Login
       /*
       this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
         .subscribe(data => {
@@ -77,50 +79,71 @@ export class LoginComponent implements OnInit {
       */
 
       // Loading Now the First DpsUser from First DpsCustomer for Testing....
-      this.customersService.getCustomers().subscribe(customersList => {
-        console.log('authLogin in customersList Found ::', customersList);
-        if (customersList.length > 0) {
-          const FirstCustomer: DPSCustomer = customersList[0];
-          console.log('authLogin in customers Selected ::', FirstCustomer);
-          this.userService.getUsersByVatNumber(FirstCustomer.customer.vatNumber).subscribe(usersList => {
-            console.log('authLogin in usersList Found ::', usersList);
-            const FirstUser: DpsUser = usersList[0];
-            console.log('authLogin in Selected User ::', FirstUser);
-            this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
-              .subscribe(data => {
-                this.ltkn = data;
-                console.log('authLogin in authLogin.component ::');
-                console.log(data);
-                if (this.ltkn !== null) {
-                  if (this.ltkn.accessToken !== '') {
-                    this.message = 'Logged in success please wait...';
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('accesstoken', this.ltkn.accessToken);
+      this.userService.getUsersByVatNumber(this.dpsuservatnumber).subscribe(usersList => {
+        console.log('authLogin in usersList Found ::', usersList);
+        const FirstUser: DpsUser = usersList[0];
+        console.log('authLogin in Selected User ::', FirstUser);
 
-                    this.ltkn.dpsUser = FirstUser;
-                    console.log('authLogin in Login User ::', this.ltkn.dpsUser);
-                    if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
-                      this.ltkn.dpsUser.userRole = 'DPSUser';
-                    }
-                    if (this.ltkn.dpsUser === null) {
-                      this.ltkn.dpsUser.userRole = 'Customer';
-                    }
+        this.ltkn.accessToken = 'Login-Access-Token';
+        this.ltkn.dpsUser = FirstUser;
 
-                    console.log('authLogin in Login User Role ::', this.ltkn.dpsUser.userRole);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('accesstoken', this.ltkn.accessToken);
 
-                    localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
-                    this.router.navigate([this.returnUrl]);
-                  } else {
-                    this.message = 'Please check your userid and password';
-                  }
-                } else {
-                  this.message = 'Please check your userid and password';
-                }
-              }, error => this.errorMsg = error);
+        if (this.ltkn.dpsUser.customerVatNumber === this.dpsuservatnumber) {
+          this.customersService.getCustomers().subscribe(customersList => {
+            console.log('authLogin in customersList Found ::', customersList);
+            const customers: DPSCustomer[] = customersList.filter(c => c.customer.vatNumber !== this.dpsuservatnumber);
+            if (customers.length > 0) {
+              this.message = 'Logged in successfully. Please wait...';
+              const FirstCustomer: DPSCustomer = customers[0];
+              console.log('authLogin in customers Selected ::', FirstCustomer);
+              this.ltkn.dpsUser.customerVatNumber = FirstCustomer.customer.vatNumber;
+              localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+              this.router.navigate([this.returnUrl]);
+            } else {
+              this.message = 'Logged in successfully, but customers not found. Please wait...';
+              localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+              this.router.navigate([this.returnaddcustomerUrl]);
+            }
           }, error => this.errorMsg = error);
         } else {
-          this.message = 'Customers Not Found...';
+          localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+          this.router.navigate([this.returnUrl]);
         }
+        /*
+        this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
+          .subscribe(data => {
+            this.ltkn = data;
+            console.log('authLogin in authLogin.component ::');
+            console.log(data);
+            if (this.ltkn !== null) {
+              if (this.ltkn.accessToken !== '') {
+                this.message = 'Logged in success please wait...';
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('accesstoken', this.ltkn.accessToken);
+
+                this.ltkn.dpsUser = FirstUser;
+                console.log('authLogin in Login User ::', this.ltkn.dpsUser);
+                if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
+                  this.ltkn.dpsUser.userRole = 'DPSAdmin';
+                }
+                if (this.ltkn.dpsUser === null) {
+                  this.ltkn.dpsUser.userRole = 'Customer';
+                }
+
+                console.log('authLogin in Login User Role ::', this.ltkn.dpsUser.userRole);
+
+                localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+                this.router.navigate([this.returnUrl]);
+              } else {
+                this.message = 'Please check your userid and password';
+              }
+            } else {
+              this.message = 'Please check your userid and password';
+            }
+          }, error => this.errorMsg = error);
+        */
       }, error => this.errorMsg = error);
     }
   }
