@@ -34,9 +34,9 @@ export class CalendarComponent implements OnInit {
     this.selectedYear = 0;
 
     this.calendarObject = {
-      'dayString': '1',
-      'monthString': '1',
-      'yearString': '2019'
+      dayString: '1',
+      monthString: '1',
+      yearString: '2019'
     };
 
     console.log('calendar data received=' + this.CalendarData);
@@ -47,9 +47,10 @@ export class CalendarComponent implements OnInit {
   @Input() public calendardayDisableStatus = null;
   @Input() public calendarmonthDisableStatus = null;
   @Input() public calendaryearDisableStatus = null;
+  @Input() public componentType = null;
   @Output() public childEvent = new EventEmitter();
 
-  public dataDropDown: String[];
+  public dataDropDown: string[];
   public dropDownMonth: string[];
   public dropDownYear: Array<string>;
   public dayString;
@@ -116,7 +117,6 @@ export class CalendarComponent implements OnInit {
     this._selectedIndexYear = parseInt(calendarArray[2], 10);
 
 
-
     console.log('selected month=' + this._selectedIndexMonth);
 
   }
@@ -160,16 +160,16 @@ export class CalendarComponent implements OnInit {
       }
 
       for (let i = 1; i <= noDays; i++) {
-        this.dataDropDown.push("" + i);
+        this.dataDropDown.push('' + i);
       }
     } else
       if (month === '11' || month === '0' || month === '4' || month === '6' || month === '7' || month === '9' || month === '2') {
         for (let i = 1; i <= 31; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       } else {
         for (let i = 1; i <= 30; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       }
 
@@ -177,7 +177,7 @@ export class CalendarComponent implements OnInit {
 
   onChangeDropDownYear($event) {
     this.yearString = this.dropDownYear[$event.target.value];
-    console.log('selected year=' + this.yearString);
+    console.log('onChangeDropDownYear selected year=' + this.yearString);
     this.selectedYear = $event.target.value;
 
     this.calendarObject.yearString = this.yearString;
@@ -186,23 +186,18 @@ export class CalendarComponent implements OnInit {
   }
 
   onChangeDropDownMonth($event) {
-
     this.changeDropDownDateArray($event.target.value);
     this.monthString = this.dropDownMonth[$event.target.value];
-    console.log('selected month=' + this.monthString);
-
+    console.log('onChangeDropDownMonth selected month=' + this.monthString);
     this.calendarObject.monthString = this.monthString;
     this.childEvent.emit(this.calendarObject);
   }
 
   onChangeDropDownDate($event) {
-    // console.log("selected date="+$event.target.value);
     this.dayString = this.dataDropDown[$event.target.value - 1];
-    console.log('selected date=' + this.dayString);
-
+    console.log('onChangeDropDownDate selected date=' + this.dayString);
     this.calendarObject.dayString = this.dayString;
     this.childEvent.emit(this.calendarObject);
-
   }
 
   ngOnInit() {

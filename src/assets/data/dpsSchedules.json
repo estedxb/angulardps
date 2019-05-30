@@ -10,7 +10,128 @@
       "personId": "91.10.18-035.58",
       "personName": "Vanessa Martens",
       "positionName": "Function Two",
-      "contracts": null
+      "contracts": [
+        {
+          "customerContractId": "1",
+          "customerContractName": "123456789101",
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 1,
+                "workTimes": [
+                  {
+                    "startTime": "08:00",
+                    "endTime": "12:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "15:30",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "08:00",
+                    "endTime": "12:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "15:30",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "8:00",
+                    "endTime": "12:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "15:30",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 4,
+                "workTimes": [
+                  {
+                    "startTime": "8:00",
+                    "endTime": "12:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "15:30",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 5,
+                "workTimes": [
+                  {
+                    "startTime": "8:00",
+                    "endTime": "12:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "13:00",
+                    "endTime": "15:30",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 6,
+                "workTimes": [
+                  {
+                    "startTime": "0:00",
+                    "endTime": "0:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "00:00",
+                    "endTime": "00:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 7,
+                "workTimes": [
+                  {
+                    "startTime": "00:00",
+                    "endTime": "00:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "00:00",
+                    "endTime": "00:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "personId": "38.09.16-343.34",
@@ -26,21 +147,16 @@
                 "dayOfWeek": 2,
                 "workTimes": [
                   {
-                    "startTime": "08:00",
-                    "endTime": "12:00",
-                    "title": "Title"
-                  },
-                  {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ],
                 "breakTimes": [
                   {
-                    "startTime": "12:00",
-                    "endTime": "13:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ]
               },
@@ -48,21 +164,16 @@
                 "dayOfWeek": 3,
                 "workTimes": [
                   {
-                    "startTime": "08:00",
-                    "endTime": "12:00",
-                    "title": "Title"
-                  },
-                  {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ],
                 "breakTimes": [
                   {
-                    "startTime": "12:00",
-                    "endTime": "13:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ]
               },
@@ -70,21 +181,16 @@
                 "dayOfWeek": 4,
                 "workTimes": [
                   {
-                    "startTime": "08:00",
-                    "endTime": "12:00",
-                    "title": "Title"
-                  },
-                  {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ],
                 "breakTimes": [
                   {
-                    "startTime": "12:00",
-                    "endTime": "13:00",
-                    "title": "Title"
+                    "startTime": "12:21 PM",
+                    "endTime": "12:21 PM",
+                    "title": "title"
                   }
                 ]
               }
@@ -97,192 +203,7 @@
       "personId": "84.09.10-343.34",
       "personName": "Jannes Labaere",
       "positionName": "Function Two",
-      "contracts": [
-        {
-          "customerContractId": 2,
-          "customerContractName": "123456789101",
-          "workSchedule": {
-            "workDays": [
-              {
-                "dayOfWeek": 0,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 1,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 2,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 3,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 4,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 5,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 6,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 7,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:45",
-                    "title": "morning"
-                  },
-                  {
-                    "startTime": "13:30",
-                    "endTime": "17:30",
-                    "title": "Evening"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:46",
-                    "endTime": "13:29",
-                    "title": "Lunch"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
+      "contracts": null
     },
     {
       "personId": "84.11.04-343.34",

@@ -26,7 +26,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Voorname: </label>
                     <input formControlName="firstname" class="form-control" name="firstname" type="text" required
-                        [attr.disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null" />
+                        disabled />
                     <div class="form-control-feedback"
                         *ngIf="ContractForm.controls.firstname.invalid && (ContractForm.controls.firstname.dirty || ContractForm.controls.firstname.touched) else newvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -39,7 +39,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Naam: </label>
                     <input formControlName="lastname" class="form-control" name="lastname" type="text" required
-                        [attr.disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null" />
+                        disabled />
                     <div class="form-control-feedback"
                         *ngIf="ContractForm.controls.lastname.invalid && (ContractForm.controls.lastname.dirty || ContractForm.controls.lastname.touched) else anewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -52,38 +52,37 @@
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
-                    <select class='form-control' required [(ngModel)]='positionSelected'
+                    <select id="position" name="position" class='form-control' required [(ngModel)]='positionSelected'
                         (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let dpsPosition of dpsPositionsData'
                             [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
                     </select>
-
                 </div>
             </div>
 
             <label class="titleBold"> Start Date: </label>
             <app-calendar (childEvent)="receiveMessageStartDate($event)" [CalendarData]="calendarData"
-                [calendarDisableStatus]="this.mode=='update' || this.mode=='edit' ? true : null"
-                [calendardayDisableStatus]="this.calendardayDisableStatus"
+                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
-                [calendaryearDisableStatus]="this.calendaryearDisableStatus">
+                [calendaryearDisableStatus]="this.calendaryearDisableStatus"
+                [calendarDisableStatus]="this.mode=='update' || this.mode=='edit' ? true : null">
             </app-calendar>
 
             <label class="titleBold"> End Date: </label>
             <app-calendar (childEvent)="receiveMessageEndDate($event)" [CalendarData]="calendarDataNew"
-                [calendarDisableStatus]="this.mode=='update' ? true : null"
-                [calendardayDisableStatus]="this.calendardayDisableStatus"
+                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
-                [calendaryearDisableStatus]="this.calendaryearDisableStatus">
+                [calendaryearDisableStatus]="this.calendaryearDisableStatus"
+                [calendarDisableStatus]="this.mode=='update' ? true : null">
             </app-calendar>
 
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Werkrooster: </label>
-                    <select class='form-control' required [(ngModel)]='workScheduleSelected'
-                        (ngModelChange)='onWorkScheduleSelected($event)' [ngModelOptions]="{standalone: true}"
-                        [disabled]="this.mode=='update' ? true : null">
+                    <select id="workSchedule" name="workSchedule" class='form-control' required
+                        [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleSelected($event)'
+                        [ngModelOptions]="{standalone: true}" [disabled]="this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData'
                             [value]="workSchedule.id">
                             {{workSchedule.name}} </option>
@@ -91,7 +90,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
-                    <select class='form-control' required [(ngModel)]='locationSelected'
+                    <select id="location" name="location" class='form-control' required [(ngModel)]='locationSelected'
                         (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let location of locationsData' [value]="location.id">

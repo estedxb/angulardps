@@ -70,19 +70,20 @@ export class WorkSchedulesComponent implements OnInit {
       const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
-        // console.log('The dialog was closed');
+        console.log('The dialog was closed');
         this.data = result;
         // console.log('this.data ::', this.data);
         // console.log('this.SelectedIndex ::', this.SelectedIndex);
 
-        if (this.SelectedIndex >= -1) {
+        if (this.SelectedIndex > -1) {
           // maindatas Update Work Schedule
+          console.log('Update Work Schedule :: ' + this.SelectedIndex, this.data);
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
-          this.ShowMessage('Work Schedules "' + this.data + '" is updated successfully.', '');
+          this.ShowMessage('Work Schedules "' + this.data.name + '" is updated successfully.', '');
         } else {
           // maindatas Add Work Schedule
-          // console.log('this.data.id :: ', this.data.id);
+          console.log('Add Work Schedule  :: ', this.data);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
             console.log('New Work Schedule Added Successfully :: ', this.maindatas);

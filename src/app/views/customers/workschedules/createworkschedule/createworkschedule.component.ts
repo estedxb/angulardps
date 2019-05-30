@@ -425,7 +425,8 @@ export class CreateWorkScheduleComponent implements OnInit {
   onSaveWorkScheduleClick() {
     this.createObjects();
     console.log('data ::', this.currentDpsWorkSchedule);
-    if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
+    if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed
+      && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
       if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {
         if (
           this.currentDpsWorkSchedule.id !== 0 && this.currentDpsWorkSchedule.id !== undefined &&
@@ -434,6 +435,7 @@ export class CreateWorkScheduleComponent implements OnInit {
           // Update Work Schedule
           this.workschedulesService.updateWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
             console.log('Update Work Schedule Response :: ', res);
+            console.log('Update Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
             this.dialogRef.close(this.currentDpsWorkSchedule);
           },
             (err: HttpErrorResponse) => {
@@ -452,6 +454,7 @@ export class CreateWorkScheduleComponent implements OnInit {
           this.workschedulesService.createWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
             console.log('Work Schedule Response :: ', res.body);
             this.currentDpsWorkSchedule.id = res.body;
+            console.log('Create Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
             this.dialogRef.close(this.currentDpsWorkSchedule);
           },
             (err: HttpErrorResponse) => {
