@@ -75,7 +75,7 @@ export class CreateContractComponent implements OnInit {
   public currentPerson: Person;
   public errorMsg;
   public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSUser' ? true : false;
+  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
 
   public VatNumber = this.loginuserdetails.customerVatNumber;
   public statute: Statute;

@@ -87,6 +87,12 @@ export class LoginComponent implements OnInit {
         this.ltkn.accessToken = 'Login-Access-Token';
         this.ltkn.dpsUser = FirstUser;
 
+        if (this.f.userid.value.toLowerCase() === 'admin' && this.f.password.value.toLowerCase() === 'admin') {
+          this.ltkn.dpsUser.userRole = 'DPSAdmin';
+        } else {
+          this.ltkn.dpsUser.userRole = 'Customer';
+        }
+
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('accesstoken', this.ltkn.accessToken);
 
