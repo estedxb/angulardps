@@ -34,19 +34,18 @@ export class CalendarComponent implements OnInit {
     this.selectedYear = 0;
     this.dropDownYear = [];
 
-    if(this.componentType === "Contract")
+    if (this.componentType === "Contract")
       this.dropDownYear = ['' + today.getFullYear(), '' + (today.getFullYear() + 1)];
-    else
-    {
-      for(let i:number=1900;i<=2020;i++)
-          this.dropDownYear.push(""+i);
+    else {
+      for (let i: number = 1900; i <= 2020; i++)
+        this.dropDownYear.push("" + i);
     }
 
 
     this.calendarObject = {
-      'dayString': '1',
-      'monthString': '1',
-      'yearString': '2019'
+      dayString: '1',
+      monthString: '1',
+      yearString: '2019'
     };
 
     console.log('calendar data received=' + this.CalendarData);
@@ -60,7 +59,7 @@ export class CalendarComponent implements OnInit {
   @Input() public componentType = null;
   @Output() public childEvent = new EventEmitter();
 
-  public dataDropDown: String[];
+  public dataDropDown: string[];
   public dropDownMonth: string[];
   public dropDownYear: Array<string>;
   public dayString;
@@ -126,23 +125,22 @@ export class CalendarComponent implements OnInit {
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
     this._selectedIndexYear = parseInt(calendarArray[2], 10);
 
-    this.calendarObject.dayString = ""+ calendarArray[0];
+    this.calendarObject.dayString = "" + calendarArray[0];
     this.calendarObject.monthString = "" + calendarArray[1];
-    this.calendarObject.yearString = ""+ calendarArray[2];
+    this.calendarObject.yearString = "" + calendarArray[2];
 
     this.selectedYear = this.findIndex(parseInt(calendarArray[2], 10));
 
   }
 
-  findIndex(yearString){
+  findIndex(yearString) {
 
-     for(let i:number=0;i<this.dropDownYear.length;i++)
-     {
-        if(yearString === parseInt(this.dropDownYear[i],10))
-            return i;
-     }
+    for (let i: number = 0; i < this.dropDownYear.length; i++) {
+      if (yearString === parseInt(this.dropDownYear[i], 10))
+        return i;
+    }
 
-     return -1;
+    return -1;
   }
 
   checkLeapYear(year: number): boolean {
@@ -184,16 +182,16 @@ export class CalendarComponent implements OnInit {
       }
 
       for (let i = 1; i <= noDays; i++) {
-        this.dataDropDown.push("" + i);
+        this.dataDropDown.push('' + i);
       }
     } else
       if (month === '11' || month === '0' || month === '4' || month === '6' || month === '7' || month === '9' || month === '2') {
         for (let i = 1; i <= 31; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       } else {
         for (let i = 1; i <= 30; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       }
 
@@ -201,7 +199,7 @@ export class CalendarComponent implements OnInit {
 
   onChangeDropDownYear($event) {
     this.yearString = this.dropDownYear[$event.target.value];
-    console.log('selected year=' + this.yearString);
+    console.log('onChangeDropDownYear selected year=' + this.yearString);
     this.selectedYear = $event.target.value;
 
     this.calendarObject.yearString = this.yearString;
@@ -210,24 +208,19 @@ export class CalendarComponent implements OnInit {
   }
 
   onChangeDropDownMonth($event) {
-
     this.changeDropDownDateArray($event.target.value);
     this.monthString = this.dropDownMonth[$event.target.value];
-    console.log('selected month=' + this.monthString);
-
+    console.log('onChangeDropDownMonth selected month=' + this.monthString);
     this.calendarObject.monthString = this.monthString;
     this.childEvent.emit(this.calendarObject);
   }
 
   onChangeDropDownDate($event) {
-    // console.log("selected date="+$event.target.value);
     this.dayString = this.dataDropDown[$event.target.value - 1];
-    console.log('selected date=' + this.dayString);
-
+    console.log('onChangeDropDownDate selected date=' + this.dayString);
     this.calendarObject.dayString = this.dayString;
 
     this.childEvent.emit(this.calendarObject);
-
   }
 
   ngOnInit() {

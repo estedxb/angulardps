@@ -74,14 +74,17 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   getSelectedDates() {
+    //const setdate = '2019-05-31';
     let curr = new Date();
     let curre = new Date();
+    const adddays: number = this.WeekDiff * 7;
+
     const adjustDaysForWeekStartDate = curr.getUTCDay() - 1;
 
     curr.setDate(curr.getUTCDate() - adjustDaysForWeekStartDate);
-    curre.setDate(curr.getUTCDate() - (adjustDaysForWeekStartDate - 7));
-    const adddays: number = this.WeekDiff * 7;
     curr.setDate(curr.getUTCDate() + adddays);
+
+    curre.setDate(curre.getUTCDate() - (adjustDaysForWeekStartDate - 6));
     curre.setDate(curre.getUTCDate() + adddays);
 
     const first = curr.getUTCDate();

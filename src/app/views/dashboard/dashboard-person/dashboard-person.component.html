@@ -51,28 +51,7 @@
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 0">
-                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
-                      <div class="workbar" style="border-radius: 2.5px;"
-                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
-                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
-                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
-                      </div>
-                      <!--</ng-container>-->
-                    </ng-container>
-                  </ng-container>
-                </ng-container>
-              </ng-container>
-            </ng-container>
-            <div class="centerline"></div>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 1">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
@@ -93,7 +72,7 @@
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 2">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
@@ -114,7 +93,7 @@
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 3">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
@@ -135,7 +114,7 @@
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 4">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
@@ -156,7 +135,7 @@
           <td class="col-split col-split-m">
             <ng-container *ngIf="personContract.contracts !==null">
               <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays null">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 5">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
@@ -180,6 +159,27 @@
                 <ng-container *ngIf="contract.workSchedule.workDays !== null">
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 6">
+                      <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                      <div class="workbar" style="border-radius: 2.5px;"
+                        (click)="openContractDialog(personContract.personId,contract.customerContractId)"
+                        [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                        [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx"
+                        matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}">
+                      </div>
+                      <!--</ng-container>-->
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <div class="centerline"></div>
+          </td>
+          <td class="col-split col-split-m">
+            <ng-container *ngIf="personContract.contracts !==null">
+              <ng-container *ngFor="let contract of personContract.contracts">
+                <ng-container *ngIf="contract.workSchedule.workDays !== null">
+                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                    <ng-container *ngIf="workday.dayOfWeek === 7">
                       <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
                       <div class="workbar" style="border-radius: 2.5px;"
                         (click)="openContractDialog(personContract.personId,contract.customerContractId)"
