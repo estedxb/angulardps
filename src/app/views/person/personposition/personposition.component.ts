@@ -28,6 +28,7 @@ export class PersonPositionComponent implements OnInit {
   public maindatas = [];
   public datas: DpsPostion;
   public dataDropDownFunctie: string[];
+  public dataDropDownFunctieIds: number[];
   public dpsPosition;
   public SelectedIndexFunctie = 0;
   public _position;
@@ -71,6 +72,7 @@ export class PersonPositionComponent implements OnInit {
   public monthString;
   public yearString;
   public positionChosen:string;
+  public positionId:number;
   public statuteChosen:string;
   public statutes = [];
   public countStatutes:number;
@@ -106,10 +108,13 @@ export class PersonPositionComponent implements OnInit {
   fillDataDropDown(maindatas) {
 
     this.dataDropDownFunctie = [];
+    this.dataDropDownFunctieIds = [];
 
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
+      this.dataDropDownFunctieIds.push(maindatas[i].position.id);
+      console.log("positon in maindatas="+maindatas[i].id);
     }
 
     this.getPersonbySSIDVatNumber();
@@ -207,6 +212,7 @@ export class PersonPositionComponent implements OnInit {
     });
 
     this.positionChosen = "";
+    this.positionId = -1;
 
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
@@ -448,7 +454,11 @@ export class PersonPositionComponent implements OnInit {
 
   onChangeDropDownFunctie($event) {
 
+    console.log("position id="+this.dataDropDownFunctieIds[$event.target.value]);
+
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
+    this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+
     this.updatePosition();
 
   }
@@ -456,7 +466,7 @@ export class PersonPositionComponent implements OnInit {
   updatePosition() {
 
     this.DpsPersonObject = this.message.data;
-    this.DpsPersonObject.customerPostionId = this.positionChosen;
+    this.DpsPersonObject.customerPostionId = ""+this.positionId;
 
     this.changeMessage();
 
