@@ -120,12 +120,12 @@
                                                 <span>Andre</span>
                                         </div>
                                 </div>
-                                <div class="row dynrow"
-                                        *ngFor="let Andre of ISForm.get('arrayAndreBox').controls as nresult; let i=index; first as isFirstA; last as isLastA">
-                                        <div class="col col-sm-5">
-                                                <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
-                                                        formControlName="AndreBox1" style="display: none">
-                                                <app-workcodes [disabled]="disableWorkCodes"
+                                <div formArrayName="arrayAndreBox" *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let i=index; first as isFirstA; last as isLastA">
+                                   <div [formGroupName]="i" class="row dynrow">
+                                        <div class="col col-sm-5" style="border: 1px solid red">
+                                                <!-- <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
+                                                        formControlName="AndreBox1"> -->
+                                                <app-workcodes [disabled]="disableWorkCodes" [initialWorkCode]="workCode"
                                                         (childEvent)="receiveWorkCode($event,i)"></app-workcodes>
                                         </div>
                                         <div class="col col-sm-3">
@@ -157,6 +157,7 @@
                                                                 width="17.5" />
                                                 </button>
                                         </ng-template>
+                                </div>
                                 </div>
                         </div>
                 </div>

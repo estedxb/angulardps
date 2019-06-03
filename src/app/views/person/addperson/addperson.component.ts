@@ -351,6 +351,7 @@ export class AddPersonComponent implements OnInit {
 
   onChangeDropDownYear($event) {
     this.yearString = $event.value;
+    
   }
 
   onChangeDropDownMonth($event) {

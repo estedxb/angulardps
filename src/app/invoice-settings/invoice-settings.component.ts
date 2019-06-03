@@ -60,6 +60,8 @@ export class InvoiceSettingsComponent implements OnInit {
   public form: FormGroup;
   public Ploegpremiere: FormArray;
 
+  public workCode:string;
+
   public formNew: FormGroup;
   public Andre: FormArray;
 
@@ -257,22 +259,15 @@ export class InvoiceSettingsComponent implements OnInit {
               this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
                   if(this.otherAllowanceCounter < lengthOtherAllowance)
                   {
+                    this.addAndreRows(element.codeId,element.amount);
 
-                    this.otherAllowanceObject = new OtherAllowance();
-                    this.otherAllowanceObject.codeId = element.codeId;
-                    this.otherAllowanceObject.amount = element.amount;
-                    this.otherAllowances.push(this.otherAllowanceObject);
+                    const formGroup = this.Andre.controls[counter] as FormGroup;
+                    formGroup.controls['AndreBox1'].setValue(element.codeId);
+                    formGroup.controls['AndreBox2'].setValue(element.amount);
+
+                    this.workCode = element.codeId;
 
                     counter += 1;
-
-                    console.log("codeId="+element.codeId);
-                  
-                    // this.ISForm.get('AndreBox1').setValue(element.codeId);
-                    // this.ISForm.get('AndreBox2').setValue(element.amount);
-
-                    this.ISForm.controls.AndreBox1.setValue(element.amount);                    
- 
-                    //this.addAndreRows(element.codeId,element.amount);
 
                     if(element.nominal === true)
                         this.currencyNewChoice = 0;
@@ -292,37 +287,6 @@ export class InvoiceSettingsComponent implements OnInit {
     }
 
   }
-
-  pushOtherAllowancesData() {
-    this.disableWorkCodes = false;
-
-    let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
-
-    let counter:number =  0;
-    this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
-        if(this.otherAllowanceCounter < lengthOtherAllowance)
-        {
-
-          this.otherAllowanceObject = new OtherAllowance();
-          this.otherAllowanceObject.codeId = element.codeId;
-          this.otherAllowanceObject.amount = element.amount;
-          this.otherAllowances.push(this.otherAllowanceObject);
-
-          counter += 1;
-
-          console.log("otherAllowanceObject="+this.otherAllowanceObject);
-         
-          //this.addAndreRows(element.codeId,element.amount);
-
-          if(element.nominal === true)
-              this.currencyNewChoice = 0;
-          else 
-              this.currencyNewChoice = 1;
-        }
-
-    });
-  }
-
 
   ngOnInit() {
 

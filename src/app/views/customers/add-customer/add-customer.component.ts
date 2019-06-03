@@ -138,7 +138,7 @@ export class AddCustomerComponent implements OnInit {
         } else {
           this.HQdata = new DPSCustomer();
           this.HQdata.customer = new Customer();
-          this.HQdata.customer.vatNumber = '23232323';
+          this.HQdata.customer.vatNumber = '';
           this.HQdata.customer.name = 'hello';
           this.HQdata.customer.officialName = 'new name';
           this.HQdata.customer.legalForm = 'legal';

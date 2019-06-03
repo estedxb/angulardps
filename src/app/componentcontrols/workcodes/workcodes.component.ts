@@ -17,7 +17,10 @@ export class WorkCodesComponent implements OnInit {
   HQForm: FormGroup;
 
   @Input() public disabled;
+  @Input() public initialWorkCode;
   @Output() public childEvent = new EventEmitter();
+
+  public oldInitialWorkCode = "";
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -83,6 +86,12 @@ export class WorkCodesComponent implements OnInit {
    else
    {
     this.HQForm.get('WorkCode').enable();
+   }
+
+   if(this.initialWorkCode !== this.oldInitialWorkCode)
+   {
+     this.oldInitialWorkCode = this.initialWorkCode;
+     this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);
    }
 
   }
