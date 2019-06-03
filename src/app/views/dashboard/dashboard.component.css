@@ -155,9 +155,6 @@
   cursor: pointer;
 }
 
-.Contents .col-split-n {
-  text-align: left;
-}
 .Contents .col-split .name,
 .Contents .col-split .position {
   color: #fff;
@@ -173,10 +170,14 @@
   font-weight: normal;
   padding: 0px 5px 5px 5px;
 }
+#PersonContents .dashboardpersoncontent table {
+  min-width: 1100px;
+}
 .col-split-t {
   width: auto;
 }
 .col-split-n {
+  text-align: left;
   width: auto;
 }
 .col-split-f {
@@ -186,10 +187,11 @@
   margin: 0px;
 }
 .col-split-m {
-  width: 130px;
+  width: 120px;
 }
 .col-split-l {
   width: 5%;
+  display: none;
 }
 .dashboardactionhead {
   line-height: 50px;

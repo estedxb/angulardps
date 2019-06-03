@@ -37,6 +37,7 @@
     "angular-ng-autocomplete": "^1.1.11",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "file-exists": "^5.0.1",
     "file-saver": "^2.0.1",
     "font-awesome": "^4.7.0",
     "git": "^0.1.5",

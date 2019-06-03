@@ -86,23 +86,23 @@ export class PersonService {
     return result;
   }
 
-  public getDpsScheduleByVatNumber(customerVatNumber: string, startDate: Date, endDate: Date): Observable<any> {
+  public getDpsScheduleByVatNumber(customerVatNumber: string, startDate: string, endDate: string): Observable<DpsSchedule> {
     let getURL = this.getDpsScheduleURL;
     let result = null;
     // console.log('PersonService getDpsScheduleByVatNumber ');
     if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
-      getURL = getURL + '/{"customerVatNumber" : "' + customerVatNumber + '", "startDate" : "' + startDate + '", "endDate" : "' + endDate + '"}';
-      // console.log('PersonService API getDpsScheduleByVatNumber Data From = ' + getURL);
+      getURL = getURL + '/';
+      console.log('PersonService API getDpsScheduleByVatNumber Data From = ' + getURL);
       let dpsScheduleCall = new DpsScheduleCall();
       dpsScheduleCall.customerVatNumber = customerVatNumber;
-      dpsScheduleCall.startDate = startDate.toString();
-      dpsScheduleCall.endDate = endDate.toString();
+      dpsScheduleCall.startDate = startDate;
+      dpsScheduleCall.endDate = endDate;
       result = this.http.post<any>(getURL, dpsScheduleCall, this.httpOptions).catch(this.errorHandler);
     } else {
       if (customerVatNumber !== '123456789101') {
         getURL = getURL.replace('.json', '_empty.json');
       }
-      // console.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
+      console.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
       result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);
     }
     // console.log(result);

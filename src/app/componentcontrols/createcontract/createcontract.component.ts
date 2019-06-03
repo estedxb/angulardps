@@ -11,6 +11,7 @@ import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 import { saveAs } from 'file-saver';
+import { ApproveContract } from '../../shared/models';
 
 @Component({
   selector: 'app-createcontract',
@@ -360,7 +361,6 @@ export class CreateContractComponent implements OnInit {
   }
 
   createObjects() {
-
     this.currentContract = new DpsContract();
     this.contract = new Contract();
     console.log('createObjects  :: ', this.selectedStartDate, this.selectedEndDate);
@@ -410,23 +410,37 @@ export class CreateContractComponent implements OnInit {
 
   onPrintContractClick() {
     console.log('onPrintContractClick :: ');
-    this.contractService.getPrintContractPDFFileURL(this.VatNumber, this.contractId).subscribe(printContractPDF => {
-      console.log(printContractPDF);
-      const FileURL = printContractPDF.fileUrl;
-      saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
-    });
+    this.contractService.getPrintContractPDFFileURL(this.VatNumber, this.contractId).subscribe(
+      printContractPDFURLSuccess => {
+        console.log('createcontract.component printContractPDFURLSuccess :: ', printContractPDFURLSuccess);
+        const FileURL = printContractPDFURLSuccess;
+        saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
+      },
+      printContractPDFURLFailed => {
+        console.log('printContractPDFURLFailed');
+        this.ShowMessage('Fout! bij het afdrukken van het contract', ''); // Error! in printing the contract
+        console.log('Printing the contract failed. ' + printContractPDFURLFailed);
+      }
+    );
   }
   onApproveContractClick() {
     console.log('onApproveContractClick :: ');
-    this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(approveContractSuccess => {
-      console.log(approveContractSuccess);
-      this.ShowMessage(approveContractSuccess.message, '');
-      if (approveContractSuccess.accessStatus) {
-        this.dialog.closeAll();
-      } else {
-        this.errorMsg = approveContractSuccess.message;
+    this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(
+      approveContractSuccess => {
+        console.log(approveContractSuccess);
+        this.ShowMessage(approveContractSuccess.message, '');
+        if (approveContractSuccess.accessStatus) {
+          this.dialog.closeAll();
+        } else {
+          this.errorMsg = approveContractSuccess.message;
+        }
+      },
+      approveContractFailed => {
+        console.log('approveContractFailed');
+        this.ShowMessage('Fout! bij het goedkeuren van het contract', ''); // Error! in approving the contract
+        console.log('Approving the contract failed. ' + approveContractFailed);
       }
-    });
+    );
   }
 
   onCreateOrUpdateContractClick() {
@@ -435,6 +449,16 @@ export class CreateContractComponent implements OnInit {
     if (this.ContractForm.valid) {
       if (this.currentContract !== undefined && this.currentContract !== null) {
         console.log('Create Contract');
+
+        if (this.mode === 'update' || this.mode === 'edit') {
+          this.currentContract.id = this.contractId;
+        } else if (this.mode === 'extend') {
+          this.currentContract.id = 0;
+          this.currentContract.parentContractId = this.contractId;
+        } else {
+          this.currentContract.id = 0;
+        }
+
         if (this.currentContract.positionId > 0) {
           if (this.currentContract.workScheduleId > 0) {
             if (this.currentContract.locationId > 0) {

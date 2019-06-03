@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CustomerListsService } from '../../shared/customerlists.service';
+import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-customerselection',
@@ -8,6 +9,10 @@ import { CustomerListsService } from '../../shared/customerlists.service';
 })
 
 export class CustomerSelectionComponent implements OnInit {
+  public currentUser: DpsUser;
+  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
   public customers = [];
   public customernames = [];
   public errorMsg;
@@ -34,7 +39,11 @@ export class CustomerSelectionComponent implements OnInit {
       }, error => this.errorMsg = error);
   }
 
-  ShowHideCustomerList() { this.show = !this.show; }
+  ShowHideCustomerList() {
+    if (this.isDpsUser) {
+      this.show = !this.show;
+    }
+  }
 
   closeMe() { this.show = false; }
 

@@ -21,11 +21,12 @@
 <div id="PersonContents">
   <div class="row">
     <div class="col-sm-12 dashboardactioncontent dashboardpersoncontent">
-      <table style="min-width:1250px">
+      <table>
         <tr class="Dates">
           <td colspan="2" class="col-split col-split-t">
             <div class="search"><img src="../../../../assets/svg/search_white.svg">
-              <input type="text" class="search-form" placeholder="Zoeken…" /></div>
+              <input type="text" class="search-form" placeholder="Zoeken…"
+                (keyup)="onPersonKeyup($event.target.value)" /></div>
           </td>
           <td class="col-split col-split-m">Ma. {{SelectedMonday}}</td>
           <td class="col-split col-split-m">Din. {{SelectedTuesday}}</td>
@@ -36,7 +37,7 @@
           <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
           <td class="col-split col-split-l">&nbsp;</td>
         </tr>
-        <tr class="Contents" *ngFor="let personContract of maindatas">
+        <tr class="Contents" *ngFor="let personContract of datas">
           <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
             <div class="name">
               {{personContract.personName}}</div>

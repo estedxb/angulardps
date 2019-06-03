@@ -53,17 +53,17 @@ export class ContractService {
   }
 
 
-  public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<PrintContractPDF> {
+  public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<string> {
     // console.log('getContractById');
     let result: any = null;
     if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
-      console.log('getPrintContractPDFFileURL Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
+      console.log('getPrintContractPDFFileURL API Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
       result = this.http.get<any>(this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     } else {
-      console.log('getPrintContractPDFFileURL Data From = ' + this.getPrintContractFileURL);
+      console.log('getPrintContractPDFFileURL JSON Data From = ' + this.getPrintContractFileURL);
       result = this.http.get<any>(this.getPrintContractFileURL).catch(this.errorHandler);
     }
-    console.log(result);
+    console.log('getPrintContractPDFFileURL result', result);
     return result;
   }
 
@@ -76,9 +76,8 @@ export class ContractService {
     console.log('getApproveContract Data From = ' + this.getApproveContractURL);
 
     if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
-      result = this.http.post<any>(this.getApproveContractURL, approveContract, {
-        headers: httpHeaders, observe: 'response'
-      }).catch(this.errorHandler);
+      this.getApproveContractURL = this.getApproveContractURL + '/' + vatNumber + '/' + contractId;
+      result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
     } else {
       result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
     }
