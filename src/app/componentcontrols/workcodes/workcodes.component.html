@@ -30,8 +30,8 @@
         <div class="col-sm-1"></div>
       </div>
       <div class="input-group ng-autocomplete inputWithIcon workSearch">
-        <input type="text" class="search-form form-control workcode" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" /><i
-          class="fa fa-search fa-2"></i>
+        <input type="text" class="search-form form-control workcode" (keyup)="oncustomerKeyup($event.target.value)" placeholder="Search" />
+        <i class="fa fa-search fa-2"></i>
       </div>
       <div class="content" id="customerContent">
         <div *ngFor="let data of datas let i= index" [attr.data-index]="i">
