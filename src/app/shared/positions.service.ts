@@ -51,6 +51,8 @@ export class PositionsService {
   }
 
   public updatePositionWithFile(fileToUpload: File, vatNumber: string, positionId: number): Observable<any> {
+   // if ( fileToUpload.size > 0)
+  // {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     // console.log('formData:::', formData);
@@ -59,6 +61,7 @@ export class PositionsService {
       {
         observe: 'response'
       });
+  //  }
   }
 
   errorHandler(error: HttpErrorResponse) {
