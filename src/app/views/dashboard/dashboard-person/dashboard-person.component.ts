@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person, SelectedContract } from 'src/app/shared/models';
+import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
@@ -12,7 +12,8 @@ import { PersonService } from '../../../shared/person.service';
   styleUrls: ['./../dashboard.component.css']
 })
 export class DashboardPersonComponent implements OnInit {
-  public maindatas = [];
+  public maindatas: DpsSchedulePerson[] = [];
+  public datas: DpsSchedulePerson[] = [];
   public data: any;
   public currentPage = '';
   public Id = '';
@@ -34,7 +35,7 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedSunday = '';
   public ShowMorningDiff = 6;
   public ShowNightDiff = 2;
-  public CellWidth = 130;
+  public CellWidth = 120;
   // public TimeConverterToPx = 0.09375;
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
@@ -45,12 +46,15 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    // console.log('DashboardPersonComponent this.vatNumber : ' + this.vatNumber);
+    const localstartDate = this.startDate.getFullYear() + '-' + this.startDate.getDate() + '-' + (this.startDate.getMonth() + 1);
+    const localendDate = this.endDate.getFullYear() + '-' + this.endDate.getDate() + '-' + (this.endDate.getMonth() + 1);
+    console.log('onPageInit getDpsScheduleByVatNumber(' + this.vatNumber + ', ' + localstartDate + ', ' + localendDate);
 
-    this.personService.getDpsScheduleByVatNumber(this.vatNumber, this.startDate, this.endDate)
+    this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
       .subscribe(dpsSchedule => {
         console.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
         this.maindatas = dpsSchedule.persons;
+        this.onPersonKeyup('');
         console.log('maindatas ::', this.maindatas);
       }, error => this.errorMsg = error);
 
@@ -59,6 +63,16 @@ export class DashboardPersonComponent implements OnInit {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
       }
+    }
+  }
+
+  onPersonKeyup(value) {
+    this.datas = [];
+    if (this.maindatas.length > 0) {
+      this.datas = this.maindatas
+        .map(pers => { if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; } });
+    } else {
+      this.datas = this.maindatas;
     }
   }
 
@@ -74,28 +88,43 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   getSelectedDates() {
-    //const setdate = '2019-05-31';
-    let curr = new Date();
-    let curre = new Date();
-    const adddays: number = this.WeekDiff * 7;
+    const setdate = '2019-06-03';
+    const curr = new Date(setdate);
 
-    const adjustDaysForWeekStartDate = curr.getUTCDay() - 1;
+    const adddays: number = this.WeekDiff * 7;
+    let adjustDaysForWeekStartDate = - 1;
+
+    console.log('Current Date :: ' + curr);
+    console.log('Current Day :: ' + curr.getUTCDay());
+    console.log('adddays :: ' + adddays);
+
+    if (curr.getUTCDay() === 0) {
+      adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + 7 + curr.getUTCDay();
+    } else {
+      adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + curr.getUTCDay();
+    }
+
+    console.log('adjustDaysForWeekStartDate :: ' + adjustDaysForWeekStartDate);
 
     curr.setDate(curr.getUTCDate() - adjustDaysForWeekStartDate);
+
+    console.log('Start Date :: ' + curr);
+
     curr.setDate(curr.getUTCDate() + adddays);
-
-    curre.setDate(curre.getUTCDate() - (adjustDaysForWeekStartDate - 6));
-    curre.setDate(curre.getUTCDate() + adddays);
-
-    const first = curr.getUTCDate();
-
     const mon = new Date(curr);
-    const tue = new Date(curr.setDate(first + 1));
-    const wed = new Date(curr.setDate(first + 2));
-    const thu = new Date(curr.setDate(first + 3));
-    const fri = new Date(curr.setDate(first + 4));
-    const sat = new Date(curr.setDate(first + 5));
-    const sun = new Date(curre);
+    curr.setDate(curr.getUTCDate() + 1);
+    const tue = new Date(curr);
+    curr.setDate(curr.getUTCDate() + 1);
+    const wed = new Date(curr);
+    curr.setDate(curr.getUTCDate() + 1);
+    const thu = new Date(curr);
+    curr.setDate(curr.getUTCDate() + 1);
+    const fri = new Date(curr);
+    curr.setDate(curr.getUTCDate() + 1);
+    const sat = new Date(curr);
+    curr.setDate(curr.getUTCDate() + 1);
+    const sun = new Date(curr);
+    console.log('Start End :: ' + curr);
 
     this.startDate = mon;
     this.endDate = sun;
@@ -118,6 +147,7 @@ export class DashboardPersonComponent implements OnInit {
       const selectedContract = new SelectedContract();
       selectedContract.contractId = contractid;
       selectedContract.personId = personid;
+      console.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
       selectedContract.startDate = this.startDate;
       selectedContract.endDate = this.endDate;
       const dialogConfig = new MatDialogConfig();

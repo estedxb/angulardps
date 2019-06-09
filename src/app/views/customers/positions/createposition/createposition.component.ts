@@ -101,17 +101,24 @@ export class CreatepositionComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.fileToUpload = files.item(0);
       }
+      if(this.fileToUpload !==null)
+      {
       this.currentPosition.position.workstationDocument.name = files.item(0).name;
       this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionFileUploads + '' + files.item(0).name;
+      }
     }
   }
 
   uploadFileToActivity() {
+    //console.log('fileToUpload ::::::::' + this.fileToUpload.name);
+    if (this.fileToUpload !==null)
+    {
     this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
       // do something, if upload success
     }, error => {
       console.log(error);
     });
+ }
   }
 
 

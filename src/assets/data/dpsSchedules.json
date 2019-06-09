@@ -7,8 +7,8 @@
   },
   "persons": [
     {
-      "personId": "91.10.18-035.58",
-      "personName": "Vanessa Martens",
+      "personId": "62.11.18-012.12",
+      "personName": "Jannes Martin",
       "positionName": "Function Two",
       "contracts": [
         {
@@ -20,13 +20,13 @@
                 "dayOfWeek": 1,
                 "workTimes": [
                   {
-                    "startTime": "08:00",
+                    "startTime": "8:30",
                     "endTime": "12:00",
                     "title": ""
                   },
                   {
                     "startTime": "13:00",
-                    "endTime": "15:30",
+                    "endTime": "16:00",
                     "title": ""
                   }
                 ],
@@ -36,13 +36,13 @@
                 "dayOfWeek": 2,
                 "workTimes": [
                   {
-                    "startTime": "08:00",
+                    "startTime": "8:30",
                     "endTime": "12:00",
                     "title": ""
                   },
                   {
                     "startTime": "13:00",
-                    "endTime": "15:30",
+                    "endTime": "16:00",
                     "title": ""
                   }
                 ],
@@ -52,13 +52,13 @@
                 "dayOfWeek": 3,
                 "workTimes": [
                   {
-                    "startTime": "8:00",
+                    "startTime": "8:30",
                     "endTime": "12:00",
                     "title": ""
                   },
                   {
                     "startTime": "13:00",
-                    "endTime": "15:30",
+                    "endTime": "16:00",
                     "title": ""
                   }
                 ],
@@ -68,13 +68,13 @@
                 "dayOfWeek": 4,
                 "workTimes": [
                   {
-                    "startTime": "8:00",
+                    "startTime": "8:30",
                     "endTime": "12:00",
                     "title": ""
                   },
                   {
                     "startTime": "13:00",
-                    "endTime": "15:30",
+                    "endTime": "16:00",
                     "title": ""
                   }
                 ],
@@ -84,13 +84,13 @@
                 "dayOfWeek": 5,
                 "workTimes": [
                   {
-                    "startTime": "8:00",
+                    "startTime": "8:30",
                     "endTime": "12:00",
                     "title": ""
                   },
                   {
                     "startTime": "13:00",
-                    "endTime": "15:30",
+                    "endTime": "16:00",
                     "title": ""
                   }
                 ],
@@ -100,8 +100,8 @@
                 "dayOfWeek": 6,
                 "workTimes": [
                   {
-                    "startTime": "0:00",
-                    "endTime": "0:00",
+                    "startTime": "00:00",
+                    "endTime": "00:00",
                     "title": ""
                   },
                   {
@@ -132,150 +132,6 @@
           }
         }
       ]
-    },
-    {
-      "personId": "38.09.16-343.34",
-      "personName": "Simon Blondeel",
-      "positionName": "Function Two",
-      "contracts": [
-        {
-          "customerContractId": "1",
-          "customerContractName": "123456789101",
-          "workSchedule": {
-            "workDays": [
-              {
-                "dayOfWeek": 2,
-                "workTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 3,
-                "workTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ]
-              },
-              {
-                "dayOfWeek": 4,
-                "workTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ],
-                "breakTimes": [
-                  {
-                    "startTime": "12:21 PM",
-                    "endTime": "12:21 PM",
-                    "title": "title"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "personId": "84.09.10-343.34",
-      "personName": "Jannes Labaere",
-      "positionName": "Function Two",
-      "contracts": null
-    },
-    {
-      "personId": "84.11.04-343.34",
-      "personName": "Lieven Bonamie",
-      "positionName": "Function Three",
-      "contracts": null
-    },
-    {
-      "personId": "41.09.16-343.34",
-      "personName": "asdfsafd asdsdf",
-      "positionName": "Function Three",
-      "contracts": null
-    },
-    {
-      "personId": "46.09.16-343.34",
-      "personName": "Robert Martens",
-      "positionName": "Function Two",
-      "contracts": null
-    },
-    {
-      "personId": "41.09.15-343.34",
-      "personName": "Charlotte De Pestel",
-      "positionName": "Function Two",
-      "contracts": null
-    },
-    {
-      "personId": "12.09.21-343.34",
-      "personName": "Jan Pier Klaai",
-      "positionName": "Function Two",
-      "contracts": null
-    },
-    {
-      "personId": "38.09.12-343.34",
-      "personName": "Pis Pan Pot",
-      "positionName": "Function Three",
-      "contracts": null
-    },
-    {
-      "personId": "73.09.16-343.34",
-      "personName": "Jean Mars",
-      "positionName": "",
-      "contracts": null
-    },
-    {
-      "personId": "99.10.18-035.58",
-      "personName": "Robin Hoedt",
-      "positionName": "Function Two",
-      "contracts": null
-    },
-    {
-      "personId": "39.09.16-343.34",
-      "personName": "Hoedt Robin",
-      "positionName": "Function Three",
-      "contracts": null
-    },
-    {
-      "personId": "63.09.11-343.34",
-      "personName": "Mars James",
-      "positionName": "Balaji Subbiah",
-      "contracts": null
-    },
-    {
-      "personId": "12.09.16-343.34",
-      "personName": "Balaji Subbiah",
-      "positionName": "Function Three",
-      "contracts": null
-    },
-    {
-      "personId": "87.10.18-035.58",
-      "personName": "Faisal Faisal",
-      "positionName": "Function Two",
-      "contracts": null
     }
   ]
 }

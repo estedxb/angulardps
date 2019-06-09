@@ -1,9 +1,14 @@
 <div class="headerRow">
   <div class="float-right"><img src="../../assets/img/DPSLogo.png" id="dpslogo"></div>
   <div class="float-left" (click)="customerList.ShowHideCustomerList()">
-    <div class="clogo"><img src="../../assets/img/jobfixerslogo.png" id="customlogo" alt="JobFixers"></div>
-    <div class="cname"><span id="Organization">JobFixers</span>{{buttonName}}</div>
-    <div class="arrow"><img src="../../../assets/svg/arrow-down.svg" /></div>
+    <div class="clogo_{{isDpsUser}}">
+      <img [src]="customerLogo" id="customlogo" alt="JobFixers" *ngIf="isLogoFound">
+      <div class="clogoInit" *ngIf="!isLogoFound">
+        {{clogoInit}}
+      </div>
+    </div>
+    <div class="cname_{{isDpsUser}}"><span id=" Organization">{{customerName}}</span></div>
+    <div class="arrow" *ngIf="isDpsUser"><img src="../../../assets/svg/arrow-down.svg" /></div>
   </div>
 </div>
 <app-customerselection #customerList></app-customerselection>

@@ -129,7 +129,7 @@ export class DpsScheduleCall { customerVatNumber: string; startDate: string; end
 export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
 export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
 export class DpsSchedulePerson { personId: string; personName: string; positionName: string; contracts: DpsScheduleContract[]; }
-export class DpsScheduleContract { customerContractId: string; customerContractName: string; workSchedule: WorkSchedule; }
+export class DpsScheduleContract { customerContractId: string; customerContractName: string; customerContractstatus: string; workSchedule: WorkSchedule; }
 export class PrintContractPDF { contractId: string; fileUrl: string }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string }
 export class ApproveContract { customerVatNumber: string; contractId: string; }
