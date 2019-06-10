@@ -50,7 +50,7 @@ export class JointcommitteeComponent implements OnInit {
 
     if(this.JCFormData !== undefined)
     {
-        console.log("data=");
+        console.log("joint committee data=");
         console.log(this.datas);
 
         this.loadDropDownData(this.JCFormData);
@@ -63,18 +63,30 @@ export class JointcommitteeComponent implements OnInit {
     this.resetToInitValue();
 
     this.jointcommitteeService.getJointCommitees().
-         subscribe(data => this.datas = data, 
+         subscribe(data => this.datas = data,
             error => this.errorMsg = error);
+
+    console.log("joint committee data="+this.datas.length);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
     this.loadDropDownData(this.stringJCReceived);
   }
 
+  outputData() {
+
+    for(let i=0;i<this.datas.length;i++)
+      console.log("i="+this.datas[i]);
+
+  }
+
   loadDropDownData(stringJCReceived) {
+    this.outputData();
+
     console.log("received string="+stringJCReceived);
-    
-    for(let i=0;i<this.datas;i++)
+    console.log(this.datas);
+
+    for(let i=0;i<this.datas.length;i++)
     {
          if(this.datas[i] === stringJCReceived)
          {

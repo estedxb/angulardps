@@ -231,6 +231,8 @@ export class InvoiceSettingsComponent implements OnInit {
               this.ISForm.get('PloegprimeBox2').enable();
               this.ISForm.get('currency').enable();
 
+              this.ploegpremieSwitch = true;
+
               let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
               this.ISForm.get('PloegprimeBox1').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName);
               this.ISForm.get('PloegprimeBox2').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount);
@@ -243,7 +245,8 @@ export class InvoiceSettingsComponent implements OnInit {
               else {
                 this._selectedIndexnominal = 1;
                 this.currencyChoice = 1;
-              }              
+              }
+
             }
 
             if(this.loadSwitchOther === true)
@@ -271,60 +274,14 @@ export class InvoiceSettingsComponent implements OnInit {
                   {
                     this.workCode[this.counter] = element.codeId;
                     this.addAndreRows(element.codeId,element.amount);
+                    this.disabled = 'false';
+                    this.andreSwitch = true;
                     const formGroup = this.Andre.controls[this.counter] as FormGroup;
                     formGroup.controls['AndreBox2'].setValue(element.amount);
                   }
 
                   this.counter += 1;  
                 }
-
-                console.log("counter="+this.counter);
-
-                // if(lengthOtherAllowance === 1 && this.counter < lengthOtherAllowance)
-                // {
-                //   const formGroup = this.Andre.controls[this.counter] as FormGroup;
-                //   console.log(formGroup);
-
-                //   this.workCode = element.codeId;
-
-                //   //formGroup.controls['AndreBox1'].setValue(element.codeId);
-                //   formGroup.controls['AndreBox2'].setValue(element.amount);
-
-                //   this.counter += 1;
-
-                //   if(element.nominal === true)
-                //       this.currencyNewChoice = 0;
-                //   else 
-                //       this.currencyNewChoice = 1;
-                // }
-
-                // if(this.otherAllowanceCounter < lengthOtherAllowance)
-                // {
-                //     this.addAndreRows(element.codeId,element.amount);
-                //     this.workCode = element.codeId;
-                // }
-                  // else
-                  // {
-                  //   if(this.counter < lengthOtherAllowance)
-                  //   {
-                  //     const formGroup = this.Andre.controls[this.counter] as FormGroup;
-                  //     console.log(formGroup);
-  
-                  //     this.workCode = element.codeId;
-  
-                  //     //formGroup.controls['AndreBox1'].setValue(element.codeId);
-                  //     formGroup.controls['AndreBox2'].setValue(element.amount);
-  
-                  //     this.counter += 1;
-  
-                  //     if(element.nominal === true)
-                  //         this.currencyNewChoice = 0;
-                  //     else 
-                  //         this.currencyNewChoice = 1;
-                  //   }
-                   
-                  // }
-
               });
 
             }
@@ -366,9 +323,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.dataDropDown = ['betaald', 'niet betaald'];
     this.datacurrencyDropDown = ['€', '%'];
-
-    console.log("length="+this.otherAllowances.length);
-    console.log("codeId="+this.otherAllowances[0].codeId + "amount="+this.otherAllowances[0].amount);
 
     this.ISForm = new FormGroup({
 
@@ -458,7 +412,8 @@ export class InvoiceSettingsComponent implements OnInit {
     return true;
   }
 
-  isInvalidOther() {
+  isInvalidOther() 
+  {
 
     console.log('is invalid andre =');
     console.log(this.andreSwitch);
