@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
               this.message = 'Logged in success please wait...';
               localStorage.setItem('isLoggedIn', 'true');
               localStorage.setItem('accesstoken', this.ltkn.accessToken);
+              localStorage.setItem('customerName', this.ltkn.customerName);
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
               this.router.navigate([this.returnUrl]);
             } else {
@@ -105,15 +106,22 @@ export class LoginComponent implements OnInit {
               const FirstCustomer: DPSCustomer = customers[0];
               console.log('authLogin in customers Selected ::', FirstCustomer);
               this.ltkn.dpsUser.customerVatNumber = FirstCustomer.customer.vatNumber;
+              console.log('Selected customerVatNumber::', this.ltkn.dpsUser.customerVatNumber);
+              this.ltkn.customerName = FirstCustomer.customer.name;
+              console.log('Selected customerName::', this.ltkn.customerName);
+              localStorage.setItem('customerName', this.ltkn.customerName);
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
               this.router.navigate([this.returnUrl]);
             } else {
               this.message = 'Logged in successfully, but customers not found. Please wait...';
+              localStorage.setItem('customerName', this.ltkn.customerName);
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
               this.router.navigate([this.returnaddcustomerUrl]);
             }
           }, error => this.errorMsg = error);
         } else {
+          this.ltkn.customerName = '......';
+          localStorage.setItem('customerName', this.ltkn.customerName);
           localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
           this.router.navigate([this.returnUrl]);
         }

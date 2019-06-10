@@ -103,8 +103,8 @@
 .search img {
   width: 20px;
   position: absolute;
-  left: 23px;
-  top: 15px;
+  left: 16px;
+  top: 12px;
   background-color: transparent;
   color: #fff;
   overflow: hidden;
@@ -116,20 +116,22 @@
   border-radius: 22px;
   line-height: 22px;
   padding: 2px 0px 2px 26px;
+  margin: 5px 5px 5px 10px;
   background-color: #00032b;
   border: 1px solid #595a64;
   font-weight: 500;
   color: #fff;
   outline: 0px;
-  width: 90%;
-  min-width: 100px;
+  width: 96%;
+  min-width: 242px;
+  text-align: left;
 }
 .Dates .col-split {
   color: #e37619;
   font-size: 13px;
   font-weight: normal;
   padding: 5px;
-  text-align: center;
+  text-align: left;
 }
 .Contents .col-split {
   color: #fff;

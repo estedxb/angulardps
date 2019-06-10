@@ -59,7 +59,8 @@ export const environment = {
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: '',
   getPrintContractFileURL: 'Contract/Pdf',
-  getApproveContractURL: 'Contract/Approve'
+  getApproveContractURL: 'Contract/Approve',
+  getContractReasonURL: ''
 };
 
 /*

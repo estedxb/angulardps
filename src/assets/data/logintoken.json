@@ -13,5 +13,6 @@
     "userRole": "DPSUser",
     "isEnabled": true,
     "isArchived": false
-  }
+  },
+  "customerName": "CustomerTestName"
 }

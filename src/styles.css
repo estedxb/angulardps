@@ -556,7 +556,11 @@ div#PersonContact {
   background-image: none;
 }
 #btnSave.greenbtn {
-  min-width: 220px;
+  min-width: 200px;
+}
+
+#btnDelete.redbtn {
+  min-width: 200px;
 }
 
 #maincontentarea input[type="text"].workcode {

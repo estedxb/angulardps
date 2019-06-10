@@ -432,14 +432,14 @@ div#CustomerContact1 {
   margin: 0px 0px 5px 0px;
 }
 
-.inputWrapper{
+.inputWrapper {
   margin-top: 10px;
 }
 #VCAAttest h4,
 #BuildingCards h4,
-#StudentAttest h4{
+#StudentAttest h4 {
   margin-top: 5px;
 }
-#StudentAttest .inputWrapper{
+#StudentAttest .inputWrapper {
   margin-top: 5px;
 }
