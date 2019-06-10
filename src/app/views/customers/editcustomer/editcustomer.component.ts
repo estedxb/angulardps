@@ -63,6 +63,8 @@ export class EditCustomerComponent implements OnInit {
     console.log('ngOnInit called editcustomer');
     console.log('vatNumber=' + this.vatNumber);
     this.getCustomerByVatNumberEdit(this.vatNumber);
+
+    this.ShowMessage("Loading Data Successfully","");
   }
 
   ngOnDestroy() { console.log('object destroyed'); }
@@ -72,6 +74,31 @@ export class EditCustomerComponent implements OnInit {
     this.HQdata = $event;
     console.log('received in editcustomer component');
     console.log(this.HQdata);
+    console.log("CTdata:");
+    console.log(this.CTdata);
+
+    if (this.CTdata !== null && this.CTdata !== undefined) {
+      this.HQdata.contact = this.CTdata.contact;
+      this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+      this.HQdata.formValid = true;
+    }
+
+    if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
+      console.log('fp data=');
+      console.log(this.FPdata);
+      console.log('HQ data');
+      console.log(this.HQdata);
+
+      this.HQdata.invoiceSettings = new InvoiceSettings();
+      this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
+      this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+      this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
+      this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
+      this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
+      this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+      this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
+
+    }
 
     this.childEvent.emit(this.HQdata);
   }
@@ -120,6 +147,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
       }
     }
+
     this.childEvent.emit(this.HQdata);
   }
 
@@ -168,6 +196,18 @@ export class EditCustomerComponent implements OnInit {
       data: response,
       page: 'edit'
     };
+
+    this.HQdata.contact.firstName = response.contact.firstName;
+    this.HQdata.contact.lastName = response.contact.lastName;
+    this.HQdata.contact.email = response.contact.email;
+    this.HQdata.contact.lastName = response.contact.language;
+    this.HQdata.contact.mobile = response.contact.mobile;
+    this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
+    this.HQdata.contact.postion = response.contact.postion;
+    this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+    this.HQdata.formValid = true;
+    this.childEvent.emit(this.HQdata);
+
     // this.HQdata = response;
   }
   handleError(error: any) { }
