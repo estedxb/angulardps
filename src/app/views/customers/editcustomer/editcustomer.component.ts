@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@
 import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 
 @Component({
   selector: 'app-editcustomer',
@@ -23,13 +24,27 @@ export class EditCustomerComponent implements OnInit {
   public oldHQdata: any;
   public dataCustomerEdit: any;
 
-  constructor(private customerService: CustomersService, private data: DataService) {
+  constructor(private customerService: CustomersService, private data: DataService, private dialog: MatDialog, private snackBar: MatSnackBar) 
+  {
     //this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.editObject = {
       data: '',
       page: ''
     };
+
   }
+
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      console.log('Snackbar Action :: ' + Action);
+    });
+  }
+
 
   ngDoCheck() {
     if (this.HQdata !== this.oldHQdata) {
