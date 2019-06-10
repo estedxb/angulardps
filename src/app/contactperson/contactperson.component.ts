@@ -80,7 +80,6 @@ export class ContactPersonComponent implements OnInit {
   }
 
 
-
   ngDoCheck() {
 
     console.log('CTFormData');
@@ -94,14 +93,6 @@ export class ContactPersonComponent implements OnInit {
           this.languageString = this.CTFormData.data.contact.language.name;
           // this.languageString = "French";
           this.createObjects();
-
-          // this.CTdata =  {
-          //   "contact": this.contact,
-          //   "formValid": this.validity(),
-          //   "activateContactAsUser":this.alsCheck
-          // };
-
-          // this.childEvent.emit(this.CTdata);
 
         }
       }
