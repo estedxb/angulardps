@@ -56,7 +56,7 @@ export class StatuteComponent implements OnInit {
 
 
   ngDoCheck() {
-    this.createCoefficientArray();
+    this.createCoefficientArray();    
 
     if (this.STFormData !== undefined) {
       if (this.STFormData != this.oldSFTFormData) {
@@ -84,8 +84,16 @@ export class StatuteComponent implements OnInit {
     console.log("load STFormData=");
     console.log(this.STFormData);
 
+    this.fillTitles();
+
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
+
+      console.log("length of statute array="+this.loadStatuteSettingsArray.length);
+      console.log(this.loadStatuteSettingsArray);
+
+      console.log("statute array=");
+
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
         this.loadStatuteSettingsArray.forEach(element => {
@@ -95,12 +103,17 @@ export class StatuteComponent implements OnInit {
       }
     }
   }
+
+  fillTitles() {
+
+    console.log("statutes length="+this.statutes.length);
+    
+    for(let counter:number=0;counter<this.statutes.length;counter+=1)
+      this.titles[counter] = this.statutes[counter].name;
+
+  }
    
    onloadData(arrayElement,counter){
-
-    console.log("arrayElement="+arrayElement+ " counter="+counter);
-
-    this.titles[counter] = this.statutes[counter].name;
 
     this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
 
