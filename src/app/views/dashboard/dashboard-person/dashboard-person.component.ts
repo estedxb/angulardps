@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson } from 'src/app/shared/models';
+import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
@@ -14,6 +14,8 @@ import { PersonService } from '../../../shared/person.service';
 export class DashboardPersonComponent implements OnInit {
   public maindatas: DpsSchedulePerson[] = [];
   public datas: DpsSchedulePerson[] = [];
+  public selectedPersondatas: DpsSchedulePerson[] = [];
+  public selectedPersonContracts: DpsScheduleContract[] = [];
   public data: any;
   public currentPage = '';
   public Id = '';
@@ -46,8 +48,10 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    const localstartDate = this.startDate.getFullYear() + '-' + this.startDate.getDate() + '-' + (this.startDate.getMonth() + 1);
-    const localendDate = this.endDate.getFullYear() + '-' + this.endDate.getDate() + '-' + (this.endDate.getMonth() + 1);
+    console.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
+    console.log('onPageInit endDate :: ' + this.endDate);
+    const localstartDate = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + this.startDate.getDate();
+    const localendDate = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + this.endDate.getDate();
     console.log('onPageInit getDpsScheduleByVatNumber(' + this.vatNumber + ', ' + localstartDate + ', ' + localendDate);
 
     this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
@@ -78,18 +82,20 @@ export class DashboardPersonComponent implements OnInit {
 
   addWeek() {
     this.WeekDiff += 1;
-    this.SelectedDates = this.getSelectedDates();
+    //this.SelectedDates = this.getSelectedDates();
+    this.onPageInit();
     // console.log('this.SelectedDates ::', this.SelectedDates);
   }
 
   minusWeek() {
     this.WeekDiff -= 1;
-    this.SelectedDates = this.getSelectedDates();
+    //this.SelectedDates = this.getSelectedDates();
+    this.onPageInit();
   }
 
   getSelectedDates() {
-    const setdate = '2019-06-03';
-    const curr = new Date(setdate);
+    // const setdate = '2019-06-03';
+    const curr = new Date();
 
     const adddays: number = this.WeekDiff * 7;
     let adjustDaysForWeekStartDate = - 1;
@@ -145,6 +151,7 @@ export class DashboardPersonComponent implements OnInit {
   openContractDialog(personid, contractid): void {
     try {
       const selectedContract = new SelectedContract();
+      selectedContract.personContracts = this.getSelectedPersonWorkDays(personid);
       selectedContract.contractId = contractid;
       selectedContract.personId = personid;
       console.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
@@ -182,6 +189,23 @@ export class DashboardPersonComponent implements OnInit {
         */
       });
     } catch (e) { alert(e.message); }
+  }
+
+  getSelectedPersonWorkDays(personid) {
+    console.log('getSelectedPersonWorkDays(' + personid + ') ');
+    this.selectedPersonContracts = [];
+    if (this.maindatas.length > 0) {
+      this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
+      if (this.selectedPersondatas.length > 0) {
+        this.selectedPersonContracts = this.selectedPersondatas[0].contracts;
+      } else {
+        this.selectedPersonContracts = null;
+      }
+    } else {
+      this.selectedPersonContracts = this.maindatas[0].contracts;
+    }
+    console.log('getSelectedPersonWorkDays(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
+    return this.selectedPersonContracts;
   }
 
   OpenAddPersonURL() {

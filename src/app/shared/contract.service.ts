@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Contract, DpsContract, PrintContractPDF, ApproveContractSuccess, ApproveContract } from './models';
+import { Contract, DpsContract, PrintContractPDF, ApproveContractSuccess, ApproveContract, ContractReason } from './models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +12,8 @@ export class ContractService {
   private getContractByVatNumberUrl = '';
   private getContractURL = '';
   private getPrintContractFileURL = '';
-  public getApproveContractURL = '';
+  private getApproveContractURL = '';
+  private getContractReasonURL = '';
 
   constructor(private http: HttpClient) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getContract !== '') {
@@ -38,6 +39,15 @@ export class ContractService {
       console.log('getApproveContractURL Data From JSON');
       this.getApproveContractURL = environment.getAssetsDataPath + 'approveContract.json';
     }
+
+    if (environment.dataFromAPI_JSON && environment.getContractReasonURL !== '') {
+      console.log('getContractReasonURL Data From Remote');
+      this.getApproveContractURL = environment.dpsAPI + environment.getContractReasonURL;
+    } else {
+      console.log('getContractReasonURL Data From JSON');
+      this.getContractReasonURL = environment.getAssetsDataPath + 'contractreason.json';
+    }
+
   }
 
   public createContract(contract: DpsContract): Observable<any> {
@@ -51,7 +61,6 @@ export class ContractService {
     // console.log('updateContract Data From = ' + this.getContractURL);
     return this.http.put<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
-
 
   public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<string> {
     // console.log('getContractById');
@@ -93,6 +102,13 @@ export class ContractService {
     return result;
   }
 
+  public getContractReason(): Observable<ContractReason> {
+    console.log('getContractReason');
+    console.log('getContractReason Data From = ' + this.getContractReasonURL);
+    const result = this.http.get<any>(this.getContractReasonURL).catch(this.errorHandler);
+    console.log(result);
+    return result;
+  }
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {

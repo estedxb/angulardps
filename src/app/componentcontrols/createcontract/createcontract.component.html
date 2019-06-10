@@ -59,19 +59,31 @@
                             [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
                     </select>
                 </div>
+                <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Contractreden: </label>
+                    <select id="position" name="position" class='form-control' required [(ngModel)]='reasonSelected'
+                        (ngModelChange)='onReasonSelected($event)' [ngModelOptions]="{standalone: true}"
+                        [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
+                        <option class='option' *ngFor='let contractReason of contractReasons'
+                            [value]="contractReason.BrightStaffing_Contract_Reason_ID">
+                            {{contractReason.Name}}</option>
+                    </select>
+                </div>
             </div>
 
             <label class="titleBold"> Start Date: </label>
-            <app-calendar (childEvent)="receiveMessageStartDate($event)" [CalendarData]="calendarData"
-                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
+            <app-calendar id='calendarStartDate' (childEvent)="receiveMessageStartDate($event)"
+                [CalendarData]="calendarData" [componentType]="Contract"
+                [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
                 [calendaryearDisableStatus]="this.calendaryearDisableStatus"
                 [calendarDisableStatus]="this.mode=='update' || this.mode=='edit' ? true : null">
             </app-calendar>
 
             <label class="titleBold"> End Date: </label>
-            <app-calendar (childEvent)="receiveMessageEndDate($event)" [CalendarData]="calendarDataNew"
-                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
+            <app-calendar id='calendarEndDate' (childEvent)="receiveMessageEndDate($event)"
+                [CalendarData]="calendarDataNew" [componentType]="Contract"
+                [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
                 [calendaryearDisableStatus]="this.calendaryearDisableStatus"
                 [calendarDisableStatus]="this.mode=='update' ? true : null">

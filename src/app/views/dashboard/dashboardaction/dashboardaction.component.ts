@@ -58,7 +58,7 @@ export class DashboardActionComponent implements OnInit {
   }
 
   updateAction(index: number) {
-    let summaries: Summaries = this.datas[index];
+    const summaries: Summaries = this.datas[index];
     summaries.isFinished = true;
     this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
       this.datas.splice(index, 1);

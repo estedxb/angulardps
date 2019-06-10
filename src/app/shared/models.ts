@@ -57,7 +57,7 @@ export class _Position {
     name: string; taskDescription: string; isStudentAllowed: boolean; costCenter: string; workstationDocument: Documents;
 }
 export class Login { userid: string; password: string; }
-export class LoginToken { accessToken: string; dpsUser: DpsUser; }
+export class LoginToken { accessToken: string; dpsUser: DpsUser; customerName: string; }
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
@@ -97,7 +97,7 @@ export class DpsContract {
 }
 export class Contract {
     name: string; startDate: string; endDate: string; workSchedule: WorkSchedule; position: _Position; statute: Statute;
-    status: string; cancelReason: string;
+    status: string; cancelReason: string; contractReason: string;
 }
 export class TimeSheet { dayValues: DayValue[]; standAloneValues: StandAloneValue[]; information: string; status: string; }
 export class DayValue { date: Date; values: Value[]; }
@@ -115,7 +115,7 @@ export class Summaries {
     objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
 }
 
-export class SelectedContract { contractId: number; personId: string; startDate: Date; endDate: Date }
+export class SelectedContract { personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date }
 
 // export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
 // export class PersonsContracts { customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string; customerPostionId: string; dpsContracts: DpsContract[];}
@@ -129,7 +129,11 @@ export class DpsScheduleCall { customerVatNumber: string; startDate: string; end
 export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
 export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
 export class DpsSchedulePerson { personId: string; personName: string; positionName: string; contracts: DpsScheduleContract[]; }
-export class DpsScheduleContract { customerContractId: string; customerContractName: string; customerContractstatus: string; workSchedule: WorkSchedule; }
+export class DpsScheduleContract {
+    customerContractId: string; customerContractName: string; customerContractstatus: string; workSchedule: WorkSchedule;
+}
 export class PrintContractPDF { contractId: string; fileUrl: string }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string }
 export class ApproveContract { customerVatNumber: string; contractId: string; }
+// tslint:disable-next-line: variable-name
+export class ContractReason { Name: string; BrightStaffing_Contract_Reason_ID: string; }

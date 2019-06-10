@@ -50,10 +50,19 @@ export class UpdateCustomerComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.onPageInit();
+  }
+
   ngOnInit() {
+    this.onPageInit();
+  }
+
+  onPageInit() {
     this.activeRoute.params.subscribe((routeParams: any) => {
       console.log('routeParams :: ', routeParams);
-      this.Id = routeParams.id; this.currentPage = routeParams.page;
+      this.Id = routeParams.id;
+      this.currentPage = routeParams.page;
       console.log('this.Id  :: ', this.Id, 'this.currentPage :: ', this.currentPage);
 
       if (this.Id === 'locations' || this.Id === 'location' || this.Id === 'positions' || this.Id === 'position' ||
@@ -72,41 +81,23 @@ export class UpdateCustomerComponent implements OnInit {
         } else {
           this.currentPage = 'editcustomer';
         }
+        this.GetCustomerInfo(0);
       } else {
         this.vatNumber = this.Id;
-        this.updateLocalStorage();
-        if (
-          this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
-          this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||
-          this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
-
-          if (this.currentPage === 'locations' || this.currentPage === 'location') {
-            this.currentPage = 'locations';
-          } else if (this.currentPage === 'users' || this.currentPage === 'user') {
-            this.currentPage = 'users';
-          } else if (this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
-            this.currentPage = 'workschedules';
-          } else if (this.currentPage === 'positions' || this.currentPage === 'position') {
-            this.currentPage = 'positions';
-          } else {
-            this.currentPage = 'editcustomer';
-          }
-        } else {
-          this.currentPage = 'editcustomer';
-        }
+        this.GetCustomerInfo(1);
       }
       console.log('ID :: ' + this.Id, 'CurrentPage :: ' + this.currentPage);
-      this.onPageInit();
     });
   }
 
-  onPageInit() {
+  GetCustomerInfo(mode: number) {
     try {
       console.log('this.vatNumber pageInit :: ' + this.vatNumber);
       this.customerService.getCustomersByVatNumberEdit(this.vatNumber).subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer;
         console.log('Customer Form Data : ', this.dpsCustomer);
         this.CustomerName = this.dpsCustomer.customer.name;
+        if (mode === 1) { this.updateLocalStorage(); }
         this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.ShowMessage(error, 'error'));
     } catch (e) {
@@ -119,6 +110,28 @@ export class UpdateCustomerComponent implements OnInit {
     this.loginuserdetails.customerVatNumber = this.vatNumber;
     console.log('lsDPUser :: ', this.loginuserdetails);
     localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
+    localStorage.setItem('customerName', this.CustomerName);
+
+    if (
+      this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
+      this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||
+      this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
+
+      if (this.currentPage === 'locations' || this.currentPage === 'location') {
+        this.currentPage = 'locations';
+      } else if (this.currentPage === 'users' || this.currentPage === 'user') {
+        this.currentPage = 'users';
+      } else if (this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
+        this.currentPage = 'workschedules';
+      } else if (this.currentPage === 'positions' || this.currentPage === 'position') {
+        this.currentPage = 'positions';
+      } else {
+        this.currentPage = 'editcustomer';
+      }
+    } else {
+      this.currentPage = 'editcustomer';
+    }
+
   }
   receiveEditCustomerData($event) {
     console.log('received editCustomerData in update customer=');

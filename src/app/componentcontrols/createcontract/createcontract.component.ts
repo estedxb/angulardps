@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule, SelectedContract } from 'src/app/shared/models';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
+import {
+  Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location,
+  TimeSheet, DpsPostion, DpsWorkSchedule, WorkSchedule, SelectedContract, ContractReason
+} from 'src/app/shared/models';
 
+import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
@@ -12,6 +15,7 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 import { saveAs } from 'file-saver';
 import { ApproveContract } from '../../shared/models';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-createcontract',
@@ -69,6 +73,7 @@ export class CreateContractComponent implements OnInit {
   public locationsData = [];
   locationSelected: any;
   workScheduleSelected: any;
+  reasonSelected: any;
   public dpsWorkSchedulesData = [];
   public dpsWorkSchedule: DpsWorkSchedule;
   public currentContract: DpsContract;
@@ -85,6 +90,7 @@ export class CreateContractComponent implements OnInit {
   public contractId: number;
   public calendarData: string;
   public calendarDataNew: string;
+  public contractReasons: ContractReason;
 
   public monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -135,10 +141,12 @@ export class CreateContractComponent implements OnInit {
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl(''),
       workSchedule: new FormControl(''),
-      location: new FormControl('')
+      location: new FormControl(''),
+      calendarStartDate: new FormControl(''),
+      calendarEndDate: new FormControl('')
     });
     // this.disableCancelButton();
-
+    this.getContractReason();
     this.getPositionsByVatNumber();
 
     if (this.personid !== null && this.personid !== undefined && this.personid !== '') {
@@ -199,7 +207,6 @@ export class CreateContractComponent implements OnInit {
     } else {
       this.calendarmonthDisableStatus = false;
     }
-
   }
 
   loadPerson(personid: string, vatNumber: string) {
@@ -313,19 +320,32 @@ export class CreateContractComponent implements OnInit {
   }
 
   receiveMessageStartDate($event) {
-    console.log('start date ', $event);
+    console.log('start date $event', $event);
     if ($event !== undefined && $event !== null) {
-      this.selectedStartDate = $event;
-      // this.selectedStartDate = new Date($event.yearString + '-' + this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
-      this.createObjects();
+      console.log('start date allowedStartDate', this.allowedStartDate);
+      if (this.getDate($event) >= this.allowedStartDate) {
+        this.selectedStartDate = this.getDate($event);
+        this.createObjects();
+      } else {
+        this.ShowMessage('Please choose the date with in the selected week', '');
+        this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
+      }
+
+      // this.selectedStartDate = new Date($event.yearString + '-' + 
+      // this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
     }
   }
   receiveMessageEndDate($event) {
-    console.log('end date ', $event);
+    console.log('end date $event', $event);
     if ($event !== undefined && $event !== null) {
-      this.selectedEndDate = $event;
-      // this.selectedEndDate = new Date($event.yearString + '-' + this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
-      this.createObjects();
+      console.log('end date allowedEndDate', this.allowedEndDate);
+      if (this.getDate($event) <= this.allowedEndDate) {
+        this.selectedEndDate = this.getDate($event);
+        this.createObjects();
+      } else {
+        this.ShowMessage('Please choose the date with in the selected week', '');
+        this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
+      }
     }
   }
 
@@ -366,9 +386,9 @@ export class CreateContractComponent implements OnInit {
     console.log('createObjects  :: ', this.selectedStartDate, this.selectedEndDate);
     // this.contract.name = "";
     this.contract.startDate = this.getDateString(this.selectedStartDate);
-    console.log('createObjects  contract.startDate  :: ', this.contract.startDate);
+    console.log('createObjects  contract.startDate  :: ', this.contract.startDate, this.selectedStartDate);
     this.contract.endDate = this.getDateString(this.selectedEndDate);
-    console.log('createObjects  contract.endDate  :: ', this.contract.endDate);
+    console.log('createObjects  contract.endDate  :: ', this.contract.endDate, this.selectedEndDate);
 
     if (this.workScheduleSelected !== null && this.workScheduleSelected !== undefined) {
       console.log('createObjects workScheduleSelected not null', this.workScheduleSelected);
@@ -443,6 +463,29 @@ export class CreateContractComponent implements OnInit {
     );
   }
 
+  getContractReason() {
+    console.log('getContractReason ');
+    this.contractService.getContractReason().subscribe(
+      contractReason => {
+        console.log('LoadContractReason contractReason()', contractReason);
+        this.contractReasons = contractReason;
+        this.LoadContractReason();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Error occured=' + err.error.message);
+          this.ShowMessage('Error occured=' + err.error.message, '');
+        } else {
+          console.log('response code=' + err.status);
+          console.log('response body=' + err.error);
+          this.ShowMessage('Error occured=' + err.error, '');
+        }
+      }
+    );
+  }
+  LoadContractReason() {
+
+  }
   onCreateOrUpdateContractClick() {
     this.createObjects();
     console.log('currentContract ::', this.currentContract);
@@ -462,12 +505,13 @@ export class CreateContractComponent implements OnInit {
         if (this.currentContract.positionId > 0) {
           if (this.currentContract.workScheduleId > 0) {
             if (this.currentContract.locationId > 0) {
-              this.contractService.createContract(this.currentContract).subscribe(res => {
-                console.log('  Contract Response :: ', res.body);
-                this.currentContract = res.body;
-                this.ShowMessage('Contract succesvol opgeslagen', '');
-                this.dialogRef.close(this.currentContract);
-              },
+              this.contractService.createContract(this.currentContract).subscribe(
+                res => {
+                  console.log('  Contract Response :: ', res.body);
+                  this.currentContract = res.body;
+                  this.ShowMessage('Contract succesvol opgeslagen', '');
+                  this.dialogRef.close(this.currentContract);
+                },
                 (err: HttpErrorResponse) => {
                   if (err.error instanceof Error) {
                     console.log('Error occured=' + err.error.message);
@@ -592,7 +636,18 @@ export class CreateContractComponent implements OnInit {
     console.log('onPositionsSelected ::' + event); // option value will be sent as event
     console.log('onPositionsSelected this.positionSelectedId :: ' + this.positionSelectedId); // option value will be sent as event
   }
+  onReasonSelected(event) {
+    this.reasonSelected = event;
+    const dpsPositions = this.dpsPositionsData.filter(p => p.position.name === this.positionSelected);
+    if (dpsPositions.length > 0) {
+      this.positionSelectedId = dpsPositions[0].id;
+    } else {
+      this.positionSelectedId = 0;
+    }
+    console.log('onPositionsSelected ::' + event); // option value will be sent as event
+    console.log('onPositionsSelected this.positionSelectedId :: ' + this.positionSelectedId); // option value will be sent as event
 
+  }
   onWorkScheduleSelected(event) {
     this.workScheduleSelected = event;
     console.log('onWorkScheduleSelected :: ' + event); // option value will be sent as event
@@ -615,14 +670,20 @@ export class CreateContractComponent implements OnInit {
     return returnDate;
   }
 
+  getDate(dt) {
+    console.log('getDate :: ', dt);
+    const returnDate: Date = new Date(dt.yearString + '-' + dt.monthString + '-' + dt.dayString);
+    console.log('getDate returnDate :: ', returnDate);
+    return returnDate;
+  }
+
   getDateString(dt: Date) {
     console.log('getDateString :: ', dt);
-    const returnDate = dt.getFullYear() + '-' + dt.getMonth() + '-' + dt.getDate();
+    const returnDate = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
     console.log('getDateString returnDate :: ', returnDate);
     return returnDate;
   }
 }
-
 
 
 
