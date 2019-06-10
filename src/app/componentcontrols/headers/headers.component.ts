@@ -39,12 +39,6 @@ export class HeadersComponent implements OnInit {
     this.onPageInit();
   }
 
-  onPageInit() {
-    this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
-    this.clogoInit = this.getInit(this.customerName);
-    this.islogoVaild();
-  }
-
   getInit(FullName) {
     const FullNameSplit: string[] = FullName.split(' ');
     let result = '';
@@ -59,24 +53,12 @@ export class HeadersComponent implements OnInit {
     }
     return result.toUpperCase();
   }
-  islogoVaild() {
+
+  onPageInit() {
     try {
       console.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
-      /*
-      fs.fileExists(this.customerLogo, (err, exists) => {
-        console.log('islogoVaild stat Success');
-        if (err == null) {
-          this.isLogoFound = true;
-          console.log(this.customerLogo + ' file exists');
-        } else if (err.code === 'ENOENT') {
-          this.isLogoFound = false;
-          console.log(this.customerLogo + ' file does not exist');
-        } else {
-          this.isLogoFound = false;
-          console.log('Some other error: ', err.code);
-        }
-      });
-      */
+      this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
+      this.clogoInit = this.getInit(this.customerName);
 
       $.ajax(
         {
@@ -94,8 +76,6 @@ export class HeadersComponent implements OnInit {
             $('.clogoInit').show();
           }
         });
-
-
     } catch (e) {
       console.log('islogoVaild Error !!' + e.message);
       this.isLogoFound = false;
