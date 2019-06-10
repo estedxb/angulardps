@@ -6,8 +6,6 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { element } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 
 @Component({
@@ -24,6 +22,8 @@ export class InvoiceSettingsComponent implements OnInit {
   public id = 'ddl_jointcommittee';
   public currentlanguage = 'nl';
   public errorMsg;
+
+  public counter:number =  0;
 
   // tslint:disable-next-line: variable-name
   private _selectedValueInhaalrust: any; private _selectedIndexInhaalrust: any = 0; private _Inhaalrustvalue: any;
@@ -60,7 +60,8 @@ export class InvoiceSettingsComponent implements OnInit {
   public form: FormGroup;
   public Ploegpremiere: FormArray;
 
-  public workCode:string;
+  public workCode:string[] = [];
+  public workCodeArray:any = [];
 
   public formNew: FormGroup;
   public Andre: FormArray;
@@ -230,6 +231,8 @@ export class InvoiceSettingsComponent implements OnInit {
               this.ISForm.get('PloegprimeBox2').enable();
               this.ISForm.get('currency').enable();
 
+              this.ploegpremieSwitch = true;
+
               let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
               this.ISForm.get('PloegprimeBox1').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName);
               this.ISForm.get('PloegprimeBox2').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount);
@@ -242,7 +245,8 @@ export class InvoiceSettingsComponent implements OnInit {
               else {
                 this._selectedIndexnominal = 1;
                 this.currencyChoice = 1;
-              }              
+              }
+
             }
 
             if(this.loadSwitchOther === true)
@@ -254,27 +258,30 @@ export class InvoiceSettingsComponent implements OnInit {
               this.disableWorkCodes = false;
 
               let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
+              console.log("lengthOtherAllowance="+lengthOtherAllowance + " counter="+this.counter);
 
-              let counter:number =  0;
               this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
-                  if(this.otherAllowanceCounter < lengthOtherAllowance)
+
+                if(this.counter < lengthOtherAllowance)
+                {
+                  if(this.counter===0)
                   {
-                    this.addAndreRows(element.codeId,element.amount);
-
-                    const formGroup = this.Andre.controls[counter] as FormGroup;
-                    formGroup.controls['AndreBox1'].setValue(element.codeId);
+                    this.workCode[this.counter] = element.codeId;
+                    const formGroup = this.Andre.controls[this.counter] as FormGroup;
                     formGroup.controls['AndreBox2'].setValue(element.amount);
-
-                    this.workCode = element.codeId;
-
-                    counter += 1;
-
-                    if(element.nominal === true)
-                        this.currencyNewChoice = 0;
-                    else 
-                        this.currencyNewChoice = 1;
+                  }
+                  else 
+                  {
+                    this.workCode[this.counter] = element.codeId;
+                    this.addAndreRows(element.codeId,element.amount);
+                    this.disabled = 'false';
+                    this.andreSwitch = true;
+                    const formGroup = this.Andre.controls[this.counter] as FormGroup;
+                    formGroup.controls['AndreBox2'].setValue(element.amount);
                   }
 
+                  this.counter += 1;  
+                }
               });
 
             }
@@ -316,9 +323,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.dataDropDown = ['betaald', 'niet betaald'];
     this.datacurrencyDropDown = ['€', '%'];
-
-    console.log("length="+this.otherAllowances.length);
-    console.log("codeId="+this.otherAllowances[0].codeId + "amount="+this.otherAllowances[0].amount);
 
     this.ISForm = new FormGroup({
 
@@ -408,7 +412,8 @@ export class InvoiceSettingsComponent implements OnInit {
     return true;
   }
 
-  isInvalidOther() {
+  isInvalidOther() 
+  {
 
     console.log('is invalid andre =');
     console.log(this.andreSwitch);
@@ -576,7 +581,7 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.fb.group({
       AndreBox1: new FormControl(value1),
       AndreBox2: new FormControl(value2),
-      AndreBox3: new FormControl(''),
+      currency: new FormControl(''),
     });
 
   }

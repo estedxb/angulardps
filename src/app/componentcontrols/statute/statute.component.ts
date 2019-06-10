@@ -98,17 +98,19 @@ export class StatuteComponent implements OnInit {
    
    onloadData(arrayElement,counter){
 
+    console.log("arrayElement="+arrayElement+ " counter="+counter);
+
     this.titles[counter] = this.statutes[counter].name;
 
     this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
 
-      if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null )
+      if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null)
       {
         if(this.STFormData.data.statuteSettings.paritairCommitee !== null && this.STFormData.data.statuteSettings.paritairCommitee !== undefined)
         {
           let name = this.STFormData.data.statuteSettings.paritairCommitee.name;
           let number = this.STFormData.data.statuteSettings.paritairCommitee.number;
-          this.JCString = number + " - " + name;  
+          this.JCString = number + " - " + name;
         }
       }
 }

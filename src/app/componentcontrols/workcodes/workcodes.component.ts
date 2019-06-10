@@ -69,14 +69,17 @@ export class WorkCodesComponent implements OnInit {
 
   // ngOnChanges() {
 
-  //   if(this.disabled === true)
-  //     this.HQForm.get('WorkCode').disable();
-  //    else
-  //     this.HQForm.get('WorkCode').enable();
+    // if(this.disabled === true)
+    //   this.HQForm.get('WorkCode').disable();
+    //  else
+    //   this.HQForm.get('WorkCode').enable(); 
 
   // }
 
   ngDoCheck() {
+
+    console.log("initialWorkCode="+this.initialWorkCode);
+    console.log("oldInitialWorkCode="+this.oldInitialWorkCode);
 
     if(this.disabled === true)
     {
@@ -91,7 +94,7 @@ export class WorkCodesComponent implements OnInit {
    if(this.initialWorkCode !== this.oldInitialWorkCode)
    {
      this.oldInitialWorkCode = this.initialWorkCode;
-     this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);
+     this.HQForm.controls['WorkCode'].setValue(this.initialWorkCode);
    }
 
   }
@@ -119,6 +122,8 @@ export class WorkCodesComponent implements OnInit {
       console.log('getworkcodes in workcodes.component ::');
       console.log(data);
     }, error => this.errorMsg = error);
+
+    // this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);
   }
 
   closeMe() { this.show = false; }
