@@ -59,7 +59,7 @@ export class ContactPersonComponent implements OnInit {
           this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
         }
 
-        if(contactPerson.contact.position !== undefined && contactPerson.contact.position !== null)
+        if(contactPerson.contact.postion !== undefined && contactPerson.contact.postion !== null)
             this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
 
         if(contactPerson.contact.mobile !== undefined && contactPerson.contact.mobile !== null)
@@ -71,6 +71,8 @@ export class ContactPersonComponent implements OnInit {
                     this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
         this.languageString = contactPerson.contact.language.name;
+
+        this.createObjects();
       }
     }
 
@@ -116,6 +118,8 @@ export class ContactPersonComponent implements OnInit {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
         //this.languageString = "French";
+        this.createObjects();
+
       }
     }
   }

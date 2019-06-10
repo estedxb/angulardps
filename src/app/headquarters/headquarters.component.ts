@@ -309,6 +309,14 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
+  updateFirstName(firstname:string) {
+    this.HQForm.controls['firstname'].setValue(firstname);
+  }
+
+  updateLastName(lastname:string) {
+    this.HQForm.controls['lastname'].setValue(lastname);
+  }
+
   clearError() {
     this.ErrorResponseMessage = "";
   }
@@ -432,6 +440,7 @@ export class HeadQuartersComponent implements OnInit {
     this.address.postalCode = this.HQForm.get('postalcode').value;
     this.address.street = this.HQForm.get('street').value;
     this.address.streetNumber = this.HQForm.get('streetnumber').value;
+
   }
 
   setCustomerObject() {
