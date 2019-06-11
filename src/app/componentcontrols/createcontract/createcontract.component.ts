@@ -95,11 +95,15 @@ export class CreateContractComponent implements OnInit {
   public contractId: number;
   public calendarData: string;
   public calendarDataNew: string;
-  public isStartDateVaild: boolean;
-  public isStartDateVaildErrorMsg: string;
-  public isEndDateVaild: boolean;
-  public isEndDateVaildErrorMsg: string;
-  public contractAllowedDates: number[];
+  public isStartDateVaild = false;
+  public isEndDateVaild = false;
+  public isSelectedDateDoesNotHaveWork = false;
+
+  public isStartDateVaildErrorMsg = '';
+  public isEndDateVaildErrorMsg = '';
+  public isSelectedDateDoesNotHaveWorkErrorMsg = '';
+
+  public contractAllowedDates: number[] = [];
   public errorMsg: string;
 
   public monthNames = [
@@ -121,6 +125,7 @@ export class CreateContractComponent implements OnInit {
   ngOnInit() {
 
     console.log('SelectedContract :: ', this.selectedContract);
+
     this.getContractAllowedDates(this.selectedContract.personContracts);
     this.contractId = this.selectedContract.contractId;
     this.personid = this.selectedContract.personId;
@@ -172,28 +177,39 @@ export class CreateContractComponent implements OnInit {
     }
   }
 
-  getContractAllowedDates(dpsScheduleContract: DpsScheduleContract[]) {
-    /*
-    console.log('getContractAllowedDates', dpsScheduleContract);
-    dpsScheduleContract.forEach(workSchedule => {
-      workSchedule. .workDays.forEach(workdays => {
-        console.log('getContractAllowedDates workDays loop start of ' + workdays.dayOfWeek);
-        let isWorkScheduleFound: boolean = false;
-        workdays.workTimes.forEach(workTime => {
-          console.log('getContractAllowedDates work startTime ' + workTime.startTime + ' :: endTime ' + workTime.endTime);
-          if (!(workTime.startTime === '00:00' && workTime.endTime === '00:00')) {
-            console.log('getContractAllowedDates isWorkScheduleFound');
-            isWorkScheduleFound = true;
+  getContractAllowedDates(dpsScheduleContracts: DpsScheduleContract[]) {
+    try {
+      // console.log('getContractAllowedDates dpsScheduleContracts ', dpsScheduleContracts);
+      if (this.selectedContract.personContracts !== null) {
+        let contractCount = 0;
+        dpsScheduleContracts.forEach(dpsScheduleContract => {
+          // console.log('getContractAllowedDates dpsScheduleContract[' + contractCount + ']', dpsScheduleContract);
+          console.log('getContractAllowedDates dpsScheduleContract workSchedule', dpsScheduleContract.workSchedule);
+          contractCount += 1;
+          if (dpsScheduleContract.workSchedule !== null) {
+            dpsScheduleContract.workSchedule.workDays.forEach(workDay => {
+              console.log('getContractAllowedDates workDay[' + workDay.dayOfWeek + '].workTimes', workDay.workTimes);
+              let isWorkScheduleFound = false;
+              if (workDay.workTimes !== null) {
+                workDay.workTimes.forEach(workTime => {
+                  console.log('getContractAllowedDates work startTime ' + workTime.startTime + ' :: endTime ' + workTime.endTime);
+                  if (!(workTime.startTime === '00:00' && workTime.endTime === '00:00')) {
+                    isWorkScheduleFound = true;
+                    console.log('getContractAllowedDates isWorkScheduleFound = ' + isWorkScheduleFound);
+                  }
+                });
+              }
+              if (!isWorkScheduleFound) { this.contractAllowedDates.push(workDay.dayOfWeek); }
+              console.log('getContractAllowedDates workDays loop end of' + workDay.dayOfWeek);
+            });
           }
         });
-        if (isWorkScheduleFound) {
-          this.contractAllowedDates.push(workdays.dayOfWeek);
-        }
-        console.log('getContractAllowedDates workDays loop end of' + workdays.dayOfWeek);
-      });
-    });
-    console.log('getContractAllowedDates contractAllowedDates', this.contractAllowedDates);
-    */
+      } else { this.contractAllowedDates = []; }
+      console.log('getContractAllowedDates contractAllowedDates', this.contractAllowedDates);
+    } catch (e) {
+      this.ShowMessage(e.message, '');
+      console.log('getContractAllowedDates Error! ', e.message);
+    }
   }
 
   SetMode(mode: string) {
@@ -278,11 +294,11 @@ export class CreateContractComponent implements OnInit {
       this.selectedEndDay = this.selectedEndDate.getDate();
       this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
 
-      this.contractReasonSelected = response.contract.contractReason;
       this.positionSelectedId = response.positionId;
       this.locationSelected = response.locationId;
       this.workScheduleSelected = response.workScheduleId;
       this.positionSelected = response.contract.position.name;
+      this.contractReasonSelected = response.contract.contractReason;
 
       console.log('loadContract this.selectedStartDate  :: ', this.selectedStartDate);
       console.log('loadContract this.selectedEndDate  :: ', this.selectedEndDate);
@@ -377,21 +393,22 @@ export class CreateContractComponent implements OnInit {
           this.isStartDateVaild = false;
           this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
           this.ShowMessage(this.isStartDateVaildErrorMsg, '');
-          this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
           this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
+          // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
         this.isStartDateVaild = false;
         this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
         this.ShowMessage(this.isStartDateVaildErrorMsg, '');
-        // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
+        // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
       }
 
-      // this.selectedStartDate = new Date($event.yearString + '-' + 
+      // this.selectedStartDate = new Date($event.yearString + '-' +
       // this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
     }
   }
+
   receiveMessageEndDate($event) {
     console.log('end date $event', $event);
     if ($event !== undefined && $event !== null) {
@@ -405,15 +422,15 @@ export class CreateContractComponent implements OnInit {
           this.isEndDateVaild = false;
           this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
           this.ShowMessage(this.isEndDateVaildErrorMsg, '');
-          // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+          // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         }
       } else {
         this.isEndDateVaild = false;
         this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
         this.ShowMessage(this.isEndDateVaildErrorMsg, '');
-        // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+        // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
       }
     }
   }
@@ -487,6 +504,7 @@ export class CreateContractComponent implements OnInit {
     this.contract.statute = new Statute();
     this.contract.status = ContractStatus.Active;
     this.contract.cancelReason = '';
+    this.contract.contractReason = this.contractReasonSelected;
 
     this.currentContract.id = 0;
     this.currentContract.customerVatNumber = this.VatNumber;
@@ -512,6 +530,7 @@ export class CreateContractComponent implements OnInit {
       }
     );
   }
+
   onApproveContractClick() {
     console.log('onApproveContractClick :: ');
     this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(
@@ -535,7 +554,7 @@ export class CreateContractComponent implements OnInit {
   onCreateOrUpdateContractClick() {
     this.createObjects();
     console.log('currentContract ::', this.currentContract);
-    if (this.isStartDateVaild && this.isEndDateVaild) {
+    if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedDateDoesNotHaveWork) {
       if (this.ContractForm.valid) {
         if (this.currentContract !== undefined && this.currentContract !== null) {
           console.log('Create Contract');
@@ -593,14 +612,18 @@ export class CreateContractComponent implements OnInit {
         }
       }
     } else {
-      let errormsgnew = this.isStartDateVaildErrorMsg;
-      if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
-        errormsgnew += '/n' + this.isEndDateVaildErrorMsg;
-      } else {
-        errormsgnew = this.isEndDateVaildErrorMsg;
-      }
+      let errormsgnew = '';
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isStartDateVaildErrorMsg);
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isEndDateVaildErrorMsg);
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       this.ShowMessage(errormsgnew, '');
     }
+  }
+
+  getErrorMsg(errormsgnew, AddMsg) {
+    if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
+      if (AddMsg !== '') { return errormsgnew + '<br>' + AddMsg; } else { return errormsgnew; }
+    } else { return AddMsg; }
   }
 
   onEnableEdit() {
