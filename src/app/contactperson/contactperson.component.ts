@@ -87,13 +87,12 @@ export class ContactPersonComponent implements OnInit {
 
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
-        if (this.CTFormData.data !== '' && this.CTFormData.page === 'edit') {
+        if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
           this.languageString = this.CTFormData.data.contact.language.name;
           // this.languageString = "French";
           this.createObjects();
-
         }
       }
 
