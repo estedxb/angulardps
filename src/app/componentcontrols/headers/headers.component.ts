@@ -17,7 +17,6 @@ export class HeadersComponent implements OnInit {
   public isDpsUser = false;
   public customerLogo = '';
   public isLogoFound = false;
-  // public customerName = '';
   public clogoInit = '';
   public platformLocation: string = '';
   public errorMsg;

@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.ltkn.dpsUser.userRole = 'Customer';
         }
-// test
+
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('accesstoken', this.ltkn.accessToken);
 
