@@ -15,6 +15,7 @@ export class HeadersComponent implements OnInit {
   public loginuserdetails: DpsUser = new DpsUser();
   public VatNumber: string;
   public isDpsUser = false;
+  public customerLogoFileName = '';
   public customerLogo = '';
   public isLogoFound = false;
   public clogoInit = '';
@@ -35,7 +36,6 @@ export class HeadersComponent implements OnInit {
     this.loginuserdetails = JSON.parse(localStorage.getItem('dpsuser'));
     this.VatNumber = this.loginuserdetails.customerVatNumber;
     this.isDpsUser = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
-    // this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
     this.onPageInit();
   }
 
@@ -57,10 +57,22 @@ export class HeadersComponent implements OnInit {
   onPageInit() {
     try {
       console.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
-      this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
+
+      this.customerLogoFileName = localStorage.getItem('customerlogo');
+
+      if (this.customerLogoFileName !== undefined && this.customerLogoFileName !== '' && this.customerLogoFileName !== null) {
+        this.customerLogo = '../../assets/img/customer/logo/' + this.customerLogoFileName;
+        this.isLogoFound = true;
+        console.log('isLogoFound True');
+      } else {
+        this.customerLogo = '';
+        this.isLogoFound = false;
+        console.log('isLogoFound False');
+      }
+
       this.customerName = localStorage.getItem('customerName');
       this.clogoInit = this.getInit(this.customerName);
-
+      /*
       $.ajax(
         {
           url: this.customerLogo,
@@ -76,7 +88,9 @@ export class HeadersComponent implements OnInit {
             $('#customlogo').hide();
             $('.clogoInit').show();
           }
-        });
+        }
+      );
+      */
     } catch (e) {
       console.log('islogoVaild Error !!' + e.message);
       this.isLogoFound = false;

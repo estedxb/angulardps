@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Login, DPSCustomer, DpsUser, LoginToken } from '../../shared/models';
+import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../../shared/models';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
+import { CustomerListsService } from '../../shared/customerlists.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     public userService: UsersService,
-    public customersService: CustomersService) { }
+    public customersService: CustomersService,
+    public customerListsService: CustomerListsService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -98,19 +100,27 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('accesstoken', this.ltkn.accessToken);
 
         if (this.ltkn.dpsUser.customerVatNumber === this.dpsuservatnumber) {
-          this.customersService.getCustomers().subscribe(customersList => {
+          this.customerListsService.getCustomers().subscribe(customersList => {
             console.log('authLogin in customersList Found ::', customersList);
-            const customers: DPSCustomer[] = customersList.filter(c => c.customer.vatNumber !== this.dpsuservatnumber);
+            let customers: CustomersList[] = [];
+            if (this.ltkn.dpsUser.userRole === 'DPSAdmin') {
+              customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
+            } else {
+              customers = customersList;
+            }
+
             if (customers.length > 0) {
               this.message = 'Logged in successfully. Please wait...';
-              const FirstCustomer: DPSCustomer = customers[0];
-              console.log('authLogin in customers Selected ::', FirstCustomer);
-              this.ltkn.dpsUser.customerVatNumber = FirstCustomer.customer.vatNumber;
-              console.log('Selected customerVatNumber::', this.ltkn.dpsUser.customerVatNumber);
-              this.ltkn.customerName = FirstCustomer.customer.name;
-              console.log('Selected customerName::', this.ltkn.customerName);
+              this.ltkn.dpsUser.customerVatNumber = customers[0].item1;
+              this.ltkn.customerName = customers[0].item2;
               localStorage.setItem('customerName', this.ltkn.customerName);
+              localStorage.setItem('customerlogo', customers[0].item4 !== undefined ? customers[0].item4 : '');
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+
+              console.log('authLogin in customers Selected ::', customers[0].item2);
+              console.log('Selected customerVatNumber::', this.ltkn.dpsUser.customerVatNumber);
+              console.log('Selected customerName::', this.ltkn.customerName);
+
               this.router.navigate([this.returnUrl]);
             } else {
               this.message = 'Logged in successfully, but customers not found. Please wait...';

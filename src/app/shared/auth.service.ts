@@ -45,6 +45,7 @@ export class AuthService {
     localStorage.removeItem('accesstoken');
     localStorage.removeItem('dpsuser');
     localStorage.removeItem('customerName');
+    localStorage.removeItem('customerlogo');
     console.log('Logout...');
   }
 }

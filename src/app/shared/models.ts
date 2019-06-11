@@ -31,7 +31,7 @@ export class InvoiceSettings {
     lieuDaysAllowance?: LieuDaysAllowance; sicknessInvoiced?: boolean; holidayInvoiced?: boolean; mobilityAllowance?: MobilityAllowance;
     shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
 }
-export class CustomersList { item1: string; item2: string; item3?: string; }
+export class CustomersList { item1: string; item2: string; item3?: string; item4?: string; }
 export class WorkCodes {
     CodeNumber: number; Description: string; CodeType: string; ValueType?: string; IsDefaultForCodeType?: string; StatuteType?: string;
 }

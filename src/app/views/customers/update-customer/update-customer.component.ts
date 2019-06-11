@@ -6,6 +6,7 @@ import { CustomersService } from 'src/app/shared/customers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginComponent } from '../../login/login.component';
+import { CustomerListsService } from '../../../shared/customerlists.service';
 
 @Component({
   selector: 'app-update-customer',
@@ -19,13 +20,14 @@ export class UpdateCustomerComponent implements OnInit {
   public dpsCustomer: any;
   public vatNumber: string;
   public CustomerName = '';
+  public CustomerLogo = '';
   public currentPage = '';
   public Id = '';
 
   public editCustomerData: any;
 
   constructor(// private routerEvent: RouterEvent,
-    private customerService: CustomersService, private snackBar: MatSnackBar,
+    private customerListsService: CustomerListsService, private snackBar: MatSnackBar,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
@@ -93,10 +95,11 @@ export class UpdateCustomerComponent implements OnInit {
   GetCustomerInfo(mode: number) {
     try {
       console.log('this.vatNumber pageInit :: ' + this.vatNumber);
-      this.customerService.getCustomersByVatNumberEdit(this.vatNumber).subscribe(dpscustomer => {
-        this.dpsCustomer = dpscustomer;
+      this.customerListsService.getCustomers().subscribe(dpscustomer => {
+        this.dpsCustomer = dpscustomer.filter(cl => cl.item1 === this.vatNumber)[0];
         console.log('Customer Form Data : ', this.dpsCustomer);
-        this.CustomerName = this.dpsCustomer.customer.name;
+        this.CustomerName = this.dpsCustomer.item2;
+        this.CustomerLogo = this.dpsCustomer.item4;
         if (mode === 1) { this.updateLocalStorage(); }
         this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.ShowMessage(error, 'error'));
@@ -111,6 +114,7 @@ export class UpdateCustomerComponent implements OnInit {
     console.log('lsDPUser :: ', this.loginuserdetails);
     localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
     localStorage.setItem('customerName', this.CustomerName);
+    localStorage.setItem('customerlogo', this.CustomerLogo);
 
     if (
       this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
@@ -148,15 +152,15 @@ export class UpdateCustomerComponent implements OnInit {
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
         console.log('response=' + res);
-        this.ShowMessage("Customer Data Saved successfully. ",'');
+        this.ShowMessage("Customer Data Saved successfully. ", '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             console.log('Error occured=' + err.error.message);
-            this.ShowMessage(""+err.error.message,'');
+            this.ShowMessage("" + err.error.message, '');
           } else {
             console.log('response code=' + err.status, 'response body=' + err.error);
-            this.ShowMessage(""+err.status + "" + err.error,'');
+            this.ShowMessage("" + err.status + "" + err.error, '');
           }
         }
       );

@@ -26,7 +26,7 @@ export const environment = {
   getCodes: 'code',
   getLanguages: '',
   getCustomers: 'Customer',
-  getCustomerLists: 'Customer/GetAllCustomersPreviewJson',
+  getCustomerLists: '', // 'Customer/GetAllCustomersPreviewJson',
   getCustomersByVatNumber: 'Customer/GetCustomerByVatNumber',
   getUsersByVatNumber: 'User/ForCustomer',
   getLocationsByVatNumber: 'Location/ForCustomer',
