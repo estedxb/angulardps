@@ -72,14 +72,22 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   onPersonKeyup(value) {
-    this.datas = [];
-    if (this.maindatas.length > 0) {
-      this.datas = this.maindatas
-        .map(pers => {
-          if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; }
-        });
-    } else {
-      this.datas = this.maindatas;
+    try {
+      this.datas = [];
+      if (this.maindatas !== null && this.maindatas !== undefined) {
+        if (this.maindatas.length > 0) {
+          this.datas = this.maindatas
+            .map(pers => {
+              if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; }
+            });
+        } else {
+          this.datas = this.maindatas;
+        }
+      } else {
+        this.datas = this.maindatas;
+      }
+    } catch (e) {
+      console.log('dashboardperson onPersonKeyup Error ! ' + e.message);
     }
   }
 
