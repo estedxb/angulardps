@@ -55,6 +55,7 @@ export const environment = {
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: '',
   //getPositionsDownloadTemplate: 'https://dpsstorageaccountstg.blob.core.windows.net/position/Position1.pdf',
-  getPrintContractFileURL: '',
-  getApproveContractURL: ''
+  getPrintContractFileURL: 'Contract/Pdf',
+  getApproveContractURL: 'Contract/Approve',
+  getContractReasonURL: ''
 };

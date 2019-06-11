@@ -2,10 +2,8 @@
   <div class="float-right"><img src="../../assets/img/DPSLogo.png" id="dpslogo"></div>
   <div class="float-left" (click)="customerList.ShowHideCustomerList()">
     <div class="clogo_{{isDpsUser}}">
-      <img [src]="customerLogo" id="customlogo" alt="{{clogoInit}}" title="{{customerName}}">
-      <div class="clogoInit">
-        {{clogoInit}}
-      </div>
+      <img [src]="customerLogo" id="customlogo" alt="{{clogoInit}}" title="{{customerName}}" *ngIf="this.isLogoFound">
+      <div class="clogoInit" *ngIf="!this.isLogoFound">{{clogoInit}}</div>
     </div>
     <div class="cname_{{isDpsUser}}"><span id=" Organization">{{customerName}}</span></div>
     <div class="arrow" *ngIf="isDpsUser"><img src="../../../assets/svg/arrow-down.svg" /></div>

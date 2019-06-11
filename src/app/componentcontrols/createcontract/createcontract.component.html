@@ -61,12 +61,12 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
-                    <select id="position" name="position" class='form-control' required [(ngModel)]='reasonSelected'
-                        (ngModelChange)='onReasonSelected($event)' [ngModelOptions]="{standalone: true}"
+                    <select id="position" name="position" class='form-control' required
+                        [(ngModel)]='contractReasonSelected' (ngModelChange)='onReasonSelected($event)'
+                        [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
-                        <option class='option' *ngFor='let contractReason of contractReasons'
-                            [value]="contractReason.BrightStaffing_Contract_Reason_ID">
-                            {{contractReason.Name}}</option>
+                        <option class='option' *ngFor='let contractReason of contractReasonDatas'
+                            [value]="contractReason.BrightStaffing_Contract_Reason_ID">{{contractReason.Name}}</option>
                     </select>
                 </div>
             </div>

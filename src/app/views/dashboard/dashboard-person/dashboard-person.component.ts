@@ -48,10 +48,11 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    console.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
-    console.log('onPageInit endDate :: ' + this.endDate);
     const localstartDate = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + this.startDate.getDate();
     const localendDate = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + this.endDate.getDate();
+
+    console.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
+    console.log('onPageInit endDate :: ' + this.endDate);
     console.log('onPageInit getDpsScheduleByVatNumber(' + this.vatNumber + ', ' + localstartDate + ', ' + localendDate);
 
     this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
@@ -71,25 +72,32 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   onPersonKeyup(value) {
-    this.datas = [];
-    if (this.maindatas.length > 0) {
-      this.datas = this.maindatas
-        .map(pers => { if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; } });
-    } else {
-      this.datas = this.maindatas;
+    try {
+      this.datas = [];
+      if (this.maindatas !== null && this.maindatas !== undefined) {
+        if (this.maindatas.length > 0) {
+          this.datas = this.maindatas
+            .map(pers => {
+              if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; }
+            });
+        } else {
+          this.datas = this.maindatas;
+        }
+      } else {
+        this.datas = this.maindatas;
+      }
+    } catch (e) {
+      console.log('dashboardperson onPersonKeyup Error ! ' + e.message);
     }
   }
 
   addWeek() {
     this.WeekDiff += 1;
-    //this.SelectedDates = this.getSelectedDates();
     this.onPageInit();
-    // console.log('this.SelectedDates ::', this.SelectedDates);
   }
 
   minusWeek() {
     this.WeekDiff -= 1;
-    //this.SelectedDates = this.getSelectedDates();
     this.onPageInit();
   }
 
@@ -188,6 +196,7 @@ export class DashboardPersonComponent implements OnInit {
         }
         */
       });
+
     } catch (e) { alert(e.message); }
   }
 

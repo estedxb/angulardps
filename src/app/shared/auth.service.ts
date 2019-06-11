@@ -41,6 +41,11 @@ export class AuthService {
 
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
-    localStorage.removeItem('token');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('accesstoken');
+    localStorage.removeItem('dpsuser');
+    localStorage.removeItem('customerName');
+    localStorage.removeItem('customerlogo');
+    console.log('Logout...');
   }
 }
