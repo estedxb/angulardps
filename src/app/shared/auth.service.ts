@@ -40,11 +40,11 @@ export class AuthService {
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 
   logout(): void {
-    console.log('Logout...');
     localStorage.setItem('isLoggedIn', 'false');
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('accesstoken');
     localStorage.removeItem('dpsuser');
     localStorage.removeItem('customerName');
+    console.log('Logout...');
   }
 }

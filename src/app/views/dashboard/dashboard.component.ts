@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
         this.onPageInit();
       });
     } else {
+      console.log('localStorage.getItem("dpsuser") not found.');
       this.router.navigate(['/login']);
     }
   }
