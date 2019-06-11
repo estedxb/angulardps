@@ -3,9 +3,7 @@
   <div class="float-left" (click)="customerList.ShowHideCustomerList()">
     <div class="clogo_{{isDpsUser}}">
       <img [src]="customerLogo" id="customlogo" alt="{{clogoInit}}" title="{{customerName}}" *ngIf="this.isLogoFound">
-      <div class="clogoInit" *ngIf="!this.isLogoFound">
-        {{clogoInit}}
-      </div>
+      <div class="clogoInit" *ngIf="!this.isLogoFound">{{clogoInit}}</div>
     </div>
     <div class="cname_{{isDpsUser}}"><span id=" Organization">{{customerName}}</span></div>
     <div class="arrow" *ngIf="isDpsUser"><img src="../../../assets/svg/arrow-down.svg" /></div>

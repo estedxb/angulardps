@@ -45,12 +45,8 @@ export class HeadersComponent implements OnInit {
     if (FullName.length > 0) {
       if (FullNameSplit.length > 1 && FullNameSplit[0].length > 0 && FullNameSplit[FullNameSplit.length - 1].length > 0) {
         result = FullNameSplit[0].substring(0, 1) + FullNameSplit[FullNameSplit.length - 1].substring(0, 1);
-      } else {
-        result = FullName.substring(0, 2);
-      }
-    } else {
-      result = FullName;
-    }
+      } else { result = FullName.substring(0, 2); }
+    } else { result = FullName; }
     return result.toUpperCase();
   }
 
@@ -72,6 +68,7 @@ export class HeadersComponent implements OnInit {
 
       this.customerName = localStorage.getItem('customerName');
       this.clogoInit = this.getInit(this.customerName);
+
       /*
       $.ajax(
         {

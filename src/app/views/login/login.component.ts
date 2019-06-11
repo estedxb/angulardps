@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
               this.ltkn.dpsUser.customerVatNumber = customers[0].item1;
               this.ltkn.customerName = customers[0].item2;
               localStorage.setItem('customerName', this.ltkn.customerName);
-              localStorage.setItem('customerlogo', customers[0].item4 !== undefined ? customers[0].item4 : '');
+              localStorage.setItem('customerlogo', customers[0].item4 !== undefined ? customers[0].item4 + '' : '');
               localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
 
               console.log('authLogin in customers Selected ::', customers[0].item2);

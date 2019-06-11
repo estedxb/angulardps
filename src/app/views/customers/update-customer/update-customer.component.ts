@@ -98,8 +98,8 @@ export class UpdateCustomerComponent implements OnInit {
       this.customerListsService.getCustomers().subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer.filter(cl => cl.item1 === this.vatNumber)[0];
         console.log('Customer Form Data : ', this.dpsCustomer);
-        this.CustomerName = this.dpsCustomer.item2;
-        this.CustomerLogo = this.dpsCustomer.item4;
+        this.CustomerName = this.dpsCustomer.item2 + '';
+        this.CustomerLogo = this.dpsCustomer.item4 !== undefined ? this.dpsCustomer.item4 + '' : '';
         if (mode === 1) { this.updateLocalStorage(); }
         this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.ShowMessage(error, 'error'));
@@ -120,7 +120,6 @@ export class UpdateCustomerComponent implements OnInit {
       this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
       this.currentPage === 'position' || this.currentPage === 'users' || this.currentPage === 'user' ||
       this.currentPage === 'workschedules' || this.currentPage === 'works' || this.currentPage === 'work') {
-
       if (this.currentPage === 'locations' || this.currentPage === 'location') {
         this.currentPage = 'locations';
       } else if (this.currentPage === 'users' || this.currentPage === 'user') {
