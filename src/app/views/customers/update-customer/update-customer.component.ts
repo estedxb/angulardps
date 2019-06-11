@@ -27,7 +27,7 @@ export class UpdateCustomerComponent implements OnInit {
   public editCustomerData: any;
 
   constructor(// private routerEvent: RouterEvent,
-    private customerListsService: CustomerListsService, private snackBar: MatSnackBar,
+    private customerListsService: CustomerListsService, private customerService: CustomersService, private snackBar: MatSnackBar,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
