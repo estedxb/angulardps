@@ -100,7 +100,6 @@ export class InvoiceSettingsComponent implements OnInit {
     this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
   }
   get selectedIndex(): number {
-    console.log(this._selectedIndexInhaalrust);
     return this._selectedIndexInhaalrust;
   }
   set value(value: any) { this._Inhaalrustvalue = value; }
@@ -109,8 +108,6 @@ export class InvoiceSettingsComponent implements OnInit {
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
 
   changeObject() {
-
-    console.log("other allowances size of array="+this.otherAllowances.length);
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
@@ -124,15 +121,11 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.childEvent.emit(jsonObject);
 
-    console.log('object changed');
-    console.log(jsonObject);
-
   }
 
   onChangeDropDownCurrencyTeam($event, i) {
 
     this.selectedIndexCurrencyShiftAllowance = $event.target.value;
-    console.log(this.value);
 
     if (this.value === '€') {
       this.shiftAllowances[i].nominal = true;
@@ -149,15 +142,12 @@ export class InvoiceSettingsComponent implements OnInit {
   onChangeDropDownCurrencyOther($event, i) {
 
     this.selectedIndexCurrencyOtherAllowance = $event.target.value;
-    console.log(this.value);
 
     if (this.value === '€') {
-      console.log('euro selected setting nominal to true');
       this.otherAllowances[i].nominal = true;
       this.changeObject();
     }
     else {
-      console.log('% selected setting nominal to false');
       this.otherAllowances[i].nominal = false;
       this.changeObject();
     }
@@ -167,7 +157,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDown($event) {
     this.selectedIndex = $event.target.value;
-    console.log(this.value);
 
     if (this.value === 'Betaald')
       this.lieuDaysAllowanceObject.payed = true;
@@ -181,8 +170,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("invoice-settings FPFormData received =");
-    console.log(this.FPFormData);
+    // console.log("invoice-settings FPFormData received =");
+    // console.log(this.FPFormData);
 
     this.loadSwitchInhaalrust = false;
     this.loadSwitchSickness = false;
@@ -199,11 +188,6 @@ export class InvoiceSettingsComponent implements OnInit {
         {
           if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
           {
-            console.log("loadswitch rust="+this.loadSwitchInhaalrust);
-            console.log("loadswitch sickness="+this.loadSwitchSickness);
-            console.log("loadswitch Holidays="+this.loadSwitchHolidays);
-            console.log("loadswitch Mobility="+this.loadSwitchMobility);
-            console.log("loadswitch Team="+this.loadSwitchTeam);
 
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
               this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
@@ -260,7 +244,6 @@ export class InvoiceSettingsComponent implements OnInit {
               this.disableWorkCodes = false;
 
               let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
-              console.log("lengthOtherAllowance="+lengthOtherAllowance + " counter="+this.counter);
 
               this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
 
@@ -401,8 +384,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   isInvalid() {
 
-    console.log('is invalid =');
-    console.log(this.ploegpremieSwitch);
+    // console.log('is invalid =');
+    // console.log(this.ploegpremieSwitch);
 
     if (this.ploegpremieSwitch === true) {
       return false;
@@ -414,8 +397,8 @@ export class InvoiceSettingsComponent implements OnInit {
   isInvalidOther() 
   {
 
-    console.log('is invalid andre =');
-    console.log(this.andreSwitch);
+    // console.log('is invalid andre =');
+    // console.log(this.andreSwitch);
 
     if (this.andreSwitch === true) {
       return false;
@@ -472,7 +455,7 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   receiveWorkCode($event, k: number) {
-    console.log('workcode received is=' + $event);
+    // console.log('workcode received is=' + $event);
 
     // setting the value in the array
     if (this.andreSwitch === true) {
@@ -573,8 +556,6 @@ export class InvoiceSettingsComponent implements OnInit {
   createAndre(value1,value2): FormGroup {
     this.addNewRow = false;
     this.removeLastRemove = true;
-
-    console.log("value1="+value1+ " value2="+value2);
 
     return this.fb.group({
       AndreBox1: new FormControl(value1),

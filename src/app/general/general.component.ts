@@ -27,9 +27,6 @@ export class GeneralComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("received in general component");
-    console.log(this.GLFormData);
-
     if(this.GLFormData !== undefined)
     {
       if(this.GLFormData.data !== null)

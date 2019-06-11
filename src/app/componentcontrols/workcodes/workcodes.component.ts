@@ -78,9 +78,6 @@ export class WorkCodesComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("initialWorkCode="+this.initialWorkCode);
-    console.log("oldInitialWorkCode="+this.oldInitialWorkCode);
-
     if(this.disabled === true)
     {
       this.HQForm.get('WorkCode').disable();
@@ -119,8 +116,6 @@ export class WorkCodesComponent implements OnInit {
     this.workCodesService.getWorkCodes().subscribe(data => {
       this.maindatas = data;
       this.datas = data;
-      console.log('getworkcodes in workcodes.component ::');
-      console.log(data);
     }, error => this.errorMsg = error);
 
     // this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);

@@ -40,9 +40,6 @@ export class ContactPersonComponent implements OnInit {
 
   loadEditDetails(contactPerson: any) {
 
-    console.log("load details has been called");
-    console.log(contactPerson);
-
     if(contactPerson !== undefined && contactPerson !== null)
     {
       if(contactPerson.contact !== undefined && contactPerson.contact !== null)
@@ -82,9 +79,6 @@ export class ContactPersonComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log('CTFormData');
-    console.log(this.CTFormData);
-
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
         if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
@@ -101,7 +95,6 @@ export class ContactPersonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log("inside ngDoAfterViewInit=" + this.CTFormData.data);
 
     if (this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
       if (this.CTFormData.data !== this.oldData) {
@@ -209,11 +202,11 @@ export class ContactPersonComponent implements OnInit {
 
   checkValidations() {
 
-    console.log(this.CTForm.get('firstname').valid);
-    console.log(this.CTForm.get('lastname').valid);
-    console.log(this.CTForm.get('position').valid);
-    console.log(this.CTForm.get('emailaddress').valid);
-    console.log(this.CTForm.get('mobile').valid);
+    // console.log(this.CTForm.get('firstname').valid);
+    // console.log(this.CTForm.get('lastname').valid);
+    // console.log(this.CTForm.get('position').valid);
+    // console.log(this.CTForm.get('emailaddress').valid);
+    // console.log(this.CTForm.get('mobile').valid);
 
   }
 

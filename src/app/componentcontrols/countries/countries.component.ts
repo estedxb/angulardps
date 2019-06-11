@@ -38,8 +38,6 @@ export class CountriesComponent implements OnInit {
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-    console.log('countries selected=' + this.value);
-    console.log(this.value);
 
     this.selectedString = this.value;
 
@@ -56,7 +54,6 @@ export class CountriesComponent implements OnInit {
       this.datas = countries;
       this.childEvent.emit(this.datas[0]);
       this.loadInitialData(this.datas);
-      console.log('Countries Forms Data : '); console.log(this.datas);
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
@@ -64,9 +61,7 @@ export class CountriesComponent implements OnInit {
   }
 
   ngDoCheck() {
-    console.log(this.CountryFormData);
     if (this.CountryFormData !== this.oldCountryFormData) {
-      console.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
     }
@@ -74,24 +69,18 @@ export class CountriesComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.CountryFormData !== this.oldCountryFormData) {
-      console.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
     }
   }
 
   loadInitialData(datas: any) {
-    console.log('countryString=' + this.CountryFormData);
-    console.log(this.datas);
     if (datas.length !== 0) {
-      console.log('datas new country string');
       for (let i = 0; i < this.datas.length; i++) {
-        console.log('country=' + this.CountryFormData);
         if (this.datas[i].countryName === this.CountryFormData) {
           this._selectedIndex = i;
         }
       }
-      console.log('selected index=' + this._selectedIndex);
     } else {
       console.log('null or undefined');
     }

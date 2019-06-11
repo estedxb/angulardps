@@ -13,6 +13,7 @@ import { compileBaseDefFromMetadata } from '@angular/compiler';
 export class JointcommitteeComponent implements OnInit {
 
   @Input() public JCFormData;
+  @Input() public TypeWorker;
   @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_jointcommittee';
@@ -37,7 +38,6 @@ export class JointcommitteeComponent implements OnInit {
     this.selectedIndex = $event.target.value;
     let obj:any = { "selectedObject": this.value, "arrayObject": this.datas};
     this.childEvent.emit(obj);
-    console.log(this.value);
     return this.value; 
   }
 
@@ -46,13 +46,30 @@ export class JointcommitteeComponent implements OnInit {
 
   ngDoCheck() 
   {
-    console.log("RECEIVED paritair commitee data");
-
     if(this.JCFormData !== undefined)
     {
         this.loadDropDownData(this.JCFormData);
-
     }
+  }
+
+  filterDatas(datas) {
+
+    console.log("filtering the data from array");
+    console.log(datas.length);
+
+    console.log("current typeworker = "+this.TypeWorker);
+
+    this.datas = [];
+
+    for(let counter=0;counter<datas.length;counter+=1){
+
+        if(this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase())
+            this.datas.push(datas[counter]);
+    }
+
+    console.log("filtered Array");
+    console.log(this.datas);
+
   }
 
   ngOnInit() {
@@ -60,7 +77,7 @@ export class JointcommitteeComponent implements OnInit {
     this.resetToInitValue();
 
     this.jointcommitteeService.getJointCommitees().
-         subscribe(data => this.datas = data,
+         subscribe(data => {this.filterDatas(data);},
             error => this.errorMsg = error);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
@@ -69,9 +86,8 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   loadDropDownData(stringJCReceived) {
-
-    console.log("received string="+stringJCReceived);
-
+    
+    
     for(let i=0;i<this.datas.length;i++)
     {
          if(this.datas[i] === stringJCReceived)

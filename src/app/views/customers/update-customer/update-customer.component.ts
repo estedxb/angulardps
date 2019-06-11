@@ -134,9 +134,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   }
   receiveEditCustomerData($event) {
-    console.log('received editCustomerData in update customer=');
     this.editCustomerData = $event;
-    console.log(this.editCustomerData);
   }
 
   onFormwardClick() {
@@ -147,7 +145,6 @@ export class UpdateCustomerComponent implements OnInit {
 
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
-        console.log('response=' + res);
         this.ShowMessage("Customer Data Saved successfully. ",'');
       },
         (err: HttpErrorResponse) => {

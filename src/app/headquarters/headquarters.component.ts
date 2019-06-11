@@ -95,18 +95,12 @@ export class HeadQuartersComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("hqform data=");
-
     //load Edit Page details
     if (this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
         this.updateData();
-
-        console.log("this form data=");
-        console.log(this.HQFormData.data);
-
       }
     }
   }
@@ -138,8 +132,6 @@ export class HeadQuartersComponent implements OnInit {
     //this.legalString = "BVBA";
     this.createObjects();  //check validations
 
-    console.log("received object in hq component=" + this.HQFormData);
-
   }
 
   constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private data: DataService) {
@@ -148,17 +140,12 @@ export class HeadQuartersComponent implements OnInit {
 
   ngAfterViewInit() {
 
-    console.log("hqform data=");
     //load Edit Page details
     if (this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
         this.updateData();
-
-        console.log("this form data=");
-        console.log(this.HQFormData.data);
-
       }
     }
 
@@ -175,8 +162,6 @@ export class HeadQuartersComponent implements OnInit {
       this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
         this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
       this.legalString = dpscustomer.customer.legalForm;
-
-      console.log("legalString=" + this.legalString);
 
       this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
       this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
@@ -258,8 +243,6 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessageCountry($event) {
 
-    console.log("recevied event");
-    console.log($event);
     this.countryString = $event.countryName;
     this.countryCode = $event.countryCode;
     this.setAddress();
@@ -301,9 +284,6 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: any) {
 
-    console.log("handling error message");
-    console.log(errorMessage.status);
-
     this.allowCustomer = false;
 
     if (errorMessage.status === 400)
@@ -338,8 +318,6 @@ export class HeadQuartersComponent implements OnInit {
 
     let creditCheckboolean: boolean = response.customer.creditCheck.creditcheck;
     this.creditCheckLimit = response.customer.creditCheck.creditLimit;
-
-    console.log("creditchekc=" + creditCheckboolean);
 
     if (creditCheckboolean === true)
       this.creditLimit(this.creditCheckLimit);
@@ -395,17 +373,14 @@ export class HeadQuartersComponent implements OnInit {
     else
       this.creditLimit(0);
 
-    console.log("this.change=" + this.change);
   }
 
   onChangeEvent(event: MouseEvent) {
-    console.log(event, event.toString(), JSON.stringify(event));
     this.changeEvent = event;
   }
 
   onValueChange(value: boolean) {
     this.valueChange = value;
-    console.log("valuechange=" + this.valueChange);
   }
 
 
@@ -451,8 +426,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setCustomerObject() {
 
-    console.log("setting customer object with legalform=" + this.legalString);
-    console.log(this.legalString);
 
     this.customer = new Customer();
     this.generalEmail = new EmailAddress();
@@ -479,7 +452,6 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.vcaCertification = this.vcaCertification;
     this.customer.isBlocked = false;
 
-    console.log(this.customer);
   }
 
   setStatuteSettingArray() {
@@ -519,9 +491,6 @@ export class HeadQuartersComponent implements OnInit {
     this.shiftAllowance = new Array();
     this.otherAllowance = new Array();
     this.invoiceSettings = new InvoiceSettings();
-
-    console.log("invoice settings received in hqFOrmData");
-    console.log(this.HQFormData.data.invoiceSettings);
 
     if(this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
     {
@@ -573,8 +542,6 @@ export class HeadQuartersComponent implements OnInit {
 
     }
 
-    console.log("invoice settings set=");
-    console.log(this.invoiceSettings);
     this.HQdata.invoiceSettings = this.invoiceSettings;
   }
 
@@ -659,9 +626,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
-    console.log("dps customer=");
-    console.log(this.dpsCustomer.invoiceSettings);
-
     if (this.dpsCustomer !== null) {
       this.HQdata = {
         "customer": this.dpsCustomer.customer,
@@ -684,21 +648,13 @@ export class HeadQuartersComponent implements OnInit {
   // post the json data
   updateData() {
 
-    console.log(this.HQdata);
-    console.log("invoice settings");
     this.createObjects();
-
-    console.log("validity of form =" + this.HQForm.valid);
 
     //this.childEvent.emit(this.HQdata);
 
   }
 
   sendDatatoHome() {
-    console.log("sending HQdata");
-    console.log(this.HQdata.invoiceSettings);
-    console.log(this.dpsCustomer.invoiceSettings);
-    console.log(this.HQdata);
     this.childEvent.emit(this.HQdata);
   }
 

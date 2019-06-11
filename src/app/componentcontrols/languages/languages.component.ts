@@ -35,7 +35,6 @@ export class LanguagesComponent implements OnInit {
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-    console.log('language=' + this.value);
     this.childEvent.emit(this.value);
     return this.value;
 
@@ -45,11 +44,9 @@ export class LanguagesComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("inside ngDoCheck="+this.LanguageFormData);
 
     if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
     {
-      console.log("languageFormData="+this.LanguageFormData);
       if(this.LanguageFormData != this.oldLanguageFormData)
       {
         this.oldLanguageFormData = this.LanguageFormData;
@@ -61,18 +58,15 @@ export class LanguagesComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("inside ngOnInit="+this.LanguageFormData);
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
       this.loadInitialData(this.datas);
-      console.log('Languages Data : '); console.log(this.datas);
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
   ngAfterViewInit() {
-    console.log("inside ngDoAfterViewInit="+this.LanguageFormData);
-
+ 
     if(this.LanguageFormData !== undefined && this.LanguageFormData !== null)
     {
       if(this.LanguageFormData != this.oldLanguageFormData)
@@ -85,8 +79,6 @@ export class LanguagesComponent implements OnInit {
 
   loadInitialData(datas) {
 
-    console.log("language String="+this.LanguageFormData);
-
     if(datas.length !== 0)
     {
       for(var i=0;i<datas.length;i++)
@@ -94,7 +86,6 @@ export class LanguagesComponent implements OnInit {
         if(datas[i].name === this.LanguageFormData)
             this._selectedIndex = i;
       }
-      console.log("selected index="+this._selectedIndex);
     }
     else
     {

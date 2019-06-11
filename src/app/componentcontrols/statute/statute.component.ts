@@ -34,7 +34,8 @@ export class StatuteComponent implements OnInit {
   public newIndex;
   public i;
   public oldSFTFormData;
-  public titles=[];
+  public titles =[];
+  public TypeWorker = [];
 
   public MealBox:FormArray;
   SForm: FormGroup;
@@ -81,18 +82,10 @@ export class StatuteComponent implements OnInit {
   loadInitialData(datas: any) {
     let counter:number = 0;
 
-    console.log("load STFormData=");
-    console.log(this.STFormData);
-
     this.fillTitles();
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
-
-      console.log("length of statute array="+this.loadStatuteSettingsArray.length);
-      console.log(this.loadStatuteSettingsArray);
-
-      console.log("statute array=");
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
@@ -105,11 +98,15 @@ export class StatuteComponent implements OnInit {
   }
 
   fillTitles() {
-
-    console.log("statutes length="+this.statutes.length);
     
     for(let counter:number=0;counter<this.statutes.length;counter+=1)
+    {
       this.titles[counter] = this.statutes[counter].name;
+      this.TypeWorker[counter] = this.statutes[counter].type;
+
+      // this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
+      this.addControls("",0,0,0);
+    }
 
   }
    
@@ -130,6 +127,8 @@ export class StatuteComponent implements OnInit {
 
 createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
 
+  console.log("creating array controls !!");
+  
   return this.fb.group({
      CoefficientBox: new FormControl(Coefficient, [Validators.required, Validators.pattern('^[0-9]$')]),
      arrayBox: this.fb.array([
@@ -179,6 +178,9 @@ ngOnInit() {
       this.statutes = data;
       console.log('data from getStatutues(): ');
       console.log(data);
+
+      this.fillTitles();
+
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
 
@@ -201,7 +203,6 @@ ngOnInit() {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
-    console.log("coefficient data=" + this.coefficient);
     this.replaceArrayCoefficient(value, i);
   }
 
@@ -210,7 +211,6 @@ ngOnInit() {
       this.isMealEnabled[ctrlid] = event; 
       // alert('this.isMealEnabled[' + ctrlid + '] = ' + this.isMealEnabled[ctrlid]);
       // this.createArrayData(this.statutes);
-      console.log('onChange');
     } catch (ex) {
       alert(ex.message);
     }
@@ -262,17 +262,14 @@ ngOnInit() {
 
     }
 
-    console.log('created array=')
     this.emitData();
 
-    console.log(this.statuteSettings);
   }
 
   totalChange(value: number, i) {
 
     if(this.isMealEnabled[i]===true)
     {
-      console.log("totalwaarde value and i:"+value+"  "+ i);
       this.totalArray[i] = value;    
       this.replaceArrayTotal(i);  
     }
@@ -287,7 +284,6 @@ ngOnInit() {
   WergeversdeelChange(value: number, i) {
     if(this.isMealEnabled[i]===true)
     {
-      console.log("WergeversdeelChange value and i:"+value+"  "+ i);
       this.wegervaalArray[i] = value;
       this.replaceArrayWergever(i); 
     }
@@ -296,7 +292,6 @@ ngOnInit() {
   minimumUrenChange(value: number, i) {
     if(this.isMealEnabled[i]===true)
     {
-      console.log("minimumUrenChange value and i:"+value + " "+i);
       this.minimumurenArray[i] = value;
       this.replaceArrayMinimum(i);  
     }
@@ -304,7 +299,6 @@ ngOnInit() {
 
   receiveJTdata($event, i) {
 
-    console.log('i=' + i);
     this.statuteSelectedString = $event.selectedObject;
     this.arrayParitairCommitee = $event.arrayObject;
 
@@ -331,8 +325,6 @@ ngOnInit() {
 
   replaceArrayTotal(i: number) {
 
-    console.log("i="+i);
-
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
     {
       this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i],10);
@@ -344,9 +336,6 @@ ngOnInit() {
   }
 
   replaceArrayMinimum(i: number) {
-
-    console.log("i="+i);
-
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i],10);
@@ -360,17 +349,13 @@ ngOnInit() {
 
   replaceArrayCoefficient(value:number,i: number) {
 
-    console.log('replacing statute array');
-    console.log('item to replace=' + this.coefficientArray[i]);
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
-      console.log("value received=" + value);
     } else {
       this.createArrayData(this.statutes);
     }
     this.emitData();
-    console.log(this.statuteSettings);
   }
 
   replaceArray(i: number) {
@@ -381,7 +366,6 @@ ngOnInit() {
           this.statuteSettings[i].paritairCommitee.number = this.statuteSelectedString.number;
     }
     this.emitData();
-    console.log(this.statuteSettings);
   }
 
   emitData() {
