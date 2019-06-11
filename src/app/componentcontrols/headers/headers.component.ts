@@ -9,14 +9,14 @@ import $ from 'jquery';
   styleUrls: ['./headers.component.css']
 })
 export class HeadersComponent implements OnInit {
-  public currentUser: DpsUser;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
   @Input() CustomerVatNumber: string;
   @Input() customerName: string;
-  public VatNumber = this.loginuserdetails.customerVatNumber;
-  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
-  public customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
-  public isLogoFound: boolean = false;
+  public currentUser: DpsUser;
+  public loginuserdetails: DpsUser = new DpsUser();
+  public VatNumber: string;
+  public isDpsUser = false;
+  public customerLogo = '';
+  public isLogoFound = false;
   // public customerName = '';
   public clogoInit = '';
   public platformLocation: string = '';
@@ -33,9 +33,10 @@ export class HeadersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customerName = localStorage.getItem('customerName');
     this.loginuserdetails = JSON.parse(localStorage.getItem('dpsuser'));
     this.VatNumber = this.loginuserdetails.customerVatNumber;
+    this.isDpsUser = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
+    // this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
     this.onPageInit();
   }
 
@@ -58,6 +59,7 @@ export class HeadersComponent implements OnInit {
     try {
       console.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
       this.customerLogo = '../../assets/img/customer/logo/' + this.VatNumber + '.png';
+      this.customerName = localStorage.getItem('customerName');
       this.clogoInit = this.getInit(this.customerName);
 
       $.ajax(

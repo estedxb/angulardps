@@ -10,9 +10,9 @@ import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 
 export class CustomerSelectionComponent implements OnInit {
   public currentUser: DpsUser;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
-  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
+  public loginuserdetails: DpsUser = new DpsUser();
+  public VatNumber: string;
+  public isDpsUser = false;
   public customers = [];
   public customernames = [];
   public errorMsg;
@@ -30,6 +30,9 @@ export class CustomerSelectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginuserdetails = JSON.parse(localStorage.getItem('dpsuser'));
+    this.VatNumber = this.loginuserdetails.customerVatNumber;
+    this.isDpsUser = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
     this.customerLists.getCustomers()
       .subscribe(data => {
         this.customers = data;

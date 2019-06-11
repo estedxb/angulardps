@@ -17,11 +17,15 @@ export class DashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    const sub = this.route.params.subscribe((params: any) => {
-      this.Id = params.id;
-      this.currentPage = params.page;
-      this.onPageInit();
-    });
+    if (localStorage.getItem('dpsuser') !== undefined && localStorage.getItem('dpsuser') !== '' && localStorage.getItem('dpsuser') !== null) {
+      const sub = this.route.params.subscribe((params: any) => {
+        this.Id = params.id;
+        this.currentPage = params.page;
+        this.onPageInit();
+      });
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   onPageInit() {
