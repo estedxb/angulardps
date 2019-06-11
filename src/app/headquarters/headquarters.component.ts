@@ -190,6 +190,12 @@ export class HeadQuartersComponent implements OnInit {
       this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
 
       this.countryString = dpscustomer.customer.address.country;
+
+      this.invoiceSettings = new InvoiceSettings();
+      this.invoiceSettings = dpscustomer.invoiceSettings;
+
+      this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
+
     }
 
   }
@@ -239,10 +245,9 @@ export class HeadQuartersComponent implements OnInit {
     this.setAddress();
     this.setCustomerObject();
     this.setStatuteSettingArray();
-    this.setInvoiceSettings();
     this.setContacts();
     this.setDpsCustomer();
-
+    this.setInvoiceSettings();
   }
 
   receiveMessage($event) {
@@ -509,39 +514,68 @@ export class HeadQuartersComponent implements OnInit {
 
   setInvoiceSettings() {
 
-    this.lieuDaysAllowance = new LieuDaysAllowance;
+    this.lieuDaysAllowance = new LieuDaysAllowance();
     this.mobilityAllowance = new MobilityAllowance();
     this.shiftAllowance = new Array();
     this.otherAllowance = new Array();
-    this.otherAllowanceObject = new OtherAllowance();
-    this.shiftAllowanceObject = new ShiftAllowance();
     this.invoiceSettings = new InvoiceSettings();
 
-    // assigning invoice settings 
-    this.lieuDaysAllowance.enabled = false;
-    this.lieuDaysAllowance.payed = false;
-    this.mobilityAllowance.amountPerKm = 0;
-    this.mobilityAllowance.enabled = false;
+    console.log("invoice settings received in hqFOrmData");
+    console.log(this.HQFormData.data.invoiceSettings);
 
-    this.shiftAllowanceObject.amount = 9.3;
-    this.shiftAllowanceObject.nominal = false;
-    this.shiftAllowanceObject.timeSpan = "";
-    this.shiftAllowanceObject.shiftName = "";
+    if(this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
+    {
 
-    this.otherAllowanceObject.amount = 9.4;
-    this.otherAllowanceObject.codeId = 0;
-    this.otherAllowanceObject.nominal = false;
+          // assigning invoice settings 
+    this.lieuDaysAllowance.enabled =     this.HQFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+    this.lieuDaysAllowance.payed =     this.HQFormData.data.invoiceSettings.lieuDaysAllowance.payed;
+    this.mobilityAllowance.amountPerKm =     this.HQFormData.data.invoiceSettings.mobilityAllowance.amountPerKm;
+    this.mobilityAllowance.enabled =     this.HQFormData.data.invoiceSettings.mobilityAllowance.enabled;
 
-    this.shiftAllowance.push(this.shiftAllowanceObject);
-    this.otherAllowance.push(this.otherAllowanceObject);
-
-    this.invoiceSettings.holidayInvoiced = false;
-    this.invoiceSettings.sicknessInvoiced = false;
-    this.invoiceSettings.shiftAllowance = false;
     this.invoiceSettings.lieuDaysAllowance = this.lieuDaysAllowance;
     this.invoiceSettings.mobilityAllowance = this.mobilityAllowance;
+
+    this.invoiceSettings.holidayInvoiced =     this.HQFormData.data.invoiceSettings.holidayInvoiced;
+    this.invoiceSettings.sicknessInvoiced =     this.HQFormData.data.invoiceSettings.sicknessInvoiced;
+    this.invoiceSettings.shiftAllowance =     this.HQFormData.data.invoiceSettings.shiftAllowance;
+
+    let lengthOfOtherAllowanceArray = this.HQFormData.data.invoiceSettings.otherAllowances.length;
+
+    for(let count:number=0;count<lengthOfOtherAllowanceArray;count+=1){
+
+      this.otherAllowanceObject = new OtherAllowance(); 
+
+      this.otherAllowanceObject.amount =     this.HQFormData.data.invoiceSettings.otherAllowances[count].amount;
+      this.otherAllowanceObject.codeId =     this.HQFormData.data.invoiceSettings.otherAllowances[count].codeId;
+      this.otherAllowanceObject.nominal =      this.HQFormData.data.invoiceSettings.otherAllowances[count].nominal;
+
+      this.otherAllowance.push(this.otherAllowanceObject);
+
+    }
+
+    let lengthOfShiftAllowanceArray = this.HQFormData.data.invoiceSettings.shiftAllowances.length;
+
+    for(let i:number=0;i<lengthOfShiftAllowanceArray;i+=1){
+
+      this.shiftAllowanceObject = new ShiftAllowance();
+
+      this.shiftAllowanceObject.amount =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].amount;
+      this.shiftAllowanceObject.nominal =    this.HQFormData.data.invoiceSettings.shiftAllowances[i].nominal;
+      this.shiftAllowanceObject.timeSpan =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].timeSpan;
+      this.shiftAllowanceObject.shiftName =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].shiftName;  
+  
+      this.shiftAllowance.push(this.shiftAllowanceObject);
+  
+    }
+
     this.invoiceSettings.shiftAllowances = this.shiftAllowance;
     this.invoiceSettings.otherAllowances = this.otherAllowance;
+
+    }
+
+    console.log("invoice settings set=");
+    console.log(this.invoiceSettings);
+    this.HQdata.invoiceSettings = this.invoiceSettings;
   }
 
   setContacts() {
@@ -573,7 +607,7 @@ export class HeadQuartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
-    //this.dpsCustomer.invoiceSettings = this.invoiceSettings;
+    this.dpsCustomer.invoiceSettings = this.invoiceSettings;
     this.dpsCustomer.statuteSettings = this.statuteSetting;
     this.dpsCustomer.contact = this.contact;
 
@@ -625,12 +659,15 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
+    console.log("dps customer=");
+    console.log(this.dpsCustomer.invoiceSettings);
+
     if (this.dpsCustomer !== null) {
       this.HQdata = {
         "customer": this.dpsCustomer.customer,
         "invoiceEmail": this.dpsCustomer.invoiceEmail,
         "contractsEmail": this.dpsCustomer.contractsEmail,
-        // "invoiceSettings": this.dpsCustomer.invoiceSettings,
+        "invoiceSettings": this.dpsCustomer.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.dpsCustomer.statuteSettings,
         "contact": this.dpsCustomer.contact,
@@ -648,19 +685,21 @@ export class HeadQuartersComponent implements OnInit {
   updateData() {
 
     console.log(this.HQdata);
-    console.log("json=" + this.HQdata);
+    console.log("invoice settings");
     this.createObjects();
 
     console.log("validity of form =" + this.HQForm.valid);
 
-    this.childEvent.emit(this.HQdata);
+    //this.childEvent.emit(this.HQdata);
 
   }
 
   sendDatatoHome() {
-    //this.createObjects();
+    console.log("sending HQdata");
+    console.log(this.HQdata.invoiceSettings);
+    console.log(this.dpsCustomer.invoiceSettings);
+    console.log(this.HQdata);
     this.childEvent.emit(this.HQdata);
-    //this.data.changeMessage(this.HQdata);
   }
 
 }

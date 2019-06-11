@@ -113,9 +113,7 @@ export class EditCustomerComponent implements OnInit {
       this.HQdata.contact = this.CTdata.contact;
       this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
       this.HQdata.formValid = true;
-      // "contact": this.contact,
-      // "formValid": this.validity(),
-      // "activateContactAsUser":this.alsCheck
+      
       this.childEvent.emit(this.HQdata);
     }
   }

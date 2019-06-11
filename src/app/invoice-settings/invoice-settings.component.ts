@@ -110,6 +110,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
+    console.log("other allowances size of array="+this.otherAllowances.length);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -179,7 +181,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log("invoice-settings FPFormData=");
+    console.log("invoice-settings FPFormData received =");
     console.log(this.FPFormData);
 
     this.loadSwitchInhaalrust = false;
@@ -283,11 +285,8 @@ export class InvoiceSettingsComponent implements OnInit {
                   this.counter += 1;  
                 }
               });
-
             }
-
           }
-
           //this.changeObject();
         }     
       }
@@ -442,7 +441,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.ISForm.controls['PloegprimeBox1'].setValue('');
     this.ISForm.controls['PloegprimeBox2'].setValue('');
-
 
     for (let i = 0; i < this.shiftAllowances.length; i++) {
       this.shiftAllowances[i].shiftName = '';
