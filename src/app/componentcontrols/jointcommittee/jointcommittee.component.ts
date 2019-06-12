@@ -39,7 +39,6 @@ export class JointcommitteeComponent implements OnInit {
     this.selectedIndex = $event.target.value;
     const obj: any = { selectedObject: this.value, arrayObject: this.datas };
     this.childEvent.emit(obj);
-    // this.logger.log(this.value);
     return this.value;
   }
 
@@ -87,6 +86,8 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   loadDropDownData(stringJCReceived) {
+
+
     for (let i = 0; i < this.datas.length; i++) {
       if (this.datas[i] === stringJCReceived) {
         this._selectedIndex = i;

@@ -13,7 +13,7 @@ export class DataService {
 
     constructor() {
         if (this.isRequireAuth) {
-            alert('Authentication Required');
+            // alert('Authentication Required');
         }
     }
 
