@@ -58,7 +58,6 @@ export class StatuteComponent implements OnInit {
 
   ngDoCheck() {
     this.createCoefficientArray();    
-
     if (this.STFormData !== undefined) {
       if (this.STFormData != this.oldSFTFormData) {
         this.oldSFTFormData = this.STFormData;
@@ -67,8 +66,11 @@ export class StatuteComponent implements OnInit {
     }
   }
 
-  loadCoefficientArray() {
+  loadCoefficientArray(data) {
 
+    for (let i: number = 0; i < data.length; i++) {
+      this.coefficientArray[i] = data[i].coefficient;
+    }
     
   }
 
@@ -91,7 +93,7 @@ export class StatuteComponent implements OnInit {
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
 
-      this.loadCoefficientArray();
+      this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
@@ -111,17 +113,17 @@ export class StatuteComponent implements OnInit {
       this.TypeWorker[counter] = this.statutes[counter].type;
 
       // this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
-      this.addControls("",0,0,0);
+      this.addControls("0",0,0,0);
     }
 
-    console.log("coefficient array");
-    console.log(this.coefficientArray);
+    this.loadzeroArray();
+
 
   }
    
    onloadData(arrayElement,counter){
 
-    this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
+    //this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
 
       if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null)
       {
@@ -160,7 +162,10 @@ addArray() {
 }
 
 get arrayBox() {
-  return this.SForm.get('arrayBox') as FormArray;
+
+  return (<FormArray>this.SForm.get('statuteArray') as FormArray).get('arrayBox') as FormArray;
+
+  // return <FormArray>this.SForm.get('arrayBox') as FormArray;
 }
 
 get statuteArray() {
@@ -183,8 +188,6 @@ ngOnInit() {
 
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
-      console.log('data from getStatutues(): ');
-      console.log(data);
 
       this.fillTitles();
 
@@ -221,6 +224,17 @@ ngOnInit() {
     } catch (ex) {
       alert(ex.message);
     }
+  }
+
+  loadzeroArray() {
+
+    for(let i:number=0;i<this.statutes.length;i++)
+    {
+      this.totalArray.push(0);
+      this.wegervaalArray.push(0);
+      this.minimumurenArray.push(0);
+    }
+    
   }
 
   createArrayData(data: Statute[]) {

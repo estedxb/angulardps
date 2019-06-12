@@ -2,7 +2,6 @@ import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@
 import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
@@ -27,7 +26,7 @@ export class EditCustomerComponent implements OnInit {
 
   constructor(
     private customerService: CustomersService, private data: DataService,
-    private logger: LoggingService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+    private logger: LoggingService) {
     // this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.editObject = {
       data: '',
@@ -35,18 +34,6 @@ export class EditCustomerComponent implements OnInit {
     };
 
   }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
 
   ngDoCheck() {
     if (this.HQdata !== this.oldHQdata) {
@@ -64,7 +51,7 @@ export class EditCustomerComponent implements OnInit {
     this.vatNumber = this.CustomerVatNumber;
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
-    this.ShowMessage("Loading Data Successfully", "");
+    //this.ShowMessage("Loading Data Successfully", "");
   }
 
   ngOnDestroy() { this.logger.log('object destroyed'); }
