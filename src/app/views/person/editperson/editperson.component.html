@@ -232,7 +232,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteland: </label>
-            <app-countries [CountryFormData]="birthPlaceString" (childEvent)="onCountryReceive($event)"></app-countries>
+            <app-countries [CountryFormData]="birthCountryString" (childEvent)="onCountryReceive($event)"></app-countries>
             <!-- <input #countryOfBirth (change)="updateCOB(countryOfBirth.value)" formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required /> -->
             <!-- <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.countryOfBirth.invalid && (editPersonForm.controls.countryOfBirth.dirty || editPersonForm.controls.countryOfBirth.touched) else newvalidcountryOfBirth">

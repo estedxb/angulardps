@@ -72,7 +72,7 @@ export class EditPersonComponent implements OnInit {
 
   public calendarData: string;
   public countryString: string;
-  public birthPlaceString:string;
+  public birthCountryString:string;
   public nationalityString:string;
   public languageString: string;
 
@@ -381,8 +381,14 @@ export class EditPersonComponent implements OnInit {
       }
 
       this.editPersonForm.controls.placeOfBirth.setValue(data.person.placeOfBirth);
+
       this.editPersonForm.controls.countryOfBirth.setValue(data.person.countryOfBirth);
+      this.birthCountryString = data.person.countryOfBirth;
+
+      console.log("country of birth="+this.birthCountryString);
+
       this.editPersonForm.controls.nationality.setValue(data.person.nationality);
+      this.nationalityString = data.person.nationality;
       this.editPersonForm.controls.firstName.setValue(data.person.firstName);
       this.editPersonForm.controls.lastName.setValue(data.person.lastName);
     }
