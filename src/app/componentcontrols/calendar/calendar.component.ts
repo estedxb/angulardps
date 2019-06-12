@@ -125,6 +125,12 @@ export class CalendarComponent implements OnInit {
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
     this._selectedIndexYear = parseInt(calendarArray[2], 10);
 
+    console.log("received data on calendar component");
+    console.log("days="+calendarArray[0]);
+    console.log("month="+calendarArray[1]);
+    console.log("year="+calendarArray[2]);
+
+
     this.calendarObject.dayString = "" + calendarArray[0];
     this.calendarObject.monthString = "" + calendarArray[1];
     this.calendarObject.yearString = "" + calendarArray[2];

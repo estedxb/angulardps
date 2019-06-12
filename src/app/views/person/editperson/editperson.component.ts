@@ -249,7 +249,12 @@ export class EditPersonComponent implements OnInit {
     this.dayString = dayString;
     this.yearString = yearString;
 
-    this.calendarData = this.monthString + '/' + this.dayString + '/' + this.yearString;
+    this.calendarData = this.dayString  + '/' + this.monthString + '/' + this.yearString;
+
+    console.log("calendar data");
+    console.log(this.monthString);
+    console.log(this.dayString);
+    console.log(this.yearString);
 
     console.log('setting calendar data=' + this.calendarData);
 

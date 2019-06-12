@@ -121,6 +121,31 @@ export class UpdatePersonComponent implements OnInit {
     }
   }
 
+  archiveClick() {
+
+    if(this.dpsPerson !== undefined && this.dpsPerson !== null)
+    {
+      console.log("person data");
+      console.log(this.dpsPerson);
+
+      this.personService.updatePosition(this.dpsPerson).subscribe(res => {
+        console.log("response=" + res);
+        this.ShowMessage('Person archived successfully.', '');
+      },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Error occured=" + err.error.message);
+          }
+          else {
+            console.log("response code=" + err.status);
+            console.log("response body=" + err.error);
+          }
+        }
+      );
+  
+    }
+  }
+
   onFormwardClick() {
 
     if(this.currentPage === "editperson")

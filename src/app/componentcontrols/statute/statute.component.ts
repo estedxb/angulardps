@@ -157,7 +157,7 @@ get arrayBox() {
 }
 
 get statuteArray() {
-  return this.SForm.get('statuteArray') as FormArray;
+  return <FormArray>this.SForm.get('statuteArray') as FormArray;
 }
 
 addControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
