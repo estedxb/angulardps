@@ -6,6 +6,7 @@ import { _Position, DpsPostion, LoginToken, DpsUser, Documents } from '../../../
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from '../../../shared/positions.service';
 import { CreatepositionComponent } from './createposition/createposition.component';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-positions',
@@ -24,24 +25,26 @@ export class PositionsComponent implements OnInit {
   public durationInSeconds = 5;
   // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
-  constructor(private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(
+    private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
-    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.logger.log('CustomerVatNumber ::', this.CustomerVatNumber);
     this.positionsService.getPositionsByVatNumber(this.CustomerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
-      console.log('Positions Form Data : ', this.maindatas);
+      this.logger.log('Positions Form Data : ', this.maindatas);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
   FilterTheArchive() {
-    console.log('Positions Form Data : ', this.maindatas);
+    this.logger.log('Positions Form Data : ', this.maindatas);
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
@@ -52,7 +55,7 @@ export class PositionsComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
@@ -69,18 +72,18 @@ export class PositionsComponent implements OnInit {
 
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        this.logger.log('The dialog was closed');
         this.data = result;
-        console.log('this.data ::', this.data);
+        this.logger.log('this.data ::', this.data);
         if (this.SelectedIndex >= 0) {
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
           this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
         } else {
-          console.log('this.data.id :: ', this.data.id);
+          this.logger.log('this.data.id :: ', this.data.id);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
-            console.log(' new this.maindatas :: ', this.maindatas);
+            this.logger.log(' new this.maindatas :: ', this.maindatas);
             this.FilterTheArchive();
             this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
           }
@@ -116,7 +119,7 @@ export class PositionsComponent implements OnInit {
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    console.log('Edit Clicked Index :: ' + i);
+    this.logger.log('Edit Clicked Index :: ' + i);
     this.data = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
@@ -124,23 +127,23 @@ export class PositionsComponent implements OnInit {
 
   updatePositions() {
     this.positionsService.updatePosition(this.data).subscribe(res => {
-      console.log('response :: ', res, "Data ::", this.data);
+      this.logger.log('response :: ', res, "Data ::", this.data);
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
       (err: HttpErrorResponse) => {
-        console.log('Error :: ', err);
+        this.logger.log('Error :: ', err);
         if (err.error instanceof Error) {
-          console.log('Error occured=' + err.error.message);
+          this.logger.log('Error occured=' + err.error.message);
         } else {
-          console.log('response code=' + err.status, 'response body=' + err.error);
+          this.logger.log('response code=' + err.status, 'response body=' + err.error);
         }
       }
     );
   }
 
   onClickDelete(i) {
-    console.log('Delete Clicked Index:: ' + i);
+    this.logger.log('Delete Clicked Index:: ' + i);
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updatePositions();
@@ -148,7 +151,7 @@ export class PositionsComponent implements OnInit {
 
   onStatusChange(event, i) {
     this.SelectedIndex = i;
-    console.log('Position index : ' + this.SelectedIndex + ', Enabled : ' + event);
+    this.logger.log('Position index : ' + this.SelectedIndex + ', Enabled : ' + event);
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updatePositions();

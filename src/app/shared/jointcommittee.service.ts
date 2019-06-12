@@ -4,24 +4,25 @@ import { ParitairCommitee } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import _ from 'lodash';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class JointcommitteeService {
   private getJointCommiteeUrl = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getParitairCommitee !== '') {
       this.getJointCommiteeUrl = environment.boemmAPI + environment.getParitairCommitee;
     } else {
       this.getJointCommiteeUrl = environment.getAssetsDataPath + 'jointcommittee.json';
     }
-    // console.log('Data From = ' + this.getJointCommiteeUrl);
+    // this.logger.log('Data From = ' + this.getJointCommiteeUrl);
   }
 
   public getJointCommitees(): Observable<ParitairCommitee[]> {
-    // console.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
+    // this.logger.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
     const result = this.http.get<ParitairCommitee[]>(this.getJointCommiteeUrl).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 

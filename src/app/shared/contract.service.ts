@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Contract, DpsContract, PrintContractPDF, ApproveContractSuccess, ApproveContract, ContractReason } from './models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,36 +16,36 @@ export class ContractService {
   private getApproveContractURL = '';
   private getContractReasonURL = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getContract !== '') {
-      // console.log('Data From Remote');      
+      // this.logger.log('Data From Remote');      
       this.getContractURL = environment.dpsAPI + environment.getContract;
     } else {
-      // console.log('Data From JSON');
+      // this.logger.log('Data From JSON');
       this.getContractByVatNumberUrl = '';
     }
 
     if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
-      console.log('getPrintContractFileURL Data From Remote');
+      this.logger.log('getPrintContractFileURL Data From Remote');
       this.getPrintContractFileURL = environment.dpsAPI + environment.getPrintContractFileURL;
     } else {
-      console.log('getPrintContractFileURL Data From JSON');
+      this.logger.log('getPrintContractFileURL Data From JSON');
       this.getPrintContractFileURL = environment.getAssetsDataPath + 'printContract.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
-      console.log('getApproveContractURL Data From Remote');
+      this.logger.log('getApproveContractURL Data From Remote');
       this.getApproveContractURL = environment.dpsAPI + environment.getApproveContractURL;
     } else {
-      console.log('getApproveContractURL Data From JSON');
+      this.logger.log('getApproveContractURL Data From JSON');
       this.getApproveContractURL = environment.getAssetsDataPath + 'approveContract.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getContractReasonURL !== '') {
-      console.log('getContractReasonURL Data From Remote');
+      this.logger.log('getContractReasonURL Data From Remote');
       this.getContractReasonURL = environment.dpsAPI + environment.getContractReasonURL;
     } else {
-      console.log('getContractReasonURL Data From JSON');
+      this.logger.log('getContractReasonURL Data From JSON');
       this.getContractReasonURL = environment.getAssetsDataPath + 'contractreason.json';
     }
 
@@ -52,27 +53,27 @@ export class ContractService {
 
   public createContract(contract: DpsContract): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // console.log('createContract Data From = ' + this.getContractURL);
+    // this.logger.log('createContract Data From = ' + this.getContractURL);
     return this.http.post<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateContract(contract: DpsContract): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // console.log('updateContract Data From = ' + this.getContractURL);
+    // this.logger.log('updateContract Data From = ' + this.getContractURL);
     return this.http.put<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
   public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<string> {
-    // console.log('getContractById');
+    // this.logger.log('getContractById');
     let result: any = null;
     if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
-      console.log('getPrintContractPDFFileURL API Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
+      this.logger.log('getPrintContractPDFFileURL API Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
       result = this.http.get<any>(this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     } else {
-      console.log('getPrintContractPDFFileURL JSON Data From = ' + this.getPrintContractFileURL);
+      this.logger.log('getPrintContractPDFFileURL JSON Data From = ' + this.getPrintContractFileURL);
       result = this.http.get<any>(this.getPrintContractFileURL).catch(this.errorHandler);
     }
-    console.log('getPrintContractPDFFileURL result', result);
+    this.logger.log('getPrintContractPDFFileURL result', result);
     return result;
   }
 
@@ -82,7 +83,7 @@ export class ContractService {
     const approveContract = new ApproveContract();
     approveContract.customerVatNumber = vatNumber;
     approveContract.contractId = contractId.toString();
-    console.log('getApproveContract Data From = ' + this.getApproveContractURL);
+    this.logger.log('getApproveContract Data From = ' + this.getApproveContractURL);
 
     if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
       this.getApproveContractURL = this.getApproveContractURL + '/' + vatNumber + '/' + contractId;
@@ -90,35 +91,35 @@ export class ContractService {
     } else {
       result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
     }
-    console.log(result);
+    this.logger.log(result);
     return result;
   }
 
   public getContractByVatNoAndId(vatNumber: string, contractId: string): Observable<DpsContract> {
-    // console.log('getContractById');
-    // console.log('getContractByVatNoAndId Data From = ' + this.getContractURL + '/' + vatNumber +'/' + contractId);
+    // this.logger.log('getContractById');
+    // this.logger.log('getContractByVatNoAndId Data From = ' + this.getContractURL + '/' + vatNumber +'/' + contractId);
     const result = this.http.get<any>(this.getContractURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 
   public getContractReason(): Observable<ContractReason[]> {
-    console.log('getContractReason');
-    console.log('getContractReason Data From = ' + this.getContractReasonURL);
+    this.logger.log('getContractReason');
+    this.logger.log('getContractReason Data From = ' + this.getContractReasonURL);
     const result = this.http.get<any>(this.getContractReasonURL).catch(this.errorHandler);
-    console.log(result);
+    this.logger.log(result);
     return result;
   }
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-      console.log('vat number not correct format');
+      this.logger.log('vat number not correct format');
     } else if (error.status === 204) {
-      console.log('vat number doesnt exist ');
+      this.logger.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-      console.log('user exists in the system, dont allow customer to create');
+      this.logger.log('user exists in the system, dont allow customer to create');
     } else {
-      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+      this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
     return Observable.throwError(error.message);
   }

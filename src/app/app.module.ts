@@ -1,4 +1,4 @@
-import { NgModule, EventEmitter } from '@angular/core';
+import { NgModule, EventEmitter, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +15,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
+import { AppConfig } from './app.config';
+import { DatePipe } from '@angular/common';
 
+export function initializeApp(appConfig: AppConfig) {
+  return () => appConfig.load();
+}
 @NgModule({
   declarations: [AppComponent, routingComponents, TestArraysComponent],
   imports: [
@@ -47,7 +52,15 @@ import { TestArraysComponent } from './test-arrays/test-arrays.component';
     HttpClientModule,
     AlertsModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppConfig], multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]

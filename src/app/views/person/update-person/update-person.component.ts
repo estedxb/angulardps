@@ -7,6 +7,7 @@ import { ContactPersonComponent } from '../../../contactperson/contactperson.com
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DataService } from 'src/app/shared/data.service';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-update-person',
@@ -29,16 +30,17 @@ export class UpdatePersonComponent implements OnInit {
   public personpositionData: any;
   public personDocumentsData: any;
 
-  constructor(private personService: PersonService, private data: DataService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
-    console.log('InSide :: Update Person');
+  constructor(private personService: PersonService, private data: DataService, private logger: LoggingService,
+    private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+    this.logger.log('InSide :: Update Person');
     this.validateLogin();
     this.vatNumber = this.loginuserdetails.customerVatNumber;
-    console.log('vatNumber :: ' + this.vatNumber);
+    this.logger.log('vatNumber :: ' + this.vatNumber);
   }
 
   validateLogin() {
     try {
-      console.log('this.loginaccessToken :: ' + this.loginaccessToken);
+      this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.router.navigate(['/login']);
       }
@@ -55,7 +57,7 @@ export class UpdatePersonComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
@@ -70,19 +72,17 @@ export class UpdatePersonComponent implements OnInit {
 
   }
 
-  filterData(message:any) {
+  filterData(message: any) {
 
-      if(message.page === "edit")
-      {
-        this.editPersonData = message.data;
-        console.log("received person data="+this.editPersonData);
-      }
+    if (message.page === "edit") {
+      this.editPersonData = message.data;
+      this.logger.log("received person data=" + this.editPersonData);
+    }
 
-      if(message.page === "position")
-      {
-        this.personpositionData = message.data;
-        console.log("received person data="+this.editPersonData);
-      }
+    if (message.page === "position") {
+      this.personpositionData = message.data;
+      this.logger.log("received person data=" + this.editPersonData);
+    }
   }
 
   onPageInit() {
@@ -97,16 +97,16 @@ export class UpdatePersonComponent implements OnInit {
       this.currentPage = 'editperson';
     }
 
-    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    console.log('CurrentPage :: ' + this.currentPage);
+    this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    this.logger.log('CurrentPage :: ' + this.currentPage);
 
     try {
-      console.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
+      this.logger.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
         this.dpsPerson = dpsperson.body;
         this.person = this.dpsPerson.person;
-        console.log('DPS Person Form Data : ', dpsperson);
-        console.log('Person Form Data : ', this.person);
+        this.logger.log('DPS Person Form Data : ', dpsperson);
+        this.logger.log('Person Form Data : ', this.person);
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
         if (this.dpsPerson.person.lastName === '' || this.dpsPerson.person.lastName === null ||
           this.dpsPerson.person.lastName === undefined) {
@@ -123,51 +123,49 @@ export class UpdatePersonComponent implements OnInit {
 
   onFormwardClick() {
 
-    if(this.currentPage === "editperson")
-    {
-      console.log("data collected");
-      console.log(this.editPersonData);
+    if (this.currentPage === "editperson") {
+      this.logger.log("data collected");
+      this.logger.log(this.editPersonData);
 
       this.personService.updatePosition(this.editPersonData).subscribe(res => {
-        console.log("response=" + res);
+        this.logger.log("response=" + res);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Error occured=" + err.error.message);
+            this.logger.log("Error occured=" + err.error.message);
           }
           else {
-            console.log("response code=" + err.status);
-            console.log("response body=" + err.error);
+            this.logger.log("response code=" + err.status);
+            this.logger.log("response body=" + err.error);
           }
         }
       );
 
     }
 
-    if(this.currentPage === "positions")
-    {
+    if (this.currentPage === "positions") {
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
-        console.log("response=" + res);
+        this.logger.log("response=" + res);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Error occured=" + err.error.message);
+            this.logger.log("Error occured=" + err.error.message);
           }
           else {
-            console.log("response code=" + err.status);
-            console.log("response body=" + err.error);
+            this.logger.log("response code=" + err.status);
+            this.logger.log("response body=" + err.error);
           }
         }
       );
     }
 
-    if(this.currentPage === "documents"){
-     
-      console.log("data collected for person documents");
-      console.log(this.personDocumentsData);
+    if (this.currentPage === "documents") {
+
+      this.logger.log("data collected for person documents");
+      this.logger.log(this.personDocumentsData);
 
 
-      
+
 
 
     }

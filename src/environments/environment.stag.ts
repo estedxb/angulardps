@@ -1,4 +1,5 @@
 export const environment = {
+  name: 'stag',
   production: false,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapistg.azurewebsites.net/api/',

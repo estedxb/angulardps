@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-dashboardperson',
@@ -41,7 +42,9 @@ export class DashboardPersonComponent implements OnInit {
   // public TimeConverterToPx = 0.09375;
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
   // tslint:disable-next-line: max-line-length
-  constructor(private personService: PersonService, private route: ActivatedRoute, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(
+    private personService: PersonService, private route: ActivatedRoute, private logger: LoggingService,
+    private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() { this.onPageInit(); }
 
@@ -51,19 +54,19 @@ export class DashboardPersonComponent implements OnInit {
     const localstartDate = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + this.startDate.getDate();
     const localendDate = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + this.endDate.getDate();
 
-    console.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
-    console.log('onPageInit endDate :: ' + this.endDate);
-    console.log('onPageInit getDpsScheduleByVatNumber(' + this.vatNumber + ', ' + localstartDate + ', ' + localendDate);
+    this.logger.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
+    this.logger.log('onPageInit endDate :: ' + this.endDate);
+    this.logger.log('onPageInit getDpsScheduleByVatNumber(' + this.vatNumber + ', ' + localstartDate + ', ' + localendDate);
 
     this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
       .subscribe(dpsSchedule => {
-        console.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
+        this.logger.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
         this.maindatas = dpsSchedule.persons;
         this.onPersonKeyup('');
-        console.log('maindatas ::', this.maindatas);
+        this.logger.log('maindatas ::', this.maindatas);
       }, error => this.errorMsg = error);
 
-    console.log('this.currentPage : ' + this.currentPage);
+    this.logger.log('this.currentPage : ' + this.currentPage);
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();
@@ -87,7 +90,7 @@ export class DashboardPersonComponent implements OnInit {
         this.datas = this.maindatas;
       }
     } catch (e) {
-      console.log('dashboardperson onPersonKeyup Error ! ' + e.message);
+      this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message);
     }
   }
 
@@ -108,9 +111,9 @@ export class DashboardPersonComponent implements OnInit {
     const adddays: number = this.WeekDiff * 7;
     let adjustDaysForWeekStartDate = - 1;
 
-    console.log('Current Date :: ' + curr);
-    console.log('Current Day :: ' + curr.getUTCDay());
-    console.log('adddays :: ' + adddays);
+    this.logger.log('Current Date :: ' + curr);
+    this.logger.log('Current Day :: ' + curr.getUTCDay());
+    this.logger.log('adddays :: ' + adddays);
 
     if (curr.getUTCDay() === 0) {
       adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + 7 + curr.getUTCDay();
@@ -118,11 +121,11 @@ export class DashboardPersonComponent implements OnInit {
       adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + curr.getUTCDay();
     }
 
-    console.log('adjustDaysForWeekStartDate :: ' + adjustDaysForWeekStartDate);
+    this.logger.log('adjustDaysForWeekStartDate :: ' + adjustDaysForWeekStartDate);
 
     curr.setDate(curr.getUTCDate() - adjustDaysForWeekStartDate);
 
-    console.log('Start Date :: ' + curr);
+    this.logger.log('Start Date :: ' + curr);
 
     curr.setDate(curr.getUTCDate() + adddays);
     const mon = new Date(curr);
@@ -138,7 +141,7 @@ export class DashboardPersonComponent implements OnInit {
     const sat = new Date(curr);
     curr.setDate(curr.getUTCDate() + 1);
     const sun = new Date(curr);
-    console.log('Start End :: ' + curr);
+    this.logger.log('Start End :: ' + curr);
 
     this.startDate = mon;
     this.endDate = sun;
@@ -162,7 +165,7 @@ export class DashboardPersonComponent implements OnInit {
       selectedContract.personContracts = this.getSelectedPersonWorkDays(personid);
       selectedContract.contractId = contractid;
       selectedContract.personId = personid;
-      console.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
+      this.logger.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
       selectedContract.startDate = this.startDate;
       selectedContract.endDate = this.endDate;
       const dialogConfig = new MatDialogConfig();
@@ -170,15 +173,15 @@ export class DashboardPersonComponent implements OnInit {
       dialogConfig.autoFocus = true;
       dialogConfig.width = '700px';
       dialogConfig.data = selectedContract;
-      console.log('selectedContract :: ', selectedContract);
+      this.logger.log('selectedContract :: ', selectedContract);
       dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
       const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        this.logger.log('The dialog was closed');
         this.data = result;
-        console.log('this.data ::', this.data);
+        this.logger.log('this.data ::', this.data);
 
         /*
         if (this.SelectedIndex >= 0) {
@@ -186,10 +189,10 @@ export class DashboardPersonComponent implements OnInit {
           this.FilterTheArchive();
           this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
         } else {
-          console.log('this.data.id :: ', this.data.id);
+          this.logger.log('this.data.id :: ', this.data.id);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
-            console.log(' new this.maindatas :: ', this.maindatas);
+            this.logger.log(' new this.maindatas :: ', this.maindatas);
             this.FilterTheArchive();
             this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
           }
@@ -201,7 +204,7 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   getSelectedPersonWorkDays(personid) {
-    console.log('getSelectedPersonWorkDays(' + personid + ') ');
+    this.logger.log('getSelectedPersonWorkDays(' + personid + ') ');
     this.selectedPersonContracts = [];
     if (this.maindatas.length > 0) {
       this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
@@ -213,7 +216,7 @@ export class DashboardPersonComponent implements OnInit {
     } else {
       this.selectedPersonContracts = this.maindatas[0].contracts;
     }
-    console.log('getSelectedPersonWorkDays(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
+    this.logger.log('getSelectedPersonWorkDays(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
     return this.selectedPersonContracts;
   }
 

@@ -4,6 +4,7 @@ import { CountriesList } from './models';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class CountriesService {
@@ -15,7 +16,7 @@ export class CountriesService {
     })
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private logger: LoggingService) {
     if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
       this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
     } else {
@@ -24,9 +25,9 @@ export class CountriesService {
   }
 
   public getCountriesList(): Observable<CountriesList[]> {
-    // console.log('CountriesService Data From = ' + this.getCountriesListUrl);
+    // this.logger.log('CountriesService Data From = ' + this.getCountriesListUrl);
     const result = this.http.get<CountriesList[]>(this.getCountriesListUrl, this.httpOptions).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 

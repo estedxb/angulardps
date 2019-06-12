@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { User, DpsUser, DpsPostion } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class PositionsService {
@@ -13,25 +14,25 @@ export class PositionsService {
 
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'my-auth-token' }) };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private logger: LoggingService) {
     if (environment.dataFromAPI_JSON && environment.getPositionsByVatNumber !== '') {
-      // console.log('Data From Remote');
+      // this.logger.log('Data From Remote');
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
       this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
 
 
     } else {
-      console.log('Data From JSON');
+      this.logger.log('Data From JSON');
       this.getPositionsByVatNumberUrl = environment.getAssetsDataPath + 'positions.json';
     }
   }
 
   public getPositionsByVatNumber(parameter: string): Observable<DpsPostion[]> {
-    // console.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + parameter);
+    // this.logger.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + parameter);
     const result = this.http.get<DpsPostion[]>(
       this.getPositionsByVatNumberUrl + '/' + parameter, this.httpOptions).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 
@@ -51,28 +52,28 @@ export class PositionsService {
   }
 
   public updatePositionWithFile(fileToUpload: File, vatNumber: string, positionId: number): Observable<any> {
-   // if ( fileToUpload.size > 0)
-  // {
+    // if ( fileToUpload.size > 0)
+    // {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    // console.log('formData:::', formData);
-    new Response(formData).text().then(console.log);
+    // this.logger.log('formData:::', formData);
+    new Response(formData).text().then(this.logger.log);
     return this.http.post<any>(this.getPositionUpdateUrl + '/' + vatNumber + '/' + positionId, formData,
       {
         observe: 'response'
       });
-  //  }
+    //  }
   }
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-      console.log('vat number not correct format');
+      this.logger.log('vat number not correct format');
     } else if (error.status === 204) {
-      console.log('vat number doesnt exist ');
+      this.logger.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-      console.log('user exists in the system, dont allow customer to create');
+      this.logger.log('user exists in the system, dont allow customer to create');
     } else {
-      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+      this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
     return Observable.throwError(error.message);
   }

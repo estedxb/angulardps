@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WorkCodesService } from '../../shared/workcodes.service';
 import { FormGroup, Form, FormControl } from '@angular/forms';
 import { WorkCodes } from '../../shared/models';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-workcodes',
@@ -20,7 +21,7 @@ export class WorkCodesComponent implements OnInit {
   @Input() public initialWorkCode;
   @Output() public childEvent = new EventEmitter();
 
-  public oldInitialWorkCode = "";
+  public oldInitialWorkCode = '';
 
   // tslint:disable-next-line: variable-name
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -35,7 +36,7 @@ export class WorkCodesComponent implements OnInit {
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
   onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
 
-  constructor(private workCodesService: WorkCodesService) { }
+  constructor(private workCodesService: WorkCodesService, private logger: LoggingService) { }
 
   oncustomerKeyup(value) {
     // this.datas = [];
@@ -69,33 +70,29 @@ export class WorkCodesComponent implements OnInit {
 
   // ngOnChanges() {
 
-    // if(this.disabled === true)
-    //   this.HQForm.get('WorkCode').disable();
-    //  else
-    //   this.HQForm.get('WorkCode').enable(); 
+  // if(this.disabled === true)
+  //   this.HQForm.get('WorkCode').disable();
+  //  else
+  //   this.HQForm.get('WorkCode').enable();
 
   // }
 
   ngDoCheck() {
 
-    console.log("initialWorkCode="+this.initialWorkCode);
-    console.log("oldInitialWorkCode="+this.oldInitialWorkCode);
+    this.logger.log('initialWorkCode=' + this.initialWorkCode);
+    this.logger.log('oldInitialWorkCode=' + this.oldInitialWorkCode);
 
-    if(this.disabled === true)
-    {
+    if (this.disabled === true) {
       this.HQForm.get('WorkCode').disable();
-      this.HQForm.controls['WorkCode'].setValue('');
+      this.HQForm.controls.WorkCode.setValue('');
+    } else {
+      this.HQForm.get('WorkCode').enable();
     }
-   else
-   {
-    this.HQForm.get('WorkCode').enable();
-   }
 
-   if(this.initialWorkCode !== this.oldInitialWorkCode)
-   {
-     this.oldInitialWorkCode = this.initialWorkCode;
-     this.HQForm.controls['WorkCode'].setValue(this.initialWorkCode);
-   }
+    if (this.initialWorkCode !== this.oldInitialWorkCode) {
+      this.oldInitialWorkCode = this.initialWorkCode;
+      this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);
+    }
 
   }
 
@@ -105,22 +102,19 @@ export class WorkCodesComponent implements OnInit {
       WorkCode: new FormControl('')
     });
 
-    if(this.disabled === true)
-    {
+    if (this.disabled === true) {
       this.HQForm.get('WorkCode').disable();
-      this.HQForm.controls['WorkCode'].setValue('');
+      this.HQForm.controls.WorkCode.setValue('');
+    } else {
+      this.HQForm.get('WorkCode').enable();
     }
-   else
-   {
-    this.HQForm.get('WorkCode').enable();
-   }
 
 
     this.workCodesService.getWorkCodes().subscribe(data => {
       this.maindatas = data;
       this.datas = data;
-      console.log('getworkcodes in workcodes.component ::');
-      console.log(data);
+      this.logger.log('getworkcodes in workcodes.component ::');
+      this.logger.log(data);
     }, error => this.errorMsg = error);
 
     // this.HQForm.controls.WorkCode.setValue(this.initialWorkCode);

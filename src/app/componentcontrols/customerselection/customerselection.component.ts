@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { User, DpsUser, LoginToken } from 'src/app/shared/models';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-customerselection',
@@ -17,7 +18,7 @@ export class CustomerSelectionComponent implements OnInit {
   public customernames = [];
   public errorMsg;
   public show = false;
-  constructor(private customerLists: CustomerListsService) { }
+  constructor(private customerLists: CustomerListsService, private logger: LoggingService) { }
 
   oncustomerKeyup(value) {
     this.customernames = [];
@@ -37,8 +38,8 @@ export class CustomerSelectionComponent implements OnInit {
       .subscribe(data => {
         this.customers = data;
         this.customernames = data;
-        // console.log('getCustomers in customerselection.component ::');
-        // console.log(data);
+        // this.logger.log('getCustomers in customerselection.component ::');
+        // this.logger.log(data);
       }, error => this.errorMsg = error);
   }
 

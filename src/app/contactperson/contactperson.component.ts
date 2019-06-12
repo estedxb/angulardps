@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { LoggingService } from '../shared/logging.service';
 import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
@@ -34,41 +35,38 @@ export class ContactPersonComponent implements OnInit {
   contact: Contact;
   alsCheck: boolean;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private logger: LoggingService) {
 
   }
 
   loadEditDetails(contactPerson: any) {
 
-    console.log("load details has been called");
-    console.log(contactPerson);
+    this.logger.log("load details has been called");
+    this.logger.log(contactPerson);
 
-    if(contactPerson !== undefined && contactPerson !== null)
-    {
-      if(contactPerson.contact !== undefined && contactPerson.contact !== null)
-      {
-        if(contactPerson.contact.firstName !== undefined && contactPerson.contact.firstName !== null)
-            this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
+    if (contactPerson !== undefined && contactPerson !== null) {
+      if (contactPerson.contact !== undefined && contactPerson.contact !== null) {
+        if (contactPerson.contact.firstName !== undefined && contactPerson.contact.firstName !== null)
+          this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
 
-        if(contactPerson.contact.lastName !== undefined && contactPerson.contact.lastName !== null)
-            this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
+        if (contactPerson.contact.lastName !== undefined && contactPerson.contact.lastName !== null)
+          this.CTForm.controls['lastname'].setValue(contactPerson.contact.lastName);
 
-        if(contactPerson.contact.email !== undefined && contactPerson.contact.email !== null)
-        {
-          if(contactPerson.contact.email.emailAddress !== undefined && contactPerson.contact.email.emailAddress !== null)
-          this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
+        if (contactPerson.contact.email !== undefined && contactPerson.contact.email !== null) {
+          if (contactPerson.contact.email.emailAddress !== undefined && contactPerson.contact.email.emailAddress !== null)
+            this.CTForm.controls['emailaddress'].setValue(contactPerson.contact.email.emailAddress);
         }
 
-        if(contactPerson.contact.postion !== undefined && contactPerson.contact.postion !== null)
-            this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
+        if (contactPerson.contact.postion !== undefined && contactPerson.contact.postion !== null)
+          this.CTForm.controls['position'].setValue(contactPerson.contact.postion);
 
-        if(contactPerson.contact.mobile !== undefined && contactPerson.contact.mobile !== null)
-           if(contactPerson.contact.mobile.number !== undefined && contactPerson.contact.mobile.number !== null)
-              this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
+        if (contactPerson.contact.mobile !== undefined && contactPerson.contact.mobile !== null)
+          if (contactPerson.contact.mobile.number !== undefined && contactPerson.contact.mobile.number !== null)
+            this.CTForm.controls['mobile'].setValue(contactPerson.contact.mobile.number);
 
-        if(contactPerson.contact.phoneNumber !== null && contactPerson.contact.phoneNumber !== undefined)
-              if(contactPerson.contact.phoneNumber.number !== undefined && contactPerson.contact.phoneNumber.number !== null)
-                    this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
+        if (contactPerson.contact.phoneNumber !== null && contactPerson.contact.phoneNumber !== undefined)
+          if (contactPerson.contact.phoneNumber.number !== undefined && contactPerson.contact.phoneNumber.number !== null)
+            this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
         this.languageString = contactPerson.contact.language.name;
 
@@ -82,8 +80,8 @@ export class ContactPersonComponent implements OnInit {
 
   ngDoCheck() {
 
-    console.log('CTFormData');
-    console.log(this.CTFormData);
+    this.logger.log('CTFormData');
+    this.logger.log(this.CTFormData);
 
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
@@ -101,7 +99,7 @@ export class ContactPersonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log("inside ngDoAfterViewInit=" + this.CTFormData.data);
+    this.logger.log("inside ngDoAfterViewInit=" + this.CTFormData.data);
 
     if (this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
       if (this.CTFormData.data !== this.oldData) {
@@ -209,11 +207,11 @@ export class ContactPersonComponent implements OnInit {
 
   checkValidations() {
 
-    console.log(this.CTForm.get('firstname').valid);
-    console.log(this.CTForm.get('lastname').valid);
-    console.log(this.CTForm.get('position').valid);
-    console.log(this.CTForm.get('emailaddress').valid);
-    console.log(this.CTForm.get('mobile').valid);
+    this.logger.log(this.CTForm.get('firstname').valid);
+    this.logger.log(this.CTForm.get('lastname').valid);
+    this.logger.log(this.CTForm.get('position').valid);
+    this.logger.log(this.CTForm.get('emailaddress').valid);
+    this.logger.log(this.CTForm.get('mobile').valid);
 
   }
 

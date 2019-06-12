@@ -3,6 +3,7 @@ import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, 
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-editcustomer',
@@ -24,9 +25,10 @@ export class EditCustomerComponent implements OnInit {
   public oldHQdata: any;
   public dataCustomerEdit: any;
 
-  constructor(private customerService: CustomersService, private data: DataService, private dialog: MatDialog, private snackBar: MatSnackBar) 
-  {
-    //this.vatNumber = this.loginuserdetails.customerVatNumber;
+  constructor(
+    private customerService: CustomersService, private data: DataService,
+    private logger: LoggingService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+    // this.vatNumber = this.loginuserdetails.customerVatNumber;
     this.editObject = {
       data: '',
       page: ''
@@ -41,7 +43,7 @@ export class EditCustomerComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
@@ -60,22 +62,22 @@ export class EditCustomerComponent implements OnInit {
 
   onPageInit() {
     this.vatNumber = this.CustomerVatNumber;
-    console.log('ngOnInit called editcustomer');
-    console.log('vatNumber=' + this.vatNumber);
+    this.logger.log('ngOnInit called editcustomer');
+    this.logger.log('vatNumber=' + this.vatNumber);
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
-    this.ShowMessage("Loading Data Successfully","");
+    this.ShowMessage("Loading Data Successfully", "");
   }
 
-  ngOnDestroy() { console.log('object destroyed'); }
+  ngOnDestroy() { this.logger.log('object destroyed'); }
 
   receiveHQdata($event) {
 
     this.HQdata = $event;
-    console.log('received in editcustomer component');
-    console.log(this.HQdata);
-    console.log("CTdata:");
-    console.log(this.CTdata);
+    this.logger.log('received in editcustomer component');
+    this.logger.log(this.HQdata);
+    this.logger.log("CTdata:");
+    this.logger.log(this.CTdata);
 
     if (this.CTdata !== null && this.CTdata !== undefined) {
       this.HQdata.contact = this.CTdata.contact;
@@ -84,10 +86,10 @@ export class EditCustomerComponent implements OnInit {
     }
 
     if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-      console.log('fp data=');
-      console.log(this.FPdata);
-      console.log('HQ data');
-      console.log(this.HQdata);
+      this.logger.log('fp data=');
+      this.logger.log(this.FPdata);
+      this.logger.log('HQ data');
+      this.logger.log(this.HQdata);
 
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
@@ -106,14 +108,14 @@ export class EditCustomerComponent implements OnInit {
   receiveCTdata($event) {
 
     this.CTdata = $event;
-    console.log('updated in editcustomer component');
-    console.log(this.CTdata);
+    this.logger.log('updated in editcustomer component');
+    this.logger.log(this.CTdata);
 
     if (this.CTdata !== null && this.CTdata !== undefined) {
       this.HQdata.contact = this.CTdata.contact;
       this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
       this.HQdata.formValid = true;
-      
+
       this.childEvent.emit(this.HQdata);
     }
   }
@@ -121,8 +123,8 @@ export class EditCustomerComponent implements OnInit {
   receiveGeneralObject($event) {
 
     this.GLdata = $event;
-    console.log('received in editcustomer component');
-    console.log(this.HQdata);
+    this.logger.log('received in editcustomer component');
+    this.logger.log(this.HQdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.GLdata !== null && this.GLdata !== undefined) {
@@ -137,8 +139,8 @@ export class EditCustomerComponent implements OnInit {
   receiveStatuteData($event) {
 
     this.STdata = $event;
-    console.log('received in editcustomer component');
-    console.log(this.STdata);
+    this.logger.log('received in editcustomer component');
+    this.logger.log(this.STdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.STdata !== null && this.STdata !== undefined) {
@@ -152,14 +154,14 @@ export class EditCustomerComponent implements OnInit {
   receiveInvoiceData($event) {
 
     this.FPdata = $event;
-    console.log('FP received in editcustomer component');
-    console.log(this.HQdata);
+    this.logger.log('FP received in editcustomer component');
+    this.logger.log(this.HQdata);
 
     if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-      console.log('fp data=');
-      console.log(this.FPdata);
-      console.log('HQ data');
-      console.log(this.HQdata);
+      this.logger.log('fp data=');
+      this.logger.log(this.FPdata);
+      this.logger.log('HQ data');
+      this.logger.log(this.HQdata);
 
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
@@ -177,19 +179,19 @@ export class EditCustomerComponent implements OnInit {
   postData() { }
 
   getCustomerByVatNumberEdit(vatNumber: string) {
-    console.log('calling get customer by vatnumber on edit page');
+    this.logger.log('calling get customer by vatnumber on edit page');
     let response: DPSCustomer;
     this.customerService.getCustomersByVatNumberEdit(vatNumber)
       .subscribe(data => {
         response = data;
-        console.log('response=');
-        console.log('response name=' + response.customer.name);
+        this.logger.log('response=');
+        this.logger.log('response name=' + response.customer.name);
         this.parseData(response);
       }, error => this.handleError(error));
   }
 
   parseData(response: DPSCustomer) {
-    console.log(response);
+    this.logger.log(response);
     this.editObject = {
       data: response,
       page: 'edit'
@@ -211,7 +213,7 @@ export class EditCustomerComponent implements OnInit {
   handleError(error: any) { }
 
   editCustomerApi() {
-    console.log('edit customer Api called');
+    this.logger.log('edit customer Api called');
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.CTdata !== null && this.CTdata !== undefined) {
         this.HQdata.contact = this.CTdata;
@@ -224,10 +226,10 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
       }
       if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-        console.log('fp data=');
-        console.log(this.FPdata);
-        console.log('HQ data');
-        console.log(this.HQdata);
+        this.logger.log('fp data=');
+        this.logger.log(this.FPdata);
+        this.logger.log('HQ data');
+        this.logger.log(this.HQdata);
 
         if (this.HQdata.invoiceSettings !== undefined && this.HQdata.invoiceSettings !== null) {
           if (this.HQdata.invoiceSettings.lieuDaysAllowance !== undefined) {
@@ -242,8 +244,8 @@ export class EditCustomerComponent implements OnInit {
         }
         this.childEvent.emit(this.HQdata);
       }
-      console.log('consolidated json object=');
-      console.log(this.HQdata);
+      this.logger.log('consolidated json object=');
+      this.logger.log(this.HQdata);
     }
   }
 }

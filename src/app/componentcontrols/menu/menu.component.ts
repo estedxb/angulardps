@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
 import { AuthService } from '../../shared/auth.service';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,11 +11,11 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router, public authService: AuthService) { }
+  constructor(private router: Router, public authService: AuthService, private logger: LoggingService) { }
   ngOnInit() { }
 
   logout(): void {
-    console.log('Logout');
+    this.logger.log('Logout');
     this.authService.logout();
     this.router.navigate(['/login']);
   }

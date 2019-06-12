@@ -8,6 +8,7 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CreateWorkTimeComponent } from '../../../../componentcontrols/createworktime/createworktime.component';
 import { copyObj } from '@angular/animations/browser/src/util';
+import { LoggingService } from '../../../../shared/logging.service';
 
 @Component({
   selector: 'app-createworkschedule',
@@ -41,15 +42,15 @@ export class CreateWorkScheduleComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
     private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
-    @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule) {
+    @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule, private logger: LoggingService) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
     this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));
   }
 
   /*
     ngDoCheck() {
-      console.log('ngDoCheck CreateLocationComponent');
-      console.log(this.currentDpsWorkSchedule);
+      this.logger.log('ngDoCheck CreateLocationComponent');
+      this.logger.log(this.currentDpsWorkSchedule);
       if (this.oldCurrentLocation !== this.currentDpsWorkSchedule) {
         this.oldCurrentLocation = this.currentDpsWorkSchedule;
         this.loadLocationToEdit();
@@ -80,9 +81,9 @@ export class CreateWorkScheduleComponent implements OnInit {
       const missingWeekDays = '';
       const maxArrayLength = this.getRowMaxLength(this.currentDpsWorkSchedule.workSchedule);
       this.AddMissingWeekDay(maxArrayLength);
-      // console.log('After TransposeCurrentDpsWorkScheduleToWorkScheduleRows :: ', this.currentDpsWorkSchedule);
+      // this.logger.log('After TransposeCurrentDpsWorkScheduleToWorkScheduleRows :: ', this.currentDpsWorkSchedule);
       for (let i = 0; maxArrayLength > i; i++) { this.workScheduleRows.push(this.loadDataOfRow(i)); }
-      // console.log('this.workScheduleRows', this.workScheduleRows);
+      // this.logger.log('this.workScheduleRows', this.workScheduleRows);
     } catch (e) {
       alert(e.message);
     }
@@ -112,7 +113,7 @@ export class CreateWorkScheduleComponent implements OnInit {
         }
 
         if (isMissing) {
-          // console.log('Missed WeekDay ' + thisweekday);
+          // this.logger.log('Missed WeekDay ' + thisweekday);
           const wt = [];
           for (let x = 1; x <= maxArrayLength; x++) { wt.push({ startTime: '00:00', endTime: '00:00', title: '' }); }
           this.currentDpsWorkSchedule.workSchedule.workDays.splice(w, 0, { dayOfWeek: thisweekday, workTimes: wt, breakTimes: null });
@@ -166,40 +167,40 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   loadDataOfRow(rowid) {
-    console.log('loadDataOfRow rowid :: ' + rowid);
+    this.logger.log('loadDataOfRow rowid :: ' + rowid);
     try {
       const workScheduleRow = new WorkScheduleRow();
       workScheduleRow.rowid = rowid;
       const weekDayOf: WeekDayOf[] = [];
       for (let dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) {
-        console.log('loadDataOfRow for dayOfWeek :: ' + dayOfWeek);
+        this.logger.log('loadDataOfRow for dayOfWeek :: ' + dayOfWeek);
         const loadWorkDays: WorkDays[] = this.currentDpsWorkSchedule.workSchedule.workDays;
         let loadWorkTimes: WorkTimes;
 
-        console.log('loadDataOfRow for loadWorkDays.length :: ' + loadWorkDays.length);
+        this.logger.log('loadDataOfRow for loadWorkDays.length :: ' + loadWorkDays.length);
         // tslint:disable-next-line: prefer-for-of
         for (let x = 0; x < loadWorkDays.length; x++) {
-          console.log('loadDataOfRow for loadWorkDays :: ' + x);
+          this.logger.log('loadDataOfRow for loadWorkDays :: ' + x);
           if (dayOfWeek === loadWorkDays[x].dayOfWeek) {
-            console.log('loadDataOfRow for dayOfWeek === loadWorkDays[x].dayOfWeek :: ' + (dayOfWeek === loadWorkDays[x].dayOfWeek));
-            console.log('loadDataOfRow loadWorkDays[x].workTimes[1] is', loadWorkDays[x].workTimes[1]);
+            this.logger.log('loadDataOfRow for dayOfWeek === loadWorkDays[x].dayOfWeek :: ' + (dayOfWeek === loadWorkDays[x].dayOfWeek));
+            this.logger.log('loadDataOfRow loadWorkDays[x].workTimes[1] is', loadWorkDays[x].workTimes[1]);
             loadWorkTimes = loadWorkDays[x].workTimes[rowid];
           }
         }
 
         if (loadWorkTimes === null) {
-          console.log('loadWorkTimes is null');
+          this.logger.log('loadWorkTimes is null');
           loadWorkTimes = new WorkTimes();
           loadWorkTimes.title = '';
           loadWorkTimes.startTime = '';
           loadWorkTimes.endTime = '';
         }
-        console.log('loadWorkTimes :: ', loadWorkTimes);
+        this.logger.log('loadWorkTimes :: ', loadWorkTimes);
         weekDayOf.push(this.loadWeekDayOf(dayOfWeek, loadWorkTimes));
       }
-      console.log('loadDataOfRow weekDayOf', weekDayOf);
+      this.logger.log('loadDataOfRow weekDayOf', weekDayOf);
       workScheduleRow.weekDayOf = weekDayOf;
-      console.log('loadDataOfRow workScheduleRow rowid :: ' + rowid, workScheduleRow);
+      this.logger.log('loadDataOfRow workScheduleRow rowid :: ' + rowid, workScheduleRow);
       return workScheduleRow;
     } catch (e) {
       alert(e.message);
@@ -224,16 +225,16 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   addEmptyRow() {
     let lastRowId = 0;
-    // console.log('this.workScheduleRows.length :: ', this.workScheduleRows.length);
+    // this.logger.log('this.workScheduleRows.length :: ', this.workScheduleRows.length);
     if (this.workScheduleRows.length > 0) {
       const lastRow: WorkScheduleRow = this.workScheduleRows[this.workScheduleRows.length - 1];
-      console.log('lastRow :: ', lastRow);
+      this.logger.log('lastRow :: ', lastRow);
       lastRowId = lastRow.rowid;
     }
-    console.log('lastRow Row ID :: ', lastRowId);
+    this.logger.log('lastRow Row ID :: ', lastRowId);
     this.workScheduleRows.push(this.getEmptyRowOf(lastRowId + 1));
     this.addEmptyWorkTimeToCurrentDpsWorkSchedule();
-    console.log('this.currentDpsWorkSchedule after addEmptyRow:: ', this.currentDpsWorkSchedule);
+    this.logger.log('this.currentDpsWorkSchedule after addEmptyRow:: ', this.currentDpsWorkSchedule);
   }
 
   addEmptyWorkTimeToCurrentDpsWorkSchedule() {
@@ -249,7 +250,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       wday.workTimes.forEach(function (wTimes) {
         i += 1;
         if (rowid === i && !breaked) {
-          console.log('removeWorkTimeFromCurrentDpsWorkSchedule :: ', wTimes);
+          this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule :: ', wTimes);
           wday.workTimes.splice(rowid, 1);
           breaked = true;
         }
@@ -258,7 +259,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   getEmptyRowOf(rowid) {
-    console.log('getEmptyRowOf :: ' + rowid);
+    this.logger.log('getEmptyRowOf :: ' + rowid);
     const workScheduleRow = new WorkScheduleRow();
     workScheduleRow.rowid = rowid;
     const weekDayOf: WeekDayOf[] = [];
@@ -279,19 +280,19 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   removeRow(removeRowId: number) {
 
-    // console.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
+    // this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
     for (let i = 0; i < this.workScheduleRows.length; i++) {
-      // console.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
+      // this.logger.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
       const currentRow: WorkScheduleRow = this.workScheduleRows[i];
-      // console.log('currentRow :: ', currentRow);
-      // console.log('currentRow Row ID :: ', currentRow.rowid);
+      // this.logger.log('currentRow :: ', currentRow);
+      // this.logger.log('currentRow Row ID :: ', currentRow.rowid);
       if (currentRow.rowid === removeRowId) {
         this.workScheduleRows.splice(i, 1);
       }
     }
-    // console.log('After Remove Index :: ', this.workScheduleRows);
+    // this.logger.log('After Remove Index :: ', this.workScheduleRows);
     this.removeWorkTimeFromCurrentDpsWorkSchedule(removeRowId);
-    // console.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
+    // this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
   }
 
   ShowMessage(msg, action) { this.showmsg.emit({ MSG: msg, Action: action }); }
@@ -305,34 +306,34 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   OnTextBoxBlur(InputValue, rowid, dayOfWeek, SE, HM) {
-    // console.log('OnTextBoxBlur(' + InputValue + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
+    // this.logger.log('OnTextBoxBlur(' + InputValue + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
     this.currentDpsWorkSchedule.workSchedule.workDays.forEach(wday => {
       if (dayOfWeek === wday.dayOfWeek) {
-        // console.log('wday(' + (rowid + 1) + ')', wday);
+        // this.logger.log('wday(' + (rowid + 1) + ')', wday);
         let i = 0;
         let breaked = false;
         wday.workTimes.forEach(wTimes => {
           i += 1;
-          // console.log('wTimes (' + i + ')', wTimes);
-          // console.log('i - ' + i + ' :: rowid+1 - ' + rowid + 1, wTimes);
+          // this.logger.log('wTimes (' + i + ')', wTimes);
+          // this.logger.log('i - ' + i + ' :: rowid+1 - ' + rowid + 1, wTimes);
           if (rowid + 1 === i && !breaked) {
-            // console.log('OnTextBoxBlur wTimes :: ', wTimes);
+            // this.logger.log('OnTextBoxBlur wTimes :: ', wTimes);
             if (SE === 'E') { // EndTime
-              // console.log('updateWorkScheduleWorkTime EndTime');
+              // this.logger.log('updateWorkScheduleWorkTime EndTime');
               if (HM === 'M') { // EndTime Min
-                // console.log('updateWorkScheduleWorkTime EndTime Min');
+                // this.logger.log('updateWorkScheduleWorkTime EndTime Min');
                 wTimes.endTime = wTimes.endTime.split(':')[0] + ':' + InputValue;
               } else {// EndTime Hour
-                // console.log('updateWorkScheduleWorkTime EndTime Hour');
+                // this.logger.log('updateWorkScheduleWorkTime EndTime Hour');
                 wTimes.endTime = InputValue + ':' + wTimes.endTime.split(':')[1];
               }
             } else {// StartTime
-              // console.log('updateWorkScheduleWorkTime StartTime');
+              // this.logger.log('updateWorkScheduleWorkTime StartTime');
               if (HM === 'M') { // StartTime Min
-                // console.log('updateWorkScheduleWorkTime StartTime Min');
+                // this.logger.log('updateWorkScheduleWorkTime StartTime Min');
                 wTimes.startTime = wTimes.startTime.split(':')[0] + ':' + InputValue;
               } else {// StartTime Hour
-                // console.log('updateWorkScheduleWorkTime StartTime Hour');
+                // this.logger.log('updateWorkScheduleWorkTime StartTime Hour');
                 wTimes.startTime = InputValue + ':' + wTimes.startTime.split(':')[1];
               }
             }
@@ -342,7 +343,7 @@ export class CreateWorkScheduleComponent implements OnInit {
         });
       }
     });
-    console.log('OnTextBoxBlur currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule.workSchedule);
+    this.logger.log('OnTextBoxBlur currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule.workSchedule);
   }
 
   updateVaild(wday_workTimes, wTimes, dayOfWeek, rowid) {
@@ -399,7 +400,7 @@ export class CreateWorkScheduleComponent implements OnInit {
     }
   }
   onHourKey(e) {
-    console.log(e.target.value);
+    this.logger.log(e.target.value);
     if (e.target.value < 23) {
       return true;
     } else {
@@ -411,7 +412,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   onMinKey(e) {
-    console.log(e.target.value);
+    this.logger.log(e.target.value);
     if (e.target.value < 59) {
       return true;
     } else {
@@ -424,72 +425,72 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   onSaveWorkScheduleClick() {
     this.createObjects();
-    console.log('data ::', this.currentDpsWorkSchedule);
+    this.logger.log('data ::', this.currentDpsWorkSchedule);
     if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed
       && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
       if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {
         if (
           this.currentDpsWorkSchedule.id !== 0 && this.currentDpsWorkSchedule.id !== undefined &&
           this.currentDpsWorkSchedule.id !== null) {
-          console.log('Update Work Schedule');
+          this.logger.log('Update Work Schedule');
           // Update Work Schedule
           this.workschedulesService.updateWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
-            console.log('Update Work Schedule Response :: ', res);
-            console.log('Update Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
+            this.logger.log('Update Work Schedule Response :: ', res);
+            this.logger.log('Update Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
             this.dialogRef.close(this.currentDpsWorkSchedule);
           },
             (err: HttpErrorResponse) => {
-              console.log('Error :: ');
-              console.log(err);
+              this.logger.log('Error :: ');
+              this.logger.log(err);
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         } else {
-          console.log('Create Work Schedule');
+          this.logger.log('Create Work Schedule');
           this.workschedulesService.createWorkschedule(this.currentDpsWorkSchedule).subscribe(res => {
-            console.log('Work Schedule Response :: ', res.body);
+            this.logger.log('Work Schedule Response :: ', res.body);
             this.currentDpsWorkSchedule.id = res.body;
-            console.log('Create Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
+            this.logger.log('Create Work Schedule this.currentDpsWorkSchedule :: ', this.currentDpsWorkSchedule);
             this.dialogRef.close(this.currentDpsWorkSchedule);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         }
       }
     } else {
-      console.log('Form is Not Vaild');
+      this.logger.log('Form is Not Vaild');
     }
   }
 }
 
 /*
 getDummyRows() {
-console.log('getDummyRows :: ');
+this.logger.log('getDummyRows :: ');
 this.workScheduleRows.push(this.getDummyRowOf(1));
 this.workScheduleRows.push(this.getDummyRowOf(2));
 }
 
 onWorkTimeSelector(RowId, WeekDay, workTimes: WorkTimes) {
-console.log('onWorkTimeSelector (RowId =  ' + RowId + ' :: WeekDay = ' + WeekDay + ' :: workTimes = [OBject Follows])', workTimes);
+this.logger.log('onWorkTimeSelector (RowId =  ' + RowId + ' :: WeekDay = ' + WeekDay + ' :: workTimes = [OBject Follows])', workTimes);
 this.SelectedRowID = RowId;
 this.SelectedWeekDay = WeekDay;
 this.data = new WorkTimes();
 this.data.title = workTimes.title;
 this.data.startTime = workTimes.startTime;
 this.data.endTime = workTimes.endTime;
-console.log('onClickAdd EmptyData', this.data);
+this.logger.log('onClickAdd EmptyData', this.data);
 this.openDialog();
 }
 
@@ -507,10 +508,10 @@ const dialogRef = this.dialog.open(CreateWorkTimeComponent, dialogConfig);
 // const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
 dialogRef.afterClosed().subscribe(result => {
-  console.log('The dialog was closed');
+  this.logger.log('The dialog was closed');
   this.data = result;
-  console.log('this.data ::', this.data);
-  console.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
+  this.logger.log('this.data ::', this.data);
+  this.logger.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
   // Need to update currentDpsWorkSchedule and workScheduleRows
   // this.maindatas[this.SelectedIndex] = this.data;
   this.ShowMessage('Work Time "' + this.data + '" is updated successfully.', '');
