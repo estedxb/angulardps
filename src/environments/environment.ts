@@ -21,7 +21,7 @@ export const environment = {
   createUser: 'User/Create',
   verifylogin: '',
   getLegalForm: '',
-  getCounteries: '',
+  getCounteries: 'countries',
   getParitairCommitee: 'ParitairCommitee',
   getStatute: '',
   getCodes: 'code',
@@ -48,7 +48,7 @@ export const environment = {
   getWorkscheduleEmpty: 'workschedules_empty.json',
   getFileUploads: '',
   getContract: 'Contract',
-  getDpsSchedules: 'Schedule', // ''
+  getDpsSchedules: 'Schedule',
   actionURL_1: 'customer/edit',
   actionURL_2: 'customer/position',
   actionURL_3: 'customer/user',
