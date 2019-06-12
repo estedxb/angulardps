@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
 import { Summaries } from '../../../shared/models';
+import { LoggingService } from '../../../shared/logging.service';
 @Component({
   selector: 'app-dashboardsummary',
   templateUrl: './dashboardaction.component.html',
@@ -18,15 +19,15 @@ export class DashboardActionComponent implements OnInit {
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
   public vatNumber: string;
 
-  constructor(public summaryService: SummaryService, private router: Router) { }
+  constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
 
   ngOnInit() {
     this.vatNumber = this.loginuserdetails.customerVatNumber;
-    // console.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
+    // this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);
       this.notificationcount = this.datas.length;
-      // console.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
+      // this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
   }
 
@@ -62,7 +63,7 @@ export class DashboardActionComponent implements OnInit {
     summaries.isFinished = true;
     this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
       this.datas.splice(index, 1);
-      // console.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
+      // this.logger.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
     }, error => this.errorMsg = error);
   }
 

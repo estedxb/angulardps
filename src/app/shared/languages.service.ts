@@ -4,6 +4,7 @@ import { Language } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class LanguagesService {
   private getLanguagesUrl = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getLanguages !== '') {
       this.getLanguagesUrl = environment.dpsAPI + environment.getLanguages;
     } else {
@@ -20,9 +21,9 @@ export class LanguagesService {
   }
 
   public getLanguages(): Observable<Language[]> {
-    // console.log('LanguagesService Data From = ' + this.getLanguagesUrl);
+    // this.logger.log('LanguagesService Data From = ' + this.getLanguagesUrl);
     const result = this.http.get<Language[]>(this.getLanguagesUrl).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 

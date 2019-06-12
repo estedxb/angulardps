@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 // import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-countries',
@@ -46,7 +47,7 @@ export class CountriesComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private countriesService: CountriesService) { }
+  constructor(private countriesService: CountriesService, private logger: LoggingService) { }
 
   ngOnInit() {
 
@@ -54,6 +55,7 @@ export class CountriesComponent implements OnInit {
       this.datas = countries;
       this.childEvent.emit(this.datas[0]);
       this.loadInitialData(this.datas);
+      // this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
@@ -61,7 +63,9 @@ export class CountriesComponent implements OnInit {
   }
 
   ngDoCheck() {
+    // this.logger.log(this.CountryFormData);
     if (this.CountryFormData !== this.oldCountryFormData) {
+      // this.logger.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
     }
@@ -69,20 +73,26 @@ export class CountriesComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.CountryFormData !== this.oldCountryFormData) {
+      // this.logger.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
     }
   }
 
   loadInitialData(datas: any) {
+    // this.logger.log('countryString=' + this.CountryFormData);
+    // this.logger.log(this.datas);
     if (datas.length !== 0) {
+      // this.logger.log('datas new country string');
       for (let i = 0; i < this.datas.length; i++) {
+        // this.logger.log('country=' + this.CountryFormData);
         if (this.datas[i].countryName === this.CountryFormData) {
           this._selectedIndex = i;
         }
       }
+      // this.logger.log('selected index=' + this._selectedIndex);
     } else {
-      console.log('null or undefined');
+      this.logger.log('null or undefined');
     }
 
   }

@@ -2,6 +2,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { LegalForm, Forms } from '../../shared/models';
 import { LegalformService } from '../../shared/legalform.service';
+import { LoggingService } from './../../shared/logging.service';
 
 @Component({
   selector: 'app-legal',
@@ -41,8 +42,8 @@ export class LegalComponent implements OnInit {
 
   ngDoCheck() {
 
-    if (this.legalFormData != this.oldlegalFormData) {
-      console.log("ngDoCheck legalForm data=" + this.legalFormData);
+    if (this.legalFormData !== this.oldlegalFormData) {
+      this.logger.log('ngDoCheck legalForm data=' + this.legalFormData);
       this.oldlegalFormData = this.legalFormData;
       this.loadInitialData(this.datas);
     }
@@ -52,7 +53,7 @@ export class LegalComponent implements OnInit {
   ngAfterViewInit() {
 
     if (this.legalFormData !== this.oldlegalFormData) {
-      console.log("ngDoCheck legalForm data=" + this.legalFormData);
+      this.logger.log('ngDoCheck legalForm data=' + this.legalFormData);
       this.oldlegalFormData = this.legalFormData;
       this.loadInitialData(this.datas);
     }
@@ -60,30 +61,30 @@ export class LegalComponent implements OnInit {
 
   loadInitialData(datas: any) {
 
-    console.log("legalString=" + this.legalFormData);
+    this.logger.log('legalString=' + this.legalFormData);
 
     if (datas.length !== 0) {
-      console.log("datas length=" + datas.length);
+      this.logger.log('datas length=' + datas.length);
 
-      for (var i = 0; i < this.datas.length; i++) {
-        if (this.datas[i].FormName === this.legalFormData)
+      for (let i = 0; i < this.datas.length; i++) {
+        if (this.datas[i].FormName === this.legalFormData) {
           this._selectedIndex = i;
+        }
       }
 
-      console.log("selected index=" + this._selectedIndex);
-    }
-    else {
-      console.log("null or undefined");
+      this.logger.log('selected index=' + this._selectedIndex);
+    } else {
+      this.logger.log('null or undefined');
     }
 
   }
 
   onChange($event) {
-  this.selectedIndex = $event.target.value;
+    this.selectedIndex = $event.target.value;
 
-    console.log("legalform selected=" + this.value);
-    console.log(this.value);
-    console.log("legalform selected=" + this.value.FormName);
+    this.logger.log('legalform selected=' + this.value);
+    this.logger.log(this.value);
+    this.logger.log('legalform selected=' + this.value.FormName);
 
     this.selectedString = this.value.FormName;
 
@@ -92,35 +93,36 @@ export class LegalComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private legalformService: LegalformService) {
-    console.log("constructor legalString=" + this.legalFormData);
+  constructor(private legalformService: LegalformService, private logger: LoggingService) {
+    this.logger.log('constructor legalString=' + this.legalFormData);
   }
 
   ngOnInit() {
 
-    console.log("init legalString received=" + this.legalFormData);
+    this.logger.log('init legalString received=' + this.legalFormData);
 
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
       this.datas = this.maindatas[this.currentlanguage];
-      console.log('Legal Forms Data : '); console.log(this.datas);
+      this.logger.log('Legal Forms Data : '); this.logger.log(this.datas);
 
       this.loadInitialData(this.datas);
     }, error => this.errorMsg = error);
 
-    console.log("legalFormData=" + this.legalFormData);
+    this.logger.log('legalFormData=' + this.legalFormData);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
 }
 
-// console.log(this.id); console.log($event.target.value);
-// console.log('Legal Forms Selected Data ::'); console.log(this.value);
+// this.logger.log(this.id); this.logger.log($event.target.value);
+// this.logger.log('Legal Forms Selected Data ::'); this.logger.log(this.value);
 
 /*
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { LoggingService } from '../../shared/logging.service';
 
 export const COMPONENT_NAME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

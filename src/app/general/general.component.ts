@@ -1,8 +1,11 @@
-import { Component, OnInit,Output, EventEmitter, Input } from '@angular/core';
-import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck, 
-  PhoneNumber, Address,StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
-  LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance, 
-  InvoiceSettings, Language, Contact } from '../shared/models';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { LoggingService } from '../shared/logging.service';
+import {
+  DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
+  PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
+  LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
+  InvoiceSettings, Language, Contact
+} from '../shared/models';
 
 @Component({
   selector: 'app-general',
@@ -11,30 +14,27 @@ import { DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
 })
 export class GeneralComponent implements OnInit {
 
-  vcaObject:VcaCertification;
+  vcaObject: VcaCertification;
   blkContracten: boolean;
 
-  public loadVCA:boolean;
-  public loadBlk:boolean;
+  public loadVCA: boolean;
+  public loadBlk: boolean;
 
   @Input() public GLFormData;
   @Output() public childEvent = new EventEmitter();
 
-  constructor() { 
+  constructor(private logger: LoggingService) {
     this.loadVCA = false;
     this.loadBlk = false;
   }
 
   ngDoCheck() {
 
-    if(this.GLFormData !== undefined)
-    {
-      if(this.GLFormData.data !== null)
-      {
+    if (this.GLFormData !== undefined) {
+      if (this.GLFormData.data !== null) {
         this.loadBlk = this.GLFormData.data.bulkContractsEnabled;
-        if(this.GLFormData.data.customer !== null && this.GLFormData.page === "edit")
-        {
-         this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
+        if (this.GLFormData.data.customer !== null && this.GLFormData.page === "edit") {
+          this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
         }
       }
     }
@@ -47,20 +47,20 @@ export class GeneralComponent implements OnInit {
   }
 
 
-  changeVca($event){
+  changeVca($event) {
 
     this.vcaObject.cerified = $event;
     this.emitData();
   }
 
-  changeBlk($event){
+  changeBlk($event) {
     this.blkContracten = $event;
     this.emitData();
   }
 
-  emitData(){
-    
-    let obj:any = { "vcaObject": this.vcaObject, "blk": this.blkContracten};
+  emitData() {
+
+    let obj: any = { "vcaObject": this.vcaObject, "blk": this.blkContracten };
 
     this.childEvent.emit(obj);
 

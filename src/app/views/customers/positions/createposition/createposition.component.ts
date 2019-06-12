@@ -7,6 +7,7 @@ import { FileuploadService } from 'src/app/shared/fileupload.service';
 import { environment } from '../../../../../environments/environment';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { saveAs } from 'file-saver';
+import { LoggingService } from '../../../../shared/logging.service';
 
 @Component({
   selector: 'app-createposition',
@@ -31,13 +32,13 @@ export class CreatepositionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService, private positionsService: PositionsService,
-    public dialogRef: MatDialogRef<CreatepositionComponent>, @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
+    public dialogRef: MatDialogRef<CreatepositionComponent>, @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion, private logger: LoggingService) {
     this.currentPosition = posistionData;
   }
 
   ngOnInit() {
-    console.log('Current Position :: ', this.currentPosition);
-    console.log('Current VatNumber : ' + this.VatNumber);
+    this.logger.log('Current Position :: ', this.currentPosition);
+    this.logger.log('Current VatNumber : ' + this.VatNumber);
 
     this.PositionForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
@@ -50,8 +51,8 @@ export class CreatepositionComponent implements OnInit {
   }
 
   loadPositionsToEdit() {
-    console.log('before');
-    console.log(this.currentPosition);
+    this.logger.log('before');
+    this.logger.log(this.currentPosition);
 
     if (this.currentPosition.id !== undefined || this.currentPosition.id !== 0) {
       this.PositionForm.controls.name.setValue(this.currentPosition.position.name);
@@ -68,8 +69,8 @@ export class CreatepositionComponent implements OnInit {
 
   onChange($event) {
     this.currentPosition.position.isStudentAllowed = $event;
-    console.log('after');
-    console.log(this.currentPosition);
+    this.logger.log('after');
+    this.logger.log(this.currentPosition);
   }
 
   public updateData() {
@@ -101,24 +102,22 @@ export class CreatepositionComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.fileToUpload = files.item(0);
       }
-      if(this.fileToUpload !==null)
-      {
-      this.currentPosition.position.workstationDocument.name = files.item(0).name;
-      this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionFileUploads + '' + files.item(0).name;
+      if (this.fileToUpload !== null) {
+        this.currentPosition.position.workstationDocument.name = files.item(0).name;
+        this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionFileUploads + '' + files.item(0).name;
       }
     }
   }
 
   uploadFileToActivity() {
-    //console.log('fileToUpload ::::::::' + this.fileToUpload.name);
-    if (this.fileToUpload !==null)
-    {
-    this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
-      // do something, if upload success
-    }, error => {
-      console.log(error);
-    });
- }
+    //this.logger.log('fileToUpload ::::::::' + this.fileToUpload.name);
+    if (this.fileToUpload !== null) {
+      this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
+        // do something, if upload success
+      }, error => {
+        this.logger.log(error);
+      });
+    }
   }
 
 
@@ -126,36 +125,36 @@ export class CreatepositionComponent implements OnInit {
 
   onSavePositionClick() {
     this.createObjects();
-    console.log('PositionData=' + this.currentPosition);
+    this.logger.log('PositionData=' + this.currentPosition);
     if (this.PositionForm.valid) {
       if (this.currentPosition !== undefined && this.currentPosition !== null) {
-        console.log('currentPosition.id =' + this.currentPosition.id);
+        this.logger.log('currentPosition.id =' + this.currentPosition.id);
         if (this.currentPosition.id !== undefined && this.currentPosition.id !== null && this.currentPosition.id > 0) {
           // Update Position         
           this.positionsService.updatePosition(this.currentPosition).subscribe(res => {
-            console.log('Update Position Response :: ', res);
+            this.logger.log('Update Position Response :: ', res);
             this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
 
           },
             (err: HttpErrorResponse) => {
 
-              console.log('Error :: ');
-              console.log(err);
+              this.logger.log('Error :: ');
+              this.logger.log(err);
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
 
         } else {
           // Create Position
-          console.log('Create Position');
+          this.logger.log('Create Position');
           this.positionsService.createPosition(this.currentPosition).subscribe(res => {
-            console.log('create Position  Response :: ', res.body);
+            this.logger.log('create Position  Response :: ', res.body);
             this.currentPosition.id = res.body;
             this.uploadFileToActivity();
             this.dialogRef.close(this.currentPosition);
@@ -164,20 +163,20 @@ export class CreatepositionComponent implements OnInit {
           },
             (err: HttpErrorResponse) => {
 
-              console.log('Error :: ');
-              console.log(err);
+              this.logger.log('Error :: ');
+              this.logger.log(err);
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         }
       }
     } else {
-      console.log('Form is Not Vaild');
+      this.logger.log('Form is Not Vaild');
     }
   }
 }

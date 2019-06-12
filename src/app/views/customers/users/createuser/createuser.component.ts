@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { UsersService } from 'src/app/shared/users.service';
 import { element } from '@angular/core/src/render3';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LoggingService } from '../../../../shared/logging.service';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -32,15 +33,15 @@ export class CreateuserComponent implements OnInit {
   language: Language;
 
   constructor(
-    private formBuilder: FormBuilder, private userService: UsersService,
+    private formBuilder: FormBuilder, private userService: UsersService, private logger: LoggingService,
     public dialogRef: MatDialogRef<CreateuserComponent>, @Inject(MAT_DIALOG_DATA) public userData: DpsUser) {
     this.currentUser = userData;
   }
 
   /*
   ngDoCheck() {
-    console.log('ngDoCheck CreateuserComponent');
-    console.log(this.currentUser);
+    this.logger.log('ngDoCheck CreateuserComponent');
+    this.logger.log(this.currentUser);
     if (this.oldCurrentUser !== this.currentUser) {
       this.oldCurrentUser = this.currentUser;
       this.loadUserToEdit();
@@ -49,8 +50,8 @@ export class CreateuserComponent implements OnInit {
   */
 
   ngOnInit() {
-    console.log('Current User :: ', this.currentUser);
-    console.log('Current VatNumber : ' + this.VatNumber);
+    this.logger.log('Current User :: ', this.currentUser);
+    this.logger.log('Current VatNumber : ' + this.VatNumber);
     this.UserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
@@ -63,7 +64,7 @@ export class CreateuserComponent implements OnInit {
   }
 
   loadUserToEdit() {
-    console.log('this.currentUser.user :: ', this.currentUser.user);
+    this.logger.log('this.currentUser.user :: ', this.currentUser.user);
     if (this.currentUser.user !== null) {
       if (this.currentUser.user.firstName !== null && this.currentUser.user.firstName !== '') {
         this.UserForm.controls.firstname.setValue(this.currentUser.user.firstName);
@@ -82,7 +83,7 @@ export class CreateuserComponent implements OnInit {
     } else {
       this.isNewUser = true;
     }
-    console.log('isNewUser :: ' + this.isNewUser);
+    this.logger.log('isNewUser :: ' + this.isNewUser);
   }
 
   receiveMessageLanguage($event: { name: any; shortName: any; }) {
@@ -108,7 +109,7 @@ export class CreateuserComponent implements OnInit {
   public updateData() { this.createObjects(); }
 
   createObjects() {
-    console.log('createObjects :: ', this.UserForm);
+    this.logger.log('createObjects :: ', this.UserForm);
     this.currentUser.user.userName = this.UserForm.get('emailaddress').value;
     this.currentUser.user.firstName = this.UserForm.get('firstname').value;
     this.currentUser.user.lastName = this.UserForm.get('lastname').value;
@@ -128,47 +129,47 @@ export class CreateuserComponent implements OnInit {
 
   onSaveUserClick() {
     this.createObjects();
-    console.log('data ::', this.currentUser);
+    this.logger.log('data ::', this.currentUser);
     if (this.UserForm.valid) {
       if (this.currentUser !== undefined && this.currentUser !== null) {
         if (!this.isNewUser) {
-          console.log('Update User');
+          this.logger.log('Update User');
           // Update User
           this.userService.updateUser(this.currentUser).subscribe(res => {
-            console.log('Update User Response :: ', res);
+            this.logger.log('Update User Response :: ', res);
             this.dialogRef.close(this.currentUser);
           },
             (err: HttpErrorResponse) => {
-              console.log('Error :: ');
-              console.log(err);
+              this.logger.log('Error :: ');
+              this.logger.log(err);
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         } else {
-          console.log('Create User');
+          this.logger.log('Create User');
           this.userService.createUser(this.currentUser).subscribe(res => {
-            console.log('  User Response :: ', res.body);
+            this.logger.log('  User Response :: ', res.body);
             this.currentUser = res.body;
             this.dialogRef.close(this.currentUser);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         }
       }
     } else {
-      console.log('Form is Not Vaild');
+      this.logger.log('Form is Not Vaild');
     }
   }
 }

@@ -10,6 +10,7 @@ import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
+import { LoggingService } from '../../../shared/logging.service';
 
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
@@ -63,7 +64,7 @@ export class AddPersonComponent implements OnInit {
   public SelectedIndexFunctie = 0;
   public maindatas = [];
   public statutes = [];
-  public countStatutes:number;
+  public countStatutes: number;
   public datas: DpsPostion;
   public selectedGenderIndex;
 
@@ -82,9 +83,9 @@ export class AddPersonComponent implements OnInit {
   public yearString;
 
   public message;
-  public bban:any = "";
-  public bbic:any = "";
-  public iban:any = "";
+  public bban: any = '';
+  public bbic: any = '';
+  public iban: any = '';
 
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
@@ -118,40 +119,56 @@ export class AddPersonComponent implements OnInit {
   set valueYear(value: any) { this._selectedValueYear = value; }
   get valueYear(): any { return this._selectedValueYear; }
   resetToInitValueYear() { this.value = this.selectedValue; }
-  SetInitialValueYear() { if (this.selectedValueYear === undefined) { this.selectedValueYear = this.dropDownYear[this.selectedIndexYear]; } }
+  SetInitialValueYear() {
+    if (this.selectedValueYear === undefined) { this.selectedValueYear = this.dropDownYear[this.selectedIndexYear]; }
+  }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
   private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 1; private _Functievalue: any;
   set selectedValueFunctie(value: any) { this._selectedIndexFunctie = value; }
   get selectedValueFunctie(): any { return this._selectedValueFunctie; }
-  set selectedIndexFunctieBox(value: number) { this._selectedIndexFunctie = value; this.valueFunctie = this.dataDropDownFunctie[this.selectedIndexFunctieBox]; }
-  get selectedIndexFunctieBox(): number { return this._selectedIndexFunctie }
+  set selectedIndexFunctieBox(value: number) {
+    this._selectedIndexFunctie = value; this.valueFunctie = this.dataDropDownFunctie[this.selectedIndexFunctieBox];
+  }
+  get selectedIndexFunctieBox(): number { return this._selectedIndexFunctie; }
   set valueFunctie(value: any) { this._Functievalue = value; }
   get valueFunctie(): any { return this._Functievalue; }
-  SetInitialValueFunctie() { if (this.selectedValueFunctie === undefined) { this.selectedValueFunctie = this.dataDropDownFunctie[this.selectedIndexFunctieBox]; } }
+  SetInitialValueFunctie() {
+    if (this.selectedValueFunctie === undefined) { this.selectedValueFunctie = this.dataDropDownFunctie[this.selectedIndexFunctieBox]; }
+  }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
+  // tslint:disable-next-line: member-ordering // tslint:disable-next-line: variable-name
   private _selectedValueGender: any; private _selectedIndexGender: any = 1; private _Gendervalue: any;
   set selectedValueGender(value: any) { this._selectedIndexGender = value; }
   get selectedValueGender(): any { return this._selectedValueGender; }
-  set selectedIndexGenderBox(value: number) { this._selectedIndexGender = value; this.valueGender = this.dataDropDownGender[this.selectedIndexGenderBox]; }
-  get selectedIndexGenderBox(): number { return this._selectedIndexGender }
+  set selectedIndexGenderBox(value: number) {
+    this._selectedIndexGender = value; this.valueGender = this.dataDropDownGender[this.selectedIndexGenderBox];
+  }
+  get selectedIndexGenderBox(): number { return this._selectedIndexGender; }
   set valueGender(value: any) { this._Gendervalue = value; }
   get valueGender(): any { return this._Gendervalue; }
-  SetInitialValueGender() { if (this.selectedValueGender === undefined) { this.selectedValueGender = this.dataDropDownGender[this.selectedIndexGenderBox]; } }
+  SetInitialValueGender() {
+    if (this.selectedValueGender === undefined) {
+      this.selectedValueGender = this.dataDropDownGender[this.selectedIndexGenderBox];
+    }
+  }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
-  constructor(public http:HttpClient, private personsService: PersonService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+  constructor(
+    public http: HttpClient, private personsService: PersonService,
+    private positionsService: PositionsService, private logger: LoggingService,
+    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
-    console.log("customerVatNumber="+this.loginuserdetails.customerVatNumber);
+    this.logger.log('customerVatNumber=' + this.loginuserdetails.customerVatNumber);
 
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
-      console.log('Positions Form Data : ', this.maindatas);
+      this.logger.log('Positions Form Data : ', this.maindatas);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
@@ -159,8 +176,8 @@ export class AddPersonComponent implements OnInit {
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
       this.setDummyStatute(this.statutes);
-      console.log('data from getStatutues(): ');
-      console.log(data);
+      this.logger.log('data from getStatutues(): ');
+      this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
@@ -179,10 +196,10 @@ export class AddPersonComponent implements OnInit {
       const dialogRef = this.dialog.open(CreatepositionComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        this.logger.log('The dialog was closed');
         this.datas = result;
-        //this.maindatas = result;
-        console.log('this.data ::', this.datas);
+        // this.maindatas = result;
+        this.logger.log('this.data ::', this.datas);
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
@@ -190,10 +207,10 @@ export class AddPersonComponent implements OnInit {
             this.FilterTheArchive();
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
-            console.log('this.data.id :: ', this.datas.id);
+            this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
               this.maindatas.push(this.datas);
-              console.log(' new this.maindatas :: ', this.maindatas);
+              this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
               this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
             }
@@ -211,9 +228,9 @@ export class AddPersonComponent implements OnInit {
 
     this.setDropDownYear();
 
-    this.dataDropDown = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
-    this.dropDownMonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    this.dataDropDownGender = ["Man", "Vrouw"];
+    this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.dataDropDownGender = ['Man', 'Vrouw'];
 
     this.AddPersonForm1 = new FormGroup({
       socialSecurityNumber: new FormControl(''),
@@ -251,13 +268,13 @@ export class AddPersonComponent implements OnInit {
       extra: new FormControl('', [Validators.required]),
     });
 
-    //this.createObjectsForm1();
+    // this.createObjectsForm1();
     this.SetInitialValue();
     this.SetInitialValueMonth();
     this.SetInitialValueYear();
     this.SetInitialValueGender();
 
-    //this.customSSIDValidator(this.AddPersonForm1.get('socialSecurityNumber').value); 
+    // this.customSSIDValidator(this.AddPersonForm1.get('socialSecurityNumber').value);
     this.validSSID = false;
 
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
@@ -265,17 +282,17 @@ export class AddPersonComponent implements OnInit {
       this.FilterTheArchive();
       this.dataDropDownFunctie = this.maindatas;
       this.fillDataDropDown(this.maindatas);
-      console.log("drop down functie");
-      console.log(this.dataDropDownFunctie);
-      console.log('Positions Form Data : ', this.maindatas);
+      this.logger.log('drop down functie');
+      this.logger.log(this.dataDropDownFunctie);
+      this.logger.log('Positions Form Data : ', this.maindatas);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
       this.setDummyStatute(this.statutes);
-      console.log('data from getStatutues(): ');
-      console.log(data);
+      this.logger.log('data from getStatutues(): ');
+      this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
@@ -286,7 +303,7 @@ export class AddPersonComponent implements OnInit {
     this.dataDropDownFunctie = [];
 
     for (let i = 0; i < maindatas.length; i++) {
-      let positionObject = maindatas[i].position.name;
+      const positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
     }
 
@@ -299,63 +316,66 @@ export class AddPersonComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
 
   setDropDownYear() {
     this.dropDownYear = new Array<string>();
-    for (let i: number = 1900; i <= 2019; i++)
+    for (let i = 1900; i <= 2019; i++) {
       this.dropDownYear.push("" + i);
+    }
   }
 
   onChangeDropDownGender($event) {
-    if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null)
+    if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
       this.DpsPersonObject.person.gender.title = $event.target.value;
+    }
     else {
       this.DpsPersonObject.person.gender = new Gender();
       this.DpsPersonObject.person.gender.title = $event.target.value;
     }
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
   }
 
   changeDropDownDateArray(event) {
 
-    let month: string = event;
-    console.log("selected month=" + month);
+    const month: string = event;
+    this.logger.log('selected month=' + month);
 
     this.dataDropDown = [];
 
-    if (month === "1") {
-      for (let i: number = 1; i <= 28; i++)
+    if (month === '1') {
+      for (let i = 1; i <= 28; i++) {
         this.dataDropDown.push("" + i);
-    }
-    else
-      if (month === "11" || month === "0" || month === "4" || month === "6" ||
-        month === "7" || month === "9" || month === "2") {
-        for (let i: number = 1; i <= 31; i++)
-          this.dataDropDown.push("" + i);
       }
-      else {
-        for (let i: number = 1; i <= 30; i++)
+    } else
+      if (month === '11' || month === '0' || month === '4' || month === '6' ||
+        month === '7' || month === '9' || month === '2') {
+        for (let i = 1; i <= 31; i++) {
           this.dataDropDown.push("" + i);
+        }
+      } else {
+        for (let i = 1; i <= 30; i++) {
+          this.dataDropDown.push("" + i);
+        }
       }
   }
 
   onChangeDropDownFunctie($event) {
-    console.log("selected functie=" + this.dataDropDownFunctie[$event.target.value]);
+    this.logger.log('selected functie=' + this.dataDropDownFunctie[$event.target.value]);
     this.DpsPersonObject.customerPostionId = this.dataDropDownFunctie[$event.target.value];
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
   }
 
   onChangeDropDownYear($event) {
     this.yearString = $event.value;
-    
+
   }
 
   onChangeDropDownMonth($event) {
-    console.log("selected month=" + $event.target.value);
+    this.logger.log('selected month=' + $event.target.value);
     this.changeDropDownDateArray($event.target.value);
     this.monthString = $event.value;
   }
@@ -367,33 +387,35 @@ export class AddPersonComponent implements OnInit {
 
   switchNetExpense($event) {
     this.DpsPersonObject.renumeration.costReimbursment = $event;
-    console.log("event=" + $event);
+    this.logger.log('event=' + $event);
   }
 
   customSSIDValidator(ssid: string) {
     this.validSSID = false;
-    let validSPCharacters: boolean = false;
+    let validSPCharacters = false;
 
-    if (ssid.length !== 15)
+    if (ssid.length !== 15) {
       return false;
+    }
 
-    if (ssid[2] === '.' && ssid[5] === '.' && ssid[8] === '-' && ssid[12] === '.')
+    if (ssid[2] === '.' && ssid[5] === '.' && ssid[8] === '-' && ssid[12] === '.') {
       validSPCharacters = true;
+    }
 
-    let firstTwo: string = ssid.substr(0, 2);
-    let firstTwoValid: boolean = this.checkDigits(firstTwo);
+    const firstTwo: string = ssid.substr(0, 2);
+    const firstTwoValid: boolean = this.checkDigits(firstTwo);
 
-    let secondTwo: string = ssid.substr(3, 2);
-    let secondTwoValid: boolean = this.checkDigits(secondTwo);
+    const secondTwo: string = ssid.substr(3, 2);
+    const secondTwoValid: boolean = this.checkDigits(secondTwo);
 
-    let thirdTwo: string = ssid.substr(6, 2);
-    let thirdTwoValid: boolean = this.checkDigits(thirdTwo);
+    const thirdTwo: string = ssid.substr(6, 2);
+    const thirdTwoValid: boolean = this.checkDigits(thirdTwo);
 
-    let nextThree: string = ssid.substr(9, 3);
-    let nextThreeValid: boolean = this.checkDigits(nextThree);
+    const nextThree: string = ssid.substr(9, 3);
+    const nextThreeValid: boolean = this.checkDigits(nextThree);
 
-    let lastTwo: string = ssid.substr(13);
-    let lastTwoValid: boolean = this.checkDigits(lastTwo);
+    const lastTwo: string = ssid.substr(13);
+    const lastTwoValid: boolean = this.checkDigits(lastTwo);
 
     if (validSPCharacters === true && firstTwoValid === true && secondTwoValid === true
       && thirdTwoValid === true && nextThreeValid === true && lastTwoValid === true) {
@@ -405,13 +427,15 @@ export class AddPersonComponent implements OnInit {
 
   checkDigits(digitString: string) {
 
-    let digitsValid: boolean = false;
+    let digitsValid = false;
 
     for (let index = 0; index < digitString.length; index++) {
-      if (digitString[index] >= '0' && digitString[index] <= '9')
+      if (digitString[index] >= '0' && digitString[index] <= '9') {
         digitsValid = true;
-      else
+      }
+      else {
         digitsValid = false;
+      }
     }
 
     return digitsValid;
@@ -420,15 +444,15 @@ export class AddPersonComponent implements OnInit {
   setDummyStatute(data) {
     this.dataDropDownStatute = [];
 
-      data.forEach(element => {
-        this.dataDropDownStatute.push(element.name);
-      });
+    data.forEach(element => {
+      this.dataDropDownStatute.push(element.name);
+    });
   }
 
 
   setPersonVatNumber() {
 
-    let ssid: number = this.AddPersonForm1.get('socialSecurityNumber').value;
+    const ssid: number = this.AddPersonForm1.get('socialSecurityNumber').value;
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
@@ -444,40 +468,38 @@ export class AddPersonComponent implements OnInit {
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
     this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
-    //this.DpsPersonObject.customerVatNumber = "123456789101";
+    // this.DpsPersonObject.customerVatNumber = "123456789101";
     this.DpsPersonObject.person = this.PersonObject;
 
-    // console.log("dps person object customer object=");
-    // console.log(this.DpsPersonObject);
+    // this.logger.log("dps person object customer object=");
+    // this.logger.log(this.DpsPersonObject);
 
   }
 
   getPersonbySSIDVatNumber() {
 
     if (this.validSSID === true) {
-      let ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
-      let customerVatNumber = this.loginuserdetails.customerVatNumber;
-      console.log("customerVatNumber=" + customerVatNumber);
+      const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
+      const customerVatNumber = this.loginuserdetails.customerVatNumber;
+      this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        console.log("response=" + res);
-        console.log(res);
+        this.logger.log('response=' + res);
+        this.logger.log(res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Error occured=" + err.error.message);
+            this.logger.log('Error occured=' + err.error.message);
             this.loadDOBFromSSID();
-          }
-          else {
-            console.log("response code=" + err.status);
-            console.log("response body=" + err.error);
+          } else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
           }
         }
       );
-    }
-    else {
-      console.log("invalid SSN format");
+    } else {
+      this.logger.log('invalid SSN format');
       this.resetPeronData();
     }
 
@@ -485,26 +507,26 @@ export class AddPersonComponent implements OnInit {
 
   loadDOBFromSSID() {
 
-    let ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
-    let dobString: string = ssid.substring(0, 8);
+    const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
+    const dobString: string = ssid.substring(0, 8);
 
-    let stringData = dobString.split('.');
-    //let dobArray = stringData.split('T');
-    //let dobString:string = dobArray[0];
+    const stringData = dobString.split('.');
+    // let dobArray = stringData.split('T');
+    // let dobString:string = dobArray[0];
 
-    //this.loadDOBData(stringData);
+    // this.loadDOBData(stringData);
 
 
   }
 
   loadDOBData(dateOfBirth: string) {
 
-    console.log("date of birth=" + dateOfBirth);
+    this.logger.log('date of birth=' + dateOfBirth);
 
-    let dobArrayData = dateOfBirth.split("-");
-    let yearString: string = dobArrayData[0];
-    let monthString: string = dobArrayData[1];
-    let dayString: string = dobArrayData[2];
+    const dobArrayData = dateOfBirth.split('-');
+    const yearString: string = dobArrayData[0];
+    const monthString: string = dobArrayData[1];
+    const dayString: string = dobArrayData[2];
 
     this._selectedIndexdays = parseInt(dayString, 10);
     this._selectedIndexMonth = parseInt(monthString, 10) - 1;
@@ -518,7 +540,7 @@ export class AddPersonComponent implements OnInit {
 
   }
 
-  // // get bban from iban 
+  // // get bban from iban
   // soapCallGetBBAN() {
 
   //   var xmlHttp = new XMLHttpRequest();
@@ -537,7 +559,7 @@ export class AddPersonComponent implements OnInit {
   //        if(xmlHttp.status == 200){
   //          var xml = xmlHttp.responseXML;
   //          reponse = parseInt(xml.getElementsByTagName("return")[0].childNodes[0].nodeValue);
-  //          console.log("response="+reponse);
+  //          this.logger.log("response="+reponse);
   //        }
   //     }
   //   }
@@ -548,52 +570,52 @@ export class AddPersonComponent implements OnInit {
 
   // }
 
-soapCallFetchBBAN() {
+  soapCallFetchBBAN() {
 
-let parser = new DOMParser();
-let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-                +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-                +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-                +'<Value>BE46001664436336</Value>'
-                +'</getBelgianBBAN></soap12:Body></soap12:Envelope>'
+    const parser = new DOMParser();
+    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+      + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
+      + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
+      + '<Value>BE46001664436336</Value>'
+      + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
-let doc = parser.parseFromString(xmlString,'text/xml');
-let headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin','*')
+    const doc = parser.parseFromString(xmlString, 'text/xml');
+    const headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
-        console.log("data="+data);
-        this.bban = data;
-        this.soapCallGetBIC();
-});
-  
-}
-
-  // bic from bban
-  soapCallGetBIC(){
-
-    let parser = new DOMParser();
-    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-                    +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
-                    +'<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-                    +'<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
-
-    let headers = new HttpHeaders()
-    .set('Access-Control-Allow-Origin','*')
-    .set('Content-Type', 'application/soap+xml');
-              
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
-            console.log("data="+data);
-            this.bbic = data;
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+      this.logger.log('data=' + data);
+      this.bban = data;
+      this.soapCallGetBIC();
     });
 
-  if (this.DpsPersonObject !== null) {
-    if (this.DpsPersonObject.person !== null) {
+  }
+
+  // bic from bban
+  soapCallGetBIC() {
+
+    const parser = new DOMParser();
+    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+      + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+      + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
+      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>';
+
+    const headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Content-Type', 'application/soap+xml');
+
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+      this.logger.log('data=' + data);
+      this.bbic = data;
+    });
+
+    if (this.DpsPersonObject !== null) {
+      if (this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.bankAccount = new BankAccount();
         this.DpsPersonObject.person.bankAccount.iban = this.iban;
         this.DpsPersonObject.person.bankAccount.bic = this.bbic;
-        this.AddPersonForm1.controls['bic'].setValue(this.bbic);
+        this.AddPersonForm1.controls.bic.setValue(this.bbic);
       }
     }
   }
@@ -605,40 +627,40 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
 
   resetPeronData() {
 
-    this.AddPersonForm1.controls['placeOfBirth'].setValue("");
-    this.AddPersonForm1.controls['countryOfBirth'].setValue("");
-    this.AddPersonForm1.controls['nationality'].setValue("");
-    this.AddPersonForm1.controls['firstName'].setValue("");
-    this.AddPersonForm1.controls['lastName'].setValue("");
-    this.AddPersonForm1.controls['street'].setValue("");
-    this.AddPersonForm1.controls['streetNumber'].setValue("");
-    this.AddPersonForm1.controls['bus'].setValue("");
-    this.AddPersonForm1.controls['city'].setValue("");
-    this.AddPersonForm1.controls['postalCode'].setValue("");
-    this.AddPersonForm1.controls['country'].setValue("");
-    this.AddPersonForm1.controls['emailAddress'].setValue("");
+    this.AddPersonForm1.controls.placeOfBirth.setValue('');
+    this.AddPersonForm1.controls.countryOfBirth.setValue('');
+    this.AddPersonForm1.controls.nationality.setValue('');
+    this.AddPersonForm1.controls.firstName.setValue('');
+    this.AddPersonForm1.controls.lastName.setValue('');
+    this.AddPersonForm1.controls.street.setValue('');
+    this.AddPersonForm1.controls.streetNumber.setValue('');
+    this.AddPersonForm1.controls.bus.setValue('');
+    this.AddPersonForm1.controls.city.setValue('');
+    this.AddPersonForm1.controls.postalCode.setValue('');
+    this.AddPersonForm1.controls.country.setValue('');
+    this.AddPersonForm1.controls.emailAddress.setValue('');
     // this.languageString = data.person.language.name;
 
-    this.AddPersonForm1.controls['iban'].setValue("");
-    this.AddPersonForm1.controls['bic'].setValue("");
+    this.AddPersonForm1.controls.iban.setValue('');
+    this.AddPersonForm1.controls.bic.setValue('');
 
-    this.AddPersonForm1.controls['mobileNumber'].setValue("");
-    this.AddPersonForm1.controls['telephoneNumber'].setValue("");
+    this.AddPersonForm1.controls.mobileNumber.setValue('');
+    this.AddPersonForm1.controls.telephoneNumber.setValue('');
   }
 
   loadPersonData(response) {
 
-    console.log(response.body);
-    let data = response.body;
+    this.logger.log(response.body);
+    const data = response.body;
 
     if (data.person !== null) {
 
-      let stringData: string = data.person.dateOfBirth.toString();
-      let dobArray = stringData.split('T');
-      let dobString: string = dobArray[0];
+      const stringData: string = data.person.dateOfBirth.toString();
+      const dobArray = stringData.split('T');
+      const dobString: string = dobArray[0];
       this.loadDOBData(dobString);
 
-      let genderObject = new Gender();
+      const genderObject = new Gender();
 
       if (data.person.gender !== null) {
         genderObject.genderId = data.person.gender.genderId;
@@ -647,36 +669,36 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
         this.selectedGenderIndex = genderObject.genderId;
       }
 
-      this.AddPersonForm1.controls['placeOfBirth'].setValue(data.person.placeOfBirth);
-      this.AddPersonForm1.controls['countryOfBirth'].setValue(data.person.countryOfBirth);
-      this.AddPersonForm1.controls['nationality'].setValue(data.person.nationality);
-      this.AddPersonForm1.controls['firstName'].setValue(data.person.firstName);
-      this.AddPersonForm1.controls['lastName'].setValue(data.person.lastName);
+      this.AddPersonForm1.controls.placeOfBirth.setValue(data.person.placeOfBirth);
+      this.AddPersonForm1.controls.countryOfBirth.setValue(data.person.countryOfBirth);
+      this.AddPersonForm1.controls.nationality.setValue(data.person.nationality);
+      this.AddPersonForm1.controls.firstName.setValue(data.person.firstName);
+      this.AddPersonForm1.controls.lastName.setValue(data.person.lastName);
     }
 
     if (data.person.address !== null) {
-      this.AddPersonForm1.controls['street'].setValue(data.person.address.street);
-      this.AddPersonForm1.controls['streetNumber'].setValue(data.person.address.streetNumber);
-      this.AddPersonForm1.controls['bus'].setValue(data.person.address.bus);
-      this.AddPersonForm1.controls['city'].setValue(data.person.address.city);
-      this.AddPersonForm1.controls['postalCode'].setValue(data.person.address.postalCode);
-      this.AddPersonForm1.controls['country'].setValue(data.person.address.country);
-      this.AddPersonForm1.controls['emailAddress'].setValue(data.person.email.emailAddress);
+      this.AddPersonForm1.controls.street.setValue(data.person.address.street);
+      this.AddPersonForm1.controls.streetNumber.setValue(data.person.address.streetNumber);
+      this.AddPersonForm1.controls.bus.setValue(data.person.address.bus);
+      this.AddPersonForm1.controls.city.setValue(data.person.address.city);
+      this.AddPersonForm1.controls.postalCode.setValue(data.person.address.postalCode);
+      this.AddPersonForm1.controls.country.setValue(data.person.address.country);
+      this.AddPersonForm1.controls.emailAddress.setValue(data.person.email.emailAddress);
     }
 
     // this.languageString = data.person.language.name;
 
     if (data.person.bankAccount !== null) {
-      this.AddPersonForm1.controls['iban'].setValue(data.person.bankAccount.iban);
-      this.AddPersonForm1.controls['bic'].setValue(data.person.bankAccount.bic);
+      this.AddPersonForm1.controls.iban.setValue(data.person.bankAccount.iban);
+      this.AddPersonForm1.controls.bic.setValue(data.person.bankAccount.bic);
     }
 
     if (data.person.mobile !== null) {
-      this.AddPersonForm1.controls['mobileNumber'].setValue(data.person.mobile.number);
+      this.AddPersonForm1.controls.mobileNumber.setValue(data.person.mobile.number);
     }
 
     if (data.person.phone !== null) {
-      this.AddPersonForm1.controls['telephoneNumber'].setValue(data.person.phone.number);
+      this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
   }
@@ -694,7 +716,7 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject = new DpsPerson();
-    this.DpsPersonObject.customerVatNumber = "";
+    this.DpsPersonObject.customerVatNumber = '';
 
     this.DpsPersonObject.person = new Person();
     this.DpsPersonObject.person.socialSecurityNumber = response.person.socialSecurityNumber;
@@ -742,7 +764,7 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
     this.DpsPersonObject.vcaAttestation = new Documents();
     this.DpsPersonObject.vcaAttestation = response.vcaAttestation;
 
-    //this.DpsPersonObject.constructionProfile = new ConstructionProfile();
+    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = response.constructionCards;
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
@@ -775,7 +797,7 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
-    this.DpsPersonObject.person.gender.title = "Male";
+    this.DpsPersonObject.person.gender.title = 'Male';
 
     this.DpsPersonObject.person.firstName = this.AddPersonForm1.get('firstName').value;
     this.DpsPersonObject.person.lastName = this.AddPersonForm1.get('lastName').value;
@@ -786,8 +808,8 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
     this.DpsPersonObject.person.address.bus = this.AddPersonForm1.get('bus').value;
     this.DpsPersonObject.person.address.city = this.AddPersonForm1.get('city').value;
     this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalCode').value;
-    this.DpsPersonObject.person.address.country = "New country";
-    this.DpsPersonObject.person.address.countryCode = "NX";
+    this.DpsPersonObject.person.address.country = 'New country';
+    this.DpsPersonObject.person.address.countryCode = 'NX';
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.AddPersonForm1.get('emailAddress').value;
@@ -801,57 +823,57 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
     this.DpsPersonObject.person.language = new Language();
-    this.DpsPersonObject.person.language.name = "";
-    this.DpsPersonObject.person.language.shortName = "";
+    this.DpsPersonObject.person.language.name = '';
+    this.DpsPersonObject.person.language.shortName = '';
 
     this.DpsPersonObject.person.bankAccount = new BankAccount();
     this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
 
     this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
-    this.DpsPersonObject.person.status = "";
+    this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
-    this.DpsPersonObject.statute.name = "";
-    this.DpsPersonObject.statute.type = "";
+    this.DpsPersonObject.statute.name = '';
+    this.DpsPersonObject.statute.type = '';
 
-    this.DpsPersonObject.customerPostionId = "";
+    this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = "";
+    this.DpsPersonObject.addittionalInformation = '';
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
-    this.DpsPersonObject.medicalAttestation.location = "";
-    this.DpsPersonObject.medicalAttestation.name = "";
+    this.DpsPersonObject.medicalAttestation.location = '';
+    this.DpsPersonObject.medicalAttestation.name = '';
 
     this.DpsPersonObject.vcaAttestation = new Documents();
-    this.DpsPersonObject.vcaAttestation.location = "";
-    this.DpsPersonObject.vcaAttestation.name = "";
+    this.DpsPersonObject.vcaAttestation.location = '';
+    this.DpsPersonObject.vcaAttestation.name = '';
 
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
     this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
-    this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
-    this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
+    this.DpsPersonObject.studentAtWorkProfile.attestation.location = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestation.name = '';
+    this.DpsPersonObject.studentAtWorkProfile.attestationDate = '10/10/2019';
     this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
     this.DpsPersonObject.studentAtWorkProfile.balance = 0;
 
     this.DpsPersonObject.driverProfiles = [];
 
-    let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
+    const driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
     driverProfilesObject.attestation = new Documents();
-    driverProfilesObject.attestation.location = "";
-    driverProfilesObject.attestation.name = "";
+    driverProfilesObject.attestation.location = '';
+    driverProfilesObject.attestation.name = '';
 
     this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
 
     this.DpsPersonObject.otherDocuments = [];
 
-    let otherDocumentsObject: Documents = new Documents();
-    otherDocumentsObject.location = "";
-    otherDocumentsObject.name = "";
+    const otherDocumentsObject: Documents = new Documents();
+    otherDocumentsObject.location = '';
+    otherDocumentsObject.name = '';
 
     this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
 
@@ -865,33 +887,33 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
   }
 
   onChangeDropDownStatute($event) {
-    console.log("dropdown value=" + $event.target.value);
+    this.logger.log('dropdown value=' + $event.target.value);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       this.DpsPersonObject.statute = new Statute();
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
-      this.DpsPersonObject.statute.type = "";
+      this.DpsPersonObject.statute.type = '';
     }
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
   }
 
   onLanguageReceive($event) {
 
-    console.log("language=" + $event.name);
-    console.log("language=" + $event.shortName);
+    this.logger.log('language=' + $event.name);
+    this.logger.log('language=' + $event.shortName);
 
     if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined) {
       this.DpsPersonObject.person.language = new Language();
       this.DpsPersonObject.person.language.name = $event.name;
       this.DpsPersonObject.person.language.shortName = $event.shortName;
     }
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
   }
 
   onCountryReceive($event) {
 
-    // console.log("on Country Receive");
-    // console.log(this.DpsPersonObject);
+    // this.logger.log("on Country Receive");
+    // this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -908,7 +930,7 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
   onStatuteReceive($event) {
     if (this.DpsPersonObject !== null) {
       this.DpsPersonObject.statute = new Statute();
-      this.DpsPersonObject.statute.name = $event.value.name
+      this.DpsPersonObject.statute.name = $event.value.name;
       this.DpsPersonObject.statute.type = $event.value.type;
     }
   }
@@ -962,8 +984,7 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
     if (this.showFormIndex === 1) {
       this.showFormIndex = 2;
       this.createObjectsForm1();
-    }
-    else {
+    } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
         this.showFormIndex = 3;
@@ -973,15 +994,14 @@ this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString,
 
   postPersonData() {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
-      console.log("response=" + res);
+      this.logger.log('response=' + res);
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Error occured=" + err.error.message);
-        }
-        else {
-          console.log("response code=" + err.status);
-          console.log("response body=" + err.error);
+          this.logger.log('Error occured=' + err.error.message);
+        } else {
+          this.logger.log('response code=' + err.status);
+          this.logger.log('response body=' + err.error);
         }
       }
     );

@@ -1,8 +1,9 @@
-import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
-//import { ParitairCommitee } from '../../shared/models';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+// import { ParitairCommitee } from '../../shared/models';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 // import { $ } from 'jquery';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-jointcommittee',
@@ -20,10 +21,10 @@ export class JointcommitteeComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
-  public stringJCReceived:string;
-  
+  public stringJCReceived: string;
+
   // tslint:disable-next-line: variable-name
-  private _selectedValue: any ; private _selectedIndex: any = 0;  private _value: any ;
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
 
   set selectedValue(value: any) { this._selectedValue = value; }
   get selectedValue(): any { return this._selectedValue; }
@@ -34,41 +35,40 @@ export class JointcommitteeComponent implements OnInit {
   resetToInitValue() { this.value = this.selectedValue; }
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
 
-  onChange($event) { 
+  onChange($event) {
     this.selectedIndex = $event.target.value;
-    let obj:any = { "selectedObject": this.value, "arrayObject": this.datas};
+    const obj: any = { selectedObject: this.value, arrayObject: this.datas };
     this.childEvent.emit(obj);
-    return this.value; 
+    return this.value;
   }
 
-  constructor(private jointcommitteeService: JointcommitteeService) { 
+  constructor(private jointcommitteeService: JointcommitteeService, private logger: LoggingService) {
   }
 
-  ngDoCheck() 
-  {
-    if(this.JCFormData !== undefined)
-    {
-        this.loadDropDownData(this.JCFormData);
+  ngDoCheck() {
+    if (this.JCFormData !== undefined) {
+      this.loadDropDownData(this.JCFormData);
     }
   }
 
   filterDatas(datas) {
 
-    console.log("filtering the data from array");
-    console.log(datas.length);
+    this.logger.log('filtering the data from array');
+    this.logger.log(datas.length);
 
-    console.log("current typeworker = "+this.TypeWorker);
+    this.logger.log('current typeworker = ' + this.TypeWorker);
 
     this.datas = [];
 
-    for(let counter=0;counter<datas.length;counter+=1){
+    for (let counter = 0; counter < datas.length; counter += 1) {
 
-        if(this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase())
-            this.datas.push(datas[counter]);
+      if (this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase()) {
+        this.datas.push(datas[counter]);
+      }
     }
 
-    console.log("filtered Array");
-    console.log(this.datas);
+    this.logger.log('filtered Array');
+    this.logger.log(this.datas);
 
   }
 
@@ -77,8 +77,8 @@ export class JointcommitteeComponent implements OnInit {
     this.resetToInitValue();
 
     this.jointcommitteeService.getJointCommitees().
-         subscribe(data => {this.filterDatas(data);},
-            error => this.errorMsg = error);
+      subscribe(data => { this.filterDatas(data); },
+        error => this.errorMsg = error);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
@@ -86,14 +86,12 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   loadDropDownData(stringJCReceived) {
-    
-    
-    for(let i=0;i<this.datas.length;i++)
-    {
-         if(this.datas[i] === stringJCReceived)
-         {
-           this._selectedIndex = i;
-         }
+
+
+    for (let i = 0; i < this.datas.length; i++) {
+      if (this.datas[i] === stringJCReceived) {
+        this._selectedIndex = i;
+      }
     }
   }
 

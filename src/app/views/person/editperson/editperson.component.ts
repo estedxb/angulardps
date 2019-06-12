@@ -13,7 +13,8 @@ import {
 } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-editperson',
@@ -67,18 +68,20 @@ export class EditPersonComponent implements OnInit {
 
   public dayString;
   public monthString;
-  public yearString;  
+  public yearString;
 
   public calendarData: string;
   public countryString: string;
-  public languageString:string;
+  public languageString: string;
 
   public message;
-  public bbic:any;
-  public bban:any;
-  public iban:any;
+  public bbic: any;
+  public bban: any;
+  public iban: any;
 
-  constructor(public http:HttpClient,private personsService: PersonService, private data: DataService,private spinner: NgxSpinnerService) { }
+  constructor(
+    public http: HttpClient, private personsService: PersonService, private data: DataService,
+    private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   setDummyStatute() {
   }
@@ -88,25 +91,25 @@ export class EditPersonComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   ngOnInit() {
-    console.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
     this.data.currentMessage.subscribe(message => this.message = message);
 
     this.onPageInit();
     this.loadDOBFromSSID();
     this.createObjectsForm1();
 
-      /** spinner starts on init */
-      this.spinner.show();
- 
-      // setTimeout(() => {
-      //     /** spinner ends after 5 seconds */
-      //     this.spinner.hide();
-      // }, 15000);
+    /** spinner starts on init */
+    this.spinner.show();
+
+    // setTimeout(() => {
+    //     /** spinner ends after 5 seconds */
+    //     this.spinner.hide();
+    // }, 15000);
 
   }
 
   changeMessage() {
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
     if (this.DpsPersonObject !== null) {
       const newmessage: any = {
         page: 'edit',
@@ -208,22 +211,22 @@ export class EditPersonComponent implements OnInit {
       const customerVatNumber = this.loginuserdetails.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-        console.log('response=' + res);
-        console.log(res);
+        this.logger.log('response=' + res);
+        this.logger.log(res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log('Error occured=' + err.error.message);
+            this.logger.log('Error occured=' + err.error.message);
             this.loadDOBFromSSID();
           } else {
-            console.log('response code=' + err.status);
-            console.log('response body=' + err.error);
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
           }
         }
       );
     } else {
-      console.log('invalid SSN format');
+      this.logger.log('invalid SSN format');
       this.resetPeronData();
     }
   }
@@ -238,7 +241,7 @@ export class EditPersonComponent implements OnInit {
 
   loadDOBData(dateOfBirth: string) {
 
-    console.log('date of birth=' + dateOfBirth);
+    this.logger.log('date of birth=' + dateOfBirth);
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -256,7 +259,7 @@ export class EditPersonComponent implements OnInit {
     console.log(this.dayString);
     console.log(this.yearString);
 
-    console.log('setting calendar data=' + this.calendarData);
+    this.logger.log('setting calendar data=' + this.calendarData);
 
   }
 
@@ -264,54 +267,52 @@ export class EditPersonComponent implements OnInit {
 
     let parser = new DOMParser();
     let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-                    +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-                    +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-                    +'<Value>BE46001664436336</Value>'
-                    +'</getBelgianBBAN></soap12:Body></soap12:Envelope>'
-    
-    let doc = parser.parseFromString(xmlString,'text/xml');
+      + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
+      + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
+      + '<Value>BE46001664436336</Value>'
+      + '</getBelgianBBAN></soap12:Body></soap12:Envelope>'
+
+    let doc = parser.parseFromString(xmlString, 'text/xml');
     let headers = new HttpHeaders()
-          .set('Access-Control-Allow-Origin','*')
-          .set('Content-Type', 'application/soap+xml');
-    
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
-            console.log("data="+data);
-            this.bban = data;
-            this.soapCallGetBIC();
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Content-Type', 'application/soap+xml');
+
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers: headers }).subscribe(data => {
+      this.logger.log("data=" + data);
+      this.bban = data;
+      this.soapCallGetBIC();
     });
-      
-    }
-    
-      // bic from bban
-soapCallGetBIC()
-{
-  let parser = new DOMParser();
-  let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-                  +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
-                  +'<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-                  +'<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
-    
-  let headers = new HttpHeaders()
-  .set('Access-Control-Allow-Origin','*')
-  .set('Content-Type', 'application/soap+xml');
-                  
-  this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',xmlString, { headers: headers}).subscribe(data => {
-          console.log("data="+data);
-          this.bbic = data;
-  });
-    
-  if(this.DpsPersonObject !== null) 
-  {
-          if (this.DpsPersonObject.person !== null) {
-            this.DpsPersonObject.person.bankAccount = new BankAccount();
-            this.DpsPersonObject.person.bankAccount.iban = this.iban;
-            this.DpsPersonObject.person.bankAccount.bic = this.bbic;
-            this.editPersonForm.controls['bic'].setValue(this.bbic);
-          }
-      this.changeMessage();    
+
   }
 
-}  
+  // bic from bban
+  soapCallGetBIC() {
+    let parser = new DOMParser();
+    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+      + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+      + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
+      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
+
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Content-Type', 'application/soap+xml');
+
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers: headers }).subscribe(data => {
+      this.logger.log("data=" + data);
+      this.bbic = data;
+    });
+
+    if (this.DpsPersonObject !== null) {
+      if (this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.bankAccount = new BankAccount();
+        this.DpsPersonObject.person.bankAccount.iban = this.iban;
+        this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+        this.editPersonForm.controls['bic'].setValue(this.bbic);
+      }
+      this.changeMessage();
+    }
+
+  }
 
   setIbanNumber(value: string) {
     this.soapCallFetchBBAN();
@@ -319,8 +320,8 @@ soapCallGetBIC()
 
   onChangeDropDownGender($event) {
 
-    console.log('selected index=' + $event.target.value);
-    console.log('selected value=' + this.dataDropDownGender[$event.target.value]);
+    this.logger.log('selected index=' + $event.target.value);
+    this.logger.log('selected value=' + this.dataDropDownGender[$event.target.value]);
 
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -358,7 +359,7 @@ soapCallGetBIC()
 
   loadPersonData(response) {
 
-    console.log(response.body);
+    this.logger.log(response.body);
     const data = response.body;
 
     if (data.person !== null) {
@@ -417,8 +418,8 @@ soapCallGetBIC()
   }
 
   receiveDOBDate($event) {
-    console.log('recevied date=');
-    console.log($event);
+    this.logger.log('recevied date=');
+    this.logger.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
@@ -427,11 +428,11 @@ soapCallGetBIC()
     let monthInNumber = -1;
     let counter = 0;
 
-    console.log('monthString=' + this.monthString);
+    this.logger.log('monthString=' + this.monthString);
 
     this.dropDownMonth.forEach(element => {
 
-      console.log('month=' + element);
+      this.logger.log('month=' + element);
       if (element === this.monthString) {
         monthInNumber = counter;
       }
@@ -447,9 +448,9 @@ soapCallGetBIC()
 
   onCountryReceive($event) {
 
-    console.log('Received Country');
-    console.log('country=' + $event.countryName);
-    console.log('countryName=' + $event.countryCode);
+    this.logger.log('Received Country');
+    this.logger.log('country=' + $event.countryName);
+    this.logger.log('countryName=' + $event.countryCode);
 
     if (this.DpsPersonObject.person.address !== null) {
       this.DpsPersonObject.person.address.country = $event.countryName;
@@ -462,9 +463,9 @@ soapCallGetBIC()
 
   onLanguageReceive($event) {
 
-    console.log('Received Language');
-    console.log('name=' + $event.name);
-    console.log('short name=' + $event.shortName);
+    this.logger.log('Received Language');
+    this.logger.log('name=' + $event.name);
+    this.logger.log('short name=' + $event.shortName);
 
     if (this.DpsPersonObject.person.language === null) {
       this.DpsPersonObject.person.language = new Language();
@@ -481,7 +482,7 @@ soapCallGetBIC()
 
   setPersonVatNumber() {
 
-    console.log('calling set person vat number method');
+    this.logger.log('calling set person vat number method');
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
@@ -525,89 +526,89 @@ soapCallGetBIC()
     return this.validSSID;
   }
 
-  updateMobileNumber(value:string){
+  updateMobileNumber(value: string) {
     this.DpsPersonObject.person.mobile.number = value;
     this.changeMessage();
   }
 
-  updatePostalCode(value:string){
+  updatePostalCode(value: string) {
     this.DpsPersonObject.person.address.postalCode = value;
     this.changeMessage();
   }
 
-  updateCity(value:string){
+  updateCity(value: string) {
     this.DpsPersonObject.person.address.city = value;
     this.changeMessage();
   }
 
-  updateBus(value:string){
+  updateBus(value: string) {
     this.DpsPersonObject.person.address.bus = value;
     this.changeMessage();
   }
 
-  updateStreetNumber(value:string) {
+  updateStreetNumber(value: string) {
     this.DpsPersonObject.person.address.streetNumber = value;
     this.changeMessage();
   }
 
-  updateStreet(value:string) {
+  updateStreet(value: string) {
     this.DpsPersonObject.person.address.street = value;
     this.changeMessage();
   }
 
-  updateFirstName(value:string) {
+  updateFirstName(value: string) {
     this.DpsPersonObject.person.firstName = value;
     this.changeMessage();
   }
 
-  updateLastName(value:string) {
+  updateLastName(value: string) {
     this.DpsPersonObject.person.lastName = value;
     this.changeMessage();
   }
 
-  updateEmailAddress(value:string) {
+  updateEmailAddress(value: string) {
     this.DpsPersonObject.person.email.emailAddress = value;
     this.changeMessage();
   }
 
-  updateTelephoneNumber(value:string) {
+  updateTelephoneNumber(value: string) {
     this.DpsPersonObject.person.phone.number = value;
     this.changeMessage();
   }
 
-  updateNationality(value:string){
+  updateNationality(value: string) {
     this.DpsPersonObject.person.nationality = value;
     this.changeMessage();
   }
 
-  updatePOB(value:string){
+  updatePOB(value: string) {
     this.DpsPersonObject.person.placeOfBirth = value;
     this.changeMessage();
   }
 
-  updateCOB(value:string){
+  updateCOB(value: string) {
     this.DpsPersonObject.person.countryOfBirth = value;
     this.changeMessage();
   }
 
-  updateIban(value:string){
+  updateIban(value: string) {
     this.DpsPersonObject.person.bankAccount.iban = value;
     this.changeMessage();
   }
 
-  updateBIC(value:string){
+  updateBIC(value: string) {
     this.DpsPersonObject.person.bankAccount.bic = value;
     this.changeMessage();
   }
 
-  updatetravelMode(value:string){
+  updatetravelMode(value: string) {
     this.DpsPersonObject.person.travelMode = value;
     this.changeMessage();
   }
 
   createObjectsForm1() {
 
-    console.log('create objects form1 called');
+    this.logger.log('create objects form1 called');
 
     this.DpsPersonObject = new DpsPerson();
     this.PersonObject = new Person();

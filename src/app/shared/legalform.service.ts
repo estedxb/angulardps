@@ -4,12 +4,13 @@ import { LegalForm } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class LegalformService {
   private getLegalFormUrl = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getLegalForm !== '') {
       this.getLegalFormUrl = environment.dpsAPI + environment.getLegalForm;
     } else {
@@ -18,9 +19,9 @@ export class LegalformService {
   }
 
   public getLegalForms(): Observable<LegalForm[]> {
-    // console.log('LegalformService Data From = ' + this.getLegalFormUrl);
+    // this.logger.log('LegalformService Data From = ' + this.getLegalFormUrl);
     const result = this.http.get<LegalForm[]>(this.getLegalFormUrl).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 

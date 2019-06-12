@@ -1,4 +1,4 @@
-import { FormGroup,FormControl,Validators,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
@@ -12,6 +12,7 @@ import {
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-personposition',
@@ -24,7 +25,7 @@ export class PersonPositionComponent implements OnInit {
   public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
 
   public PersonPositionForm: FormGroup;
-  public dataDropDownStatute:Array<string>;
+  public dataDropDownStatute: Array<string>;
   public maindatas = [];
   public datas: DpsPostion;
   public dataDropDownFunctie: string[];
@@ -71,13 +72,13 @@ export class PersonPositionComponent implements OnInit {
   public dayString;
   public monthString;
   public yearString;
-  public positionChosen:string;
-  public positionId:number;
-  public statuteChosen:string;
+  public positionChosen: string;
+  public positionId: number;
+  public statuteChosen: string;
   public statutes = [];
-  public countStatutes:number;
+  public countStatutes: number;
 
-  public message:any;
+  public message: any;
 
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
 
@@ -91,18 +92,22 @@ export class PersonPositionComponent implements OnInit {
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDownFunctie[this.selectedIndex]; } }
 
 
-  constructor(private personsService: PersonService,private data:DataService, private positionsService: PositionsService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+  constructor(
+    private personsService: PersonService, private data: DataService,
+    private logger: LoggingService, private positionsService: PositionsService,
+    private fb: FormBuilder, private dialog: MatDialog,
+    private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
-      console.log('Positions Form Data : ', this.maindatas);
+      this.logger.log('Positions Form Data : ', this.maindatas);
       this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
     //SetInitialValue();
-    console.log("social security id="+this.SocialSecurityId);
+    this.logger.log("social security id=" + this.SocialSecurityId);
   }
 
   fillDataDropDown(maindatas) {
@@ -114,7 +119,7 @@ export class PersonPositionComponent implements OnInit {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
-      console.log("positon in maindatas="+maindatas[i].id);
+      this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
 
     this.getPersonbySSIDVatNumber();
@@ -133,24 +138,24 @@ export class PersonPositionComponent implements OnInit {
       const dialogRef = this.dialog.open(CreatepositionComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        this.logger.log('The dialog was closed');
         this.datas = result;
 
         //this.maindatas = result;
-        console.log('this.data ::', this.datas);
+        this.logger.log('this.data ::', this.datas);
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
             //this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
-            this.maindatas.push(this.datas);            
+            this.maindatas.push(this.datas);
             this.FilterTheArchive();
             this.fillDataDropDown(this.maindatas);
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
-            console.log('this.data.id :: ', this.datas.id);
+            this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
               this.maindatas.push(this.datas);
-              console.log(' new this.maindatas :: ', this.maindatas);
+              this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
               this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
             }
@@ -171,41 +176,40 @@ export class PersonPositionComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
   setDummyStatute(data) {
     this.dataDropDownStatute = [];
 
-      data.forEach(element => {
-        this.dataDropDownStatute.push(element.name);
-      });
+    data.forEach(element => {
+      this.dataDropDownStatute.push(element.name);
+    });
   }
-  
+
   changeMessage() {
 
-    console.log(this.DpsPersonObject);
+    this.logger.log(this.DpsPersonObject);
 
-      if(this.DpsPersonObject !== null)
-      {
-        let newmessage:any = {
-          "page": "position",
-          "data": this.DpsPersonObject
-        };
-        this.data.changeMessage(newmessage);
-      }
+    if (this.DpsPersonObject !== null) {
+      let newmessage: any = {
+        "page": "position",
+        "data": this.DpsPersonObject
+      };
+      this.data.changeMessage(newmessage);
+    }
   }
 
   ngOnInit() {
-    
+
     this.onPageInit();
 
     this.PersonPositionForm = new FormGroup({
       functie: new FormControl('', [Validators.required]),
       statute: new FormControl('', [Validators.required]),
       grossHourlyWage: new FormControl('', [Validators.required]),
-      netExpenseAllowance: new FormControl('',[Validators.required]),
+      netExpenseAllowance: new FormControl('', [Validators.required]),
       extraRef: new FormControl('', [Validators.required]),
       countryOnetExpenseAllowancefBirth: new FormControl('', [Validators.required]),
       extra: new FormControl('', [Validators.required])
@@ -217,16 +221,16 @@ export class PersonPositionComponent implements OnInit {
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
       this.setDummyStatute(this.statutes);
-      console.log('data from getStatutues(): ');
-      console.log(data);
+      this.logger.log('data from getStatutues(): ');
+      this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
     this.data.currentMessage.subscribe(message => this.message = message);
     this.updatePosition();
-   }
+  }
 
-   onClickAdd() {
+  onClickAdd() {
 
     this.dpsPosition = new DpsPostion();
     this._position = new _Position();
@@ -258,7 +262,7 @@ export class PersonPositionComponent implements OnInit {
   switchNetExpense($event) {
     this.DpsPersonObject.renumeration.costReimbursment = $event;
 
-    if($event === true) {
+    if ($event === true) {
       this.PersonPositionForm.controls.netExpenseAllowance.enable();
     }
     else {
@@ -270,24 +274,24 @@ export class PersonPositionComponent implements OnInit {
 
   getPersonbySSIDVatNumber() {
 
-      const customerVatNumber = this.loginuserdetails.customerVatNumber;
+    const customerVatNumber = this.loginuserdetails.customerVatNumber;
 
-      this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-        console.log('response=' + res);
-        console.log(res);
-        this.loadPersonData(res);
-      },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            console.log('Error occured=' + err.error.message);
-          } else {
-            console.log('response code=' + err.status);
-            console.log('response body=' + err.error);
-          }
+    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
+      this.logger.log('response=' + res);
+      this.logger.log(res);
+      this.loadPersonData(res);
+    },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.logger.log('Error occured=' + err.error.message);
+        } else {
+          this.logger.log('response code=' + err.status);
+          this.logger.log('response body=' + err.error);
         }
-      );
+      }
+    );
   }
-  
+
   // set positions
   // statute
   // coefficients
@@ -296,29 +300,28 @@ export class PersonPositionComponent implements OnInit {
   // extra information
   loadPersonData(response) {
 
-    console.log(response.body);
+    this.logger.log(response.body);
     const data = response.body;
-    let counter:number = 0;
+    let counter: number = 0;
 
-    if(data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined)
-    {
+    if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) {
 
       counter = 0;
       this.maindatas.forEach((element) => {
-          if(element.position.name === data.customerPostionId)
-            this.selectedIndexFunctie = counter;
+        if (element.position.name === data.customerPostionId)
+          this.selectedIndexFunctie = counter;
         counter++;
       });
     }
 
-    if(data.statute !== null && data.statute !== undefined && data.statute !== "") {
-    
-      counter = 0;
-      this.statutes.forEach((element)=>{
+    if (data.statute !== null && data.statute !== undefined && data.statute !== "") {
 
-          if(element.name === data.statute.name)
-             this.selectedIndexStatute = counter;
-          counter++;
+      counter = 0;
+      this.statutes.forEach((element) => {
+
+        if (element.name === data.statute.name)
+          this.selectedIndexStatute = counter;
+        counter++;
       });
     }
 
@@ -326,14 +329,14 @@ export class PersonPositionComponent implements OnInit {
     //netCostReimbursment
     this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
     this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
-        
+
     //transportationAllowance
     //costReimbursment
     this.kmtoggle = data.renumeration.transportationAllowance;
-    this.nettoggle  = data.renumeration.costReimbursment;
+    this.nettoggle = data.renumeration.costReimbursment;
 
 
-    if(this.nettoggle === true) {
+    if (this.nettoggle === true) {
       this.PersonPositionForm.controls.netExpenseAllowance.enable();
     }
     else {
@@ -454,7 +457,7 @@ export class PersonPositionComponent implements OnInit {
 
   onChangeDropDownFunctie($event) {
 
-    console.log("position id="+this.dataDropDownFunctieIds[$event.target.value]);
+    this.logger.log("position id=" + this.dataDropDownFunctieIds[$event.target.value]);
 
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
     this.positionId = this.dataDropDownFunctieIds[$event.target.value];
@@ -466,7 +469,7 @@ export class PersonPositionComponent implements OnInit {
   updatePosition() {
 
     this.DpsPersonObject = this.message.data;
-    this.DpsPersonObject.customerPostionId = ""+this.positionId;
+    this.DpsPersonObject.customerPostionId = "" + this.positionId;
 
     this.changeMessage();
 
@@ -480,9 +483,8 @@ export class PersonPositionComponent implements OnInit {
   onChangeDropDownStatute($event) {
 
     this.statuteChosen = "";
-    if(this.DpsPersonObject !== null)
-    {
-      this.DpsPersonObject.statute = new Statute();      
+    if (this.DpsPersonObject !== null) {
+      this.DpsPersonObject.statute = new Statute();
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
     }
@@ -491,19 +493,19 @@ export class PersonPositionComponent implements OnInit {
 
   }
 
-  addittionalInformation(value:string) {
+  addittionalInformation(value: string) {
     this.DpsPersonObject.addittionalInformation = value;
 
     this.changeMessage();
   }
 
-  onNetExpensesReceive(netExpenseAllowance:number){
-      this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
-      this.changeMessage();
+  onNetExpensesReceive(netExpenseAllowance: number) {
+    this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+    this.changeMessage();
   }
 
-  onHourlyWageReceive(grossHourlyWage:number) {  
-    this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;  
+  onHourlyWageReceive(grossHourlyWage: number) {
+    this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
     this.changeMessage();
   }
 

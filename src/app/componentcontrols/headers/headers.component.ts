@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@
 import { DpsUser } from 'src/app/shared/models';
 import { PlatformLocation } from '@angular/common';
 import $ from 'jquery';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-headers',
@@ -22,9 +23,9 @@ export class HeadersComponent implements OnInit {
   public platformLocation: string = '';
   public errorMsg;
 
-  constructor(platformLocation: PlatformLocation) {
+  constructor(platformLocation: PlatformLocation, private logger: LoggingService) {
     this.platformLocation = (platformLocation as any).location.origin;
-    console.log('HeadersComponent this.platformLocation :: ' + this.platformLocation);
+    this.logger.log('HeadersComponent this.platformLocation :: ' + this.platformLocation);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,18 +53,18 @@ export class HeadersComponent implements OnInit {
 
   onPageInit() {
     try {
-      console.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
+      this.logger.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
 
       this.customerLogoFileName = localStorage.getItem('customerlogo');
 
       if (this.customerLogoFileName !== undefined && this.customerLogoFileName !== '' && this.customerLogoFileName !== null) {
         this.customerLogo = '../../assets/img/customer/logo/' + this.customerLogoFileName;
         this.isLogoFound = true;
-        console.log('isLogoFound True');
+        this.logger.log('isLogoFound True');
       } else {
         this.customerLogo = '';
         this.isLogoFound = false;
-        console.log('isLogoFound False');
+        this.logger.log('isLogoFound False');
       }
 
       this.customerName = localStorage.getItem('customerName');
@@ -75,13 +76,13 @@ export class HeadersComponent implements OnInit {
           url: this.customerLogo,
           success: function (data, textStatus) {
             this.isLogoFound = true;
-            console.log('islogoVaild file exists');
+            this.logger.log('islogoVaild file exists');
             $('#customlogo').show();
             $('.clogoInit').hide();
           },
           error: function (jqXHR, textStatus, errorThrown) {
             this.isLogoFound = false;
-            console.log('islogoVaild file does not exist');
+            this.logger.log('islogoVaild file does not exist');
             $('#customlogo').hide();
             $('.clogoInit').show();
           }
@@ -89,7 +90,7 @@ export class HeadersComponent implements OnInit {
       );
       */
     } catch (e) {
-      console.log('islogoVaild Error !!' + e.message);
+      this.logger.log('islogoVaild Error !!' + e.message);
       this.isLogoFound = false;
     }
   }

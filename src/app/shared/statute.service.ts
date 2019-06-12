@@ -3,24 +3,25 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Statute } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class StatuteService {
   private getStatuteUrl = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getStatute !== '') {
       this.getStatuteUrl = environment.boemmAPI + environment.getStatute;
     } else {
       this.getStatuteUrl = environment.getAssetsDataPath + 'statute.json';
     }
-    // console.log('Data From = ' + this.getStatuteUrl);
+    // this.logger.log('Data From = ' + this.getStatuteUrl);
   }
 
   public getStatutes(): Observable<Statute[]> {
-    // console.log('LegalformService Data From = ' + this.getStatuteUrl);
+    // this.logger.log('LegalformService Data From = ' + this.getStatuteUrl);
     const result = this.http.get<Statute[]>(this.getStatuteUrl).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 

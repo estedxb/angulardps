@@ -4,6 +4,7 @@ import { Address, Location, DpsUser } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from 'src/app/shared/locations.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { LoggingService } from '../../../../shared/logging.service';
 @Component({
   selector: 'app-createlocation',
   templateUrl: './createlocation.component.html',
@@ -25,14 +26,14 @@ export class CreatelocationComponent implements OnInit {
   @Output() showmsg = new EventEmitter<object>();
 
   constructor(
-    private formBuilder: FormBuilder, private locationsService: LocationsService,
+    private formBuilder: FormBuilder, private locationsService: LocationsService, private logger: LoggingService,
     public dialogRef: MatDialogRef<CreatelocationComponent>, @Inject(MAT_DIALOG_DATA) public locationdata: Location) {
     this.currentLocation = locationdata;
   }
 
   ngOnInit() {
-    console.log('Current Location :: ', this.currentLocation);
-    console.log('Current VatNumber : ' + this.VatNumber);
+    this.logger.log('Current Location :: ', this.currentLocation);
+    this.logger.log('Current VatNumber : ' + this.VatNumber);
     this.LocationForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
       street: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9,. ]+$')]),
@@ -66,12 +67,12 @@ export class CreatelocationComponent implements OnInit {
   }
 
   receiveMessageCountry($event) {
-    console.log('recevied event');
-    console.log($event);
+    this.logger.log('recevied event');
+    this.logger.log($event);
     if ($event.countryName !== undefined && $event.countryCode !== undefined) {
       this.countryStringR = $event.countryName;
       this.countryCodeR = $event.countryCode;
-      console.log('countryString=' + this.countryString);
+      this.logger.log('countryString=' + this.countryString);
       this.createObjects();
     }
   }
@@ -98,41 +99,41 @@ export class CreatelocationComponent implements OnInit {
 
   onSaveLocationClick() {
     this.createObjects();
-    console.log('data ::', this.currentLocation);
+    this.logger.log('data ::', this.currentLocation);
     if (this.LocationForm.valid) {
       if (this.currentLocation !== undefined && this.currentLocation !== null) {
         if (this.currentLocation.id !== 0 && this.currentLocation.id !== undefined && this.currentLocation.id !== null) {
-          console.log('Update Location');
+          this.logger.log('Update Location');
           // Update Location
           this.locationsService.updateLocation(this.currentLocation).subscribe(res => {
-            console.log('Update Location Response :: ', res);
+            this.logger.log('Update Location Response :: ', res);
             this.dialogRef.close(this.currentLocation);
           },
             (err: HttpErrorResponse) => {
-              console.log('Error :: ');
-              console.log(err);
+              this.logger.log('Error :: ');
+              this.logger.log(err);
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
           // this.dialogRef.close();
         } else {
-          console.log('Create Location');
+          this.logger.log('Create Location');
           this.locationsService.createLocation(this.currentLocation).subscribe(res => {
-            console.log('  Location Response :: ', res.body);
+            this.logger.log('  Location Response :: ', res.body);
             this.currentLocation.id = res.body;
             this.dialogRef.close(this.currentLocation);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
@@ -140,7 +141,7 @@ export class CreatelocationComponent implements OnInit {
         }
       }
     } else {
-      console.log('Form is Not Vaild');
+      this.logger.log('Form is Not Vaild');
     }
   }
 }

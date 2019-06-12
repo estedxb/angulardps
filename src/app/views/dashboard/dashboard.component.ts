@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { DpsPerson, Person } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit {
   public Id = '';
   public data: any = '';
   public errorMsg;
-  constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnInit() {
     if (localStorage.getItem('dpsuser') !== undefined && localStorage.getItem('dpsuser') !== '' && localStorage.getItem('dpsuser') !== null) {
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
         this.onPageInit();
       });
     } else {
-      console.log('localStorage.getItem("dpsuser") not found.');
+      this.logger.log('localStorage.getItem("dpsuser") not found.');
       this.router.navigate(['/login']);
     }
   }
@@ -44,7 +45,7 @@ export class DashboardComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 }

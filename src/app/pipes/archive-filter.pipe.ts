@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { LoggingService } from '../shared/logging.service';
 
 @Pipe({
   name: 'archiveFilter',
@@ -8,9 +9,9 @@ export class ArchiveFilterPipe implements PipeTransform {
   transform(datas: any[], isBoolen: boolean = false): any {
     // console.log('archiveFilter datas :: ' , datas);
     if (!datas) { return datas; }
-    let returnData : any = datas.filter(d => d.isArchived === isBoolen);
-    console.log('archiveFilter datas after:: ' , returnData);
+    let returnData: any = datas.filter(d => d.isArchived === isBoolen);
+    console.log('archiveFilter datas after:: ', returnData);
     return returnData;
-    //return datas;
+    // return datas;
   }
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Customer, DPSCustomer } from './models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class CustomersService {
@@ -12,49 +13,49 @@ export class CustomersService {
   private createCustomerURL = '';
   private getCustomersByVatNumberEditUrl = '';
 
-  constructor(private http: HttpClient) { // , private header: HttpHeaders
+  constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getCustomersByVatNumber !== '') {
-      // console.log('Data From Remote getCustomers');
+      // this.logger.log('Data From Remote getCustomers');
       this.getCustomersListUrl = environment.dpsAPI + environment.getCustomers;
       this.getCustomersByVatNumberUrl = environment.dpsAPI + environment.getCustomerByVatNumber;
       this.getCustomersByVatNumberEditUrl = environment.dpsAPI + environment.getCustomerByVatNumberEdit;
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
-      console.log('Data From JSON getCustomers');
+      this.logger.log('Data From JSON getCustomers');
       this.getCustomersListUrl = environment.getAssetsDataPath + 'customers.json';
     }
   }
 
   public getCustomers(): Observable<DPSCustomer[]> {
-    // console.log('CustomersService Data From = ' + this.getCustomersListUrl);
+    // this.logger.log('CustomersService Data From = ' + this.getCustomersListUrl);
     const result = this.http.get<any>(this.getCustomersListUrl).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 
   public getCustomersByVatNumberEdit(parameter: string): Observable<DPSCustomer> {
 
-    // console.log('edit call to get customer by vat Number');
+    // this.logger.log('edit call to get customer by vat Number');
     const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/' + parameter).catch(this.errorHandler);
-    // console.log('result=' + result);
+    // this.logger.log('result=' + result);
     return result;
 
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
+    // this.logger.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
     const result = this.http.get<any>(this.getCustomersByVatNumberUrl + "?VatNumber=" + parameter).catch(this.errorHandler);
-    // console.log(result);
+    // this.logger.log(result);
     return result;
   }
 
   // customer update/Edit 
   public createCustomerUpdate(customer: any): Observable<any> {
-    // console.log("update / edit called");
+    // this.logger.log("update / edit called");
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    // console.log(this.createCustomerURL);
+    // this.logger.log(this.createCustomerURL);
     return this.http.put<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
       observe: 'response'
@@ -75,13 +76,13 @@ export class CustomersService {
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-      console.log('vat number not correct format');
+      this.logger.log('vat number not correct format');
     } else if (error.status === 204) {
-      console.log('vat number doesnt exist ');
+      this.logger.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-      console.log('customer exists in the system, customer not allowed');
+      this.logger.log('customer exists in the system, customer not allowed');
     } else {
-      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+      this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
 
     return Observable.throwError(error);

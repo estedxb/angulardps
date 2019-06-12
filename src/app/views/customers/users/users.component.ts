@@ -5,6 +5,7 @@ import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
 import { CreateuserComponent } from './createuser/createuser.component';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-users',
@@ -25,18 +26,19 @@ export class UsersComponent implements OnInit {
   public SelectedEnableStatus = true;
   // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
 
-  constructor(private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(
+    private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
-    console.log('CustomerVatNumber ::', this.CustomerVatNumber);
+    this.logger.log('CustomerVatNumber ::', this.CustomerVatNumber);
     this.usersService.getUsersByVatNumber(this.CustomerVatNumber).subscribe(users => {
       this.maindatas = users;
       this.FilterTheArchive();
-      console.log('Users Form Data : ', this.maindatas);
+      this.logger.log('Users Form Data : ', this.maindatas);
       this.ShowMessage('Users fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -50,7 +52,7 @@ export class UsersComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
@@ -67,9 +69,9 @@ export class UsersComponent implements OnInit {
       const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        this.logger.log('The dialog was closed');
         this.data = result;
-        console.log('this.data ::', this.data);
+        this.logger.log('this.data ::', this.data);
         if (this.SelectedIndex >= 0) {
           // maindatas Update User
           this.maindatas[this.SelectedIndex] = this.data;
@@ -77,19 +79,19 @@ export class UsersComponent implements OnInit {
           this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is updated successfully.', '');
         } else {
           // maindatas Add User
-          console.log('this.data.user :: ', this.data.user);
+          this.logger.log('this.data.user :: ', this.data.user);
           try {
             if (this.data.user !== null) {
               if (this.data.user.firstName !== undefined && this.data.user.firstName !== '' && this.data.user.firstName !== null) {
                 this.maindatas.push(this.data);
-                console.log('New User Added Successfully :: ', this.maindatas);
+                this.logger.log('New User Added Successfully :: ', this.maindatas);
                 this.FilterTheArchive();
                 this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is added successfully.', '');
               } else {
-                console.log('New User Added Failed :: ', this.maindatas);
+                this.logger.log('New User Added Failed :: ', this.maindatas);
               }
             } else {
-              console.log('New User Added Failed :: ', this.maindatas);
+              this.logger.log('New User Added Failed :: ', this.maindatas);
             }
           } catch (e) { }
         }
@@ -134,7 +136,7 @@ export class UsersComponent implements OnInit {
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    console.log('Edit Clicked Index :: ' + this.SelectedIndex);
+    this.logger.log('Edit Clicked Index :: ' + this.SelectedIndex);
     this.data = this.maindatas[this.SelectedIndex];
     this.openDialog();
     return true;
@@ -142,23 +144,23 @@ export class UsersComponent implements OnInit {
 
   updateUsers() {
     this.usersService.updateUser(this.data).subscribe(res => {
-      console.log('response :: ', res, 'Data ::', this.data);
+      this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
       (err: HttpErrorResponse) => {
-        console.log('Error :: ', err);
+        this.logger.log('Error :: ', err);
         if (err.error instanceof Error) {
-          console.log('Error occured=' + err.error.message);
+          this.logger.log('Error occured=' + err.error.message);
         } else {
-          console.log('response code=' + err.status, 'response body=' + err.error);
+          this.logger.log('response code=' + err.status, 'response body=' + err.error);
         }
       }
     );
   }
 
   onClickDelete(i) {
-    console.log('Delete Clicked Index:: ' + i);
+    this.logger.log('Delete Clicked Index:: ' + i);
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updateUsers();
@@ -167,7 +169,7 @@ export class UsersComponent implements OnInit {
 
   onStatusChange(event, i) {
     this.SelectedIndex = i;
-    console.log('Users index : ' + this.SelectedIndex + ', Enabled : ' + event);
+    this.logger.log('Users index : ' + this.SelectedIndex + ', Enabled : ' + event);
     this.data = this.maindatas[i];
     this.data.isEnabled = event;
     this.updateUsers();

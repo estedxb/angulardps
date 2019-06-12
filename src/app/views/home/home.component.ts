@@ -8,6 +8,7 @@ import {
   Contact, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber, Address
 } from 'src/app/shared/models';
 import { DataService } from '../../shared/data.service';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   public CTFormValid: boolean;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService) { }
+  constructor(private customerService: CustomersService, private logger: LoggingService) { }
 
   ngOnInit() {
     this.HQFormValid = true;
@@ -48,47 +49,47 @@ export class HomeComponent implements OnInit {
   }
 
   receiveGeneralObject($event) {
-    console.log('received in home component GL data');
+    this.logger.log('received in home component GL data');
     this.GLdata = $event;
-    console.log(this.GLdata);
+    this.logger.log(this.GLdata);
   }
 
   receiveStatuteData($event) {
-    console.log('received in home component ST data');
+    this.logger.log('received in home component ST data');
     this.STdata = $event;
-    console.log(this.STdata);
+    this.logger.log(this.STdata);
   }
 
   receiveInvoiceData($event) {
-    console.log('received in home component IS data');
+    this.logger.log('received in home component IS data');
     this.FPdata = $event;
-    console.log(this.FPdata);
+    this.logger.log(this.FPdata);
   }
 
   receiveHQdata($event) {
     this.HQdata = $event;
     this.HQFormValid = this.HQdata.formValid;
-    console.log('received in home component HQ data');
-    console.log(this.HQdata);
+    this.logger.log('received in home component HQ data');
+    this.logger.log(this.HQdata);
   }
 
   receiveCTdata($event) {
     this.CTdata = $event;
     this.CTFormValid = this.CTdata.formValid;
-    console.log('received in home component CT data');
-    console.log(this.CTdata);
+    this.logger.log('received in home component CT data');
+    this.logger.log(this.CTdata);
   }
 
   onFormwardClick() {
 
     if (this.showFormIndex === 1) {
 
-      console.log('CTdata=' + this.CTdata);
-      console.log(this.CTdata);
-      console.log('HQdata=' + this.HQdata);
-      console.log(this.HQdata);
+      this.logger.log('CTdata=' + this.CTdata);
+      this.logger.log(this.CTdata);
+      this.logger.log('HQdata=' + this.HQdata);
+      this.logger.log(this.HQdata);
 
-      console.log('validity data=' + this.HQdata.formValid);
+      this.logger.log('validity data=' + this.HQdata.formValid);
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
@@ -100,36 +101,36 @@ export class HomeComponent implements OnInit {
           this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
           this.HQdata.contact = this.CTdata.contact;
 
-          console.log('updated HQData=' + this.HQdata);
-          console.log(this.HQdata.contact);
-          console.log(this.CTdata.contact);
+          this.logger.log('updated HQData=' + this.HQdata);
+          this.logger.log(this.HQdata.contact);
+          this.logger.log(this.CTdata.contact);
 
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
-            console.log('response=' + res);
+            this.logger.log('response=' + res);
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log('Error occured=' + err.error.message);
+                this.logger.log('Error occured=' + err.error.message);
               } else {
-                console.log('response code=' + err.status);
-                console.log('response body=' + err.error);
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
               }
             }
           );
         }
       } else {
-        console.log('HQdata or CTdata is null or undefined !!');
+        this.logger.log('HQdata or CTdata is null or undefined !!');
       }
 
 
     } else if (this.showFormIndex === 2) {
-      console.log('Complete data=');
-      console.log(this.GLdata);
-      console.log('HQdata');
-      console.log(this.HQdata);
-      console.log('this STdata');
-      console.log(this.STdata);
+      this.logger.log('Complete data=');
+      this.logger.log(this.GLdata);
+      this.logger.log('HQdata');
+      this.logger.log(this.HQdata);
+      this.logger.log('this STdata');
+      this.logger.log(this.STdata);
 
       if (this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== '') {
         if (this.HQdata !== null && this.HQdata !== undefined && this.HQdata !== '') {
@@ -162,15 +163,15 @@ export class HomeComponent implements OnInit {
           this.HQdata.bulkContractsEnabled = false;
         }
 
-        console.log('updated hqdata');
-        console.log(this.HQdata);
+        this.logger.log('updated hqdata');
+        this.logger.log(this.HQdata);
       }
 
       if (this.CTdata !== null && this.CTdata !== undefined) {
-        console.log(this.CTdata.contact);
+        this.logger.log(this.CTdata.contact);
       } else {
 
-        console.log('no contact data');
+        this.logger.log('no contact data');
         this.HQdata.contact = new Contact();
         this.HQdata.contact.firstName = 'blah';
         this.HQdata.contact.lastName = 'ajsdf';
@@ -196,8 +197,8 @@ export class HomeComponent implements OnInit {
       }
 
       if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-        console.log('fp data=');
-        console.log(this.FPdata);
+        this.logger.log('fp data=');
+        this.logger.log(this.FPdata);
 
         if (this.HQdata !== null) {
           if (this.HQdata.invoiceSettings !== null && this.HQdata.invoiceSettings !== undefined) {
@@ -223,7 +224,7 @@ export class HomeComponent implements OnInit {
 
       }
 
-      console.log(this.HQdata);
+      this.logger.log(this.HQdata);
 
       this.updateData();
     }
@@ -231,14 +232,14 @@ export class HomeComponent implements OnInit {
 
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
-      console.log('response=' + res);
+      this.logger.log('response=' + res);
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log('Error occured=' + err.error.message);
+          this.logger.log('Error occured=' + err.error.message);
         } else {
-          console.log('response code=' + err.status);
-          console.log('response body=' + err.error);
+          this.logger.log('response code=' + err.status);
+          this.logger.log('response body=' + err.error);
         }
       }
     );

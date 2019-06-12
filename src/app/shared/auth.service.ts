@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PARAMETERS } from '@angular/core/src/util/decorators';
+import { LoggingService } from './logging.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     })
   };
   private httpParams: HttpParams = new HttpParams();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private logger: LoggingService) {
     if (environment.dataFromAPI_JSON && environment.verifylogin !== '') {
       this.getVerifyLoginUrl = environment.dpsAPI + environment.verifylogin;
     } else {
@@ -27,12 +28,12 @@ export class AuthService {
 
   public verifyLogin(userid: string, Password: string): Observable<LoginToken> {
     try {
-      // console.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
+      // this.logger.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
       const result = this.http.get<LoginToken>(this.getVerifyLoginUrl, this.httpOptions).catch(this.errorHandler);
-      // console.log(result);
+      // this.logger.log(result);
       return result;
     } catch (e) {
-      console.log('Error verifyLogin !' + e.message);
+      this.logger.log('Error verifyLogin !' + e.message);
       return null;
     }
   }
@@ -46,6 +47,6 @@ export class AuthService {
     localStorage.removeItem('dpsuser');
     localStorage.removeItem('customerName');
     localStorage.removeItem('customerlogo');
-    console.log('Logout...');
+    this.logger.log('Logout...');
   }
 }

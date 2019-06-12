@@ -4,6 +4,7 @@ import { DpsContract, ContractStatus } from 'src/app/shared/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContractService } from 'src/app/shared/contract.service';
+import { LoggingService } from '../../shared/logging.service';
 
 @Component({
   selector: 'app-cancelcontract',
@@ -12,58 +13,58 @@ import { ContractService } from 'src/app/shared/contract.service';
 })
 export class CancelContractComponent implements OnInit {
   @Output() showmsg = new EventEmitter<object>();
-   public currentContract : DpsContract;
-   CancelContractForm :FormGroup;
+  public currentContract: DpsContract;
+  CancelContractForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<CancelContractComponent>, @Inject(MAT_DIALOG_DATA) public contractData: DpsContract,
-    private contractService: ContractService
-  ) { 
+    private contractService: ContractService, private logger: LoggingService
+  ) {
     this.currentContract = contractData;
   }
 
   ngOnInit() {
-    console.log('Current Contract :: ', this.currentContract);
+    this.logger.log('Current Contract :: ', this.currentContract);
 
     this.CancelContractForm = new FormGroup({
-      reasonForcancellation: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])     
+      reasonForcancellation: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])
     });
 
   }
 
-  createObjects() { 
-  
-     this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value; 
-     this.currentContract.contract.status = ContractStatus.Active;  
+  createObjects() {
+
+    this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value;
+    this.currentContract.contract.status = ContractStatus.Active;
 
   }
 
 
   onCancelContractClick() {
     this.createObjects();
-    console.log('currentContract ::', this.currentContract);
+    this.logger.log('currentContract ::', this.currentContract);
     // if (this.ContractForm.valid) {
-      if (this.currentContract.id !== undefined && this.currentContract.id !== null && this.currentContract.id !== 0) {
-        console.log('Update Contract');
-        this.contractService.updateContract(this.currentContract).subscribe(res => {
-          console.log('  Contract Response :: ', res.body);
-          this.currentContract = res.body;
-          //this.dialogRef.close(this.currentContract);
-        },
-          (err: HttpErrorResponse) => {
-            if (err.error instanceof Error) {
-              console.log('Error occured=' + err.error.message);
-            } else {
-              console.log('response code=' + err.status);
-              console.log('response body=' + err.error);
-            }
+    if (this.currentContract.id !== undefined && this.currentContract.id !== null && this.currentContract.id !== 0) {
+      this.logger.log('Update Contract');
+      this.contractService.updateContract(this.currentContract).subscribe(res => {
+        this.logger.log('  Contract Response :: ', res.body);
+        this.currentContract = res.body;
+        //this.dialogRef.close(this.currentContract);
+      },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.logger.log('Error occured=' + err.error.message);
+          } else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
           }
-        );
+        }
+      );
 
-      }
+    }
 
     // } else {
-    //   console.log('Form is Not Vaild');
+    //   this.logger.log('Form is Not Vaild');
     // }
   }
 

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
+import { LoggingService } from '../../../shared/logging.service';
 
 @Component({
   selector: 'app-update-customer',
@@ -28,11 +29,11 @@ export class UpdateCustomerComponent implements OnInit {
 
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService, private snackBar: MatSnackBar,
-    private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
+    private logger: LoggingService, private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
     try {
-      console.log('this.loginaccessToken :: ' + this.loginaccessToken);
+      this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.router.navigate(['/login']);
       }
@@ -48,7 +49,7 @@ export class UpdateCustomerComponent implements OnInit {
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
-      console.log('Snackbar Action :: ' + Action);
+      this.logger.log('Snackbar Action :: ' + Action);
     });
   }
 
@@ -62,10 +63,11 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
     this.activeRoute.params.subscribe((routeParams: any) => {
-      console.log('routeParams :: ', routeParams);
+      this.logger.log('routeParams :: ', routeParams);
       this.Id = routeParams.id;
       this.currentPage = routeParams.page;
-      console.log('this.Id  :: ', this.Id, 'this.currentPage :: ', this.currentPage);
+      this.logger.log('this.Id  :: ', this.Id);
+      this.logger.log('this.currentPage :: ', this.currentPage);
 
       if (this.Id === 'locations' || this.Id === 'location' || this.Id === 'positions' || this.Id === 'position' ||
         this.Id === 'users' || this.Id === 'user' || this.Id === 'workschedules' || this.Id === 'works' || this.Id === 'work' ||
@@ -88,16 +90,16 @@ export class UpdateCustomerComponent implements OnInit {
         this.vatNumber = this.Id;
         this.GetCustomerInfo(1);
       }
-      console.log('ID :: ' + this.Id, 'CurrentPage :: ' + this.currentPage);
+      this.logger.log('ID :: ' + this.Id, 'CurrentPage :: ' + this.currentPage);
     });
   }
 
   GetCustomerInfo(mode: number) {
     try {
-      console.log('this.vatNumber pageInit :: ' + this.vatNumber);
+      this.logger.log('this.vatNumber pageInit :: ' + this.vatNumber);
       this.customerListsService.getCustomers().subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer.filter(cl => cl.item1 === this.vatNumber)[0];
-        console.log('Customer Form Data : ', this.dpsCustomer);
+        this.logger.log('Customer Form Data : ', this.dpsCustomer);
         this.CustomerName = this.dpsCustomer.item2 + '';
         this.CustomerLogo = this.dpsCustomer.item4 !== undefined ? this.dpsCustomer.item4 + '' : '';
         if (mode === 1) { this.updateLocalStorage(); }
@@ -109,9 +111,9 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   updateLocalStorage() {
-    console.log('updateLocalStorage :: ');
+    this.logger.log('updateLocalStorage :: ');
     this.loginuserdetails.customerVatNumber = this.vatNumber;
-    console.log('lsDPUser :: ', this.loginuserdetails);
+    this.logger.log('lsDPUser :: ', this.loginuserdetails);
     localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
     localStorage.setItem('customerName', this.CustomerName);
     localStorage.setItem('customerlogo', this.CustomerLogo);
@@ -141,24 +143,24 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   onFormwardClick() {
-    console.log('forward click', this.editCustomerData);
+    this.logger.log('forward click', this.editCustomerData);
     if (this.editCustomerData.formValid !== null) {
       delete this.editCustomerData.formValid;
     }
 
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
-        this.ShowMessage("Customer Data Saved successfully. ",'');
-        console.log('response=' + res);
-        this.ShowMessage("Customer Data Saved successfully. ", '');
+        this.ShowMessage('Customer Data Saved successfully. ', '');
+        this.logger.log('response=' + res);
+        this.ShowMessage('Customer Data Saved successfully. ', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log('Error occured=' + err.error.message);
-            this.ShowMessage("" + err.error.message, '');
+            this.logger.log('Error occured=' + err.error.message);
+            this.ShowMessage('' + err.error.message, '');
           } else {
-            console.log('response code=' + err.status, 'response body=' + err.error);
-            this.ShowMessage("" + err.status + "" + err.error, '');
+            this.logger.log('response code=' + err.status, 'response body=' + err.error);
+            this.ShowMessage('' + err.status + '' + err.error, '');
           }
         }
       );
