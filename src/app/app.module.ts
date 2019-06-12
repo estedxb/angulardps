@@ -17,6 +17,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { AppConfig } from './app.config';
 import { DatePipe } from '@angular/common';
+import { MsAdalAngular6Module } from 'microsoft-adal-angular6';
+
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -33,6 +35,7 @@ export function initializeApp(appConfig: AppConfig) {
     MatDialogModule,
     MatSnackBarModule,
     AppRoutingModule,
+    MsAdalAngular6Module,
     AngularFontAwesomeModule,
     AutocompleteLibModule,
     NgxSpinnerModule,

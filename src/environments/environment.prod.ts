@@ -57,5 +57,5 @@ export const environment = {
   getVehicles: '',
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
-  getContractReasonURL: ''
+  getContractReasonURL: 'ContractReasons'
 };

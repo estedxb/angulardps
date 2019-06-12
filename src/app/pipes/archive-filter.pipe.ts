@@ -1,6 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LoggingService } from '../shared/logging.service';
-
 @Pipe({
   name: 'archiveFilter',
   pure: true

@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../../shared/models';
-import { Router } from '@angular/router';
+import { Router, CanActivate } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { LoggingService } from '../../shared/logging.service';
-
 
 @Component({
   selector: 'app-login',

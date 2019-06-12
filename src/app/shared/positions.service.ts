@@ -57,7 +57,7 @@ export class PositionsService {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     // this.logger.log('formData:::', formData);
-    new Response(formData).text().then(this.logger.log);
+    new Response(formData).text().then(console.log);
     return this.http.post<any>(this.getPositionUpdateUrl + '/' + vatNumber + '/' + positionId, formData,
       {
         observe: 'response'

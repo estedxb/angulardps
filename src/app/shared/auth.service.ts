@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// import { CanActivate } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Login, LoginToken } from './models';
 import { Observable } from 'rxjs/Observable';
@@ -6,8 +7,26 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PARAMETERS } from '@angular/core/src/util/decorators';
 import { LoggingService } from './logging.service';
-
+import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 @Injectable({ providedIn: 'root' })
+/*
+export class AuthGuard implements CanActivate {
+
+constructor(private adal: MsAdalAngular6Service) { }
+
+canActivate(): boolean {
+
+  if (this.adal.isAuthenticated) {
+    return true;
+  }
+
+  this.adal.login();
+
+  return false;
+}
+
+}
+*/
 export class AuthService {
   private getVerifyLoginUrl = '';
   public errorMsg;
