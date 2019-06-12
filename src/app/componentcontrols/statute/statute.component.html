@@ -1,32 +1,31 @@
 <form [formGroup]="SForm" novalidate id="SForm">
 
   <div class="error">{{ errorMsg }}</div>
-  <div formArrayName="statuteArray">
-  <div class="customerBox" *ngFor="let statute of SForm.controls.statuteArray.controls; let i= index; trackBy: trackByFn" [attr.data-index]="i">
-   <div [formGroupName]="i">
+      <!-- SForm.controls.statuteArray.controls -->
+  <div class="customerBox" *ngFor="let statute of statutes; let i= index; trackBy: trackByFn" [attr.data-index]="i">
     <div class="row panelheader">
       <div class="col col-sm-5 fright">
-        <h4> {{ titles[i] }} </h4>
+        <h4> {{ statute.name }} </h4>
         <hr>
       </div>
       <div class="col col-sm-7"></div>
     </div>
     <div class="row">
       <div class="col col-sm-8"><label class="titleBold">Paritair Comité</label>
-        <app-jointcommittee (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"></app-jointcommittee>
+        <app-jointcommittee [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"></app-jointcommittee>
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
 
         <div class="row inputWithImg">
-          <input formControlName="CoefficientBox" class="form-control" #coefficientBox
+          <!-- <input formControlName="CoefficientBox" class="form-control" #coefficientBox
             (change)="onChangeCoefficient(coefficientBox.value,i)"
-            type="number" onfocus="this.select();" onmouseup="return false;">
-          <div class="col-sm-2 form-control-feedback" *ngIf="statute.controls.CoefficientBox.invalid && (statute.controls.CoefficientBox.untouched || statute.controls.CoefficientBox.dirty || statute.controls.CoefficientBox.touched) else valida">
+            type="number" onfocus="this.select();" onmouseup="return false;"> -->
+          <!-- <div class="col-sm-2 form-control-feedback" *ngIf="statuteArray[i].invalid && (st.CoefficientBox.untouched || st.CoefficientBox.dirty || st.CoefficientBox.touched) else valida">
             <img src="../../assets/img/InvalidIcon.png" alt="">
           </div>
           <ng-template #valida>
             <img src="../../assets/img/ValidIcon.png" alt="">
-          </ng-template>
+          </ng-template> -->
         </div>
       </div>
     </div>
@@ -37,10 +36,10 @@
         <span class="titleBold">Maaltijdcheques</span>
       </div>
     </div>
-
-    <ng-container formArrayName="arrayBox" *ngIf="isMealEnabled[this.i]===true">
-      <div class="row" *ngFor="let mb of statute.controls.arrayBox.controls; let j=index; first as isFirstA; last as isLastA">
-        <div [formGroupName]="j" style="display: flex; justify-content: space-evenly;">
+    
+    <ng-container *ngIf="isMealEnabled[this.i]===true">
+      <div class="row">
+        <div  style="display: flex; justify-content: space-evenly;">
             <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,j)"
               formControlName="TotalWaarde" class="form-control" type="number" #totalwaarde
               onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i></div>
@@ -56,7 +55,5 @@
         </div>
       </div>
     </ng-container>
-  </div>
-</div>
   </div>
 </form>

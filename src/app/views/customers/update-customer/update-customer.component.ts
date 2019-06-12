@@ -66,7 +66,8 @@ export class UpdateCustomerComponent implements OnInit {
       this.logger.log('routeParams :: ', routeParams);
       this.Id = routeParams.id;
       this.currentPage = routeParams.page;
-      this.logger.log('this.Id  :: ', this.Id, 'this.currentPage :: ', this.currentPage);
+      this.logger.log('this.Id  :: ', this.Id);
+      this.logger.log('this.currentPage :: ', this.currentPage);
 
       if (this.Id === 'locations' || this.Id === 'location' || this.Id === 'positions' || this.Id === 'position' ||
         this.Id === 'users' || this.Id === 'user' || this.Id === 'workschedules' || this.Id === 'works' || this.Id === 'work' ||
@@ -138,9 +139,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   }
   receiveEditCustomerData($event) {
-    this.logger.log('received editCustomerData in update customer=');
     this.editCustomerData = $event;
-    this.logger.log(this.editCustomerData);
   }
 
   onFormwardClick() {
@@ -151,16 +150,17 @@ export class UpdateCustomerComponent implements OnInit {
 
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
+        this.ShowMessage('Customer Data Saved successfully. ', '');
         this.logger.log('response=' + res);
-        this.ShowMessage("Customer Data Saved successfully. ", '');
+        this.ShowMessage('Customer Data Saved successfully. ', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             this.logger.log('Error occured=' + err.error.message);
-            this.ShowMessage("" + err.error.message, '');
+            this.ShowMessage('' + err.error.message, '');
           } else {
             this.logger.log('response code=' + err.status, 'response body=' + err.error);
-            this.ShowMessage("" + err.status + "" + err.error, '');
+            this.ShowMessage('' + err.status + '' + err.error, '');
           }
         }
       );

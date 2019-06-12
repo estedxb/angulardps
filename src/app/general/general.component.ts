@@ -30,9 +30,6 @@ export class GeneralComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log("received in general component");
-    this.logger.log(this.GLFormData);
-
     if (this.GLFormData !== undefined) {
       if (this.GLFormData.data !== null) {
         this.loadBlk = this.GLFormData.data.bulkContractsEnabled;

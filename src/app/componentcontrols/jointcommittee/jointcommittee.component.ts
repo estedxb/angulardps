@@ -14,6 +14,7 @@ import { LoggingService } from '../../shared/logging.service';
 export class JointcommitteeComponent implements OnInit {
 
   @Input() public JCFormData;
+  @Input() public TypeWorker;
   @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_jointcommittee';
@@ -38,7 +39,7 @@ export class JointcommitteeComponent implements OnInit {
     this.selectedIndex = $event.target.value;
     const obj: any = { selectedObject: this.value, arrayObject: this.datas };
     this.childEvent.emit(obj);
-    this.logger.log(this.value);
+    // this.logger.log(this.value);
     return this.value;
   }
 
@@ -46,12 +47,30 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   ngDoCheck() {
-    this.logger.log('RECEIVED paritair commitee data');
-
     if (this.JCFormData !== undefined) {
       this.loadDropDownData(this.JCFormData);
-
     }
+  }
+
+  filterDatas(datas) {
+
+    this.logger.log('filtering the data from array');
+    this.logger.log(datas.length);
+
+    this.logger.log('current typeworker = ' + this.TypeWorker);
+
+    this.datas = [];
+
+    for (let counter = 0; counter < datas.length; counter += 1) {
+
+      if (this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase()) {
+        this.datas.push(datas[counter]);
+      }
+    }
+
+    this.logger.log('filtered Array');
+    this.logger.log(this.datas);
+
   }
 
   ngOnInit() {
@@ -59,7 +78,7 @@ export class JointcommitteeComponent implements OnInit {
     this.resetToInitValue();
 
     this.jointcommitteeService.getJointCommitees().
-      subscribe(data => this.datas = data,
+      subscribe(data => { this.filterDatas(data); },
         error => this.errorMsg = error);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
@@ -68,9 +87,6 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   loadDropDownData(stringJCReceived) {
-
-    this.logger.log('received string=' + stringJCReceived);
-
     for (let i = 0; i < this.datas.length; i++) {
       if (this.datas[i] === stringJCReceived) {
         this._selectedIndex = i;

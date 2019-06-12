@@ -62,8 +62,6 @@ export class EditCustomerComponent implements OnInit {
 
   onPageInit() {
     this.vatNumber = this.CustomerVatNumber;
-    this.logger.log('ngOnInit called editcustomer');
-    this.logger.log('vatNumber=' + this.vatNumber);
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
     this.ShowMessage("Loading Data Successfully", "");
@@ -74,10 +72,6 @@ export class EditCustomerComponent implements OnInit {
   receiveHQdata($event) {
 
     this.HQdata = $event;
-    this.logger.log('received in editcustomer component');
-    this.logger.log(this.HQdata);
-    this.logger.log("CTdata:");
-    this.logger.log(this.CTdata);
 
     if (this.CTdata !== null && this.CTdata !== undefined) {
       this.HQdata.contact = this.CTdata.contact;
@@ -86,10 +80,6 @@ export class EditCustomerComponent implements OnInit {
     }
 
     if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-      this.logger.log('fp data=');
-      this.logger.log(this.FPdata);
-      this.logger.log('HQ data');
-      this.logger.log(this.HQdata);
 
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
@@ -108,8 +98,6 @@ export class EditCustomerComponent implements OnInit {
   receiveCTdata($event) {
 
     this.CTdata = $event;
-    this.logger.log('updated in editcustomer component');
-    this.logger.log(this.CTdata);
 
     if (this.CTdata !== null && this.CTdata !== undefined) {
       this.HQdata.contact = this.CTdata.contact;
@@ -123,8 +111,6 @@ export class EditCustomerComponent implements OnInit {
   receiveGeneralObject($event) {
 
     this.GLdata = $event;
-    this.logger.log('received in editcustomer component');
-    this.logger.log(this.HQdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.GLdata !== null && this.GLdata !== undefined) {
@@ -139,8 +125,6 @@ export class EditCustomerComponent implements OnInit {
   receiveStatuteData($event) {
 
     this.STdata = $event;
-    this.logger.log('received in editcustomer component');
-    this.logger.log(this.STdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.STdata !== null && this.STdata !== undefined) {
@@ -154,14 +138,8 @@ export class EditCustomerComponent implements OnInit {
   receiveInvoiceData($event) {
 
     this.FPdata = $event;
-    this.logger.log('FP received in editcustomer component');
-    this.logger.log(this.HQdata);
 
     if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-      this.logger.log('fp data=');
-      this.logger.log(this.FPdata);
-      this.logger.log('HQ data');
-      this.logger.log(this.HQdata);
 
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
@@ -179,19 +157,15 @@ export class EditCustomerComponent implements OnInit {
   postData() { }
 
   getCustomerByVatNumberEdit(vatNumber: string) {
-    this.logger.log('calling get customer by vatnumber on edit page');
     let response: DPSCustomer;
     this.customerService.getCustomersByVatNumberEdit(vatNumber)
       .subscribe(data => {
         response = data;
-        this.logger.log('response=');
-        this.logger.log('response name=' + response.customer.name);
         this.parseData(response);
       }, error => this.handleError(error));
   }
 
   parseData(response: DPSCustomer) {
-    this.logger.log(response);
     this.editObject = {
       data: response,
       page: 'edit'
@@ -213,7 +187,6 @@ export class EditCustomerComponent implements OnInit {
   handleError(error: any) { }
 
   editCustomerApi() {
-    this.logger.log('edit customer Api called');
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.CTdata !== null && this.CTdata !== undefined) {
         this.HQdata.contact = this.CTdata;
@@ -226,10 +199,6 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
       }
       if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-        this.logger.log('fp data=');
-        this.logger.log(this.FPdata);
-        this.logger.log('HQ data');
-        this.logger.log(this.HQdata);
 
         if (this.HQdata.invoiceSettings !== undefined && this.HQdata.invoiceSettings !== null) {
           if (this.HQdata.invoiceSettings.lieuDaysAllowance !== undefined) {
@@ -244,8 +213,6 @@ export class EditCustomerComponent implements OnInit {
         }
         this.childEvent.emit(this.HQdata);
       }
-      this.logger.log('consolidated json object=');
-      this.logger.log(this.HQdata);
     }
   }
 }

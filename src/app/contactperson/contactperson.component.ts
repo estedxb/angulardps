@@ -41,9 +41,6 @@ export class ContactPersonComponent implements OnInit {
 
   loadEditDetails(contactPerson: any) {
 
-    this.logger.log("load details has been called");
-    this.logger.log(contactPerson);
-
     if (contactPerson !== undefined && contactPerson !== null) {
       if (contactPerson.contact !== undefined && contactPerson.contact !== null) {
         if (contactPerson.contact.firstName !== undefined && contactPerson.contact.firstName !== null)
@@ -80,9 +77,6 @@ export class ContactPersonComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log('CTFormData');
-    this.logger.log(this.CTFormData);
-
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
         if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
@@ -99,13 +93,12 @@ export class ContactPersonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.logger.log("inside ngDoAfterViewInit=" + this.CTFormData.data);
 
     if (this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
       if (this.CTFormData.data !== this.oldData) {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
-        //this.languageString = "French";
+        // this.languageString = "French";
         this.createObjects();
 
       }
@@ -127,7 +120,7 @@ export class ContactPersonComponent implements OnInit {
     });
 
     this.alsCheck = false;
-    this.createObjects();  //check validations
+    this.createObjects();  // check validations
   }
 
   receiveMessageLanguage($event) {
@@ -207,11 +200,11 @@ export class ContactPersonComponent implements OnInit {
 
   checkValidations() {
 
-    this.logger.log(this.CTForm.get('firstname').valid);
-    this.logger.log(this.CTForm.get('lastname').valid);
-    this.logger.log(this.CTForm.get('position').valid);
-    this.logger.log(this.CTForm.get('emailaddress').valid);
-    this.logger.log(this.CTForm.get('mobile').valid);
+    // this.logger.log(this.CTForm.get('firstname').valid);
+    // this.logger.log(this.CTForm.get('lastname').valid);
+    // this.logger.log(this.CTForm.get('position').valid);
+    // this.logger.log(this.CTForm.get('emailaddress').valid);
+    // this.logger.log(this.CTForm.get('mobile').valid);
 
   }
 

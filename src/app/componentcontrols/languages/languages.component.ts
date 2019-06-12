@@ -36,7 +36,6 @@ export class LanguagesComponent implements OnInit {
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-    this.logger.log('language=' + this.value);
     this.childEvent.emit(this.value);
     return this.value;
 
@@ -46,10 +45,8 @@ export class LanguagesComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log('inside ngDoCheck=' + this.LanguageFormData);
 
     if (this.LanguageFormData !== undefined && this.LanguageFormData !== null) {
-      this.logger.log('languageFormData=' + this.LanguageFormData);
       if (this.LanguageFormData != this.oldLanguageFormData) {
         this.oldLanguageFormData = this.LanguageFormData;
         this.loadInitialData(this.datas);
@@ -58,23 +55,18 @@ export class LanguagesComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
-    this.logger.log('inside ngOnInit=' + this.LanguageFormData);
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
       this.loadInitialData(this.datas);
-      this.logger.log('Languages Data : ');
-      this.logger.log(this.datas);
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }
 
   ngAfterViewInit() {
-    this.logger.log('inside ngDoAfterViewInit=' + this.LanguageFormData);
 
     if (this.LanguageFormData !== undefined && this.LanguageFormData !== null) {
-      if (this.LanguageFormData !== this.oldLanguageFormData) {
+      if (this.LanguageFormData != this.oldLanguageFormData) {
         this.oldLanguageFormData = this.LanguageFormData;
         this.loadInitialData(this.datas);
       }
@@ -83,15 +75,12 @@ export class LanguagesComponent implements OnInit {
 
   loadInitialData(datas) {
 
-    this.logger.log('language String=' + this.LanguageFormData);
-
     if (datas.length !== 0) {
       for (let i = 0; i < datas.length; i++) {
         if (datas[i].name === this.LanguageFormData) {
           this._selectedIndex = i;
         }
       }
-      this.logger.log('selected index=' + this._selectedIndex);
     } else {
       this.logger.log('null or undefined');
     }
