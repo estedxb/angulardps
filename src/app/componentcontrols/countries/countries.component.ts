@@ -55,7 +55,7 @@ export class CountriesComponent implements OnInit {
       this.datas = countries;
       this.childEvent.emit(this.datas[0]);
       this.loadInitialData(this.datas);
-      // this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
+      this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }

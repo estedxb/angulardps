@@ -27,29 +27,30 @@ export class LoggingService {
 
   log(msg: any, data1: any = null, data2: any = null, data3: any = null) {
     const date = new Date();
-    const dateString: string = '"' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-      + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + '"';
+    const dateString: string = date.getFullYear() + '-' + this.Trim('0' + date.getMonth() + 1, 2)
+      + '-' + this.Trim('0' + date.getDate(), 2) + ' ' + date.getHours() + ':' + date.getMinutes();
     if ((msg !== null || data1 !== null || data2 !== null || data3 !== null) && this.isLoggingRequired) {
-      console.log(' ========= dateString - Start =========== ');
-      if (msg !== null) {
-        const msgstring = JSON.stringify(msg);
-        if (msgstring !== '') { console.log(msgstring); }
-      }
-      if (data1 !== null) {
-        const msgstring = JSON.stringify(data1);
-        if (msgstring !== '') { console.log(msgstring); }
-      }
-      if (data2 !== null) {
-        const msgstring = JSON.stringify(data2);
-        if (msgstring !== '') { console.log(msgstring); }
-      }
-      if (data3 !== null) {
-        const msgstring = JSON.stringify(data3);
-        if (msgstring !== '') { console.log(msgstring); }
-      }
-      console.log(' ========= dateString - End =========== ');
+      this.ConsoleLog(' ========= ' + dateString + ' =========== ');
+      this.ConsoleLog(msg);
+      this.ConsoleLog(data1);
+      this.ConsoleLog(data2);
+      this.ConsoleLog(data3);
     } else {
-      if (this.isLoggingRequired) { console.log(' Log Msg Empty....'); }
+      if (this.isLoggingRequired) { this.ConsoleLog(' Log Msg Empty....'); }
+    }
+  }
+
+  Trim(data: string, len: number) { return data.substring(data.length - (len + 1), len); }
+
+  ConsoleLog(data: any) {
+    try {
+      if (data !== null) {
+        console.log(data);
+        // const msgstring = JSON.stringify(data);
+        // if (msgstring !== '') { console.log(msgstring); }
+      }
+    } catch (e) {
+      console.log(data);
     }
   }
 }

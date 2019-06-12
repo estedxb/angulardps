@@ -17,8 +17,8 @@ export class CountriesService {
   };
 
   constructor(private http: HttpClient, private logger: LoggingService) {
-    if (environment.dataFromAPI_JSON && environment.getCounteries !== '') {
-      this.getCountriesListUrl = environment.dpsAPI + environment.getCounteries;
+    if (environment.boemmAPI && environment.getCounteries !== '') {
+      this.getCountriesListUrl = environment.boemmAPI + environment.getCounteries;
     } else {
       this.getCountriesListUrl = environment.getAssetsDataPath + 'countries.json';
     }

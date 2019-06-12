@@ -38,7 +38,7 @@ export class WorkCodes {
 export class Statute { name: string; type?: string; }
 export class LegalForm { nl: Forms[]; en: Forms[]; fr: Forms[]; }
 export class Forms { name: string; }
-export class CountriesList { countryCode: string; countryName: string; }
+export class CountriesList { Country: string; 'Alpha-2': string; 'Alpha-3': string; }
 export class Language { name: string; shortName: string; }
 export class User {
     userName: string; firstName: string; lastName: string; email: EmailAddress; mobile: PhoneNumber; phone: PhoneNumber; language: Language;
