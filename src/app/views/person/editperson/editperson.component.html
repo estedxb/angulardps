@@ -208,14 +208,16 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Nationaliteit: </label>
-            <input #nationality (change)="updateNationality(nationality.value)" formControlName="nationality" class="form-control" name="nationality" type="text" required />
-            <div class="form-control-feedback"
+            <app-countries [CountryFormData]="nationalityString" (childEvent)="onCountryReceive($event)"></app-countries>
+
+            <!-- <input #nationality (change)="updateNationality(nationality.value)" formControlName="nationality" class="form-control" name="nationality" type="text" required /> -->
+            <!-- <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.nationality.invalid && (editPersonForm.controls.nationality.dirty || editPersonForm.controls.nationality.touched) else newvalidnationality">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidnationality>
               <img src="../../assets/img/ValidIcon.png" alt="">
-            </ng-template>
+            </ng-template> -->
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteplaats: </label>
@@ -230,14 +232,15 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteland: </label>
-            <input #countryOfBirth (change)="updateCOB(countryOfBirth.value)" formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required />
-            <div class="form-control-feedback"
+            <app-countries [CountryFormData]="birthPlaceString" (childEvent)="onCountryReceive($event)"></app-countries>
+            <!-- <input #countryOfBirth (change)="updateCOB(countryOfBirth.value)" formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required /> -->
+            <!-- <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.countryOfBirth.invalid && (editPersonForm.controls.countryOfBirth.dirty || editPersonForm.controls.countryOfBirth.touched) else newvalidcountryOfBirth">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidcountryOfBirth>
               <img src="../../assets/img/ValidIcon.png" alt="">
-            </ng-template>
+            </ng-template> -->
           </div>
         </div>
         <div class="row">

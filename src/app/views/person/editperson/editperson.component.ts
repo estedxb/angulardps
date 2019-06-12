@@ -72,6 +72,8 @@ export class EditPersonComponent implements OnInit {
 
   public calendarData: string;
   public countryString: string;
+  public birthPlaceString:string;
+  public nationalityString:string;
   public languageString: string;
 
   public message;

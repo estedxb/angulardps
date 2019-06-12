@@ -118,7 +118,6 @@ export class StatuteComponent implements OnInit {
 
     this.loadzeroArray();
 
-
   }
    
    onloadData(arrayElement,counter){
