@@ -53,10 +53,10 @@ export class JointcommitteeComponent implements OnInit {
 
   filterDatas(datas) {
 
-    this.logger.log('filtering the data from array');
-    this.logger.log(datas.length);
+    // this.logger.log('filtering the data from array');
+    // this.logger.log(datas.length);
 
-    this.logger.log('current typeworker = ' + this.TypeWorker);
+    // this.logger.log('current typeworker = ' + this.TypeWorker);
 
     this.datas = [];
 
@@ -67,8 +67,8 @@ export class JointcommitteeComponent implements OnInit {
       }
     }
 
-    this.logger.log('filtered Array');
-    this.logger.log(this.datas);
+    // this.logger.log('filtered Array');
+    // this.logger.log(this.datas);
 
   }
 

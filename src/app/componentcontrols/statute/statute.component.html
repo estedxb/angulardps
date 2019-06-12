@@ -1,8 +1,8 @@
 <form [formGroup]="SForm" novalidate id="SForm">
 
   <div class="error">{{ errorMsg }}</div>
-      <!-- SForm.controls.statuteArray.controls -->
-  <div class="customerBox" *ngFor="let statute of statutes; let i= index; trackBy: trackByFn" [attr.data-index]="i">
+      <!-- SForm.controls.statuteArray.controls -->      
+  <div class="customerBox" formArrayName="statuteArray" *ngFor="let statute of statutes; let st of SForm.get('statuteArray').controls; let i= index; trackBy: trackByFn" [attr.data-index]="i">
     <div class="row panelheader">
       <div class="col col-sm-5 fright">
         <h4> {{ statute.name }} </h4>
@@ -15,17 +15,16 @@
         <app-jointcommittee [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"></app-jointcommittee>
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
-
-        <div class="row inputWithImg">
-              <input class="form-control" #coefficientBox value="coefficientArray[i]"
+        <div class="row inputWithImg" [formGroupName]="i">
+                <input value="{{coefficientArray[i]}}" formControlName="CoefficientBox" class="form-control" #coefficientBox
                 (change)="onChangeCoefficient(coefficientBox.value,i)"
-                type="number" onfocus="this.select();" onmouseup="return false;">
-              <!-- <div class="col-sm-2 form-control-feedback" *ngIf="statuteArray[i].invalid && (st.CoefficientBox.untouched || st.CoefficientBox.dirty || st.CoefficientBox.touched) else valida">
-                <img src="../../assets/img/InvalidIcon.png" alt="">
-              </div>
-              <ng-template #valida>
-                <img src="../../assets/img/ValidIcon.png" alt="">
-              </ng-template> -->
+                type="text" onfocus="this.select();" onmouseup="return false;">
+                <!-- <div class="col-sm-2 form-control-feedback" *ngIf="statuteArray[i].invalid && (st.CoefficientBox.untouched || st.CoefficientBox.dirty || st.CoefficientBox.touched) else valida">
+                  <img src="../../assets/img/InvalidIcon.png" alt="">
+                </div>
+                <ng-template #valida>
+                  <img src="../../assets/img/ValidIcon.png" alt="">
+                </ng-template> -->
         </div>
       </div>
     </div>
@@ -36,24 +35,24 @@
         <span class="titleBold">Maaltijdcheques</span>
       </div>
     </div>
-    
+      
     <ng-container *ngIf="isMealEnabled[this.i]===true">
-      <!-- <div class="row">
-        <div  style="display: flex; justify-content: space-evenly;">
-            <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,j)"
-              formControlName="TotalWaarde" class="form-control" type="number" #totalwaarde
-              onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i></div>
+      <div class="row" *ngFor="let item of SForm.get('statuteArray').controls[i].arrayBox.controls; let k = index">
+        <div style="display: flex; justify-content: space-evenly;" [formGroupName]="k">
+            <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,i)"
+              value="{{totalArray[i]}}" formControlName="TotalWaarde" class="form-control" type="number"
+              #totalwaarde onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i></div>
 
-          <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,j)"
-              formControlName="Wergeversdeel" class="form-control" type="number" #wergeversdeel
-              onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i>
-          </div>
+            <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,i)"
+              value="{{wegervaalArray[i]}}" formControlName="Wergeversdeel" class="form-control" type="number"
+              #wergeversdeel onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i>
+            </div>
 
-          <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,j)"
-              formControlName="minimumHours" class="form-control" type="number" #minimumuren
-              onfocus="this.select();" onmouseup="return false;"></div>
+            <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,i)"
+              value="{{minimumurenArray[i]}}" formControlName="minimumHours" class="form-control" type="number"
+              #minimumuren onfocus="this.select();" onmouseup="return false;"></div>
         </div>
-      </div> -->
+      </div>
     </ng-container>
   </div>
 </form>
