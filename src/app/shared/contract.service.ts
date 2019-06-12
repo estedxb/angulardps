@@ -41,9 +41,9 @@ export class ContractService {
       this.getApproveContractURL = environment.getAssetsDataPath + 'approveContract.json';
     }
 
-    if (environment.dataFromAPI_JSON && environment.getContractReasonURL !== '') {
+    if (environment.boemmAPI && environment.getContractReasonURL !== '') {
       this.logger.log('getContractReasonURL Data From Remote');
-      this.getContractReasonURL = environment.dpsAPI + environment.getContractReasonURL;
+      this.getContractReasonURL = environment.boemmAPI + environment.getContractReasonURL;
     } else {
       this.logger.log('getContractReasonURL Data From JSON');
       this.getContractReasonURL = environment.getAssetsDataPath + 'contractreason.json';
@@ -104,7 +104,6 @@ export class ContractService {
   }
 
   public getContractReason(): Observable<ContractReason[]> {
-    this.logger.log('getContractReason');
     this.logger.log('getContractReason Data From = ' + this.getContractReasonURL);
     const result = this.http.get<any>(this.getContractReasonURL).catch(this.errorHandler);
     this.logger.log(result);

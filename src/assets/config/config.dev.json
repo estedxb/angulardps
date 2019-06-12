@@ -6,7 +6,7 @@
     "instrumentationKey": "<dev-guid-here>"
   },
   "logging": {
-    "console": true,
+    "console": false,
     "appInsights": false
   },
   "aad": {

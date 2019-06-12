@@ -38,7 +38,7 @@ export class FileuploadService {
     }
 
     this.logger.log('formData:::', formData);
-    new Response(formData).text().then(this.logger.log)
+    new Response(formData).text().then(console.log)
 
     return this.http.post<any>(this.getPositionUpdateUrl, /*JSON.stringify(position)+""+*/ formData, {
       headers: httpHeaders,

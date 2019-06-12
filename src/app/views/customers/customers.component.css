@@ -239,3 +239,65 @@ div.customerBox div.customerBoxContect {
 .bottom-15 {
   margin-bottom: 15px;
 }
+
+.inforow .actioneyebtn button,
+.inforow .actiondelbtn button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  float: left;
+  width: 100%;
+  text-align: right;
+  margin: 0px;
+  padding: 5px 2px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 30px;
+  vertical-align: middle;
+  color: #21252938;
+}
+
+.inforow .actioneyebtn button,
+.inforow .actiondelbtn button {
+  width: 25px;
+  padding: 0px;
+  line-height: 25px;
+  vertical-align: middle;
+}
+
+#PositionForm .inforow .actioneyebtn,
+#PositionForm .inforow .actiondelbtn {
+  line-height: 15px;
+  vertical-align: middle;
+  padding: 0px;
+  margin: 0px auto;
+  padding: 2px 4px;
+}
+#PositionForm .inforow .actioneyebtn button img {
+  width: 24px;
+}
+#PositionForm .inforow .actiondelbtn button img {
+  width: 20px;
+}
+#PositionForm .inforow .actioncontent {
+  line-height: 28px;
+  padding: 2px;
+  vertical-align: middle;
+  overflow: hidden;
+  max-height: 28px;
+}
+#PositionForm .inforow .actioncontent::after {
+  content: " --------------------------------------------------------------------------------------------------------";
+}
+.inforow {
+  line-height: 18px;
+  vertical-align: middle;
+}
+.UploadedFiles {
+  min-width: 400px;
+  max-width: 810px;
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+}
