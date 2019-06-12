@@ -67,6 +67,10 @@ export class StatuteComponent implements OnInit {
     }
   }
 
+  loadCoefficientArray() {
+
+    
+  }
 
   ngAfterViewInit() {
 
@@ -86,6 +90,8 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
+
+      this.loadCoefficientArray();
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
@@ -108,6 +114,9 @@ export class StatuteComponent implements OnInit {
       this.addControls("",0,0,0);
     }
 
+    console.log("coefficient array");
+    console.log(this.coefficientArray);
+
   }
    
    onloadData(arrayElement,counter){
@@ -126,8 +135,6 @@ export class StatuteComponent implements OnInit {
 }
 
 createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
-
-  console.log("creating array controls !!");
   
   return this.fb.group({
      CoefficientBox: new FormControl(Coefficient, [Validators.required, Validators.pattern('^[0-9]$')]),
@@ -220,7 +227,7 @@ ngOnInit() {
 
     this.statuteSettings = [];
 
-    for (let i = 0; i < data.length; i++) 
+    for (let i = 0; i < data.length; i++)
     {
 
       const dataObject = data[i];
