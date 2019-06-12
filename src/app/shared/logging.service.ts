@@ -29,7 +29,6 @@ export class LoggingService {
     const date = new Date();
     const dateString: string = '"' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
       + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + '"';
-    console.log('this.isLoggingRequired :: ' + this.isLoggingRequired);
     if ((msg !== null || data1 !== null || data2 !== null || data3 !== null) && this.isLoggingRequired) {
       console.log(' ========= dateString - Start =========== ');
       if (msg !== null) {
@@ -49,9 +48,8 @@ export class LoggingService {
         if (msgstring !== '') { console.log(msgstring); }
       }
       console.log(' ========= dateString - End =========== ');
-    }
-    else {
-      console.log(' Log Msg Empty.... or Logging False');
+    } else {
+      if (this.isLoggingRequired) { console.log(' Log Msg Empty....'); }
     }
   }
 }
