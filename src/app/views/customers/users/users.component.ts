@@ -144,7 +144,7 @@ export class UsersComponent implements OnInit {
 
   updateUsers() {
     this.usersService.updateUser(this.data).subscribe(res => {
-      this.logger.log('response :: ', res, 'Data ::', this.data);
+      this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },

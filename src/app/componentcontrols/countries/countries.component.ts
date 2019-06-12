@@ -39,11 +39,6 @@ export class CountriesComponent implements OnInit {
   onChange($event) {
 
     this.selectedIndex = $event.target.value;
-<<<<<<< HEAD
-    this.logger.log('countries selected=' + this.value);
-    this.logger.log(this.value);
-=======
->>>>>>> 2fbe8b1cd08e7439411764f4c44c5a5170ee92c6
 
     this.selectedString = this.value;
 

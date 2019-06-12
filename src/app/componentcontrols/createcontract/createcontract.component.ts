@@ -515,9 +515,9 @@ export class CreateContractComponent implements OnInit {
     this.contract.startDate = this.getDateString(this.selectedStartDate);
     this.contract.endDate = this.getDateString(this.selectedEndDate);
 
-    this.logger.log('createObjects  :: ', this.selectedStartDate, this.selectedEndDate);
-    this.logger.log('createObjects  contract.startDate  :: ', this.contract.startDate, this.selectedStartDate);
-    this.logger.log('createObjects  contract.endDate  :: ', this.contract.endDate, this.selectedEndDate);
+    this.logger.log('createObjects  :: ' + this.selectedStartDate, this.selectedEndDate);
+    this.logger.log('createObjects  contract.startDate  :: ' + this.contract.startDate, this.selectedStartDate);
+    this.logger.log('createObjects  contract.endDate  :: ' + this.contract.endDate, this.selectedEndDate);
 
     if (this.workScheduleSelected !== null && this.workScheduleSelected !== undefined) {
       this.contract.workSchedule = this.getWorkSchedule().workSchedule;

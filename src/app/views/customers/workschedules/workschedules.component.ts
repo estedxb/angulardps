@@ -156,7 +156,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   updateWorkschedules() {
     this.workschedulesService.updateWorkschedule(this.data).subscribe(res => {
-      this.logger.log('response :: ', res, 'Data ::', this.data);
+      this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
     },
