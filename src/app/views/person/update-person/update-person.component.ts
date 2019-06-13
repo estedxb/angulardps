@@ -32,15 +32,15 @@ export class UpdatePersonComponent implements OnInit {
 
   constructor(private personService: PersonService, private data: DataService, private logger: LoggingService,
     private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
-    this.logger.log('InSide :: Update Person');
+    // this.logger.log('InSide :: Update Person');
     this.validateLogin();
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
-    this.logger.log('vatNumber :: ' + this.vatNumber);
+    // this.logger.log('vatNumber :: ' + this.vatNumber);
   }
 
   validateLogin() {
     try {
-      this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
+      // this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
         this.router.navigate(['/login']);
@@ -78,12 +78,23 @@ export class UpdatePersonComponent implements OnInit {
 
     if (message.page === "edit") {
       this.editPersonData = message.data;
-      this.logger.log("received person data=" + this.editPersonData);
+      // this.logger.log("received person data=" + this.editPersonData);
     }
 
     if (message.page === "position") {
       this.personpositionData = message.data;
-      this.logger.log("received person data=" + this.editPersonData);
+      // this.logger.log("received person data=" + this.editPersonData);
+    }
+  }
+
+  changeMessage() {
+    // this.logger.log(this.dpsPerson);
+    if (this.dpsPerson !== null) {
+      const newmessage: any = {
+        page: 'edit',
+        data: this.dpsPerson
+      };
+      this.data.changeMessage(newmessage);
     }
   }
 
@@ -100,16 +111,20 @@ export class UpdatePersonComponent implements OnInit {
       this.currentPage = 'editperson';
     }
 
-    this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    this.logger.log('CurrentPage :: ' + this.currentPage);
+    // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    // this.logger.log('CurrentPage :: ' + this.currentPage);
 
     try {
-      this.logger.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
+      // this.logger.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
         this.dpsPerson = dpsperson.body;
         this.person = this.dpsPerson.person;
-        this.logger.log('DPS Person Form Data : ', dpsperson);
-        this.logger.log('Person Form Data : ', this.person);
+        //this.logger.log('DPS Person Form Data : ', dpsperson);
+        //this.logger.log('Person Form Data : ', this.person);
+        this.logger.log("Person Form Data : ");
+        this.logger.log(this.person);
+        this.changeMessage();
+
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
         if (this.dpsPerson.person.lastName === '' || this.dpsPerson.person.lastName === null ||
           this.dpsPerson.person.lastName === undefined) {
@@ -127,11 +142,11 @@ export class UpdatePersonComponent implements OnInit {
   archiveClick() {
 
     if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
-      console.log("person data");
-      console.log(this.dpsPerson);
+      // console.log("person data");
+      // console.log(this.dpsPerson);
 
       this.personService.updatePosition(this.dpsPerson).subscribe(res => {
-        console.log("response=" + res);
+        // console.log("response=" + res);
         this.ShowMessage('Person archived successfully.', '');
       },
         (err: HttpErrorResponse) => {
@@ -156,6 +171,7 @@ export class UpdatePersonComponent implements OnInit {
 
       this.personService.updatePosition(this.editPersonData).subscribe(res => {
         this.logger.log("response=" + res);
+        this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -173,6 +189,7 @@ export class UpdatePersonComponent implements OnInit {
     if (this.currentPage === "positions") {
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log("response=" + res);
+        this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
