@@ -4,7 +4,7 @@ import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 // Adal Login Start
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from './shared/models';
-import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+import { MsalService } from './shared/msal.service';
 import { Router, CanActivate } from '@angular/router';
 import { CustomerListsService } from './shared/customerlists.service';
 // Adal Login End
@@ -24,14 +24,16 @@ export class AppComponent {
   constructor(
     private router: Router, private logger: LoggingService, public customerListsService: CustomerListsService
     // tslint:disable-next-line: align // Adal Login Start
-    , private adalSvc: MsAdalAngular6Service
+    , private msalService: MsalService
     // Adal Login end
   ) {
     this.logger.logF('environment.production :: ' + environment.production);
     // Adal Login Start
-    console.log(this.adalSvc.userInfo);
+    console.log('App.Component');
+    this.msalService.login();
     this.returnUrl = './dashboard';
     this.returnaddcustomerUrl = './customer/add';
+    /*
     const token = this.adalSvc.acquireToken(environment.aadurl).subscribe((token: string) => {
       this.logger.logF(token);
       this.ltkn.isLoggedIn = this.adalSvc.isAuthenticated;
@@ -42,6 +44,7 @@ export class AppComponent {
       this.getUserInfo(token, this.adalSvc.LoggedInUserEmail);
     });
     // Adal Login End
+    */
   }
 
   getUserInfo(token: string, UserEmail: string) {
@@ -76,3 +79,10 @@ export class AppComponent {
     }, error => this.logger.logF(error));
   }
 }
+
+/*
+import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+
+, adalSvc: MsAdalAngular6Service
+=====
+*/

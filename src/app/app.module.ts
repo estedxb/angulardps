@@ -18,8 +18,6 @@ import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { DatePipe } from '@angular/common';
 import { environment } from '../environments/environment';
 
-import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
-
 @NgModule({
   declarations: [AppComponent, routingComponents, TestArraysComponent],
   imports: [
@@ -35,16 +33,6 @@ import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angula
     AngularFontAwesomeModule,
     AutocompleteLibModule,
     NgxSpinnerModule,
-    MsAdalAngular6Module.forRoot({
-      tenant: environment.tenantid,
-      clientId: environment.clientId,
-      redirectUri: window.location.origin,
-      endpoints: {
-        'https://localhost:4200/Api/': 'xxx-bae6-4760-b434-xxx'
-      },
-      navigateToLoginRequestUrl: false,
-      cacheLocation: 'localStorage',
-    }),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     TimepickerModule.forRoot(),
@@ -62,10 +50,33 @@ import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angula
     AlertsModule.forRoot()
   ],
   providers: [
-    AuthenticationGuard, DatePipe
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]
 })
 export class AppModule { }
+
+/*
+import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
+
+==============
+
+
+    MsAdalAngular6Module.forRoot({
+      tenant: environment.tenantid,
+      clientId: environment.clientId,
+      redirectUri: window.location.origin,
+      endpoints: {
+        'https://localhost:4200/Api/': 'xxx-bae6-4760-b434-xxx'
+      },
+      navigateToLoginRequestUrl: false,
+      cacheLocation: 'localStorage',
+    }),
+
+
+    AuthenticationGuard,
+
+    ========
+*/

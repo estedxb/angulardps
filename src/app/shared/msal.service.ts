@@ -30,7 +30,7 @@ export class MsalService {
    */
   clientApplication = new Msal.UserAgentApplication(
     this.tenantConfig.clientID, this.authority,
-    function (errorDesc: any, token: any, error: any, tokenType: any) {
+    (errorDesc: any, token: any, error: any, tokenType: any) => {
     }
   );
 
@@ -79,6 +79,7 @@ export class MsalService {
 
   getUserEmail(): string {
     // return this.getUser().idToken.emails[0];
+    return this.getUser().idToken.toString();
   }
 
   getUser() {

@@ -56,7 +56,6 @@ import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 
-import { AuthenticationGuard } from 'microsoft-adal-angular6';
 import { AuthCallbackComponent } from './views/auth-callback/auth-callback.component';
 
 
@@ -80,8 +79,8 @@ const routes: Routes = [
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: 'auth-callback', component: AuthCallbackComponent },
-  { path: '', component: AppComponent, pathMatch: 'full', canActivate: [AuthenticationGuard] },
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 @NgModule({
@@ -136,3 +135,11 @@ export const entringComponents = [
   CancelContractComponent,
   CreateContractComponent
 ];
+/*
+import { AuthenticationGuard } from 'microsoft-adal-angular6';
+
+=====
+
+{ path: '', component: AppComponent, pathMatch: 'full', canActivate: [AuthenticationGuard] },
+
+*/
