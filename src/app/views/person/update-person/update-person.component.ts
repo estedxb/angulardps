@@ -154,6 +154,7 @@ export class UpdatePersonComponent implements OnInit {
 
       this.personService.updatePosition(this.editPersonData).subscribe(res => {
         this.logger.log("response=" + res);
+        this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -171,6 +172,7 @@ export class UpdatePersonComponent implements OnInit {
     if (this.currentPage === "positions") {
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log("response=" + res);
+        this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
