@@ -29,7 +29,6 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { CreateuserComponent } from './views/customers/users/createuser/createuser.component';
 import { CreatelocationComponent } from './views/customers/locations/createlocation/createlocation.component';
 import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
-import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { SchedulerComponent } from './views/scheduler/scheduler.component';
@@ -57,6 +56,13 @@ import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 
+
+import { AuthGuard } from './auth.guard';
+/*
+import { AuthCallbackComponent } from './views/auth-callback/auth-callback.component';
+import { AuthenticationGuard } from 'microsoft-adal-angular6';
+*/
+
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
@@ -76,9 +82,12 @@ const routes: Routes = [
   { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
-  // { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-  // { path: 'auth-callback', component: AuthCallbackComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  /* ==
+   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'auth-callback', component: AuthCallbackComponent },
+  == */
+
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 // , canActivate: [AuthGuard]
@@ -96,6 +105,7 @@ export const routingComponents = [
   CustomerSelectionComponent,
   LegalComponent,
   JointcommitteeComponent,
+  /* == AuthCallbackComponent,==*/
   CountriesComponent, StatuteComponent, LanguagesComponent,
   WorkCodesComponent,
   ContactPersonComponent,

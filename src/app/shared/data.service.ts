@@ -6,15 +6,15 @@ import { AppConfig } from '../app.config';
 })
 
 export class DataService {
-    protected apiServer = AppConfig.settings.apiServer;
+    // protected apiServer = AppConfig.settings.apiServer;
     private messageService = new BehaviorSubject<any>('default message');
     currentMessage = this.messageService.asObservable();
-    private isRequireAuth: boolean = AppConfig.settings.aad.requireAuth;
+    // private isRequireAuth: boolean = AppConfig.settings.aad.requireAuth;
 
     constructor() {
-        if (this.isRequireAuth) {
-            // alert('Authentication Required');
-        }
+        // if (this.isRequireAuth) {
+        // alert('Authentication Required');
+        // }
     }
 
     changeMessage(message: any) {

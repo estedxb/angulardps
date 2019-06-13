@@ -9,10 +9,13 @@
     "console": true,
     "appInsights": false
   },
-  "aad": {
-    "requireAuth": true,
-    "tenant": "<dev-guid-here>",
-    "clientId": "<dev-guid-here>"
+  "adalConfig": {
+    "clientId": "<client-id-here>",
+    "tenant": "<tenant-guid-here>",
+    "cacheLocation": "localStorage",
+    "endpoints": {
+      "api": "<client-id-here>"
+    }
   },
   "apiServer": {
     "metadata": "https://metadata.demo.com/api/v1.0/",

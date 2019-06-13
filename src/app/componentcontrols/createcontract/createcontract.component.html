@@ -66,7 +66,7 @@
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'
-                            [value]="contractReason.BrightStaffing_Contract_Reason_ID">{{contractReason.Name}}</option>
+                            [value]="contractReason.BrightStaffing_Contract_Reason_ID">{{contractReason.name}}</option>
                     </select>
                 </div>
             </div>

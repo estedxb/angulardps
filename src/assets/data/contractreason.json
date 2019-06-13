@@ -1,18 +1,18 @@
 [
   {
-    "Name": "Tijdelijke vermeerdering van werk",
+    "name": "Tijdelijke vermeerdering van werk",
     "BrightStaffing_Contract_Reason_ID": "1"
   },
   {
-    "Name": "Vervanging",
+    "name": "Vervanging",
     "BrightStaffing_Contract_Reason_ID": "2"
   },
   {
-    "Name": "Uitzonderlijk werk",
+    "name": "Uitzonderlijk werk",
     "BrightStaffing_Contract_Reason_ID": "3"
   },
   {
-    "Name": "Instroom",
+    "name": "Instroom",
     "BrightStaffing_Contract_Reason_ID": "4"
   }
 ]

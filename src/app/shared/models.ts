@@ -136,4 +136,4 @@ export class PrintContractPDF { contractId: string; fileUrl: string }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string }
 export class ApproveContract { customerVatNumber: string; contractId: string; }
 // tslint:disable-next-line: variable-name
-export class ContractReason { Name: string; BrightStaffing_Contract_Reason_ID: string; }
+export class ContractReason { name: string; BrightStaffing_Contract_Reason_ID: string; }

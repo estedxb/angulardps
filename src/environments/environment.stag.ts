@@ -58,5 +58,6 @@ export const environment = {
   //getPositionsDownloadTemplate: 'https://dpsstorageaccountstg.blob.core.windows.net/position/Position1.pdf',
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
-  getContractReasonURL: 'ContractReasons'
+  getContractReasonURL: 'ContractReasons',
+  isLoggingRequired: true
 };
