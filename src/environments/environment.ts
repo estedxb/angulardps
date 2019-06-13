@@ -61,7 +61,8 @@ export const environment = {
   getVehicles: '',
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
-  getContractReasonURL: 'ContractReasons'
+  getContractReasonURL: 'ContractReasons',
+  isLoggingRequired: true
 };
 
 /*

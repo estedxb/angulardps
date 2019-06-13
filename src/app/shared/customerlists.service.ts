@@ -28,6 +28,12 @@ export class CustomerListsService {
     return result;
   }
 
+  public getCustomersbyVatNumber(vatNumber: string): Observable<CustomersList[]> {
+    // this.logger.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
+    const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + vatNumber).catch(this.errorHandler);
+    // this.logger.log(result);
+    return result;
+  }
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 
 }

@@ -75,6 +75,8 @@ export class PositionsComponent implements OnInit {
         this.logger.log('The dialog was closed');
         this.data = result;
         this.logger.log('this.data ::', this.data);
+        this.onPageInit();
+        /*
         if (this.SelectedIndex >= 0) {
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
@@ -88,6 +90,8 @@ export class PositionsComponent implements OnInit {
             this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
           }
         }
+        */
+
       });
     } catch (e) { }
   }

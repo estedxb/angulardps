@@ -9,24 +9,7 @@ import { PARAMETERS } from '@angular/core/src/util/decorators';
 import { LoggingService } from './logging.service';
 import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 @Injectable({ providedIn: 'root' })
-/*
-export class AuthGuard implements CanActivate {
 
-constructor(private adal: MsAdalAngular6Service) { }
-
-canActivate(): boolean {
-
-  if (this.adal.isAuthenticated) {
-    return true;
-  }
-
-  this.adal.login();
-
-  return false;
-}
-
-}
-*/
 export class AuthService {
   private getVerifyLoginUrl = '';
   public errorMsg;

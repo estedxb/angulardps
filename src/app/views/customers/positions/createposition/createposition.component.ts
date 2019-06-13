@@ -23,6 +23,7 @@ export class CreatepositionComponent implements OnInit {
   PositionForm: FormGroup;
   position: _Position;
   fileToUpload: File = null;
+  fileToUploadName = '';
   workstationDocument: Documents;
 
   public getPositionUpdateUrl;
@@ -128,11 +129,12 @@ export class CreatepositionComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.fileToUpload = files.item(0);
       }
-      /*
+
       if (this.fileToUpload !== null) {
-        this.currentPosition.position.workstationDocument.name = files.item(0).name;
+        this.fileToUploadName = files.item(0).name;
+        // this.currentPosition.position.workstationDocument.name = files.item(0).name;
       }
-      */
+
     }
   }
 
@@ -140,17 +142,31 @@ export class CreatepositionComponent implements OnInit {
     // this.logger.log('fileToUpload ::::::::' + this.fileToUpload.name);
     if (this.fileToUpload !== null) {
       this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
-        this.currentPosition.position.workstationDocument.location = data.url;
-        this.currentPosition.position.workstationDocument.name = data.name;
+        this.logger.log('uploadFileToActivity()', data);
+        this.setContractWorkstationDocumentInfo(data);
         this.dialogRef.close(this.currentPosition);
       }, error => {
-        this.logger.log(error);
-        this.currentPosition.position.workstationDocument.location = '';
-        this.currentPosition.position.workstationDocument.name = '';
+        this.logger.log('uploadFileToActivity() Error - ', error);
+        this.setContractWorkstationDocumentInfo(false);
         this.dialogRef.close(this.currentPosition);
       });
     } else {
       this.dialogRef.close(this.currentPosition);
+    }
+  }
+  setContractWorkstationDocumentInfo(data: any) {
+    try {
+      const dataString = JSON.stringify(data).trim();
+      if (dataString !== 'true' && dataString !== 'false') {
+        this.currentPosition.position.workstationDocument.location = data.url;
+        this.currentPosition.position.workstationDocument.name = data.name;
+      } else {
+        this.currentPosition.position.workstationDocument.location = '';
+        this.currentPosition.position.workstationDocument.name = this.fileToUploadName;
+      }
+    } catch (e) {
+      this.currentPosition.position.workstationDocument.location = '';
+      this.currentPosition.position.workstationDocument.name = this.fileToUploadName;
     }
   }
 

@@ -9,11 +9,13 @@ export interface IAppConfig {
         console: boolean;
         appInsights: boolean;
     };
-    aad: {
-        requireAuth: boolean;
-        tenant: string;
+    adalConfig: {
         clientId: string;
-
+        tenant: string;
+        cacheLocation: string;
+        endpoints: {
+            api: string
+        }
     };
     apiServer: {
         metadata: string;

@@ -1,11 +1,15 @@
-import { NgModule, EventEmitter, APP_INITIALIZER } from '@angular/core';
+import { NgModule, EventEmitter } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+/* == 
+ import { NgModule, EventEmitter, APP_INITIALIZER } from '@angular/core';
+ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+ == */
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents, entringComponents } from './app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { AlertsModule } from 'angular-alert-module';
@@ -17,11 +21,31 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { AppConfig } from './app.config';
 import { DatePipe } from '@angular/common';
-import { MsAdalAngular6Module } from 'microsoft-adal-angular6';
+/* ==
+import { AuthenticationGuard, MsAdalAngular6Module } from 'microsoft-adal-angular6';
+import { InsertAuthTokenInterceptor } from './insert-auth-token-interceptor';
 
+let adalConfig: any; // will be initialized by APP_INITIALIZER
+export function msAdalAngular6ConfigFactory() {
+  return adalConfig; // will be invoked later when creating MsAdalAngular6Service
+}
+== */
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.load();
+  /*
+  const promise = appConfig.load().then(() => {
+    adalConfig = {
+      tenant: AppConfig.settings.adalConfig.tenant,
+      clientId: AppConfig.settings.adalConfig.clientId,
+      redirectUri: window.location.origin,
+      endpoints: AppConfig.settings.adalConfig.endpoints,
+      navigateToLoginRequestUrl: false,
+      cacheLocation: AppConfig.settings.adalConfig.cacheLocation
+    };
+  });
+  return () => promise;
+*/
 }
 @NgModule({
   declarations: [AppComponent, routingComponents, TestArraysComponent],
@@ -35,7 +59,18 @@ export function initializeApp(appConfig: AppConfig) {
     MatDialogModule,
     MatSnackBarModule,
     AppRoutingModule,
-    MsAdalAngular6Module,
+    /* ==
+    MsAdalAngular6Module.forRoot({
+      tenant: '<YOUR TENANT>',
+      clientId: '<YOUR CLIENT / APP ID>',
+      redirectUri: window.location.origin,
+      endpoints: {
+        'https://localhost/Api/': 'xxx-bae6-4760-b434-xxx'
+      },
+      navigateToLoginRequestUrl: false,
+      cacheLocation: 'localStorage',
+    }),
+    == */
     AngularFontAwesomeModule,
     AutocompleteLibModule,
     NgxSpinnerModule,
@@ -56,13 +91,7 @@ export function initializeApp(appConfig: AppConfig) {
     AlertsModule.forRoot()
   ],
   providers: [
-    DatePipe,
-    AppConfig,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [AppConfig], multi: true
-    }
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [],
@@ -70,3 +99,18 @@ export function initializeApp(appConfig: AppConfig) {
 })
 export class AppModule { }
 
+/*
+{
+  provide: HTTP_INTERCEPTORS,
+    useClass: InsertAuthTokenInterceptor
+},
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppConfig],
+      multi: true
+    },
+    AuthenticationGuard,
+
+*/

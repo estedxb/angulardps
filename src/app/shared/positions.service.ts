@@ -11,7 +11,6 @@ export class PositionsService {
   private getPositionUrl = '';
   private getPositionUpdateUrl = '';
 
-
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'my-auth-token' }) };
 
   constructor(private http: HttpClient, private logger: LoggingService) {
@@ -20,8 +19,6 @@ export class PositionsService {
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
       this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
-
-
     } else {
       this.logger.log('Data From JSON');
       this.getPositionsByVatNumberUrl = environment.getAssetsDataPath + 'positions.json';
