@@ -72,7 +72,6 @@ export class LoginComponent implements OnInit {
         this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
 
         if (this.f.userid.value.toLowerCase() === 'admin' && this.f.password.value.toLowerCase() === 'admin') {
-          this.ltkn.userEmail = 'balaji_sp@hotmail.com';
           this.ltkn.userRole = 'DPSAdmin';
         } else { this.ltkn.userRole = 'Customer'; }
 

@@ -15,14 +15,16 @@ export class DashboardActionComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
-  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-  public loginaccessToken: string = this.dpsLoginToken.accessToken;
+  public dpsLoginToken: LoginToken = new LoginToken();
+  public loginaccessToken = '';
   public vatNumber: string;
 
   constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
 
   ngOnInit() {
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.loginaccessToken = this.dpsLoginToken.accessToken;
     // this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);

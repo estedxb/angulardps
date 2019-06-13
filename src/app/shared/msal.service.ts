@@ -4,45 +4,36 @@ import * as Msal from 'msal';
 import { environment } from '../../environments/environment';
 
 declare var bootbox: '';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 
 export class MsalService {
 
   B2CTodoAccessTokenKey = 'b2c.access.token';
+  public AccessURL = environment.aadurl;  // 'https://login.microsoftonline.com/tfp/';
 
   tenantConfig = {
     tenant: environment.tenantid,
     clientID: environment.clientId,
-    signInPolicy: 'B2C_1_signin',
-    signUpPolicy: 'B2C_1_signup',
+    signInPolicy: '',
+    signUpPolicy: '',
     redirectUri: 'http://localhost:4200',
-    b2cScopes: [environment.tenantid + '/access-api/user_impersonation']
+    b2cScopes: ['https://' + environment.tenantid + '/access-api/user_impersonation']
   };
 
   // Configure the authority for Azure AD B2C
-  authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
-  // authority = environment.aadurl + '/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
+  authority = this.AccessURL + '/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
 
-  /*
-   * B2C SignIn SignUp Policy Configuration
-   */
-  clientApplication = new Msal.UserAgentApplication(
-    this.tenantConfig.clientID, this.authority,
-    (errorDesc: any, token: any, error: any, tokenType: any) => {
-    }
-  );
+  /* B2C SignIn SignUp Policy Configuration */
+  clientApplication = new Msal.UserAgentApplication(this.tenantConfig.clientID, this.authority,
+    (errorDesc: any, token: any, error: any, tokenType: any) => { });
 
   public login(): void {
-    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' +
-      this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
+    this.clientApplication.authority = this.AccessURL + '/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
     this.authenticate();
   }
 
   public signup(): void {
-    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' +
-      this.tenantConfig.tenant + '/' + this.tenantConfig.signUpPolicy;
+    this.clientApplication.authority = this.AccessURL + '/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signUpPolicy;
     this.authenticate();
   }
 
@@ -53,36 +44,21 @@ export class MsalService {
         (accessToken: any) => {
           _this.saveAccessTokenToCache(accessToken);
         }, (error: any) => {
-          _this.clientApplication.acquireTokenPopup(_this.tenantConfig.b2cScopes).then(
-            (accessToken: any) => {
-              _this.saveAccessTokenToCache(accessToken);
-            }, (error: any) => {
-              console.log('error: ', error);
-            });
+          _this.clientApplication.acquireTokenPopup(_this.tenantConfig.b2cScopes).then((accessToken: any) => {
+            _this.saveAccessTokenToCache(accessToken);
+          }, (error: any) => { console.log('error: ', error); });
         });
-    }, (error: any) => {
-      console.log('error: ', error);
-    });
+    }, (error: any) => { console.log('error: ', error); });
   }
 
-  saveAccessTokenToCache(accessToken: string): void {
-    sessionStorage.setItem(this.B2CTodoAccessTokenKey, accessToken);
-  }
+  saveAccessTokenToCache(accessToken: string): void { sessionStorage.setItem(this.B2CTodoAccessTokenKey, accessToken); }
 
-  logout(): void {
-    this.clientApplication.logout();
-  }
+  logout(): void { this.clientApplication.logout(); }
 
-  isLoggedIn(): boolean {
-    return this.clientApplication.getUser() != null;
-  }
+  isLoggedIn(): boolean { return this.clientApplication.getUser() != null; }
 
-  getUserEmail(): string {
-    // return this.getUser().idToken.emails[0];
-    return this.getUser().idToken.toString();
-  }
+  getUserEmail(): string { /* return this.getUser().idToken.emails[0];*/ return this.getUser().idToken.toString(); }
 
-  getUser() {
-    return this.clientApplication.getUser();
-  }
+  getUser() { return this.clientApplication.getUser(); }
+
 }

@@ -30,7 +30,7 @@ export class AppComponent {
     this.logger.logF('environment.production :: ' + environment.production);
     // Adal Login Start
     console.log('App.Component');
-    this.msalService.login();
+    // this.msalService.login();
     this.returnUrl = './dashboard';
     this.returnaddcustomerUrl = './customer/add';
     /*
