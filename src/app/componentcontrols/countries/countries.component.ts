@@ -55,7 +55,7 @@ export class CountriesComponent implements OnInit {
       this.datas = countries;
       this.childEvent.emit(this.datas[0]);
       this.loadInitialData(this.datas);
-      this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
+      // this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
@@ -86,9 +86,9 @@ export class CountriesComponent implements OnInit {
       // this.logger.log('datas new country string');
       for (let i = 0; i < this.datas.length; i++) {
         const str:string = this.datas[i].Country;
-        this.logger.log("str="+str);
+        // this.logger.log("str="+str);
         const datString:Array<string> = str.split(" ");
-        this.logger.log('country=' + str.split(" ")[0].toLowerCase());
+        // this.logger.log('country=' + str.split(" ")[0].toLowerCase());
         if (str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
           this._selectedIndex = i;
         }

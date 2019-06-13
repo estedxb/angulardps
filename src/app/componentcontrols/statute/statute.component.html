@@ -36,8 +36,8 @@
       </div>
     </div>
       
-    <ng-container *ngIf="isMealEnabled[this.i]===true">
-      <div class="row" *ngFor="let item of SForm.get('statuteArray').controls[i].arrayBox.controls; let k = index">
+    <ng-container *ngIf="isMealEnabled[this.i]===true" formArrayName="arrayBox">
+      <div class="row" *ngFor="let item of SForm.get('statuteArray').controls.get('arrayBox').controls; let k = index">
         <div style="display: flex; justify-content: space-evenly;" [formGroupName]="k">
             <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,i)"
               value="{{totalArray[i]}}" formControlName="TotalWaarde" class="form-control" type="number"

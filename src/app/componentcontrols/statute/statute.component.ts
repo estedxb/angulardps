@@ -68,6 +68,9 @@ export class StatuteComponent implements OnInit {
 
   loadCoefficientArray(data) {
 
+    // console.log("statuteSettings Array");
+    // console.log(data);
+
     for (let i: number = 0; i < data.length; i++) {
       this.coefficientArray[i] = data[i].coefficient;
     }
@@ -162,7 +165,7 @@ addArray() {
 
 get arrayBox() {
 
-  return (<FormArray>this.SForm.get('statuteArray') as FormArray).get('arrayBox') as FormArray;
+  return <FormArray>this.SForm.get('arrayBox') as FormArray;
 
   // return <FormArray>this.SForm.get('arrayBox') as FormArray;
 }
