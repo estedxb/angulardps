@@ -94,9 +94,10 @@ export class CountriesComponent implements OnInit {
         // this.logger.log("str="+str);
         const datString:Array<string> = str.split(" ");
         // this.logger.log('country=' + str.split(" ")[0].toLowerCase());
-        if (str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
-          this._selectedIndex = i;
-        }
+        if(str.split(" ")[0] !== undefined && str.split(" ")[0] !== null)
+          if ( str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
+            this._selectedIndex = i;
+          }
       }
       // this.logger.log('selected index=' + this._selectedIndex);
     } else {
