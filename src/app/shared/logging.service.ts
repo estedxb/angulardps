@@ -37,7 +37,7 @@ export class LoggingService {
       this.ConsoleLog(data2);
       this.ConsoleLog(data3);
     } else {
-      if (this.isLoggingRequired) { this.ConsoleLog(' Log Msg Empty....'); } else { this.ConsoleLog(' Log Blocked ....'); }
+      if (this.isLoggingRequired) { this.ConsoleLog(' Log Msg Empty....'); }
     }
   }
 
