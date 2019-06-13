@@ -36,6 +36,7 @@ export class EditPersonComponent implements OnInit {
   public validSSID;
 
   public DpsPersonObject: DpsPerson;
+  public oldDpsPersonObject: DpsPerson;
   public PersonObject: Person;
   public SocialSecurityNumberObject: SocialSecurityNumber;
   public GenderObject: Gender;
@@ -92,9 +93,19 @@ export class EditPersonComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
+  ngDoCheck() {
+
+    if (this.DpsPersonObject !== this.oldDpsPersonObject) {
+      this.oldDpsPersonObject = this.DpsPersonObject;      
+      //this.childEvent.emit(this.HQdata);
+    }
+  }
+
   ngOnInit() {
-    this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    this.data.currentMessage.subscribe(message => this.message = message);
+    // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
+    this.data.currentMessage.subscribe(message => {
+      this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
+      );
 
     this.onPageInit();
     this.loadDOBFromSSID();
@@ -111,7 +122,7 @@ export class EditPersonComponent implements OnInit {
   }
 
   changeMessage() {
-    this.logger.log(this.DpsPersonObject);
+    // this.logger.log(this.DpsPersonObject);
     if (this.DpsPersonObject !== null) {
       const newmessage: any = {
         page: 'edit',
@@ -119,7 +130,6 @@ export class EditPersonComponent implements OnInit {
       };
       this.data.changeMessage(newmessage);
     }
-
   }
 
   onPageInit() {
@@ -219,16 +229,16 @@ export class EditPersonComponent implements OnInit {
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            this.logger.log('Error occured=' + err.error.message);
+            // this.logger.log('Error occured=' + err.error.message);
             this.loadDOBFromSSID();
           } else {
-            this.logger.log('response code=' + err.status);
-            this.logger.log('response body=' + err.error);
+            // this.logger.log('response code=' + err.status);
+            // this.logger.log('response body=' + err.error);
           }
         }
       );
     } else {
-      this.logger.log('invalid SSN format');
+      // this.logger.log('invalid SSN format');
       this.resetPeronData();
     }
   }
@@ -243,7 +253,7 @@ export class EditPersonComponent implements OnInit {
 
   loadDOBData(dateOfBirth: string) {
 
-    this.logger.log('date of birth=' + dateOfBirth);
+    // this.logger.log('date of birth=' + dateOfBirth);
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -255,13 +265,6 @@ export class EditPersonComponent implements OnInit {
     this.yearString = yearString;
 
     this.calendarData = this.dayString  + '/' + this.monthString + '/' + this.yearString;
-
-    // console.log("calendar data");
-    // console.log(this.monthString);
-    // console.log(this.dayString);
-    // console.log(this.yearString);
-
-    //this.logger.log('setting calendar data=' + this.calendarData);
 
   }
 
@@ -322,8 +325,8 @@ export class EditPersonComponent implements OnInit {
 
   onChangeDropDownGender($event) {
 
-    this.logger.log('selected index=' + $event.target.value);
-    this.logger.log('selected value=' + this.dataDropDownGender[$event.target.value]);
+    // this.logger.log('selected index=' + $event.target.value);
+    // this.logger.log('selected value=' + this.dataDropDownGender[$event.target.value]);
 
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -361,7 +364,7 @@ export class EditPersonComponent implements OnInit {
 
   loadPersonData(response) {
 
-    this.logger.log(response.body);
+    // this.logger.log(response.body);
     const data = response.body;
 
     if (data.person !== null) {
@@ -424,8 +427,9 @@ export class EditPersonComponent implements OnInit {
   }
 
   receiveDOBDate($event) {
-    this.logger.log('recevied date=');
-    this.logger.log($event);
+
+    // this.logger.log('recevied date=');
+    // this.logger.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
@@ -434,11 +438,11 @@ export class EditPersonComponent implements OnInit {
     let monthInNumber = -1;
     let counter = 0;
 
-    this.logger.log('monthString=' + this.monthString);
+    // this.logger.log('monthString=' + this.monthString);
 
     this.dropDownMonth.forEach(element => {
 
-      this.logger.log('month=' + element);
+      // this.logger.log('month=' + element);
       if (element === this.monthString) {
         monthInNumber = counter;
       }
@@ -454,13 +458,13 @@ export class EditPersonComponent implements OnInit {
 
   onCountryReceive($event) {
 
-    this.logger.log('Received Country');
-    this.logger.log('country=' + $event.countryName);
-    this.logger.log('countryName=' + $event.countryCode);
+    // this.logger.log('Received Country');
+    // this.logger.log('country=' + $event.Country);
+    // this.logger.log('countryCode=' + $event['Alpha-2']);
 
     if (this.DpsPersonObject.person.address !== null) {
-      this.DpsPersonObject.person.address.country = $event.countryName;
-      this.DpsPersonObject.person.address.countryCode = $event.countryCode;
+      this.DpsPersonObject.person.address.country = $event.Country;
+      this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
     }
 
     this.changeMessage();
@@ -469,9 +473,9 @@ export class EditPersonComponent implements OnInit {
 
   onLanguageReceive($event) {
 
-    this.logger.log('Received Language');
-    this.logger.log('name=' + $event.name);
-    this.logger.log('short name=' + $event.shortName);
+    // this.logger.log('Received Language');
+    // this.logger.log('name=' + $event.name);
+    // this.logger.log('short name=' + $event.shortName);
 
     if (this.DpsPersonObject.person.language === null) {
       this.DpsPersonObject.person.language = new Language();
@@ -488,7 +492,7 @@ export class EditPersonComponent implements OnInit {
 
   setPersonVatNumber() {
 
-    this.logger.log('calling set person vat number method');
+    // this.logger.log('calling set person vat number method');
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
@@ -614,7 +618,7 @@ export class EditPersonComponent implements OnInit {
 
   createObjectsForm1() {
 
-    this.logger.log('create objects form1 called');
+    // this.logger.log('create objects form1 called');
 
     this.DpsPersonObject = new DpsPerson();
     this.PersonObject = new Person();

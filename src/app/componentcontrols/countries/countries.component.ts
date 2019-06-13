@@ -38,7 +38,11 @@ export class CountriesComponent implements OnInit {
   }
   onChange($event) {
 
+    this._selectedIndex = $event.target.value;
     this.selectedIndex = $event.target.value;
+
+    // this.logger.log("country selected="+this.value.Country);
+    // this.logger.log(this.value);
 
     this.selectedString = this.value;
 
@@ -54,6 +58,7 @@ export class CountriesComponent implements OnInit {
     this.countriesService.getCountriesList().subscribe(countries => {
       this.datas = countries;
       this.childEvent.emit(this.datas[0]);
+      // this.logger.log(countries);
       this.loadInitialData(this.datas);
       // this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
 
@@ -95,7 +100,7 @@ export class CountriesComponent implements OnInit {
       }
       // this.logger.log('selected index=' + this._selectedIndex);
     } else {
-      this.logger.log('null or undefined');
+      // this.logger.log('null or undefined');
     }
 
   }
