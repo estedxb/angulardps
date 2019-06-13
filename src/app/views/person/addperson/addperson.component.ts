@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
+import { LoginToken } from '../../../shared/models';
 
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
-
 
 @Component({
   selector: 'app-addperson',
@@ -36,7 +32,7 @@ export class AddPersonComponent implements OnInit {
   public validSSID: boolean;
 
   public functieBox: FormArray;
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
   public languageString;
 
   public DpsPersonObject: DpsPerson;
@@ -162,9 +158,9 @@ export class AddPersonComponent implements OnInit {
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
-    this.logger.log('customerVatNumber=' + this.loginuserdetails.customerVatNumber);
+    this.logger.log('customerVatNumber=' + this.dpsLoginToken.customerVatNumber);
 
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+    this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
@@ -277,7 +273,7 @@ export class AddPersonComponent implements OnInit {
     // this.customSSIDValidator(this.AddPersonForm1.get('socialSecurityNumber').value);
     this.validSSID = false;
 
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+    this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.dataDropDownFunctie = this.maindatas;
@@ -295,18 +291,14 @@ export class AddPersonComponent implements OnInit {
       this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
-
   }
 
   fillDataDropDown(maindatas) {
-
     this.dataDropDownFunctie = [];
-
     for (let i = 0; i < maindatas.length; i++) {
       const positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
     }
-
   }
 
   ShowMessage(MSG, Action) {
@@ -320,19 +312,17 @@ export class AddPersonComponent implements OnInit {
     });
   }
 
-
   setDropDownYear() {
     this.dropDownYear = new Array<string>();
     for (let i = 1900; i <= 2019; i++) {
-      this.dropDownYear.push("" + i);
+      this.dropDownYear.push('' + i);
     }
   }
 
   onChangeDropDownGender($event) {
     if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
       this.DpsPersonObject.person.gender.title = $event.target.value;
-    }
-    else {
+    } else {
       this.DpsPersonObject.person.gender = new Gender();
       this.DpsPersonObject.person.gender.title = $event.target.value;
     }
@@ -348,17 +338,17 @@ export class AddPersonComponent implements OnInit {
 
     if (month === '1') {
       for (let i = 1; i <= 28; i++) {
-        this.dataDropDown.push("" + i);
+        this.dataDropDown.push('' + i);
       }
     } else
       if (month === '11' || month === '0' || month === '4' || month === '6' ||
         month === '7' || month === '9' || month === '2') {
         for (let i = 1; i <= 31; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       } else {
         for (let i = 1; i <= 30; i++) {
-          this.dataDropDown.push("" + i);
+          this.dataDropDown.push('' + i);
         }
       }
   }
@@ -432,8 +422,7 @@ export class AddPersonComponent implements OnInit {
     for (let index = 0; index < digitString.length; index++) {
       if (digitString[index] >= '0' && digitString[index] <= '9') {
         digitsValid = true;
-      }
-      else {
+      } else {
         digitsValid = false;
       }
     }
@@ -467,7 +456,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     // this.DpsPersonObject.customerVatNumber = "123456789101";
     this.DpsPersonObject.person = this.PersonObject;
 
@@ -480,7 +469,7 @@ export class AddPersonComponent implements OnInit {
 
     if (this.validSSID === true) {
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
-      const customerVatNumber = this.loginuserdetails.customerVatNumber;
+      const customerVatNumber = this.dpsLoginToken.customerVatNumber;
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
@@ -712,7 +701,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject = new DpsPerson();
@@ -787,7 +776,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -970,7 +959,7 @@ export class AddPersonComponent implements OnInit {
     this._position.taskDescription = '';
     this._position.workstationDocument = this.workstationDocument;
 
-    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.dpsPosition.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.dpsPosition.id = 0;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;

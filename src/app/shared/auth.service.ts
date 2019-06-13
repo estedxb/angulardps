@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 import { PARAMETERS } from '@angular/core/src/util/decorators';
 import { LoggingService } from './logging.service';
 import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+
 @Injectable({ providedIn: 'root' })
 
 export class AuthService {
@@ -19,13 +20,12 @@ export class AuthService {
       Authorization: 'my-auth-token'
     })
   };
+
   private httpParams: HttpParams = new HttpParams();
   constructor(private http: HttpClient, private logger: LoggingService) {
     if (environment.dataFromAPI_JSON && environment.verifylogin !== '') {
       this.getVerifyLoginUrl = environment.dpsAPI + environment.verifylogin;
-    } else {
-      this.getVerifyLoginUrl = environment.getAssetsDataPath + 'logintoken.json';
-    }
+    } else { this.getVerifyLoginUrl = environment.getAssetsDataPath + 'logintoken.json'; }
   }
 
   public verifyLogin(userid: string, Password: string): Observable<LoginToken> {
@@ -43,12 +43,7 @@ export class AuthService {
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
 
   logout(): void {
-    localStorage.setItem('isLoggedIn', 'false');
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('accesstoken');
-    localStorage.removeItem('dpsuser');
-    localStorage.removeItem('customerName');
-    localStorage.removeItem('customerlogo');
+    localStorage.removeItem('dpsLoginToken');
     this.logger.log('Logout...');
   }
 }

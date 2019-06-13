@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract } from 'src/app/shared/models';
+import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
@@ -23,7 +23,7 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedIndex = 0;
   public errorMsg;
   public loginaccessToken: string = localStorage.getItem('accesstoken');
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
   public vatNumber: string;
   public startDate: Date;
   public endDate: Date;
@@ -49,7 +49,7 @@ export class DashboardPersonComponent implements OnInit {
   ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
-    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
     const localstartDate = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + this.startDate.getDate();
     const localendDate = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + this.endDate.getDate();
@@ -221,13 +221,15 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   OpenAddPersonURL() {
+    this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/add');
     this.router.navigate(['./person/add']);
   }
   OpenBulkContractURL() {
+    this.logger.log(this.constructor.name + ' - ' + 'Redirect... ./bulkcontract');
     this.router.navigate(['./bulkcontract']);
   }
   OpenUpdatePerson(SSID: string) {
+    this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/' + SSID);
     this.router.navigate(['./person/' + SSID]);
   }
-
 }

@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      userid: ['', Validators.required],
-      password: ['', Validators.required]
+      userid: ['', Validators.required], password: ['', Validators.required]
     });
     this.returnUrl = './dashboard';
     this.returnaddcustomerUrl = './customer/add';
@@ -46,44 +45,18 @@ export class LoginComponent implements OnInit {
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
-  ShowForgotPassword() {
-    this.currentpage = 'forgotpassword';
-  }
-  ShowLogin() {
-    this.currentpage = 'login';
-  }
-  forgotpassword() {
-    return true;
-  }
+
+  ShowForgotPassword() { this.currentpage = 'forgotpassword'; }
+
+  ShowLogin() { this.currentpage = 'login'; }
+
+  forgotpassword() { return true; }
+
   login() {
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
-      // for Real Login
-      /*
-      this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
-        .subscribe(data => {
-          this.ltkn = data;
-          this.logger.log('authLogin in authLogin.component ::');
-          this.logger.log(data);
-          if (this.ltkn !== null) {
-            if (this.ltkn.accessToken !== '') {
-              this.message = 'Logged in success please wait...';
-              localStorage.setItem('isLoggedIn', 'true');
-              localStorage.setItem('accesstoken', this.ltkn.accessToken);
-              localStorage.setItem('customerName', this.ltkn.customerName);
-              localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
-              this.router.navigate([this.returnUrl]);
-            } else {
-              this.message = 'Please check your userid and password';
-            }
-          } else {
-            this.message = 'Please check your userid and password';
-          }
-        }, error => this.errorMsg = error);
-      */
-
       // Loading Now the First DpsUser from First DpsCustomer for Testing....
       this.userService.getUsersByVatNumber(this.dpsuservatnumber).subscribe(usersList => {
         this.logger.log('authLogin in usersList Found ::', usersList);
@@ -91,88 +64,110 @@ export class LoginComponent implements OnInit {
         this.logger.log('authLogin in Selected User ::', FirstUser);
 
         this.ltkn.accessToken = 'Login-Access-Token';
-        this.ltkn.dpsUser = FirstUser;
+        this.ltkn.isLoggedIn = true;
+        this.ltkn.userRole = FirstUser.userRole;
+        this.ltkn.userName = FirstUser.user.firstName;
+        this.ltkn.userEmail = FirstUser.user.email.emailAddress;
+        this.ltkn.customerName = FirstUser.customerVatNumber;
+        this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
 
         if (this.f.userid.value.toLowerCase() === 'admin' && this.f.password.value.toLowerCase() === 'admin') {
-          this.ltkn.dpsUser.userRole = 'DPSAdmin';
-        } else {
-          this.ltkn.dpsUser.userRole = 'Customer';
-        }
+          this.ltkn.userEmail = 'balaji_sp@hotmail.com';
+          this.ltkn.userRole = 'DPSAdmin';
+        } else { this.ltkn.userRole = 'Customer'; }
 
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('accesstoken', this.ltkn.accessToken);
-
-        if (this.ltkn.dpsUser.customerVatNumber === this.dpsuservatnumber) {
-          this.customerListsService.getCustomers().subscribe(customersList => {
+        if (this.ltkn.customerVatNumber === this.dpsuservatnumber) {
+          this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail).subscribe(customersList => {
             this.logger.log('authLogin in customersList Found ::', customersList);
             let customers: CustomersList[] = [];
-            if (this.ltkn.dpsUser.userRole === 'DPSAdmin') {
+
+            if (this.ltkn.userRole === 'DPSAdmin') {
               customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
-            } else {
-              customers = customersList;
-            }
+            } else { customers = customersList; }
 
             if (customers.length > 0) {
               this.message = 'Logged in successfully. Please wait...';
-              this.ltkn.dpsUser.customerVatNumber = customers[0].item1;
+              this.logger.log('Selected Customer', customers[0]);
+              this.ltkn.customerVatNumber = customers[0].item1;
               this.ltkn.customerName = customers[0].item2;
-              localStorage.setItem('customerName', this.ltkn.customerName);
-              localStorage.setItem('customerlogo', customers[0].item4 !== undefined ? customers[0].item4 + '' : '');
-              localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
-
-              this.logger.log('authLogin in customers Selected ::', customers[0].item2);
-              this.logger.log('Selected customerVatNumber::', this.ltkn.dpsUser.customerVatNumber);
-              this.logger.log('Selected customerName::', this.ltkn.customerName);
-
+              this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
+              localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+              this.logger.log('1) authLogin in ::', this.ltkn);
               this.router.navigate([this.returnUrl]);
             } else {
               this.message = 'Logged in successfully, but customers not found. Please wait...';
-              localStorage.setItem('customerName', this.ltkn.customerName);
-              localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+              localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+              this.logger.log('2) authLogin in ::', this.ltkn);
               this.router.navigate([this.returnaddcustomerUrl]);
             }
           }, error => this.errorMsg = error);
         } else {
-          this.ltkn.customerName = '......';
-          localStorage.setItem('customerName', this.ltkn.customerName);
-          localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+          localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+          this.logger.log('3) authLogin in ::', this.ltkn);
           this.router.navigate([this.returnUrl]);
         }
-        /*
-        this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
-          .subscribe(data => {
-            this.ltkn = data;
-            this.logger.log('authLogin in authLogin.component ::');
-            this.logger.log(data);
-            if (this.ltkn !== null) {
-              if (this.ltkn.accessToken !== '') {
-                this.message = 'Logged in success please wait...';
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('accesstoken', this.ltkn.accessToken);
-
-                this.ltkn.dpsUser = FirstUser;
-                this.logger.log('authLogin in Login User ::', this.ltkn.dpsUser);
-                if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
-                  this.ltkn.dpsUser.userRole = 'DPSAdmin';
-                }
-                if (this.ltkn.dpsUser === null) {
-                  this.ltkn.dpsUser.userRole = 'Customer';
-                }
-
-                this.logger.log('authLogin in Login User Role ::', this.ltkn.dpsUser.userRole);
-
-                localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
-                this.router.navigate([this.returnUrl]);
-              } else {
-                this.message = 'Please check your userid and password';
-              }
-            } else {
-              this.message = 'Please check your userid and password';
-            }
-          }, error => this.errorMsg = error);
-        */
       }, error => this.errorMsg = error);
     }
   }
 }
 
+
+// for Real Login
+/*
+this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
+  .subscribe(data => {
+    this.ltkn = data;
+    this.logger.log('authLogin in authLogin.component ::');
+    this.logger.log(data);
+    if (this.ltkn !== null) {
+      if (this.ltkn.accessToken !== '') {
+        this.message = 'Logged in success please wait...';
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('accesstoken', this.ltkn.accessToken);
+        localStorage.setItem('customerName', this.ltkn.customerName);
+        localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.message = 'Please check your userid and password';
+      }
+    } else {
+      this.message = 'Please check your userid and password';
+    }
+  }, error => this.errorMsg = error);
+*/
+
+
+
+/*
+this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
+  .subscribe(data => {
+    this.ltkn = data;
+    this.logger.log('authLogin in authLogin.component ::');
+    this.logger.log(data);
+    if (this.ltkn !== null) {
+      if (this.ltkn.accessToken !== '') {
+        this.message = 'Logged in success please wait...';
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('accesstoken', this.ltkn.accessToken);
+
+        this.ltkn.dpsUser = FirstUser;
+        this.logger.log('authLogin in Login User ::', this.ltkn.dpsUser);
+        if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
+          this.ltkn.dpsUser.userRole = 'DPSAdmin';
+        }
+        if (this.ltkn.dpsUser === null) {
+          this.ltkn.dpsUser.userRole = 'Customer';
+        }
+
+        this.logger.log('authLogin in Login User Role ::', this.ltkn.dpsUser.userRole);
+
+        localStorage.setItem('dpsuser', JSON.stringify(this.ltkn.dpsUser));
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.message = 'Please check your userid and password';
+      }
+    } else {
+      this.message = 'Please check your userid and password';
+    }
+  }, error => this.errorMsg = error);
+*/

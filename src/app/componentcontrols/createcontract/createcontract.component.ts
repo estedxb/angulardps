@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import {
-  Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location,
+  Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, LoginToken,
   TimeSheet, DpsPostion, DpsScheduleContract, DpsWorkSchedule, WorkSchedule, SelectedContract, ContractReason
 } from 'src/app/shared/models';
 
@@ -89,10 +89,10 @@ export class CreateContractComponent implements OnInit {
   public currentContract: DpsContract;
   public contract: Contract;
   public currentPerson: Person;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public isDpsUser: boolean = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public isDpsUser: boolean = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
 
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
   public statute: Statute;
 
   public personid: string;
@@ -701,7 +701,7 @@ export class CreateContractComponent implements OnInit {
 
   getPositionsByVatNumber() {
     this.dpsPositionsData = [];
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
+    this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       // response.forEach(element => { this.dpsPositionsData.push(element); });
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
@@ -715,7 +715,7 @@ export class CreateContractComponent implements OnInit {
 
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
-    this.workschedulesService.getWorkscheduleByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
+    this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsWorkSchedulesData = response;
       // response.forEach(element => { this.dpsWorkSchedulesData.push(element); });
 
@@ -736,7 +736,7 @@ export class CreateContractComponent implements OnInit {
 
   getLocationsByVatNumber() {
     this.locationsData = [];
-    this.locationsService.getLocationByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(response => {
+    this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.locationsData = response;
       // response.forEach(element => { this.locationsData.push(element);});
       this.getWorkscheduleByVatNumber();

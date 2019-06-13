@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '../app.config';
 import { getMinutes } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { environment } from '../../environments/environment';
 @Injectable({
@@ -64,7 +63,6 @@ export class LoggingService {
       this.ConsoleError(' Log Msg Empty....');
     }
   }
-
 
   ConsoleLog(data: any) {
     try {

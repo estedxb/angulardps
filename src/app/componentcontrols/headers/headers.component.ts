@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
-import { DpsUser } from 'src/app/shared/models';
+import { DpsUser, LoginToken } from 'src/app/shared/models';
 import { PlatformLocation } from '@angular/common';
 import $ from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
@@ -13,7 +13,7 @@ export class HeadersComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   @Input() customerName: string;
   public currentUser: DpsUser;
-  public loginuserdetails: DpsUser = new DpsUser();
+  public dpsLoginToken: LoginToken = new LoginToken();
   public VatNumber: string;
   public isDpsUser = false;
   public customerLogoFileName = '';
@@ -29,14 +29,17 @@ export class HeadersComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.VatNumber = this.CustomerVatNumber;
+    // this.VatNumber = this.CustomerVatNumber;
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.VatNumber = this.dpsLoginToken.customerVatNumber;
+    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
     this.onPageInit();
   }
 
   ngOnInit() {
-    this.loginuserdetails = JSON.parse(localStorage.getItem('dpsuser'));
-    this.VatNumber = this.loginuserdetails.customerVatNumber;
-    this.isDpsUser = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.VatNumber = this.dpsLoginToken.customerVatNumber;
+    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
     this.onPageInit();
   }
 
@@ -53,9 +56,10 @@ export class HeadersComponent implements OnInit {
 
   onPageInit() {
     try {
+
       this.logger.log('islogoVaild this.platformLocation :: ' + this.customerLogo);
 
-      this.customerLogoFileName = localStorage.getItem('customerlogo');
+      this.customerLogoFileName = this.dpsLoginToken.customerlogo;
 
       if (this.customerLogoFileName !== undefined && this.customerLogoFileName !== '' && this.customerLogoFileName !== null) {
         this.customerLogo = '../../assets/img/customer/logo/' + this.customerLogoFileName;
@@ -67,7 +71,7 @@ export class HeadersComponent implements OnInit {
         this.logger.log('isLogoFound False');
       }
 
-      this.customerName = localStorage.getItem('customerName');
+      this.customerName = this.dpsLoginToken.customerName;
       this.clogoInit = this.getInit(this.customerName);
 
       /*

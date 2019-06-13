@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person } from 'src/app/shared/models';
+import { DpsPerson, Person, LoginToken } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoggingService } from '../../shared/logging.service';
@@ -15,19 +15,23 @@ export class DashboardComponent implements OnInit {
   public Id = '';
   public data: any = '';
   public errorMsg;
+  public dpsLoginToken: LoginToken = new LoginToken();
+
   constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('dpsuser') !== undefined &&
-      localStorage.getItem('dpsuser') !== '' &&
-      localStorage.getItem('dpsuser') !== null) {
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
       const sub = this.route.params.subscribe((params: any) => {
+        this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
         this.Id = params.id;
         this.currentPage = params.page;
         this.onPageInit();
       });
     } else {
-      this.logger.log('localStorage.getItem("dpsuser") not found.');
+      this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.router.navigate(['/login']);
     }
   }

@@ -1,9 +1,5 @@
 import { NgModule, EventEmitter } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-/* == 
- import { NgModule, EventEmitter, APP_INITIALIZER } from '@angular/core';
- import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
- == */
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,34 +15,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
-import { AppConfig } from './app.config';
 import { DatePipe } from '@angular/common';
-/* ==
-import { AuthenticationGuard, MsAdalAngular6Module } from 'microsoft-adal-angular6';
-import { InsertAuthTokenInterceptor } from './insert-auth-token-interceptor';
+import { environment } from '../environments/environment';
 
-let adalConfig: any; // will be initialized by APP_INITIALIZER
-export function msAdalAngular6ConfigFactory() {
-  return adalConfig; // will be invoked later when creating MsAdalAngular6Service
-}
-== */
+import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 
-export function initializeApp(appConfig: AppConfig) {
-  return () => appConfig.load();
-  /*
-  const promise = appConfig.load().then(() => {
-    adalConfig = {
-      tenant: AppConfig.settings.adalConfig.tenant,
-      clientId: AppConfig.settings.adalConfig.clientId,
-      redirectUri: window.location.origin,
-      endpoints: AppConfig.settings.adalConfig.endpoints,
-      navigateToLoginRequestUrl: false,
-      cacheLocation: AppConfig.settings.adalConfig.cacheLocation
-    };
-  });
-  return () => promise;
-*/
-}
 @NgModule({
   declarations: [AppComponent, routingComponents, TestArraysComponent],
   imports: [
@@ -59,21 +32,19 @@ export function initializeApp(appConfig: AppConfig) {
     MatDialogModule,
     MatSnackBarModule,
     AppRoutingModule,
-    /* ==
+    AngularFontAwesomeModule,
+    AutocompleteLibModule,
+    NgxSpinnerModule,
     MsAdalAngular6Module.forRoot({
-      tenant: '<YOUR TENANT>',
-      clientId: '<YOUR CLIENT / APP ID>',
+      tenant: environment.tenantid,
+      clientId: environment.clientId,
       redirectUri: window.location.origin,
       endpoints: {
-        'https://localhost/Api/': 'xxx-bae6-4760-b434-xxx'
+        'https://localhost:4200/Api/': 'xxx-bae6-4760-b434-xxx'
       },
       navigateToLoginRequestUrl: false,
       cacheLocation: 'localStorage',
     }),
-    == */
-    AngularFontAwesomeModule,
-    AutocompleteLibModule,
-    NgxSpinnerModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     TimepickerModule.forRoot(),
@@ -91,26 +62,10 @@ export function initializeApp(appConfig: AppConfig) {
     AlertsModule.forRoot()
   ],
   providers: [
-    DatePipe
+    AuthenticationGuard, DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]
 })
 export class AppModule { }
-
-/*
-{
-  provide: HTTP_INTERCEPTORS,
-    useClass: InsertAuthTokenInterceptor
-},
-    AppConfig,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [AppConfig],
-      multi: true
-    },
-    AuthenticationGuard,
-
-*/

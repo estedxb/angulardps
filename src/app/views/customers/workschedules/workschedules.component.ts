@@ -22,7 +22,8 @@ export class WorkSchedulesComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  // public VatNumber = this.dpsLoginToken.customerVatNumber;
 
   constructor(
     private workschedulesService: WorkschedulesService, private logger: LoggingService,

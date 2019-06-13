@@ -23,7 +23,7 @@ export class PositionsComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
     private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService

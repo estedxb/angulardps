@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
-import { Contact, DpsUser, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
+import { Contact, DpsUser, LoginToken, DPSCustomer, Customer, InvoiceSettings, CreditCheck, Language, EmailAddress, PhoneNumber } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
@@ -11,7 +11,7 @@ import { LoggingService } from '../../../shared/logging.service';
 })
 export class EditCustomerComponent implements OnInit {
 
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
   @Input() CustomerVatNumber: string;
   @Output() public childEvent = new EventEmitter();
   public HQdata: any;
@@ -27,7 +27,7 @@ export class EditCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomersService, private data: DataService,
     private logger: LoggingService) {
-    // this.vatNumber = this.loginuserdetails.customerVatNumber;
+    // this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.editObject = {
       data: '',
       page: ''

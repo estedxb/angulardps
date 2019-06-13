@@ -22,7 +22,7 @@ export class LocationsComponent implements OnInit {
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
   public durationInSeconds = 5;
-  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
     private locationsService: LocationsService, private logger: LoggingService,

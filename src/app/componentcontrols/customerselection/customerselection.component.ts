@@ -11,7 +11,7 @@ import { LoggingService } from '../../shared/logging.service';
 
 export class CustomerSelectionComponent implements OnInit {
   public currentUser: DpsUser;
-  public loginuserdetails: DpsUser = new DpsUser();
+  public dpsLoginToken: LoginToken = new LoginToken();
   public VatNumber: string;
   public isDpsUser = false;
   public customers = [];
@@ -31,9 +31,9 @@ export class CustomerSelectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginuserdetails = JSON.parse(localStorage.getItem('dpsuser'));
-    this.VatNumber = this.loginuserdetails.customerVatNumber;
-    this.isDpsUser = this.loginuserdetails.userRole === 'DPSAdmin' ? true : false;
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.VatNumber = this.dpsLoginToken.customerVatNumber;
+    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
     this.customerLists.getCustomers()
       .subscribe(data => {
         this.customers = data;

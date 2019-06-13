@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Address, Location, DpsUser } from '../../../../shared/models';
+import { Address, Location, DpsUser, LoginToken } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from 'src/app/shared/locations.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -16,8 +16,8 @@ export class CreatelocationComponent implements OnInit {
   public countryCode;
   public countryStringR;
   public countryCodeR;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
 
   LocationForm: FormGroup;
   // location: Location;

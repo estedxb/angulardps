@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
-import { Summaries } from '../../../shared/models';
+import { Summaries, LoginToken } from '../../../shared/models';
 import { LoggingService } from '../../../shared/logging.service';
 @Component({
   selector: 'app-dashboardsummary',
@@ -15,14 +15,14 @@ export class DashboardActionComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
-  public loginaccessToken: string = localStorage.getItem('accesstoken');
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public loginaccessToken: string = this.dpsLoginToken.accessToken;
   public vatNumber: string;
 
   constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
 
   ngOnInit() {
-    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    this.vatNumber = this.dpsLoginToken.customerVatNumber;
     // this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);

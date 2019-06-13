@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person } from 'src/app/shared/models';
+import { DpsPerson, Person, LoginToken } from 'src/app/shared/models';
 import { PersonService } from 'src/app/shared/person.service';
 import { ContactPersonComponent } from '../../../contactperson/contactperson.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,8 +15,8 @@ import { LoggingService } from '../../../shared/logging.service';
   styleUrls: ['./../person.component.css']
 })
 export class UpdatePersonComponent implements OnInit {
-  public loginaccessToken: string = localStorage.getItem('accesstoken');
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public loginaccessToken: string = this.dpsLoginToken.accessToken;
   public PersonInitial = '';
   public PersonName = '';
   public currentPage = '';
@@ -34,7 +34,7 @@ export class UpdatePersonComponent implements OnInit {
     private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     this.logger.log('InSide :: Update Person');
     this.validateLogin();
-    this.vatNumber = this.loginuserdetails.customerVatNumber;
+    this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.logger.log('vatNumber :: ' + this.vatNumber);
   }
 
@@ -42,9 +42,11 @@ export class UpdatePersonComponent implements OnInit {
     try {
       this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
+        this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
         this.router.navigate(['/login']);
       }
     } catch (e) {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.router.navigate(['/login']);
       alert(e.message);
     }
@@ -87,6 +89,7 @@ export class UpdatePersonComponent implements OnInit {
 
   onPageInit() {
     if (this.Id === null || this.Id === '' || this.Id === undefined) {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... 404');
       this.router.navigate(['/404']);
     } else { this.SocialSecurityId = this.Id; }
     if (this.currentPage === 'documents' || this.currentPage === 'document') {
@@ -123,8 +126,7 @@ export class UpdatePersonComponent implements OnInit {
 
   archiveClick() {
 
-    if(this.dpsPerson !== undefined && this.dpsPerson !== null)
-    {
+    if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
       console.log("person data");
       console.log(this.dpsPerson);
 
@@ -142,7 +144,7 @@ export class UpdatePersonComponent implements OnInit {
           }
         }
       );
-  
+
     }
   }
 

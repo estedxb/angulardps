@@ -8,7 +8,7 @@ import { CreatepositionComponent } from '../../customers/positions/createpositio
 
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
-  ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
+  ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification, LoginToken
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,7 +22,7 @@ import { LoggingService } from '../../../shared/logging.service';
 
 export class PersonPositionComponent implements OnInit {
   @Input() public SocialSecurityId: string;
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   public PersonPositionForm: FormGroup;
   public dataDropDownStatute: Array<string>;
@@ -98,7 +98,7 @@ export class PersonPositionComponent implements OnInit {
     private fb: FormBuilder, private dialog: MatDialog,
     private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
-    this.positionsService.getPositionsByVatNumber(this.loginuserdetails.customerVatNumber).subscribe(positions => {
+    this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
@@ -245,7 +245,7 @@ export class PersonPositionComponent implements OnInit {
     this._position.taskDescription = '';
     this._position.workstationDocument = this.workstationDocument;
 
-    this.dpsPosition.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.dpsPosition.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.dpsPosition.id = 0;
     this.dpsPosition.isArchived = false;
     this.dpsPosition.isEnabled = true;
@@ -274,7 +274,7 @@ export class PersonPositionComponent implements OnInit {
 
   getPersonbySSIDVatNumber() {
 
-    const customerVatNumber = this.loginuserdetails.customerVatNumber;
+    const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
       this.logger.log('response=' + res);

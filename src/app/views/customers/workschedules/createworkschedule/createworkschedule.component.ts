@@ -32,8 +32,8 @@ export class CreateWorkScheduleComponent implements OnInit {
   // public workScheduleRow: WorkScheduleRow;
 
   public oldCurrentWorkSchedule: any;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
 
   WorkScheduleForm: FormGroup;
 
