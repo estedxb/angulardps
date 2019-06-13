@@ -213,8 +213,8 @@ export class EditPersonComponent implements OnInit {
       const customerVatNumber = this.loginuserdetails.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-        this.logger.log('response=' + res);
-        this.logger.log(res);
+        // this.logger.log('response=' + res);
+        // this.logger.log(res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
@@ -256,12 +256,12 @@ export class EditPersonComponent implements OnInit {
 
     this.calendarData = this.dayString  + '/' + this.monthString + '/' + this.yearString;
 
-    console.log("calendar data");
-    console.log(this.monthString);
-    console.log(this.dayString);
-    console.log(this.yearString);
+    // console.log("calendar data");
+    // console.log(this.monthString);
+    // console.log(this.dayString);
+    // console.log(this.yearString);
 
-    this.logger.log('setting calendar data=' + this.calendarData);
+    //this.logger.log('setting calendar data=' + this.calendarData);
 
   }
 
@@ -384,8 +384,6 @@ export class EditPersonComponent implements OnInit {
 
       this.editPersonForm.controls.countryOfBirth.setValue(data.person.countryOfBirth);
       this.birthCountryString = data.person.countryOfBirth;
-
-      console.log("country of birth="+this.birthCountryString);
 
       this.editPersonForm.controls.nationality.setValue(data.person.nationality);
       this.nationalityString = data.person.nationality;
