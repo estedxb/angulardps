@@ -61,10 +61,11 @@ export class JointcommitteeComponent implements OnInit {
     this.datas = [];
 
     for (let counter = 0; counter < datas.length; counter += 1) {
-
+      
       if (this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase()) {
         this.datas.push(datas[counter]);
       }
+
     }
 
     // this.logger.log('filtered Array');

@@ -85,8 +85,11 @@ export class CountriesComponent implements OnInit {
     if (datas.length !== 0) {
       // this.logger.log('datas new country string');
       for (let i = 0; i < this.datas.length; i++) {
-        // this.logger.log('country=' + this.CountryFormData);
-        if (this.datas[i].countryName === this.CountryFormData) {
+        const str:string = this.datas[i].Country;
+        this.logger.log("str="+str);
+        const datString:Array<string> = str.split(" ");
+        this.logger.log('country=' + str.split(" ")[0].toLowerCase());
+        if (str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
           this._selectedIndex = i;
         }
       }
