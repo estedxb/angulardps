@@ -405,7 +405,11 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheck.creditLimit = 0; //this.creditCheckLimit;
     this.creditCheck.creditcheck = false;
     this.creditCheck.creditCheckPending = false;
-    this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDay() + "/" + today.getFullYear();
+    this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+
+    console.log("today date checked=");
+    console.log("today day="+today.getDate());
+    console.log(this.creditCheck.dateChecked);
 
   }
 

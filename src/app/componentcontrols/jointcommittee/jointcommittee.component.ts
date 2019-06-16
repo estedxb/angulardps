@@ -71,6 +71,13 @@ export class JointcommitteeComponent implements OnInit {
     // this.logger.log('filtered Array');
     // this.logger.log(this.datas);
 
+    // this.logger.log("0th data=");
+    // this.logger.log(this.datas[0]);
+
+    const obj: any = { selectedObject: this.datas[0], arrayObject: this.datas };
+    this.childEvent.emit(obj);
+
+
   }
 
   ngOnInit() {
@@ -88,11 +95,14 @@ export class JointcommitteeComponent implements OnInit {
 
   loadDropDownData(stringJCReceived) {
 
-
-    for (let i = 0; i < this.datas.length; i++) {
-      if (this.datas[i] === stringJCReceived) {
-        this._selectedIndex = i;
+    if(this.datas !== null && this.datas !== undefined)
+    {
+      for (let i = 0; i < this.datas.length; i++) {
+        if ((this.datas[i].number + " - " + this.datas[i].name)  === stringJCReceived) {
+          this._selectedIndex = i;
+        }
       }
+  
     }
   }
 
