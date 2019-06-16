@@ -36,6 +36,7 @@ export class StatuteComponent implements OnInit {
   public oldSFTFormData;
   public titles =[];
   public TypeWorker = [];
+  public TempArray = [];
 
   public MealBox:FormArray;
   SForm: FormGroup;
@@ -58,6 +59,7 @@ export class StatuteComponent implements OnInit {
 
   ngDoCheck() {
     this.createCoefficientArray();    
+    this.loadArrayTemp();
     if (this.STFormData !== undefined) {
       if (this.STFormData != this.oldSFTFormData) {
         this.oldSFTFormData = this.STFormData;
@@ -66,10 +68,12 @@ export class StatuteComponent implements OnInit {
     }
   }
 
-  loadCoefficientArray(data) {
+  loadArrayTemp() {
+    for(let i=0;i<8;i++)
+      this.TempArray[i] = 0;
+  }
 
-    // console.log("statuteSettings Array");
-    // console.log(data);
+  loadCoefficientArray(data) {
 
     for (let i: number = 0; i < data.length; i++) {
       this.coefficientArray[i] = data[i].coefficient;
@@ -95,7 +99,8 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
-
+      // coefficient
+      console.log(this.loadStatuteSettingsArray);
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
@@ -116,7 +121,7 @@ export class StatuteComponent implements OnInit {
       this.TypeWorker[counter] = this.statutes[counter].type;
 
       // this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
-      this.addControls("0",0,0,0);
+      //this.addControls("0",0,0,0);
     }
 
     this.loadzeroArray();
@@ -125,7 +130,7 @@ export class StatuteComponent implements OnInit {
    
    onloadData(arrayElement,counter){
 
-    //this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
+    this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
 
       if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null)
       {
