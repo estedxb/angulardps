@@ -56,12 +56,8 @@ import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 
-
-import { AuthGuard } from './auth.guard';
-/*
 import { AuthCallbackComponent } from './views/auth-callback/auth-callback.component';
-import { AuthenticationGuard } from 'microsoft-adal-angular6';
-*/
+
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -82,16 +78,11 @@ const routes: Routes = [
   { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  /* ==
-   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-    { path: 'auth-callback', component: AuthCallbackComponent },
-  == */
+  { path: 'auth-callback', component: AuthCallbackComponent },
 
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
-// , canActivate: [AuthGuard]
-
 @NgModule({
   imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
@@ -105,7 +96,7 @@ export const routingComponents = [
   CustomerSelectionComponent,
   LegalComponent,
   JointcommitteeComponent,
-  /* == AuthCallbackComponent,==*/
+  AuthCallbackComponent,
   CountriesComponent, StatuteComponent, LanguagesComponent,
   WorkCodesComponent,
   ContactPersonComponent,
@@ -144,3 +135,11 @@ export const entringComponents = [
   CancelContractComponent,
   CreateContractComponent
 ];
+/*
+import { AuthenticationGuard } from 'microsoft-adal-angular6';
+
+=====
+
+{ path: '', component: AppComponent, pathMatch: 'full', canActivate: [AuthenticationGuard] },
+
+*/

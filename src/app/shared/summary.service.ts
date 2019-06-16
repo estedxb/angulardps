@@ -36,9 +36,9 @@ export class SummaryService {
   public getSummaryByVatnumber(customervatnumber: string): Observable<any> {
     let getURL = this.getSummaryURL;
     if (environment.dataFromAPI_JSON && environment.getSummaryURL !== '') { getURL = getURL + '/' + customervatnumber; }
-    // this.logger.log('SummaryService Data From = ' + getURL);
+    this.logger.log('SummaryService Data From = ' + getURL);
     const result = this.http.get<Summaries[]>(getURL, this.httpOptions).catch(this.errorHandler);
-    // this.logger.log(result);
+    this.logger.log(result);
     return result;
   }
 

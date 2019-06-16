@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { _Position, DpsUser, DpsPostion, Documents } from '../../../../shared/models';
+import { _Position, DpsUser, DpsPostion, Documents, LoginToken } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { FileuploadService } from 'src/app/shared/fileupload.service';
@@ -16,8 +16,8 @@ import { LoggingService } from '../../../../shared/logging.service';
 })
 export class CreatepositionComponent implements OnInit {
   public currentPosition: DpsPostion;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
   public isStudentAllowed: boolean;
 
   PositionForm: FormGroup;
@@ -119,22 +119,15 @@ export class CreatepositionComponent implements OnInit {
   }
 
   // this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionsDownloadTemplate;
-  downloadFile() {
-    saveAs(environment.blobStorage + '/' + environment.getPositionsDownloadTemplate);
-  }
+
+  downloadFile() { saveAs(environment.blobStorage + '/' + environment.getPositionsDownloadTemplate); }
 
   handleFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
-        || files.item(0).type === 'image/png') {
-        this.fileToUpload = files.item(0);
-      }
+        || files.item(0).type === 'image/png') { this.fileToUpload = files.item(0); }
 
-      if (this.fileToUpload !== null) {
-        this.fileToUploadName = files.item(0).name;
-        // this.currentPosition.position.workstationDocument.name = files.item(0).name;
-      }
-
+      if (this.fileToUpload !== null) { this.fileToUploadName = files.item(0).name; }
     }
   }
 

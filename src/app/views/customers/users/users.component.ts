@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   public errorMsg;
   public SelectedIndex = -1;
   public SelectedEnableStatus = true;
-  // public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
     private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService) { }

@@ -3,14 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address,
-  EmailAddress, PhoneNumber, Statute, VcaCertification
+  EmailAddress, PhoneNumber, Statute, VcaCertification, LoginToken
 } from '../../../shared/models';
 import { PersonService } from 'src/app/shared/person.service';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -24,7 +20,7 @@ import { LoggingService } from '../../../shared/logging.service';
 export class EditPersonComponent implements OnInit {
 
   @Input() public SocialSecurityId: string;
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   editPersonForm: FormGroup;
   editPersonForm2: FormGroup;
@@ -73,8 +69,8 @@ export class EditPersonComponent implements OnInit {
 
   public calendarData: string;
   public countryString: string;
-  public birthCountryString:string;
-  public nationalityString:string;
+  public birthCountryString: string;
+  public nationalityString: string;
   public languageString: string;
 
   public message;
@@ -211,7 +207,7 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
   }
@@ -220,7 +216,7 @@ export class EditPersonComponent implements OnInit {
 
     if (this.validSSID === true) {
 
-      const customerVatNumber = this.loginuserdetails.customerVatNumber;
+      const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
         // this.logger.log('response=' + res);
@@ -264,7 +260,7 @@ export class EditPersonComponent implements OnInit {
     this.dayString = dayString;
     this.yearString = yearString;
 
-    this.calendarData = this.dayString  + '/' + this.monthString + '/' + this.yearString;
+    this.calendarData = this.dayString + '/' + this.monthString + '/' + this.yearString;
 
   }
 
@@ -627,7 +623,7 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.loginuserdetails.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;

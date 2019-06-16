@@ -20,9 +20,8 @@ export class CreateuserComponent implements OnInit {
   public languageShortName;
   public languageShortNameNew;
   public isNewUser = false;
-  // public loginuserdetails: DpsUser = JSON.parse(this.setDummyDpsUserData());
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
   @Output() showmsg = new EventEmitter<object>();
 
   UserForm: FormGroup;

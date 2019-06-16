@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson } from '../../../shared/models';
+import {
+  _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson, LoginToken
+} from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { environment } from '../../../../environments/environment';;
@@ -19,8 +21,8 @@ export class PersonDocumentComponent implements OnInit {
   public dpsPersondata = [];
   public vehiclesForLicense = [];
   public errorMsg;
-  public loginuserdetails: DpsUser = JSON.parse(localStorage.getItem('dpsuser'));
-  public VatNumber = this.loginuserdetails.customerVatNumber;
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public VatNumber = this.dpsLoginToken.customerVatNumber;
   PersonDocumentForm: FormGroup;
 
   public isConstructionSector: boolean;

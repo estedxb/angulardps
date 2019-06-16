@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, CanActivateChild, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LoggingService } from './shared/logging.service';
+import { LoginToken } from './shared/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  constructor(private router: Router, private logger: LoggingService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
@@ -16,6 +19,7 @@ export class AuthGuard implements CanActivate {
 
   verifyLogin(url): boolean {
     if (!this.isLoggedIn()) {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... Login');
       this.router.navigate(['/login']);
       return false;
     } else if (this.isLoggedIn()) {
@@ -24,7 +28,7 @@ export class AuthGuard implements CanActivate {
   }
   public isLoggedIn(): boolean {
     let status = false;
-    if (localStorage.getItem('isLoggedIn') === 'true') {
+    if (this.dpsLoginToken.isLoggedIn === true) {
       status = true;
     } else {
       status = false;

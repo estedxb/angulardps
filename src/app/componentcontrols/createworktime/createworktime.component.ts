@@ -63,7 +63,6 @@ export class CreateWorkTimeComponent implements OnInit {
   createObjects() {
     //this.currentWorktime.startTime = this.startTime;
     //this.currentWorktime.endTime = this.endTime;
-
   }
 
 }

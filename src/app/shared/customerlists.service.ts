@@ -28,9 +28,12 @@ export class CustomerListsService {
     return result;
   }
 
-  public getCustomersbyVatNumber(vatNumber: string): Observable<CustomersList[]> {
+  public getCustomersbyUserEmail(UserEmail: string): Observable<CustomersList[]> {
     // this.logger.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
-    const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + vatNumber).catch(this.errorHandler);
+    const Token = 'ssss';
+    const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + UserEmail, {
+      headers: { Authorization: 'Token token="' + Token + '"' }
+    }).catch(this.errorHandler);
     // this.logger.log(result);
     return result;
   }

@@ -16,8 +16,8 @@ import { LoggingService } from '../../../shared/logging.service';
 })
 export class UpdateCustomerComponent implements OnInit {
 
-  public loginaccessToken: string = localStorage.getItem('accesstoken');
-  public loginuserdetails: any = JSON.parse(localStorage.getItem('dpsuser'));
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public loginaccessToken: string = this.dpsLoginToken.accessToken;
   public dpsCustomer: any;
   public vatNumber: string;
   public CustomerName = '';
@@ -35,9 +35,11 @@ export class UpdateCustomerComponent implements OnInit {
     try {
       this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
+        this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
         this.router.navigate(['/login']);
       }
     } catch (e) {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.router.navigate(['/login']); alert(e.message);
     }
   }
@@ -72,7 +74,7 @@ export class UpdateCustomerComponent implements OnInit {
       if (this.Id === 'locations' || this.Id === 'location' || this.Id === 'positions' || this.Id === 'position' ||
         this.Id === 'users' || this.Id === 'user' || this.Id === 'workschedules' || this.Id === 'works' || this.Id === 'work' ||
         this.Id === 'update' || this.Id === 'updatecustomer' || this.Id === 'edit' || this.Id === 'editcustomer') {
-        this.vatNumber = this.loginuserdetails.customerVatNumber;
+        this.vatNumber = this.dpsLoginToken.customerVatNumber;
 
         if (this.Id === 'locations' || this.Id === 'location') {
           this.currentPage = 'locations';
@@ -111,12 +113,13 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   updateLocalStorage() {
-    this.logger.log('updateLocalStorage :: ');
-    this.loginuserdetails.customerVatNumber = this.vatNumber;
-    this.logger.log('lsDPUser :: ', this.loginuserdetails);
-    localStorage.setItem('dpsuser', JSON.stringify(this.loginuserdetails));
-    localStorage.setItem('customerName', this.CustomerName);
-    localStorage.setItem('customerlogo', this.CustomerLogo);
+    this.logger.log('updateLocalStorage :: Vat = ' + this.vatNumber +
+      ' :: CustomerName = ' + this.CustomerName + ' :: CustomerLogo = ' + this.CustomerLogo);
+    this.dpsLoginToken.customerVatNumber = this.vatNumber;
+    this.dpsLoginToken.customerName = this.CustomerName;
+    this.dpsLoginToken.customerlogo = this.CustomerLogo;
+    localStorage.setItem('dpsLoginToken', JSON.stringify(this.dpsLoginToken));
+    this.logger.log('dpsLoginToken :: ', this.dpsLoginToken);
 
     if (
       this.currentPage === 'locations' || this.currentPage === 'location' || this.currentPage === 'positions' ||
@@ -136,7 +139,6 @@ export class UpdateCustomerComponent implements OnInit {
     } else {
       this.currentPage = 'editcustomer';
     }
-
   }
   receiveEditCustomerData($event) {
     this.editCustomerData = $event;

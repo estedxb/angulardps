@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   name: 'dev',
   production: false,
@@ -9,6 +5,9 @@ export const environment = {
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
+  aadurl: 'https://digitalpayrollservices.b2clogin.com',
+  tenantid: 'digitalpayrollservices.onmicrosoft.com',
+  clientId: '0a3fd7db-e748-4a4d-b9d5-e022ddc100e1',
   getAssetsDataPath: '../../assets/data/',
   getPositionFileUploads: 'postion/',
   getPositionsDownloadTemplate: 'postion/Position1.pdf',
@@ -64,12 +63,3 @@ export const environment = {
   getContractReasonURL: 'ContractReasons',
   isLoggingRequired: true
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
