@@ -22,14 +22,14 @@ export class DashboardActionComponent implements OnInit {
   constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
 
   ngOnInit() {
-    this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.loginaccessToken = this.dpsLoginToken.accessToken;
-    // this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
+    this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);
       this.notificationcount = this.datas.length;
-      // this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
+      this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
     }, error => this.errorMsg = error);
   }
 
