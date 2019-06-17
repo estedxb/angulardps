@@ -1,4 +1,5 @@
 import { Component, OnInit, Input,EventEmitter,Output } from '@angular/core';
+import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
   selector: 'app-currency',
@@ -44,7 +45,7 @@ export class CurrencyComponent implements OnInit {
       return this.value;
     }
 
-  constructor() { 
+  constructor(private logger:LoggingService) { 
   }
 
   ngDoCheck() {
@@ -59,6 +60,8 @@ export class CurrencyComponent implements OnInit {
   loadInitialData() {
 
     this.datacurrencyDropDown = ['€', '%'];
+
+    this.logger.log("received on load="+this.currencyData);
 
     if (this.currencyData !== null && this.currencyData !== undefined) 
     {

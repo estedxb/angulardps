@@ -134,9 +134,9 @@ export class InvoiceSettingsComponent implements OnInit {
 
     // this.selectedIndexCurrencyShiftAllowance = $event.target.value;
 
-    this.logger.log("selected currency="+$event.target.value);
+    this.logger.log("selected currency="+$event);
 
-    if (this.value === '€') {
+    if ($event === '€') {
       this.shiftAllowances[i].nominal = true;
       this.currencyDataShift[i] = '€';
       this.changeObject();
@@ -152,18 +152,22 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDownCurrencyOther($event, i) {
 
-    this.selectedIndexCurrencyOtherAllowance = $event.target.value;
+    // this.selectedIndexCurrencyOtherAllowance = $event.target.value;
 
-    if (this.value === '€') {
-      this.otherAllowances[i].nominal = true;
+    this.logger.log("received object="+$event + "  i="+i);
+
+    if ( $event === '€') {
+      this.otherAllowances[i].nominal = false;
+      this.currencyDataOther[i] = '€';
       this.changeObject();
     }
     else {
-      this.otherAllowances[i].nominal = false;
+      this.otherAllowances[i].nominal = true;
+      this.currencyDataOther[i] = '%';
       this.changeObject();
     }
 
-    return this.value;
+    //return $event;
   }
 
   onChangeDropDown($event) {
@@ -343,6 +347,12 @@ export class InvoiceSettingsComponent implements OnInit {
                       this.otherAllowances[anothercounter].amount = parseInt(element.amount,10);
                       this.otherAllowances[anothercounter].codeId = parseInt(element.codeId,10);
                       this.otherAllowances[anothercounter].nominal = element.nominal;
+
+                      if(this.FPFormData.data.invoiceSettings.otherAllowances[0].nominal === false)
+                          this.currencyDataOther[0] = "€";
+                      else
+                          this.currencyDataOther[0] = "%";
+
                     }
                     else 
                     {
@@ -354,6 +364,11 @@ export class InvoiceSettingsComponent implements OnInit {
                         this.andreSwitch = true;
                         const formGroup = this.Andre.controls[anothercounter] as FormGroup;
                         formGroup.controls['AndreBox2'].setValue(element.amount);   
+
+                        if(this.FPFormData.data.invoiceSettings.otherAllowances[anothercounter].nominal === false)
+                            this.currencyDataOther[anothercounter] = "€";
+                        else
+                            this.currencyDataOther[anothercounter] = "%";
                       }
                                       
                     }
@@ -362,10 +377,7 @@ export class InvoiceSettingsComponent implements OnInit {
                   }
                 });
               }
-            
-                                   
-            this.logger.log(this.FPFormData.data.invoiceSettings);
-  
+             
           }
         }
       }

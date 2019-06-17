@@ -153,6 +153,9 @@ export class StatuteComponent implements OnInit {
         this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
         this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
 
+        this.logger.log(this.statutes[counter].name);
+        this.logger.log(this.statutes[counter].type);
+
         this.statuteSettings.push(this.StatuteSettingsObject);
   
     }
@@ -194,7 +197,7 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject.mealVoucherSettings.totalWorth = arrayElement.mealVoucherSettings.totalWorth;
       this.StatuteSettingsObject.mealVoucherSettings.employerShare = arrayElement.mealVoucherSettings.employerShare;
       this.StatuteSettingsObject.mealVoucherSettings.minimumHours = arrayElement.mealVoucherSettings.minimumHours;
-      
+
       this.StatuteSettingsObject.coefficient = arrayElement.coefficient;
   
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
