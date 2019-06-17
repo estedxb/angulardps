@@ -28,6 +28,7 @@ export class Contact {
     phoneNumber?: PhoneNumber; language?: Language;
 }
 export class InvoiceSettings {
+    transportCoefficient: number; mealvoucherCoefficient: number; ecoCoefficient: number; dimonaCost: number;
     lieuDaysAllowance?: LieuDaysAllowance; sicknessInvoiced?: boolean; holidayInvoiced?: boolean; mobilityAllowance?: MobilityAllowance;
     shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
 }
