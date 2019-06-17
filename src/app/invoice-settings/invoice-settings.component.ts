@@ -273,6 +273,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
                  if(counter===0)
                 {
+                  this.logger.log(this.Ploegpremiere);
+
                     const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
                     formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
                     formGroup.controls['PloegprimeBox2'].setValue(element.amount);
