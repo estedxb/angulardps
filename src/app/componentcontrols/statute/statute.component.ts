@@ -29,7 +29,7 @@ export class StatuteComponent implements OnInit {
   public minimumurenArray = [];
   public statutename = '';
   public statuteSelectedString: ParitairCommitee;
-  public arrayParitairCommitee: ParitairCommitee[];
+  public arrayParitairCommitee = [];
   public JCString = [];
   public loadStatuteSettingsArray = [];
   public newIndex;
@@ -55,7 +55,15 @@ export class StatuteComponent implements OnInit {
   lengthStatueSettings: number = 0;
 
   constructor(private statuteService: StatuteService, private fb:FormBuilder, private logger:LoggingService) {
-    this.createCoefficientArray();
+
+  }
+
+  setParitairCommitteArray() {
+
+    for(let i=0;i<this.statutes.length;i++)
+      this.arrayParitairCommitee.push(new ParitairCommitee());
+
+      this.createStatuteSettingsArrayEmpty();
 
   }
 
@@ -108,108 +116,48 @@ export class StatuteComponent implements OnInit {
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
-        this.createStatuteSettingsArrayEmpty();
+        this.loadStatuteSettingsArray.forEach(element => {
+          this.onloadData(element,counter);
+          counter++;
+        });
 
-        // this.loadStatuteSettingsArray.forEach(element => {
-        //   this.onloadData(element,counter);
-        //   counter++;
-        // });
-
+        this.emitData();
       }
-
     }
-
-
   }
 
   createStatuteSettingsArrayEmpty() {
 
     let counter:number = 0;
 
-    this.logger.log("statutes="+this.statutes.length);
     this.lengthStatueSettings = this.statuteSettings.length;
 
-    if(this.arrayParitairCommitee !== null && this.arrayParitairCommitee !== undefined)
-      this.logger.log("length paritair committee="+this.arrayParitairCommitee.length);
-    else
-      this.logger.log("null array");
-
-    // for(let counter =0; counter< this.statutes.length; counter+=1)
-    // {
-
-    //     this.StatuteSettingsObject = new StatuteSetting();
-    //     this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
-
-    //     this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0
-    //     this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0
-    //     this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0
-    //     this.StatuteSettingsObject.coefficient = 0;
-    
-    //     this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-    //     this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
-    //     this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
-    //     this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
-    //     this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
-
-    //     this.StatuteSettingsObject.statute = new Statute();
-    //     this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
-    //     this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
-
-    //     this.statuteSettings.push(this.StatuteSettingsObject);
-  
-    // }
-
-    // console.log("created array with loaded data");
-    // console.log(this.statuteSettings);
-
-  }
-
-  createStatuteSettingsArray(){
-
-    console.log("creating array");
-    console.log("loadStatuteSettingsArray length="+this.loadStatuteSettingsArray.length);
-
-    let counter:number = 0;
-    
-    if(this.loadStatuteSettingsArray.length > 0 )
+    for(let counter =0; counter< this.statutes.length; counter+=1)
     {
-      this.loadStatuteSettingsArray.forEach(element => {
-
-        console.log("element=");
-        console.log(element);
 
         this.StatuteSettingsObject = new StatuteSetting();
-
         this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
 
-        this.StatuteSettingsObject.mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
-        this.StatuteSettingsObject.mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-        this.StatuteSettingsObject.mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
-        this.StatuteSettingsObject.coefficient = element.coefficient;
+        this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0
+        this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0
+        this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0
+        this.StatuteSettingsObject.coefficient = 0;
     
         this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-        this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = element.paritairCommitee.BrightStaffingCommitteeId;
-        this.StatuteSettingsObject.paritairCommitee.name = element.paritairCommitee.name;
-        this.StatuteSettingsObject.paritairCommitee.number = element.paritairCommitee.number;
-        this.StatuteSettingsObject.paritairCommitee.type = element.paritairCommitee.type;
+        this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
+        this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
+        this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
+        this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
 
         this.StatuteSettingsObject.statute = new Statute();
-        this.StatuteSettingsObject.statute.name = element.statute.name;
-        this.StatuteSettingsObject.statute.type  = element.statute.type;
+        this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
+        this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
 
         this.statuteSettings.push(this.StatuteSettingsObject);
-        counter += 1;
-      });
-  
-      console.log("created array with loaded data");
-      console.log(this.statuteSettings);
-  
-      this.emitData();
   
     }
-    else {
-      console.log("array with no data");
-    }
+
+    this.emitData();
 
   }
 
@@ -232,24 +180,36 @@ export class StatuteComponent implements OnInit {
     this.minimumurenArray[counter] = arrayElement.mealVoucherSettings.minimumHours;
     this.coefficientArray[counter] = arrayElement.coefficient;
 
-    this.arrayParitairCommitee[counter] = new ParitairCommitee();
-    this.arrayParitairCommitee[counter].BrightStaffingCommitteeId = arrayElement.paritairCommitee.BrightStaffingCommitteeId;
-    this.arrayParitairCommitee[counter].name = arrayElement.paritairCommitee.name;
-    this.arrayParitairCommitee[counter].number = arrayElement.paritairCommitee.number;
-    this.arrayParitairCommitee[counter].type = arrayElement.type;
-
     let name = arrayElement.paritairCommitee.name;
     let number = arrayElement.paritairCommitee.number;
     this.JCString[counter] = number + " - " + name;
 
-    // this.StatuteSettingsObject = new StatuteSetting();
-    // this.StatuteSettingsObject.statute = this.statuteObject;
-    // this.StatuteSettingsObject.paritairCommitee = this.arrayParitairCommitee[counter];
-    // this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
-    // this.StatuteSettingsObject.coefficient = parseInt(this.coefficientArray[counter],10);
+    // load statuteSettings data onto statuteSettings Array
 
-    // this.statuteSettings.push(this.StatuteSettingsObject);
+    if(this.statuteSettings.length > 0)
+    {
+      this.StatuteSettingsObject = new StatuteSetting();
 
+      this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
+      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = arrayElement.mealVoucherSettings.totalWorth;
+      this.StatuteSettingsObject.mealVoucherSettings.employerShare = arrayElement.mealVoucherSettings.employerShare;
+      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = arrayElement.mealVoucherSettings.minimumHours;
+      
+      this.StatuteSettingsObject.coefficient = arrayElement.coefficient;
+  
+      this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
+      this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = arrayElement.paritairCommitee.BrightStaffingCommitteeId;
+      this.StatuteSettingsObject.paritairCommitee.name = arrayElement.paritairCommitee.name;
+      this.StatuteSettingsObject.paritairCommitee.number = arrayElement.paritairCommitee.number;
+      this.StatuteSettingsObject.paritairCommitee.type = arrayElement.paritairCommitee.type;
+
+      this.StatuteSettingsObject.statute = new Statute();
+      this.StatuteSettingsObject.statute.name = arrayElement.statute.name;
+      this.StatuteSettingsObject.statute.type  = arrayElement.statute.type;
+
+      this.statuteSettings[counter] = this.StatuteSettingsObject;
+
+    }
 
 }
 
@@ -299,6 +259,7 @@ addControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
 ngOnInit() {
     this.SForm = new FormGroup({
       statuteArray: this.fb.array([]),
+      coefficientBox: new FormControl()
     });
 
     this.createCoefficientArray();
@@ -307,6 +268,8 @@ ngOnInit() {
       this.statutes = data;
 
       this.fillTitles();
+      this.createCoefficientArray();
+      this.setParitairCommitteArray();
 
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
@@ -447,6 +410,7 @@ ngOnInit() {
 
     this.statuteSelectedString = $event.selectedObject;
 
+    this.arrayParitairCommitee[i] = new ParitairCommitee();
     this.paritarirCommiteeObject = new ParitairCommitee();
 
     this.paritarirCommiteeObject.BrightStaffingCommitteeId = $event.selectedObject.BrightStaffingCommitteeId;
@@ -454,7 +418,7 @@ ngOnInit() {
     this.paritarirCommiteeObject.number = $event.selectedObject.number;
     this.paritarirCommiteeObject.type = $event.selectedObject.type;
 
-    this.arrayParitairCommitee.push(this.paritarirCommiteeObject);
+    this.arrayParitairCommitee[i] = this.paritarirCommiteeObject;
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
     {

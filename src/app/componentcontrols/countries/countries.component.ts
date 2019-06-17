@@ -93,11 +93,14 @@ export class CountriesComponent implements OnInit {
         const str:string = this.datas[i].Country;
         // this.logger.log("str="+str);
         const datString:Array<string> = str.split(" ");
+        if(str !== undefined && str != null)
+        {
         // this.logger.log('country=' + str.split(" ")[0].toLowerCase());
         if(str.split(" ")[0] !== undefined && str.split(" ")[0] !== null)
           if ( str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
             this._selectedIndex = i;
           }
+        }
       }
       // this.logger.log('selected index=' + this._selectedIndex);
     } else {

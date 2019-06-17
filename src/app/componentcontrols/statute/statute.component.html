@@ -17,10 +17,10 @@
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
 
-        <div class="row inputWithImg">
+        <div class="row">
 
-            <div class="form-group" *ngIf="i < lengthStatueSettings else coeff">
-                <input #coefficientBox (change)="onChangeCoefficient(coefficientBox.value,i)" value="{{STFormData.data.statuteSettings[i].coefficient}}" type="text" class="form-control">
+            <div class="form-group" *ngIf="i < countStatutes else coeff">
+                <input #coefficientBox (change)="onChangeCoefficient(coefficientBox.value,i)" value="{{statuteSettings[i].coefficient}}" type="text" class="form-control">
             </div>
             <ng-template #coeff>
                 <div class="form-group">
