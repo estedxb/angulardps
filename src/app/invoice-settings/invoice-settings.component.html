@@ -106,16 +106,24 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2">
-                                                <select formControlName="currency" id="dd_currency_{{i}}" name="dd_currency_{{i}}"
+                                                <app-currency [currencyData]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
+                                                        <!-- <div class="form-group">
+                                                                <select class="form-control" [(ngModel)]="currencyChoice"
+                                                                 class="currency selectcomponent"
+                                                                 (change)="onChangeDropDownCurrencyTeam($event,i)">
+                                                                        <option *ngFor="let k of datacurrencyDropDown" >{{ k }}</option>
+                                                                </select>
+                                                        </div>                                                               -->
+                                                <!-- <select formControlName="currency" id="dd_currency" name="dd_currency"
                                                         class="currency selectcomponent" [(ngModel)]="currencyChoice"
-                                                        (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown
+                                                        (change)="onChangeDropDownCurrencyTeam($event,i)"
                                                         required="required">
                                                         <option *ngFor="let data of datacurrencyDropDown let j= index"
                                                                 [attr.data-index]="j" [value]="j">{{data}}</option>
-                                                </select>
+                                                </select> -->
                                         </div>
                                         <div class="col col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
-                                                <button [disabled]="isInvalid()" #addButton (click)="addRows('','','')"
+                                                <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,'')"
                                                         type="button" class="btnAdd">
                                                         <img src="../../assets/svg/addblack.svg" alt="" height="17.5"
                                                                 width="17.5" />
@@ -140,25 +148,25 @@
                                         </div>
                                 </div>
                                 <div formArrayName="arrayAndreBox"
-                                        *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let i=index; first as isFirstA; last as isLastA">
-                                        <div [formGroupName]="i" class="row dynrow">
+                                        *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let r=index; first as isFirstA; last as isLastA">
+                                        <div [formGroupName]="r" class="row dynrow">
                                                 <div class="col col-sm-5">
                                                         <!-- <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
                                                         formControlName="AndreBox1"> -->
-                                                        <app-workcodes [initialWorkCode]="workCode[i]"
+                                                        <app-workcodes [initialWorkCode]="workCode[r]"
                                                                 [disabled]="disableWorkCodes"
-                                                                (childEvent)="receiveWorkCode($event,i)">
+                                                                (childEvent)="receiveWorkCode($event,r)">
                                                         </app-workcodes>
                                                 </div>
                                                 <div class="col col-sm-3">
-                                                        <input #amountA (change)="setPgABox2(amountA.value,i)"
+                                                        <input #amountA (change)="setPgABox2(amountA.value,r)"
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
                                                 <div class="col col-sm-2">
                                                         <select formControlName="currency_other" id="dd_currency_new"
                                                                 name="dd_currency_new" class="currency selectcomponent"
                                                                 [(ngModel)]="currencyNewChoice"
-                                                                (change)="onChangeDropDownCurrencyOther($event,i)"
+                                                                (change)="onChangeDropDownCurrencyOther($event,r)"
                                                                 ng-dropdown required="required">
                                                                 <option *ngFor="let data of datacurrencyDropDown let m= index"
                                                                         [attr.data-index]="m" [value]="m">{{data}}
