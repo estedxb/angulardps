@@ -53,12 +53,8 @@ export class JointcommitteeComponent implements OnInit {
 
   filterDatas(datas) {
 
-    // this.logger.log('filtering the data from array');
-    // this.logger.log(datas.length);
-
-    // this.logger.log('current typeworker = ' + this.TypeWorker);
-
     this.datas = [];
+    let position = 0;
 
     for (let counter = 0; counter < datas.length; counter += 1) {
       
@@ -66,15 +62,14 @@ export class JointcommitteeComponent implements OnInit {
         this.datas.push(datas[counter]);
       }
 
+      if((datas[counter].number + " - " + datas[counter].name)  === this.JCFormData)
+          position = counter;
+
     }
 
-    // this.logger.log('filtered Array');
-    // this.logger.log(this.datas);
+    this.logger.log("received string="+this.JCFormData);
 
-    // this.logger.log("0th data=");
-    // this.logger.log(this.datas[0]);
-
-    const obj: any = { selectedObject: this.datas[0], arrayObject: this.datas };
+    const obj: any = { selectedObject: datas[position], arrayObject: datas };
     this.childEvent.emit(obj);
 
 
@@ -90,7 +85,7 @@ export class JointcommitteeComponent implements OnInit {
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
-    this.loadDropDownData(this.stringJCReceived);
+    this.loadDropDownData(this.JCFormData);
   }
 
   loadDropDownData(stringJCReceived) {

@@ -121,6 +121,8 @@ export class StatuteComponent implements OnInit {
           counter++;
         });
 
+        this.logger.log("loaded array");
+        this.logger.log(this.statuteSettings);    
         this.emitData();
       }
     }
@@ -153,14 +155,18 @@ export class StatuteComponent implements OnInit {
         this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
         this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
 
-        this.logger.log(this.statutes[counter].name);
-        this.logger.log(this.statutes[counter].type);
+        // this.logger.log(this.statutes[counter].name);
+        // this.logger.log(this.statutes[counter].type);
 
         this.statuteSettings.push(this.StatuteSettingsObject);
   
     }
 
-    this.emitData();
+    // this.logger.log("created array");
+    // this.logger.log(this.statuteArray);
+
+    if(counter > this.statutes.length)
+        this.emitData();
 
   }
 
@@ -187,6 +193,9 @@ export class StatuteComponent implements OnInit {
     let number = arrayElement.paritairCommitee.number;
     this.JCString[counter] = number + " - " + name;
 
+    this.logger.log("array Element");
+    this.logger.log(arrayElement);
+
     // load statuteSettings data onto statuteSettings Array
 
     if(this.statuteSettings.length > 0)
@@ -207,12 +216,13 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject.paritairCommitee.type = arrayElement.paritairCommitee.type;
 
       this.StatuteSettingsObject.statute = new Statute();
-      this.StatuteSettingsObject.statute.name = arrayElement.statute.name;
-      this.StatuteSettingsObject.statute.type  = arrayElement.statute.type;
+      this.StatuteSettingsObject.statute.name = this.statutes[counter].name
+      this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
 
       this.statuteSettings[counter] = this.StatuteSettingsObject;
 
     }
+
 
 }
 
@@ -413,6 +423,9 @@ ngOnInit() {
 
     this.statuteSelectedString = $event.selectedObject;
 
+    this.logger.log("received object i="+i);
+    this.logger.log($event);
+
     this.arrayParitairCommitee[i] = new ParitairCommitee();
     this.paritarirCommiteeObject = new ParitairCommitee();
 
@@ -492,6 +505,8 @@ ngOnInit() {
   }
 
   emitData() {
+    this.logger.log("Sending array");
+    this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 
