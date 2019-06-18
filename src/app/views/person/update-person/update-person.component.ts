@@ -76,6 +76,9 @@ export class UpdatePersonComponent implements OnInit {
 
   filterData(message: any) {
 
+    this.logger.log("received message in update person");
+    this.logger.log(message.data);
+
     if (message.page === "edit") {
       this.editPersonData = message.data;
       // this.logger.log("received person data=" + this.editPersonData);
@@ -119,12 +122,13 @@ export class UpdatePersonComponent implements OnInit {
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
         this.dpsPerson = dpsperson.body;
         this.person = this.dpsPerson.person;
-        
+
         this.logger.log('DPS Person Form Data : ');
         this.logger.log(this.dpsPerson);
 
         this.logger.log("Person Form Data : ");
         this.logger.log(this.person);
+
         this.changeMessage();
 
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
@@ -165,6 +169,8 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   onFormwardClick() {
+
+    this.logger.log("forward click has been clicked!!");
 
     if (this.currentPage === "editperson") {
       this.logger.log("data collected");

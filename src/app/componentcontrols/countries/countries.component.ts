@@ -69,6 +69,9 @@ export class CountriesComponent implements OnInit {
 
   ngDoCheck() {
 
+    this.logger.log("country received="+ this.CountryFormData);
+
+
     if (this.CountryFormData !== this.oldCountryFormData) {
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
@@ -85,26 +88,32 @@ export class CountriesComponent implements OnInit {
   }
 
   loadInitialData(datas: any) {
-    // this.logger.log('countryString=' + this.CountryFormData);
-    // this.logger.log(this.datas);
     if (datas.length !== 0) {
-      // this.logger.log('datas new country string');
+
       for (let i = 0; i < this.datas.length; i++) {
         const str:string = this.datas[i].Country;
-        // this.logger.log("str="+str);
         const datString:Array<string> = str.split(" ");
+
         if(str !== undefined && str != null)
         {
-        // this.logger.log('country=' + str.split(" ")[0].toLowerCase());
-        if(str.split(" ")[0] !== undefined && str.split(" ")[0] !== null)
-          if ( str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) {
-            this._selectedIndex = i;
+          if(str.split(" ")[0] !== undefined && str.split(" ")[0] !== null && str.split(" ")[1] === "(the)")
+          {
+            if (str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) 
+                this._selectedIndex = i;
+          }
+          else {
+            if(str.split(" ")[1] !== "(the)")
+            {
+                if(str.toLowerCase() === this.CountryFormData.toLowerCase())
+                {
+                    this._selectedIndex = i;
+                }
+            }
           }
         }
       }
-      // this.logger.log('selected index=' + this._selectedIndex);
-    } else {
-      // this.logger.log('null or undefined');
+    } 
+    else {
     }
 
   }

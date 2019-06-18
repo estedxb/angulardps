@@ -87,7 +87,7 @@ export class EditPersonComponent implements OnInit {
 
   setDropDownYear() {
   }
-  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+  // ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
   ngDoCheck() {
 
@@ -118,11 +118,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   changeMessage() {
-    
-    // this.logger.log(this.DpsPersonObject);
-
-    this.logger.log("changing message");
-    this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null) {
       const newmessage: any = {
@@ -223,22 +218,24 @@ export class EditPersonComponent implements OnInit {
 
       const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
-      this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-        this.logger.log('response=');
-        this.logger.log(res);
-        this.loadPersonData(res);
-      },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            // this.logger.log('Error occured=' + err.error.message);
-            this.logger.log('response error =');
-            this.loadDOBFromSSID();
-          } else {
-            // this.logger.log('response code=' + err.status);
-            // this.logger.log('response body=' + err.error);
-          }
-        }
-      );
+      this.loadPersonData();
+
+      // this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
+      //   this.logger.log('edit person response=');
+      //   this.logger.log(res);
+      //   this.loadPersonData(res);
+      // },
+      //   (err: HttpErrorResponse) => {
+      //     if (err.error instanceof Error) {
+      //       // this.logger.log('Error occured=' + err.error.message);
+      //       this.logger.log('response error =');
+      //       this.loadDOBFromSSID();
+      //     } else {
+      //       // this.logger.log('response code=' + err.status);
+      //       // this.logger.log('response body=' + err.error);
+      //     }
+      //   }
+      // );
     } else {
       // this.logger.log('invalid SSN format');
       this.resetPeronData();
@@ -339,8 +336,8 @@ export class EditPersonComponent implements OnInit {
   resetPeronData() {
 
     this.editPersonForm.controls.placeOfBirth.setValue('');
-    this.editPersonForm.controls.countryOfBirth.setValue('');
-    this.editPersonForm.controls.nationality.setValue('');
+    // this.editPersonForm.controls.countryOfBirth.setValue('');
+    // this.editPersonForm.controls.nationality.setValue('');
     this.editPersonForm.controls.firstName.setValue('');
     this.editPersonForm.controls.lastName.setValue('');
     this.editPersonForm.controls.street.setValue('');
@@ -359,70 +356,83 @@ export class EditPersonComponent implements OnInit {
     this.editPersonForm.controls.telephoneNumber.setValue('');
   }
 
-  loadPersonData(response) {
+  loadPersonData() {
 
-    // this.logger.log("response");
-    // this.logger.log(response);
+    this.logger.log("load person data called");
 
-    const data = response.body;
+    let newResponse:any = "";
+    let data:any = "";
+    let vatNumber = this.dpsLoginToken.customerVatNumber;
 
-    if (data.person !== null) {
+    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, vatNumber).subscribe(dpsperson => {
+      newResponse  = dpsperson.body;
+      this.logger.log("new response");
+      this.logger.log(dpsperson);
+      data = newResponse;
 
-      const stringData: string = data.person.dateOfBirth.toString();
-      const dobArray = stringData.split('T');
-      const dobString: string = dobArray[0];
-      this.loadDOBData(dobString);
+      this.logger.log("countryOfBirth="+data.person.countryOfBirth);
 
-      const genderObject = new Gender();
+      if (data !== null  && data.person !== null) {
 
-      if (data.person.gender !== null) {
-        genderObject.genderId = data.person.gender.genderId;
-        genderObject.title = data.person.gender.title;
-
-        this.selectedGenderIndex = genderObject.genderId;
+        const stringData: string = data.person.dateOfBirth.toString();
+        const dobArray = stringData.split('T');
+        const dobString: string = dobArray[0];
+        this.loadDOBData(dobString);
+  
+        this.languageString = data.person.language.name;
+  
+        const genderObject = new Gender();
+  
+        if (data.person.gender !== null) {
+          genderObject.genderId = data.person.gender.genderId;
+          genderObject.title = data.person.gender.title;
+  
+          this.selectedGenderIndex = genderObject.genderId;
+        }
+  
+        this.editPersonForm.controls.placeOfBirth.setValue(data.person.placeOfBirth);
+  
+        // this.editPersonForm.controls.countryOfBirth.setValue(data.person.countryOfBirth);
+        this.birthCountryString = data.person.countryOfBirth;
+  
+        // this.editPersonForm.controls.nationality.setValue(data.person.nationality);
+        this.nationalityString = data.person.nationality;
+  
+        this.editPersonForm.controls.firstName.setValue(data.person.firstName);
+        this.editPersonForm.controls.lastName.setValue(data.person.lastName);
       }
+  
+      if (data.person.address !== null) {
+        this.editPersonForm.controls.street.setValue(data.person.address.street);
+        this.editPersonForm.controls.streetNumber.setValue(data.person.address.streetNumber);
+        this.editPersonForm.controls.bus.setValue(data.person.address.bus);
+        this.editPersonForm.controls.city.setValue(data.person.address.city);
+        this.editPersonForm.controls.postalCode.setValue(data.person.address.postalCode);
+        this.editPersonForm.controls.country.setValue(data.person.address.country);
+        this.editPersonForm.controls.emailAddress.setValue(data.person.email.emailAddress);
+  
+        this.countryString = data.person.address.country;
+      }
+  
+      if (data.person.bankAccount !== null) {
+        this.editPersonForm.controls.iban.setValue(data.person.bankAccount.iban);
+        this.editPersonForm.controls.bic.setValue(data.person.bankAccount.bic);
+      }
+  
+      if (data.person.mobile !== null) {
+        this.editPersonForm.controls.mobileNumber.setValue(data.person.mobile.number);
+      }
+  
+      if (data.person.phone !== null) {
+        this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
+      }
+  
+      // this.DpsPersonObject = data;
+  
+      // this.changeMessage();
+    });
 
-      this.editPersonForm.controls.placeOfBirth.setValue(data.person.placeOfBirth);
-
-      this.editPersonForm.controls.countryOfBirth.setValue(data.person.countryOfBirth);
-      this.birthCountryString = data.person.countryOfBirth;
-
-      this.editPersonForm.controls.nationality.setValue(data.person.nationality);
-      this.nationalityString = data.person.nationality;
-      this.editPersonForm.controls.firstName.setValue(data.person.firstName);
-      this.editPersonForm.controls.lastName.setValue(data.person.lastName);
-    }
-
-    if (data.person.address !== null) {
-      this.editPersonForm.controls.street.setValue(data.person.address.street);
-      this.editPersonForm.controls.streetNumber.setValue(data.person.address.streetNumber);
-      this.editPersonForm.controls.bus.setValue(data.person.address.bus);
-      this.editPersonForm.controls.city.setValue(data.person.address.city);
-      this.editPersonForm.controls.postalCode.setValue(data.person.address.postalCode);
-      this.editPersonForm.controls.country.setValue(data.person.address.country);
-      this.editPersonForm.controls.emailAddress.setValue(data.person.email.emailAddress);
-    }
-
-    if (data.person.bankAccount !== null) {
-      this.editPersonForm.controls.iban.setValue(data.person.bankAccount.iban);
-      this.editPersonForm.controls.bic.setValue(data.person.bankAccount.bic);
-    }
-
-    if (data.person.mobile !== null) {
-      this.editPersonForm.controls.mobileNumber.setValue(data.person.mobile.number);
-    }
-
-    if (data.person.phone !== null) {
-      this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
-    }
-
-    this.countryString = data.person.address.country;
-    this.birthCountryString = data.person.countryOfBirth;
-    this.languageString = data.person.language.name;
-
-    this.DpsPersonObject = data;
-
-    this.changeMessage();
+    this.logger.log("ended calling the api");
 
   }
 
@@ -458,7 +468,6 @@ export class EditPersonComponent implements OnInit {
 
   onCountryReceiveNationality($event) {
 
-
     if (this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.nationality = $event.Country;
     }
@@ -479,8 +488,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   onCountryReceive($event) {
-
-    // this.logger.log('countryCode=' + $event['Alpha-2']);
 
     if (this.DpsPersonObject.person.address !== null) {      
       this.DpsPersonObject.person.address.country = $event.Country;
@@ -507,8 +514,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   setPersonVatNumber() {
-
-    // this.logger.log('calling set person vat number method');
 
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
@@ -633,8 +638,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   createObjectsForm1() {
-
-    // this.logger.log('create objects form1 called');
 
     this.DpsPersonObject = new DpsPerson();
     this.PersonObject = new Person();
