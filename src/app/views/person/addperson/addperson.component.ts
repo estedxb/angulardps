@@ -864,6 +864,25 @@ export class AddPersonComponent implements OnInit {
 
   }
 
+  onCountryReceiveNationality($event) {
+
+    if (this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.nationality = $event.Country;
+    }
+
+    //this.changeMessage();
+
+  }
+
+  onCountryReceiveBirthPlace($event) {
+
+    if (this.DpsPersonObject.person !== null) {
+      this.DpsPersonObject.person.countryOfBirth = $event.Country;
+    }
+
+    //this.changeMessage();
+
+  }
   onChangeDropDownStatute($event) {
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {

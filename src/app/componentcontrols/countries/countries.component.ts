@@ -71,7 +71,6 @@ export class CountriesComponent implements OnInit {
 
     this.logger.log("country received="+ this.CountryFormData);
 
-
     if (this.CountryFormData !== this.oldCountryFormData) {
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
@@ -96,19 +95,10 @@ export class CountriesComponent implements OnInit {
 
         if(str !== undefined && str != null)
         {
-          if(str.split(" ")[0] !== undefined && str.split(" ")[0] !== null && str.split(" ")[1] === "(the)")
+          if(this.CountryFormData === str)
           {
-            if (str.split(" ")[0].toLowerCase() === this.CountryFormData.toLowerCase()) 
-                this._selectedIndex = i;
-          }
-          else {
-            if(str.split(" ")[1] !== "(the)")
-            {
-                if(str.toLowerCase() === this.CountryFormData.toLowerCase())
-                {
-                    this._selectedIndex = i;
-                }
-            }
+            this._selectedIndex = i;
+            this.childEvent.emit(this.datas[i]);
           }
         }
       }

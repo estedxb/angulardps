@@ -427,9 +427,9 @@ export class EditPersonComponent implements OnInit {
         this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
       }
   
-      // this.DpsPersonObject = data;
+      this.DpsPersonObject = data;
   
-      // this.changeMessage();
+      this.changeMessage();
     });
 
     this.logger.log("ended calling the api");

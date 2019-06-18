@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-sm-3 inputWithImg">
                   <label class="titleBold"> Land: </label>
-                  <app-countries (childEvent)="onCountryReceive($event)"></app-countries>
+                  <app-countries [CountryFormData]="countryString" (childEvent)="onCountryReceive($event)"></app-countries>
                 </div>
               </div>
               <div class="row">
@@ -239,14 +239,16 @@
               <div class="row">
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Nationaliteit: </label>
-                  <input formControlName="nationality" class="form-control" name="nationality" type="text" required />
-                  <div class="form-control-feedback"
+                  <app-countries [CountryFormData]="nationalityString" (childEvent)="onCountryReceiveNationality($event)"></app-countries>
+
+                  <!-- <input formControlName="nationality" class="form-control" name="nationality" type="text" required /> -->
+                  <!-- <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.nationality.invalid && (AddPersonForm1.controls.nationality.dirty || AddPersonForm1.controls.nationality.touched) else newvalidnationality">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidnationality>
                     <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
+                  </ng-template> -->
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Geboorteplaats: </label>
@@ -261,15 +263,16 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Geboorteland: </label>
-                  <input formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text"
-                    required />
-                  <div class="form-control-feedback"
+                  <app-countries [CountryFormData]="birthCountryString" (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
+                  <!-- <input formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text"
+                    required /> -->
+                  <!-- <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.countryOfBirth.invalid && (AddPersonForm1.controls.countryOfBirth.dirty || AddPersonForm1.controls.countryOfBirth.touched) else newvalidcountryOfBirth">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidcountryOfBirth>
                     <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
+                  </ng-template> -->
                 </div>
               </div>
               <div class="row">
