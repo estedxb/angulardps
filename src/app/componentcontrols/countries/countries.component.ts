@@ -69,7 +69,7 @@ export class CountriesComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log("country received="+ this.CountryFormData);
+    // this.logger.log("country received="+ this.CountryFormData);
 
     if (this.CountryFormData !== this.oldCountryFormData) {
       this.oldCountryFormData = this.CountryFormData;

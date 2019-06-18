@@ -72,7 +72,7 @@
                       <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="selectedIndexMonth"
                         name="dd_months" class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)"
                         ng-dropdown required="required">
-                        <option *ngFor="let data of dropDownMonth let i= index" [attr.data-index]="i" [value]="i">
+                        <option *ngFor="let data of dropDownMonth let j= index" [attr.data-index]="j" [value]="j">
                           {{data}}</option>
                       </select>
                     </div>
@@ -80,7 +80,7 @@
                       <select formControlName="yearOfBirth" id="dd_year" name="dd_year" [(ngModel)]="selectedIndexYear"
                         class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown
                         required="required">
-                        <option *ngFor="let data of dropDownYear let i= index" [attr.data-index]="i" [value]="i">
+                        <option *ngFor="let data of dropDownYear let r= index" [attr.data-index]="r" [value]="r">
                           {{data}}</option>
                       </select>
                     </div>
