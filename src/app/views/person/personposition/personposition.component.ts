@@ -304,14 +304,19 @@ export class PersonPositionComponent implements OnInit {
     const data = response.body;
     let counter: number = 0;
 
+    this.logger.log("customer position id="+data.customerPostionId);
+
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) {
 
       counter = 0;
-      this.maindatas.forEach((element) => {
-        if (element.position.name === data.customerPostionId)
-          this.selectedIndexFunctie = counter;
-        counter++;
-      });
+      // this.maindatas.forEach((element) => {
+      //   this.logger.log("name="+element.position.name);
+      //   if (element.position.name === data.customerPostionId)
+      //     this.selectedIndexFunctie = counter;
+      //   counter++;
+      // });
+
+      this.selectedIndexFunctie = parseInt(data.customerPostionId,10);
     }
 
     if (data.statute !== null && data.statute !== undefined && data.statute !== "") {

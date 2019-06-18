@@ -457,11 +457,8 @@ export class AddPersonComponent implements OnInit {
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
     this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
-    // this.DpsPersonObject.customerVatNumber = "123456789101";
     this.DpsPersonObject.person = this.PersonObject;
 
-    // this.logger.log("dps person object customer object=");
-    // this.logger.log(this.DpsPersonObject);
 
   }
 
@@ -473,8 +470,6 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        this.logger.log('response=' + res);
-        this.logger.log(res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
@@ -500,12 +495,6 @@ export class AddPersonComponent implements OnInit {
     const dobString: string = ssid.substring(0, 8);
 
     const stringData = dobString.split('.');
-    // let dobArray = stringData.split('T');
-    // let dobString:string = dobArray[0];
-
-    // this.loadDOBData(stringData);
-
-
   }
 
   loadDOBData(dateOfBirth: string) {

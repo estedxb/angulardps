@@ -91,28 +91,17 @@ export class EditPersonComponent implements OnInit {
 
   ngDoCheck() {
 
-
-    this.logger.log("this dps person object=");
-    this.logger.log(this.DpsPersonObject);
-
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== this.oldDpsPersonObject) {
-
-      this.data.currentMessage.subscribe(message => {
-        this.DpsPersonObject = this.message.data;
-        this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
-        );
-        this.oldDpsPersonObject = this.DpsPersonObject;      
-
+        this.oldDpsPersonObject = this.DpsPersonObject;
       //this.childEvent.emit(this.HQdata);
     }
   }
 
   ngOnInit() {
     // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    this.data.currentMessage.subscribe(message => {
-      this.DpsPersonObject = this.message.data;
-      this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
-      );
+    // this.data.currentMessage.subscribe(message => {
+    //   this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
+    //   );
 
     this.onPageInit();
     this.loadDOBFromSSID();
@@ -129,7 +118,12 @@ export class EditPersonComponent implements OnInit {
   }
 
   changeMessage() {
+    
     // this.logger.log(this.DpsPersonObject);
+
+    this.logger.log("changing message");
+    this.logger.log(this.DpsPersonObject);
+
     if (this.DpsPersonObject !== null) {
       const newmessage: any = {
         page: 'edit',
@@ -230,13 +224,14 @@ export class EditPersonComponent implements OnInit {
       const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
       this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-        // this.logger.log('response=' + res);
-        // this.logger.log(res);
+        this.logger.log('response=');
+        this.logger.log(res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             // this.logger.log('Error occured=' + err.error.message);
+            this.logger.log('response error =');
             this.loadDOBFromSSID();
           } else {
             // this.logger.log('response code=' + err.status);
@@ -259,8 +254,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   loadDOBData(dateOfBirth: string) {
-
-    // this.logger.log('date of birth=' + dateOfBirth);
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -332,9 +325,6 @@ export class EditPersonComponent implements OnInit {
 
   onChangeDropDownGender($event) {
 
-    // this.logger.log('selected index=' + $event.target.value);
-    // this.logger.log('selected value=' + this.dataDropDownGender[$event.target.value]);
-
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.gender = new Gender();
@@ -371,7 +361,9 @@ export class EditPersonComponent implements OnInit {
 
   loadPersonData(response) {
 
-    // this.logger.log(response.body);
+    // this.logger.log("response");
+    // this.logger.log(response);
+
     const data = response.body;
 
     if (data.person !== null) {
@@ -425,6 +417,7 @@ export class EditPersonComponent implements OnInit {
     }
 
     this.countryString = data.person.address.country;
+    this.birthCountryString = data.person.countryOfBirth;
     this.languageString = data.person.language.name;
 
     this.DpsPersonObject = data;
@@ -499,10 +492,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   onLanguageReceive($event) {
-
-    // this.logger.log('Received Language');
-    // this.logger.log('name=' + $event.name);
-    // this.logger.log('short name=' + $event.shortName);
 
     if (this.DpsPersonObject.person.language === null) {
       this.DpsPersonObject.person.language = new Language();
@@ -659,8 +648,8 @@ export class EditPersonComponent implements OnInit {
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
-    this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
-    this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
+    // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
+    // this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
@@ -675,8 +664,8 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.address.bus = this.editPersonForm.get('bus').value;
     this.DpsPersonObject.person.address.city = this.editPersonForm.get('city').value;
     this.DpsPersonObject.person.address.postalCode = this.editPersonForm.get('postalCode').value;
-    this.DpsPersonObject.person.address.country = 'New country';
-    this.DpsPersonObject.person.address.countryCode = 'NX';
+    // this.DpsPersonObject.person.address.country = 'New country';
+    // this.DpsPersonObject.person.address.countryCode = 'NX';
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.editPersonForm.get('emailAddress').value;
