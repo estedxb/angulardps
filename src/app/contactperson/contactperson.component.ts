@@ -126,7 +126,7 @@ export class ContactPersonComponent implements OnInit {
   receiveMessageLanguage($event) {
 
     this.languageStringNew = $event.name;
-    this.languageShortNameNEw = $event.shortName;
+    this.languageShortNameNEw = $event.shortName.toLowerCase();
 
     this.createObjects();
 
@@ -146,7 +146,9 @@ export class ContactPersonComponent implements OnInit {
     this.contactsEmail.emailAddress = this.CTForm.get('emailaddress').value;
 
     this.language.name = this.languageStringNew;
-    this.language.shortName = this.languageShortNameNEw;
+    
+    if(this.languageShortNameNEw !== undefined && this.languageShortNameNEw !== null)
+        this.language.shortName = this.languageShortNameNEw.toLowerCase();
 
     this.contact.firstName = this.CTForm.get('firstname').value;
     this.contact.lastName = this.CTForm.get('lastname').value;

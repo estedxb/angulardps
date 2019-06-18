@@ -243,8 +243,8 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessageCountry($event) {
 
-    this.countryString = $event.countryName;
-    this.countryCode = $event.countryCode;
+    this.countryString = $event.Country;
+    this.countryCode = $event['Alpha-2'];
     this.setAddress();
     this.setCustomerObject();
     this.createObjects();

@@ -127,6 +127,7 @@ export class InvoiceSettingsComponent implements OnInit {
       'mobilityAllowance': this.mobilityAllowanceObject,
       'shiftAllowance': this.shiftAllowance,
       'shiftAllowances': this.shiftAllowances,
+      'otherAllowance': this.andreSwitch,
       'otherAllowances': this.otherAllowances
     };
 
@@ -207,6 +208,7 @@ export class InvoiceSettingsComponent implements OnInit {
             this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
             this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
+            this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
