@@ -8,6 +8,7 @@ import {
   InvoiceSettings, Language, Contact
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
+import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
   selector: 'app-statute',
@@ -28,8 +29,8 @@ export class StatuteComponent implements OnInit {
   public minimumurenArray = [];
   public statutename = '';
   public statuteSelectedString: ParitairCommitee;
-  public arrayParitairCommitee: ParitairCommitee[];
-  public JCString;
+  public arrayParitairCommitee = [];
+  public JCString = [];
   public loadStatuteSettingsArray = [];
   public newIndex;
   public i;
@@ -51,14 +52,25 @@ export class StatuteComponent implements OnInit {
   paritarirCommiteeObject: ParitairCommitee;
   coefficient: number;
   newCounter: number = 0;
+  lengthStatueSettings: number = 0;
 
-  constructor(private statuteService: StatuteService, private fb:FormBuilder) {
-    this.createCoefficientArray();
+  constructor(private statuteService: StatuteService, private fb:FormBuilder, private logger:LoggingService) {
+
+  }
+
+  setParitairCommitteArray() {
+
+    for(let i=0;i<this.statutes.length;i++)
+      this.arrayParitairCommitee.push(new ParitairCommitee());
+
+      this.createStatuteSettingsArrayEmpty();
+
   }
 
 
   ngDoCheck() {
     this.createCoefficientArray();    
+
     this.loadArrayTemp();
     if (this.STFormData !== undefined) {
       if (this.STFormData != this.oldSFTFormData) {
@@ -98,19 +110,64 @@ export class StatuteComponent implements OnInit {
     this.fillTitles();
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") {
+
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
-      // coefficient
-      console.log(this.loadStatuteSettingsArray);
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
         this.loadStatuteSettingsArray.forEach(element => {
-          this.onloadData(element,counter);         
+          this.onloadData(element,counter);
           counter++;
         });
+
+        this.logger.log("loaded array");
+        this.logger.log(this.statuteSettings);    
+        this.emitData();
       }
     }
+  }
+
+  createStatuteSettingsArrayEmpty() {
+
+    let counter:number = 0;
+
+    this.lengthStatueSettings = this.statuteSettings.length;
+
+    for(let counter =0; counter< this.statutes.length; counter+=1)
+    {
+
+        this.StatuteSettingsObject = new StatuteSetting();
+        this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
+
+        this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0
+        this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0
+        this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0
+        this.StatuteSettingsObject.coefficient = 0;
+    
+        this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
+        this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
+        this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
+        this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
+        this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
+
+        this.StatuteSettingsObject.statute = new Statute();
+        this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
+        this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
+
+        // this.logger.log(this.statutes[counter].name);
+        // this.logger.log(this.statutes[counter].type);
+
+        this.statuteSettings.push(this.StatuteSettingsObject);
+  
+    }
+
+    // this.logger.log("created array");
+    // this.logger.log(this.statuteArray);
+
+    if(counter > this.statutes.length)
+        this.emitData();
+
   }
 
   fillTitles() {
@@ -119,9 +176,6 @@ export class StatuteComponent implements OnInit {
     {
       this.titles[counter] = this.statutes[counter].name;
       this.TypeWorker[counter] = this.statutes[counter].type;
-
-      // this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
-      //this.addControls("0",0,0,0);
     }
 
     this.loadzeroArray();
@@ -130,17 +184,46 @@ export class StatuteComponent implements OnInit {
    
    onloadData(arrayElement,counter){
 
-    this.addControls(arrayElement.coefficient,arrayElement.mealVoucherSettings.totalWorth,arrayElement.mealVoucherSettings.employerShare,arrayElement.mealVoucherSettings.minimumHours);
+    this.totalArray[counter] = arrayElement.mealVoucherSettings.totalWorth;
+    this.wegervaalArray[counter] = arrayElement.mealVoucherSettings.employerShare;
+    this.minimumurenArray[counter] = arrayElement.mealVoucherSettings.minimumHours;
+    this.coefficientArray[counter] = arrayElement.coefficient;
 
-      if(this.STFormData !== null && this.STFormData.data !== undefined && this.STFormData.data.statuteSettings !== null)
-      {
-        if(this.STFormData.data.statuteSettings.paritairCommitee !== null && this.STFormData.data.statuteSettings.paritairCommitee !== undefined)
-        {
-          let name = this.STFormData.data.statuteSettings.paritairCommitee.name;
-          let number = this.STFormData.data.statuteSettings.paritairCommitee.number;
-          this.JCString = number + " - " + name;
-        }
-      }
+    let name = arrayElement.paritairCommitee.name;
+    let number = arrayElement.paritairCommitee.number;
+    this.JCString[counter] = number + " - " + name;
+
+    this.logger.log("array Element");
+    this.logger.log(arrayElement);
+
+    // load statuteSettings data onto statuteSettings Array
+
+    if(this.statuteSettings.length > 0)
+    {
+      this.StatuteSettingsObject = new StatuteSetting();
+
+      this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
+      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = arrayElement.mealVoucherSettings.totalWorth;
+      this.StatuteSettingsObject.mealVoucherSettings.employerShare = arrayElement.mealVoucherSettings.employerShare;
+      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = arrayElement.mealVoucherSettings.minimumHours;
+
+      this.StatuteSettingsObject.coefficient = arrayElement.coefficient;
+  
+      this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
+      this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = arrayElement.paritairCommitee.BrightStaffingCommitteeId;
+      this.StatuteSettingsObject.paritairCommitee.name = arrayElement.paritairCommitee.name;
+      this.StatuteSettingsObject.paritairCommitee.number = arrayElement.paritairCommitee.number;
+      this.StatuteSettingsObject.paritairCommitee.type = arrayElement.paritairCommitee.type;
+
+      this.StatuteSettingsObject.statute = new Statute();
+      this.StatuteSettingsObject.statute.name = this.statutes[counter].name
+      this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
+
+      this.statuteSettings[counter] = this.StatuteSettingsObject;
+
+    }
+
+
 }
 
 createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
@@ -189,6 +272,7 @@ addControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
 ngOnInit() {
     this.SForm = new FormGroup({
       statuteArray: this.fb.array([]),
+      coefficientBox: new FormControl()
     });
 
     this.createCoefficientArray();
@@ -197,6 +281,8 @@ ngOnInit() {
       this.statutes = data;
 
       this.fillTitles();
+      this.createCoefficientArray();
+      this.setParitairCommitteArray();
 
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
@@ -224,12 +310,11 @@ ngOnInit() {
   }
 
   onMealChange(event, ctrlid: number) {
-    try {
-      this.isMealEnabled[ctrlid] = event; 
-      // alert('this.isMealEnabled[' + ctrlid + '] = ' + this.isMealEnabled[ctrlid]);
-      // this.createArrayData(this.statutes);
-    } catch (ex) {
-      alert(ex.message);
+
+    if(ctrlid >= 0 && ctrlid < 8)
+    {
+      this.isMealEnabled[ctrlid] = event;
+      this.logger.log("event="+event);
     }
   }
 
@@ -244,55 +329,64 @@ ngOnInit() {
     
   }
 
-  createArrayData(data: Statute[]) {
 
-    this.statuteSettings = [];
-
-    for (let i = 0; i < data.length; i++)
-    {
-
-      const dataObject = data[i];
-
-      this.statuteObject = new Statute();
-      this.statuteObject.name = dataObject.name;
-      this.statuteObject.type = dataObject.type;
-
-      if(this.arrayParitairCommitee !== null && this.arrayParitairCommitee !== undefined && this.arrayParitairCommitee.length !== 0)
-      {
-        const dataPtObject = this.arrayParitairCommitee[i];
-  
-        this.paritarirCommiteeObject = new ParitairCommitee();
-        this.paritarirCommiteeObject.BrightStaffingCommitteeId = dataPtObject.BrightStaffingCommitteeId;
-        this.paritarirCommiteeObject.name = dataPtObject.name;
-        this.paritarirCommiteeObject.number = dataPtObject.number;
-        this.paritarirCommiteeObject.type = dataPtObject.type;
-  
-        this.mealVoucherSettingsObject = new MealVoucherSettings();
-  
-        if (this.isMealEnabled[i] === true) {
-          this.mealVoucherSettingsObject.employerShare = parseInt(this.wegervaalArray[i],10);
-          this.mealVoucherSettingsObject.minimumHours = parseInt(this.minimumurenArray[i],10);
-          this.mealVoucherSettingsObject.totalWorth = parseInt(this.totalArray[i],10);
-        } else {
-          this.mealVoucherSettingsObject.employerShare = 0;
-          this.mealVoucherSettingsObject.minimumHours = 0;
-          this.mealVoucherSettingsObject.totalWorth = 0;
-        }
-  
-        this.StatuteSettingsObject = new StatuteSetting();
-        this.StatuteSettingsObject.statute = this.statuteObject;
-        this.StatuteSettingsObject.paritairCommitee = this.paritarirCommiteeObject;
-        this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
-        this.StatuteSettingsObject.coefficient = parseInt(this.coefficientArray[i],10);
-  
-        this.statuteSettings.push(this.StatuteSettingsObject);
-      }
-
-    }
-
+  createArrayData() {
     this.emitData();
-
   }
+  
+
+  // createArrayData(data: Statute[]) {
+
+  //   this.statuteSettings = [];
+
+  //   console.log("statute settings array");
+  //   console.log(this.loadStatuteSettingsArray);
+
+  //   for (let i = 0; i < data.length; i++)
+  //   {
+
+  //     const dataObject = data[i];
+
+  //     this.statuteObject = new Statute();
+  //     this.statuteObject.name = dataObject.name;
+  //     this.statuteObject.type = dataObject.type;
+
+  //     if(this.arrayParitairCommitee !== null && this.arrayParitairCommitee !== undefined && this.arrayParitairCommitee.length !== 0)
+  //     {
+  //       const dataPtObject = this.arrayParitairCommitee[i];
+  
+  //       this.paritarirCommiteeObject = new ParitairCommitee();
+  //       this.paritarirCommiteeObject.BrightStaffingCommitteeId = dataPtObject.BrightStaffingCommitteeId;
+  //       this.paritarirCommiteeObject.name = dataPtObject.name;
+  //       this.paritarirCommiteeObject.number = dataPtObject.number;
+  //       this.paritarirCommiteeObject.type = dataPtObject.type;
+  
+  //       this.mealVoucherSettingsObject = new MealVoucherSettings();
+  
+  //       if (this.isMealEnabled[i] === true) {
+  //         this.mealVoucherSettingsObject.employerShare = parseInt(this.wegervaalArray[i],10);
+  //         this.mealVoucherSettingsObject.minimumHours = parseInt(this.minimumurenArray[i],10);
+  //         this.mealVoucherSettingsObject.totalWorth = parseInt(this.totalArray[i],10);
+  //       } else {
+  //         this.mealVoucherSettingsObject.employerShare = 0;
+  //         this.mealVoucherSettingsObject.minimumHours = 0;
+  //         this.mealVoucherSettingsObject.totalWorth = 0;
+  //       }
+  
+  //       this.StatuteSettingsObject = new StatuteSetting();
+  //       this.StatuteSettingsObject.statute = this.statuteObject;
+  //       this.StatuteSettingsObject.paritairCommitee = this.paritarirCommiteeObject;
+  //       this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
+  //       this.StatuteSettingsObject.coefficient = parseInt(this.coefficientArray[i],10);
+  
+  //       this.statuteSettings.push(this.StatuteSettingsObject);
+  //     }
+
+  //   }
+
+  //   this.emitData();
+
+  // }
 
   totalChange(value: number, i) {
 
@@ -328,12 +422,26 @@ ngOnInit() {
   receiveJTdata($event, i) {
 
     this.statuteSelectedString = $event.selectedObject;
-    this.arrayParitairCommitee = $event.arrayObject;
 
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
+    this.logger.log("received object i="+i);
+    this.logger.log($event);
+
+    this.arrayParitairCommitee[i] = new ParitairCommitee();
+    this.paritarirCommiteeObject = new ParitairCommitee();
+
+    this.paritarirCommiteeObject.BrightStaffingCommitteeId = $event.selectedObject.BrightStaffingCommitteeId;
+    this.paritarirCommiteeObject.name =  $event.selectedObject.name;
+    this.paritarirCommiteeObject.number = $event.selectedObject.number;
+    this.paritarirCommiteeObject.type = $event.selectedObject.type;
+
+    this.arrayParitairCommitee[i] = this.paritarirCommiteeObject;
+
+    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+    {
       this.replaceArray(i);
     } else {
-      this.createArrayData(this.statutes);
+
+      this.createArrayData();
       this.replaceArray(i);
     }
     this.emitData();
@@ -345,7 +453,7 @@ ngOnInit() {
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i],10);
     } else {
-      this.createArrayData(this.statutes);
+      this.createArrayData();
     }
     this.emitData();
 
@@ -357,7 +465,7 @@ ngOnInit() {
     {
       this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i],10);
     } else {
-      this.createArrayData(this.statutes);
+      this.createArrayData();
     }
     this.emitData();
 
@@ -368,7 +476,7 @@ ngOnInit() {
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i],10);
     } else {
-      this.createArrayData(this.statutes);
+      this.createArrayData();
     }
 
     this.emitData();
@@ -381,7 +489,7 @@ ngOnInit() {
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
     } else {
-      this.createArrayData(this.statutes);
+      this.createArrayData();
     }
     this.emitData();
   }
@@ -397,6 +505,8 @@ ngOnInit() {
   }
 
   emitData() {
+    this.logger.log("Sending array");
+    this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 

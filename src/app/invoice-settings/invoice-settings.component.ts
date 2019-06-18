@@ -7,6 +7,8 @@ import {
   InvoiceSettings, Language, Contact
 } from '../shared/models';
 import { TimeSpan } from '../shared/TimeSpan';
+import { LoggingService } from '../shared/logging.service';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -24,6 +26,9 @@ export class InvoiceSettingsComponent implements OnInit {
   public errorMsg;
 
   public counter:number =  0;
+  public newcounter: number = 0;
+
+  public oldFPFormData:any = {};
 
   // tslint:disable-next-line: variable-name
   private _selectedValueInhaalrust: any; private _selectedIndexInhaalrust: any = 0; private _Inhaalrustvalue: any;
@@ -49,6 +54,8 @@ export class InvoiceSettingsComponent implements OnInit {
   otherAllowanceObject: OtherAllowance;
   shiftAllowances: ShiftAllowance[] = [];
   otherAllowances: OtherAllowance[] = [];
+  currencyDataShift = [];
+  currencyDataOther = [];
   shiftAllowanceCounter: number;
   otherAllowanceCounter: number;
   dataDropDown: string[];
@@ -76,7 +83,7 @@ export class InvoiceSettingsComponent implements OnInit {
   public currencyChoice:number = 0;
   public currencyNewChoice:number = 0;
 
-  constructor(private fb: FormBuilder) { } 
+  constructor(private fb: FormBuilder, private logger: LoggingService) { } 
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
      private _selectedValuenominal: any; private _selectedIndexnominal: any = 0; private _nominalvalue: any;
@@ -109,6 +116,10 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
+    this.logger.log("changed allowances");
+    this.logger.log(this.shiftAllowances);
+    this.logger.log(this.otherAllowances);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -125,34 +136,42 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
-    this.selectedIndexCurrencyShiftAllowance = $event.target.value;
+    // this.selectedIndexCurrencyShiftAllowance = $event.target.value;
 
-    if (this.value === '€') {
-      this.shiftAllowances[i].nominal = true;
+    this.logger.log("selected currency="+$event + "i="+i);
+
+    if ($event === '€') {
+      this.shiftAllowances[i].nominal = false;
+      this.currencyDataShift[i] = '€';
       this.changeObject();
     }
     else {
-      this.shiftAllowances[i].nominal = false;
+      this.shiftAllowances[i].nominal = true;
+      this.currencyDataShift[i] = '%';
       this.changeObject();
     }
 
-    return this.value;
+    //return this.value;
   }
 
   onChangeDropDownCurrencyOther($event, i) {
 
-    this.selectedIndexCurrencyOtherAllowance = $event.target.value;
+    // this.selectedIndexCurrencyOtherAllowance = $event.target.value;
 
-    if (this.value === '€') {
-      this.otherAllowances[i].nominal = true;
+    this.logger.log("received object="+$event + "  i="+i);
+
+    if ( $event === '€') {
+      this.otherAllowances[i].nominal = false;
+      this.currencyDataOther[i] = '€';
       this.changeObject();
     }
     else {
-      this.otherAllowances[i].nominal = false;
+      this.otherAllowances[i].nominal = true;
+      this.currencyDataOther[i] = '%';
       this.changeObject();
     }
 
-    return this.value;
+    //return $event;
   }
 
   onChangeDropDown($event) {
@@ -170,112 +189,351 @@ export class InvoiceSettingsComponent implements OnInit {
 
   ngDoCheck() {
 
-    // console.log("invoice-settings FPFormData received =");
-    // console.log(this.FPFormData);
-
-    this.loadSwitchInhaalrust = false;
-    this.loadSwitchSickness = false;
-    this.loadSwitchHolidays = false;
-    this.loadSwitchMobility = false;
-    this.loadSwitchTeam = false;
-    this.loadSwitchOther = true;
-
-    if(this.FPFormData !== undefined && this.FPFormData !== null)
+    
+    //load Edit Page details
+    if (this.FPFormData !== undefined && this.FPFormData !== null) 
     {
-      if(this.FPFormData.data !== null && this.FPFormData.page==="edit")
+      if(this.FPFormData.data !== null && this.FPFormData.data !== undefined)
       {
-        if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
+        if(this.oldFPFormData !== this.FPFormData)
         {
-          if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
+          this.oldFPFormData = this.FPFormData;
+
+          this.logger.log(this.FPFormData);
+
+          if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
           {
-
-            if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
-              this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
-
-            if(this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
-              this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled;
-
-            this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
+            this.loadSwitchSickness =  this.FPFormData.data.invoiceSettings.sicknessInvoiced;
             this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
             this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
-            this.loadSwitchOther = true;
+            this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
 
-            if(this.loadSwitchMobility === true)
+            if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
-              this.ISForm.get('mobilebox').enable();
-              this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+                  if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
+                  {
+                    this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+
+                    if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled === true)
+                    {
+                      this.ISForm.get('inhaalrust').enable();
+                      this._selectedIndexInhaalrust = 0;
+                      
+                      if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.payed === true)
+                      {
+                        this._selectedIndexInhaalrust = 0;
+                      }
+                      else {
+                        this._selectedIndexInhaalrust = 1;
+                      } 
+                    }
+                    else
+                    {
+                         this.ISForm.get('inhaalrust').disable();
+                    }
+
+                  }
             }
-            else
+
+            if(this.FPFormData.data.invoiceSettings.mobilityAllowance !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance !== undefined)
             {
-              this.ISForm.get('mobilebox').disable();
-              this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+                if(this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
+                {
+                  this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled;
+
+                  if(this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled === true)
+                  {
+                    this.ISForm.get('mobilebox').enable();
+                    this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+                  }
+                  else {
+                    this.ISForm.get('mobilebox').disable();
+                    this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+                  }
+                }
             }
 
-            if(this.loadSwitchTeam === true)
+            if(this.FPFormData.data.invoiceSettings.shiftAllowance === true )
             {
-              this.ISForm.get('PloegprimeBox1').enable();
-              this.ISForm.get('PloegprimeBox2').enable();
-              this.ISForm.get('currency').enable();
+                   this.ISForm.get('PloegprimeBox1').enable();
+                   this.ISForm.get('PloegprimeBox2').enable();
+                   this.ISForm.get('currency').enable();
+            }
+            else {
 
-              this.ploegpremieSwitch = true;
+              this.logger.log("shiftAllowance is false");
+              this.ISForm.get('PloegprimeBox1').disable();
+              this.ISForm.get('PloegprimeBox2').disable();
+              this.ISForm.get('currency').disable();
+            }            
 
-              let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
-              this.ISForm.get('PloegprimeBox1').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName);
-              this.ISForm.get('PloegprimeBox2').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount);
-
-              if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === true)
+            if(this.FPFormData.data.invoiceSettings.shiftAllowances !== null && this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined )
               {
-                this._selectedIndexnominal = 0;
-                this.currencyChoice = 0;
-              }
-              else {
-                this._selectedIndexnominal = 1;
-                this.currencyChoice = 1;
+                this.ploegpremieSwitch = true;
+
+                let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
+                let counter:number = 0;
+
+               this.FPFormData.data.invoiceSettings.shiftAllowances.forEach(element => {
+
+                this.ISForm.get('PloegprimeBox1').enable();
+                this.ISForm.get('PloegprimeBox2').enable();
+
+                 if(counter===0)
+                {
+                  this.logger.log(this.Ploegpremiere);
+
+                    const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
+                    formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
+                    formGroup.controls['PloegprimeBox2'].setValue(element.amount);
+
+                     if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false)
+                         this.currencyDataShift[0] = "€";
+                     else
+                       this.currencyDataShift[0] = "%";
+                     
+                     this.shiftAllowances[0].amount = parseInt(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount,10);
+                     this.shiftAllowances[0].shiftName = this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName;
+                     this.shiftAllowances[0].nominal = this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal;
+                }
+                else 
+                {
+                        if(this.shiftAllowanceCounter < this.FPFormData.data.invoiceSettings.shiftAllowances.length)
+                        {
+
+                          if(element.nominal === false)
+                              this.currencyDataShift[counter] = "€";
+                          else
+                              this.currencyDataShift[counter] = "%";
+
+                          this.addRows(element.shiftName,element.amount,element.nominal);
+                          this.shiftAllowances[counter].nominal = element.nominal;
+     
+                          const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
+                          formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
+                          formGroup.controls['PloegprimeBox2'].setValue(element.amount);
+
+                        }    
+                  }  
+                        counter += 1;
+                 });                   
+
+                   this.changeObject();
               }
 
-            }
-
-            if(this.loadSwitchOther === true)
+            if(this.FPFormData.data.invoiceSettings.otherAllowance === true)
             {
-
               this.ISForm.get('AndreBox1').enable();
               this.ISForm.get('AndreBox2').enable();
               this.ISForm.get('currency').enable();
-              this.disableWorkCodes = false;
-
-              let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
-
-              this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
-
-                if(this.counter < lengthOtherAllowance)
-                {
-                  if(this.counter===0)
-                  {
-                    this.workCode[this.counter] = element.codeId;
-                    const formGroup = this.Andre.controls[this.counter] as FormGroup;
-                    formGroup.controls['AndreBox2'].setValue(element.amount);
-                  }
-                  else 
-                  {
-                    this.workCode[this.counter] = element.codeId;
-                    this.addAndreRows(element.codeId,element.amount);
-                    this.disabled = 'false';
-                    this.andreSwitch = true;
-                    const formGroup = this.Andre.controls[this.counter] as FormGroup;
-                    formGroup.controls['AndreBox2'].setValue(element.amount);
-                  }
-
-                  this.counter += 1;  
-                }
-              });
+              // this.disableWorkCodes = false;
             }
+            else {
+                this.ISForm.get('AndreBox1').disable();
+                this.ISForm.get('AndreBox2').disable();
+                this.ISForm.get('currency').disable();
+                this.disableWorkCodes = false;
+              }
+
+              if(this.FPFormData.data.invoiceSettings.otherAllowances !== null && this.FPFormData.data.invoiceSettings.otherAllowances !== undefined)
+              {
+                let anothercounter = 0;
+                let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
+  
+                this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
+
+                  if(anothercounter < lengthOtherAllowance)
+                  {
+                    if(anothercounter===0)
+                    {
+                      this.workCode[anothercounter] = element.codeId;
+                      const formGroup = this.Andre.controls[anothercounter] as FormGroup;
+                      formGroup.controls['AndreBox2'].setValue(element.amount);
+                      this.otherAllowances[anothercounter].amount = parseInt(element.amount,10);
+                      this.otherAllowances[anothercounter].codeId = parseInt(element.codeId,10);
+                      this.otherAllowances[anothercounter].nominal = element.nominal;
+
+                      if(this.FPFormData.data.invoiceSettings.otherAllowances[0].nominal === false)
+                          this.currencyDataOther[0] = "€";
+                      else
+                          this.currencyDataOther[0] = "%";
+
+                    }
+                    else 
+                    {
+                      if(this.otherAllowanceCounter < lengthOtherAllowance)
+                      {
+                        this.workCode[anothercounter] = element.codeId;
+                        this.addAndreRows(element.codeId,element.amount);
+                        this.otherAllowances[anothercounter].nominal = element.nominal;
+                        this.disabled = 'false';
+                        this.andreSwitch = true;
+                        const formGroup = this.Andre.controls[anothercounter] as FormGroup;
+                        formGroup.controls['AndreBox2'].setValue(element.amount);   
+
+                        if(this.FPFormData.data.invoiceSettings.otherAllowances[anothercounter].nominal === false)
+                            this.currencyDataOther[anothercounter] = "€";
+                        else
+                            this.currencyDataOther[anothercounter] = "%";
+                      }
+                                      
+                    }
+  
+                      anothercounter += 1;  
+                  }
+                });
+              }
+             
           }
-          //this.changeObject();
-        }     
+        }
       }
+    }
+    else
+    {
+      this.loadSwitchInhaalrust = false;
+      this.loadSwitchSickness = false;
+      this.loadSwitchHolidays = false;
+      this.loadSwitchMobility = false;
+      this.loadSwitchTeam = false;
+      this.loadSwitchOther = false;  
     }
 
   }
+
+  // ngDoCheck() {
+
+  //   this.loadSwitchInhaalrust = false;
+  //   this.loadSwitchSickness = false;
+  //   this.loadSwitchHolidays = false;
+  //   this.loadSwitchMobility = false;
+  //   this.loadSwitchTeam = false;
+  //   this.loadSwitchOther = true;
+
+  //   if(this.oldFPFormData !== this.FPFormData) 
+  //   {
+  //     this.oldFPFormData = this.FPFormData;
+
+  //     this.logger.log("old fp form data");
+  //     this.logger.log("validity="+(this.oldFPFormData !== this.FPFormData));
+
+  //     if(this.FPFormData !== undefined && this.FPFormData !== null)
+  //   {
+  //     if(this.FPFormData.data !== null && this.FPFormData.page==="edit")
+  //     {
+  //       if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
+  //       {
+  //         if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
+  //         {
+
+  //           if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
+  //             this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+
+  //           if(this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
+  //             this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled;
+
+  //           this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
+  //           this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
+  //           this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
+  //           this.loadSwitchOther = true;
+
+  //           if(this.loadSwitchMobility === true)
+  //           {
+  //             this.ISForm.get('mobilebox').enable();
+  //             this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+  //           }
+  //           else
+  //           {
+  //             this.ISForm.get('mobilebox').disable();
+  //             this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
+  //           }
+
+  //           if(this.loadSwitchTeam === true)
+  //           {
+  //             this.ISForm.get('PloegprimeBox1').enable();
+  //             this.ISForm.get('PloegprimeBox2').enable();
+  //             this.ISForm.get('currency').enable();
+
+  //             this.ploegpremieSwitch = true;
+
+  //             let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
+  //             let counter:number = 0;
+
+  //             this.newcounter++;
+  //             this.logger.log("counter="+this.newcounter+ "  length="+lengthShiftAllowance);
+
+  //             this.logger.log("length of shift allowance="+lengthShiftAllowance);
+
+  //             this.FPFormData.data.invoiceSettings.shiftAllowances.forEach(element => {
+
+  //               this.addRows(element.shiftName,element.amount,element.nominal);
+  //               counter += 1;
+
+  //             });
+
+  //             // this.ISForm.get('PloegprimeBox1').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName);
+  //             // this.ISForm.get('PloegprimeBox2').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount);
+
+  //             if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === true)
+  //             {
+  //               this._selectedIndexnominal = 0;
+  //               this.currencyChoice = 0;
+  //             }
+  //             else {
+  //               this._selectedIndexnominal = 1;
+  //               this.currencyChoice = 1;
+  //             }
+
+  //             this.changeObject();
+
+  //           }
+
+  //           if(this.loadSwitchOther === true)
+  //           {
+
+  //             this.ISForm.get('AndreBox1').enable();
+  //             this.ISForm.get('AndreBox2').enable();
+  //             this.ISForm.get('currency').enable();
+  //             this.disableWorkCodes = false;
+
+  //             let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
+
+  //             this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
+
+  //               if(this.counter < lengthOtherAllowance)
+  //               {
+  //                 if(this.counter===0)
+  //                 {
+  //                   this.workCode[this.counter] = element.codeId;
+  //                   const formGroup = this.Andre.controls[this.counter] as FormGroup;
+  //                   formGroup.controls['AndreBox2'].setValue(element.amount);
+  //                   this.otherAllowances[this.counter].amount = parseInt(element.amount,10);
+  //                   this.otherAllowances[this.counter].codeId = parseInt(element.codeId,10);
+  //                   this.otherAllowances[this.counter].nominal = element.nominal;
+  //                 }
+  //                 else 
+  //                 {
+  //                   this.workCode[this.counter] = element.codeId;
+  //                   this.addAndreRows(element.codeId,element.amount);
+  //                   this.disabled = 'false';
+  //                   this.andreSwitch = true;
+  //                   const formGroup = this.Andre.controls[this.counter] as FormGroup;
+  //                   formGroup.controls['AndreBox2'].setValue(element.amount);                    
+  //                 }
+
+  //                 this.counter += 1;  
+  //               }
+  //             });
+
+  //             this.changeObject();
+
+  //           }
+  //         }
+  //       }     
+  //     }
+  //       }
+  //   }    
+  // }
+
 
   ngOnInit() {
 
@@ -312,13 +570,17 @@ export class InvoiceSettingsComponent implements OnInit {
       mobilebox: new FormControl(''),
       currency: new FormControl(''),
 
+      currency_other: new FormControl(''),
+
       PloegprimeBox1: new FormControl(''),
       PloegprimeBox2: new FormControl(''),
       PloegprimeBox3: new FormControl(''),
 
-      arrayBox: this.fb.array([
-        this.createFirstServant()
-      ]),
+
+      Verplaatsingen: new FormControl(''),
+      Dimona: new FormControl(''),
+      Echo: new FormControl(''),
+      Maalticheques: new FormControl(''),
 
       AndreBox1: new FormControl(''),
       AndreBox2: new FormControl(''),
@@ -326,23 +588,32 @@ export class InvoiceSettingsComponent implements OnInit {
             
       arrayAndreBox: this.fb.array([
         this.createAndre('','')
+      ]),
+
+      arrayBox: this.fb.array([
+        this.createFirstServant()
       ])
 
     });
 
+    this.ISForm.get('Verplaatsingen').setValue('1.20');
+    this.ISForm.get('Dimona').setValue('0.3510');
+    this.ISForm.get('Echo').setValue('1.69');
+    this.ISForm.get('Maalticheques').setValue('1.69');
+
     // set Ploegpremiere to the form control containing contacts
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
-    this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;
+    this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;    
 
     this.ISForm.get('mobilebox').disable();
     this.ISForm.get('PloegprimeBox1').disable();
     this.ISForm.get('PloegprimeBox2').disable();
-    this.ISForm.get('PloegprimeBox3').disable();
-    this.ISForm.get('inhaalrust').disable();
+    this.ISForm.get('currency').disable();
+    // this.ISForm.get('inhaalrust').disable();
 
     this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
-    this.ISForm.get('currency').disable();
+    // this.ISForm.get('currency').disable();
 
     this.disabled = 'true';
     this.disableWorkCodes = true;
@@ -350,10 +621,11 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ploegpremieSwitch = false;
     this.andreSwitch = false;
 
-    this.changeObject();
+    //this.changeObject();
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
+    
   }
 
   onTeamChange($event) {
@@ -364,7 +636,6 @@ export class InvoiceSettingsComponent implements OnInit {
       this.shiftAllowance = true;
       this.ISForm.get('PloegprimeBox1').enable();
       this.ISForm.get('PloegprimeBox2').enable();
-      this.ISForm.get('PloegprimeBox3').enable();
       this.ISForm.get('currency').enable();
       this.disabled = 'false';
     }
@@ -372,13 +643,28 @@ export class InvoiceSettingsComponent implements OnInit {
       this.shiftAllowance = false;
       this.ISForm.get('PloegprimeBox1').disable();
       this.ISForm.get('PloegprimeBox2').disable();
-      this.ISForm.get('PloegprimeBox3').disable();
       this.ISForm.get('currency').disable();
       this.disabled = 'true';
       this.clearShiftAllowances();
     }
 
       this.changeObject();
+
+  }
+
+  transportCoefficient() {
+
+  }
+
+  maaltichequesCoefficient() {
+
+  }
+
+  onEchoChange() {
+
+  }
+
+  onDimonaChange() {
 
   }
 
@@ -455,13 +741,13 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   receiveWorkCode($event, k: number) {
-    // console.log('workcode received is=' + $event);
 
     // setting the value in the array
     if (this.andreSwitch === true) {
       this.otherAllowances[k].codeId = $event;
       this.changeObject();
     }
+
   }
 
   onChangeZ(event) {
@@ -538,14 +824,14 @@ export class InvoiceSettingsComponent implements OnInit {
       // this.ISForm.get('AndreBox1').enable();
       this.disableWorkCodes = false;
       this.ISForm.get('AndreBox2').enable();
-      this.ISForm.get('currency').enable();
+      this.ISForm.get('currency_other').enable();
       this.disabled = 'false';
     } else {
       this.ISForm.get('arrayAndreBox').disable();
       // this.ISForm.get('AndreBox1').disable();
       this.disableWorkCodes = true;
       this.ISForm.get('AndreBox2').disable();
-      this.ISForm.get('currency').disable();
+      this.ISForm.get('currency_other').disable();
       this.disabled = 'true';
       this.clearOtherAllowances();
     }
@@ -560,7 +846,7 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.fb.group({
       AndreBox1: new FormControl(value1),
       AndreBox2: new FormControl(value2),
-      currency: new FormControl(''),
+      currency_other: new FormControl(''),
     });
 
   }
@@ -572,20 +858,24 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.fb.group({
       PloegprimeBox1: new FormControl(''),
       PloegprimeBox2: new FormControl(''),
-      PloegprimeBox3: new FormControl(''),
+      currency: new FormControl(''),
     });
   }
 
-  createServants(): FormGroup {
+  createServants(value1,value2): FormGroup {
     this.addNewRow = false;
     this.removeLastRemove = false;
 
     return this.fb.group({
-      PloegprimeBox1: new FormControl(''),
-      PloegprimeBox2: new FormControl(''),
-      PloegprimeBox3: new FormControl(''),
+      PloegprimeBox1: new FormControl(value1),
+      PloegprimeBox2: new FormControl(value2),
+      currency: new FormControl(''),
     });
 
+  }
+
+  get arrayBox() {
+    return this.Ploegpremiere.get('arrayBox') as FormArray;
   }
 
   get arrayAndreBox() {
@@ -599,6 +889,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.otherAllowanceObject.amount = value2;
     this.otherAllowances.push(this.otherAllowanceObject);
     this.otherAllowanceCounter++;
+    // this.changeObject();
   }
 
   removeAndreRows(index) {
@@ -608,18 +899,17 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeObject();
   }
 
+  addRows(value1,value2,nominal) {
 
-  get arrayBox() {
-    return this.Ploegpremiere.get('arrayBox') as FormArray;
-  }
-
-  addRows() {
-
-    this.Ploegpremiere.push(this.createServants());
+    this.Ploegpremiere.push(this.createServants(value1,value2));
     this.shiftAllowanceObject = new ShiftAllowance();
+    this.shiftAllowanceObject.shiftName = value1;
+    this.shiftAllowanceObject.amount = value2;
     this.shiftAllowanceObject.timeSpan = "02:02:02";
+    this.shiftAllowanceObject.nominal = nominal;
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.shiftAllowanceCounter++;
+    // this.changeObject();
   }
 
   removeRows(index) {

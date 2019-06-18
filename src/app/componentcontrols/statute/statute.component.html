@@ -13,18 +13,18 @@
     </div>
     <div class="row">
       <div class="col col-sm-8"><label class="titleBold">Paritair Comité</label>
-        <app-jointcommittee [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString"></app-jointcommittee>
+        <app-jointcommittee [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString[i]"></app-jointcommittee>
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
 
-        <div class="row inputWithImg">
+        <div class="row">
 
-            <div class="form-group" *ngIf="i < STFormData.data.statuteSettings.length else coeff" >
-                <input [(ngModel)]="STFormData.data.statuteSettings" value="{{STFormData.data.statuteSettings[i].coefficient}}" type="text" class="form-control">
+            <div class="form-group" *ngIf="i < countStatutes else coeff">
+                <input #coefficientBox (change)="onChangeCoefficient(coefficientBox.value,i)" value="{{statuteSettings[i].coefficient}}" type="text" class="form-control">
             </div>
             <ng-template #coeff>
                 <div class="form-group">
-                    <input value="0" type="text" class="form-control">
+                    <input  #coefficientBox  (change)="onChangeCoefficient(coefficientBox.value,i)" value="0" type="text" class="form-control">
                 </div>
             </ng-template>
 
@@ -51,22 +51,22 @@
     </div>
       
     <ng-container *ngIf="isMealEnabled[i]===true">
-      <div class="row">
-        <div style="display: flex; justify-content: space-evenly;">
+          <div class="row">
+              <div style="display: flex; justify-content: space-evenly;">
             <div class="col col-sm-4 inputWithEuro">Totalewaarde<input (change)="totalChange(totalwaarde.value,i)"
-              [(ngModel)]="totalArray" value="{{totalArray[i]}}" formControlName="TotalWaarde" class="form-control" type="number"
-              #totalwaarde onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i></div>
+               value="{{totalArray[i]}}"  class="form-control" type="number"
+              #totalwaarde><i class="fa fa-eur" aria-hidden="true"></i></div>
 
             <div class="col col-sm-4 inputWithEuro">Wergeversdeel<input (change)="WergeversdeelChange(wergeversdeel.value,i)"
-              [(ngModel)]="wegervaalArray" value="{{wegervaalArray[i]}}" formControlName="Wergeversdeel" class="form-control" type="number"
-              #wergeversdeel onfocus="this.select();" onmouseup="return false;"><i class="fa fa-eur" aria-hidden="true"></i>
+              value="{{wegervaalArray[i]}}"  class="form-control" type="number"
+              #wergeversdeel ><i class="fa fa-eur" aria-hidden="true"></i>
             </div>
 
             <div class="col col-sm-4 inputWithNoIcon">Minimum uren <input (change)="minimumUrenChange(minimumuren.value,i)"
-              [(ngModel)]="minimumurenArray" value="{{minimumurenArray[i]}}" formControlName="minimumHours" class="form-control" type="number"
-              #minimumuren onfocus="this.select();" onmouseup="return false;"></div>
+              value="{{minimumurenArray[i]}}"  class="form-control" type="number"
+              #minimumuren ></div>
         </div>
       </div>
-    </ng-container>
+    </ng-container>    
   </div>
 </form>
