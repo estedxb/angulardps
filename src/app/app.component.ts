@@ -2,13 +2,9 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
-// Adal Login Start
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from './shared/models';
-import { MsalService } from './shared/msal.service';
 import { Router, CanActivate } from '@angular/router';
 import { CustomerListsService } from './shared/customerlists.service';
-// Adal Login End
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,29 +19,29 @@ export class AppComponent {
 
   constructor(
     private router: Router, private logger: LoggingService, public customerListsService: CustomerListsService
-    // tslint:disable-next-line: align // Adal Login Start
-    , private msalService: MsalService
-    // Adal Login end
+    // , private msalService: MsalService
   ) {
     this.logger.logF('environment.production :: ' + environment.production);
     // Adal Login Start
     console.log('App.Component');
-    // this.msalService.login();
+    // this.login();
     this.returnUrl = './dashboard';
     this.returnaddcustomerUrl = './customer/add';
-    /*
-    const token = this.adalSvc.acquireToken(environment.aadurl).subscribe((token: string) => {
-      this.logger.logF(token);
-      this.ltkn.isLoggedIn = this.adalSvc.isAuthenticated;
-      this.ltkn.accessToken = token;
-      this.ltkn.userName = this.adalSvc.LoggedInUserName;
-      this.ltkn.userEmail = this.adalSvc.LoggedInUserEmail;
-      this.ltkn.userRole = this.adalSvc.userInfo.profile;
-      this.getUserInfo(token, this.adalSvc.LoggedInUserEmail);
-    });
-    // Adal Login End
-    */
+
   }
+/*
+  useremail() {
+    const useremail = this.msalService.getUserEmail();
+    return useremail;
+  }
+
+  login() { this.msalService.login(); }
+
+  signup() { this.msalService.signup(); }
+
+  logout() { this.msalService.logout(); }
+
+  isUserLoggedIn() { return this.msalService.isLoggedIn(); }
 
   getUserInfo(token: string, UserEmail: string) {
 
@@ -78,11 +74,5 @@ export class AppComponent {
       }
     }, error => this.logger.logF(error));
   }
+  */
 }
-
-/*
-import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
-
-, adalSvc: MsAdalAngular6Service
-=====
-*/

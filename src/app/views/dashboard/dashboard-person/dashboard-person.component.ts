@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken } from 'src/app/shared/models';
+import {
+  DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken
+} from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
@@ -10,7 +13,25 @@ import { LoggingService } from '../../../shared/logging.service';
 @Component({
   selector: 'app-dashboardperson',
   templateUrl: './dashboard-person.component.html',
-  styleUrls: ['./../dashboard.component.css']
+  styleUrls: ['./../dashboard.component.css'],
+  animations: [
+    trigger('ExpandMe', [
+      state('initial', style({
+        backgroundColor: '#EAEAEA',
+        'border-radius': '35px',
+        width: '35px',
+        height: '35px'
+      })),
+      state('final', style({
+        backgroundColor: 'red',
+        'border-radius': '35px',
+        width: '175px',
+        height: '35px'
+      })),
+      transition('initial => final', [animate('0.5s 5000ms ease-in')]),
+      transition('final => initial', [animate('0.5s 5000ms ease-out')])
+    ])
+  ]
 })
 export class DashboardPersonComponent implements OnInit {
   public maindatas: DpsSchedulePerson[] = [];
@@ -39,14 +60,23 @@ export class DashboardPersonComponent implements OnInit {
   public ShowMorningDiff = 6;
   public ShowNightDiff = 2;
   public CellWidth = 120;
+  public RollOverContract = 0;
   // public TimeConverterToPx = 0.09375;
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
+
+  public currentState = 'initial';
+
   // tslint:disable-next-line: max-line-length
   constructor(
     private personService: PersonService, private route: ActivatedRoute, private logger: LoggingService,
     private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() { this.onPageInit(); }
+
+
+  changeState() {
+    this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
+  }
 
   onPageInit() {
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
@@ -72,6 +102,15 @@ export class DashboardPersonComponent implements OnInit {
         // openContract();
       }
     }
+  }
+
+  onContractOver(contractId: number, state: boolean) {
+    if (state) {
+      this.RollOverContract = contractId;
+    } else {
+      this.RollOverContract = 0;
+    }
+    // console.log('onContractOver(' + contractId.toString() + ',' + state + ')');
   }
 
   onPersonKeyup(value) {
@@ -182,7 +221,7 @@ export class DashboardPersonComponent implements OnInit {
         this.logger.log('The dialog was closed');
         this.data = result;
         this.logger.log('this.data ::', this.data);
-
+        this.onPageInit();  
         /*
         if (this.SelectedIndex >= 0) {
           this.maindatas[this.SelectedIndex] = this.data;

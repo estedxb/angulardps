@@ -147,14 +147,49 @@
   border-right: 0.5px dotted rgba(255, 255, 255, 0.15);
   margin: auto;
 }
+.Contents .col-split .workbar.green {
+  background-color: limegreen;
+}
+
+.Contents .col-split .workbar.orange {
+  background-color: #e37619;
+}
 
 .Contents .col-split .workbar {
+  border-radius: 2.5px;
   height: 5px;
-  background-color: limegreen;
   position: absolute;
   vertical-align: middle;
   margin-top: 50px;
   cursor: pointer;
+}
+
+.Contents .col-split .SelectedContract .workbar {
+  border-radius: 5px;
+  height: 10px;
+  margin-top: 48px;
+}
+.Contents .col-split .workbar .tt {
+  display: none;
+  font-weight: lighter;
+  font-size: 8px;
+  color: #fff;
+  margin-top: -1px;
+}
+.Contents .col-split .SelectedContract .workbar .tt {
+  display: block;
+}
+
+.Contents .col-split .FullCol {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.Contents .col-split .FullCol.SelectedContract {
+  background-color: rgba(255, 255, 255, 0.13);
 }
 
 .Contents .col-split .name,
@@ -408,4 +443,10 @@ sup.notify {
 }
 .error {
   word-break: break-all;
+}
+.HideMe {
+  display: none;
+}
+.ShowMe {
+  display: block;
 }
