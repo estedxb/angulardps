@@ -116,6 +116,10 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
+    this.logger.log("changed allowances");
+    this.logger.log(this.shiftAllowances);
+    this.logger.log(this.otherAllowances);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -134,15 +138,15 @@ export class InvoiceSettingsComponent implements OnInit {
 
     // this.selectedIndexCurrencyShiftAllowance = $event.target.value;
 
-    this.logger.log("selected currency="+$event);
+    this.logger.log("selected currency="+$event + "i="+i);
 
     if ($event === '€') {
-      this.shiftAllowances[i].nominal = true;
+      this.shiftAllowances[i].nominal = false;
       this.currencyDataShift[i] = '€';
       this.changeObject();
     }
     else {
-      this.shiftAllowances[i].nominal = false;
+      this.shiftAllowances[i].nominal = true;
       this.currencyDataShift[i] = '%';
       this.changeObject();
     }
@@ -303,6 +307,7 @@ export class InvoiceSettingsComponent implements OnInit {
                               this.currencyDataShift[counter] = "%";
 
                           this.addRows(element.shiftName,element.amount,element.nominal);
+                          this.shiftAllowances[counter].nominal = element.nominal;
      
                           const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
                           formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
@@ -360,6 +365,7 @@ export class InvoiceSettingsComponent implements OnInit {
                       {
                         this.workCode[anothercounter] = element.codeId;
                         this.addAndreRows(element.codeId,element.amount);
+                        this.otherAllowances[anothercounter].nominal = element.nominal;
                         this.disabled = 'false';
                         this.andreSwitch = true;
                         const formGroup = this.Andre.controls[anothercounter] as FormGroup;
@@ -900,6 +906,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceObject.shiftName = value1;
     this.shiftAllowanceObject.amount = value2;
     this.shiftAllowanceObject.timeSpan = "02:02:02";
+    this.shiftAllowanceObject.nominal = nominal;
     this.shiftAllowances.push(this.shiftAllowanceObject);
     this.shiftAllowanceCounter++;
     // this.changeObject();
