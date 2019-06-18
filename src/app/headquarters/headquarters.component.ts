@@ -141,7 +141,7 @@ export class HeadQuartersComponent implements OnInit {
   ngAfterViewInit() {
 
     //load Edit Page details
-    if (this.oldData !== this.HQFormData) {
+    if (this.HQFormData!== null  && this.HQFormData !== undefined && this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
@@ -496,7 +496,8 @@ export class HeadQuartersComponent implements OnInit {
     this.otherAllowance = new Array();
     this.invoiceSettings = new InvoiceSettings();
 
-    if(this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
+    if(this.HQFormData !== null && this.HQFormData !== undefined)    
+    if(this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
     {
 
           // assigning invoice settings 

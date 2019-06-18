@@ -94,7 +94,7 @@ export class ContactPersonComponent implements OnInit {
 
   ngAfterViewInit() {
 
-    if (this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
+    if (this.CTFormData !== undefined && this.CTFormData !== null && this.CTFormData.data !== undefined && this.CTFormData.data !== null) {
       if (this.CTFormData.data !== this.oldData) {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
