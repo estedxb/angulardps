@@ -451,7 +451,7 @@
           </div>
         </div>
 
-        <div id="from1" *ngIf="showFormIndex === 3">
+       <div id="from1" *ngIf="showFormIndex === 3">
           <div id="CustomerDetails" class="customerBox">
             <div class="row panelheader">
               <div class="col col-sm-5 fright">
@@ -462,7 +462,7 @@
               <label class="center-block">Thank You For creating Person!!</label>
             </div>
           </div>
-        </div>
+        </div> 
 
       </form>
 
@@ -475,8 +475,8 @@
     <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
       src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>            
   </div>
-  <ng-template #clausex>
-      <div class="col col-sm-3">
+  <ng-template #clausex >
+      <div class="col col-sm-3" *ngIf="showFormIndex === 2">
           <button class="greenButton" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Persoon Opslaan
               <img src="../../assets/svg/right-arrow.svg" style="width:20px;" /></button><br />
           <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
