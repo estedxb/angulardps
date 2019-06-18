@@ -1,5 +1,5 @@
 import { NgModule, EventEmitter } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,12 +37,7 @@ import { environment } from '../environments/environment';
     AlertModule.forRoot(),
     TimepickerModule.forRoot(),
     UiSwitchModule.forRoot({
-      size: 'small',
-      color: '#fff',
-      switchOffColor: '#C7C7C7',
-      switchColor: 'limegreen',
-      defaultBoColor: '#000',
-      defaultBgColor: '#fff'
+      size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
     }),
     FormsModule,
     ReactiveFormsModule,
@@ -57,26 +52,3 @@ import { environment } from '../environments/environment';
   entryComponents: [entringComponents]
 })
 export class AppModule { }
-
-/*
-import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
-
-==============
-
-
-    MsAdalAngular6Module.forRoot({
-      tenant: environment.tenantid,
-      clientId: environment.clientId,
-      redirectUri: window.location.origin,
-      endpoints: {
-        'https://localhost:4200/Api/': 'xxx-bae6-4760-b434-xxx'
-      },
-      navigateToLoginRequestUrl: false,
-      cacheLocation: 'localStorage',
-    }),
-
-
-    AuthenticationGuard,
-
-    ========
-*/

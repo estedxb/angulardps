@@ -59,9 +59,11 @@ import { NumPipe } from './pipes/num.pipe';
 import { AuthCallbackComponent } from './views/auth-callback/auth-callback.component';
 
 
+
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'index', component: DashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'dashboard/:page/:id', component: DashboardComponent },
   { path: 'customer', component: AddCustomerComponent },
@@ -79,6 +81,7 @@ const routes: Routes = [
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: 'auth-callback', component: AuthCallbackComponent },
+  // { path: '', component: AppComponent, pathMatch: 'full', canActivate: [MsalGuard] },
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
@@ -135,11 +138,3 @@ export const entringComponents = [
   CancelContractComponent,
   CreateContractComponent
 ];
-/*
-import { AuthenticationGuard } from 'microsoft-adal-angular6';
-
-=====
-
-{ path: '', component: AppComponent, pathMatch: 'full', canActivate: [AuthenticationGuard] },
-
-*/
