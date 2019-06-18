@@ -91,8 +91,18 @@ export class EditPersonComponent implements OnInit {
 
   ngDoCheck() {
 
-    if (this.DpsPersonObject !== this.oldDpsPersonObject) {
-      this.oldDpsPersonObject = this.DpsPersonObject;      
+
+    this.logger.log("this dps person object=");
+    this.logger.log(this.DpsPersonObject);
+
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== this.oldDpsPersonObject) {
+
+      this.data.currentMessage.subscribe(message => {
+        this.DpsPersonObject = this.message.data;
+        this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
+        );
+        this.oldDpsPersonObject = this.DpsPersonObject;      
+
       //this.childEvent.emit(this.HQdata);
     }
   }
@@ -100,6 +110,7 @@ export class EditPersonComponent implements OnInit {
   ngOnInit() {
     // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
     this.data.currentMessage.subscribe(message => {
+      this.DpsPersonObject = this.message.data;
       this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
       );
 
@@ -452,13 +463,33 @@ export class EditPersonComponent implements OnInit {
 
   }
 
+  onCountryReceiveNationality($event) {
+
+
+    if (this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.nationality = $event.Country;
+    }
+
+    this.changeMessage();
+
+  }
+
+  onCountryReceiveBirthPlace($event) {
+
+
+    if (this.DpsPersonObject.person !== null) {
+      this.DpsPersonObject.person.countryOfBirth = $event.Country;
+    }
+
+    this.changeMessage();
+
+  }
+
   onCountryReceive($event) {
 
-    // this.logger.log('Received Country');
-    // this.logger.log('country=' + $event.Country);
     // this.logger.log('countryCode=' + $event['Alpha-2']);
 
-    if (this.DpsPersonObject.person.address !== null) {
+    if (this.DpsPersonObject.person.address !== null) {      
       this.DpsPersonObject.person.address.country = $event.Country;
       this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
     }

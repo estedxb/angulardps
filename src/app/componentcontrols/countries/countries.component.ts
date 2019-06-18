@@ -68,12 +68,12 @@ export class CountriesComponent implements OnInit {
   }
 
   ngDoCheck() {
-    // this.logger.log(this.CountryFormData);
+
     if (this.CountryFormData !== this.oldCountryFormData) {
-      // this.logger.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldCountryFormData = this.CountryFormData;
       this.loadInitialData(this.datas);
     }
+
   }
 
   ngAfterViewInit() {

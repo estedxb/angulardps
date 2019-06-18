@@ -208,7 +208,7 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Nationaliteit: </label>
-            <app-countries [CountryFormData]="nationalityString" (childEvent)="onCountryReceive($event)"></app-countries>
+            <app-countries [CountryFormData]="nationalityString" (childEvent)="onCountryReceiveNationality($event)"></app-countries>
 
             <!-- <input #nationality (change)="updateNationality(nationality.value)" formControlName="nationality" class="form-control" name="nationality" type="text" required /> -->
             <!-- <div class="form-control-feedback"
@@ -232,7 +232,7 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Geboorteland: </label>
-            <app-countries [CountryFormData]="birthCountryString" (childEvent)="onCountryReceive($event)"></app-countries>
+            <app-countries [CountryFormData]="birthCountryString" (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
             <!-- <input #countryOfBirth (change)="updateCOB(countryOfBirth.value)" formControlName="countryOfBirth" class="form-control" name="countryOfBirth" type="text" required /> -->
             <!-- <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.countryOfBirth.invalid && (editPersonForm.controls.countryOfBirth.dirty || editPersonForm.controls.countryOfBirth.touched) else newvalidcountryOfBirth">

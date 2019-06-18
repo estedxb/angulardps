@@ -866,7 +866,7 @@ export class AddPersonComponent implements OnInit {
 
     this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
 
-    this.DpsPersonObject.isEnabled = false;
+    this.DpsPersonObject.isEnabled = true;
     this.DpsPersonObject.isArchived = false;
 
   }
@@ -876,7 +876,6 @@ export class AddPersonComponent implements OnInit {
   }
 
   onChangeDropDownStatute($event) {
-    this.logger.log('dropdown value=' + $event.target.value);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       this.DpsPersonObject.statute = new Statute();
@@ -887,9 +886,6 @@ export class AddPersonComponent implements OnInit {
   }
 
   onLanguageReceive($event) {
-
-    this.logger.log('language=' + $event.name);
-    this.logger.log('language=' + $event.shortName);
 
     if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined) {
       this.DpsPersonObject.person.language = new Language();
@@ -984,6 +980,7 @@ export class AddPersonComponent implements OnInit {
   postPersonData() {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
+      this.ShowMessage('Person record created successfully.', '');
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -998,6 +995,7 @@ export class AddPersonComponent implements OnInit {
 
   onBackwardClick() {
     this.showFormIndex = 1;
+    this.ShowMessage('back', '');
   }
 
   isInvalid() {

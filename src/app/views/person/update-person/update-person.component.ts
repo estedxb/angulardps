@@ -119,8 +119,10 @@ export class UpdatePersonComponent implements OnInit {
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
         this.dpsPerson = dpsperson.body;
         this.person = this.dpsPerson.person;
-        //this.logger.log('DPS Person Form Data : ', dpsperson);
-        //this.logger.log('Person Form Data : ', this.person);
+        
+        this.logger.log('DPS Person Form Data : ');
+        this.logger.log(this.dpsPerson);
+
         this.logger.log("Person Form Data : ");
         this.logger.log(this.person);
         this.changeMessage();
@@ -142,9 +144,8 @@ export class UpdatePersonComponent implements OnInit {
   archiveClick() {
 
     if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
-      // console.log("person data");
-      // console.log(this.dpsPerson);
 
+      this.dpsPerson.isArchived = true;
       this.personService.updatePosition(this.dpsPerson).subscribe(res => {
         // console.log("response=" + res);
         this.ShowMessage('Person archived successfully.', '');
