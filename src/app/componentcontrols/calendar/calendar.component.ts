@@ -98,10 +98,12 @@ export class CalendarComponent implements OnInit {
     }
 
     if (this.calendarDisableStatus === true) {
+      // this.logger.log('in');
       this.dayDisableStatus = true;
       this.monthDisableStatus = true;
       this.yearDisableStatus = true;
     } else {
+      // this.logger.log('out');
       this.dayDisableStatus = this.calendardayDisableStatus;
       this.monthDisableStatus = this.calendarmonthDisableStatus;
       this.yearDisableStatus = this.calendaryearDisableStatus;

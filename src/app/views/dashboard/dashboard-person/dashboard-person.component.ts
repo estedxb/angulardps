@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {
   DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken
 } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule } from '@angular/material';
+import {
+  MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule, MatDialogRef, MAT_DIALOG_DATA
+} from '@angular/material';
 import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
@@ -69,7 +71,7 @@ export class DashboardPersonComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   constructor(
     private personService: PersonService, private route: ActivatedRoute, private logger: LoggingService,
-    private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
+    private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar, private elRef: ElementRef) { }
 
   ngOnInit() { this.onPageInit(); }
 
@@ -81,8 +83,10 @@ export class DashboardPersonComponent implements OnInit {
   onPageInit() {
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.SelectedDates = this.getSelectedDates();
-    const localstartDate = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + this.startDate.getDate();
-    const localendDate = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + this.endDate.getDate();
+    const localstartDate = this.startDate.getFullYear() + '-' + this.formateZero(this.startDate.getMonth() + 1)
+      + '-' + this.formateZero(this.startDate.getDate());
+    const localendDate = this.endDate.getFullYear() + '-' + this.formateZero(this.endDate.getMonth() + 1)
+      + '-' + this.formateZero(this.endDate.getDate());
 
     this.logger.log('onPageInit startDate :: ' + this.startDate + ' :: this.startDate.getDate() :: ' + this.startDate.getDate());
     this.logger.log('onPageInit endDate :: ' + this.endDate);
@@ -104,12 +108,27 @@ export class DashboardPersonComponent implements OnInit {
     }
   }
 
-  onContractOver(contractId: number, state: boolean) {
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      this.logger.log('Snackbar Action :: ' + Action);
+    });
+  }
+
+  onContractOver(contractId: number, state: boolean, ref: ElementRef) {
     if (state) {
       this.RollOverContract = contractId;
     } else {
       this.RollOverContract = 0;
     }
+
+    // console.log('onContractOver elRef :: ', this.elRef);
+    // console.log('onContractOver offsetLeft :: ' + this.elRef.nativeElement.offsetLeft);
+    // console.log('onContractOver offsetTop :: ' + this.elRef.nativeElement.offsetTop);
     // console.log('onContractOver(' + contractId.toString() + ',' + state + ')');
   }
 
@@ -141,6 +160,10 @@ export class DashboardPersonComponent implements OnInit {
   minusWeek() {
     this.WeekDiff -= 1;
     this.onPageInit();
+  }
+
+  formateZero(n) {
+    return n > 9 ? n : '0' + n;
   }
 
   getSelectedDates() {
@@ -194,56 +217,72 @@ export class DashboardPersonComponent implements OnInit {
     this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
 
     // tslint:disable-next-line: max-line-length
-    return this.startDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.startDate) + ' - ' + this.endDate.getUTCDate().toString() + ' ' + this.getShortMonth(this.endDate) + '. ' + this.endDate.getUTCFullYear();
+    return this.formateZero(this.startDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.startDate) + (this.startDate.getUTCFullYear() !== this.endDate.getUTCFullYear() ? 'this.startDate.getUTCFullYear()' : '') + ' - ' + this.formateZero(this.endDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.endDate) + '. ' + this.endDate.getUTCFullYear();
   }
   getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
 
-  openContractDialog(personid, contractid): void {
+  openContractDialog(personid, contractid, actionState, mode): void {
     try {
-      const selectedContract = new SelectedContract();
-      selectedContract.personContracts = this.getSelectedPersonWorkDays(personid);
-      selectedContract.contractId = contractid;
-      selectedContract.personId = personid;
-      this.logger.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
-      selectedContract.startDate = this.startDate;
-      selectedContract.endDate = this.endDate;
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = false;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '700px';
-      dialogConfig.data = selectedContract;
-      this.logger.log('selectedContract :: ', selectedContract);
-      dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
+      if (actionState) {
+        if (mode !== undefined && mode !== null && mode !== '') {
+          const selectedContract = new SelectedContract();
+          selectedContract.personContracts = this.getSelectedPersonContracts(personid);
+          selectedContract.contractId = contractid;
+          selectedContract.personId = personid;
+          selectedContract.mode = mode;
 
-      const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
+          this.logger.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.logger.log('The dialog was closed');
-        this.data = result;
-        this.logger.log('this.data ::', this.data);
-        this.onPageInit();  
-        /*
-        if (this.SelectedIndex >= 0) {
-          this.maindatas[this.SelectedIndex] = this.data;
-          this.FilterTheArchive();
-          this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
-        } else {
-          this.logger.log('this.data.id :: ', this.data.id);
-          if (parseInt('0' + this.data.id, 0) > 0) {
-            this.maindatas.push(this.data);
-            this.logger.log(' new this.maindatas :: ', this.maindatas);
-            this.FilterTheArchive();
-            this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
+          selectedContract.startDate = this.startDate;
+          selectedContract.endDate = this.endDate;
+
+          if (mode === 'extend') {
+            selectedContract.startDate.setDate(selectedContract.startDate.getDate() + 7);
+            selectedContract.endDate.setDate(selectedContract.endDate.getDate() + 7);
           }
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.disableClose = false;
+          dialogConfig.autoFocus = true;
+          dialogConfig.width = '700px';
+          dialogConfig.data = selectedContract;
+          this.logger.log('selectedContract :: ', selectedContract);
+          dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
+
+          const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
+
+          dialogRef.afterClosed().subscribe(result => {
+            this.logger.log('The dialog was closed');
+            this.data = result;
+            this.logger.log('this.data ::', this.data);
+            this.onPageInit();
+            /*
+            if (this.SelectedIndex >= 0) {
+              this.maindatas[this.SelectedIndex] = this.data;
+              this.FilterTheArchive();
+              this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
+            } else {
+              this.logger.log('this.data.id :: ', this.data.id);
+              if (parseInt('0' + this.data.id, 0) > 0) {
+                this.maindatas.push(this.data);
+                this.logger.log(' new this.maindatas :: ', this.maindatas);
+                this.FilterTheArchive();
+                this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
+              }
+            }
+            */
+          });
+        } else {
+          this.ShowMessage('Mode not selected.', '');
         }
-        */
-      });
+      } else {
+        this.ShowMessage('Person is not archived or disabled.', '');
+      }
 
     } catch (e) { alert(e.message); }
   }
 
-  getSelectedPersonWorkDays(personid) {
-    this.logger.log('getSelectedPersonWorkDays(' + personid + ') ');
+  getSelectedPersonContracts(personid) {
+    this.logger.log('getSelectedPersonContracts(' + personid + ') ');
     this.selectedPersonContracts = [];
     if (this.maindatas.length > 0) {
       this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
@@ -255,7 +294,7 @@ export class DashboardPersonComponent implements OnInit {
     } else {
       this.selectedPersonContracts = this.maindatas[0].contracts;
     }
-    this.logger.log('getSelectedPersonWorkDays(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
+    this.logger.log('getSelectedPersonContracts(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
     return this.selectedPersonContracts;
   }
 
