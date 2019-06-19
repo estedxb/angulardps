@@ -290,7 +290,6 @@ export class InvoiceSettingsComponent implements OnInit {
                       formGroup.controls['PloegprimeBox2'].enable();
                     }
   
-
                      if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false)
                          this.currencyDataShift[0] = "€";
                      else
@@ -411,7 +410,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
       this.ISForm.get('PloegprimeBox1').disable();
       this.ISForm.get('PloegprimeBox2').disable();
-      this.ISForm.get('inhaalrust').disable();
 
     }
 
