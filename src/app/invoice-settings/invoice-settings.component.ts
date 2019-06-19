@@ -364,7 +364,7 @@ export class InvoiceSettingsComponent implements OnInit {
                             this.currencyDataOther[anothercounter] = "%";
                       }                                      
                     }  
-                      anothercounter += 1;  
+                      anothercounter += 1;
                   }
                 });
               }

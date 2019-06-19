@@ -18,9 +18,10 @@ import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { DatePipe } from '@angular/common';
 import { environment } from '../environments/environment';
 import { CurrencyComponent } from './componentcontrols/currency/currency.component';
+import { ZichmetComponent } from '../app/componentcontrols/zichmet/zichmet.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, TestArraysComponent, CurrencyComponent],
+  declarations: [AppComponent, routingComponents, TestArraysComponent, CurrencyComponent, ZichmetComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

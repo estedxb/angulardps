@@ -1,15 +1,15 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-// import { CountriesList } from '../../shared/models';
-import { CountriesService } from '../../shared/countries.service';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
+import { CountriesService } from '../../shared/countries.service';
+
 
 @Component({
-  selector: 'app-countries',
-  templateUrl: './countries.component.html',
-  styles: ['']
+  selector: 'app-zichmet',
+  templateUrl: './zichmet.component.html',
+  styleUrls: ['./zichmet.component.css']
 })
 
-export class CountriesComponent implements OnInit {
+export class ZichmetComponent implements OnInit {
 
   @Input() public CountryFormData;
   @Output() public childEvent = new EventEmitter();
@@ -20,6 +20,7 @@ export class CountriesComponent implements OnInit {
   public errorMsg;
   public datas: any = [];
   public selectedString: string;
+
   // tslint:disable-next-line: variable-name
 
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -41,10 +42,6 @@ export class CountriesComponent implements OnInit {
 
     this._selectedIndex = $event.target.value;
     this.selectedIndex = $event.target.value;
-
-    // this.logger.log("country selected="+this.value.Country);
-    // this.logger.log(this.value);
-
     this.selectedString = this.value;
 
     this.childEvent.emit(this.value);
