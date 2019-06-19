@@ -208,14 +208,8 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if (this.currentPage === 'documents') {
-
       this.logger.log('data collected for person documents');
       this.logger.log(this.personDocumentsData);
-
-
-
-
-
     }
 
   }
