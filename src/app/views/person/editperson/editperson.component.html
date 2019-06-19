@@ -154,7 +154,7 @@
         </div>
         <div class="row">
           <div class="col-sm-6 inputWithImg">
-            <label class="titleBold">  Mobiel nummer </label>
+            <label class="titleBold"> Mobiel nummer </label>
             <input #mobileNumber (change)="updateMobileNumber(mobileNumber.value)" formControlName="mobileNumber" class="form-control" name="mobileNumber" type="text" required />
             <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.mobileNumber.invalid && (editPersonForm.controls.mobileNumber.dirty || editPersonForm.controls.mobileNumber.touched) else newvalidmobileNumber">
