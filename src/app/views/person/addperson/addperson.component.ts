@@ -345,7 +345,6 @@ export class AddPersonComponent implements OnInit {
   changeDropDownDateArray(event) {
 
     const month: string = event;
-    this.logger.log('selected month=' + month);
 
     this.dataDropDown = [];
 
@@ -374,22 +373,48 @@ export class AddPersonComponent implements OnInit {
   }
 
   onChangeDropDownYear($event) {
-    this.yearString = parseInt($event.target.value,10)+1900;
-    this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
+    this.logger.log("year="+$event.target.value);
+ 
+    if(this.DpsPersonObject!== null && this.DpsPersonObject !== undefined)
+    {
+      if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
+      {
+
+        this.yearString = parseInt($event.target.value,10)+1900;
+        this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;    
+
+      }
+    }
+
   }
 
   onChangeDropDownMonth($event) {
-    this.logger.log('selected month=' + $event.target.value);
+    this.logger.log('selected month=' + (parseInt($event.target.value,10) +1));
     this.changeDropDownDateArray($event.target.value);
-    this.monthString = $event.value;
-    this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+    if(this.DpsPersonObject!== null && this.DpsPersonObject !== undefined)
+    {
+      if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
+      {
+
+        this.monthString = (parseInt($event.target.value,10) + 1);
+        this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;    
+      }
+    }
   }
 
   onChangeDropDownDate($event) {
-    this.DpsPersonObject.person.dateOfBirth = $event.value;
-    this.dayString = $event.value;
+    this.logger.log("selected day="+$event.target.value);
 
-    this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+    if(this.DpsPersonObject!== null && this.DpsPersonObject !== undefined)
+    {
+      if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
+      {
+        this.dayString = $event.target.value;    
+        this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;    
+      }
+    }
+
   }
 
   switchNetExpense($event) {
@@ -651,9 +676,6 @@ export class AddPersonComponent implements OnInit {
 
   loadPersonData(rdata) {
 
-    // this.logger.log("response = ");
-    // this.logger.log(response);
-    // this.logger.log(response.body);
     const data = rdata;
 
     if (data.person !== null) {
@@ -802,6 +824,9 @@ export class AddPersonComponent implements OnInit {
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.AddPersonForm1.get('placeOfBirth').value;
+
+
+
     this.DpsPersonObject.person.countryOfBirth = this.recvdCountryOfBirth; 
     this.DpsPersonObject.person.nationality = this.recvdNationalityString;
 
@@ -917,11 +942,11 @@ export class AddPersonComponent implements OnInit {
   onCountryReceiveNationality($event) {
 
     this.logger.log("nationality received="+ $event.Country);
+    this.recvdNationalityString = $event.Country;
 
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
     if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.nationality = $event.Country;
-        this.recvdNationalityString = $event.Country;
     }  
 
     this.changeMessage();
@@ -932,11 +957,11 @@ export class AddPersonComponent implements OnInit {
 
     this.logger.log("onCountryReceiveBirthPlace received="+ $event.Country);
 
+    this.recvdCountryOfBirth = $event.Country;  
+
    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
     if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
       this.DpsPersonObject.person.countryOfBirth = $event.Country;
-      this.recvdCountryOfBirth = $event.Country;
-  
     }
 
     this.changeMessage();
@@ -976,6 +1001,9 @@ export class AddPersonComponent implements OnInit {
     this.logger.log("on Country Receive="+$event.Country);
     this.logger.log("on Country Receive="+$event['Alpha-2']);
 
+    this.recvdCountryString = $event.Country;
+    this.recvdCountryCode = $event['Alpha-2'];
+
     // this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
@@ -984,8 +1012,6 @@ export class AddPersonComponent implements OnInit {
         if (this.DpsPersonObject.person.address !== null && this.DpsPersonObject.person.address !== undefined) {
           this.DpsPersonObject.person.address.country = $event.Country;
           this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
-          this.recvdCountryString = $event.Country;
-          this.recvdCountryCode = $event['Alpha-2'];
           
           this.logger.log(this.DpsPersonObject);
         }
