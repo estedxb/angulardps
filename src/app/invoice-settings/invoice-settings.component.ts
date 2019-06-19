@@ -79,6 +79,11 @@ export class InvoiceSettingsComponent implements OnInit {
   public loadSwitchTeam:boolean;
   public loadSwitchOther:boolean;
 
+  public tCoefficient = "1.20";
+  public mCoefficient = "1.69";
+  public EchoChange = "1.69";
+  public DimonaChange = "0.3510";
+
   public currencyChoice:number = 0;
   public currencyNewChoice:number = 0;
 
@@ -104,10 +109,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
-    this.logger.log("changed allowances");
-    this.logger.log(this.shiftAllowances);
-    this.logger.log(this.otherAllowances);
-
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -116,7 +117,11 @@ export class InvoiceSettingsComponent implements OnInit {
       'shiftAllowance': this.shiftAllowance,
       'shiftAllowances': this.shiftAllowances,
       'otherAllowance': this.andreSwitch,
-      'otherAllowances': this.otherAllowances
+      'otherAllowances': this.otherAllowances,
+      'transportCoefficient': this.tCoefficient,
+      'mealvoucherCoefficient': this.mCoefficient,
+      'ecoCoefficient': this.EchoChange,
+      'dimonaCost': this.DimonaChange
     };
 
     this.childEvent.emit(jsonObject);
@@ -176,8 +181,6 @@ export class InvoiceSettingsComponent implements OnInit {
         if(this.oldFPFormData !== this.FPFormData)
         {
           this.oldFPFormData = this.FPFormData;
-
-          this.logger.log(this.FPFormData);
 
           if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
           {
@@ -244,8 +247,13 @@ export class InvoiceSettingsComponent implements OnInit {
               this.ISForm.get('PloegprimeBox1').disable();
               this.ISForm.get('PloegprimeBox2').disable();
               this.ISForm.get('currency').disable();
-            }            
+            }
 
+            this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
+            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
+            this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
+            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
+        
             if(this.FPFormData.data.invoiceSettings.shiftAllowances !== null && this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined )
               {
                 this.ploegpremieSwitch = true;
@@ -354,10 +362,8 @@ export class InvoiceSettingsComponent implements OnInit {
                             this.currencyDataOther[anothercounter] = "€";
                         else
                             this.currencyDataOther[anothercounter] = "%";
-                      }
-                                      
-                    }
-  
+                      }                                      
+                    }  
                       anothercounter += 1;  
                   }
                 });
@@ -421,10 +427,10 @@ export class InvoiceSettingsComponent implements OnInit {
       PloegprimeBox3: new FormControl(''),
 
 
-      Verplaatsingen: new FormControl(''),
-      Dimona: new FormControl(''),
-      Echo: new FormControl(''),
-      Maalticheques: new FormControl(''),
+      Verplaatsingen: new FormControl(this.tCoefficient),
+      Dimona: new FormControl(this.DimonaChange),
+      Echo: new FormControl(this.EchoChange),
+      Maalticheques: new FormControl(this.maaltichequesCoefficient),
 
       AndreBox1: new FormControl(''),
       AndreBox2: new FormControl(''),
@@ -496,20 +502,20 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  transportCoefficient() {
-
+  transportCoefficient(value) {
+    this.tCoefficient = value;
   }
 
-  maaltichequesCoefficient() {
-
+  maaltichequesCoefficient(value) {
+    this.mCoefficient = value;
   }
 
-  onEchoChange() {
-
+  onEchoChange(value) {
+    this.EchoChange = value;
   }
 
-  onDimonaChange() {
-
+  onDimonaChange(value) {
+    this.DimonaChange = value;
   }
 
   isInvalid() {
