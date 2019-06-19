@@ -38,10 +38,7 @@ export class CurrencyComponent implements OnInit {
   
       this._selectedIndex = $event.target.value;
       this.selectedIndex = $event.target.value;
-      this.selectedString = this.value;
-
-      this.logger.log("sending value="+this.value);
-  
+      this.selectedString = this.value;  
       this.childEvent.emit(this.value);
   
       return this.value;
@@ -62,8 +59,6 @@ export class CurrencyComponent implements OnInit {
   loadInitialData() {
 
     this.datacurrencyDropDown = ['€', '%'];
-
-    this.logger.log("received on load="+this.currencyData);
 
     if (this.currencyData !== null && this.currencyData !== undefined) 
     {

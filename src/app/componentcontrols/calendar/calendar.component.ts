@@ -93,21 +93,15 @@ export class CalendarComponent implements OnInit {
   ngDoCheck() {
 
     if (this.CalendarData !== this.oldCalendarData) {
-
-      this.logger.log('check Calendar Data=' + this.CalendarData);
       this.oldCalendarData = this.CalendarData;
-
       this.loadDOBData(this.CalendarData);
-      this.logger.log('this.calendarDisableStatus :: ' + this.calendarDisableStatus);
     }
 
     if (this.calendarDisableStatus === true) {
-      this.logger.log('in');
       this.dayDisableStatus = true;
       this.monthDisableStatus = true;
       this.yearDisableStatus = true;
     } else {
-      this.logger.log('out');
       this.dayDisableStatus = this.calendardayDisableStatus;
       this.monthDisableStatus = this.calendarmonthDisableStatus;
       this.yearDisableStatus = this.calendaryearDisableStatus;
@@ -118,8 +112,6 @@ export class CalendarComponent implements OnInit {
   loadDOBData(calendarData) {
 
     const calendarArray = calendarData.split('/');
-    this.logger.log('calendarArray');
-    this.logger.log(calendarArray);
 
     this._selectedIndexdays = parseInt(calendarArray[0], 10);
     // this._selectedIndexMonth = parseInt(calendarArray[1],10);
@@ -206,7 +198,6 @@ export class CalendarComponent implements OnInit {
 
   onChangeDropDownYear($event) {
     this.yearString = this.dropDownYear[$event.target.value];
-    this.logger.log('onChangeDropDownYear selected year=' + this.yearString);
     this.selectedYear = $event.target.value;
 
     this.calendarObject.yearString = this.yearString;
@@ -217,20 +208,17 @@ export class CalendarComponent implements OnInit {
   onChangeDropDownMonth($event) {
     this.changeDropDownDateArray($event.target.value);
     this.monthString = this.dropDownMonth[$event.target.value];
-    this.logger.log('onChangeDropDownMonth selected month=' + this.monthString);
     this.calendarObject.monthString = this.monthString;
     this.childEvent.emit(this.calendarObject);
   }
 
   onChangeDropDownDate($event) {
     this.dayString = this.dataDropDown[$event.target.value - 1];
-    this.logger.log('onChangeDropDownDate selected date=' + this.dayString);
     this.calendarObject.dayString = this.dayString;
 
     this.childEvent.emit(this.calendarObject);
   }
 
   ngOnInit() {
-    this.logger.log('calendar data received=' + this.CalendarData);
   }
 }
