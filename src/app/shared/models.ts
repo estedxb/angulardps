@@ -36,7 +36,7 @@ export class CustomersList { item1: string; item2: string; item3?: string; item4
 export class WorkCodes {
     CodeNumber: number; Description: string; CodeType: string; ValueType?: string; IsDefaultForCodeType?: string; StatuteType?: string;
 }
-export class Statute { name: string; type?: string; }
+export class Statute { brightStaffingID: number; name: string; type?: string; }
 export class LegalForm { nl: Forms[]; en: Forms[]; fr: Forms[]; }
 export class Forms { name: string; }
 export class CountriesList { Country: string; 'Alpha-2': string; 'Alpha-3': string; }

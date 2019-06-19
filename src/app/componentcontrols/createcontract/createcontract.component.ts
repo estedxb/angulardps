@@ -52,8 +52,6 @@ export class CreateContractComponent implements OnInit {
   public allowedEndMonth: any;
   public allowedEndDay: any;
 
-  public personsStatute: Statute;
-
   /*
   public allowedExtentedStartDate: Date;
   public allowedExtentedEndDate: Date;
@@ -72,7 +70,7 @@ export class CreateContractComponent implements OnInit {
   public showLoading = false;
   public mode = 'new';
   public maindatas = [];
-  public dpsPositionsData = [];
+  public dpsPositionsData: DpsPostion[] = [];
   public locationsData = [];
   public dpsWorkSchedulesData = [];
   public contractReasonDatas: ContractReason[] = [];
@@ -539,7 +537,7 @@ export class CreateContractComponent implements OnInit {
     let loopDate: Date;
     this.selectedWeekDays = [];
 
-    loopDate = this.selectedStartDate;
+    loopDate = new Date(this.selectedStartDate);
     let i = 0;
     while (loopDate.getDate() <= this.selectedEndDate.getDate() && i < 9) {
       i += 1;
@@ -681,11 +679,17 @@ export class CreateContractComponent implements OnInit {
   onStartDateChange($event) {
     this.logger.log('start date $event', $event);
     if ($event !== undefined && $event !== null) {
-      this.logger.log('start date allowedStartDate', this.allowedStartDate, this.getDate($event));
-      if (this.getDate($event) >= this.allowedStartDate) {
-        this.logger.log('Start in 1');
-        if (this.getDate($event) <= this.selectedEndDate) {
-          this.logger.log('Start in 2');
+      this.logger.log('Start in 1');
+      this.logger.log('onStartDateChange (this.getDate($event).getDate() >= this.allowedStartDate.getDate()) = ' +
+        (this.getDate($event).getDate() >= this.allowedStartDate.getDate()),
+        this.getDate($event).getDate(), this.allowedStartDate.getDate());
+      if (this.getDate($event).getDate() >= this.allowedStartDate.getDate()) {
+        this.logger.log('Start in 2');
+        this.logger.log('onStartDateChange (this.getDate($event).getDate() <= this.selectedEndDate.getDate()) = ' +
+          (this.getDate($event).getDate() <= this.selectedEndDate.getDate()),
+          this.getDate($event).getDate(), this.selectedEndDate.getDate());
+        if (this.getDate($event).getDate() <= this.selectedEndDate.getDate()) {
+          this.logger.log('Start in 3');
           this.isStartDateVaild = true;
           this.isStartDateVaildErrorMsg = '';
           this.logger.log('this.selectedStartDate 1 before', this.selectedStartDate);
@@ -694,7 +698,7 @@ export class CreateContractComponent implements OnInit {
           this.contract.startDate = this.getDateString(this.selectedStartDate); // this.createObjects();
           this.getSelectedWeekDays();
         } else {
-          this.logger.log('Start out 2');
+          this.logger.log('Start out 3');
           this.isStartDateVaild = false;
           this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
           this.ShowMessage(this.isStartDateVaildErrorMsg, '');
@@ -702,7 +706,7 @@ export class CreateContractComponent implements OnInit {
           // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
-        this.logger.log('Start out 1');
+        this.logger.log('Start out 2');
         this.isStartDateVaild = false;
         this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
         this.ShowMessage(this.isStartDateVaildErrorMsg, '');
@@ -713,40 +717,60 @@ export class CreateContractComponent implements OnInit {
 
       // this.selectedStartDate = new Date($event.yearString + '-' +
       // this.formateZero($event.monthString) + '-' + this.formateZero($event.dayString));
+    } else {
+      this.logger.log('Start out 1', 'onStartDateChange change date is empty');
     }
   }
 
   onEndDateChange($event) {
     this.logger.log('end date $event', $event);
     if ($event !== undefined && $event !== null) {
-      this.logger.log('end date selectedStartDate', this.selectedStartDate, this.getDate($event));
-      if (this.getDate($event) <= this.allowedEndDate) {
-        this.logger.log('End in 1');
-        if (this.getDate($event) >= this.selectedStartDate) {
-          this.logger.log('End in 2');
+
+      this.logger.log('End in 1');
+      this.logger.log('onEndDateChange this.getDate($event) <= this.allowedEndDate = ' + (this.getDate($event).getDate() <=
+        this.allowedEndDate.getDate()), this.getDate($event).getDate(), this.allowedEndDate.getDate());
+
+      if (this.getDate($event).getDate() <= this.allowedEndDate.getDate()) {
+
+        this.logger.log('End in 2');
+        this.logger.log('onEndDateChange this.getDate($event) >= this.selectedStartDate) = ' + (this.getDate($event).getDate() >=
+          this.selectedStartDate.getDate()), this.getDate($event).getDate(), this.selectedStartDate.getDate());
+
+        if (this.getDate($event).getDate() >= this.selectedStartDate.getDate()) {
+
+          this.logger.log('End in 3');
           this.isEndDateVaild = true;
           this.isEndDateVaildErrorMsg = '';
-          this.logger.log('this.selectedEndDate 1 before', this.selectedEndDate);
+          this.logger.log('onEndDateChange this.selectedEndDate 1 before', this.selectedEndDate);
           this.selectedEndDate = this.getDate($event);
-          this.logger.log('this.selectedEndDate 1 after', this.selectedEndDate);
+          this.logger.log('onEndDateChange this.selectedEndDate 1 after', this.selectedEndDate);
           this.contract.endDate = this.getDateString(this.selectedEndDate); // this.createObjects();
           this.getSelectedWeekDays();
+
         } else {
-          this.logger.log('End out 2');
+
+          this.logger.log('End out 3');
           this.isEndDateVaild = false;
           this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
           this.ShowMessage(this.isEndDateVaildErrorMsg, '');
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
           // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
+
         }
       } else {
-        this.logger.log('End out 1');
+
+        this.logger.log('End out 2');
         this.isEndDateVaild = false;
         this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
         this.ShowMessage(this.isEndDateVaildErrorMsg, '');
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
         // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
+
       }
+    } else {
+
+      this.logger.log('End out 1', 'onEndDateChange change date is empty');
+
     }
   }
 
@@ -762,7 +786,7 @@ export class CreateContractComponent implements OnInit {
         this.logger.log('onPositionsChange dpsPositionsData :: ', this.dpsPositionsData);
         this.logger.log('onPositionsChange  dpsPositions by positionSelectedId :: '
           + this.positionSelectedId.toString(), dpsPositions[0]);
-        this.currentDpsContract.contract.position = dpsPositions[0];
+        this.currentDpsContract.contract.position = dpsPositions[0].position;
       } else {
         this.positionSelectedId = 0;
         this.currentDpsContract.positionId = this.positionSelectedId;
