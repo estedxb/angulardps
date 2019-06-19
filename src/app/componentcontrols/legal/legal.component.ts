@@ -104,6 +104,9 @@ export class LegalComponent implements OnInit {
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
       this.datas = this.maindatas[this.currentlanguage];
+
+      this.childEvent.emit(this.datas[0].FormName);
+
       this.logger.log('Legal Forms Data : '); this.logger.log(this.datas);
 
       this.loadInitialData(this.datas);

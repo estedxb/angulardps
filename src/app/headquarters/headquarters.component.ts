@@ -88,6 +88,7 @@ export class HeadQuartersComponent implements OnInit {
   _isDisabled: boolean = true;
 
   public EditdataFromComponents;
+  public selectedLegalObject: any = { "FormName": "NV" };
 
   // ngAfterViewInit(){
   //   //this.legalString = this.legalComponent.selectedString;
@@ -237,6 +238,7 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessage($event) {
     this.nlegalString = $event;
+    this.selectedLegalObject = {"FormName": $event};
     this.setCustomerObject();
     this.createObjects();
   }
@@ -451,7 +453,15 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.vatNumber = this.HQForm.get('vatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
-    this.customer.legalForm = this.nlegalString;
+
+    if(this.nlegalString !== null && this.nlegalString !== undefined)
+      this.customer.legalForm = this.nlegalString;
+    else 
+    {
+      this.customer.legalForm = this.selectedLegalObject.FormName;
+    }
+
+
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.creditCheck = this.creditCheck;
     this.customer.address = this.address;

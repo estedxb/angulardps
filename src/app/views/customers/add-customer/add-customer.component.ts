@@ -248,7 +248,7 @@ export class AddCustomerComponent implements OnInit {
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.logger.log('response=' + res);
-      this.ShowMessage('Person record created successfully.', '');
+      this.ShowMessage('Customer record created successfully!', '');
       this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
