@@ -146,7 +146,7 @@ export class ContactPersonComponent implements OnInit {
     this.contactsEmail.emailAddress = this.CTForm.get('emailaddress').value;
 
     this.language.name = this.languageStringNew;
-    
+
     if(this.languageShortNameNEw !== undefined && this.languageShortNameNEw !== null)
         this.language.shortName = this.languageShortNameNEw.toLowerCase();
 

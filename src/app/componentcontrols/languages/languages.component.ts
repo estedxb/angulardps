@@ -69,6 +69,8 @@ export class LanguagesComponent implements OnInit {
           this.datas[it].name = "Engels";  
     }
 
+    this.childEvent.emit(this.datas[0]);
+
 
   }
 
@@ -77,6 +79,7 @@ export class LanguagesComponent implements OnInit {
       this.datas = languages;
 
       this.replaceDatasLanguage();
+
       this.loadInitialData(this.datas);
       
     }, error => this.errorMsg = error);

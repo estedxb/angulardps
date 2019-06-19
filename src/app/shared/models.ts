@@ -14,7 +14,7 @@ export class Address {
     street?: string; streetNumber?: string; bus?: string; city?: string; postalCode?: string; country?: string; countryCode?: string;
 }
 export class VcaCertification { cerified: boolean; }
-export class ParitairCommitee { number: string; name: string; BrightStaffingCommitteeId?: string; type?: string; }
+export class ParitairCommitee { number: string; name: string; brightStaffingId?: string; type?: string; }
 export class LieuDaysAllowance { enabled: boolean; payed: boolean; }
 export class MobilityAllowance { enabled: boolean; amountPerKm?: number; }
 export class ShiftAllowance { shiftName: string; timeSpan: string; amount: number; nominal?: boolean; }
@@ -36,7 +36,7 @@ export class CustomersList { item1: string; item2: string; item3?: string; item4
 export class WorkCodes {
     CodeNumber: number; Description: string; CodeType: string; ValueType?: string; IsDefaultForCodeType?: string; StatuteType?: string;
 }
-export class Statute { name: string; type?: string; }
+export class Statute { name: string; type?: string; brightStaffingID:number }
 export class LegalForm { nl: Forms[]; en: Forms[]; fr: Forms[]; }
 export class Forms { name: string; }
 export class CountriesList { Country: string; 'Alpha-2': string; 'Alpha-3': string; }

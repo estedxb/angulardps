@@ -73,6 +73,8 @@ export class CurrencyComponent implements OnInit {
   ngOnInit() {
     this.datacurrencyDropDown = ['€', '%'];
 
+    this.childEvent.emit(this.datacurrencyDropDown[0]);
+
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
   }
