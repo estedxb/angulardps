@@ -8,7 +8,7 @@ import { LoggingService } from 'src/app/shared/logging.service';
 })
 export class CurrencyComponent implements OnInit {
 
-  @Input() public currencyData;
+  @Input() public currencyDataForm;
   @Output() public childEvent = new EventEmitter();
 
   public oldcurrencyData;
@@ -49,9 +49,9 @@ export class CurrencyComponent implements OnInit {
 
   ngDoCheck() {
 
-    if(this.oldcurrencyData !== this.currencyData)
+    if(this.oldcurrencyData !== this.currencyDataForm)
     {
-      this.oldcurrencyData = this.currencyData; 
+      this.oldcurrencyData = this.currencyDataForm; 
       this.loadInitialData();
     }
   }
@@ -60,10 +60,10 @@ export class CurrencyComponent implements OnInit {
 
     this.datacurrencyDropDown = ['€', '%'];
 
-    if (this.currencyData !== null && this.currencyData !== undefined) 
+    if (this.currencyDataForm !== null && this.currencyDataForm !== undefined) 
     {
       for (let i = 0; i < this.datacurrencyDropDown.length; i++) {
-        if(this.currencyData === this.datacurrencyDropDown[i])
+        if(this.currencyDataForm === this.datacurrencyDropDown[i])
             this._selectedIndex = i;
       }
     }
@@ -72,6 +72,8 @@ export class CurrencyComponent implements OnInit {
 
   ngOnInit() {
     this.datacurrencyDropDown = ['€', '%'];
+
+    this.childEvent.emit(this.datacurrencyDropDown[0]);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 

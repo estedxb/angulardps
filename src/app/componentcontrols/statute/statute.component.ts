@@ -28,7 +28,7 @@ export class StatuteComponent implements OnInit {
   public wegervaalArray = [];
   public minimumurenArray = [];
   public statutename = '';
-  public statuteSelectedString: ParitairCommitee;
+  public statuteSelectedString: any;
   public arrayParitairCommitee = [];
   public JCString = [];
   public loadStatuteSettingsArray = [];
@@ -146,7 +146,7 @@ export class StatuteComponent implements OnInit {
         this.StatuteSettingsObject.coefficient = 0;
     
         this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-        this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
+        this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
         this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
         this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
         this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
@@ -154,16 +154,12 @@ export class StatuteComponent implements OnInit {
         this.StatuteSettingsObject.statute = new Statute();
         this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
         this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
-
-        // this.logger.log(this.statutes[counter].name);
-        // this.logger.log(this.statutes[counter].type);
+        this.StatuteSettingsObject.statute.brightStaffingID = parseInt(this.statutes[counter].BrightStaffingID,10);
 
         this.statuteSettings.push(this.StatuteSettingsObject);
   
     }
 
-    // this.logger.log("created array");
-    // this.logger.log(this.statuteArray);
 
     if(counter > this.statutes.length)
         this.emitData();
@@ -183,6 +179,7 @@ export class StatuteComponent implements OnInit {
   }
    
    onloadData(arrayElement,counter){
+
 
     this.totalArray[counter] = arrayElement.mealVoucherSettings.totalWorth;
     this.wegervaalArray[counter] = arrayElement.mealVoucherSettings.employerShare;
@@ -210,7 +207,7 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject.coefficient = arrayElement.coefficient;
   
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-      this.StatuteSettingsObject.paritairCommitee.BrightStaffingCommitteeId = arrayElement.paritairCommitee.BrightStaffingCommitteeId;
+      this.StatuteSettingsObject.paritairCommitee.brightStaffingId = arrayElement.paritairCommitee.BrightStaffingCommitteeId;
       this.StatuteSettingsObject.paritairCommitee.name = arrayElement.paritairCommitee.name;
       this.StatuteSettingsObject.paritairCommitee.number = arrayElement.paritairCommitee.number;
       this.StatuteSettingsObject.paritairCommitee.type = arrayElement.paritairCommitee.type;
@@ -218,6 +215,7 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject.statute = new Statute();
       this.StatuteSettingsObject.statute.name = this.statutes[counter].name
       this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
+      this.StatuteSettingsObject.statute.brightStaffingID  = parseInt(this.statutes[counter].BrightStaffingID,10);
 
       this.statuteSettings[counter] = this.StatuteSettingsObject;
 
@@ -287,6 +285,9 @@ ngOnInit() {
       this.isMealEnabled = new Array<number>(data.length);
       this.countStatutes = data.length;
 
+      this.logger.log("length of statutes="+this.statutes.length);
+      this.logger.log(this.statutes);
+
       if (this.statutes.length !== 0) {
         this.emitData();
       }      
@@ -335,59 +336,6 @@ ngOnInit() {
   }
   
 
-  // createArrayData(data: Statute[]) {
-
-  //   this.statuteSettings = [];
-
-  //   console.log("statute settings array");
-  //   console.log(this.loadStatuteSettingsArray);
-
-  //   for (let i = 0; i < data.length; i++)
-  //   {
-
-  //     const dataObject = data[i];
-
-  //     this.statuteObject = new Statute();
-  //     this.statuteObject.name = dataObject.name;
-  //     this.statuteObject.type = dataObject.type;
-
-  //     if(this.arrayParitairCommitee !== null && this.arrayParitairCommitee !== undefined && this.arrayParitairCommitee.length !== 0)
-  //     {
-  //       const dataPtObject = this.arrayParitairCommitee[i];
-  
-  //       this.paritarirCommiteeObject = new ParitairCommitee();
-  //       this.paritarirCommiteeObject.BrightStaffingCommitteeId = dataPtObject.BrightStaffingCommitteeId;
-  //       this.paritarirCommiteeObject.name = dataPtObject.name;
-  //       this.paritarirCommiteeObject.number = dataPtObject.number;
-  //       this.paritarirCommiteeObject.type = dataPtObject.type;
-  
-  //       this.mealVoucherSettingsObject = new MealVoucherSettings();
-  
-  //       if (this.isMealEnabled[i] === true) {
-  //         this.mealVoucherSettingsObject.employerShare = parseInt(this.wegervaalArray[i],10);
-  //         this.mealVoucherSettingsObject.minimumHours = parseInt(this.minimumurenArray[i],10);
-  //         this.mealVoucherSettingsObject.totalWorth = parseInt(this.totalArray[i],10);
-  //       } else {
-  //         this.mealVoucherSettingsObject.employerShare = 0;
-  //         this.mealVoucherSettingsObject.minimumHours = 0;
-  //         this.mealVoucherSettingsObject.totalWorth = 0;
-  //       }
-  
-  //       this.StatuteSettingsObject = new StatuteSetting();
-  //       this.StatuteSettingsObject.statute = this.statuteObject;
-  //       this.StatuteSettingsObject.paritairCommitee = this.paritarirCommiteeObject;
-  //       this.StatuteSettingsObject.mealVoucherSettings = this.mealVoucherSettingsObject;
-  //       this.StatuteSettingsObject.coefficient = parseInt(this.coefficientArray[i],10);
-  
-  //       this.statuteSettings.push(this.StatuteSettingsObject);
-  //     }
-
-  //   }
-
-  //   this.emitData();
-
-  // }
-
   totalChange(value: number, i) {
 
     if(this.isMealEnabled[i]===true)
@@ -429,7 +377,7 @@ ngOnInit() {
     this.arrayParitairCommitee[i] = new ParitairCommitee();
     this.paritarirCommiteeObject = new ParitairCommitee();
 
-    this.paritarirCommiteeObject.BrightStaffingCommitteeId = $event.selectedObject.BrightStaffingCommitteeId;
+    this.paritarirCommiteeObject.brightStaffingId = $event.selectedObject.BrightStaffingCommitteeId;
     this.paritarirCommiteeObject.name =  $event.selectedObject.name;
     this.paritarirCommiteeObject.number = $event.selectedObject.number;
     this.paritarirCommiteeObject.type = $event.selectedObject.type;
@@ -496,7 +444,7 @@ ngOnInit() {
 
   replaceArray(i: number) {
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-          this.statuteSettings[i].paritairCommitee.BrightStaffingCommitteeId = this.statuteSelectedString.BrightStaffingCommitteeId;
+          this.statuteSettings[i].paritairCommitee.brightStaffingId = this.statuteSelectedString.BrightStaffingCommitteeId;
           this.statuteSettings[i].paritairCommitee.name = this.statuteSelectedString.name;
           this.statuteSettings[i].paritairCommitee.type = this.statuteSelectedString.type;
           this.statuteSettings[i].paritairCommitee.number = this.statuteSelectedString.number;

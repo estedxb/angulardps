@@ -11,10 +11,10 @@ import { CountriesService } from '../../shared/countries.service';
 
 export class ZichmetComponent implements OnInit {
 
-  @Input() public CountryFormData;
+  @Input() public ZichmetFormData;
   @Output() public childEvent = new EventEmitter();
 
-  public oldCountryFormData;
+  public oldZichmetFormData;
   public id = 'ddl_legalform';
   public currentlanguage = 'nl';
   public errorMsg;
@@ -82,17 +82,17 @@ export class ZichmetComponent implements OnInit {
 
   ngDoCheck() {
 
-    if (this.CountryFormData !== this.oldCountryFormData) {
-      this.oldCountryFormData = this.CountryFormData;
+    if (this.ZichmetFormData !== this.oldZichmetFormData) {
+      this.oldZichmetFormData = this.ZichmetFormData;
       this.loadInitialData(this.datas);
     }
 
   }
 
   ngAfterViewInit() {
-    if (this.CountryFormData !== this.oldCountryFormData) {
+    if (this.ZichmetFormData !== this.oldZichmetFormData) {
       // this.logger.log('ngDoCheck countryForm data=' + this.CountryFormData);
-      this.oldCountryFormData = this.CountryFormData;
+      this.oldZichmetFormData = this.ZichmetFormData;
       this.loadInitialData(this.datas);
     }
   }
@@ -106,7 +106,7 @@ export class ZichmetComponent implements OnInit {
 
         if(str !== undefined && str != null)
         {
-          if(this.CountryFormData === str)
+          if(this.oldZichmetFormData === str)
           {
             this._selectedIndex = i;
             this.childEvent.emit(this.datas[i]);

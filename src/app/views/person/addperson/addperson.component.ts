@@ -34,6 +34,8 @@ export class AddPersonComponent implements OnInit {
   public recvdCountryOfBirth;
   public recvdCountryCode;
 
+  public zichmetdata;
+
   public selectedStatuteObject:any = {};
 
   public validSSID: boolean;
@@ -238,8 +240,8 @@ export class AddPersonComponent implements OnInit {
     this.setDropDownYear();
 
     this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
-    this.dropDownMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    this.dataDropDownGender = ['Man', 'Vrouw'];
+    this.dropDownMonth = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+    this.dataDropDownGender = ['Vrouw', 'Man'];
 
     this.AddPersonForm1 = new FormGroup({
       socialSecurityNumber: new FormControl(''),
@@ -729,6 +731,10 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
+    if(data.person !== null) {
+      this.zichmetdata = data.person.travelMode;
+    }    
+
   }
 
   loadObjects(response: any) {
@@ -825,10 +831,10 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.AddPersonForm1.get('placeOfBirth').value;
 
-
-
     this.DpsPersonObject.person.countryOfBirth = this.recvdCountryOfBirth; 
     this.DpsPersonObject.person.nationality = this.recvdNationalityString;
+
+    this.DpsPersonObject.person.travelMode = this.zichmetdata;
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
@@ -866,8 +872,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
 
-    this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
-    this.DpsPersonObject.person.status = '';
+    this.DpsPersonObject.person.status = "";
 
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = this.selectedStatuteObject.name;
@@ -939,9 +944,21 @@ export class AddPersonComponent implements OnInit {
   }
 
 
+  receiveZichMet($event) {
+
+    this.zichmetdata = $event;
+  
+    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+    if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.travelMode = $event;
+    }  
+
+    this.changeMessage();
+  
+    }
+
   onCountryReceiveNationality($event) {
 
-    this.logger.log("nationality received="+ $event.Country);
     this.recvdNationalityString = $event.Country;
 
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
@@ -954,8 +971,6 @@ export class AddPersonComponent implements OnInit {
   }
 
   onCountryReceiveBirthPlace($event) {
-
-    this.logger.log("onCountryReceiveBirthPlace received="+ $event.Country);
 
     this.recvdCountryOfBirth = $event.Country;  
 
@@ -1004,7 +1019,6 @@ export class AddPersonComponent implements OnInit {
     this.recvdCountryString = $event.Country;
     this.recvdCountryCode = $event['Alpha-2'];
 
-    // this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -1013,7 +1027,6 @@ export class AddPersonComponent implements OnInit {
           this.DpsPersonObject.person.address.country = $event.Country;
           this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
           
-          this.logger.log(this.DpsPersonObject);
         }
       }
     }
