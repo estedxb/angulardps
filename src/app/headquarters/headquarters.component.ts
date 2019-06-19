@@ -339,14 +339,17 @@ export class HeadQuartersComponent implements OnInit {
 
         this.legalString = verifiedCustomerData.customer.legalForm;
 
-        this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
-        this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
-        this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
-        this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
-        this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
-        this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);
+        if(verifiedCustomerData.customer.address !== null)
+        {
+          this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
+          this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
+          this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
+          this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
+          this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
+          this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);  
+        }
 
-        if (verifiedCustomerData.customer.phoneNumber.number !== null)
+        if (verifiedCustomerData.customer.phoneNumber !== null && verifiedCustomerData.customer.phoneNumber.number !== null)
           this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
 
         if (verifiedCustomerData.customer.email !== null)

@@ -9,6 +9,8 @@ import {
 } from 'src/app/shared/models';
 import { DataService } from '../../../shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+
 
 @Component({
   selector: 'app-add-customer',
@@ -27,7 +29,8 @@ export class AddCustomerComponent implements OnInit {
   public CTFormValid: boolean;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService, private logger: LoggingService) { }
+  constructor(private customerService: CustomersService, private logger: LoggingService,
+    private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.HQFormValid = true;
@@ -230,9 +233,23 @@ export class AddCustomerComponent implements OnInit {
     }
   }
 
+  
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      this.logger.log('Snackbar Action :: ' + Action);
+    });
+  }
+
   updateData() {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.logger.log('response=' + res);
+      this.ShowMessage('Person record created successfully.', '');
+      this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

@@ -31,7 +31,6 @@ export class InvoiceSettingsComponent implements OnInit {
   public oldFPFormData:any = {};
 
   // tslint:disable-next-line: variable-name
-  private _selectedValueInhaalrust: any; private _selectedIndexInhaalrust: any = 0; private _Inhaalrustvalue: any;
 
   public disabled = 'true';
   public addNewRow: boolean;
@@ -84,35 +83,24 @@ export class InvoiceSettingsComponent implements OnInit {
   public currencyNewChoice:number = 0;
 
   constructor(private fb: FormBuilder, private logger: LoggingService) { } 
-
-  /***** Drop Down functions and variables for calendar days  ********************************************/
-     private _selectedValuenominal: any; private _selectedIndexnominal: any = 0; private _nominalvalue: any;
-     set selectedValueNominal(value: any) {  this._selectedValuenominal = value; }
-     get selectedValueNominal(): any { return this._selectedValuenominal; }
-     set selectedIndexNominal(value: number) { this._selectedIndexnominal = value; this.valueNominal = this.datacurrencyDropDown[this.selectedIndexNominal]; }
-     get selectedIndexNominal(): number { return this._selectedIndexnominal; }
-     set valueNominal(value: any) { this._nominalvalue = value; }
-     get valueNominal(): any { return this._nominalvalue; }
-     resetToInitValueNominal() { this.value = this.selectedValueNominal; }
-     SetInitialValueNominal() { if (this.selectedValueNominal === undefined) {   this.selectedValueNominal = this.datacurrencyDropDown[this.selectedIndexNominal]; }}
   
   /********************************************** DropDown  Inhaalrust drop down *************************/
-  set selectedValue(value: any) { this._selectedValueInhaalrust = value; }
-  get selectedValue(): any { return this._selectedValueInhaalrust; }
-  set selectedIndex(value: number) { this._selectedIndexInhaalrust = value; this.value = this.dataDropDown[this.selectedIndex]; }
-  set selectedIndexCurrencyShiftAllowance(value: number) {
-    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
-  }
-  set selectedIndexCurrencyOtherAllowance(value: number) {
-    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
-  }
-  get selectedIndex(): number {
-    return this._selectedIndexInhaalrust;
-  }
-  set value(value: any) { this._Inhaalrustvalue = value; }
-  get value(): any { return this._Inhaalrustvalue; }
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
+
+  set selectedValue(value: any) { this._selectedValue = value; }
+  get selectedValue(): any { return this._selectedValue; }
+  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dataDropDown[this.selectedIndex]; }
+  get selectedIndex(): number { return this._selectedIndex; }
+  set value(value: any) { this._value = value; }
+  get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
-  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
+
+  SetInitialValue() {
+    if (this.selectedValue === undefined) {
+      this._selectedIndex = 0;
+      this.selectedValue = this.dataDropDown[this._selectedIndex];
+    }
+  }
 
   changeObject() {
 
@@ -189,7 +177,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   ngDoCheck() {
-
     
     //load Edit Page details
     if (this.FPFormData !== undefined && this.FPFormData !== null) 
@@ -219,14 +206,14 @@ export class InvoiceSettingsComponent implements OnInit {
                     if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled === true)
                     {
                       this.ISForm.get('inhaalrust').enable();
-                      this._selectedIndexInhaalrust = 0;
-                      
+                      this.SetInitialValue();
+
                       if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.payed === true)
                       {
-                        this._selectedIndexInhaalrust = 0;
+                        this._selectedIndex = 0;
                       }
                       else {
-                        this._selectedIndexInhaalrust = 1;
+                        this._selectedIndex = 1;
                       } 
                     }
                     else
