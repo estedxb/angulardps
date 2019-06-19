@@ -70,6 +70,12 @@ export class AddPersonComponent implements OnInit {
   public countStatutes: number;
   public datas: DpsPostion;
   public selectedGenderIndex;
+  
+  public selectedlanguageObject:any = {
+    name: "Dutch",
+    shortName: "nl"
+  };
+
 
   public showFormIndex = 1;
 
@@ -476,7 +482,6 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
-
   }
 
   getPersonbySSIDVatNumber() {
@@ -681,7 +686,10 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.controls.emailAddress.setValue(data.person.email.emailAddress);
     }
 
-    // this.languageString = data.person.language.name;
+    if(data.person.language !== null && data.person.language !== undefined)
+    {
+      this.languageString = data.person.language.name;
+    }
 
     if (data.person.bankAccount !== null) {
       this.AddPersonForm1.controls.iban.setValue(data.person.bankAccount.iban);
@@ -727,7 +735,11 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.address = response.person.address;
 
     this.DpsPersonObject.person.language = new Language();
-    this.DpsPersonObject.person.language = response.person.language;
+    this.DpsPersonObject.person.language.name = response.person.language.name;
+    this.DpsPersonObject.person.language.shortName = response.person.language.shortName.toLowerCase();
+
+    this.selectedlanguageObject.name = response.person.language.name;
+    this.selectedlanguageObject.shortName = response.person.language.shortName.toLowerCase();
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email = response.person.email;
@@ -832,6 +844,10 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = this.selectedStatuteObject.name;
     this.DpsPersonObject.statute.type = this.selectedStatuteObject.type;
+
+    this.DpsPersonObject.person.language = new Language();
+    this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
+    this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
     this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
@@ -938,12 +954,18 @@ export class AddPersonComponent implements OnInit {
 
   onLanguageReceive($event) {
 
+    this.selectedlanguageObject.name = $event.name;
+    this.selectedlanguageObject.shortName = $event.shortName.toLowerCase();
+
+    this.logger.log(this.selectedlanguageObject);
+
+    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
     if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined) {
       this.DpsPersonObject.person.language = new Language();
       this.DpsPersonObject.person.language.name = $event.name;
-      this.DpsPersonObject.person.language.shortName = $event.shortName;
+      this.DpsPersonObject.person.language.shortName = $event.shortName.toLowerCase();
+
     }
-    this.logger.log(this.DpsPersonObject);
   }
 
   onCountryReceive($event) {
@@ -1029,6 +1051,8 @@ export class AddPersonComponent implements OnInit {
     } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
+        this.ShowMessage('Person fetched successfully.', '');
+        this.showFormIndex = 3;
       }
     }
   }
@@ -1043,11 +1067,11 @@ export class AddPersonComponent implements OnInit {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
           this.showFormIndex = 4;
-          this.ShowMessage('Error occured='+err.error.message,'');
+          // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
           this.logger.log('response code=' + err.status);
           this.logger.log('response body=' + err.error);
-          this.ShowMessage('Error occured='+err.error.message,'');
+          // this.ShowMessage('Error occured='+err.error,'');
         }
       }
     );

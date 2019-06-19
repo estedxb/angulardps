@@ -30,7 +30,7 @@ export class Contact {
 export class InvoiceSettings {
     transportCoefficient: number; mealvoucherCoefficient: number; ecoCoefficient: number; dimonaCost: number;
     lieuDaysAllowance?: LieuDaysAllowance; sicknessInvoiced?: boolean; holidayInvoiced?: boolean; mobilityAllowance?: MobilityAllowance;
-    shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
+    otherAllowance?:boolean; shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
 }
 export class CustomersList { item1: string; item2: string; item3?: string; item4?: string; }
 export class WorkCodes {

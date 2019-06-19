@@ -141,7 +141,7 @@ export class HeadQuartersComponent implements OnInit {
   ngAfterViewInit() {
 
     //load Edit Page details
-    if (this.oldData !== this.HQFormData) {
+    if (this.HQFormData!== null  && this.HQFormData !== undefined && this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
@@ -243,8 +243,8 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessageCountry($event) {
 
-    this.countryString = $event.countryName;
-    this.countryCode = $event.countryCode;
+    this.countryString = $event.Country;
+    this.countryCode = $event['Alpha-2'];
     this.setAddress();
     this.setCustomerObject();
     this.createObjects();
@@ -339,14 +339,17 @@ export class HeadQuartersComponent implements OnInit {
 
         this.legalString = verifiedCustomerData.customer.legalForm;
 
-        this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
-        this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
-        this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
-        this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
-        this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
-        this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);
+        if(verifiedCustomerData.customer.address !== null)
+        {
+          this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
+          this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
+          this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
+          this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
+          this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
+          this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);  
+        }
 
-        if (verifiedCustomerData.customer.phoneNumber.number !== null)
+        if (verifiedCustomerData.customer.phoneNumber !== null && verifiedCustomerData.customer.phoneNumber.number !== null)
           this.HQForm.controls['phonenumber'].setValue(verifiedCustomerData.customer.phoneNumber.number);
 
         if (verifiedCustomerData.customer.email !== null)
@@ -496,7 +499,8 @@ export class HeadQuartersComponent implements OnInit {
     this.otherAllowance = new Array();
     this.invoiceSettings = new InvoiceSettings();
 
-    if(this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
+    if(this.HQFormData !== null && this.HQFormData !== undefined)    
+    if(this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
     {
 
           // assigning invoice settings 

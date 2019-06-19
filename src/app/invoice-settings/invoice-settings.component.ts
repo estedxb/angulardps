@@ -31,7 +31,6 @@ export class InvoiceSettingsComponent implements OnInit {
   public oldFPFormData:any = {};
 
   // tslint:disable-next-line: variable-name
-  private _selectedValueInhaalrust: any; private _selectedIndexInhaalrust: any = 0; private _Inhaalrustvalue: any;
 
   public disabled = 'true';
   public addNewRow: boolean;
@@ -84,35 +83,24 @@ export class InvoiceSettingsComponent implements OnInit {
   public currencyNewChoice:number = 0;
 
   constructor(private fb: FormBuilder, private logger: LoggingService) { } 
-
-  /***** Drop Down functions and variables for calendar days  ********************************************/
-     private _selectedValuenominal: any; private _selectedIndexnominal: any = 0; private _nominalvalue: any;
-     set selectedValueNominal(value: any) {  this._selectedValuenominal = value; }
-     get selectedValueNominal(): any { return this._selectedValuenominal; }
-     set selectedIndexNominal(value: number) { this._selectedIndexnominal = value; this.valueNominal = this.datacurrencyDropDown[this.selectedIndexNominal]; }
-     get selectedIndexNominal(): number { return this._selectedIndexnominal; }
-     set valueNominal(value: any) { this._nominalvalue = value; }
-     get valueNominal(): any { return this._nominalvalue; }
-     resetToInitValueNominal() { this.value = this.selectedValueNominal; }
-     SetInitialValueNominal() { if (this.selectedValueNominal === undefined) {   this.selectedValueNominal = this.datacurrencyDropDown[this.selectedIndexNominal]; }}
   
   /********************************************** DropDown  Inhaalrust drop down *************************/
-  set selectedValue(value: any) { this._selectedValueInhaalrust = value; }
-  get selectedValue(): any { return this._selectedValueInhaalrust; }
-  set selectedIndex(value: number) { this._selectedIndexInhaalrust = value; this.value = this.dataDropDown[this.selectedIndex]; }
-  set selectedIndexCurrencyShiftAllowance(value: number) {
-    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
-  }
-  set selectedIndexCurrencyOtherAllowance(value: number) {
-    this._selectedIndexInhaalrust = value; this.value = this.datacurrencyDropDown[this.selectedIndex];
-  }
-  get selectedIndex(): number {
-    return this._selectedIndexInhaalrust;
-  }
-  set value(value: any) { this._Inhaalrustvalue = value; }
-  get value(): any { return this._Inhaalrustvalue; }
+  private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
+
+  set selectedValue(value: any) { this._selectedValue = value; }
+  get selectedValue(): any { return this._selectedValue; }
+  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dataDropDown[this.selectedIndex]; }
+  get selectedIndex(): number { return this._selectedIndex; }
+  set value(value: any) { this._value = value; }
+  get value(): any { return this._value; }
   resetToInitValue() { this.value = this.selectedValue; }
-  SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.dataDropDown[this.selectedIndex]; } }
+
+  SetInitialValue() {
+    if (this.selectedValue === undefined) {
+      this._selectedIndex = 0;
+      this.selectedValue = this.dataDropDown[this._selectedIndex];
+    }
+  }
 
   changeObject() {
 
@@ -127,6 +115,7 @@ export class InvoiceSettingsComponent implements OnInit {
       'mobilityAllowance': this.mobilityAllowanceObject,
       'shiftAllowance': this.shiftAllowance,
       'shiftAllowances': this.shiftAllowances,
+      'otherAllowance': this.andreSwitch,
       'otherAllowances': this.otherAllowances
     };
 
@@ -135,10 +124,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onChangeDropDownCurrencyTeam($event, i) {
-
-    // this.selectedIndexCurrencyShiftAllowance = $event.target.value;
-
-    this.logger.log("selected currency="+$event + "i="+i);
 
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
@@ -151,14 +136,9 @@ export class InvoiceSettingsComponent implements OnInit {
       this.changeObject();
     }
 
-    //return this.value;
   }
 
   onChangeDropDownCurrencyOther($event, i) {
-
-    // this.selectedIndexCurrencyOtherAllowance = $event.target.value;
-
-    this.logger.log("received object="+$event + "  i="+i);
 
     if ( $event === '€') {
       this.otherAllowances[i].nominal = false;
@@ -171,7 +151,6 @@ export class InvoiceSettingsComponent implements OnInit {
       this.changeObject();
     }
 
-    //return $event;
   }
 
   onChangeDropDown($event) {
@@ -188,7 +167,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   ngDoCheck() {
-
     
     //load Edit Page details
     if (this.FPFormData !== undefined && this.FPFormData !== null) 
@@ -207,6 +185,7 @@ export class InvoiceSettingsComponent implements OnInit {
             this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
             this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
+            this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
@@ -217,14 +196,14 @@ export class InvoiceSettingsComponent implements OnInit {
                     if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled === true)
                     {
                       this.ISForm.get('inhaalrust').enable();
-                      this._selectedIndexInhaalrust = 0;
-                      
+                      this.SetInitialValue();
+
                       if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.payed === true)
                       {
-                        this._selectedIndexInhaalrust = 0;
+                        this._selectedIndex = 0;
                       }
                       else {
-                        this._selectedIndexInhaalrust = 1;
+                        this._selectedIndex = 1;
                       } 
                     }
                     else
@@ -364,7 +343,7 @@ export class InvoiceSettingsComponent implements OnInit {
                       if(this.otherAllowanceCounter < lengthOtherAllowance)
                       {
                         this.workCode[anothercounter] = element.codeId;
-                        this.addAndreRows(element.codeId,element.amount);
+                        this.addAndreRows(element.codeId,element.amount,element.nominal);
                         this.otherAllowances[anothercounter].nominal = element.nominal;
                         this.disabled = 'false';
                         this.andreSwitch = true;
@@ -399,141 +378,6 @@ export class InvoiceSettingsComponent implements OnInit {
     }
 
   }
-
-  // ngDoCheck() {
-
-  //   this.loadSwitchInhaalrust = false;
-  //   this.loadSwitchSickness = false;
-  //   this.loadSwitchHolidays = false;
-  //   this.loadSwitchMobility = false;
-  //   this.loadSwitchTeam = false;
-  //   this.loadSwitchOther = true;
-
-  //   if(this.oldFPFormData !== this.FPFormData) 
-  //   {
-  //     this.oldFPFormData = this.FPFormData;
-
-  //     this.logger.log("old fp form data");
-  //     this.logger.log("validity="+(this.oldFPFormData !== this.FPFormData));
-
-  //     if(this.FPFormData !== undefined && this.FPFormData !== null)
-  //   {
-  //     if(this.FPFormData.data !== null && this.FPFormData.page==="edit")
-  //     {
-  //       if(this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined)
-  //       {
-  //         if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
-  //         {
-
-  //           if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
-  //             this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
-
-  //           if(this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
-  //             this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled;
-
-  //           this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
-  //           this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
-  //           this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
-  //           this.loadSwitchOther = true;
-
-  //           if(this.loadSwitchMobility === true)
-  //           {
-  //             this.ISForm.get('mobilebox').enable();
-  //             this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
-  //           }
-  //           else
-  //           {
-  //             this.ISForm.get('mobilebox').disable();
-  //             this.ISForm.controls.mobilebox.setValue(this.FPFormData.data.invoiceSettings.mobilityAllowance.amountPerKm);
-  //           }
-
-  //           if(this.loadSwitchTeam === true)
-  //           {
-  //             this.ISForm.get('PloegprimeBox1').enable();
-  //             this.ISForm.get('PloegprimeBox2').enable();
-  //             this.ISForm.get('currency').enable();
-
-  //             this.ploegpremieSwitch = true;
-
-  //             let lengthShiftAllowance = this.FPFormData.data.invoiceSettings.shiftAllowances.length;
-  //             let counter:number = 0;
-
-  //             this.newcounter++;
-  //             this.logger.log("counter="+this.newcounter+ "  length="+lengthShiftAllowance);
-
-  //             this.logger.log("length of shift allowance="+lengthShiftAllowance);
-
-  //             this.FPFormData.data.invoiceSettings.shiftAllowances.forEach(element => {
-
-  //               this.addRows(element.shiftName,element.amount,element.nominal);
-  //               counter += 1;
-
-  //             });
-
-  //             // this.ISForm.get('PloegprimeBox1').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName);
-  //             // this.ISForm.get('PloegprimeBox2').setValue(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount);
-
-  //             if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === true)
-  //             {
-  //               this._selectedIndexnominal = 0;
-  //               this.currencyChoice = 0;
-  //             }
-  //             else {
-  //               this._selectedIndexnominal = 1;
-  //               this.currencyChoice = 1;
-  //             }
-
-  //             this.changeObject();
-
-  //           }
-
-  //           if(this.loadSwitchOther === true)
-  //           {
-
-  //             this.ISForm.get('AndreBox1').enable();
-  //             this.ISForm.get('AndreBox2').enable();
-  //             this.ISForm.get('currency').enable();
-  //             this.disableWorkCodes = false;
-
-  //             let lengthOtherAllowance = this.FPFormData.data.invoiceSettings.otherAllowances.length;
-
-  //             this.FPFormData.data.invoiceSettings.otherAllowances.forEach(element => {
-
-  //               if(this.counter < lengthOtherAllowance)
-  //               {
-  //                 if(this.counter===0)
-  //                 {
-  //                   this.workCode[this.counter] = element.codeId;
-  //                   const formGroup = this.Andre.controls[this.counter] as FormGroup;
-  //                   formGroup.controls['AndreBox2'].setValue(element.amount);
-  //                   this.otherAllowances[this.counter].amount = parseInt(element.amount,10);
-  //                   this.otherAllowances[this.counter].codeId = parseInt(element.codeId,10);
-  //                   this.otherAllowances[this.counter].nominal = element.nominal;
-  //                 }
-  //                 else 
-  //                 {
-  //                   this.workCode[this.counter] = element.codeId;
-  //                   this.addAndreRows(element.codeId,element.amount);
-  //                   this.disabled = 'false';
-  //                   this.andreSwitch = true;
-  //                   const formGroup = this.Andre.controls[this.counter] as FormGroup;
-  //                   formGroup.controls['AndreBox2'].setValue(element.amount);                    
-  //                 }
-
-  //                 this.counter += 1;  
-  //               }
-  //             });
-
-  //             this.changeObject();
-
-  //           }
-  //         }
-  //       }     
-  //     }
-  //       }
-  //   }    
-  // }
-
 
   ngOnInit() {
 
@@ -882,11 +726,12 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.Andre.get('arrayAndreBox') as FormArray;
   }
 
-  addAndreRows(value1,value2) {
+  addAndreRows(value1,value2,nominal) {
     this.Andre.push(this.createAndre(value1,value2));
     this.otherAllowanceObject = new OtherAllowance();
     this.otherAllowanceObject.codeId = value1;
     this.otherAllowanceObject.amount = value2;
+    this.otherAllowanceObject.nominal = nominal;
     this.otherAllowances.push(this.otherAllowanceObject);
     this.otherAllowanceCounter++;
     // this.changeObject();

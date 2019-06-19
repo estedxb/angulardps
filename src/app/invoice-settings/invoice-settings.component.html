@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="row">
                                         <div class="col col-sm-8 m50">
-                                                <select formControlName="inhaalrust" id="dd_inhaalrust"
+                                                <select [ngModel]="selectedIndex" formControlName="inhaalrust" id="dd_inhaalrust"
                                                         name="dd_inhaalrust" class="inhaalrust selectcomponent"
                                                         (change)="onChangeDropDown($event)" ng-dropdown
                                                         required="required">

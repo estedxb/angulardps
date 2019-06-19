@@ -221,7 +221,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Taal: </label>
-                  <app-languages (childEvent)="onLanguageReceive($event)"></app-languages>
+                  <app-languages [LanguageFormData]="languageString" (childEvent)="onLanguageReceive($event)"></app-languages>
                 </div>
               </div>
             </div>
