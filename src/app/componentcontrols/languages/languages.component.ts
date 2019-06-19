@@ -54,10 +54,31 @@ export class LanguagesComponent implements OnInit {
 
   }
 
+  replaceDatasLanguage() {
+
+    this.logger.log("replaceing datas");
+
+    for(let it=0;it<this.datas.length;it++)
+    {
+
+      if(this.datas[it].name==="Dutch")
+          this.datas[it].name = "Nederlands";
+      if(this.datas[it].name === "French")
+          this.datas[it].name = "Frans";
+        if(this.datas[it].name === "English")
+          this.datas[it].name = "Engels";  
+    }
+
+
+  }
+
   ngOnInit() {
     this.languagesService.getLanguages().subscribe(languages => {
       this.datas = languages;
+
+      this.replaceDatasLanguage();
       this.loadInitialData(this.datas);
+      
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }

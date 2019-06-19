@@ -35,7 +35,7 @@
                                                         <ui-switch [checked]="loadSwitchSickness"
                                                                 (change)="onChangeZ($event)" size="small">
                                                         </ui-switch> &nbsp;
-                                                        <span>Ziekte</span>
+                                                        <span>Ziekte factureren</span>
                                                 </div>
                                         </div>
                                 </div>
@@ -43,7 +43,7 @@
                                         <div class="col col-sm-12">
                                                 <ui-switch [checked]="loadSwitchHolidays" (change)="onChangeF($event)"
                                                         size="small"></ui-switch> &nbsp;
-                                                <span>Feest</span>
+                                                <span>Feestdagen factureren</span>
                                         </div>
                                 </div>
                                 <div class="row">
@@ -52,7 +52,7 @@
                                                         <ui-switch [checked]="loadSwitchMobility"
                                                                 (change)="onChangeM($event)" size="small">
                                                         </ui-switch> &nbsp;
-                                                        <span>Mobile</span>
+                                                        <span>Mobiliteitsvergoeding</span>
                                                 </div>
                                         </div>
                                 </div>
@@ -72,18 +72,18 @@
                         <div class="col-sm-7">
                                 <div class="row">
                                          <div class="col col-sm-5">
-                                                <span>Verplaatsingen:</span><input #transportCoefficient (change)="transportCoefficient(transportCoefficient.value)" type="number" value="1.20" formControlName="Verplaatsingen">
+                                                <span>Coëfficient verplaatsingen</span><input #transportCoefficient (change)="transportCoefficient(transportCoefficient.value)" type="number" value="1.20" formControlName="Verplaatsingen">
                                         </div>
                                         <div class="col col-sm-5">
-                                                <span>Maalticheques:</span><input #maaltichequesCoefficient (change)="maaltichequesCoefficient(maaltichequesCoefficient.value)" type="number" value="1.69" formControlName="Maalticheques">
+                                                <span>Coëfficient maaltijdcheques</span><input #maaltichequesCoefficient (change)="maaltichequesCoefficient(maaltichequesCoefficient.value)" type="number" value="1.69" formControlName="Maalticheques">
                                         </div>        
                                 </div>
                                 <div class="row">
                                                 <div class="col col-sm-5">
-                                                       <span>Echo:</span><input #echoCoefficient (change)="onEchoChange(echoCoefficient.value)" type="number" value="1.69" formControlName="Echo">
+                                                       <span>Coëfficient ecocheques</span><input #echoCoefficient (change)="onEchoChange(echoCoefficient.value)" type="number" value="1.69" formControlName="Echo">
                                                </div>
                                                <div class="col col-sm-5">
-                                                       <span>Dimona:</span><input #dimonaCost (change)="onDimonaChange(dimonaCost.value)" type="number" value="0.3510" formControlName="Dimona">
+                                                       <span>Dimona</span><input #dimonaCost (change)="onDimonaChange(dimonaCost.value)" type="number" value="0.3510" formControlName="Dimona">
                                                </div>
                                        </div>
        
@@ -144,7 +144,7 @@
                                         <div class="col col-sm-12">
                                                 <ui-switch [checked]="loadSwitchOther" (change)="onChangeA($event)"
                                                         size="small"></ui-switch>&nbsp;
-                                                <span>Andre</span>
+                                                <span>Andere</span>
                                         </div>
                                 </div>
                                 <div formArrayName="arrayAndreBox"

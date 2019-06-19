@@ -5,11 +5,10 @@
 
     <form [formGroup]="CTForm" novalidate id="CTForm">
         <!-- <pre>{{ CTForm.value | json}}</pre> -->
-
-        <pre>{{ CTForm.valid }}</pre>
+        <!-- <pre>{{ CTForm.valid }}</pre> -->
         <div class="row">
             <div class="col-sm-5 inputWithImg">
-                <label class="titleBold"> Voorname: </label>
+                <label class="titleBold"> Voornaam </label>
                 <input (change)="updateData()" formControlName="firstname" class="form-control" name="firstname"
                     type="text" required />
                 <div class="form-control-feedback"
@@ -22,7 +21,7 @@
             </div>
 
             <div class="col-sm-4 inputWithImg">
-                <label class="titleBold"> naam: </label>
+                <label class="titleBold"> Naam </label>
                 <input (change)="updateData()" formControlName="lastname" class="form-control" name="lastname"
                     type="text" required />
                 <div class="form-control-feedback"
@@ -35,7 +34,7 @@
             </div>
 
             <div class="col-sm-2 inputWithImg">
-                <label class="titleBold"> Taal: </label>
+                <label class="titleBold"> Taal </label>
                 <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString">
                 </app-languages>
                 <!-- <input formControlName="language" class="form-control" name="language" type="text" required/> -->
@@ -53,7 +52,7 @@
 
         <div class="row">
             <div class="col-sm-6 inputWithImg">
-                <label class="titleBold"> Functie: </label>
+                <label class="titleBold"> Functie </label>
                 <input (change)="updateData()" formControlName="position" class="form-control" name="position"
                     type="text" required />
                 <div class="form-control-feedback"
@@ -66,7 +65,7 @@
             </div>
 
             <div class="col-sm-6 inputWithImg">
-                <label class="titleBold"> E-mail adres: </label>
+                <label class="titleBold"> E-mail adres </label>
                 <input (change)="updateData()" formControlName="emailaddress" class="form-control" name="emailaddress"
                     type="email" />
                 <div class="form-control-feedback"
@@ -81,7 +80,7 @@
 
         <div class="row">
             <div class="col-sm-4 inputWithImg">
-                <label class="titleBold"> Mobiel Nummer: </label>
+                <label class="titleBold"> Mobiel nummer </label>
                 <input (change)="updateData()" formControlName="mobile" class="form-control" name="mobile"
                     type="text" />
                 <div class="form-control-feedback"
@@ -95,7 +94,7 @@
             </div>
 
             <div class="col-sm-4 inputWithImg">
-                <label class="titleBold"> Telefoon Nummer: </label>
+                <label class="titleBold"> Telefoonnummer </label>
                 <input (change)="updateData()" formControlName="telephone" class="form-control" name="telephone"
                     type="text" />
                 <div class="form-control-feedback"
@@ -108,7 +107,7 @@
             </div>
 
             <div class="col-sm-4 center-block middle-block">
-                <label class="titleBold"> Als gebruiker activeren </label><br />
+                <label class="titleBold"> Alls gebruiker activeren? </label><br />
                 <ui-switch (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
             </div>
         </div>

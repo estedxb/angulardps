@@ -941,7 +941,6 @@ export class AddPersonComponent implements OnInit {
 
   onCountryReceiveNationality($event) {
 
-    this.logger.log("nationality received="+ $event.Country);
     this.recvdNationalityString = $event.Country;
 
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
@@ -954,8 +953,6 @@ export class AddPersonComponent implements OnInit {
   }
 
   onCountryReceiveBirthPlace($event) {
-
-    this.logger.log("onCountryReceiveBirthPlace received="+ $event.Country);
 
     this.recvdCountryOfBirth = $event.Country;  
 
@@ -1004,7 +1001,6 @@ export class AddPersonComponent implements OnInit {
     this.recvdCountryString = $event.Country;
     this.recvdCountryCode = $event['Alpha-2'];
 
-    // this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -1013,7 +1009,6 @@ export class AddPersonComponent implements OnInit {
           this.DpsPersonObject.person.address.country = $event.Country;
           this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
           
-          this.logger.log(this.DpsPersonObject);
         }
       }
     }

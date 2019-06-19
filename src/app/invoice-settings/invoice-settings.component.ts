@@ -411,7 +411,7 @@ export class InvoiceSettingsComponent implements OnInit {
     if(this.otherAllowances.length === 0)
       this.otherAllowances.push(this.otherAllowanceObject);
 
-    this.dataDropDown = ['betaald', 'niet betaald'];
+    this.dataDropDown = ['Betaald', 'Niet betaald'];
     this.datacurrencyDropDown = ['€', '%'];
 
     this.ISForm = new FormGroup({
