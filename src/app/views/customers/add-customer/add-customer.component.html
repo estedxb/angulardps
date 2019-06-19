@@ -10,16 +10,16 @@
 <div class="row" id="formState">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-    1. Create Company Details
+    1. Bedrijfsgegevens
     <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
   </div>
   <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
-    2. Agreements
+    2. Afspraken
     <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
   </div>
   <ng-template #secondpage>
     <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-      2. Agreements
+      2. Afspraken
       <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
     </div>
   </ng-template>
