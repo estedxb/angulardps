@@ -57,7 +57,7 @@
                     <img src="../../assets/img/ValidIcon.png" alt="">
                   </ng-template>
                 </div>
-                <div class="col col-sm-5 DOBCont"><label class="titleBold"> Geboortedatum:
+                <div class="col col-sm-5 DOBCont"><label class="titleBold"> Geboortedatum
                   </label>
                   <div class="row DOB">
                     <div class="col col-sm-3">
@@ -121,7 +121,7 @@
               </div>
               <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Straat: </label>
+                  <label class="titleBold"> Straat </label>
                   <input formControlName="street" class="form-control" name="street" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.street.invalid && (AddPersonForm1.controls.street.dirty || AddPersonForm1.controls.street.touched) else newvalidstreet">
@@ -132,7 +132,11 @@
                   </ng-template>
                 </div>
                 <div class="col-sm-3 inputWithImg">
+<<<<<<< HEAD
                   <label class="titleBold"> Nr </label>
+=======
+                  <label class="titleBold"> Nr. </label>
+>>>>>>> ecb2ffd9f021c6e885597584aa65cc986e00083c
                   <input formControlName="streetNumber" class="form-control" name="streetNumber" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.streetNumber.invalid && (AddPersonForm1.controls.streetNumber.dirty || AddPersonForm1.controls.streetNumber.touched) else newvalidstreetNumber">
@@ -143,7 +147,7 @@
                   </ng-template>
                 </div>
                 <div class="col-sm-3 inputWithImg">
-                  <label class="titleBold"> Bus: </label>
+                  <label class="titleBold"> Bus </label>
                   <input formControlName="bus" class="form-control" name="bus" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.bus.invalid && (AddPersonForm1.controls.bus.dirty || AddPersonForm1.controls.bus.touched) else newvalidbus">
@@ -401,7 +405,7 @@
                     <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch>
                   </div>
                   <div class="col-sm-10">
-                    <label class="titleBold">onkostenvergoeding </label>
+                    <label class="titleBold">Netto onkostenvergoeding </label>
                   </div>
                 </div>
                 <div class="row inputWithImgNew">
@@ -440,7 +444,7 @@
             <div class="row inputWithImgNew PersonContactContent">
               <div class="col-sm-12 ">
                 <textarea rows="6" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
-                  name="extra">Extra .....</textarea>
+                  name="extra"></textarea>
                 <div class="form-control-feedback"
                   *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -458,11 +462,11 @@
           <div id="CustomerDetails" class="customerBox">
             <div class="row panelheader">
               <div class="col col-sm-5 fright">
-                <h4>Person Created</h4>
+                <h4>Persoon aangemaakt</h4>
                 <hr>
               </div>
               <div class="col col-sm-7"></div>
-              <label class="center-block">Thank You For creating Person!!</label>
+              <label class="center-block">Persoon succesvol aangemaakt</label>
             </div>
           </div>
         </div> 
@@ -480,7 +484,7 @@
   </div>
   <ng-template #clausex >
       <div class="col col-sm-3" *ngIf="showFormIndex === 2">
-          <button class="greenButton" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Persoon Opslaan
+          <button class="greenButton" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Persoon opslaan
               <img src="../../assets/svg/right-arrow.svg" style="width:20px;" /></button><br />
           <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
             src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>            
