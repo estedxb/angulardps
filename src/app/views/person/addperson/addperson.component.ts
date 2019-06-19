@@ -1051,6 +1051,7 @@ export class AddPersonComponent implements OnInit {
     } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
+        this.ShowMessage('Person fetched successfully.', '');
         this.showFormIndex = 3;
       }
     }

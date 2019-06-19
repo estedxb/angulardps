@@ -125,8 +125,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
-    this.logger.log("selected currency="+$event + "i="+i);
-
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
       this.currencyDataShift[i] = '€';
@@ -345,7 +343,7 @@ export class InvoiceSettingsComponent implements OnInit {
                       if(this.otherAllowanceCounter < lengthOtherAllowance)
                       {
                         this.workCode[anothercounter] = element.codeId;
-                        this.addAndreRows(element.codeId,element.amount);
+                        this.addAndreRows(element.codeId,element.amount,element.nominal);
                         this.otherAllowances[anothercounter].nominal = element.nominal;
                         this.disabled = 'false';
                         this.andreSwitch = true;
@@ -728,11 +726,12 @@ export class InvoiceSettingsComponent implements OnInit {
     return this.Andre.get('arrayAndreBox') as FormArray;
   }
 
-  addAndreRows(value1,value2) {
+  addAndreRows(value1,value2,nominal) {
     this.Andre.push(this.createAndre(value1,value2));
     this.otherAllowanceObject = new OtherAllowance();
     this.otherAllowanceObject.codeId = value1;
     this.otherAllowanceObject.amount = value2;
+    this.otherAllowanceObject.nominal = nominal;
     this.otherAllowances.push(this.otherAllowanceObject);
     this.otherAllowanceCounter++;
     // this.changeObject();
