@@ -76,15 +76,15 @@ export class UpdatePersonComponent implements OnInit {
 
   filterData(message: any) {
 
-    this.logger.log("received message in update person");
+    this.logger.log('received message in update person');
     this.logger.log(message.data);
 
-    if (message.page === "edit") {
+    if (message.page === 'edit') {
       this.editPersonData = message.data;
       // this.logger.log("received person data=" + this.editPersonData);
     }
 
-    if (message.page === "position") {
+    if (message.page === 'position') {
       this.personpositionData = message.data;
       // this.logger.log("received person data=" + this.editPersonData);
     }
@@ -120,13 +120,13 @@ export class UpdatePersonComponent implements OnInit {
     try {
       // this.logger.log('Social Security Id :: ' + this.SocialSecurityId, 'Vat Number ::' + this.vatNumber);
       this.personService.getPersonBySSIDVatnumber(this.SocialSecurityId, this.vatNumber).subscribe(dpsperson => {
-        this.dpsPerson = dpsperson.body;
+        this.dpsPerson = dpsperson;
         this.person = this.dpsPerson.person;
 
         this.logger.log('DPS Person Form Data : ');
         this.logger.log(this.dpsPerson);
 
-        this.logger.log("Person Form Data : ");
+        this.logger.log('Person Form Data : ');
         this.logger.log(this.person);
 
         this.changeMessage();
@@ -156,11 +156,10 @@ export class UpdatePersonComponent implements OnInit {
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Error occured=" + err.error.message);
-          }
-          else {
-            console.log("response code=" + err.status);
-            console.log("response body=" + err.error);
+            console.log('Error occured=' + err.error.message);
+          } else {
+            console.log('response code=' + err.status);
+            console.log('response body=' + err.error);
           }
         }
       );
@@ -170,55 +169,47 @@ export class UpdatePersonComponent implements OnInit {
 
   onFormwardClick() {
 
-    this.logger.log("forward click has been clicked!!");
+    this.logger.log('forward click has been clicked!!');
 
-    if (this.currentPage === "editperson") {
-      this.logger.log("data collected");
+    if (this.currentPage === 'editperson') {
+      this.logger.log('data collected');
       this.logger.log(this.editPersonData);
 
       this.personService.updatePosition(this.editPersonData).subscribe(res => {
-        this.logger.log("response=" + res);
+        this.logger.log('response=' + res);
         this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            this.logger.log("Error occured=" + err.error.message);
-          }
-          else {
-            this.logger.log("response code=" + err.status);
-            this.logger.log("response body=" + err.error);
+            this.logger.log('Error occured=' + err.error.message);
+          } else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
           }
         }
       );
 
     }
 
-    if (this.currentPage === "positions") {
+    if (this.currentPage === 'positions') {
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
-        this.logger.log("response=" + res);
+        this.logger.log('response=' + res);
         this.ShowMessage('Person updated successfully.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            this.logger.log("Error occured=" + err.error.message);
-          }
-          else {
-            this.logger.log("response code=" + err.status);
-            this.logger.log("response body=" + err.error);
+            this.logger.log('Error occured=' + err.error.message);
+          } else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
           }
         }
       );
     }
 
-    if (this.currentPage === "documents") {
-
-      this.logger.log("data collected for person documents");
+    if (this.currentPage === 'documents') {
+      this.logger.log('data collected for person documents');
       this.logger.log(this.personDocumentsData);
-
-
-
-
-
     }
 
   }
