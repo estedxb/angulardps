@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   clientApplication = new Msal.UserAgentApplication(this.msalConfig);
 
-  authenticateParaMeter: Msal.AuthenticationParameters = { scopes: ['openid',''] };
+  authenticateParaMeter: Msal.AuthenticationParameters = { scopes: ['openid', ''] };
 
   AzureLogin() {
     this.clientApplication.acquireTokenRedirect(this.authenticateParaMeter);
@@ -102,7 +102,11 @@ export class LoginComponent implements OnInit {
         this.ltkn.userRole = FirstUser.userRole;
         this.ltkn.userName = FirstUser.user.firstName;
         this.ltkn.userEmail = FirstUser.user.email.emailAddress;
-        this.ltkn.customerName = FirstUser.customerVatNumber;
+        if (FirstUser.customerVatNumber === '987654321000') {
+          this.ltkn.customerName = 'DPS';
+        } else {
+          this.ltkn.customerName = FirstUser.customerVatNumber;
+        }
         this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
 
         if (this.f.userid.value.toLowerCase() === 'admin' && this.f.password.value.toLowerCase() === 'admin') {

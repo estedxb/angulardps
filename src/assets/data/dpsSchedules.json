@@ -10,6 +10,8 @@
       "personId": "62.11.18-012.12",
       "personName": "Jannes Martin",
       "positionName": "Function Two",
+      "personIsEnabled": true,
+      "personIsArchived": false,
       "contracts": [
         {
           "customerContractId": "1",

@@ -1,0 +1,13 @@
+<svg id="Laag_1" data-name="Laag 1" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 400 400"><defs>
+<style>.cls-1{fill:url(#a);}
+.cls-2{fill:#13A95F;}
+</style>
+<linearGradient id="a" x2="1" y2="2.243"  gradientUnits="objectBoundingBox">
+<stop offset="0" stop-color="#58F40F"/>
+<stop offset="1" stop-color="#009476"/>
+</linearGradient>
+</defs>
+<title>seperate-icons</title>
+<path class="cls-1" d="M324.68,76.62a174.87,174.87,0,0,0-180-42.47l11.08,33.22A140.69,140.69,0,0,1,315.67,281.52l-29.16-29.18v87.57h87.56l-33.4-33.39a175.31,175.31,0,0,0-16-229.9Z"/>
+<path class="cls-1" d="M111.39,147.27V59.7H23.82L59.05,94.93A175.77,175.77,0,0,0,200,375a176.91,176.91,0,0,0,56.07-9.17L245,332.6A140.71,140.71,0,0,1,84.06,120Z"/>
+<polygon class="cls-2" points="264.76 134.1 166.01 232.84 136.76 196.94 119.56 210.95 164.33 265.9 280.44 149.78 264.76 134.1"/></svg>

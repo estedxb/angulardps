@@ -53,7 +53,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Functie: </label>
                     <select id="position" name="position" class='form-control' required [(ngModel)]='positionSelected'
-                        (ngModelChange)='onPositionsSelected($event)' [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)='onPositionsChange($event)' [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let dpsPosition of dpsPositionsData'
                             [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
@@ -62,7 +62,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
                     <select id="position" name="position" class='form-control' required
-                        [(ngModel)]='contractReasonSelected' (ngModelChange)='onReasonSelected($event)'
+                        [(ngModel)]='contractReasonSelected' (ngModelChange)='onReasonChange($event)'
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'
@@ -72,18 +72,16 @@
             </div>
 
             <label class="titleBold"> Start Date: </label>
-            <app-calendar id='calendarStartDate' (childEvent)="receiveMessageStartDate($event)"
-                [CalendarData]="calendarData" [componentType]="Contract"
-                [calendardayDisableStatus]="this.calendardayDisableStatus"
+            <app-calendar id='calendarStartDate' (childEvent)="onStartDateChange($event)" [CalendarData]="calendarData"
+                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
                 [calendaryearDisableStatus]="this.calendaryearDisableStatus"
                 [calendarDisableStatus]="this.mode=='update' || this.mode=='edit' ? true : null">
             </app-calendar>
 
             <label class="titleBold"> End Date: </label>
-            <app-calendar id='calendarEndDate' (childEvent)="receiveMessageEndDate($event)"
-                [CalendarData]="calendarDataNew" [componentType]="Contract"
-                [calendardayDisableStatus]="this.calendardayDisableStatus"
+            <app-calendar id='calendarEndDate' (childEvent)="onEndDateChange($event)" [CalendarData]="calendarDataNew"
+                [componentType]="Contract" [calendardayDisableStatus]="this.calendardayDisableStatus"
                 [calendarmonthDisableStatus]="this.calendarmonthDisableStatus"
                 [calendaryearDisableStatus]="this.calendaryearDisableStatus"
                 [calendarDisableStatus]="this.mode=='update' ? true : null">
@@ -93,7 +91,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Werkrooster: </label>
                     <select id="workSchedule" name="workSchedule" class='form-control' required
-                        [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleSelected($event)'
+                        [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleChange($event)'
                         [ngModelOptions]="{standalone: true}" [disabled]="this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData'
                             [value]="workSchedule.id">
@@ -103,7 +101,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
                     <select id="location" name="location" class='form-control' required [(ngModel)]='locationSelected'
-                        (ngModelChange)='onLocationSelected($event)' [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)='onLocationChange($event)' [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let location of locationsData' [value]="location.id">
                             {{location.name}} </option>
@@ -128,13 +126,16 @@
                 <button class="greenbtn transbtn" id="btnPrint" (click)="onPrintContractClick()"><span>Afdrukken</span>
                 </button>
             </div>
-            <div class="col col-sm-3 center-block" *ngIf="this.isDpsUser===false">&nbsp;</div>
+            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false">&nbsp;</div>
+            <!--
             <div class="col col-sm-3 center-block">
                 <button class="greenbtn greenbtn" id="btnExtened" (click)="onExtented()"><span>Verlengen</span>
                 </button>
             </div>
-            <div class="col col-sm-3 center-block" *ngIf="this.isDpsUser"><button class="greenbtn" id="btnApprove"
-                    (click)="onApproveContractClick()" *ngIf="this.isDpsUser"><span>Goedkeuren</span>
+            -->
+            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser">
+                <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"
+                    *ngIf="this.isDpsUser"><span>Goedkeuren</span>
                 </button>
             </div>
             <div class="col col-sm-3 center-block">

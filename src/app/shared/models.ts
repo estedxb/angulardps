@@ -68,6 +68,7 @@ export class DpsPerson {
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
     constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
     driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
+    brightStaffingId: number;
 }
 
 export class Person {
@@ -98,7 +99,7 @@ export class WorkScheduleRow { rowid: number; weekDayOf: WeekDayOf[]; }
 export class WeekDayOf { dayOfWeek: number; workTimes: WorkTimes; }
 export class DpsContract {
     id: number; customerVatNumber: string; personId: string; positionId: number; locationId: number; workScheduleId: number;
-    bsContractId?: string; parentContractId: number; contract: Contract; timeSheet: TimeSheet;
+    bsContractId: number; parentContractId: number; contract: Contract; timeSheet: TimeSheet;
 }
 export class Contract {
     name: string; startDate: string; endDate: string; workSchedule: WorkSchedule; position: _Position; statute: Statute;
@@ -120,10 +121,16 @@ export class Summaries {
     objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
 }
 
-export class SelectedContract { personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date; }
+export class SelectedContract { personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date; mode: string }
 
-// export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
-// export class PersonsContracts { customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string; customerPostionId: string; dpsContracts: DpsContract[];}
+/*
+export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
+export class PersonsContracts {
+    customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string;
+    customerPostionId: string; dpsContracts: DpsContract[];
+}
+*/
+
 export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File; }
 export enum FileType {
     MedicalAttestation = 'MedicalAttestation', VcaAttestation = 'VcaAttestation',
@@ -133,7 +140,10 @@ export enum FileType {
 export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string; }
 export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
 export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
-export class DpsSchedulePerson { personId: string; personName: string; positionName: string; contracts: DpsScheduleContract[]; }
+export class DpsSchedulePerson {
+    personId: string; personName: string; positionName: string; personIsEnabled: boolean; personIsArchived: boolean;
+    contracts: DpsScheduleContract[];
+}
 export class DpsScheduleContract {
     customerContractId: string; customerContractName: string; customerContractstatus: string;
     childContractId: number; parentContractId: number; workSchedule: WorkSchedule;
@@ -141,5 +151,6 @@ export class DpsScheduleContract {
 export class PrintContractPDF { contractId: string; fileUrl: string; }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string; }
 export class ApproveContract { customerVatNumber: string; contractId: string; }
+
 // tslint:disable-next-line: variable-name
 export class ContractReason { name: string; BrightStaffing_Contract_Reason_ID: string; }
