@@ -17,27 +17,27 @@
       <div class="rline">
         <div class="sidemenus" [ngClass]="{active: currentPage==='workschedules'}">
           <button (click)="currentPage='workschedules'">
-            <img src="./assets/svg/calander.svg" />Mijn Werkroosters
+            <img src="./assets/svg/calander.svg" />Mijn werkroosters
           </button>
         </div>
         <div class="sidemenus" [ngClass]="{active: currentPage==='positions'}">
           <button (click)="currentPage='positions'">
-            <img src="./assets/svg/position.svg" />Mijn Functies
+            <img src="./assets/svg/position.svg" />Mijn functies
           </button>
         </div>
         <div class="sidemenus" [ngClass]="{active: currentPage==='users'}">
           <button (click)="currentPage='users'">
-            <img src="./assets/svg/users.svg" />Mijn Gebruikers
+            <img src="./assets/svg/users.svg" />Mijn gebruikers
           </button>
         </div>
         <div class="sidemenus" [ngClass]="{active: currentPage==='locations'}">
           <button (click)="currentPage='locations'">
-            <img src="./assets/svg/location.svg" />Mijn Vestigingen
+            <img src="./assets/svg/location.svg" />Mijn vestigingen
           </button>
         </div>
         <div class="sidemenus" [ngClass]="{active: currentPage==='editcustomer'}">
           <button (click)="currentPage='editcustomer'">
-            <img src="./assets/svg/customers.svg" />Mijn Bedrijfsgegevens
+            <img src="./assets/svg/customers.svg" />Mijn bedrijfsgegevens
           </button>
         </div>
         <div *ngIf="currentPage==='editcustomer'">
