@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import {
-  Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, LoginToken,
+  Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, LoginToken, ApproveContract, WorkDays,
   TimeSheet, DpsPostion, DpsScheduleContract, DpsWorkSchedule, WorkSchedule, SelectedContract, ContractReason
 } from 'src/app/shared/models';
 
@@ -14,7 +14,6 @@ import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 import { saveAs } from 'file-saver';
-import { ApproveContract, WorkDays } from '../../shared/models';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { emit } from 'cluster';
 import { LoggingService } from '../../shared/logging.service';
@@ -52,6 +51,8 @@ export class CreateContractComponent implements OnInit {
   public allowedEndYear: any;
   public allowedEndMonth: any;
   public allowedEndDay: any;
+
+  public personsStatute: Statute;
 
   /*
   public allowedExtentedStartDate: Date;
@@ -571,8 +572,9 @@ export class CreateContractComponent implements OnInit {
     this.personService.getPersonBySSIDVatnumber(personid, vatNumber).subscribe(response => {
       this.logger.log('personid :: ', personid);
       this.logger.log('loadPerson :: ', response);
-      this.ContractForm.controls.firstname.setValue(response.body.person.firstName);
-      this.ContractForm.controls.lastname.setValue(response.body.person.lastName);
+      this.ContractForm.controls.firstname.setValue(response.person.firstName);
+      this.ContractForm.controls.lastname.setValue(response.person.lastName);
+      this.currentDpsContract.contract.statute = response.statute;
     });
   }
 

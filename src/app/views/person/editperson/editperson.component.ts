@@ -92,8 +92,8 @@ export class EditPersonComponent implements OnInit {
   ngDoCheck() {
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== this.oldDpsPersonObject) {
-        this.oldDpsPersonObject = this.DpsPersonObject;
-      //this.childEvent.emit(this.HQdata);
+      this.oldDpsPersonObject = this.DpsPersonObject;
+      // this.childEvent.emit(this.HQdata);
     }
   }
 
@@ -267,20 +267,20 @@ export class EditPersonComponent implements OnInit {
 
   soapCallFetchBBAN() {
 
-    let parser = new DOMParser();
-    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+    const parser = new DOMParser();
+    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
       + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
       + '<Value>BE46001664436336</Value>'
-      + '</getBelgianBBAN></soap12:Body></soap12:Envelope>'
+      + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
-    let doc = parser.parseFromString(xmlString, 'text/xml');
-    let headers = new HttpHeaders()
+    const doc = parser.parseFromString(xmlString, 'text/xml');
+    const headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers: headers }).subscribe(data => {
-      this.logger.log("data=" + data);
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+      this.logger.log('data=' + data);
       this.bban = data;
       this.soapCallGetBIC();
     });
@@ -289,18 +289,18 @@ export class EditPersonComponent implements OnInit {
 
   // bic from bban
   soapCallGetBIC() {
-    let parser = new DOMParser();
-    let xmlString = '<?xml version="1.0" encoding="utf-8"?>'
+    const parser = new DOMParser();
+    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>'
+      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>';
 
-    let headers = new HttpHeaders()
+    const headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers: headers }).subscribe(data => {
-      this.logger.log("data=" + data);
+    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+      this.logger.log('data=' + data);
       this.bbic = data;
     });
 
@@ -309,7 +309,7 @@ export class EditPersonComponent implements OnInit {
         this.DpsPersonObject.person.bankAccount = new BankAccount();
         this.DpsPersonObject.person.bankAccount.iban = this.iban;
         this.DpsPersonObject.person.bankAccount.bic = this.bbic;
-        this.editPersonForm.controls['bic'].setValue(this.bbic);
+        this.editPersonForm.controls.bic.setValue(this.bbic);
       }
       this.changeMessage();
     }
@@ -358,50 +358,50 @@ export class EditPersonComponent implements OnInit {
 
   loadPersonData() {
 
-    this.logger.log("load person data called");
+    this.logger.log('load person data called');
 
-    let newResponse:any = "";
-    let data:any = "";
-    let vatNumber = this.dpsLoginToken.customerVatNumber;
+    let newResponse: any = '';
+    let data: any = '';
+    const vatNumber = this.dpsLoginToken.customerVatNumber;
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, vatNumber).subscribe(dpsperson => {
-      newResponse  = dpsperson.body;
-      this.logger.log("new response");
+      newResponse = dpsperson;
+      this.logger.log('new response');
       this.logger.log(dpsperson);
       data = newResponse;
 
-      this.logger.log("countryOfBirth="+data.person.countryOfBirth);
+      this.logger.log('countryOfBirth=' + data.person.countryOfBirth);
 
-      if (data !== null  && data.person !== null) {
+      if (data !== null && data.person !== null) {
 
         const stringData: string = data.person.dateOfBirth.toString();
         const dobArray = stringData.split('T');
         const dobString: string = dobArray[0];
         this.loadDOBData(dobString);
-  
+
         this.languageString = data.person.language.name;
-  
+
         const genderObject = new Gender();
-  
+
         if (data.person.gender !== null) {
           genderObject.genderId = data.person.gender.genderId;
           genderObject.title = data.person.gender.title;
-  
+
           this.selectedGenderIndex = genderObject.genderId;
         }
-  
+
         this.editPersonForm.controls.placeOfBirth.setValue(data.person.placeOfBirth);
-  
+
         // this.editPersonForm.controls.countryOfBirth.setValue(data.person.countryOfBirth);
         this.birthCountryString = data.person.countryOfBirth;
-  
+
         // this.editPersonForm.controls.nationality.setValue(data.person.nationality);
         this.nationalityString = data.person.nationality;
-  
+
         this.editPersonForm.controls.firstName.setValue(data.person.firstName);
         this.editPersonForm.controls.lastName.setValue(data.person.lastName);
       }
-  
+
       if (data.person.address !== null) {
         this.editPersonForm.controls.street.setValue(data.person.address.street);
         this.editPersonForm.controls.streetNumber.setValue(data.person.address.streetNumber);
@@ -410,29 +410,29 @@ export class EditPersonComponent implements OnInit {
         this.editPersonForm.controls.postalCode.setValue(data.person.address.postalCode);
         this.editPersonForm.controls.country.setValue(data.person.address.country);
         this.editPersonForm.controls.emailAddress.setValue(data.person.email.emailAddress);
-  
+
         this.countryString = data.person.address.country;
       }
-  
+
       if (data.person.bankAccount !== null) {
         this.editPersonForm.controls.iban.setValue(data.person.bankAccount.iban);
         this.editPersonForm.controls.bic.setValue(data.person.bankAccount.bic);
       }
-  
+
       if (data.person.mobile !== null) {
         this.editPersonForm.controls.mobileNumber.setValue(data.person.mobile.number);
       }
-  
+
       if (data.person.phone !== null) {
         this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
       }
-  
+
       this.DpsPersonObject = data;
-  
+
       this.changeMessage();
     });
 
-    this.logger.log("ended calling the api");
+    this.logger.log('ended calling the api');
 
   }
 
@@ -469,7 +469,7 @@ export class EditPersonComponent implements OnInit {
   onCountryReceiveNationality($event) {
 
     if (this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.nationality = $event.Country;
+      this.DpsPersonObject.person.nationality = $event.Country;
     }
 
     this.changeMessage();
@@ -489,7 +489,7 @@ export class EditPersonComponent implements OnInit {
 
   onCountryReceive($event) {
 
-    if (this.DpsPersonObject.person.address !== null) {      
+    if (this.DpsPersonObject.person.address !== null) {
       this.DpsPersonObject.person.address.country = $event.Country;
       this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
     }

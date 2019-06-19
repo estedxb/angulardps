@@ -110,15 +110,12 @@ export class PersonService {
     return result;
   }
 
-  public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<any> {
+  public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<DpsPerson> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.get<any>(this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, {
-      headers: httpHeaders,
-      observe: 'response'
-    });
+    const result = this.http.get<DpsPerson>(
+      this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
+    return result;
   }
-
-
 
   public createPerson(person: any): Observable<any> {
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });

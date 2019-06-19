@@ -113,7 +113,7 @@ export class PersonDocumentComponent implements OnInit {
   }
   getPersonBySSIDVatnumber(ssid: string, customervatnumber: string) {
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
-      this.currentPerson = response.body;
+      this.currentPerson = response;
       this.logger.log('this.currentPerson::: ', this.currentPerson);
       this.ShowMessage('Person fetched successfully.', '');
       this.getVehiclesForLicense();
