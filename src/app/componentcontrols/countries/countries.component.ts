@@ -57,7 +57,17 @@ export class CountriesComponent implements OnInit {
 
     this.countriesService.getCountriesList().subscribe(countries => {
       this.datas = countries;
-      this.childEvent.emit(this.datas[0]);
+
+      for(let it=0;it<this.datas.length;it++)
+      {
+        if(this.datas[it].Country === "Belgium")
+        {
+          this.logger.log("sending belgium");
+          this._selectedIndex = it;
+          this.childEvent.emit(this.datas[it]);
+        }
+      }
+
       // this.logger.log(countries);
       this.loadInitialData(this.datas);
       // this.logger.log('Countries Forms Data : '); this.logger.log(this.datas);
