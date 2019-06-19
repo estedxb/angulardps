@@ -20,7 +20,7 @@
                 </ng-template>
             </div>
 
-            <div class="col-sm-4 inputWithImg">
+            <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Naam </label>
                 <input (change)="updateData()" formControlName="lastname" class="form-control" name="lastname"
                     type="text" required />
@@ -33,7 +33,7 @@
                 </ng-template>
             </div>
 
-            <div class="col-sm-2 inputWithImg">
+            <div class="col-sm-4">
                 <label class="titleBold"> Taal </label>
                 <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString">
                 </app-languages>
