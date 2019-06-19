@@ -492,6 +492,7 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
+        this.logger.log("res="+res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
@@ -648,10 +649,12 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.controls.telephoneNumber.setValue('');
   }
 
-  loadPersonData(response) {
+  loadPersonData(rdata) {
 
-    this.logger.log(response.body);
-    const data = response.body;
+    // this.logger.log("response = ");
+    // this.logger.log(response);
+    // this.logger.log(response.body);
+    const data = rdata;
 
     if (data.person !== null) {
 
