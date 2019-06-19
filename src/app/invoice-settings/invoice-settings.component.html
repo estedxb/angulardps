@@ -113,7 +113,7 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
-                                                <app-currency [currencyData]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
+                                                <app-currency [currencyDataForm]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
                                                         <!-- <div class="form-group">
                                                                 <select class="form-control" [(ngModel)]="currencyChoice"
                                                                  class="currency selectcomponent"
@@ -170,7 +170,7 @@
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
                                                 <div class="col col-sm-2">
-                                                        <app-currency [currencyData]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
+                                                        <app-currency [currencyDataForm]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
                                                         <!-- <select formControlName="currency_other" id="dd_currency_new"
                                                                 name="dd_currency_new" class="currency selectcomponent"
                                                                 [(ngModel)]="currencyNewChoice"

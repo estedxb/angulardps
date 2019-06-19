@@ -174,7 +174,13 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   ngDoCheck() {
-    
+
+    this.currencyDataShift[0] = "€";
+    this.currencyDataShift[1] = "%";
+   
+    this.currencyDataOther[0] = "€";
+    this.currencyDataOther[1] = "%";
+
     //load Edit Page details
     if (this.FPFormData !== undefined && this.FPFormData !== null) 
     {
@@ -405,6 +411,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
       this.ISForm.get('PloegprimeBox1').disable();
       this.ISForm.get('PloegprimeBox2').disable();
+      this.ISForm.get('inhaalrust').disable();
 
     }
 
