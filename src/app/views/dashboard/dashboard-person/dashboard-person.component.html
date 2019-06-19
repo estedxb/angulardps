@@ -62,6 +62,7 @@
             <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
               <ng-container *ngFor="let contract of personContract.contracts">
                 <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+
                   <div class="contractActions"
                     [style.margin-left.px]="contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth * contract.workSchedule.workDays.length)"
                     [style.width.px]="contract.workSchedule.workDays[0].dayOfWeek * CellWidth * contract.workSchedule.workDays.length"
@@ -72,16 +73,30 @@
                         (mouseover)="onContractOver(contract.customerContractId,true)"
                         (mouseout)="onContractOver(contract.customerContractId,false)"
                         (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
-                        <img src="../../../../assets/svg/extended.svg" alt="Extend"></button>
+                        <div class="btnLeftTextContainer">
+                          <div class="btnLeftText">Verlengen</div>
+                        </div>
+                        <div class="btnRightIcon">
+                          <img src="../../../../assets/svg/extended.svg" alt="Extend">
+                        </div>
+                      </button>
                       <div class="contractActionbtnGap" (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)">&nbsp;</div>
+                        (mouseout)="onContractOver(contract.customerContractId,false)" style="display: none;">&nbsp;
+                      </div>
                       <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
                         (mouseover)="onContractOver(contract.customerContractId,true)"
                         (mouseout)="onContractOver(contract.customerContractId,false)"
                         (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'edit')">
-                        <img src="../../../../assets/svg/eye.svg" alt="Edit"></button>
+                        <div class="btnLeftIcon">
+                          <img src="../../../../assets/svg/eye.svg" alt="Extend">
+                        </div>
+                        <div class="btnRightTextContainer">
+                          <div class="btnRightText">Weergeven</div>
+                        </div>
+                      </button>
                     </div>
                   </div>
+
                   <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                     <ng-container *ngIf="workday.dayOfWeek === 1">
                       <div class="FullCol Contract_{{contract.customerContractId}}"
@@ -272,7 +287,7 @@
             <div class="centerline"></div>
           </td>
         </tr>
-        <tr *ngIf="errorMsg!==null">
+        <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
           <td class="error" colspan="10">{{errorMsg}}</td>
         </tr>
       </table>

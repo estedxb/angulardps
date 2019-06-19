@@ -30,7 +30,11 @@ export class DashboardActionComponent implements OnInit {
       this.datas = summaries.filter(d => d.isFinished === false);
       this.notificationcount = this.datas.length;
       this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
-    }, error => this.errorMsg = error);
+      this.errorMsg = '';
+    }, error => {
+      this.logger.log('Error on ngOnInit while getSummaryByVatnumber(' + this.vatNumber + ') ::', error);
+      this.errorMsg = 'Fout bij het ophalen van de behandeling.';
+    });
   }
 
   goToAction(action: number, id: string, otherid: string) {
@@ -66,7 +70,11 @@ export class DashboardActionComponent implements OnInit {
     this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
       this.datas.splice(index, 1);
       // this.logger.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
-    }, error => this.errorMsg = error);
+      this.errorMsg = '';
+    }, error => {
+      this.logger.log('Error while updateAction(' + index + ') ::', error);
+      this.errorMsg = 'Fout tijdens het bijwerken van de behandeling.';
+    });
   }
 
 }

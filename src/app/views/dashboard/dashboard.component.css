@@ -284,6 +284,19 @@
 .dashboardactioncontent table tr td {
   vertical-align: middle;
 }
+.dashboardactioncontent table tr td.error {
+  text-align: center;
+  padding: 100px 10px 100px 10px;
+}
+.dashboardactioncontent .error {
+  width: 100%;
+  text-align: center;
+  padding: 131px 10px 131px 10px;
+}
+.error {
+  word-break: break-all;
+}
+
 .dashboardactioncontent table tr td.col-split-m {
   text-align: center;
 }
@@ -313,6 +326,7 @@ sup.notify {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
 .dashboardactioncontent div.row {
   margin: 15px 0px;
 }
@@ -447,20 +461,22 @@ sup.notify {
 #PersonContents .contractActions {
   position: absolute;
   border: 0px solid red;
-  display: none;
   height: 34px;
+  /*
+  display: none;
   margin-top: -17px;
+  */
 }
 #PersonContents .contractActionbtngrp {
   margin: auto;
-  width: 90px;
+  width: 250px;
   height: 34px;
   padding: 0px;
   border: 0px solid white;
 }
 #PersonContents .contractActionbtn {
   margin: 0px;
-  padding: 2px;
+  padding: 0px;
   border-radius: 17px;
   border: 1px solid #e37619;
   background: #eaeaea;
@@ -470,12 +486,68 @@ sup.notify {
   text-align: center;
   float: left;
 }
+
+#PersonContents .contractActionbtn .btnLeftTextContainer,
+#PersonContents .contractActionbtn .btnRightTextContainer {
+  display: none;
+  font-weight: bold;
+  width: 84px;
+  height: 34px;
+  line-height: 34px;
+  margin: -1px;
+  vertical-align: middle;
+  border: 0px solid purple;
+}
+#PersonContents .contractActionbtn .btnLeftIcon,
+#PersonContents .contractActionbtn .btnRightIcon {
+  width: 34px;
+  padding: 2px;
+  margin: 0px;
+  border: 0px solid violet;
+}
+
+#PersonContents .contractActionbtn .btnLeftIcon {
+  float: left;
+}
+
+#PersonContents .contractActionbtn .btnRightIcon {
+  float: right;
+}
+#PersonContents .contractActionbtn .btnLeftTextContainer {
+  float: left;
+  background-image: linear-gradient(107deg, #58f40f, #009476);
+  border-bottom-left-radius: 17px;
+  border-top-left-radius: 17px;
+}
+#PersonContents .contractActionbtn .btnRightTextContainer {
+  float: right;
+  background-image: linear-gradient(107deg, #ff8000, #ad0000);
+  border-bottom-right-radius: 17px;
+  border-top-right-radius: 17px;
+}
+
+#PersonContents .contractActionbtn:hover {
+  width: 120px;
+}
+
+#PersonContents .contractActionbtn:hover .btnLeftIcon,
+#PersonContents .contractActionbtn:hover .btnRightIcon {
+  padding: 2px;
+  margin: 0px;
+}
+
+#PersonContents .contractActionbtn:hover .btnLeftTextContainer,
+#PersonContents .contractActionbtn:hover .btnRightTextContainer {
+  display: block;
+}
+
 #PersonContents .contractActionbtnGap {
   float: left;
-  width: 12px;
+  width: 5px;
   height: 34px;
   border: 0px solid green;
 }
+
 #PersonContents .contractActionbtn.SelectedContract,
 #PersonContents .contractActions.SelectedContract {
   display: block;
@@ -483,9 +555,6 @@ sup.notify {
 
 .dashboardactioncontent table .Contents button.contractActionbtn img {
   width: 25px;
-}
-.error {
-  word-break: break-all;
 }
 .HideMe {
   display: none;

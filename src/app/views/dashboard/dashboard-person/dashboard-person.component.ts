@@ -98,7 +98,12 @@ export class DashboardPersonComponent implements OnInit {
         this.maindatas = dpsSchedule.persons;
         this.onPersonKeyup('');
         this.logger.log('maindatas ::', this.maindatas);
-      }, error => this.errorMsg = error);
+        this.errorMsg = '';
+      }, error => {
+        this.logger.log('onPageInit error while getting  getDpsScheduleByVatNumber('
+          + this.vatNumber + ',' + localstartDate + ',' + localendDate + ') ::', error);
+        this.errorMsg = 'Fout bij het ophalen van de planning.';
+      });
 
     this.logger.log('this.currentPage : ' + this.currentPage);
     if (this.currentPage === 'contract') {
