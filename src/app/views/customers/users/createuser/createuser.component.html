@@ -8,7 +8,7 @@
     <div class="row ">
         <div class="col-sm-12 center-block head">
             <img src='../../../assets/svg/UserUpdate.svg'>
-            <br /> <label>Gebruiker aanmaken / Wijzigen</label>
+            <br /> <label>Gebruiker aanmaken / wijzigen</label>
             <hr>
         </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="contactperson" id="maincontent">
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Voorname: </label>
+                    <label class="titleBold"> Voornaam </label>
                     <input formControlName="firstname" class="form-control" name="firstname" type="text" required />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.firstname.invalid && (UserForm.controls.firstname.dirty || UserForm.controls.firstname.touched) else newvalid">
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Achternaam: </label>
+                    <label class="titleBold"> Achternaam </label>
                     <input formControlName="lastname" class="form-control" name="lastname" type="text" required />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.lastname.invalid && (UserForm.controls.lastname.dirty || UserForm.controls.lastname.touched) else anewvalid">
@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> E-mail adres: </label>
+                    <label class="titleBold"> E-mail adres </label>
                     <input formControlName="emailaddress" class="form-control" name="emailaddress" type="email"
                         [readonly]="!isNewUser" />
                     <div class="form-control-feedback"
@@ -53,8 +53,8 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold">Type gebruiker: </label>
-                    <input formControlName="usertype" class="form-control" name="usertype" type="text" />
+                    <label class="titleBold">Type gebruiker </label>
+                    <input formControlName="usertype" class="form-control" name="usertype" type="text" disabled />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.usertype.invalid && (UserForm.controls.usertype.dirty || UserForm.controls.usertype.touched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -67,7 +67,7 @@
 
             <div class="row">
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Mobiel nummer: </label>
+                    <label class="titleBold"> Mobiel nummer </label>
                     <input formControlName="mobile" class="form-control" name="mobile" type="number" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.mobile.invalid && (UserForm.controls.mobile.dirty || UserForm.controls.mobile.touched) else enewvalid">
@@ -78,7 +78,7 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Vast nummer: </label>
+                    <label class="titleBold"> Vast nummer </label>
                     <input (blur)="updateData()" formControlName="telephone" class="form-control" name="telephone"
                         type="text" />
                     <div class="form-control-feedback"
@@ -90,7 +90,7 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Taal: </label>
+                    <label class="titleBold"> Taal </label>
                     <app-languages (childEvent)="receiveMessageLanguage($event)" [LanguageFormData]="languageString">
                     </app-languages>
                 </div>
