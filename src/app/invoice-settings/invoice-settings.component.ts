@@ -79,10 +79,10 @@ export class InvoiceSettingsComponent implements OnInit {
   public loadSwitchTeam:boolean;
   public loadSwitchOther:boolean;
 
-  public tCoefficient = "1.20";
-  public mCoefficient = "1.69";
-  public EchoChange = "1.69";
-  public DimonaChange = "0.3510";
+  public tCoefficient:any = "1.20";
+  public mCoefficient:any = "1.69";
+  public EchoChange:any = "1.69";
+  public DimonaChange:any = "0.3510";
 
   public currencyChoice:number = 0;
   public currencyNewChoice:number = 0;
@@ -109,6 +109,11 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
+    this.tCoefficient = parseFloat(this.ISForm.get('Verplaatsingen').value);
+    this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
+    this.EchoChange = parseFloat(this.ISForm.get('Echo').value);
+    this.DimonaChange = parseFloat(this.ISForm.get('Dimona').value);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -124,6 +129,7 @@ export class InvoiceSettingsComponent implements OnInit {
       'dimonaCost': this.DimonaChange
     };
 
+    this.logger.log("sending invoice settings data");
     this.childEvent.emit(jsonObject);
 
   }
@@ -534,19 +540,19 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   transportCoefficient(value) {
-    this.tCoefficient = value;
+    this.tCoefficient = parseFloat(value);
   }
 
   maaltichequesCoefficient(value) {
-    this.mCoefficient = value;
+    this.mCoefficient = parseFloat(value);
   }
 
   onEchoChange(value) {
-    this.EchoChange = value;
+    this.EchoChange = parseFloat(value);
   }
 
   onDimonaChange(value) {
-    this.DimonaChange = value;
+    this.DimonaChange = parseFloat(value);
   }
 
   isInvalid() {
@@ -631,20 +637,24 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  onChangeZ(event) {
-    this.sicknessInvoiced = event;
+  onChangeZ($event) {
+    this.sicknessInvoiced = $event;
     this.changeObject();
 
   }
-  onChangeF(event) {
-    this.holidayInvoiced = event;
+  onChangeF($event) {
+    this.holidayInvoiced = $event;
     this.changeObject();
   }
 
-  onChangeM(event) {
-    this.holidayInvoiced = event;
+  onChangeM($event) {
 
-    if (event === true) {
+    this.logger.log("mobility allowance switch");
+    this.logger.log($event);
+
+    this.holidayInvoiced = $event;
+
+    if ($event === true) {
       this.ISForm.get('mobilebox').enable();
       this.mobilityAllowanceObject.enabled = true;
     } else {
@@ -673,7 +683,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   setMobileBox(value: number) {
     // this.mobileBoxText = value;
-    this.mobilityAllowanceObject.enabled = false;
     this.mobilityAllowanceObject.amountPerKm = value;
     this.changeObject();
   }
