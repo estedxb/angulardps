@@ -37,7 +37,7 @@ export class CreatelocationComponent implements OnInit {
     this.LocationForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
       street: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9,. ]+$')]),
-      number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+      number: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$')]),
       bus: new FormControl('', [Validators.pattern('^[0-9]+$')]),
       place: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       postcode: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-z0-9]+$')]),
