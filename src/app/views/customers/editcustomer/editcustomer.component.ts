@@ -27,6 +27,7 @@ export class EditCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomersService, private data: DataService,
     private logger: LoggingService) {
+      
     // this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.editObject = {
       data: '',

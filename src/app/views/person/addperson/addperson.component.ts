@@ -424,6 +424,78 @@ export class AddPersonComponent implements OnInit {
     this.logger.log('event=' + $event);
   }
 
+  stripDigits(ssid:string) {
+
+   let digits: string = "";
+
+    for(let i:number=0;i<ssid.length;i++)
+    {
+      if(ssid.charAt(i)>='0' && ssid.charAt(i)<='9')
+          digits += ssid.charAt(i);
+    }
+    return digits;
+  }
+
+  newCustomSSIDValidator(ssid:string) {
+
+    this.validSSID = false;
+    let validSPCharacters = false;
+
+    if (ssid.length !== 15) {
+      return false;
+    }
+
+    let digits:string = this.stripDigits(ssid);
+
+    let lastTwoDigits: number = parseInt(digits.substring(ssid.length-1),10);
+    let firstTwoDigits: number = parseInt(digits.substring(0,2));
+    let firstNineDigits: number = parseInt(digits.substring(0,9));
+    let x:number = firstNineDigits;
+    let controlNumber: number  = -1;
+
+    // last 2 digits of the number.
+    //     if first 2 digits are between 20 (current year without 20 + 1) and 99
+    //         put first 9 digits together as x
+    //         x mod 97 = r where r is the remainder of the modulo division  97 - r = control number
+
+    // for my social security number 84.10.16-035.58
+    // 841016025 mod 97 => 39 remainder
+    // 97 - 39 = 58 —> last 2 digits of the social security number
+
+    if(firstTwoDigits >21 && firstTwoDigits <=99)
+    {
+      x = firstNineDigits;
+      let remainder:number =  x % 97;
+      controlNumber  = 97 - remainder;
+
+      if(controlNumber === lastTwoDigits)
+          this.validSSID = true;
+      else
+         this.validSSID = false;
+    }
+
+    // if first 2 digits are between 00 and 19 (current year without 20) —> somebody born in 2000 or later
+    // put first 9 digits together and put a 2 in front of it
+    // x mod 97 = r where r is the remainder of the modulo division
+    // 97 - r = control number
+    // for example security number 14.09.21-073.71
+    // 2140921073 mod 97 => 26 remainder
+    // 97 - 26 = 71 —> last 2 digits of the social security number
+
+    if(firstTwoDigits >=0 && firstTwoDigits <=19)
+    {
+      x = parseInt(("2"+firstNineDigits),10);
+      let newremainder:number = x % 97;
+      controlNumber = 97 - newremainder;
+
+      if(controlNumber === lastTwoDigits)
+          this.validSSID = true;
+        else
+          this.validSSID = false;
+    }
+
+  }
+
   customSSIDValidator(ssid: string) {
     this.validSSID = false;
     let validSPCharacters = false;
