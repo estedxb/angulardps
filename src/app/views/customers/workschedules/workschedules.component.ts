@@ -39,7 +39,7 @@ export class WorkSchedulesComponent implements OnInit {
       this.maindatas = dpsWorkSchedules;
       this.logger.log('Work Schedule Forms Data : ', this.maindatas);
       this.FilterTheArchive();
-      this.ShowMessage('Work Schedules is listed successfully.', '');
+      //this.ShowMessage('Work Schedules is listed successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 

@@ -38,7 +38,7 @@ export class LocationsComponent implements OnInit {
       this.maindatas = locations;
       this.FilterTheArchive();
       this.logger.log('Locations Forms Data : ', this.maindatas);
-      this.ShowMessage('Locations is listed successfully.', '');
+     // this.ShowMessage('Locations is listed successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 

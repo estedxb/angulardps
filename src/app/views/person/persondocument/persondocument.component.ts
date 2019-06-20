@@ -103,7 +103,7 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
       this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
-      this.ShowMessage('vehicles fetched successfully.', '');
+      //this.ShowMessage('vehicles fetched successfully.', '');
       // Remove the  Vehicles with License in this.currentPerson
       //this.vehiclesForLicense = this.vehiclesForLicense.filter( function( el ) {
       //return !this.currentPerson.driverProfiles.includes( el );
@@ -115,7 +115,7 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
       this.currentPerson = response;
       this.logger.log('this.currentPerson::: ', this.currentPerson);
-      this.ShowMessage('Person fetched successfully.', '');
+      //this.ShowMessage('Person fetched successfully.', '');
       this.getVehiclesForLicense();
     }, error => this.ShowMessage(error, 'error'));
   }
