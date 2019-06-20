@@ -145,7 +145,7 @@ export class EditCustomerComponent implements OnInit {
   postData() { }
 
   getCustomerByVatNumberEdit(vatNumber: string) {
-    let response: DPSCustomer;
+    let response: any;
     this.customerService.getCustomersByVatNumberEdit(vatNumber)
       .subscribe(data => {
         response = data;
@@ -153,7 +153,7 @@ export class EditCustomerComponent implements OnInit {
       }, error => this.handleError(error));
   }
 
-  parseData(response: DPSCustomer) {
+  parseData(response: any) {
     this.editObject = {
       data: response,
       page: 'edit'

@@ -129,14 +129,11 @@ export class InvoiceSettingsComponent implements OnInit {
       'dimonaCost': this.DimonaChange
     };
 
-    this.logger.log("sending invoice settings data");
     this.childEvent.emit(jsonObject);
 
   }
 
   onChangeDropDownCurrencyTeam($event, i) {
-
-    this.logger.log("received currency="+ $event);
 
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
@@ -258,7 +255,6 @@ export class InvoiceSettingsComponent implements OnInit {
             }
             else {
 
-              this.logger.log("shiftAllowance is false");
               this.ISForm.get('PloegprimeBox1').disable();
               this.ISForm.get('PloegprimeBox2').disable();
               this.ISForm.get('currency').disable();
@@ -280,8 +276,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
                  if(counter===0)
                 {
-                  this.logger.log(this.Ploegpremiere);
-
                     const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
                     formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
                     formGroup.controls['PloegprimeBox2'].setValue(element.amount);
@@ -648,9 +642,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onChangeM($event) {
-
-    this.logger.log("mobility allowance switch");
-    this.logger.log($event);
 
     this.holidayInvoiced = $event;
 

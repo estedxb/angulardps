@@ -43,7 +43,6 @@ export class LegalComponent implements OnInit {
   ngDoCheck() {
 
     if (this.legalFormData !== this.oldlegalFormData) {
-      this.logger.log('ngDoCheck legalForm data=' + this.legalFormData);
       this.oldlegalFormData = this.legalFormData;
       this.loadInitialData(this.datas);
     }
@@ -53,7 +52,6 @@ export class LegalComponent implements OnInit {
   ngAfterViewInit() {
 
     if (this.legalFormData !== this.oldlegalFormData) {
-      this.logger.log('ngDoCheck legalForm data=' + this.legalFormData);
       this.oldlegalFormData = this.legalFormData;
       this.loadInitialData(this.datas);
     }
@@ -61,10 +59,8 @@ export class LegalComponent implements OnInit {
 
   loadInitialData(datas: any) {
 
-    this.logger.log('legalString=' + this.legalFormData);
 
     if (datas.length !== 0) {
-      this.logger.log('datas length=' + datas.length);
 
       for (let i = 0; i < this.datas.length; i++) {
         if (this.datas[i].FormName === this.legalFormData) {
@@ -72,7 +68,6 @@ export class LegalComponent implements OnInit {
         }
       }
 
-      this.logger.log('selected index=' + this._selectedIndex);
     } else {
       this.logger.log('null or undefined');
     }
@@ -82,10 +77,6 @@ export class LegalComponent implements OnInit {
   onChange($event) {
     this.selectedIndex = $event.target.value;
 
-    this.logger.log('legalform selected=' + this.value);
-    this.logger.log(this.value);
-    this.logger.log('legalform selected=' + this.value.FormName);
-
     this.selectedString = this.value.FormName;
 
     this.childEvent.emit(this.value.FormName);
@@ -94,12 +85,10 @@ export class LegalComponent implements OnInit {
   }
 
   constructor(private legalformService: LegalformService, private logger: LoggingService) {
-    this.logger.log('constructor legalString=' + this.legalFormData);
   }
 
   ngOnInit() {
 
-    this.logger.log('init legalString received=' + this.legalFormData);
 
     this.legalformService.getLegalForms().subscribe(legalforms => {
       this.maindatas = legalforms;
@@ -107,12 +96,8 @@ export class LegalComponent implements OnInit {
 
       this.childEvent.emit(this.datas[0].FormName);
 
-      this.logger.log('Legal Forms Data : '); this.logger.log(this.datas);
-
       this.loadInitialData(this.datas);
     }, error => this.errorMsg = error);
-
-    this.logger.log('legalFormData=' + this.legalFormData);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }

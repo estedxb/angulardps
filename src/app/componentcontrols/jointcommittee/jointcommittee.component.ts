@@ -67,8 +67,6 @@ export class JointcommitteeComponent implements OnInit {
 
     }
 
-    this.logger.log("received string="+this.JCFormData);
-
     const obj: any = { selectedObject: datas[position], arrayObject: datas };
     this.childEvent.emit(obj);
 

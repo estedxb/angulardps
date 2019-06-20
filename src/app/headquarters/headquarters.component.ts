@@ -98,15 +98,11 @@ export class HeadQuartersComponent implements OnInit {
   // }
 
   ngDoCheck() {
-
-    console.log("old data");
-    console.log(this.oldData);
-    console.log(this.HQFormData);
     
     //load Edit Page details
     if (this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== null && this.HQFormData.page === "edit") {
-        this.clearFields();
+        // this.clearFields();
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
         this.updateData();
@@ -163,35 +159,53 @@ export class HeadQuartersComponent implements OnInit {
 
   loadDataEdit(dpscustomer: any) {
 
-    console.log("customer data");
+    console.log("loading customer data");
     console.log(dpscustomer);
 
     if (dpscustomer !== null) {
-      this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
-      this.HQForm.controls['vatNumber'].disable();
-      this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
-      this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
-      this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
-        this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
-      this.legalString = dpscustomer.customer.legalForm;
+      console.log("setting customer data");
 
-      this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
-      this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
-      this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
-      this.HQForm.controls['city'].setValue(dpscustomer.customer.address.city);
-      this.HQForm.controls['postalcode'].setValue(dpscustomer.customer.address.postalCode);
+      if(dpscustomer.customer !== null && dpscustomer.customer !== undefined)
+        {
+          console.log("firstname ="+dpscustomer.customer.name);
+
+          this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
+          this.HQForm.controls['vatNumber'].disable();
+          this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
+          this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
+          this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
+          this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;    
+          
+          this.legalString = dpscustomer.customer.legalForm;
+
+        if(dpscustomer.customer.address !== null && dpscustomer.customer.address !== undefined)
+        {
+        console.log("street ="+dpscustomer.customer.address.street);
+        this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
+        this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
+        this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
+        this.HQForm.controls['city'].setValue(dpscustomer.customer.address.city);
+        this.HQForm.controls['postalcode'].setValue(dpscustomer.customer.address.postalCode);  
+
+        this.countryString = dpscustomer.customer.address.country;
+      }
+
       //this.HQForm.controls['country'].setValue(dpscustomer.customer.address.country);
       this.HQForm.controls['phonenumber'].setValue(dpscustomer.customer.phoneNumber.number);
       this.HQForm.controls['generalEmail'].setValue(dpscustomer.customer.email.emailAddress);
-      this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
-      this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
 
-      this.countryString = dpscustomer.customer.address.country;
+      if(dpscustomer.contractsEmail !== null && dpscustomer.contractsEmail !== undefined)
+        this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
+
+      if(dpscustomer.invoiceEmail !== null && dpscustomer.invoiceEmail !== undefined)
+        this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
+
 
       this.invoiceSettings = new InvoiceSettings();
       this.invoiceSettings = dpscustomer.invoiceSettings;
 
       this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
+    }
 
     }
 
@@ -376,7 +390,10 @@ export class HeadQuartersComponent implements OnInit {
   }
 
 
-  loadData(verifiedCustomerData: DPSCustomer) {
+  loadData(verifiedCustomerData: any) {
+
+    console.log("customer data");
+    console.log(verifiedCustomerData);
 
     if (verifiedCustomerData !== null) {
       if (verifiedCustomerData.customer !== null) {
@@ -503,9 +520,6 @@ export class HeadQuartersComponent implements OnInit {
     {
       this.customer.legalForm = this.selectedLegalObject.FormName;
     }
-
-    console.log("credit check object");
-    console.log(this.creditCheck);
 
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.creditCheck = this.creditCheck;
