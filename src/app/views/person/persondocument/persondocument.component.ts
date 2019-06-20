@@ -216,6 +216,8 @@ export class PersonDocumentComponent implements OnInit {
     this.updatePerson();
   }
 
+
+
   handleConstructionCardsFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
@@ -295,6 +297,12 @@ export class PersonDocumentComponent implements OnInit {
 
   downloadStudentAtWorkAttestationFile() {
     saveAs(environment.blobStorage + '' + this.currentPerson.studentAtWorkProfile.attestation.location, this.currentPerson.studentAtWorkProfile.attestation.name);
+  }
+
+  deleteStudentAtWorkAttestationFile() {
+    this.currentPerson.studentAtWorkProfile.attestation.name  = '';
+    this.currentPerson.studentAtWorkProfile.attestation.location  = '';
+    this.updatePerson();
   }
 
 
