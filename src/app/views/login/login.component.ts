@@ -7,9 +7,9 @@ import { Router, CanActivate } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
-import { LoggingService } from '../../shared/logging.service';
 import { environment } from '../../../environments/environment';
 import { AppComponent } from '../../app.component';
+import { LoggingService } from '../../shared/logging.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private logger: LoggingService,
-    private appComp: AppComponent,
     public userService: UsersService,
     public customersService: CustomersService,
     public customerListsService: CustomerListsService,
+    private appComp: AppComponent,
+    private logger: LoggingService
   ) { }
 
   ngOnInit() {

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+/*
 import { Subscription } from 'rxjs/Subscription';
 import * as Msal from 'msal';
 import { MsalService } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { LoginToken } from '../shared/models';
+*/
 import { Router, CanActivate } from '@angular/router';
 
 
@@ -13,10 +15,16 @@ import { Router, CanActivate } from '@angular/router';
   styleUrls: ['./validate-login.component.css']
 })
 export class ValidateLoginComponent implements OnInit {
-  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  // public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
-  constructor(private router: Router, private msalService: MsalService, private logger: LoggingService) { }
+  constructor(
+    /*
+    private router: Router, private msalService: MsalService, private logger: LoggingService
+    */
+  ) { }
 
+  ngOnInit() { }
+  /*
   ngOnInit() {
     if (!this.isUserLoggedIn) {
       this.login();
@@ -45,5 +53,5 @@ export class ValidateLoginComponent implements OnInit {
   isUserLoggedIn() {
     return this.msalService.isLoggedIn();
   }
-
+  */
 }

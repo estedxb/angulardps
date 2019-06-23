@@ -28,26 +28,26 @@ export class AddCustomerComponent implements OnInit {
   public FPdata: any;
   public editObject: any = { data: '', page: '' };
   public vatNumber: string;
-  public currentVatNumber:string;
+  public currentVatNumber: string;
 
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   public HQFormValid: boolean;
   public CTFormValid: boolean;
 
-  public Id="";
-  public currentPage="";
+  public Id = "";
+  public currentPage = "";
 
   public showFormIndex = 1;
   constructor(private customerService: CustomersService, private logger: LoggingService,
-    private dialog: MatDialog, private snackBar: MatSnackBar,private route: ActivatedRoute, private router: Router, ) { 
-       
-        this.editObject = {
-          data: '',
-          page: ''
-        };
+    private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
 
-    }
+    this.editObject = {
+      data: '',
+      page: ''
+    };
+
+  }
 
 
   ngOnInit() {
@@ -55,18 +55,18 @@ export class AddCustomerComponent implements OnInit {
     this.CTFormValid = true;
 
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
-    localStorage.getItem('dpsLoginToken') !== '' &&
-    localStorage.getItem('dpsLoginToken') !== null) {
-    const sub = this.route.params.subscribe((params: any) => {
-      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-      this.Id = params.id;
-      this.currentPage = params.page;
-    });
-  } else {
-    this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
-    // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-    //this.router.navigate(['/login']);
-  }
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
+      const sub = this.route.params.subscribe((params: any) => {
+        this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+        this.Id = params.id;
+        this.currentPage = params.page;
+      });
+    } else {
+      this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+      // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      //this.router.navigate(['/login']);
+    }
 
   }
 
@@ -161,43 +161,41 @@ export class AddCustomerComponent implements OnInit {
       }
 
 
-    } else 
-        if (this.showFormIndex === 2) 
-      {
+    } else
+      if (this.showFormIndex === 2) {
         this.logger.log('Complete data=');
         this.logger.log(this.GLdata);
 
-        this.logger.log('HQdata');        
+        this.logger.log('HQdata');
         this.logger.log(this.HQdata);
-        
+
         this.logger.log('this STdata');
         this.logger.log(this.STdata);
 
-      if(this.HQdata !== null && this.HQdata !== undefined)
-      {
-        if (this.GLdata !== null && this.GLdata !== undefined) {
-          this.HQdata.customer.vcaCertification = new VcaCertification();
-          this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-          this.HQdata.bulkContractsEnabled = this.GLdata.blk;  
-        }
+        if (this.HQdata !== null && this.HQdata !== undefined) {
+          if (this.GLdata !== null && this.GLdata !== undefined) {
+            this.HQdata.customer.vcaCertification = new VcaCertification();
+            this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+            this.HQdata.bulkContractsEnabled = this.GLdata.blk;
+          }
 
-        if (this.CTdata !== null && this.CTdata !== undefined)
-          this.HQdata.contact = this.CTdata.contact;
+          if (this.CTdata !== null && this.CTdata !== undefined)
+            this.HQdata.contact = this.CTdata.contact;
 
-        if (this.STdata !== null && this.STdata !== undefined) {
-          this.HQdata.statuteSettings = this.STdata;
-        }
+          if (this.STdata !== null && this.STdata !== undefined) {
+            this.HQdata.statuteSettings = this.STdata;
+          }
 
-        if(this.FPdata !== null && this.FPdata !== undefined)
-          this.HQdata.invoiceSettings = this.FPdata;
+          if (this.FPdata !== null && this.FPdata !== undefined)
+            this.HQdata.invoiceSettings = this.FPdata;
 
           this.logger.log(this.HQdata);
-          this.updateData();    
+          this.updateData();
+        }
+        else {
+          this.logger.log("empty hq data");
+        }
       }
-      else {
-        this.logger.log("empty hq data");
-      }
-    }
 
   }
 
@@ -242,16 +240,16 @@ export class AddCustomerComponent implements OnInit {
         response = data;
         //this.parseData(response);
         this.logger.log("response object in from api");
-        this.logger.log(this.editObject);    
+        this.logger.log(this.editObject);
         this.editObject = {
           data: response,
           page: 'edit'
         };
-    
+
       }, error => this.handleError(error));
   }
 
-  parseData(response: DPSCustomer) {  
+  parseData(response: DPSCustomer) {
 
     this.HQdata = new DPSCustomer();
     this.HQdata.customer = new Customer();
