@@ -38,7 +38,7 @@ export class AddCustomerComponent implements OnInit {
   public Id = "";
   public currentPage = "";
 
-  public showFormIndex = 2;
+  public showFormIndex = 1;
   constructor(private customerService: CustomersService, private logger: LoggingService,
     private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
 
@@ -190,22 +190,12 @@ export class AddCustomerComponent implements OnInit {
             this.HQdata.invoiceSettings = this.FPdata;
 
           this.logger.log(this.HQdata);
-<<<<<<< HEAD
           this.updateData();
         }
         else {
           this.logger.log("empty hq data");
         }
-
       }
-=======
-          this.updateData();
-      }
-      else {
-        this.logger.log("empty hq data");
-      }
-    }
->>>>>>> ab23dbb1d1d0d8d5d4c3d2b4e030640f35929768
 
   }
 
