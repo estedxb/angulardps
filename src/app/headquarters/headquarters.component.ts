@@ -173,8 +173,12 @@ export class HeadQuartersComponent implements OnInit {
           this.HQForm.controls['vatNumber'].disable();
           this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
           this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
-          this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
-          this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;    
+
+          if(this.dpsCustomer.customer.creditCheck !== null && this.dpsCustomer.customer.creditCheck !== undefined)
+          {
+            this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
+            this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;      
+          }
           
           this.legalString = dpscustomer.customer.legalForm;
 

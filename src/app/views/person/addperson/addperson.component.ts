@@ -437,6 +437,24 @@ export class AddPersonComponent implements OnInit {
     return digits;
   }
 
+  validatePersonSsid(ssid:string) {
+
+    let totalString = "";
+
+    if(ssid.length === 2)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 5)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+  }
+
   newCustomSSIDValidator(ssid:string) {
 
     this.validSSID = false;

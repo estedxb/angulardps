@@ -132,7 +132,9 @@ export class StatuteComponent implements OnInit {
 
   copyArray(array:any)
   {
-    this.statuteSettings = array;
+    //this.statuteSettings = array;    
+
+
     let counter:number = 0;
 
     this.statuteSettings.forEach(element => {
@@ -145,7 +147,7 @@ export class StatuteComponent implements OnInit {
         counter += 1;
     });
 
-    this.fillMealEnabled();
+    //this.fillMealEnabled();
 
     this.emitData("load");
   }
@@ -211,6 +213,16 @@ export class StatuteComponent implements OnInit {
       let name = arrayElement.paritairCommitee.name;
       let number = arrayElement.paritairCommitee.number;
       this.JCString[counter] = number + " - " + name;
+
+      if(arrayElement.mealVoucherSettings.employerShare === 0 && arrayElement.mealVoucherSettings.totalWorth === 0 && arrayElement.mealVoucherSettings.minimumHours === 0)
+          this.logger.log("all zeroes at counter="+counter);
+      else
+          this.logger.log("values at counter="+counter);
+
+      if(arrayElement.mealVoucherSettings.employerShare === 0 && arrayElement.mealVoucherSettings.totalWorth === 0 && arrayElement.mealVoucherSettings.minimumHours === 0)
+          this.isMealEnabled[counter] = false;
+      else
+          this.isMealEnabled[counter] = true;
   
       if(this.statuteSettings.length > 0)
       {
