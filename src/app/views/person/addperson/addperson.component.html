@@ -48,7 +48,7 @@
                 <div class="col-sm-5 inputWithImg">
                   <label class="titleBold"> Rijkregisternummer </label>
                   <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber" class="form-control"
-                    name="socialSecurityNumber" (change)="validatePersonSsid(socialSecurityNumber.value)" type="text" required />
+                    name="socialSecurityNumber" (keypress)="validatePersonSsid(socialSecurityNumber.value)" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="!customSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
