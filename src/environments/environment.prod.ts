@@ -11,7 +11,7 @@ export const environment = {
   webUrl: 'https://dpsselfserviceportalprod.azurewebsites.net/',
   logInRedirectURL: 'login',
   logOutRedirectURL: 'logout',
-  logInSuccessURL: 'Dashboard',
+  logInSuccessURL: 'dashboard',
   logInSuccessNoCustomerURL: 'customer/add',
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
