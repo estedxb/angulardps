@@ -25,7 +25,7 @@ import { LoggingService } from '../../shared/logging.service';
 })
 
 export class CreateContractComponent implements OnInit {
-  @Output() public childEvent = new EventEmitter();
+  // @Output() public childEvent = new EventEmitter();
 
   ContractForm: FormGroup;
   public selectedWeekDays: number[] = [];

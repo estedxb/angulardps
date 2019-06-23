@@ -15,7 +15,7 @@ import { LoggingService } from '../../../shared/logging.service';
   styleUrls: ['./../customers.component.css']
 })
 export class UpdateCustomerComponent implements OnInit {
-
+  public SelectedPage = 'UpdateCustomer';
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
   public loginaccessToken: string = this.dpsLoginToken.accessToken;
   public dpsCustomer: any;
@@ -36,11 +36,11 @@ export class UpdateCustomerComponent implements OnInit {
       this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/ValidateLogin']);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate(['/login']); alert(e.message);
+      this.router.navigate(['/ValidateLogin']);
     }
   }
 

@@ -85,7 +85,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       for (let i = 0; maxArrayLength > i; i++) { this.workScheduleRows.push(this.loadDataOfRow(i)); }
       // this.logger.log('this.workScheduleRows', this.workScheduleRows);
     } catch (e) {
-      alert(e.message);
+      // alert(e.message);
     }
   }
 
@@ -203,7 +203,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       this.logger.log('loadDataOfRow workScheduleRow rowid :: ' + rowid, workScheduleRow);
       return workScheduleRow;
     } catch (e) {
-      alert(e.message);
+      //  alert(e.message);
     }
   }
 

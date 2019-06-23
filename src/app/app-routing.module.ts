@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { AppComponent } from './app.component';
+
+import { MsalService } from './shared/msal.service';
 
 import { CustomerSelectionComponent } from './componentcontrols/customerselection/customerselection.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
@@ -9,12 +13,21 @@ import { JointcommitteeComponent } from './componentcontrols/jointcommittee/join
 import { CountriesComponent } from './componentcontrols/countries/countries.component';
 import { StatuteComponent } from './componentcontrols/statute/statute.component';
 import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
-import { ContactPersonComponent } from './contactperson/contactperson.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
+import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
+import { FileUploadComponent } from './componentcontrols/fileupload/fileupload.component';
+import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
+import { CreateContractComponent } from './componentcontrols/createcontract/createcontract.component';
+import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
+import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
+import { ZichmetComponent } from './componentcontrols/zichmet/zichmet.component';
+import { CurrencyComponent } from './componentcontrols/currency/currency.component';
 
+import { ContactPersonComponent } from './contactperson/contactperson.component';
 import { HeadQuartersComponent } from './headquarters/headquarters.component';
 import { GeneralComponent } from './general/general.component';
 import { InvoiceSettingsComponent } from './invoice-settings/invoice-settings.component';
+
 import { HomeComponent } from './views/home/home.component';
 import { PageNotFoundComponentComponent } from './views/page-not-found-component/page-not-found-component.component';
 import { AddPersonComponent } from './views/person/addperson/addperson.component';
@@ -28,43 +41,33 @@ import { EditCustomerComponent } from './views/customers/editcustomer/editcustom
 import { SettingsComponent } from './views/settings/settings.component';
 import { CreateuserComponent } from './views/customers/users/createuser/createuser.component';
 import { CreatelocationComponent } from './views/customers/locations/createlocation/createlocation.component';
-import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
-import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { SchedulerComponent } from './views/scheduler/scheduler.component';
-import { FileUploadComponent } from './componentcontrols/fileupload/fileupload.component';
 import { CreateWorkScheduleComponent } from './views/customers/workschedules/createworkschedule/createworkschedule.component';
 import { CreatepositionComponent } from './views/customers/positions/createposition/createposition.component';
-import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
-import { CreateContractComponent } from './componentcontrols/createcontract/createcontract.component';
-import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
-
-import { EnableFilterPipe } from './pipes/enable-filter.pipe';
-import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
 import { UpdatePersonComponent } from './views/person/update-person/update-person.component';
 import { EditPersonComponent } from './views/person/editperson/editperson.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-
 import { PersonPositionComponent } from './views/person/personposition/personposition.component';
 import { PersonDocumentComponent } from './views/person/persondocument/persondocument.component';
 import { DashboardActionComponent } from './views/dashboard/dashboardaction/dashboardaction.component';
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
-import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
+import { ValidateLoginComponent } from './validate-login/validate-login.component';
+
+import { EnableFilterPipe } from './pipes/enable-filter.pipe';
+import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
 import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
-
-import { AuthCallbackComponent } from './views/auth-callback/auth-callback.component';
-
-
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
   { path: 'home', component: HomeComponent },
   { path: 'index', component: DashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/:page', component: DashboardComponent },
   { path: 'dashboard/:page/:id', component: DashboardComponent },
   { path: 'customer', component: AddCustomerComponent },
   { path: 'customer/addcustomer', component: AddCustomerComponent },
@@ -80,9 +83,7 @@ const routes: Routes = [
   { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
-  { path: 'auth-callback', component: AuthCallbackComponent },
-  // { path: '', component: AppComponent, pathMatch: 'full', canActivate: [MsalGuard] },
-
+  { path: 'ValidateLogin', component: ValidateLoginComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
@@ -93,48 +94,23 @@ const routes: Routes = [
 export class AppRoutingModule { }
 
 export const routingComponents = [
-  MenuComponent, HeadersComponent, LoginComponent,
-  HomeComponent, DashboardComponent, PageNotFoundComponentComponent,
-  SettingsComponent,
-  CustomerSelectionComponent,
-  LegalComponent,
-  JointcommitteeComponent,
-  AuthCallbackComponent,
-  CountriesComponent, StatuteComponent, LanguagesComponent,
-  WorkCodesComponent,
-  ContactPersonComponent,
-  HeadQuartersComponent, GeneralComponent, InvoiceSettingsComponent,
-  AddCustomerComponent, EditCustomerComponent, UpdateCustomerComponent,
-  AddPersonComponent, EditPersonComponent, UpdatePersonComponent,
-  WorkSchedulesComponent, PositionsComponent, UsersComponent, LocationsComponent,
-  PersonPositionComponent, PersonDocumentComponent,
-  SchedulerComponent,
-  CreateuserComponent,
-  CreatelocationComponent,
-  DPSSystemMessageComponent,
-  FileUploadComponent,
-  CreateWorkScheduleComponent,
-  CreatepositionComponent,
-  EnableFilterPipe,
-  ArchiveFilterPipe,
-  CreateWorkTimeComponent,
-  CalendarComponent,
-  CreateContractComponent,
-  DashboardActionComponent,
-  DashboardPersonComponent,
-  CancelContractComponent,
-  BulkContractComponent,
-  WeekPipe,
-  TimeSpliterPipe,
-  NumPipe
+  MenuComponent, HeadersComponent, LoginComponent, DashboardComponent, CustomerSelectionComponent,
+  PageNotFoundComponentComponent, SettingsComponent, HomeComponent, ContactPersonComponent,
+  LegalComponent, JointcommitteeComponent, WorkCodesComponent, UsersComponent, ValidateLoginComponent,
+  CountriesComponent, StatuteComponent, LanguagesComponent, InvoiceSettingsComponent, CurrencyComponent,
+  HeadQuartersComponent, GeneralComponent, AddCustomerComponent, EditPersonComponent, ZichmetComponent,
+  EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent,
+  UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent,
+  LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent,
+  CreateuserComponent, CreatelocationComponent, DPSSystemMessageComponent, FileUploadComponent,
+  CreateWorkScheduleComponent, CreatepositionComponent, CreateWorkTimeComponent, CalendarComponent,
+  CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
+  ZichmetComponent, EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe
 ];
+
 export const entringComponents = [
-  DPSSystemMessageComponent,
-  CreateuserComponent,
-  CreatelocationComponent,
-  CreateWorkScheduleComponent,
-  CreatepositionComponent,
-  CreateWorkTimeComponent,
-  CancelContractComponent,
-  CreateContractComponent
+  DPSSystemMessageComponent, CreateuserComponent, CreatelocationComponent, CreateWorkScheduleComponent,
+  CreatepositionComponent, CreateWorkTimeComponent, CancelContractComponent, CreateContractComponent
 ];
+
+export const routingProviders = [DatePipe, MsalService];

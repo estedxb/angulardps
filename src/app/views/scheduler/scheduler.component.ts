@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./scheduler.component.css']
 })
 export class SchedulerComponent implements OnInit {
-
+  public SelectedPage = 'Scheduler';
   constructor() { }
 
   ngOnInit() {

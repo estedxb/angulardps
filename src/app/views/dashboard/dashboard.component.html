@@ -1,6 +1,6 @@
 <div class="dashboardbg">
   <app-headers></app-headers>
-  <app-menu></app-menu>
+  <app-menu [SelectedPage]="SelectedPage"></app-menu>
   <div class="container">
     <div class="row">
       <div class="col col-sm-12 center-block">
@@ -16,12 +16,9 @@
     <div class="col col-sm-1"></div>
     <div class="col col-sm-10" id="maincontentarea">
       <div class="scrollbar" id="maincontent">
-        <div class="dashboardaction">
-          <app-dashboardsummary></app-dashboardsummary>
-        </div>
-        <div class="dashboardperson">
-          <app-dashboardperson></app-dashboardperson>
-        </div>
+        <app-dashboardsummary (NotificationCount)="setNotificationCount($event)"
+          [isForceZeroNotificationCount]="isForceZeroNotificationCount"></app-dashboardsummary>
+        <app-dashboardperson [NotificationCount]="notificationcount"></app-dashboardperson>
       </div>
     </div>
   </div>

@@ -21,6 +21,7 @@ import {
 })
 
 export class AddPersonComponent implements OnInit {
+  public SelectedPage = 'AddPerson';
   public persondata: any;
   public HQFormValid: boolean;
   public CTFormValid: boolean;
