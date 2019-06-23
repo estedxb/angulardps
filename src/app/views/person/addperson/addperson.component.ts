@@ -396,7 +396,7 @@ export class AddPersonComponent implements OnInit {
 
 
     this.logger.log(this.DpsPersonObject);
-    this.updatePosition();
+
   }
 
   updatePosition() {
