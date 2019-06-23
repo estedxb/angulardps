@@ -81,7 +81,7 @@ export class AddPersonComponent implements OnInit {
     shortName: "nl"
   };
 
-  public showFormIndex = 1;
+  public showFormIndex = 2;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
@@ -217,8 +217,10 @@ export class AddPersonComponent implements OnInit {
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
-            //this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
+            //
+            //this.dataDropDownFunctie.push(result);
             this.maindatas.push(this.datas);
+            this.fillDataDropDown(this.maindatas)
             this.FilterTheArchive();
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
@@ -320,12 +322,14 @@ export class AddPersonComponent implements OnInit {
     this.dataDropDownFunctieIds = [];
 
     for (let i = 0; i < maindatas.length; i++) {
-      const positionObject = maindatas[i].position.name;
+      let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
 
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
+
+   
   }
 
   ShowMessage(MSG, Action) {
@@ -688,6 +692,7 @@ export class AddPersonComponent implements OnInit {
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
         this.logger.log("res="+res);
         this.loadPersonData(res);
+        
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
