@@ -3,13 +3,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../../shared/models';
 import { Router, CanActivate } from '@angular/router';
-import { AuthService } from '../../shared/auth.service';
+// import { AuthService } from '../../shared/auth.service';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { LoggingService } from '../../shared/logging.service';
-import * as Msal from 'msal';
 import { environment } from '../../../environments/environment';
+import { AppComponent } from '../../app.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,55 +25,25 @@ export class LoginComponent implements OnInit {
   private ltkn: LoginToken = new LoginToken();
   public currentpage = 'login';
 
-  // name of scope, taken from the portal
-  // scope = ["https://chadsproject.onmicrosoft.com/api/user_impersonation"]; 
-  scope = [environment.aadurl + '/api/user_impersonation'];
-
-  // the creation of this was taken from the ref above.
-  authority = environment.aadurl + '/tfp/' + environment.tenantid + '/' + environment.signInPolicy + '/oauth2/v2.0/authorize';
-
-  msalConfig: Msal.Configuration = {
-    auth: {
-      clientId: '0a3fd7db-e748-4a4d-b9d5-e022ddc100e1',
-      authority: this.authority,
-      validateAuthority: true,
-      redirectUri: 'http://localhost:4200/auth-callback',
-      postLogoutRedirectUri: 'http//localhost:4200/auth-callback',
-      navigateToLoginRequestUrl: true,
-    },
-    framework: { isAngular: true },
-    cache: {
-      cacheLocation: 'localStorage',
-      storeAuthStateInCookie: true
-    }
-  };
-
-  clientApplication = new Msal.UserAgentApplication(this.msalConfig);
-
-  authenticateParaMeter: Msal.AuthenticationParameters = { scopes: ['openid', ''] };
-
-  AzureLogin() {
-    this.clientApplication.acquireTokenRedirect(this.authenticateParaMeter);
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private logger: LoggingService,
-    public authService: AuthService,
+    private appComp: AppComponent,
     public userService: UsersService,
     public customersService: CustomersService,
     public customerListsService: CustomerListsService,
   ) { }
 
   ngOnInit() {
-    this.logger.log('msalConfig ', this.msalConfig);
+    // this.logger.log('msalConfig ', this.msalConfig);
+
     this.loginForm = this.formBuilder.group({
       userid: ['', Validators.required], password: ['', Validators.required]
     });
     this.returnUrl = './dashboard';
     this.returnaddcustomerUrl = './customer/add';
-    this.authService.logout();
+    this.logout();
   }
 
   // convenience getter for easy access to form fields
@@ -85,6 +55,11 @@ export class LoginComponent implements OnInit {
 
   forgotpassword() { return true; }
 
+  logout(): void {
+    this.logger.log('Logout');
+    this.appComp.logout();
+    this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
+  }
 
   login() {
     // stop here if form is invalid

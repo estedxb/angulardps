@@ -31,6 +31,7 @@ export class HeadersComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     // this.VatNumber = this.CustomerVatNumber;
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    // alert(this.dpsLoginToken);
     this.VatNumber = this.dpsLoginToken.customerVatNumber;
     this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
     this.onPageInit();

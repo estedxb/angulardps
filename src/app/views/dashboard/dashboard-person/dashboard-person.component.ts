@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {
@@ -36,6 +36,7 @@ import { LoggingService } from '../../../shared/logging.service';
   ]
 })
 export class DashboardPersonComponent implements OnInit {
+  @Input() NotificationCount: number;
   public maindatas: DpsSchedulePerson[] = [];
   public datas: DpsSchedulePerson[] = [];
   public selectedPersondatas: DpsSchedulePerson[] = [];
@@ -45,8 +46,8 @@ export class DashboardPersonComponent implements OnInit {
   public Id = '';
   public SelectedIndex = 0;
   public errorMsg;
-  public loginaccessToken: string = localStorage.getItem('accesstoken');
-  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public dpsLoginToken: LoginToken = new LoginToken();
+  public loginaccessToken = '';
   public vatNumber: string;
   public startDate: Date;
   public endDate: Date;
@@ -75,13 +76,12 @@ export class DashboardPersonComponent implements OnInit {
 
   ngOnInit() { this.onPageInit(); }
 
-
-  changeState() {
-    this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
-  }
+  changeState() { this.currentState = this.currentState === 'initial' ? 'final' : 'initial'; }
 
   onPageInit() {
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
+    this.loginaccessToken = this.dpsLoginToken.accessToken;
     this.SelectedDates = this.getSelectedDates();
     const localstartDate = this.startDate.getFullYear() + '-' + this.formateZero(this.startDate.getMonth() + 1)
       + '-' + this.formateZero(this.startDate.getDate());
@@ -283,7 +283,9 @@ export class DashboardPersonComponent implements OnInit {
         this.ShowMessage('Person is not archived or disabled.', '');
       }
 
-    } catch (e) { alert(e.message); }
+    } catch (e) {
+      // alert(e.message);
+    }
   }
 
   getSelectedPersonContracts(personid) {

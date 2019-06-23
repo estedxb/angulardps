@@ -16,7 +16,7 @@ import { LoggingService } from '../../shared/logging.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  public SelectedPage = 'Home';
   public HQdata: any;
   public CTdata: any;
   public GLdata: any;

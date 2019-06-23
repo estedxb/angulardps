@@ -237,8 +237,12 @@
 #PersonContents {
   margin: 0px -20px 10px;
   padding: 0px;
-  min-height: 300px;
+  min-height: 400px;
 }
+#PersonContents.Expand {
+  min-height: 1000px;
+}
+
 #PersonContents .row {
   margin: 0px;
 }
@@ -261,6 +265,7 @@
   height: 300px;
   overflow: auto;
 }
+
 .dashboardpersoncontent {
   height: auto;
   max-height: 800px;
