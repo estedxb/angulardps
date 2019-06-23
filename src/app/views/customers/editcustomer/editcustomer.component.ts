@@ -166,7 +166,7 @@ export class EditCustomerComponent implements OnInit {
     this.HQdata.contact.mobile = response.contact.mobile;
     this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
     this.HQdata.contact.postion = response.contact.postion;
-    this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+    this.HQdata.activateContactAsUser = response.activateContactAsUser;
     this.HQdata.formValid = true;
     this.childEvent.emit(this.HQdata);
 

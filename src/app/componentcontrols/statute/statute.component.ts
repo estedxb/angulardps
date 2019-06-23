@@ -60,10 +60,17 @@ export class StatuteComponent implements OnInit {
 
   setParitairCommitteArray() {
 
+    this.logger.log("array Paritair committee");
+
     for(let i=0;i<this.statutes.length;i++)
       this.arrayParitairCommitee.push(new ParitairCommitee());
 
       this.createStatuteSettingsArrayEmpty();
+      
+      for(let j=0;j<this.statutes.length;j++)
+      {
+        this.isMealEnabled[j] = false;
+      }
 
   }
 
@@ -71,11 +78,11 @@ export class StatuteComponent implements OnInit {
   ngDoCheck() {
     this.createCoefficientArray();
 
-    if (this.STFormData !== undefined  && this.STFormData.data !== null && this.STFormData.page === "edit") {
       if (this.STFormData != this.oldSFTFormData) {
-          this.oldSFTFormData = this.STFormData;
-          this.loadInitialData();
-      }
+            this.oldSFTFormData = this.STFormData;
+          if (this.STFormData !== undefined  && this.STFormData.data !== null && this.STFormData.page === "edit") {
+                this.loadInitialData();
+          }
     }
   }
 
@@ -105,7 +112,6 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") 
     {
-
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
@@ -114,27 +120,27 @@ export class StatuteComponent implements OnInit {
         this.countStatutes = this.statutes.length;
         // this.createStatuteSettingsArrayEmpty();
         this.copyArray(this.loadStatuteSettingsArray);
-        // this.loadStatuteSettingsArray.forEach(element => {
-        //   this.onloadData(element,counter);
-        //   counter++;
-        // });                
-        //   if(counter > this.loadStatuteSettingsArray.length)
-        //       this.emitData("load");
+        this.loadStatuteSettingsArray.forEach(element => {
+          this.onloadData(element,counter);
+          counter++;
+        });                
+          if(counter > this.loadStatuteSettingsArray.length)
+              this.emitData("load");
       }
     }
   }
 
   copyArray(array:any)
   {
-    this.statuteSettings = this.loadStatuteSettingsArray;
+    this.statuteSettings = array;
     let counter:number = 0;
 
     this.statuteSettings.forEach(element => {
 
-      if(element.mealVoucherSettings.employerShare !== 0 && element.mealVoucherSettings.totalWorth !== 0 && element.mealVoucherSettings.minimumHours !== 0)
-            this.isMealEnabled[counter] = true;
-      else
+      if(element.mealVoucherSettings.employerShare === 0 && element.mealVoucherSettings.totalWorth === 0 && element.mealVoucherSettings.minimumHours === 0)
             this.isMealEnabled[counter] = false;
+      else
+            this.isMealEnabled[counter] = true;
 
         counter += 1;
     });
@@ -150,11 +156,9 @@ export class StatuteComponent implements OnInit {
     let counter:number = 0;
     this.lengthStatueSettings = this.statuteSettings.length;
 
-    if(this.statuteSettings === null) {
 
       for(let counter =0; counter< this.statutes.length; counter+=1)
       {
-  
           this.StatuteSettingsObject = new StatuteSetting();
           this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
   
@@ -180,8 +184,6 @@ export class StatuteComponent implements OnInit {
 
       if(counter > this.statutes.length)
           this.emitData("create array empty paritaircommitee");
-
-    }
   }
 
   fillTitles() {
@@ -228,9 +230,16 @@ export class StatuteComponent implements OnInit {
         this.StatuteSettingsObject.paritairCommitee.type = arrayElement.paritairCommitee.type;
   
         this.StatuteSettingsObject.statute = new Statute();
-        this.StatuteSettingsObject.statute.name = this.statutes[counter].name
-        this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
-        this.StatuteSettingsObject.statute.brightStaffingID  = parseInt(this.statutes[counter].BrightStaffingID,10);
+
+        if(this.statutes !== undefined && this.statutes !== null)
+        {
+          if(this.statutes[counter].name !== undefined && this.statutes[counter].type !== undefined && this.statutes[counter].BrightStaffingID !== undefined)
+          {
+            this.StatuteSettingsObject.statute.name = this.statutes[counter].name
+            this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
+            this.StatuteSettingsObject.statute.brightStaffingID  = parseInt(this.statutes[counter].BrightStaffingID,10);    
+          }
+        }
   
         this.statuteSettings[counter] = this.StatuteSettingsObject;
   
@@ -293,13 +302,13 @@ ngOnInit() {
       this.fillTitles();
       this.setParitairCommitteArray();
 
-      this.isMealEnabled = new Array<number>(data.length);
+      // this.isMealEnabled = new Array<number>(data.length);
 
-      this.fillMealEnabled();
+      // this.fillMealEnabled();
       this.countStatutes = data.length;
 
-      // this.logger.log("length of statutes="+this.statutes.length);
-      // this.logger.log(this.statutes);
+      this.logger.log("length of statutes="+this.statutes.length);
+      this.logger.log(this.statutes);
 
       if (this.statutes.length !== 0) {
         this.emitData("ngOnit");
@@ -323,15 +332,8 @@ ngOnInit() {
         counter += 1;
     });
 
-
-    // if(this.STFormData.data !== null && this.STFormData.page !== "edit")
-    // {
-
-    //   for(let i=0;i<this.isMealEnabled.length;i++)
-    //     if()
-    //       this.isMealEnabled[i] = false;
-    // }
-
+    this.logger.log("isMealEnabled is");
+    this.logger.log(this.isMealEnabled);
   }
 
   createCoefficientArray() {
@@ -368,12 +370,10 @@ ngOnInit() {
     
   }
 
-
   createArrayData() {
     this.emitData("createArray data");
   }
   
-
   totalChange(value: number, i) {
 
     if(this.isMealEnabled[i]===true)
@@ -468,13 +468,13 @@ ngOnInit() {
 
   replaceArrayCoefficient(value:number,i: number) {
 
-
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
+  if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
     } else {
       this.createArrayData();
     }
     this.emitData("replace array coefficient");
+
   }
 
   replaceArray(i: number) {

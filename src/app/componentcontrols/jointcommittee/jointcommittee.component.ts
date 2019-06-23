@@ -46,7 +46,7 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   ngDoCheck() {
-    if (this.JCFormData !== undefined) {
+    if (this.JCFormData !== undefined && this.JCFormData !== null) {
       this.loadDropDownData(this.JCFormData);
     }
   }

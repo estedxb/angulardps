@@ -108,7 +108,7 @@
 
             <div class="col-sm-4 center-block middle-block">
                 <label class="titleBold"> Als gebruiker activeren? </label><br />
-                <ui-switch (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
+                <ui-switch [checked]="alsCheck" (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
             </div>
         </div>
 

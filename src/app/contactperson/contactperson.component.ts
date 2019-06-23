@@ -42,6 +42,7 @@ export class ContactPersonComponent implements OnInit {
   loadEditDetails(contactPerson: any) {
 
     if (contactPerson !== undefined && contactPerson !== null) {
+
       if (contactPerson.contact !== undefined && contactPerson.contact !== null) {
         if (contactPerson.contact.firstName !== undefined && contactPerson.contact.firstName !== null)
           this.CTForm.controls['firstname'].setValue(contactPerson.contact.firstName);
@@ -66,8 +67,12 @@ export class ContactPersonComponent implements OnInit {
             this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
         this.languageString = contactPerson.contact.language.name;
+        this.CTForm.controls['alsCheck'].disable();
+
+        this.alsCheck = contactPerson.activateContactAsUser;
 
         this.createObjects();
+
       }
     }
 
@@ -100,7 +105,6 @@ export class ContactPersonComponent implements OnInit {
         this.loadEditDetails(this.CTFormData.data);
         // this.languageString = "French";
         this.createObjects();
-
       }
     }
   }
@@ -167,6 +171,7 @@ export class ContactPersonComponent implements OnInit {
 
   changeAls($event) {
     this.alsCheck = $event;
+
   }
 
   setJSONObject() {

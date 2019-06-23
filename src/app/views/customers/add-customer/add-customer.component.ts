@@ -165,8 +165,10 @@ export class AddCustomerComponent implements OnInit {
       {
         this.logger.log('Complete data=');
         this.logger.log(this.GLdata);
-        this.logger.log('HQdata');
+
+        this.logger.log('HQdata');        
         this.logger.log(this.HQdata);
+        
         this.logger.log('this STdata');
         this.logger.log(this.STdata);
 
