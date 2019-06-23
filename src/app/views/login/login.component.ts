@@ -8,8 +8,11 @@ import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { environment } from '../../../environments/environment';
-import { AppComponent } from '../../app.component';
 import { LoggingService } from '../../shared/logging.service';
+
+import { Subscription } from 'rxjs/Subscription';
+import * as Msal from 'msal';
+import { MsalService } from '../../shared/msal.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     public userService: UsersService,
     public customersService: CustomersService,
     public customerListsService: CustomerListsService,
-    private appComp: AppComponent,
+    private msalService: MsalService,
     private logger: LoggingService
   ) { }
 
@@ -54,12 +57,12 @@ export class LoginComponent implements OnInit {
   logout(): void {
     this.logger.log('Logout');
     localStorage.removeItem('dpsLoginToken');
-    // this.appComp.logout();
+    // this.msalService.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
   }
 
   B2CLogin() {
-    this.appComp.login();
+    this.msalService.login();
   }
 
   login() {

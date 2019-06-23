@@ -12,7 +12,6 @@ declare var bootbox: '';
 })
 export class MsalService {
   private ltkn: LoginToken = new LoginToken();
-  B2CTodoAccessTokenKey = environment.B2CTodoAccessTokenKey;
   message: string;
   returnUrl: string;
   returnaddcustomerUrl: string;
@@ -22,6 +21,7 @@ export class MsalService {
   public currentpage = 'login';
 
   public logInRedirectURL = 'validateLogin';
+  B2CTodoAccessTokenKey = environment.B2CTodoAccessTokenKey;
 
   tenantConfig = {
     tenant: environment.tenantid,
@@ -29,7 +29,7 @@ export class MsalService {
     signInPolicy: environment.signInPolicy,
     signUpPolicy: environment.signUpPolicy,
     forgotPasswordPolicy: environment.forgotPasswordPolicy,
-    redirectUri: environment.webUrl + this.logInRedirectURL,
+    redirectUri: 'http://localhost:4200',
     b2cScopes: ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation']
   };
   constructor(private userService: UsersService, private customerListsService: CustomerListsService, private logger: LoggingService) { }
