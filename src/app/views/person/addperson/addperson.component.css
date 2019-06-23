@@ -135,9 +135,12 @@
 #maincontentarea #CustomerContact1.customerBox .netExpense span {
   padding: 12px 0px;
 }
+#maincontentarea #AddPersonForm1 .inputWithImgNew .euro input {
+  padding-left: 18px;
+}
 
 #maincontentarea #AddPersonForm1 .inputWithImgNew .fa-eur {
   position: absolute;
-  left: 6px;
+  left: 20px;
   top: 13px;
 }
