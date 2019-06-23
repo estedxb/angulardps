@@ -68,11 +68,12 @@
         </form>
         <div class="col-sm-12 form-group text-center" *ngIf="currentpage==='login'">
           <button _ngcontent-aym-c20="" class="whitebtn" name="forgotpassword" (click)="ShowForgotPassword()">Wachtwoord
-            vergeten</button>
+            vergeten</button><br><button (click)="B2CLogin()">B2C Login</button>
         </div>
         <div class="col-sm-12 form-group text-center forgotpassword" *ngIf="currentpage==='forgotpassword'">
           <button _ngcontent-aym-c20="" class="whitebtn" name="backtologin" (click)="ShowLogin()"><img
               _ngcontent-atc-c2="" src="../../assets/svg/left-arrow-black.svg"><span>Terug naar inloggen</span></button>
+
         </div>
       </div>
     </div>

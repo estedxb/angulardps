@@ -18,8 +18,6 @@ import { LoggingService } from '../../shared/logging.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
-  returnUrl: string;
-  returnaddcustomerUrl: string;
   dpsuservatnumber = '987654321000';
   errorMsg: string;
   private ltkn: LoginToken = new LoginToken();
@@ -41,8 +39,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       userid: ['', Validators.required], password: ['', Validators.required]
     });
-    this.returnUrl = './dashboard';
-    this.returnaddcustomerUrl = './customer/add';
     this.logout();
   }
 
@@ -57,8 +53,13 @@ export class LoginComponent implements OnInit {
 
   logout(): void {
     this.logger.log('Logout');
+    localStorage.removeItem('dpsLoginToken');
     // this.appComp.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
+  }
+
+  B2CLogin() {
+    this.appComp.login();
   }
 
   login() {
@@ -105,18 +106,18 @@ export class LoginComponent implements OnInit {
               this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
               localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
               this.logger.log('1) authLogin in ::', this.ltkn);
-              this.router.navigate([this.returnUrl]);
+              // this.router.navigate(['./' + environment.logInSuccessURL]);
             } else {
               this.message = 'Logged in successfully, but customers not found. Please wait...';
               localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
               this.logger.log('2) authLogin in ::', this.ltkn);
-              this.router.navigate([this.returnaddcustomerUrl]);
+              // this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
             }
           }, error => this.errorMsg = error);
         } else {
           localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
           this.logger.log('3) authLogin in ::', this.ltkn);
-          this.router.navigate([this.returnUrl]);
+          // this.router.navigate(['./' + environment.logInSuccessURL]);
         }
       }, error => this.errorMsg = error);
     }

@@ -61,10 +61,7 @@ export class AppComponent {
   }
 
   public logout() {
-
-    this.msalService.logout();
-    localStorage.removeItem('dpsLoginToken');
-    // this.router.navigate(['/dashboard']);
+    this.msalService.logout();   
   }
 
   public isUserLoggedIn() {
