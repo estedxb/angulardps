@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold">Type gebruiker </label>
-                    <input formControlName="usertype" class="form-control" name="usertype" type="text" disabled />
+                    <input formControlName="usertype" class="form-control" name="usertype" type="text" />
                     <div class="form-control-feedback"
                         *ngIf="UserForm.controls.usertype.invalid && (UserForm.controls.usertype.dirty || UserForm.controls.usertype.touched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
