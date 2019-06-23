@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
 
   logout(): void {
     this.logger.log('Logout');
-    this.appComp.logout();
+    // this.appComp.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
   }
 
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
         } else { this.ltkn.userRole = 'Customer'; }
 
         if (this.ltkn.customerVatNumber === this.dpsuservatnumber) {
-          this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail).subscribe(customersList => {
+          this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
             this.logger.log('authLogin in customersList Found ::', customersList);
             let customers: CustomersList[] = [];
 

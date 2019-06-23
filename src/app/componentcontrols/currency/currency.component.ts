@@ -38,7 +38,7 @@ export class CurrencyComponent implements OnInit {
   
       this._selectedIndex = $event.target.value;
       this.selectedIndex = $event.target.value;
-      this.selectedString = this.value;  
+      this.selectedString = this.value;
       this.childEvent.emit(this.value);
   
       return this.value;
