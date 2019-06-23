@@ -8,7 +8,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
-import { environment } from 'src/environments/environment.stag';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-update-customer',
@@ -37,11 +37,11 @@ export class UpdateCustomerComponent implements OnInit {
       this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-        this.router.navigate([environment.logInRedirectURL]);
+        this.router.navigate(['./' + environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate([environment.logInRedirectURL]);
+      this.router.navigate(['./' + environment.logInRedirectURL]);
     }
   }
 

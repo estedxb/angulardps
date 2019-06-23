@@ -426,6 +426,15 @@ export class CreateWorkScheduleComponent implements OnInit {
   onSaveWorkScheduleClick() {
     this.createObjects();
     this.logger.log('data ::', this.currentDpsWorkSchedule);
+    this.logger.log('this.WorkScheduleForm.valid' + this.WorkScheduleForm.valid);
+    this.logger.log('this.isValidMon' + this.isValidMon);
+    this.logger.log('this.isValidTue' + this.isValidTue);
+    this.logger.log('this.isValidWed' + this.isValidWed);
+    this.logger.log('this.isValidThu' + this.isValidThu);
+    this.logger.log('this.isValidFri' + this.isValidFri);
+    this.logger.log('this.isValidSat' + this.isValidSat);
+    this.logger.log('this.isValidSun' + this.isValidSun);
+    
     if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed
       && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
       if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {

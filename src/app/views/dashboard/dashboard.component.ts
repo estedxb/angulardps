@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import { LoggingService } from '../../shared/logging.service';
-import { environment } from 'src/environments/environment.stag';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate([environment.logInRedirectURL]);
+      this.router.navigate(['./' + environment.logInRedirectURL]);
     }
   }
 

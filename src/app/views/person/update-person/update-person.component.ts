@@ -46,11 +46,11 @@ export class UpdatePersonComponent implements OnInit {
       // this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-        this.router.navigate([environment.logInRedirectURL]);
+        this.router.navigate(['./' + environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate([environment.logInRedirectURL]);
+      this.router.navigate(['./' + environment.logInRedirectURL]);
       // alert(e.message);
     }
   }

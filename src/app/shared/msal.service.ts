@@ -21,13 +21,15 @@ export class MsalService {
   errorMsg: string;
   public currentpage = 'login';
 
+  public logInRedirectURL = 'validateLogin';
+
   tenantConfig = {
     tenant: environment.tenantid,
     clientID: environment.clientId,
     signInPolicy: environment.signInPolicy,
     signUpPolicy: environment.signUpPolicy,
     forgotPasswordPolicy: environment.forgotPasswordPolicy,
-    redirectUri: environment.logInRedirectURL,
+    redirectUri: environment.webUrl + this.logInRedirectURL,
     b2cScopes: ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation']
   };
   constructor(private userService: UsersService, private customerListsService: CustomerListsService, private logger: LoggingService) { }
@@ -41,9 +43,9 @@ export class MsalService {
     this.tenantConfig.clientID, this.authority,
     function (errorDesc: any, token: any, error: any, tokenType: any) {
       //if (errorDesc !== '' && errorDesc !== undefined && errorDesc !== null) {
-      //alert('token :: ' + token);
+      alert('token :: ' + token);
       this.saveAccessTokenToCache(token);
-      
+
       this.updateSessionStorage(token);
       // } else {
       //   alert('Error : ' + errorDesc);
@@ -51,7 +53,7 @@ export class MsalService {
       // }
     }
   );
-   
+
   updateSessionStorage(token: string) {
     // alert(this.getUser());
     console.log('Azure getUser()', this.getUser());
@@ -89,7 +91,6 @@ export class MsalService {
     }, error => this.errorMsg = error);
 
   }
-
 
   public login(): void {
     this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
@@ -130,6 +131,7 @@ export class MsalService {
   }
 
   logout(): void {
+    localStorage.removeItem('dpsLoginToken');
     this.clientApplication.logout();
   }
 
