@@ -30,7 +30,17 @@ export class AppComponent {
       this.login();
     } else {
       const token: string = 'Token';  // this.getAccesstoken();
-      this.updateSessionStorage(token);
+      try {
+        const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
+        if (dpsLoginTokenString !== '') {
+          const dpsLoginToken: LoginToken = JSON.parse(dpsLoginTokenString);
+          const VatNumber = dpsLoginToken.customerVatNumber;
+          if (VatNumber === '') { this.updateSessionStorage(token); }
+        } else { this.updateSessionStorage(token); }
+      } catch (e) {
+        this.logger.log('Getting dpsLoginToken failed', e.message);
+        this.updateSessionStorage(token);
+      }
     }
   }
 
@@ -48,7 +58,7 @@ export class AppComponent {
   }
 
   public logout() {
-    
+
     this.msalService.logout();
     localStorage.removeItem('dpsLoginToken');
     // this.router.navigate(['/dashboard']);
