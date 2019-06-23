@@ -106,18 +106,18 @@ export class LoginComponent implements OnInit {
               this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
               localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
               this.logger.log('1) authLogin in ::', this.ltkn);
-              // this.router.navigate(['./' + environment.logInSuccessURL]);
+              this.router.navigate(['./' + environment.logInSuccessURL]);
             } else {
               this.message = 'Logged in successfully, but customers not found. Please wait...';
               localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
               this.logger.log('2) authLogin in ::', this.ltkn);
-              // this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
+              this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
             }
           }, error => this.errorMsg = error);
         } else {
           localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
           this.logger.log('3) authLogin in ::', this.ltkn);
-          // this.router.navigate(['./' + environment.logInSuccessURL]);
+          this.router.navigate(['./' + environment.logInSuccessURL]);
         }
       }, error => this.errorMsg = error);
     }

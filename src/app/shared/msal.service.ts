@@ -21,7 +21,7 @@ export class MsalService {
   errorMsg: string;
   public currentpage = 'login';
 
-  public logInRedirectURL = 'ValidateLogin';
+  public logInRedirectURL = 'validateLogin';
 
   tenantConfig = {
     tenant: environment.tenantid,
