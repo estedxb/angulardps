@@ -340,9 +340,9 @@
             </div>
             <div class="row PersonContactContent">
               <div class="col-sm-7">
-                <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                <select formControlName="functie"  [(ngModel)]="selectedIndexFunctie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
                   (change)="onChangeDropDownFunctie($event)" ng-dropdown>
-                  <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
+                  <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i" [attr.selected]="i == 0">
                     {{data}}</option>
                 </select>
               </div>
