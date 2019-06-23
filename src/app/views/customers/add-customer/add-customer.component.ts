@@ -148,9 +148,11 @@ export class AddCustomerComponent implements OnInit {
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
             this.logger.log('response=' + res);
+            this.ShowMessage("Klantrecord met succes gemaakt!",'');            
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
+                this.ShowMessage("Geen klant te maken!",'');
                 this.logger.log('Error occured=' + err.error.message);
               } else {
                 this.logger.log('response code=' + err.status);
@@ -221,13 +223,14 @@ export class AddCustomerComponent implements OnInit {
 
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.logger.log('response=' + res);
-      this.ShowMessage('Customer record created successfully!', '');
+      this.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
       this.logger.log('Redirect Breaked 11');
       this.router.navigate(['/dashboard']);
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
+          this.ShowMessage("Geen klant te maken!",'');
           this.logger.log('Error occured=' + err.error.message);
         } else {
           this.logger.log('response code=' + err.status);
