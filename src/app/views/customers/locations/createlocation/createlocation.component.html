@@ -8,7 +8,7 @@
     <div class="row ">
         <div class="col-sm-12 center-block head">
             <img src='../../../assets/svg/locationHead.svg'>
-            <br /> <label>Vestiging aanmaken / Wijzigen</label>
+            <br /> <label>Vestiging aanmaken / wijzigen</label>
             <hr>
         </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="contactperson">
             <div class="row">
                 <div class="col-sm-12 inputWithImg">
-                    <label class="titleBold"> Naam: </label>
+                    <label class="titleBold"> Naam </label>
                     <input formControlName="name" class="form-control" name="name" type="text" required />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.name.invalid && (LocationForm.controls.name.dirty || LocationForm.controls.name.touched) else newvalid">
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Straat: </label>
+                    <label class="titleBold"> Straat </label>
                     <input formControlName="street" class="form-control" name="street" />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.street.invalid && (LocationForm.controls.street.dirty || LocationForm.controls.street.touched) else dnewvalid">
@@ -40,7 +40,7 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-3 inputWithImg">
-                    <label class="titleBold">Nummer: </label>
+                    <label class="titleBold">Nummer </label>
                     <input formControlName="number" class="form-control" name="number" />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.number.invalid && (LocationForm.controls.number.dirty || LocationForm.controls.number.touched) else cnewvalid">
@@ -51,7 +51,7 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-3 inputWithImg">
-                    <label class="titleBold">Bus: </label>
+                    <label class="titleBold">Bus </label>
                     <input formControlName="bus" class="form-control" name="bus" />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.bus.invalid && (LocationForm.controls.bus.dirty || LocationForm.controls.bus.touched) else cnewvalid">
@@ -65,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Plaats: </label>
+                    <label class="titleBold"> Plaats </label>
                     <input formControlName="place" class="form-control" name="place" />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.place.invalid && (LocationForm.controls.place.dirty || LocationForm.controls.place.touched) else enewvalid">
@@ -76,7 +76,7 @@
                     </ng-template>
                 </div>
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Postcode: </label>
+                    <label class="titleBold"> Postcode </label>
                     <input (blur)="updateData()" formControlName="postcode" class="form-control" name="postcode" />
                     <div class="form-control-feedback"
                         *ngIf="LocationForm.controls.postcode.invalid && (LocationForm.controls.postcode.dirty || LocationForm.controls.postcode.touched) else fnewvalid">
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="col-sm-4 inputWithImg">
-                    <label class="titleBold"> Land: </label>
+                    <label class="titleBold"> Land </label>
                     <app-countries (childEvent)="receiveMessageCountry($event)" [CountryFormData]="countryString">
                     </app-countries>
                 </div>

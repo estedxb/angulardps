@@ -79,10 +79,10 @@ export class InvoiceSettingsComponent implements OnInit {
   public loadSwitchTeam:boolean;
   public loadSwitchOther:boolean;
 
-  public tCoefficient = "1.20";
-  public mCoefficient = "1.69";
-  public EchoChange = "1.69";
-  public DimonaChange = "0.3510";
+  public tCoefficient:any = "1.20";
+  public mCoefficient:any = "1.69";
+  public EchoChange:any = "1.69";
+  public DimonaChange:any = "0.3510";
 
   public currencyChoice:number = 0;
   public currencyNewChoice:number = 0;
@@ -109,6 +109,11 @@ export class InvoiceSettingsComponent implements OnInit {
 
   changeObject() {
 
+    this.tCoefficient = parseFloat(this.ISForm.get('Verplaatsingen').value);
+    this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
+    this.EchoChange = parseFloat(this.ISForm.get('Echo').value);
+    this.DimonaChange = parseFloat(this.ISForm.get('Dimona').value);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -129,8 +134,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onChangeDropDownCurrencyTeam($event, i) {
-
-    this.logger.log("received currency="+ $event);
 
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
@@ -252,7 +255,6 @@ export class InvoiceSettingsComponent implements OnInit {
             }
             else {
 
-              this.logger.log("shiftAllowance is false");
               this.ISForm.get('PloegprimeBox1').disable();
               this.ISForm.get('PloegprimeBox2').disable();
               this.ISForm.get('currency').disable();
@@ -274,8 +276,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
                  if(counter===0)
                 {
-                  this.logger.log(this.Ploegpremiere);
-
                     const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
                     formGroup.controls['PloegprimeBox1'].setValue(element.shiftName);
                     formGroup.controls['PloegprimeBox2'].setValue(element.amount);
@@ -290,7 +290,6 @@ export class InvoiceSettingsComponent implements OnInit {
                       formGroup.controls['PloegprimeBox2'].enable();
                     }
   
-
                      if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false)
                          this.currencyDataShift[0] = "€";
                      else
@@ -411,7 +410,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
       this.ISForm.get('PloegprimeBox1').disable();
       this.ISForm.get('PloegprimeBox2').disable();
-      this.ISForm.get('inhaalrust').disable();
 
     }
 
@@ -536,19 +534,19 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   transportCoefficient(value) {
-    this.tCoefficient = value;
+    this.tCoefficient = parseFloat(value);
   }
 
   maaltichequesCoefficient(value) {
-    this.mCoefficient = value;
+    this.mCoefficient = parseFloat(value);
   }
 
   onEchoChange(value) {
-    this.EchoChange = value;
+    this.EchoChange = parseFloat(value);
   }
 
   onDimonaChange(value) {
-    this.DimonaChange = value;
+    this.DimonaChange = parseFloat(value);
   }
 
   isInvalid() {
@@ -633,20 +631,21 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  onChangeZ(event) {
-    this.sicknessInvoiced = event;
+  onChangeZ($event) {
+    this.sicknessInvoiced = $event;
     this.changeObject();
 
   }
-  onChangeF(event) {
-    this.holidayInvoiced = event;
+  onChangeF($event) {
+    this.holidayInvoiced = $event;
     this.changeObject();
   }
 
-  onChangeM(event) {
-    this.holidayInvoiced = event;
+  onChangeM($event) {
 
-    if (event === true) {
+    this.holidayInvoiced = $event;
+
+    if ($event === true) {
       this.ISForm.get('mobilebox').enable();
       this.mobilityAllowanceObject.enabled = true;
     } else {
@@ -675,7 +674,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   setMobileBox(value: number) {
     // this.mobileBoxText = value;
-    this.mobilityAllowanceObject.enabled = false;
     this.mobilityAllowanceObject.amountPerKm = value;
     this.changeObject();
   }

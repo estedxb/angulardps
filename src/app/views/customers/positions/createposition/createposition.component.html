@@ -8,7 +8,7 @@
     <div class="row ">
         <div class="col-sm-12 center-block head">
             <img src='../../../assets/svg/PositionHead.svg'>
-            <br /> <label>Functie aanmaken / Wijzigen</label>
+            <br /> <label>Functie aanmaken / wijzigen</label>
             <hr>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     <div class="col col-sm-6">
                         <div class="row">
                             <div class="col-sm-12 inputWithImg">
-                                <label class="titleBold"> Functiebeschrijiving: </label>
+                                <label class="titleBold"> Functiebeschrijiving </label>
                                 <input formControlName="name" class="form-control" name="name" type="text" />
                                 <div class="form-control-feedback"
                                     *ngIf="PositionForm.controls.name.invalid && (PositionForm.controls.name.dirty || PositionForm.controls.name.touched) else enewvalid">
@@ -38,7 +38,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 inputWithImg">
-                                <label class="titleBold"> Kostenplaats: </label>
+                                <label class="titleBold"> Kostenplaats </label>
                                 <input formControlName="costCenter" class="form-control" name="costCenter"
                                     type="text" />
                                 <div class="form-control-feedback"
@@ -56,12 +56,12 @@
                                     (change)="onChange($event)" size="small"> </ui-switch>
                             </div>
                             <div class="col-sm-10 rb">
-                                <label class="titleBold"> Student Toegelaten </label>
+                                <label class="titleBold"> Student toegelaten </label>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 inputWithImg">
-                        <label class="titleBold"> Taakbeschrijiving: </label>
+                        <label class="titleBold"> Taakbeschrijiving </label>
                         <textarea formControlName="taskDescription" rows="7" class="form-control"
                             name="taskDescription"></textarea>
                         <div class="form-control-feedback"
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row customerBoxContect bottom-15">
                     <div class="col col-sm-6">
-                        <div class="inputWrapper"><span>Upload werkpostfiche:</span><img
+                        <div class="inputWrapper"><span>Upload werkpostfiche</span><img
                                 src="../../../../../assets/svg/CircleUp.svg">
                             <input type="file" id="file" name="file" class="fileInput hidden"
                                 (change)="handleFileInput($event.target.files)">
@@ -105,7 +105,7 @@
                 <div class="col-sm-5"></div>
                 <div class="col-sm-7">
                     <div class="row inforow">
-                        <div class="col-sm-11 actioncontent">Workstation Document</div>
+                        <div class="col-sm-11 actioncontent">Werkpostfiche</div>
                         <div class="col-sm-1 actioneyebtn">
                             <button name="downloadWorkstationDocument" id="downloadWorkstationDocument"
                                 (click)="downloadUploadedFile()">

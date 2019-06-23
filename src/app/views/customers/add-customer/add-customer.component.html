@@ -40,15 +40,10 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-            <!-- <div *ngIf="HQFormValid === true">
-                <span style="color:red;"> *All Fields are required in Hoofdzetel </span>
-            </div>   -->
-            <!-- <app-jointcommittee></app-jointcommittee>
-                <app-countries></app-countries>
-                <app-legal></app-legal> -->
 
-            <app-headquarters (childEvent)="receiveHQdata($event)"></app-headquarters>
+            <app-headquarters [HQFormData]="editObject" (childEvent)="receiveHQdata($event)"></app-headquarters>
           </div>
+
 
           <div id="CustomerContact" class="customerBox">
             <div class="row panelheader">
@@ -58,10 +53,8 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-            <!-- <div *ngIf="CTFormValid === true">
-                <span style="color:red;"> *All Fields are required in Contactpersoon </span>
-            </div> -->
-            <app-contactperson (childEvent)="receiveCTdata($event)"></app-contactperson>
+
+            <app-contactperson [CTFormData]="editObject" (childEvent)="receiveCTdata($event)"></app-contactperson>
           </div>
         </div>
         <div id="from2" *ngIf="showFormIndex === 2">
@@ -111,10 +104,5 @@
     </div>
   </ng-template>
 
-  <!-- <div class="col col-sm-3">
-    <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
-        src="../../assets/svg/right-arrow.svg" /></button><br />
-    <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-        src="../../assets/svg/left-arrow.svg" /> Terug</button>
-  </div> -->
+
 </div>
