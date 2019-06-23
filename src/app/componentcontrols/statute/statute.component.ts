@@ -231,11 +231,11 @@ export class StatuteComponent implements OnInit {
   
         this.StatuteSettingsObject.statute = new Statute();
 
-        if(this.statutes !== undefined && this.statutes !== null)
+        if(this.statutes !== undefined && this.statutes.length > 0)
         {
           if(this.statutes[counter].name !== undefined && this.statutes[counter].type !== undefined && this.statutes[counter].BrightStaffingID !== undefined)
           {
-            this.StatuteSettingsObject.statute.name = this.statutes[counter].name
+            this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
             this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
             this.StatuteSettingsObject.statute.brightStaffingID  = parseInt(this.statutes[counter].BrightStaffingID,10);    
           }
@@ -306,9 +306,6 @@ ngOnInit() {
 
       // this.fillMealEnabled();
       this.countStatutes = data.length;
-
-      this.logger.log("length of statutes="+this.statutes.length);
-      this.logger.log(this.statutes);
 
       if (this.statutes.length !== 0) {
         this.emitData("ngOnit");

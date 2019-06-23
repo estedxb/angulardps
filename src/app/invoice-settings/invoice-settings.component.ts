@@ -252,6 +252,14 @@ export class InvoiceSettingsComponent implements OnInit {
                    this.ISForm.get('PloegprimeBox2').enable();
                    this.ISForm.get('currency').enable();
                    this.ploegpremieSwitch = true;
+
+                   let nc=0;
+                   for(let nc=0;nc<this.shiftAllowances.length;nc++)
+                   {
+                         const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
+                         formGroup.controls['PloegprimeBox1'].enable();
+                         formGroup.controls['PloegprimeBox2'].enable();
+                   }
             }
             else {
 
@@ -259,6 +267,15 @@ export class InvoiceSettingsComponent implements OnInit {
               this.ISForm.get('PloegprimeBox2').disable();
               this.ISForm.get('currency').disable();
               this.ploegpremieSwitch = false;
+
+                  let nc=0;
+                  for(let nc=0;nc<this.shiftAllowances.length;nc++)
+                  {
+                        const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
+                        formGroup.controls['PloegprimeBox1'].disable();
+                        formGroup.controls['PloegprimeBox2'].disable();
+                  }
+  
             }
 
             this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
@@ -339,13 +356,27 @@ export class InvoiceSettingsComponent implements OnInit {
               this.ISForm.get('AndreBox1').enable();
               this.ISForm.get('AndreBox2').enable();
               this.ISForm.get('currency').enable();
-              // this.disableWorkCodes = false;
+              this.disableWorkCodes = true;
+
+              let nc=0;
+              for(let nc=0;nc<this.otherAllowances.length;nc++)
+              {
+                    const formGroup = this.Andre.controls[nc] as FormGroup;
+                    formGroup.controls['AndreBox2'].enable();
+              }
             }
             else {
                 this.ISForm.get('AndreBox1').disable();
                 this.ISForm.get('AndreBox2').disable();
                 this.ISForm.get('currency').disable();
                 this.disableWorkCodes = false;
+
+                let nc=0;
+                for(let nc=0;nc<this.otherAllowances.length;nc++)
+                {
+                      const formGroup = this.Andre.controls[nc] as FormGroup;
+                      formGroup.controls['AndreBox2'].disable();
+                }
               }
 
               if(this.FPFormData.data.invoiceSettings.otherAllowances !== null && this.FPFormData.data.invoiceSettings.otherAllowances !== undefined)
@@ -406,13 +437,8 @@ export class InvoiceSettingsComponent implements OnInit {
       this.loadSwitchHolidays = false;
       this.loadSwitchMobility = false;
       this.loadSwitchTeam = false;
-      this.loadSwitchOther = false;  
-
-      this.ISForm.get('PloegprimeBox1').disable();
-      this.ISForm.get('PloegprimeBox2').disable();
-
+      this.loadSwitchOther = false;
     }
-
   }
 
   ngOnInit() {
@@ -485,16 +511,17 @@ export class InvoiceSettingsComponent implements OnInit {
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
     this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;    
 
+    // this.Ploegpremiere.push(this.createServants('',''));
+
     this.ISForm.get('mobilebox').disable();
     this.ISForm.get('PloegprimeBox1').disable();
     this.ISForm.get('PloegprimeBox2').disable();
     this.ISForm.get('currency').disable();
-    // this.ISForm.get('inhaalrust').disable();
 
     this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
-    // this.ISForm.get('currency').disable();
 
+    this.ISForm.get('inhaalrust').disable();
 
     this.disabled = 'true';
     this.disableWorkCodes = true;
@@ -502,22 +529,59 @@ export class InvoiceSettingsComponent implements OnInit {
     this.ploegpremieSwitch = false;
     this.andreSwitch = false;
 
-    //this.changeObject();
+    this.changeInitialStatus();
+
+    this.logger.log("ploegpremiere length="+this.Ploegpremiere.length);
+    this.logger.log("andre length="+this.Andre.length);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
     
   }
 
+  changeInitialStatus() {
+
+    this.disableWorkCodes = true;
+
+    for(let counter=0;counter<this.otherAllowances.length;counter++)
+    {
+          const formGroup = this.Andre.controls[counter] as FormGroup;
+          formGroup.controls['AndreBox2'].disable();
+    }
+
+
+    for(let nc=0;nc<this.shiftAllowances.length;nc++)
+    {
+          const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
+          formGroup.controls['PloegprimeBox1'].disable();
+          formGroup.controls['PloegprimeBox2'].disable();
+    }
+
+  }
+
   onTeamChange($event) {
 
     this.ploegpremieSwitch = $event;
+
+    this.logger.log("shift allowances ="+this.shiftAllowances.length);
+    this.logger.log("length of Ploegprimebox1="+this.Ploegpremiere);
 
     if ($event === true) {
       this.shiftAllowance = true;
       this.ISForm.get('PloegprimeBox1').enable();
       this.ISForm.get('PloegprimeBox2').enable();
       this.ISForm.get('currency').enable();
+
+      for(let counter=0;counter<this.shiftAllowances.length;counter++)
+      {
+            const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
+            formGroup.controls['PloegprimeBox1'].enable();
+            formGroup.controls['PloegprimeBox2'].enable();
+
+            this.logger.log("counter="+counter);
+      }
+
+
       this.disabled = 'false';
     }
     else {
@@ -526,6 +590,16 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('PloegprimeBox2').disable();
       this.ISForm.get('currency').disable();
       this.disabled = 'true';
+
+      for(let counter=0;counter<this.shiftAllowances.length;counter++)
+      {
+            const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
+            formGroup.controls['PloegprimeBox1'].disable();
+            formGroup.controls['PloegprimeBox2'].disable();
+
+            this.logger.log("counter="+counter);
+      }
+
       this.clearShiftAllowances();
     }
 
@@ -706,12 +780,25 @@ export class InvoiceSettingsComponent implements OnInit {
       this.ISForm.get('AndreBox2').enable();
       this.ISForm.get('currency_other').enable();
       this.disabled = 'false';
+      for(let counter=0;counter<this.otherAllowances.length;counter++)
+      {
+            const formGroup = this.Andre.controls[counter] as FormGroup;
+            formGroup.controls['AndreBox2'].enable();
+      }
+
     } else {
       this.ISForm.get('arrayAndreBox').disable();
       this.disableWorkCodes = true;
       this.ISForm.get('AndreBox2').disable();
       this.ISForm.get('currency_other').disable();
       this.disabled = 'true';
+
+          for(let counter=0;counter<this.otherAllowances.length;counter++)
+          {
+                const formGroup = this.Andre.controls[counter] as FormGroup;
+                formGroup.controls['AndreBox2'].disable();
+          }
+
       this.clearOtherAllowances();
     }
     this.changeObject();
