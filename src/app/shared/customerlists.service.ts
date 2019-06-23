@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CustomersList } from './models';
+import { CustomersList, LoginToken } from './models';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { environment } from '../../environments/environment';
 import { LoggingService } from './logging.service';
+import { getToken } from '@angular/router/src/utils/preactivation';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerListsService {
@@ -28,9 +29,17 @@ export class CustomerListsService {
     return result;
   }
 
-  public getCustomersbyUserEmail(UserEmail: string): Observable<CustomersList[]> {
-    // this.logger.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
-    const Token = 'ssss';
+  getToken() {
+    const dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    return dpsLoginToken.accessToken;
+  }
+
+  public getCustomersbyUserEmail(UserEmail: string, Token: string = ''): Observable<CustomersList[]> {
+    this.logger.log('CustomerListsService Data From = getCustomersbyUserEmail :: ' + this.getCustomerListUrl + '/' + UserEmail);
+    if (Token === '') {
+      Token = this.getToken();
+    }
+
     const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + UserEmail, {
       headers: { Authorization: 'Token token="' + Token + '"' }
     }).catch(this.errorHandler);
@@ -38,5 +47,6 @@ export class CustomerListsService {
     return result;
   }
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }
+
 
 }

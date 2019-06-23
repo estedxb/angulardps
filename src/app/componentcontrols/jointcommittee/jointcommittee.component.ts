@@ -46,7 +46,7 @@ export class JointcommitteeComponent implements OnInit {
   }
 
   ngDoCheck() {
-    if (this.JCFormData !== undefined) {
+    if (this.JCFormData !== undefined && this.JCFormData !== null) {
       this.loadDropDownData(this.JCFormData);
     }
   }
@@ -66,8 +66,6 @@ export class JointcommitteeComponent implements OnInit {
           position = counter;
 
     }
-
-    this.logger.log("received string="+this.JCFormData);
 
     const obj: any = { selectedObject: datas[position], arrayObject: datas };
     this.childEvent.emit(obj);

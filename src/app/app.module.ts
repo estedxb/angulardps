@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule, routingComponents, entringComponents } from './app-routing.module';
+import { AppRoutingModule, routingComponents, entringComponents, routingProviders } from './app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
@@ -14,41 +14,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { TestArraysComponent } from './test-arrays/test-arrays.component';
-import { DatePipe } from '@angular/common';
-import { environment } from '../environments/environment';
-import { CurrencyComponent } from './componentcontrols/currency/currency.component';
-import { ZichmetComponent } from '../app/componentcontrols/zichmet/zichmet.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, TestArraysComponent, CurrencyComponent, ZichmetComponent],
+  declarations: [AppComponent, routingComponents],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    MatAutocompleteModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    AppRoutingModule,
-    AngularFontAwesomeModule,
-    AutocompleteLibModule,
-    NgxSpinnerModule,
-    ModalModule.forRoot(),
-    AlertModule.forRoot(),
-    TimepickerModule.forRoot(),
+    BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule,
+    MatInputModule, MatDialogModule, MatSnackBarModule, AppRoutingModule, AngularFontAwesomeModule,
+    AutocompleteLibModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule, HttpClientModule,
+    ModalModule.forRoot(), AlertModule.forRoot(), TimepickerModule.forRoot(), AlertsModule.forRoot(),
     UiSwitchModule.forRoot({
       size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
-    }),
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AlertsModule.forRoot()
+    })
   ],
-  providers: [
-    DatePipe
-  ],
+  providers: [routingProviders],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
@@ -19,6 +19,8 @@ export class DashboardActionComponent implements OnInit {
   public loginaccessToken = '';
   public vatNumber: string;
 
+  @Input() public isForceZeroNotificationCount;
+  @Output() public NotificationCount = new EventEmitter();
   constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
 
   ngOnInit() {
@@ -28,7 +30,12 @@ export class DashboardActionComponent implements OnInit {
     this.logger.log('DashboardActionComponent this.vatNumber : ' + this.vatNumber);
     this.summaryService.getSummaryByVatnumber(this.vatNumber).subscribe(summaries => {
       this.datas = summaries.filter(d => d.isFinished === false);
-      this.notificationcount = this.datas.length;
+      if (this.isForceZeroNotificationCount) {
+        this.notificationcount = 0;
+      } else {
+        this.notificationcount = this.datas.length;
+        this.NotificationCount.emit(this.notificationcount);
+      }
       this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
       this.errorMsg = '';
     }, error => {

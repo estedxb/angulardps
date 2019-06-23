@@ -1,307 +1,310 @@
-<div class="row Header">
-  <div class="col col-sm-1 fright">
-    <img src="../../../../assets/svg/schedule.svg" class="headIcon">
-  </div>
-  <div class="col col-sm-8 Heading">PLANNING</div>
-  <div class="col col-sm-3 WeekCal">
-    <div class="weeks">
-      <div class="calenderLeft"><button (click)="minusWeek()"><img
-            src="../../../../assets/svg/arrow-left.svg" /></button>
-      </div>
-      <div class="week">
-        <div class="weekdates"> {{SelectedDates}}</div>
-        <div class="weekno">Week - {{ startDate | week }}</div>
-      </div>
-      <div class="calenderRight"><button (click)="addWeek()"><img
-            src="../../../../assets/svg/arrow-right.svg" /></button></div>
+<div class="dashboardperson">
+  <div class="row Header">
+    <div class="col col-sm-1 fright">
+      <img src="../../../../assets/svg/schedule.svg" class="headIcon">
+    </div>
+    <div class="col col-sm-8 Heading">PLANNING</div>
+    <div class="col col-sm-3 WeekCal">
+      <div class="weeks">
+        <div class="calenderLeft"><button (click)="minusWeek()"><img
+              src="../../../../assets/svg/arrow-left.svg" /></button>
+        </div>
+        <div class="week">
+          <div class="weekdates"> {{SelectedDates}}</div>
+          <div class="weekno">Week - {{ startDate | week }}</div>
+        </div>
+        <div class="calenderRight"><button (click)="addWeek()"><img
+              src="../../../../assets/svg/arrow-right.svg" /></button></div>
 
+      </div>
     </div>
   </div>
-</div>
-<div id="PersonContents">
-  <div class="row">
-    <div class="col-sm-12 dashboardactioncontent dashboardpersoncontent">
-      <ng-container *ngFor="let personContract of datas">
-        <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-          <ng-container *ngFor="let contract of personContract.contracts">
+  <div id="PersonContents" [ngClass]="NotificationCount > 0 ? '':'Expand'">
+    <div class="row">
+      <div class="col-sm-12 dashboardactioncontent dashboardpersoncontent">
+        <ng-container *ngFor="let personContract of datas">
+          <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+            <ng-container *ngFor="let contract of personContract.contracts">
+            </ng-container>
           </ng-container>
         </ng-container>
-      </ng-container>
-      <table>
-        <tr class="Dates">
-          <td colspan="2" class="col-split col-split-t">
-            <div class="search"><img src="../../../../assets/svg/search_white.svg">
-              <input type="text" class="search-form" placeholder="Zoeken…"
-                (keyup)="onPersonKeyup($event.target.value)" /></div>
-          </td>
-          <td class="col-split col-split-m">Ma. {{SelectedMonday}}</td>
-          <td class="col-split col-split-m">Din. {{SelectedTuesday}}</td>
-          <td class="col-split col-split-m">Woe. {{SelectedWednesday}}</td>
-          <td class="col-split col-split-m">Don. {{SelectedThursday}}</td>
-          <td class="col-split col-split-m">Vrij. {{SelectedFriday}}</td>
-          <td class="col-split col-split-m">Zat. {{SelectedSaturday}}</td>
-          <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
-          <td class="col-split col-split-l">&nbsp;</td>
-        </tr>
-        <tr class="Contents" *ngFor="let personContract of datas">
-          <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
-            <div class="name">
-              {{personContract.personName}}</div>
-            <div class="position">
-              {{personContract.positionName}}
-            </div>
-          </td>
-          <td class="col-split col-split-f">
-            <button
-              (click)="openContractDialog(personContract.personId, 0 ,personContract.personIsEnabled && !personContract.personIsArchived, 'new')"
-              *ngIf="personContract.personIsEnabled && !personContract.personIsArchived">
-              <img src="../../../../assets/svg/checklist_add.svg" />
-            </button>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+        <table>
+          <tr class="Dates">
+            <td colspan="2" class="col-split col-split-t">
+              <div class="search"><img src="../../../../assets/svg/search_white.svg">
+                <input type="text" class="search-form" placeholder="Zoeken…"
+                  (keyup)="onPersonKeyup($event.target.value)" /></div>
+            </td>
+            <td class="col-split col-split-m">Ma. {{SelectedMonday}}</td>
+            <td class="col-split col-split-m">Din. {{SelectedTuesday}}</td>
+            <td class="col-split col-split-m">Woe. {{SelectedWednesday}}</td>
+            <td class="col-split col-split-m">Don. {{SelectedThursday}}</td>
+            <td class="col-split col-split-m">Vrij. {{SelectedFriday}}</td>
+            <td class="col-split col-split-m">Zat. {{SelectedSaturday}}</td>
+            <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
+            <td class="col-split col-split-l">&nbsp;</td>
+          </tr>
+          <tr class="Contents" *ngFor="let personContract of datas">
+            <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
+              <div class="name">
+                {{personContract.personName}}</div>
+              <div class="position">
+                {{personContract.positionName}}
+              </div>
+            </td>
+            <td class="col-split col-split-f">
+              <button
+                (click)="openContractDialog(personContract.personId, 0 ,personContract.personIsEnabled && !personContract.personIsArchived, 'new')"
+                *ngIf="personContract.personIsEnabled && !personContract.personIsArchived">
+                <img src="../../../../assets/svg/checklist_add.svg" />
+              </button>
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
 
-                  <div class="contractActions"
-                    [style.margin-left.px]="contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth * contract.workSchedule.workDays.length)"
-                    [style.width.px]="contract.workSchedule.workDays[0].dayOfWeek * CellWidth * contract.workSchedule.workDays.length"
-                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
-                    <div class="contractActionbtngrp">
-                      <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
-                        *ngIf="! contract.childContractId > 0 "
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
-                        <div class="btnLeftTextContainer">
-                          <div class="btnLeftText">Verlengen</div>
+                    <div class="contractActions"
+                      [style.margin-left.px]="contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth * contract.workSchedule.workDays.length)"
+                      [style.width.px]="contract.workSchedule.workDays[0].dayOfWeek * CellWidth * contract.workSchedule.workDays.length"
+                      [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
+                      <div class="contractActionbtngrp">
+                        <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
+                          *ngIf="! contract.childContractId > 0 "
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
+                          <div class="btnLeftTextContainer">
+                            <div class="btnLeftText">Verlengen</div>
+                          </div>
+                          <div class="btnRightIcon">
+                            <img src="../../../../assets/svg/extended.svg" alt="Extend">
+                          </div>
+                        </button>
+                        <div class="contractActionbtnGap" (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)" style="display: none;">&nbsp;
                         </div>
-                        <div class="btnRightIcon">
-                          <img src="../../../../assets/svg/extended.svg" alt="Extend">
-                        </div>
-                      </button>
-                      <div class="contractActionbtnGap" (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)" style="display: none;">&nbsp;
+                        <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'edit')">
+                          <div class="btnLeftIcon">
+                            <img src="../../../../assets/svg/eye.svg" alt="Extend">
+                          </div>
+                          <div class="btnRightTextContainer">
+                            <div class="btnRightText">Weergeven</div>
+                          </div>
+                        </button>
                       </div>
-                      <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived,'edit')">
-                        <div class="btnLeftIcon">
-                          <img src="../../../../assets/svg/eye.svg" alt="Extend">
-                        </div>
-                        <div class="btnRightTextContainer">
-                          <div class="btnRightText">Weergeven</div>
-                        </div>
-                      </button>
                     </div>
-                  </div>
 
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 1">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? ' SelectedContract' : '' ,
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 1">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? ' SelectedContract' : '' ,
                     ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) +
                     (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) -
                     ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) +
                     (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe'
                     ]">
-                        <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                          <!--<ng-container *ngFor="let workTime of workday.workTimes">-->
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
-                      <!--matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}"-->
-                      <!--</ng-container>-->
+                        <!--matTooltip="{{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}"-->
+                        <!--</ng-container>-->
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 2">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 2">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 3">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 3">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 4">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 4">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 5">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 5">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 6">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 6">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-m">
-            <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
-              <ng-container *ngFor="let contract of personContract.contracts">
-                <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
-                  <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                    <ng-container *ngIf="workday.dayOfWeek === 7">
-                      <div class="FullCol Contract_{{contract.customerContractId}}"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
-                        <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                          [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
-                          [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
-                          <div class="tt">
-                            {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+            </td>
+            <td class="col-split col-split-m">
+              <ng-container *ngIf="personContract.contracts !==null; else EmptyColum">
+                <ng-container *ngFor="let contract of personContract.contracts">
+                  <ng-container *ngIf="contract.workSchedule.workDays !== null; else EmptyColum">
+                    <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                      <ng-container *ngIf="workday.dayOfWeek === 7">
+                        <div class="FullCol Contract_{{contract.customerContractId}}"
+                          (mouseover)="onContractOver(contract.customerContractId,true)"
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          (click)="openContractDialog(personContract.personId, contract.customerContractId, personContract.personIsEnabled && !personContract.personIsArchived, 'edit')"
+                          [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , ((((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx) ? 'ShowMe' : 'HideMe' ]">
+                          <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                            [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                            [style.width.px]="(((workday.workTimes[workday.workTimes.length-1].endTime.split(':')[0] * 60 | num) + (workday.workTimes[workday.workTimes.length-1].endTime.split(':')[1] | num)) - ((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num))) * TimeConverterToPx">
+                            <div class="tt">
+                              {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                            </div>
                           </div>
+                          <div class="centerline"></div>
                         </div>
-                        <div class="centerline"></div>
-                      </div>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </td>
-          <td class="col-split col-split-l">
-            <div class="centerline"></div>
-          </td>
-        </tr>
-        <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
-          <td class="error" colspan="10">{{errorMsg}}</td>
-        </tr>
-      </table>
-      <ng-template #EmptyColum>
-        <div class="centerline"></div>
-      </ng-template>
+            </td>
+            <td class="col-split col-split-l">
+              <div class="centerline"></div>
+            </td>
+          </tr>
+          <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
+            <td class="error" colspan="10">{{errorMsg}}</td>
+          </tr>
+        </table>
+        <ng-template #EmptyColum>
+          <div class="centerline"></div>
+        </ng-template>
+      </div>
     </div>
   </div>
-</div>
-<div id="PersonButtons" class="row">
-  <div class="col col-sm-12 ">
-    <button class="greybtn" (click)="OpenAddPersonURL()"><img src="../../../../assets/svg/AddPerson.svg" alt="">Persoon
-      toevoegen</button>
-    <button class="greybtn" (click)="OpenBulkContractURL()"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
-      contracten aanmaken</button>
+  <div id="PersonButtons" class="row">
+    <div class="col col-sm-12 ">
+      <button class="greybtn" (click)="OpenAddPersonURL()"><img src="../../../../assets/svg/AddPerson.svg"
+          alt="">Persoon
+        toevoegen</button>
+      <button class="greybtn" (click)="OpenBulkContractURL()"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
+        contracten aanmaken</button>
+    </div>
   </div>
 </div>

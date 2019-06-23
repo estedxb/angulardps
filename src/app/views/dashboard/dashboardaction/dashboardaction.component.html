@@ -1,28 +1,30 @@
-<div class="row">
-  <div class="col col-sm-12 dashboardactionhead">
-    <div class="notify">
-      <sup>{{notificationcount}}</sup> <img src="../../../../assets/svg/bell.svg" style="width:20px" />
-    </div>
-    <div class="dashboardtitle">Items te behandelen
+<div class="dashboardaction" *ngIf="notificationcount > 0">
+  <div class="row">
+    <div class="col col-sm-12 dashboardactionhead">
+      <div class="notify">
+        <sup>{{notificationcount}}</sup> <img src="../../../../assets/svg/bell.svg" style="width:20px" />
+      </div>
+      <div class="dashboardtitle">Items te behandelen
+      </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col col-sm-12 dashboardactioncontent">
-    <div *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
-      <div class="error">{{errorMsg}}</div>
-    </div>
-    <div class="row" *ngFor="let data of datas let i= index">
-      <div class="col col-sm-7">
-        <span class="dot_{{data.priority}}"></span>
-        <span>{{data.message}}</span>
+  <div class="row">
+    <div class="col col-sm-12 dashboardactioncontent">
+      <div *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
+        <div class="error">{{errorMsg}}</div>
       </div>
-      <div class="col uk-column-small-1-4 dt"><span>{{data.dateTime | date :'dd MMM yyyy'}}</span></div>
-      <div class="col col-sm-1">
-        <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)" *ngIf="!data.isManual"><img
-            src="../../../../assets/svg/eye_big.svg"></button>
-        <button (click)="updateAction(i)" *ngIf="data.isManual"><img
-            src="../../../../assets/svg/revertsuccess.svg"></button>
+      <div class="row" *ngFor="let data of datas let i= index">
+        <div class="col col-sm-7">
+          <span class="dot_{{data.priority}}"></span>
+          <span>{{data.message}}</span>
+        </div>
+        <div class="col uk-column-small-1-4 dt"><span>{{data.dateTime | date :'dd MMM yyyy'}}</span></div>
+        <div class="col col-sm-1">
+          <button (click)="goToAction(data.ActionTypeId,data.ObjectId,data.SecondId)" *ngIf="!data.isManual"><img
+              src="../../../../assets/svg/eye_big.svg"></button>
+          <button (click)="updateAction(i)" *ngIf="data.isManual"><img
+              src="../../../../assets/svg/revertsuccess.svg"></button>
+        </div>
       </div>
     </div>
   </div>

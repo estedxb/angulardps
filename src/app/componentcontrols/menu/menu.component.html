@@ -1,14 +1,29 @@
 <div class="col-md-1 float-left">
         <nav>
-                <a [routerLink]='["/dashboard"]' routerLinkActive="active"><img id="dashboard"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a>
-                <a [routerLink]='["/customer/update"]' routerLinkActive="active"><img id="customer"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a>
-                <a [routerLink]='["/scheduler"]' routerLinkActive="active"><img id="schedule"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a>
-                <a [routerLink]='["/settings"]' routerLinkActive="active"><img id="settings"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a>
-                <a [routerLink]='["/login"]' routerLinkActive="active"><img id="logout"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a>
+                <a [routerLink]='["/dashboard"]' routerLinkActive="active"
+                        [ngClass]=" this.SelectedPage === 'Dashboard' ? 'Active': '' "><img id="dashboard"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+                        <div class="Label">Dashboard</div>
+                </a>
+                <a [routerLink]='["/customer/update"]' routerLinkActive="active"
+                        [ngClass]=" this.SelectedPage === 'UpdateCustomer' ? 'Active': '' "><img id="customer"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+                        <div class="Label">Update Customer</div>
+                </a>
+                <a [routerLink]='["/dashboard/scheduler"]' routerLinkActive="active"
+                        [ngClass]=" this.SelectedPage === 'Scheduler' ? 'Active': '' "><img id="schedule"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+                        <div class="Label">Schedular</div>
+                </a>
+                <a [routerLink]='["/settings"]' routerLinkActive="active" class="isDisabled"
+                        [ngClass]=" this.SelectedPage === 'Settings' ? 'Active': '' "><img id="settings"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+                        <div class="Label">Settings</div>
+                </a>
+                <a (click)="logout()" routerLinkActive="active"
+                        [ngClass]=" this.SelectedPage === 'Logout' ? 'Active': '' "><img id="logout"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+                        <div class="Label">Logout</div>
+                </a>
         </nav>
 </div>

@@ -76,14 +76,17 @@ export class WorkSchedulesComponent implements OnInit {
         this.data = result;
         // this.logger.log('this.data ::', this.data);
         // this.logger.log('this.SelectedIndex ::', this.SelectedIndex);
-
+        this.onPageInit();
+        /*
         if (this.SelectedIndex > -1) {
+          alert('o');
           // maindatas Update Work Schedule
           this.logger.log('Update Work Schedule :: ' + this.SelectedIndex, this.data);
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
           this.ShowMessage('Work Schedules "' + this.data.name + '" is updated successfully.', '');
         } else {
+          alert('n');
           // maindatas Add Work Schedule
           this.logger.log('Add Work Schedule  :: ', this.data);
           if (parseInt('0' + this.data.id, 0) > 0) {
@@ -93,26 +96,10 @@ export class WorkSchedulesComponent implements OnInit {
             this.ShowMessage('Work Schedules "' + this.data.name + '" is added successfully.', '');
           }
         }
+        */
       });
     } catch (e) { }
   }
-
-  onClickAdd() {
-    this.SelectedIndex = -1;
-    this.data = new DpsWorkSchedule();
-    this.workSchedule = new WorkSchedule();
-    this.data.id = 0;
-    this.data.name = '';
-    this.data.customerVatNumber = this.CustomerVatNumber;
-    this.data.isArchived = false;
-    this.data.isEnabled = true;
-    this.workSchedule.workDays = [];
-    this.LoadEmptyWorkDays(this.workSchedule.workDays);
-    this.data.workSchedule = this.workSchedule;
-    this.logger.log('EmptyData :: ', this.data);
-    this.openDialog();
-  }
-
   LoadEmptyWorkDays(workDays) {
     for (let weekDay = 1; weekDay <= 7; weekDay++) {
       workDays.push(
@@ -147,10 +134,37 @@ export class WorkSchedulesComponent implements OnInit {
     return workTime;
   }
 
+
+  onClickAdd() {
+    this.SelectedIndex = -1;
+    this.data = new DpsWorkSchedule();
+    this.workSchedule = new WorkSchedule();
+    this.data.id = 0;
+    this.data.name = '';
+    this.data.customerVatNumber = this.CustomerVatNumber;
+    this.data.isArchived = false;
+    this.data.isEnabled = true;
+    this.workSchedule.workDays = [];
+    this.LoadEmptyWorkDays(this.workSchedule.workDays);
+    this.data.workSchedule = this.workSchedule;
+    this.logger.log('EmptyData :: ', this.data);
+    this.openDialog();
+  }
+
   onClickEdit(i) {
     this.SelectedIndex = i;
     this.data = this.maindatas[i];
     // this.logger.log('Edit Data :: ', this.data);
+    this.openDialog();
+    return true;
+  }
+
+  onClickCopy(i) {
+    this.SelectedIndex = -1;
+    this.data = JSON.parse(JSON.stringify(this.maindatas[i]));
+    this.data.id = 0;
+    this.data.name += ' - Copy';
+    this.data.isArchived = false;
     this.openDialog();
     return true;
   }

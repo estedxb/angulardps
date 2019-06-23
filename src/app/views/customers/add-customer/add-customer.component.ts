@@ -19,6 +19,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRe
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
+  public SelectedPage = 'AddCustomer';
 
   public HQdata: any;
   public CTdata: any;
@@ -165,8 +166,10 @@ export class AddCustomerComponent implements OnInit {
       {
         this.logger.log('Complete data=');
         this.logger.log(this.GLdata);
-        this.logger.log('HQdata');
+
+        this.logger.log('HQdata');        
         this.logger.log(this.HQdata);
+        
         this.logger.log('this STdata');
         this.logger.log(this.STdata);
 
@@ -295,7 +298,7 @@ export class AddCustomerComponent implements OnInit {
 
   }
 
-  
+
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;

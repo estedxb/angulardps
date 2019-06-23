@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
   verifyLogin(url): boolean {
     if (!this.isLoggedIn()) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... Login');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/ValidateLogin']);
       return false;
     } else if (this.isLoggedIn()) {
       return true;

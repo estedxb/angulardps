@@ -7,13 +7,15 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./bulk-contract.component.css']
 })
 export class BulkContractComponent implements OnInit {
+  public SelectedPage = 'BulkContract';
 
   public showFormIndex = 1;
-  public startDate:string;
-  public endDate:string;
+  public startDate: string;
+  public endDate: string;
 
-  public blkForm:FormGroup;
-  public loadSwitchperson:boolean;
+
+  public blkForm: FormGroup;
+  public loadSwitchperson: boolean;
 
   constructor() { }
 
@@ -23,18 +25,18 @@ export class BulkContractComponent implements OnInit {
       functie: new FormControl('')
     });
 
-    
-  }
-
-  receiveStartDate($event){
 
   }
 
-  receiveEndDate($event){
+  receiveStartDate($event) {
 
   }
 
-  onChangeI($event){
+  receiveEndDate($event) {
+
+  }
+
+  onChangeI($event) {
 
   }
 

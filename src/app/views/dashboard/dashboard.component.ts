@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { DpsPerson, Person, LoginToken } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+
 import { LoggingService } from '../../shared/logging.service';
 
 @Component({
@@ -11,13 +12,18 @@ import { LoggingService } from '../../shared/logging.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  public SelectedPage = 'Dashboard';
+  public notificationcount = 0;
   public currentPage = '';
   public Id = '';
   public data: any = '';
+  public isForceZeroNotificationCount = false;
   public errorMsg;
   public dpsLoginToken: LoginToken = new LoginToken();
 
-  constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar, private logger: LoggingService) { }
+  constructor(
+    private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar,
+    private logger: LoggingService) { }
 
   ngOnInit() {
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
@@ -32,15 +38,24 @@ export class DashboardComponent implements OnInit {
     } else {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/ValidateLogin']);
     }
   }
 
   onPageInit() {
-    if (this.currentPage === 'contract') {
-      if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
-        // openContract();
-      }
+    if (this.currentPage !== undefined && this.currentPage !== null && this.currentPage !== '') {
+      this.SelectedPage = 'Scheduler';
+      this.isForceZeroNotificationCount = true;
+      this.notificationcount = 0;
+    }
+  }
+
+  setNotificationCount($event) {
+    // alert('setNotificationCount(' + $event + ', ' + this.isForceZeroNotificationCount + ')');
+    if (this.isForceZeroNotificationCount) {
+      this.notificationcount = 0;
+    } else {
+      this.notificationcount = $event;
     }
   }
 

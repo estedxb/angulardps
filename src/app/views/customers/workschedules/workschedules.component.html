@@ -19,12 +19,15 @@
             <div class="col col-sm-1 switch">
                 <ui-switch (change)="onStatusChange($event,i)" size="small" [checked]="data.isEnabled"></ui-switch>
             </div>
-            <div class="col col-sm-8 info">{{data.name}}</div>
+            <div class="col col-sm-7 info">{{data.name}}</div>
             <div class="col col-sm-1 actionbtn">
                 <button (click)="onClickEdit(i)"><img src="../../../../assets/svg/edit.svg"></button>
             </div>
             <div class="col col-sm-1 actionbtn">
                 <button (click)="onClickDelete(i)"><img src="../../../../assets/svg/delete.svg"></button>
+            </div>
+            <div class="col col-sm-1 actionbtn">
+                <button (click)="onClickCopy(i)"><img src="../../../../assets/svg/copy.svg"></button>
             </div>
         </div>
         <!--For loop Ends -->

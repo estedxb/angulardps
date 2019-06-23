@@ -1,5 +1,5 @@
 <app-headers></app-headers>
-<app-menu></app-menu>
+<app-menu [SelectedPage]="SelectedPage"></app-menu>
 <div class="row">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br />
@@ -40,7 +40,7 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-          
+
             <app-headquarters [HQFormData]="editObject" (childEvent)="receiveHQdata($event)"></app-headquarters>
           </div>
 
@@ -90,18 +90,18 @@
   </div>
 
   <div class="col col-sm-3" *ngIf="showFormIndex === 1 else clausex">
-    <button class="orangebtn" id="forward" (click)="onFormwardClick()" >Volgende stap <img
+    <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
         src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
     <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-      src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+        src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
   </div>
-  <ng-template #clausex >
-      <div class="col col-sm-3" *ngIf="showFormIndex === 2">
-          <button class="greenButton" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Bedrijf opslaan
-              <img src="../../assets/svg/right-arrow.svg" style="width:20px;" /></button><br />
-          <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-            src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>            
-      </div>
+  <ng-template #clausex>
+    <div class="col col-sm-3" *ngIf="showFormIndex === 2">
+      <button class="greenButton" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Bedrijf opslaan
+        <img src="../../assets/svg/right-arrow.svg" style="width:20px;" /></button><br />
+      <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+          src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+    </div>
   </ng-template>
 
 
