@@ -246,14 +246,14 @@ export class AddPersonComponent implements OnInit {
             this.maindatas.push(this.datas);
             this.fillDataDropDown(this.maindatas)
             this.FilterTheArchive();
-            this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
+            this.ShowMessage('posities "' + this.datas.position.name + '" is succesvol bijgewerkt.', '');
           } else {
             this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
               this.maindatas.push(this.datas);
               this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
-              this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
+              this.ShowMessage('posities "' + this.datas.position.name + '" is bijgewerkt. succesvol toegevoegd.', '');
             }
           }
         }
@@ -393,6 +393,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   onChangeDropDownGender($event) {
+    if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
     if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
       this.DpsPersonObject.person.gender.title = $event.target.value;
     } else {
@@ -571,8 +572,8 @@ export class AddPersonComponent implements OnInit {
       return false;
 
     let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
-    let firstTwoDigits: number = parseInt(digits.substring(0,2));
-    let secondTwoDigits: number = parseInt(digits.substring(3,5));
+    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
     let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
     let genderDigits: number = parseInt(ssid.substring(9,12));
     let firstNineDigits: number = parseInt(digits.substring(0,9));
@@ -587,8 +588,6 @@ export class AddPersonComponent implements OnInit {
     this.logger.log("first two digits="+firstTwoDigits);
     this.logger.log("first nine digits="+firstNineDigits);
     this.logger.log("third two digits="+thirdTwoDigits);
-
-
 
     if(firstTwoDigits >=0 && firstTwoDigits <= currentYearTwoDigits && currentYear >=2000)
     {
@@ -637,6 +636,8 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year:number,month:number,day:number) {
 
+    this.logger.log("day="+day);
+    this.logger.log("month="+month);
     this._selectedIndexdays = day;
     this._selectedIndexMonth = month - 1;
     this._selectedIndexYear = year;
@@ -1249,8 +1250,7 @@ export class AddPersonComponent implements OnInit {
         this.DpsPersonObject.person.address = new Address();
         if (this.DpsPersonObject.person.address !== null && this.DpsPersonObject.person.address !== undefined) {
           this.DpsPersonObject.person.address.country = $event.Country;
-          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
-          
+          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];          
         }
       }
     }
@@ -1291,6 +1291,23 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.addittionalInformation = $event;
   }
 
+  checkValidation() {
+
+    if (this.AddPersonForm1.get('socialSecurityNumber').valid === true &&
+      this.AddPersonForm1.get('firstName').valid === true &&
+      this.AddPersonForm1.get('lastName').valid === true &&
+      this.AddPersonForm1.get('street').valid === true &&
+      this.AddPersonForm1.get('streetNumber').valid === true &&
+      this.AddPersonForm1.get('city').valid === true &&
+      this.AddPersonForm1.get('postalCode').valid === true &&
+      this.AddPersonForm1.get('mobileNumber').valid === true &&
+      this.AddPersonForm1.get('emailAddress').valid === true &&
+      this.AddPersonForm1.get('iban').valid === true) {
+      console.log("form valid");
+      return true;
+    }
+  }
+
   onClickAdd() {
 
     this.dpsPosition = new DpsPostion();
@@ -1318,12 +1335,17 @@ export class AddPersonComponent implements OnInit {
   onFormwardClick() {
 
     if (this.showFormIndex === 1) {
-      this.showFormIndex = 2;
+
+      if(this.checkValidation())
+          this.showFormIndex = 2;
+      else
+          this.ShowMessage("Inzendingen zijn onjuist !",'');
+
       this.createObjectsForm1();
     } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
-        this.ShowMessage('Person record created successfully.', '');
+        this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
         //this.showFormIndex = 3;
         //redirect to dashboard;
 
@@ -1335,19 +1357,19 @@ export class AddPersonComponent implements OnInit {
   postPersonData() {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
-      this.ShowMessage('Person record created successfully.', '');
+      this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
       //this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
-          this.ShowMessage('Person create record Failure.', '');
+          this.ShowMessage('Persoon maakt record mislukt.', '');
           this.showFormIndex = 4;
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
           this.logger.log('response code=' + err.status);
           this.logger.log('response body=' + err.error);
-          this.ShowMessage('Person create record Failure.', '');
+          this.ShowMessage('Persoon maakt record mislukt.', '');
           // this.ShowMessage('Error occured='+err.error,'');
         }
       }
@@ -1356,7 +1378,7 @@ export class AddPersonComponent implements OnInit {
 
   onBackwardClick() {
     this.showFormIndex = 1;
-    this.ShowMessage('back', '');
+    this.ShowMessage('terug', '');
   }
 
   isInvalid() {
