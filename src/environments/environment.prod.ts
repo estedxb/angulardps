@@ -7,7 +7,7 @@ export const environment = {
   blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
   aadurl: 'https://digitalpayrollservices.b2clogin.com',
   tenantid: 'digitalpayrollservices.onmicrosoft.com',
-  clientId: '0a3fd7db-e748-4a4d-b9d5-e022ddc100e1',
+  clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
   logInRedirectURL: 'http://localhost:4200/ValidateLogin',
   logOutRedirectURL: 'http://localhost:4200/',
   signInPolicy: 'B2C_1_dpsDevUSerLogin',
