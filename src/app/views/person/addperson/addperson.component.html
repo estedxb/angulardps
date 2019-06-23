@@ -50,7 +50,7 @@
                   <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber" class="form-control"
                     name="socialSecurityNumber" (keypress)="validatePersonSsid(socialSecurityNumber.value)" type="text" required />
                   <div class="form-control-feedback"
-                    *ngIf="!customSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
+                    *ngIf="!newCustomSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalid>
