@@ -26,8 +26,10 @@ export class AppComponent {
     private msalService: MsalService, private logger: LoggingService) {
     this.logger.logF('environment.production :: ' + environment.production);
 
+    /*
     if (!this.isUserLoggedIn()) {
-      // this.login();
+      this.logger.log('this.isUserLoggedIn()', this.isUserLoggedIn());
+      this.login();
     } else {
       const token: string = 'Token';  // this.getAccesstoken();
       try {
@@ -42,6 +44,7 @@ export class AppComponent {
         this.updateSessionStorage(token);
       }
     }
+    */
   }
 
   public useremail() {

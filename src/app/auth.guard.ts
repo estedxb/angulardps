@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, CanA
 import { Observable } from 'rxjs';
 import { LoggingService } from './shared/logging.service';
 import { LoginToken } from './shared/models';
+import { environment } from 'src/environments/environment.stag';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AuthGuard implements CanActivate {
   verifyLogin(url): boolean {
     if (!this.isLoggedIn()) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... Login');
-      this.router.navigate(['/ValidateLogin']);
+      this.router.navigate([environment.logInRedirectURL]);
       return false;
     } else if (this.isLoggedIn()) {
       return true;

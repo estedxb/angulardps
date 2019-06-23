@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -45,11 +46,11 @@ export class UpdatePersonComponent implements OnInit {
       // this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-        this.router.navigate(['/ValidateLogin']);
+        this.router.navigate([environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate(['/ValidateLogin']);
+      this.router.navigate([environment.logInRedirectURL]);
       // alert(e.message);
     }
   }

@@ -41,18 +41,17 @@ export class MsalService {
     this.tenantConfig.clientID, this.authority,
     function (errorDesc: any, token: any, error: any, tokenType: any) {
       //if (errorDesc !== '' && errorDesc !== undefined && errorDesc !== null) {
-      // alert('token :: ' + token);
+      //alert('token :: ' + token);
       this.saveAccessTokenToCache(token);
-      // this.updateSessionStorage(token);
+      
+      this.updateSessionStorage(token);
       // } else {
       //   alert('Error : ' + errorDesc);
       //   console.log('error: ', errorDesc);
       // }
     }
   );
-
-  /*
-  
+   
   updateSessionStorage(token: string) {
     // alert(this.getUser());
     console.log('Azure getUser()', this.getUser());
@@ -90,7 +89,7 @@ export class MsalService {
     }, error => this.errorMsg = error);
 
   }
-*/
+
 
   public login(): void {
     this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
