@@ -53,6 +53,8 @@ import { PersonDocumentComponent } from './views/person/persondocument/persondoc
 import { DashboardActionComponent } from './views/dashboard/dashboardaction/dashboardaction.component';
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
+import { LogoutComponent } from './views/logout/logout.component';
+
 import { ValidateLoginComponent } from './validate-login/validate-login.component';
 
 import { EnableFilterPipe } from './pipes/enable-filter.pipe';
@@ -77,6 +79,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'scheduler', component: SchedulerComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'person/addperson', component: AddPersonComponent },
   { path: 'person/add', component: AddPersonComponent },
   { path: 'person/:id', component: UpdatePersonComponent },
@@ -95,17 +98,16 @@ export class AppRoutingModule { }
 
 export const routingComponents = [
   MenuComponent, HeadersComponent, LoginComponent, DashboardComponent, CustomerSelectionComponent,
-  PageNotFoundComponentComponent, SettingsComponent, HomeComponent, ContactPersonComponent,
+  PageNotFoundComponentComponent, SettingsComponent, HomeComponent, ZichmetComponent, LogoutComponent,
   LegalComponent, JointcommitteeComponent, WorkCodesComponent, UsersComponent, ValidateLoginComponent,
   CountriesComponent, StatuteComponent, LanguagesComponent, InvoiceSettingsComponent, CurrencyComponent,
-  HeadQuartersComponent, GeneralComponent, AddCustomerComponent, EditPersonComponent, ZichmetComponent,
-  EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent,
-  UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent,
-  LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent,
-  CreateuserComponent, CreatelocationComponent, DPSSystemMessageComponent, FileUploadComponent,
-  CreateWorkScheduleComponent, CreatepositionComponent, CreateWorkTimeComponent, CalendarComponent,
-  CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
-  ZichmetComponent, EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe
+  HeadQuartersComponent, GeneralComponent, AddCustomerComponent, EditPersonComponent, ContactPersonComponent,
+  EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent, CalendarComponent,
+  UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
+  LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
+  CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
+  CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
+  EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe
 ];
 
 export const entringComponents = [
