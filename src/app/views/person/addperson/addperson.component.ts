@@ -13,6 +13,7 @@ import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-addperson',
@@ -75,13 +76,15 @@ export class AddPersonComponent implements OnInit {
   public datas: DpsPostion;
   public selectedGenderIndex;
   public ssid:string;
-  
+  public totalString:string;
+  public selectedPositionIndex:number =0;
+
   public selectedlanguageObject:any = {
     name: "Dutch",
     shortName: "nl"
   };
 
-  public showFormIndex = 2;
+  public showFormIndex = 1;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
@@ -101,6 +104,8 @@ export class AddPersonComponent implements OnInit {
   public bbic: any = '';
   public iban: any = '';
 
+  public Id = "";
+  public currentPage = "";
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -138,7 +143,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
-  private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 1; private _Functievalue: any;
+  private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 0; private _Functievalue: any;
   set selectedValueFunctie(value: any) { this._selectedIndexFunctie = value; }
   get selectedValueFunctie(): any { return this._selectedValueFunctie; }
   set selectedIndexFunctieBox(value: number) {
@@ -154,7 +159,7 @@ export class AddPersonComponent implements OnInit {
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
   // tslint:disable-next-line: member-ordering // tslint:disable-next-line: variable-name
-  private _selectedValueGender: any; private _selectedIndexGender: any = 1; private _Gendervalue: any;
+  private _selectedValueGender: any; private _selectedIndexGender: any = 0; private _Gendervalue: any;
   set selectedValueGender(value: any) { this._selectedIndexGender = value; }
   get selectedValueGender(): any { return this._selectedValueGender; }
   set selectedIndexGenderBox(value: number) {
@@ -169,12 +174,31 @@ export class AddPersonComponent implements OnInit {
     }
   }
 
+    // tslint:disable-next-line: member-ordering // tslint:disable-next-line: variable-name
+    private _selectedValueStatute: any; private _selectedIndexStatute: any = 0; private _Statutevalue: any;
+    set selectedValueStatute(value: any) { this._selectedIndexStatute = value; }
+    get selectedValueStatute(): any { return this._selectedValueStatute; }
+    set selectedIndexStatuteBox(value: number) {
+      this._selectedIndexStatute = value; this.valueGender = this.dataDropDownGender[this.selectedIndexStatuteBox];
+    }
+    get selectedIndexStatuteBox(): number { return this._selectedIndexStatute; }
+    set valueStatute(value: any) { this._Statutevalue = value; }
+    get valueStatute(): any { return this._Statutevalue; }
+    SetInitialValueStatue() {
+      if (this.selectedValueStatute === undefined) {
+        this.selectedValueStatute = this.dataDropDownStatute[this.selectedIndexStatuteBox];
+      }
+    }
+
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
   constructor(
     public http: HttpClient, private personsService: PersonService,
     private positionsService: PositionsService, private logger: LoggingService,
-    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, 
+    private statuteService: StatuteService,
+    private route: ActivatedRoute, private router: Router
+    ) {
 
     this.logger.log('customerVatNumber=' + this.dpsLoginToken.customerVatNumber);
 
@@ -241,13 +265,14 @@ export class AddPersonComponent implements OnInit {
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
 
     this.setDropDownYear();
 
     this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
     this.dropDownMonth = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-    this.dataDropDownGender = ['Vrouw', 'Man'];
+    this.dataDropDownGender = ['Man','Vrouw'];
 
     this.AddPersonForm1 = new FormGroup({
       socialSecurityNumber: new FormControl(''),
@@ -288,6 +313,8 @@ export class AddPersonComponent implements OnInit {
       extra: new FormControl('', [Validators.required]),
     });
 
+    this.AddPersonForm2.get('netExpenseAllowance').disable();
+
     // this.createObjectsForm1();
     this.SetInitialValue();
     this.SetInitialValueMonth();
@@ -315,6 +342,21 @@ export class AddPersonComponent implements OnInit {
       this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
+
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+    localStorage.getItem('dpsLoginToken') !== '' &&
+    localStorage.getItem('dpsLoginToken') !== null) {
+    const sub = this.route.params.subscribe((params: any) => {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.Id = params.id;
+      this.currentPage = params.page;
+    });
+  } else {
+    this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+    // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+    //this.router.navigate(['/login']);
+  }
+
   }
 
   fillDataDropDown(maindatas) {
@@ -451,6 +493,12 @@ export class AddPersonComponent implements OnInit {
   }
 
   switchNetExpense($event) {
+
+    if($event === true)
+      this.AddPersonForm2.get('netExpenseAllowance').enable();
+    else 
+      this.AddPersonForm2.get('netExpenseAllowance').disable();
+
     this.DpsPersonObject.renumeration.costReimbursment = $event;
     this.logger.log('event=' + $event);
   }
@@ -467,72 +515,45 @@ export class AddPersonComponent implements OnInit {
     return digits;
   }
 
-  keyPress($event) {
-
-    let totalString = "";
-    this.ssid += $event.target.value;
-
-    let ssid = $event.target.value;
-
-    this.logger.log("key press="+$event.target.value);
-
-    if(ssid.length === 2)
-    {
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
-    }
-
-    if(ssid.length === 5)
-    {
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
-    }
-
-    if(ssid.length === 8)
-    {
-      totalString = totalString + ssid + "-";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
-    }
-
-    if(ssid.length === 12){
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
-    }
-
-  }
-
   validatePersonSsid($event) {
-
-    let totalString = "";
-    this.ssid += $event;
 
     let ssid = $event;
 
-    this.logger.log("key press="+$event);
-
     if(ssid.length === 2)
     {
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+      this.totalString = ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string="+this.totalString);
     }
 
     if(ssid.length === 5)
     {
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+      this.totalString = this.totalString + ssid.substring(3) + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string="+this.totalString);
+
     }
 
     if(ssid.length === 8)
     {
-      totalString = totalString + ssid + "-";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+      this.totalString = this.totalString + ssid.substring(6) + "-";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string="+this.totalString);
+
     }
 
     if(ssid.length === 12){
-      totalString = totalString + ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+      this.totalString = this.totalString + ssid.substring(9) + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string="+this.totalString);
+
     }
 
+    if(ssid.length == 15) {    
+      this.totalString = this.totalString + ssid.substring(13);
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string="+this.totalString);
+    }
   }
 
   newCustomSSIDValidator(ssid:string) {
@@ -546,42 +567,30 @@ export class AddPersonComponent implements OnInit {
 
     let digits:string = this.stripDigits(ssid);
 
-    let lastTwoDigits: number = parseInt(digits.substring(ssid.length-1),10);
+    if(digits.length < 11)
+      return false;
+
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
     let firstTwoDigits: number = parseInt(digits.substring(0,2));
+    let secondTwoDigits: number = parseInt(digits.substring(3,5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
+    let genderDigits: number = parseInt(ssid.substring(9,12));
     let firstNineDigits: number = parseInt(digits.substring(0,9));
     let x:number = firstNineDigits;
     let controlNumber: number  = -1;
 
-    // last 2 digits of the number.
-    //     if first 2 digits are between 20 (current year without 20 + 1) and 99
-    //         put first 9 digits together as x
-    //         x mod 97 = r where r is the remainder of the modulo division  97 - r = control number
+    let currentYear:any = new Date();
+    currentYear = currentYear.getFullYear();
+    let currentYearTwoDigits = currentYear%100;
 
-    // for my social security number 84.10.16-035.58
-    // 841016025 mod 97 => 39 remainder
-    // 97 - 39 = 58 —> last 2 digits of the social security number
+    this.logger.log("current year="+currentYearTwoDigits);
+    this.logger.log("first two digits="+firstTwoDigits);
+    this.logger.log("first nine digits="+firstNineDigits);
+    this.logger.log("third two digits="+thirdTwoDigits);
 
-    if(firstTwoDigits >21 && firstTwoDigits <=99)
-    {
-      x = firstNineDigits;
-      let remainder:number =  x % 97;
-      controlNumber  = 97 - remainder;
 
-      if(controlNumber === lastTwoDigits)
-          this.validSSID = true;
-      else
-         this.validSSID = false;
-    }
 
-    // if first 2 digits are between 00 and 19 (current year without 20) —> somebody born in 2000 or later
-    // put first 9 digits together and put a 2 in front of it
-    // x mod 97 = r where r is the remainder of the modulo division
-    // 97 - r = control number
-    // for example security number 14.09.21-073.71
-    // 2140921073 mod 97 => 26 remainder
-    // 97 - 26 = 71 —> last 2 digits of the social security number
-
-    if(firstTwoDigits >=0 && firstTwoDigits <=19)
+    if(firstTwoDigits >=0 && firstTwoDigits <= currentYearTwoDigits && currentYear >=2000)
     {
       x = parseInt(("2"+firstNineDigits),10);
       let newremainder:number = x % 97;
@@ -592,6 +601,45 @@ export class AddPersonComponent implements OnInit {
         else
           this.validSSID = false;
     }
+    else {
+            x = firstNineDigits;
+            let remainder:number =  x % 97;
+            controlNumber  = 97 - remainder;
+
+            if(controlNumber === lastTwoDigits)
+                this.validSSID = true;
+            else
+              this.validSSID = false;
+
+        }
+
+    this.setCalendar(firstTwoDigits,secondTwoDigits,thirdTwoDigits);
+    this.setGender(genderDigits);
+
+    return this.validSSID;
+
+  }
+
+  setGender(genderDigits:number) {
+
+    if(genderDigits % 2 === 0) {
+      this._selectedIndexGender = 1;
+      this.selectedGenderIndex = 1;
+      this.logger.log("person is female");
+    }
+    else{
+      this._selectedIndexGender = 0;
+      this.selectedGenderIndex = 0;
+      this.logger.log("person is male");
+    }
+
+  }
+
+  setCalendar(year:number,month:number,day:number) {
+
+    this._selectedIndexdays = day;
+    this._selectedIndexMonth = month - 1;
+    this._selectedIndexYear = year;
 
   }
 
@@ -659,6 +707,10 @@ export class AddPersonComponent implements OnInit {
     });
   }
 
+
+  getCustomValidation(value) {
+    return this.newCustomSSIDValidator(value);
+  }
 
   setPersonVatNumber() {
 
@@ -852,19 +904,20 @@ export class AddPersonComponent implements OnInit {
 
     const data = rdata;
 
-    if (data.person !== null) {
+    if (data !== null && data.person !== null) {
+
+      this.selectedPositionIndex = data.CustomerPostionId;
 
       const stringData: string = data.person.dateOfBirth.toString();
       const dobArray = stringData.split('T');
       const dobString: string = dobArray[0];
       this.loadDOBData(dobString);
 
-      const genderObject = new Gender();
+      const genderObject = new Gender();      
 
       if (data.person.gender !== null) {
         genderObject.genderId = data.person.gender.genderId;
         genderObject.title = data.person.gender.title;
-
         this.selectedGenderIndex = genderObject.genderId;
       }
 
@@ -1191,7 +1244,6 @@ export class AddPersonComponent implements OnInit {
     this.recvdCountryString = $event.Country;
     this.recvdCountryCode = $event['Alpha-2'];
 
-
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.address = new Address();
@@ -1218,7 +1270,13 @@ export class AddPersonComponent implements OnInit {
   }
 
   onNetExpensesReceive($event) {
-    this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event, 10);
+
+    if($event === true)
+      this.AddPersonForm2.get('netExpenseAllowance').disable();
+    else
+      this.AddPersonForm2.get('netExpenseAllowance').enable();
+
+    this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event, 10);    
   }
 
   onChangeCostImbursement($event) {
@@ -1265,8 +1323,11 @@ export class AddPersonComponent implements OnInit {
     } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
-        this.ShowMessage('Person fetched successfully.', '');
-        this.showFormIndex = 3;
+        this.ShowMessage('Person record created successfully.', '');
+        //this.showFormIndex = 3;
+        //redirect to dashboard;
+
+        this.router.navigate(['/dashboard']);
       }
     }
   }
@@ -1275,16 +1336,18 @@ export class AddPersonComponent implements OnInit {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Person record created successfully.', '');
-      this.showFormIndex = 3;
+      //this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
+          this.ShowMessage('Person create record Failure.', '');
           this.showFormIndex = 4;
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
           this.logger.log('response code=' + err.status);
           this.logger.log('response body=' + err.error);
+          this.ShowMessage('Person create record Failure.', '');
           // this.ShowMessage('Error occured='+err.error,'');
         }
       }

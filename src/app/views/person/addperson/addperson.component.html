@@ -50,7 +50,7 @@
                   <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber" class="form-control"
                     name="socialSecurityNumber" (keypress)="validatePersonSsid(socialSecurityNumber.value)" type="text" required />
                   <div class="form-control-feedback"
-                    *ngIf="!customSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
+                    *ngIf="!newCustomSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalid>
@@ -341,7 +341,7 @@
             <div class="row PersonContactContent">
               <div class="col-sm-7">
                 <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
-                  (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+                  (change)="onChangeDropDownFunctie($event)" [(ngModel)]="selectedPositionIndex" ng-dropdown>
                   <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i">
                     {{data}}</option>
                 </select>
@@ -372,7 +372,7 @@
                 </div>
                 <div class="row ">
                   <div class="col-sm-12">
-                    <select formControlName="statute" id="dd_statute" name="dd_statute"
+                    <select formControlName="statute" id="dd_statute" name="dd_statute" [(ngModel)]="selectedPositionIndex"
                       class="inhaalrust selectcomponent" (change)="onChangeDropDownStatute($event)" ng-dropdown
                       required="required">
                       <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
@@ -412,16 +412,21 @@
                 </div>
                 <div class="row inputWithImgNew">
                   <div class="col-sm-12">
-                    <input #netExpenseAllowance formControlName="netExpenseAllowance"
-                      (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
-                      name="netExpenseAllowance" type="text" required />
-                    <div class="form-control-feedback"
-                      *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
-                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    <div class="row">
+
+                        <input #netExpenseAllowance formControlName="netExpenseAllowance"
+                        (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
+                        name="netExpenseAllowance" type="text" required />
+                        <i class="fa fa-eur" aria-hidden="true"></i>
+                      <div class="form-control-feedback"
+                        *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                      </div>
+                      <ng-template #newvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                      </ng-template>
+  
                     </div>
-                    <ng-template #newvalid>
-                      <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
                   </div>
                 </div>
               </div>
