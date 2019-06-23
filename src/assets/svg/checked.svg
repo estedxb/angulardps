@@ -1,0 +1,15 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <style>.cls-1{fill:#1e1e1c;}.cls-2{fill:#010101;}</style>
+ </defs>
+ <title>seperate-icons</title>
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="402" height="402" id="canvas_background" fill="none"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect fill="none" stroke="#ffffff" stroke-width="30" x="47.5" y="43.5" width="309" height="309" id="svg_2" rx="50"/>
+  <path stroke="null" fill="#ffffff" stroke-width="null" stroke-linejoin="null" stroke-linecap="null" d="m290.860037,107.566632l-135.497466,135.511029l-40.147397,-49.275505l-23.600173,19.21921l61.441794,75.412003l159.328201,-159.341778l-21.524973,-21.524959" id="svg_3"/>
+ </g>
+</svg>

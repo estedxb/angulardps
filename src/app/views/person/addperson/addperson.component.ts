@@ -74,12 +74,12 @@ export class AddPersonComponent implements OnInit {
   public countStatutes: number;
   public datas: DpsPostion;
   public selectedGenderIndex;
+  public ssid:string;
   
   public selectedlanguageObject:any = {
     name: "Dutch",
     shortName: "nl"
   };
-
 
   public showFormIndex = 1;
 
@@ -461,6 +461,74 @@ export class AddPersonComponent implements OnInit {
           digits += ssid.charAt(i);
     }
     return digits;
+  }
+
+  keyPress($event) {
+
+    let totalString = "";
+    this.ssid += $event.target.value;
+
+    let ssid = $event.target.value;
+
+    this.logger.log("key press="+$event.target.value);
+
+    if(ssid.length === 2)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 5)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 8)
+    {
+      totalString = totalString + ssid + "-";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 12){
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+  }
+
+  validatePersonSsid($event) {
+
+    let totalString = "";
+    this.ssid += $event;
+
+    let ssid = $event;
+
+    this.logger.log("key press="+$event);
+
+    if(ssid.length === 2)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 5)
+    {
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 8)
+    {
+      totalString = totalString + ssid + "-";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
+    if(ssid.length === 12){
+      totalString = totalString + ssid + ".";
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(totalString);
+    }
+
   }
 
   newCustomSSIDValidator(ssid:string) {

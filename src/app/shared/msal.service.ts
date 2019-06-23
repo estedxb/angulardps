@@ -28,7 +28,7 @@ export class MsalService {
     signUpPolicy: environment.signUpPolicy,
     forgotPasswordPolicy: environment.forgotPasswordPolicy,
     redirectUri: environment.logInRedirectURL,
-    b2cScopes: ['https://' + environment.tenantid + '/dev/user_impersonation']
+    b2cScopes: ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation']
   };
   constructor(private userService: UsersService, private customerListsService: CustomerListsService, private logger: LoggingService) { }
   // Configure the authority for Azure AD B2C

@@ -28,26 +28,26 @@ export class AddCustomerComponent implements OnInit {
   public FPdata: any;
   public editObject: any = { data: '', page: '' };
   public vatNumber: string;
-  public currentVatNumber:string;
+  public currentVatNumber: string;
 
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   public HQFormValid: boolean;
   public CTFormValid: boolean;
 
-  public Id="";
-  public currentPage="";
+  public Id = "";
+  public currentPage = "";
 
   public showFormIndex = 1;
   constructor(private customerService: CustomersService, private logger: LoggingService,
-    private dialog: MatDialog, private snackBar: MatSnackBar,private route: ActivatedRoute, private router: Router, ) { 
-       
-        this.editObject = {
-          data: '',
-          page: ''
-        };
+    private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
 
-    }
+    this.editObject = {
+      data: '',
+      page: ''
+    };
+
+  }
 
 
   ngOnInit() {
@@ -55,18 +55,18 @@ export class AddCustomerComponent implements OnInit {
     this.CTFormValid = true;
 
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
-    localStorage.getItem('dpsLoginToken') !== '' &&
-    localStorage.getItem('dpsLoginToken') !== null) {
-    const sub = this.route.params.subscribe((params: any) => {
-      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-      this.Id = params.id;
-      this.currentPage = params.page;
-    });
-  } else {
-    this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
-    // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-    //this.router.navigate(['/login']);
-  }
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
+      const sub = this.route.params.subscribe((params: any) => {
+        this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+        this.Id = params.id;
+        this.currentPage = params.page;
+      });
+    } else {
+      this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+      // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      //this.router.navigate(['/login']);
+    }
 
   }
 
@@ -161,140 +161,41 @@ export class AddCustomerComponent implements OnInit {
       }
 
 
-    } else 
-        if (this.showFormIndex === 2) 
-      {
+    } else
+      if (this.showFormIndex === 2) {
         this.logger.log('Complete data=');
         this.logger.log(this.GLdata);
 
-        this.logger.log('HQdata');        
+        this.logger.log('HQdata');
         this.logger.log(this.HQdata);
-        
+
         this.logger.log('this STdata');
         this.logger.log(this.STdata);
 
-      if(this.HQdata !== null && this.HQdata !== undefined)
-      {
-        if (this.GLdata !== null && this.GLdata !== undefined) {
-          this.HQdata.customer.vcaCertification = new VcaCertification();
-          this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-          this.HQdata.bulkContractsEnabled = this.GLdata.blk;  
-        }
+        if (this.HQdata !== null && this.HQdata !== undefined) {
+          if (this.GLdata !== null && this.GLdata !== undefined) {
+            this.HQdata.customer.vcaCertification = new VcaCertification();
+            this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+            this.HQdata.bulkContractsEnabled = this.GLdata.blk;
+          }
 
-        if (this.CTdata !== null && this.CTdata !== undefined)
-          this.HQdata.contact = this.CTdata.contact;
+          if (this.CTdata !== null && this.CTdata !== undefined)
+            this.HQdata.contact = this.CTdata.contact;
 
-        if (this.STdata !== null && this.STdata !== undefined) {
-          this.HQdata.statuteSettings = this.STdata;
-        }
+          if (this.STdata !== null && this.STdata !== undefined) {
+            this.HQdata.statuteSettings = this.STdata;
+          }
 
-        if(this.FPdata !== null && this.FPdata !== undefined)
-          this.HQdata.invoiceSettings = this.FPdata;
+          if (this.FPdata !== null && this.FPdata !== undefined)
+            this.HQdata.invoiceSettings = this.FPdata;
 
           this.logger.log(this.HQdata);
-          this.updateData();    
+          this.updateData();
+        }
+        else {
+          this.logger.log("empty hq data");
+        }
       }
-      else {
-        this.logger.log("empty hq data");
-      }
-
-    }
-
-
-    //   if (this.GLdata !== null && this.GLdata !== undefined && this.GLdata !== '') 
-    //   {
-    //     if (this.HQdata !== null && this.HQdata !== undefined && this.HQdata !== '') {
-    //       this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-    //       this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-    //     } else {
-    //       this.HQdata = new DPSCustomer();
-    //       this.HQdata.customer = new Customer();
-    //       this.HQdata.customer.vatNumber = '';
-    //       this.HQdata.customer.name = 'hello';
-    //       this.HQdata.customer.officialName = 'new name';
-    //       this.HQdata.customer.legalForm = 'legal';
-
-    //       this.HQdata.customer.creditCheck = new CreditCheck();
-    //       this.HQdata.customer.creditCheck.creditcheck = false;
-    //       this.HQdata.customer.creditCheck.creditLimit = 1000;
-    //       this.HQdata.customer.creditCheck.dateChecked = '02/19/2019';
-    //       this.HQdata.customer.creditCheck.creditCheckPending = true;
-
-    //       this.HQdata.customer.address = new Address();
-    //       this.HQdata.customer.address.street = 'string';
-    //       this.HQdata.customer.address.streetNumber = 'new string';
-    //       this.HQdata.customer.address.bus = '232';
-    //       this.HQdata.customer.address.city = 'hello';
-    //       this.HQdata.customer.address.postalcode = 'jshdf2323';
-    //       this.HQdata.customer.address.country = 'canda';
-    //       this.HQdata.customer.address.countryCode = 'AZ';
-
-    //       this.HQdata.customer.vcaCertification = { cerified: false };
-    //       this.HQdata.bulkContractsEnabled = false;
-    //     }
-
-    //     this.logger.log('updated hqdata');
-    //     this.logger.log(this.HQdata);
-    //   }
-
-    //   if (this.CTdata !== null && this.CTdata !== undefined) {
-    //     this.logger.log(this.CTdata.contact);
-    //   } else {
-
-    //     this.logger.log('no contact data');
-    //     this.HQdata.contact = new Contact();
-    //     this.HQdata.contact.firstName = 'blah';
-    //     this.HQdata.contact.lastName = 'ajsdf';
-    //     this.HQdata.contact.postion = 'asdfs';
-
-    //     this.HQdata.contact.email = new EmailAddress();
-    //     this.HQdata.contact.email.emailAddress = 'asdfadsf@gmail.com';
-
-    //     this.HQdata.contact.mobile = new PhoneNumber();
-    //     this.HQdata.contact.mobile.number = '+93434343434';
-
-    //     this.HQdata.contact.phoneNumber = new PhoneNumber();
-    //     this.HQdata.contact.phoneNumber.number = '+93434343434';
-
-    //     this.HQdata.contact.language = new Language();
-    //     this.HQdata.contact.language.name = 'asfd';
-    //     this.HQdata.contact.language.shortName = 'ad';
-
-    //   }
-
-    //   if (this.STdata !== null && this.STdata !== undefined) {
-    //     this.HQdata.statuteSettings = this.STdata;
-    //   }
-
-    //   if (this.FPdata !== null && this.FPdata !== undefined && this.FPdata !== '') {
-    //     this.logger.log('fp data=');
-    //     this.logger.log(this.FPdata);
-
-    //     if (this.HQdata !== null) {
-    //       if (this.HQdata.invoiceSettings !== null && this.HQdata.invoiceSettings !== undefined) {
-    //         this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-    //         this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-    //         this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-    //         this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-    //         this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-    //         this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-    //         this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-    //       } else {
-    //         // this.HQdata.customer.vatNumber = "234343434";
-    //         this.HQdata.invoiceSettings = new InvoiceSettings();
-    //         this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-    //         this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-    //         this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-    //         this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-    //         this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-    //         this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-    //         this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-    //       }
-    //     }
-
-    //   }
-    // }
-
 
   }
 
@@ -339,16 +240,16 @@ export class AddCustomerComponent implements OnInit {
         response = data;
         //this.parseData(response);
         this.logger.log("response object in from api");
-        this.logger.log(this.editObject);    
+        this.logger.log(this.editObject);
         this.editObject = {
           data: response,
           page: 'edit'
         };
-    
+
       }, error => this.handleError(error));
   }
 
-  parseData(response: DPSCustomer) {  
+  parseData(response: DPSCustomer) {
 
     this.HQdata = new DPSCustomer();
     this.HQdata.customer = new Customer();
@@ -383,7 +284,7 @@ export class AddCustomerComponent implements OnInit {
     this.HQdata.contact.mobile = response.contact.mobile;
     this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
     this.HQdata.contact.postion = response.contact.postion;
-    this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+    this.HQdata.activateContactAsUser = response.activateContactAsUser;
     this.HQdata.formValid = true;
 
     this.editObject = {
