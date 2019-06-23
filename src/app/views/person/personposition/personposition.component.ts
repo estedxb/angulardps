@@ -103,7 +103,7 @@ export class PersonPositionComponent implements OnInit {
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      this.ShowMessage('Positions fetched successfully.', '');
+      //this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
     //SetInitialValue();

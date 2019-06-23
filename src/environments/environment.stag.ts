@@ -1,5 +1,5 @@
 export const environment = {
-  name: 'stag',
+  name: 'stg',
   production: false,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapistg.azurewebsites.net/api/',
@@ -7,9 +7,9 @@ export const environment = {
   blobStorage: 'https://dpsstorageaccountstg.blob.core.windows.net',
   aadurl: 'https://digitalpayrollservices.b2clogin.com',
   tenantid: 'digitalpayrollservices.onmicrosoft.com',
-  clientId: '0a3fd7db-e748-4a4d-b9d5-e022ddc100e1',
-  logInRedirectURL: 'http://localhost:4200/ValidateLogin',
-  logOutRedirectURL: 'http://localhost:4200/',
+  clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
+  logInRedirectURL: 'http://localhost:4200/',
+  logOutRedirectURL: 'http://localhost:4200/login',
   signInPolicy: 'B2C_1_dpsDevUSerLogin',
   signUpPolicy: 'B2C_1_dpsDevUSerLogin',
   forgotPasswordPolicy: 'B2C_1_SelfServicePasswordReset',

@@ -181,7 +181,7 @@ export class AddPersonComponent implements OnInit {
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      this.ShowMessage('Positions fetched successfully.', '');
+      //this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
 
@@ -297,7 +297,7 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('drop down functie');
       this.logger.log(this.dataDropDownFunctie);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      this.ShowMessage('Positions fetched successfully.', '');
+     // this.ShowMessage('Positions fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
 
     this.statuteService.getStatutes().subscribe(data => {

@@ -54,7 +54,7 @@ export class CreateuserComponent implements OnInit {
     this.UserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      usertype: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
+      usertype: new FormControl(''),
       mobile: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
       telephone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])

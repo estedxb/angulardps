@@ -299,7 +299,7 @@ export class CreateContractComponent implements OnInit {
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
-      this.ShowMessage('Contract Positions fetched successfully.', '');
+      //this.ShowMessage('Contract Positions fetched successfully.', '');
       this.getLocationsByVatNumber();
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -310,7 +310,7 @@ export class CreateContractComponent implements OnInit {
       this.locationsData = response;
       this.getWorkscheduleByVatNumber();
       this.logger.log('locationsData Form Data ::', this.locationsData);
-      this.ShowMessage('locationsData fetched successfully.', '');
+      //this.ShowMessage('locationsData fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
@@ -333,7 +333,7 @@ export class CreateContractComponent implements OnInit {
       this.SetMode();
 
       this.logger.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);
-      this.ShowMessage('WorkSchedules fetched successfully.', '');
+      //this.ShowMessage('WorkSchedules fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 

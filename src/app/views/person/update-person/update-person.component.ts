@@ -140,7 +140,7 @@ export class UpdatePersonComponent implements OnInit {
         } else {
           this.PersonInitial = this.dpsPerson.person.firstName.substring(0, 1) + this.dpsPerson.person.lastName.substring(0, 1);
         }
-        this.ShowMessage('Person fetched successfully.', '');
+        //this.ShowMessage('Person fetched successfully.', '');
       }, error => this.ShowMessage(error, 'error'));
     } catch (e) {
       this.PersonName = 'Error!!';

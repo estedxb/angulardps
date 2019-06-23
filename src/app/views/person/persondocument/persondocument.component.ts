@@ -103,7 +103,7 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
       this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
-      this.ShowMessage('vehicles fetched successfully.', '');
+      //this.ShowMessage('vehicles fetched successfully.', '');
       // Remove the  Vehicles with License in this.currentPerson
       //this.vehiclesForLicense = this.vehiclesForLicense.filter( function( el ) {
       //return !this.currentPerson.driverProfiles.includes( el );
@@ -115,7 +115,7 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getPersonBySSIDVatnumber(ssid, customervatnumber).subscribe(response => {
       this.currentPerson = response;
       this.logger.log('this.currentPerson::: ', this.currentPerson);
-      this.ShowMessage('Person fetched successfully.', '');
+      //this.ShowMessage('Person fetched successfully.', '');
       this.getVehiclesForLicense();
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -216,6 +216,8 @@ export class PersonDocumentComponent implements OnInit {
     this.updatePerson();
   }
 
+
+
   handleConstructionCardsFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
@@ -295,6 +297,12 @@ export class PersonDocumentComponent implements OnInit {
 
   downloadStudentAtWorkAttestationFile() {
     saveAs(environment.blobStorage + '' + this.currentPerson.studentAtWorkProfile.attestation.location, this.currentPerson.studentAtWorkProfile.attestation.name);
+  }
+
+  deleteStudentAtWorkAttestationFile() {
+    this.currentPerson.studentAtWorkProfile.attestation.name  = '';
+    this.currentPerson.studentAtWorkProfile.attestation.location  = '';
+    this.updatePerson();
   }
 
 

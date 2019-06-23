@@ -46,8 +46,8 @@ export class CreatepositionComponent implements OnInit {
 
     this.PositionForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
-      taskDescription: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]),
-      costCenter: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
+      taskDescription: new FormControl(''),
+      costCenter: new FormControl(''),
       file: new FormControl('')
     });
     this.loadPositionsToEdit();
@@ -95,6 +95,13 @@ export class CreatepositionComponent implements OnInit {
   createObjects() {
     this.currentPosition.position.name = this.PositionForm.get('name').value;
     this.currentPosition.position.taskDescription = this.PositionForm.get('taskDescription').value;
+    if (this.PositionForm.get('costCenter').value!==null || this.PositionForm.get('costCenter').value!==undefined || this.PositionForm.get('costCenter').value!=="")
+    {
+      this.currentPosition.position.costCenter = this.PositionForm.get('costCenter').value;
+    }
+    else{
+      this.currentPosition.position.costCenter = "0";
+    }
     this.currentPosition.position.costCenter = this.PositionForm.get('costCenter').value;
     this.currentPosition.position.isStudentAllowed = this.currentPosition.position.isStudentAllowed;
   }

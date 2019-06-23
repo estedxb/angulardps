@@ -105,7 +105,7 @@ export class UpdateCustomerComponent implements OnInit {
         this.CustomerName = this.dpsCustomer.item2 + '';
         this.CustomerLogo = this.dpsCustomer.item4 !== undefined ? this.dpsCustomer.item4 + '' : '';
         if (mode === 1) { this.updateLocalStorage(); }
-        this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
+        //this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.ShowMessage(error, 'error'));
     } catch (e) {
       this.CustomerName = 'Error!!';
