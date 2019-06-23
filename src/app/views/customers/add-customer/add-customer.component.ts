@@ -123,6 +123,7 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
+      document.getElementById('maincontent').scrollTo(0, 0);
       this.logger.log('CTdata=' + this.CTdata);
       this.logger.log(this.CTdata);
       this.logger.log('HQdata=' + this.HQdata);
@@ -302,6 +303,7 @@ export class AddCustomerComponent implements OnInit {
   handleError(error: any) { }
 
   onBackwardClick() {
+    document.getElementById('maincontent').scrollTo(0, 0);
     this.logger.log("current vat number");
     this.logger.log(this.currentVatNumber);
     this.getCustomerByVatNumberEdit(this.currentVatNumber);
