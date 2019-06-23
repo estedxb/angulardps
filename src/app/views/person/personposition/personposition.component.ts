@@ -118,6 +118,7 @@ export class PersonPositionComponent implements OnInit {
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
+      
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }

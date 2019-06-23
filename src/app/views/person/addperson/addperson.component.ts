@@ -65,6 +65,7 @@ export class AddPersonComponent implements OnInit {
   public dropDownYear: Array<string>;
   public dataDropDownStatute: string[];
   public dataDropDownFunctie: string[];
+  public dataDropDownFunctieIds: number[];
   public dataDropDownGender: string[];
   public dateofBirth;
   public SelectedIndexFunctie = 0;
@@ -94,7 +95,8 @@ export class AddPersonComponent implements OnInit {
   public dayString;
   public monthString;
   public yearString;
-
+  public positionChosen: string;
+  public positionId: number;
   public message;
   public bban: any = '';
   public bbic: any = '';
@@ -216,7 +218,10 @@ export class AddPersonComponent implements OnInit {
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
-            this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
+            //
+            //this.dataDropDownFunctie.push(result);
+            this.maindatas.push(this.datas);
+            this.fillDataDropDown(this.maindatas)
             this.FilterTheArchive();
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
@@ -272,6 +277,9 @@ export class AddPersonComponent implements OnInit {
       travelMode: new FormControl('', [Validators.required])
     });
 
+    this.positionChosen = "";
+    this.positionId = -1;
+
     this.AddPersonForm2 = new FormGroup({
       functie: new FormControl('', [Validators.required]),
       statute: new FormControl('', [Validators.required]),
@@ -314,10 +322,17 @@ export class AddPersonComponent implements OnInit {
 
   fillDataDropDown(maindatas) {
     this.dataDropDownFunctie = [];
+    this.dataDropDownFunctieIds = [];
+
     for (let i = 0; i < maindatas.length; i++) {
-      const positionObject = maindatas[i].position.name;
+      let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
+
+      this.dataDropDownFunctieIds.push(maindatas[i].position.id);
+      this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
+
+   
   }
 
   ShowMessage(MSG, Action) {
@@ -375,7 +390,22 @@ export class AddPersonComponent implements OnInit {
     this.logger.log('selected functie=' + this.dataDropDownFunctie[$event.target.value]);
 //    this.DpsPersonObject.customerPostionId = this.dataDropDownFunctie[$event.target.value];
     this.DpsPersonObject.customerPostionId = $event.target.value;
+
+    this.positionChosen = this.dataDropDownFunctie[$event.target.value];
+    this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+
+
     this.logger.log(this.DpsPersonObject);
+    this.updatePosition();
+  }
+
+  updatePosition() {
+
+    this.DpsPersonObject = this.message.data;
+    this.DpsPersonObject.customerPostionId = "" + this.positionId;
+
+    this.changeMessage();
+
   }
 
   onChangeDropDownYear($event) {
@@ -682,6 +712,7 @@ export class AddPersonComponent implements OnInit {
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
         this.logger.log("res="+res);
         this.loadPersonData(res);
+        
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

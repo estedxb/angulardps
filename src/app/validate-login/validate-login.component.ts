@@ -28,8 +28,7 @@ export class ValidateLoginComponent implements OnInit {
   ngOnInit() {
     if (!this.isUserLoggedIn) {
       this.login();
-    } else {
-      // this.router.navigate(['./login']);
+      // this.router.navigate(['./dashboard']);
     }
   }
 
