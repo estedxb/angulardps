@@ -13,6 +13,7 @@ import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-addperson',
@@ -76,6 +77,7 @@ export class AddPersonComponent implements OnInit {
   public selectedGenderIndex;
   public ssid:string;
   public totalString:string;
+  public selectedPositionIndex:number =0;
 
   public selectedlanguageObject:any = {
     name: "Dutch",
@@ -102,6 +104,8 @@ export class AddPersonComponent implements OnInit {
   public bbic: any = '';
   public iban: any = '';
 
+  public Id = "";
+  public currentPage = "";
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -139,7 +143,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
-  private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 1; private _Functievalue: any;
+  private _selectedValueFunctie: any; private _selectedIndexFunctie: any = 0; private _Functievalue: any;
   set selectedValueFunctie(value: any) { this._selectedIndexFunctie = value; }
   get selectedValueFunctie(): any { return this._selectedValueFunctie; }
   set selectedIndexFunctieBox(value: number) {
@@ -170,12 +174,31 @@ export class AddPersonComponent implements OnInit {
     }
   }
 
+    // tslint:disable-next-line: member-ordering // tslint:disable-next-line: variable-name
+    private _selectedValueStatute: any; private _selectedIndexStatute: any = 0; private _Statutevalue: any;
+    set selectedValueStatute(value: any) { this._selectedIndexStatute = value; }
+    get selectedValueStatute(): any { return this._selectedValueStatute; }
+    set selectedIndexStatuteBox(value: number) {
+      this._selectedIndexStatute = value; this.valueGender = this.dataDropDownGender[this.selectedIndexStatuteBox];
+    }
+    get selectedIndexStatuteBox(): number { return this._selectedIndexStatute; }
+    set valueStatute(value: any) { this._Statutevalue = value; }
+    get valueStatute(): any { return this._Statutevalue; }
+    SetInitialValueStatue() {
+      if (this.selectedValueStatute === undefined) {
+        this.selectedValueStatute = this.dataDropDownStatute[this.selectedIndexStatuteBox];
+      }
+    }
+
   /***** Drop Down functions and variables for calendar / Functie / statute  ********************************************/
 
   constructor(
     public http: HttpClient, private personsService: PersonService,
     private positionsService: PositionsService, private logger: LoggingService,
-    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, private statuteService: StatuteService) {
+    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar, 
+    private statuteService: StatuteService,
+    private route: ActivatedRoute, private router: Router
+    ) {
 
     this.logger.log('customerVatNumber=' + this.dpsLoginToken.customerVatNumber);
 
@@ -242,7 +265,8 @@ export class AddPersonComponent implements OnInit {
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
 
     this.setDropDownYear();
 
@@ -318,6 +342,21 @@ export class AddPersonComponent implements OnInit {
       this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
+
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+    localStorage.getItem('dpsLoginToken') !== '' &&
+    localStorage.getItem('dpsLoginToken') !== null) {
+    const sub = this.route.params.subscribe((params: any) => {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.Id = params.id;
+      this.currentPage = params.page;
+    });
+  } else {
+    this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+    // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+    //this.router.navigate(['/login']);
+  }
+
   }
 
   fillDataDropDown(maindatas) {
@@ -583,8 +622,6 @@ export class AddPersonComponent implements OnInit {
 
   setGender(genderDigits:number) {
 
-    this.logger.log("genderDigits received="+genderDigits);
-
     if(genderDigits % 2 === 0) {
       this._selectedIndexGender = 1;
       this.selectedGenderIndex = 1;
@@ -600,14 +637,9 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year:number,month:number,day:number) {
 
-    this.logger.log("year="+year);
-    this.logger.log("month="+month);
-    this.logger.log("day="+day);
-
     this._selectedIndexdays = day;
     this._selectedIndexMonth = month - 1;
     this._selectedIndexYear = year;
-
 
   }
 
@@ -872,19 +904,20 @@ export class AddPersonComponent implements OnInit {
 
     const data = rdata;
 
-    if (data.person !== null) {
+    if (data !== null && data.person !== null) {
+
+      this.selectedPositionIndex = data.CustomerPostionId;
 
       const stringData: string = data.person.dateOfBirth.toString();
       const dobArray = stringData.split('T');
       const dobString: string = dobArray[0];
       this.loadDOBData(dobString);
 
-      const genderObject = new Gender();
+      const genderObject = new Gender();      
 
       if (data.person.gender !== null) {
         genderObject.genderId = data.person.gender.genderId;
         genderObject.title = data.person.gender.title;
-
         this.selectedGenderIndex = genderObject.genderId;
       }
 
@@ -1211,7 +1244,6 @@ export class AddPersonComponent implements OnInit {
     this.recvdCountryString = $event.Country;
     this.recvdCountryCode = $event['Alpha-2'];
 
-
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
         this.DpsPersonObject.person.address = new Address();
@@ -1238,7 +1270,13 @@ export class AddPersonComponent implements OnInit {
   }
 
   onNetExpensesReceive($event) {
-    this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event, 10);
+
+    if($event === true)
+      this.AddPersonForm2.get('netExpenseAllowance').disable();
+    else
+      this.AddPersonForm2.get('netExpenseAllowance').enable();
+
+    this.DpsPersonObject.renumeration.netCostReimbursment = parseInt($event, 10);    
   }
 
   onChangeCostImbursement($event) {
@@ -1285,8 +1323,11 @@ export class AddPersonComponent implements OnInit {
     } else {
       if (this.showFormIndex === 2) {
         this.postPersonData();
-        this.ShowMessage('Person fetched successfully.', '');
-        this.showFormIndex = 3;
+        this.ShowMessage('Person record created successfully.', '');
+        //this.showFormIndex = 3;
+        //redirect to dashboard;
+
+        this.router.navigate(['/dashboard']);
       }
     }
   }
@@ -1295,16 +1336,18 @@ export class AddPersonComponent implements OnInit {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Person record created successfully.', '');
-      this.showFormIndex = 3;
+      //this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
+          this.ShowMessage('Person create record Failure.', '');
           this.showFormIndex = 4;
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
           this.logger.log('response code=' + err.status);
           this.logger.log('response body=' + err.error);
+          this.ShowMessage('Person create record Failure.', '');
           // this.ShowMessage('Error occured='+err.error,'');
         }
       }
