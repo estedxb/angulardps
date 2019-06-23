@@ -12,6 +12,7 @@ export const environment = {
   logInRedirectURL: 'login',
   logOutRedirectURL: 'logout',
   logInSuccessURL: 'dashboard',
+  B2CEnabled: '',
   logInSuccessNoCustomerURL: 'customer/add',
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',

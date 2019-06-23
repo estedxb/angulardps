@@ -65,7 +65,9 @@ export class AddCustomerComponent implements OnInit {
     } else {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
       // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      //this.router.navigate(['/login']);
+
+      this.logger.log('Redirect Breaked 9');
+      this.router.navigate(['/login']);
     }
 
   }
@@ -121,6 +123,7 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
+      document.getElementById('maincontent').scrollTo(0, 0);
       this.logger.log('CTdata=' + this.CTdata);
       this.logger.log(this.CTdata);
       this.logger.log('HQdata=' + this.HQdata);
@@ -219,7 +222,8 @@ export class AddCustomerComponent implements OnInit {
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Customer record created successfully!', '');
-      // this.showFormIndex = 3;
+      // this.showFormIndex = 3;      
+      this.logger.log('Redirect Breaked 11');
       this.router.navigate(['/dashboard']);
     },
       (err: HttpErrorResponse) => {
@@ -299,6 +303,7 @@ export class AddCustomerComponent implements OnInit {
   handleError(error: any) { }
 
   onBackwardClick() {
+    document.getElementById('maincontent').scrollTo(0, 0);
     this.logger.log("current vat number");
     this.logger.log(this.currentVatNumber);
     this.getCustomerByVatNumberEdit(this.currentVatNumber);

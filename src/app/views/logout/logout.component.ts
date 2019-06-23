@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../../app.component';
 import { LoggingService } from '../../shared/logging.service';
+import { Subscription } from 'rxjs/Subscription';
+import * as Msal from 'msal';
+import { MsalService } from '../../shared/msal.service';
 
 @Component({
   selector: 'app-logout',
@@ -10,7 +12,7 @@ import { LoggingService } from '../../shared/logging.service';
 export class LogoutComponent implements OnInit {
 
   constructor(
-    private appComp: AppComponent,
+    private msalService: MsalService,
     private logger: LoggingService) { }
 
   ngOnInit() {
@@ -19,7 +21,7 @@ export class LogoutComponent implements OnInit {
 
   logout(): void {
     this.logger.log('Logout');
-    this.appComp.logout();
+    this.msalService.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
   }
 
