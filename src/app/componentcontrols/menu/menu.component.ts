@@ -4,7 +4,6 @@ import { CustomersService } from '../../shared/customers.service';
 // import { AuthService } from '../../shared/auth.service';
 import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
-import { AppComponent } from '../../app.component';
 
 import * as Msal from 'msal';
 import { MsalService } from '../../shared/msal.service';
@@ -16,14 +15,15 @@ import { MsalService } from '../../shared/msal.service';
 })
 export class MenuComponent implements OnInit {
   @Input() SelectedPage: string;
-  constructor(private router: Router, private appComp: AppComponent, private logger: LoggingService, private msalService: MsalService
+  constructor(private router: Router, private logger: LoggingService, private msalService: MsalService
     //  , public authService: AuthService
   ) { }
+
   ngOnInit() { }
 
   logout(): void {
     this.logger.log('Logout');
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
-    this.appComp.logout();
+    this.msalService.logout();
   }
 }
