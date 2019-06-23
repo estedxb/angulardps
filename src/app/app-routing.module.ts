@@ -63,6 +63,7 @@ import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -86,8 +87,8 @@ const routes: Routes = [
   { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
-  { path: 'ValidateLogin', component: ValidateLoginComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'validatelogin', component: ValidateLoginComponent },
+  { path: '', redirectTo: '/' + environment.B2CEnabled + environment.logInRedirectURL, pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 @NgModule({

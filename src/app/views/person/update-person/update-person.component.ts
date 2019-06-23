@@ -46,11 +46,13 @@ export class UpdatePersonComponent implements OnInit {
       // this.logger.log('this.loginaccessToken :: ' + this.loginaccessToken);
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-        this.router.navigate(['./' + environment.logInRedirectURL]);
+        this.logger.log('Redirect Breaked 8');
+        this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.router.navigate(['./' + environment.logInRedirectURL]);
+      this.logger.log('Redirect Breaked 7');
+      this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
       // alert(e.message);
     }
   }

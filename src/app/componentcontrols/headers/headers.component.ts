@@ -3,6 +3,7 @@ import { DpsUser, LoginToken } from 'src/app/shared/models';
 import { PlatformLocation } from '@angular/common';
 import $ from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-headers',
@@ -29,19 +30,18 @@ export class HeadersComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // this.VatNumber = this.CustomerVatNumber;
-    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-    // alert(this.dpsLoginToken);
-    this.VatNumber = this.dpsLoginToken.customerVatNumber;
-    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
-    this.onPageInit();
+    this.ngOnInit();
   }
 
   ngOnInit() {
-    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-    this.VatNumber = this.dpsLoginToken.customerVatNumber;
-    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
-    this.onPageInit();
+    const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
+    if (dpsLoginTokenString !== '' && dpsLoginTokenString !== null && dpsLoginTokenString !== undefined) {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      // alert(this.dpsLoginToken);
+      this.VatNumber = this.dpsLoginToken.customerVatNumber;
+      this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
+      this.onPageInit();
+    }
   }
 
   getInit(FullName) {
