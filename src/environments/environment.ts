@@ -45,6 +45,7 @@ export const environment = {
   getPersonsByVatNumber: 'Person/ForCustomer',
   getSummaryURL: 'ToDo/ForCustomer',
   getPersonBySSIDNVatNumber: 'Person',
+  getPersonBySSIDBoemm:'Person',
   getPersonById: 'Person',
   getUser: 'User',
   getLocation: 'Location',

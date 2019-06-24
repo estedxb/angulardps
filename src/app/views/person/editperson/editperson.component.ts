@@ -30,6 +30,7 @@ export class EditPersonComponent implements OnInit {
   public dataDropDownGender;
   public showFormIndex = 1;
   public validSSID;
+  public disableDOB:boolean;
 
   public DpsPersonObject: DpsPerson;
   public oldDpsPersonObject: DpsPerson;
@@ -73,6 +74,8 @@ export class EditPersonComponent implements OnInit {
   public nationalityString: string;
   public languageString: string;
 
+  public totalString:string;
+
   public message;
   public bbic: any;
   public bban: any;
@@ -103,6 +106,7 @@ export class EditPersonComponent implements OnInit {
     //   this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
     //   );
 
+    this.disableDOB = true;
     this.onPageInit();
     this.loadDOBFromSSID();
     this.createObjectsForm1();
@@ -210,6 +214,181 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
+  }
+
+  newCustomSSIDValidator(ssid: string) {
+
+    this.validSSID = false;
+    let validSPCharacters = false;
+
+    if (ssid.length !== 15) {
+      return false;
+    }
+
+    let digits: string = this.stripDigits(ssid);
+
+    if (digits.length < 11)
+      return false;
+
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
+    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
+    let genderDigits: number = parseInt(ssid.substring(9,12));
+    let firstNineDigits: string = digits.substring(0,9);
+    let x:number = 0;
+    let controlNumber: number  = -1;
+
+    if(secondTwoDigits <1 || secondTwoDigits>12)
+    {
+      //this.ShowMessage("Maand is ongeldig!",'');
+      return false;
+    }
+
+    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
+    {
+      //this.ShowMessage("jaar is ongeldig!",'');
+      return false;
+    }
+
+    let currentYear: any = new Date();
+    currentYear = currentYear.getFullYear();
+    let currentYearTwoDigits = currentYear % 100;
+
+    if (firstTwoDigits >= 0 && firstTwoDigits <= currentYearTwoDigits && currentYear >= 2000) {
+      x = parseInt(("2" + firstNineDigits), 10);
+      let newremainder: number = x % 97;
+      controlNumber = 97 - newremainder;
+      if (controlNumber === lastTwoDigits)
+        this.validSSID = true;
+      else
+      {
+        this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+
+      }
+    }
+    else {
+      x = parseInt(firstNineDigits,10);
+      let remainder: number = x % 97;
+      controlNumber = 97 - remainder;
+
+      if (controlNumber === lastTwoDigits)
+        this.validSSID = true;
+      else
+      {
+        this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+      }
+
+    }
+
+    if(this.validSSID === true)
+    {
+      this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
+      this.setGender(genderDigits);  
+    }
+
+    return this.validSSID;
+
+  }
+
+  setGender(genderDigits: number) {
+
+    if (genderDigits % 2 === 0) {
+      this.selectedGenderIndex = 1;
+    }
+    else {
+      this.selectedGenderIndex = 0;
+    }
+
+  }
+
+  stripDigits(ssid: string) {
+
+    let digits: string = "";
+
+    for (let i: number = 0; i < ssid.length; i++) {
+      if (ssid.charAt(i) >= '0' && ssid.charAt(i) <= '9')
+        digits += ssid.charAt(i);
+    }
+    return digits;
+  }
+
+  setCalendar(year: number, month: number, day: number) {
+
+
+    const yearString: string = ""+year;
+    const monthString: string = ""+month;
+    const dayString: string = ""+day;
+
+    this.monthString = monthString;
+    this.dayString = dayString;
+    this.yearString = yearString;
+
+    this.calendarData = this.dayString + '/' + this.monthString + '/' + this.yearString;
+
+    this.logger.log("calendar data="+this.calendarData);
+
+    // if( day>=1 && day<=31)
+    //     this._selectedIndexdays = day;
+    
+    // if(month >=1 && month <=12)
+    //     this._selectedIndexMonth = month - 1;
+        
+    // this._selectedIndexYear = year;
+
+    // let currentYear: any = new Date();
+    // currentYear = currentYear.getFullYear();
+    // let currentYearTwoDigits = currentYear % 100;
+
+    // if(year >=0 && year<=currentYearTwoDigits)
+    // {
+    //   for(let i=0;i<this.dropDownYear.length;i++)
+    //   {
+    //     if(this.dropDownYear[i]===(year+2000).toString())
+    //       this.selectedIndexYear = i;
+    //   }
+    // }
+
+  }
+
+  validatePersonSsid($event) {
+
+    let ssid = $event;
+
+    if (ssid.length === 2) {
+      this.totalString = ssid + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+    }
+
+    if (ssid.length === 5) {
+      this.totalString = this.totalString + ssid.substring(3) + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (ssid.length === 8) {
+      this.totalString = this.totalString + ssid.substring(6) + "-";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (ssid.length === 12) {
+      this.totalString = this.totalString + ssid.substring(9) + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
+      this.totalString = this.totalString + ssid.substring(13);
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);      
+    }
   }
 
   getPersonbySSIDVatNumber() {
@@ -358,13 +537,11 @@ export class EditPersonComponent implements OnInit {
 
   loadPersonData() {
 
-    this.logger.log('load person data called');
-
     let newResponse: any = '';
     let data: any = '';
     const vatNumber = this.dpsLoginToken.customerVatNumber;
 
-    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, vatNumber).subscribe(dpsperson => {
+    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
       this.logger.log('new response');
       this.logger.log(dpsperson);
@@ -432,14 +609,9 @@ export class EditPersonComponent implements OnInit {
       this.changeMessage();
     });
 
-    this.logger.log('ended calling the api');
-
   }
 
   receiveDOBDate($event) {
-
-    // this.logger.log('recevied date=');
-    // this.logger.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
@@ -448,11 +620,8 @@ export class EditPersonComponent implements OnInit {
     let monthInNumber = -1;
     let counter = 0;
 
-    // this.logger.log('monthString=' + this.monthString);
-
     this.dropDownMonth.forEach(element => {
 
-      // this.logger.log('month=' + element);
       if (element === this.monthString) {
         monthInNumber = counter;
       }
@@ -477,7 +646,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   onCountryReceiveBirthPlace($event) {
-
 
     if (this.DpsPersonObject.person !== null) {
       this.DpsPersonObject.person.countryOfBirth = $event.Country;
