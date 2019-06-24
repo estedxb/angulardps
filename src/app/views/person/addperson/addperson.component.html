@@ -99,7 +99,7 @@
               <div class="row">
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Voornaam </label>
-                  <input formControlName="firstName" class="form-control" name="firstName" type="text" required />
+                  <input formControlName="firstName" change="updateFirstName(firstName.value)" class="form-control" name="firstName" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.firstName.invalid && (AddPersonForm1.controls.firstName.dirty || AddPersonForm1.controls.firstName.touched) else newvalidfirstname">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Familienaam </label>
-                  <input formControlName="lastName" class="form-control" name="lastName" type="text" required />
+                  <input formControlName="lastName" class="form-control" change="updateLastName(lastName.value)" name="lastName" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.lastName.invalid && (AddPersonForm1.controls.lastName.dirty || AddPersonForm1.controls.lastName.touched) else newvalidlastName">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -123,7 +123,7 @@
               <div class="row">
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Straat </label>
-                  <input formControlName="street" class="form-control" name="street" type="text" required />
+                  <input formControlName="street" class="form-control"  change="updateStreet(street.value)" name="street" type="text" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.street.invalid && (AddPersonForm1.controls.street.dirty || AddPersonForm1.controls.street.touched) else newvalidstreet">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -198,8 +198,7 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Vast nummer </label>
-                  <input #vatNumber formControlName="vatNumber" class="form-control" name="vatNumber" type="text" (change)="changeVatNumber(vatNumber.value)"
-                    required />
+                  <input #vatNumber formControlName="vatNumber" class="form-control" name="vatNumber" type="text" (change)="changeVatNumber(vatNumber.value)" required />
                   <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.vatNumber.invalid && (AddPersonForm1.controls.vatNumber.dirty || AddPersonForm1.controls.vatNumber.touched) else newvalidtelephoneNumber">
                     <img src="../../assets/img/InvalidIcon.png" alt="">

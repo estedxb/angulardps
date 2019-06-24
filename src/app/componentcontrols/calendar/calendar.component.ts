@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.CalendarData !== this.oldCalendarData) {
       this.oldCalendarData = this.CalendarData;
-      this.loadDOBData(this.CalendarData);
+      this.loadDOBDataNew(this.CalendarData);
     }
 
     if (this.disableAll === true) {
@@ -120,6 +120,22 @@ export class CalendarComponent implements OnInit {
       this.monthDisableStatus = this.calendarmonthDisableStatus;
       this.yearDisableStatus = this.calendaryearDisableStatus;
     }
+
+  }
+
+  loadDOBDataNew(calendarData) {
+
+    const calendarArray = calendarData.split('/');
+
+    let yearString = parseInt(calendarArray[2],10)+2000;
+    this.selectedIndex = parseInt(calendarArray[0],10);
+    this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
+
+      for(let i=0;i<=this.dropDownYear.length;i++)
+      {
+          if(yearString.toString() === this.dropDownYear[i])
+            this.selectedYear = i;
+      }
 
   }
 
