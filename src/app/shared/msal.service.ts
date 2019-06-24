@@ -51,6 +51,7 @@ export class MsalService {
       localStorage.setItem('dpsuseraccesstoken', token);
       this.logger.log('getAccesstoken :: ', this.getAuthenticationToken());
       alert('isLoggedIn :: ' + this.isLoggedIn());
+      this.getAuthenticationToken();
       this.updateSessionStorage(token);
       alert(token);
     } else {
@@ -79,8 +80,21 @@ export class MsalService {
 
   getAuthenticationToken(): Promise<string> {
     return this.clientApplication.acquireTokenSilent(this.b2cScopes)
-      .then(token => token)
-      .catch(error => { return Promise.reject(error); });
+      .then(token => {
+        console.log('Got silent access token: ', token);
+        return token;
+      }).catch(error => {
+        console.log('Could not silently retrieve token from storage.', error);
+        return this.clientApplication.acquireTokenPopup(this.b2cScopes)
+          .then(token => {
+            console.log('Got popup access token: ', token);
+            return token;
+          }).catch(error => {
+            console.log('Could not retrieve token from popup.', error);
+            this.clientApplication.acquireTokenRedirect(this.b2cScopes);
+            return Promise.resolve('');
+          });
+      });
   }
 
   public login(): void {

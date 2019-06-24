@@ -53,7 +53,7 @@ export class CalendarComponent implements OnInit {
   }
 
   @Input() public CalendarData: string;
-  @Input() public disableAll:boolean;
+  @Input() public disableAll: boolean;
   @Input() public calendarDisableStatus = null;
   @Input() public calendardayDisableStatus = null;
   @Input() public calendarmonthDisableStatus = null;
@@ -98,8 +98,7 @@ export class CalendarComponent implements OnInit {
       this.loadDOBData(this.CalendarData);
     }
 
-    if(this.disableAll === true)
-    {
+    if (this.disableAll === true) {
       this.dayDisableStatus = true;
       this.monthDisableStatus = true;
       this.yearDisableStatus = true;
