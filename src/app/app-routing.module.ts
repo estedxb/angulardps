@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 
-import { MsalService } from './shared/msal.service';
+// import { MsalService } from './shared/msal.service';
+
+// import { MsalModule, MsalGuard, MsalInterceptor, MsalService } from '@azure/msal-angular';
+import { LogLevel } from 'msal';
 
 import { CustomerSelectionComponent } from './componentcontrols/customerselection/customerselection.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
@@ -56,6 +58,7 @@ import { BulkContractComponent } from './views/bulk-contract/bulk-contract.compo
 import { LogoutComponent } from './views/logout/logout.component';
 
 import { ValidateLoginComponent } from './validate-login/validate-login.component';
+import { B2cloginComponent } from './b2clogin/b2clogin.component';
 
 import { EnableFilterPipe } from './pipes/enable-filter.pipe';
 import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
@@ -64,6 +67,10 @@ import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 import { environment } from '../environments/environment';
+// Logger callback for MSAL
+export function loggerCallback(logLevel, message, piiEnabled) {
+  console.log(message);
+}
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -87,8 +94,9 @@ const routes: Routes = [
   { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
+  { path: 'b2clogin', component: B2cloginComponent },
   { path: 'validatelogin', component: ValidateLoginComponent },
-  { path: '', redirectTo: '/' + environment.B2CEnabled + environment.logInRedirectURL, pathMatch: 'full' },
+  { path: '', redirectTo: '/' + environment.B2C + environment.logInRedirectURL, pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 @NgModule({
@@ -106,7 +114,7 @@ export const routingComponents = [
   EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent, CalendarComponent,
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
-  CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
+  CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent, B2cloginComponent,
   CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
   EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe
 ];
@@ -116,4 +124,4 @@ export const entringComponents = [
   CreatepositionComponent, CreateWorkTimeComponent, CancelContractComponent, CreateContractComponent
 ];
 
-export const routingProviders = [DatePipe, MsalService];
+export const routingProviders = [];

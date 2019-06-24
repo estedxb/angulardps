@@ -11,6 +11,7 @@ import {
 import { DataService } from '../../../shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -42,10 +43,7 @@ export class AddCustomerComponent implements OnInit {
   constructor(private customerService: CustomersService, private logger: LoggingService,
     private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
 
-    this.editObject = {
-      data: '',
-      page: ''
-    };
+    this.editObject = { data: '', page: '' };
 
   }
 
@@ -67,7 +65,7 @@ export class AddCustomerComponent implements OnInit {
       // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
 
       this.logger.log('Redirect Breaked 9');
-      this.router.navigate(['/login']);
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
 
   }
@@ -148,11 +146,11 @@ export class AddCustomerComponent implements OnInit {
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
             this.logger.log('response=' + res);
-            this.ShowMessage("Klantrecord met succes gemaakt!",'');            
+            this.ShowMessage("Klantrecord met succes gemaakt!", '');
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                this.ShowMessage("Geen klant te maken!",'');
+                this.ShowMessage("Geen klant te maken!", '');
                 this.logger.log('Error occured=' + err.error.message);
               } else {
                 this.logger.log('response code=' + err.status);
@@ -230,7 +228,7 @@ export class AddCustomerComponent implements OnInit {
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          this.ShowMessage("Geen klant te maken!",'');
+          this.ShowMessage("Geen klant te maken!", '');
           this.logger.log('Error occured=' + err.error.message);
         } else {
           this.logger.log('response code=' + err.status);

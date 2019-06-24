@@ -15,9 +15,10 @@
       </div>
       <div class="row PersonContactContent">
         <div class="col-sm-7">
-          <select formControlName="functie" [(ngModel)]="selectedIndexFunctie" id="dd_functie"  name="dd_functie" class="inhaalrust selectcomponent"
-            (change)="onChangeDropDownFunctie($event)" ng-dropdown>
-            <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i" [attr.selected]="i == 0"   >  
+          <select formControlName="functie" [(ngModel)]="selectedIndexFunctie" id="dd_functie" name="dd_functie"
+            class="inhaalrust selectcomponent" (change)="onChangeDropDownFunctie($event)" ng-dropdown>
+            <option *ngFor="let data of dataDropDownFunctie let i= index" [attr.data-index]="i" [value]="i"
+              [attr.selected]="i == 0">
               {{data}}</option>
           </select>
         </div>
@@ -47,8 +48,9 @@
           </div>
           <div class="row ">
             <div class="col-sm-12">
-              <select formControlName="statute" [(ngModel)]="selectedIndexStatute" id="dd_statute" name="dd_statute" class="inhaalrust selectcomponent"
-                (change)="onChangeDropDownStatute($event)" ng-dropdown required="required">
+              <select formControlName="statute" [(ngModel)]="selectedIndexStatute" id="dd_statute" name="dd_statute"
+                class="inhaalrust selectcomponent" (change)="onChangeDropDownStatute($event)" ng-dropdown
+                required="required">
                 <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
                   {{data}}</option>
               </select>
@@ -83,10 +85,10 @@
             </div>
           </div>
           <div class="row inputWithImgNew">
-            <div class="col-sm-12">
+            <div class="col-sm-12 euro">
               <input #netExpenseAllowance formControlName="netExpenseAllowance"
                 (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
-                name="netExpenseAllowance" type="text" required />
+                name="netExpenseAllowance" type="text" required /><i class="fa fa-eur" aria-hidden="true"></i>
               <div class="form-control-feedback"
                 *ngIf="PersonPositionForm.controls.netExpenseAllowance.invalid && (PersonPositionForm.controls.netExpenseAllowance.dirty || PersonPositionForm.controls.netExpenseAllowance.touched) else newvalid">
                 <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -117,8 +119,8 @@
       </div>
       <div class="row inputWithImgNew PersonContactContent">
         <div class="col-sm-12 ">
-          <textarea rows="6" formControlName="extra" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
-            name="extra">Extra .....</textarea>
+          <textarea rows="6" formControlName="extra" #extraRef (change)="addittionalInformation(extraRef.value)"
+            cols="80" name="extra">Extra .....</textarea>
           <div class="form-control-feedback"
             *ngIf="PersonPositionForm.controls.extra.invalid && (PersonPositionForm.controls.extra.dirty || PersonPositionForm.controls.extra.touched) else newvalid">
             <img src="../../assets/img/InvalidIcon.png" alt="">

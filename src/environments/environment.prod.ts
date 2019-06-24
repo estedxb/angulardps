@@ -1,7 +1,7 @@
 export const environment = {
   name: 'prod',
   production: true,
-  dataFromAPI_JSON: false, // True = From Remote :: False = From JSON
+  dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
   dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
@@ -12,11 +12,12 @@ export const environment = {
   logInRedirectURL: 'login',
   logOutRedirectURL: 'logout',
   logInSuccessURL: 'dashboard',
-  B2CEnabled: '',
+  B2CSuccess: 'validate',
+  B2C: '',
   logInSuccessNoCustomerURL: 'customer/add',
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
-  forgotPasswordPolicy: 'B2C_1_SelfServicePasswordReset',
+  forgotPasswordPolicy: 'B2C_1_SelfServicePasswordChange',
   B2CTodoAccessTokenKey: 'dpsuseraccesstoken',
   getAssetsDataPath: '../../assets/data/',
   getPositionFileUploads: 'postion/',

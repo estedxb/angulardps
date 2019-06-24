@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.logger.log('Redirect Breaked 10');
-      this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
   }
 
