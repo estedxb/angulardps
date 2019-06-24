@@ -51,7 +51,7 @@ export class MsalServiceLocal {
   saveAccessTokenToCache(accessToken: string): void { sessionStorage.setItem(this.B2CTodoAccessTokenKey, accessToken); }
 
   public login(): void {
-    this.clientApplication. = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
+    this.clientApplication = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
     this.authenticate();
   }
 
