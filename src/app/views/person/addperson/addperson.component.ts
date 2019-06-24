@@ -784,18 +784,30 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        this.logger.log("res=" + res);
+        this.logger.log("res=" + res);        
         this.loadPersonData(res);
-
       },
         (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            this.logger.log('Error occured=' + err.error.message);
-            this.loadDOBFromSSID();
-          } else {
-            this.logger.log('response code=' + err.status);
-            this.logger.log('response body=' + err.error);
+
+          if(err.status === 204)
+          {
+            this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
+              this.logger.log("res=" + res);        
+              this.loadPersonData(res);      
+            },
+            (err: HttpErrorResponse) => {
+                  this.logger.log('Error occured=' + err.error.message);
+                  this.loadDOBFromSSID();  }
+            );
           }
+
+          // if (err.error instanceof Error) {
+          //   this.logger.log('Error occured=' + err.error.message);
+          //   this.loadDOBFromSSID();
+          // } else {
+          //   this.logger.log('response code=' + err.status);
+          //   this.logger.log('response body=' + err.error);
+          // }
         }
       );
     } else {
