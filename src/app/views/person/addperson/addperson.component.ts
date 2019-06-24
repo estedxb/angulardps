@@ -660,28 +660,40 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    if (day >= 1 && day <= 31)
-      this._selectedIndexdays = day;
-
-    if (month >= 1 && month <= 12)
-      this._selectedIndexMonth = month - 1;
-
-    this._selectedIndexYear = year;
-
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    this.logger.log("month=" + month);
-    this.logger.log("day=" + day);
-    this.logger.log("year=" + year);
+    if (day >= 1 && day <= 31)
+    {
+      this.selectedIndex = day;
+      this._selectedIndexdays = day;
+    }
+
+    if (month >= 1 && month <= 12)
+    {
+      this.selectedIndexMonth = month - 1;
+      this._selectedIndexMonth = month - 1;
+    }
+
 
     if (year >= 0 && year <= currentYearTwoDigits) {
       for (let i = 0; i < this.dropDownYear.length; i++) {
         if (this.dropDownYear[i] === (year + 2000).toString())
+        {
           this.selectedIndexYear = i;
+          this._selectedIndexYear = i;
+        }
       }
     }
+
+    this.monthString = this.dropDownMonth[this.selectedIndexMonth];
+    this.dayString = this.dataDropDown[this.selectedIndex];
+    this.yearString = this.dropDownYear[this.selectedIndexYear];
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
+      this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
+
 
   }
 

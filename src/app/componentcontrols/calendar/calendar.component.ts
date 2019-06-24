@@ -128,15 +128,15 @@ export class CalendarComponent implements OnInit {
     const calendarArray = calendarData.split('/');
     let yearString = 0;
 
-    if(parseInt(calendarArray[2],10) >= 0 && parseInt(calendarArray[2],10) <= 19)
+    let currentYear = (new Date()).getFullYear() % 100;
+
+    if(parseInt(calendarArray[2],10) >= 0 && parseInt(calendarArray[2],10) <= currentYear )
       yearString = parseInt(calendarArray[2],10)+2000;
     else
       yearString = (parseInt(calendarArray[2],10) + 1900);
 
     this.selectedIndex = parseInt(calendarArray[0],10);
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
-
-    this.logger.log("year string="+yearString);
 
       for(let i=0;i<this.dropDownYear.length;i++)
       {
