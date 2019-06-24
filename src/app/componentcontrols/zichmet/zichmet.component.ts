@@ -38,7 +38,7 @@ export class ZichmetComponent implements OnInit {
       this.selectedValue = this.dropdownData[this._selectedIndex];
     }
   }
-  
+
   onChangeZich($event) {
 
     this._selectedIndex = $event.target.value;
@@ -58,7 +58,7 @@ export class ZichmetComponent implements OnInit {
       this.datas = newdata;
       this.dropdownData = this.datas;
 
-      this.logger.log("datas");
+      this.logger.log('datas');
       this.logger.log(this.datas);
 
       // setDefault country
@@ -96,21 +96,15 @@ export class ZichmetComponent implements OnInit {
   }
 
   loadInitialData() {
+    if (this.datas.length !== 0) {
+      for (let i = 0; i < this.datas.length; i++) {
+        const str: string = this.datas[i].vehicleName;
 
-    if (this.datas.length !== 0)    
-    {
-      for (let i = 0; i < this.datas.length; i++) 
-      {
-        const str:string = this.datas[i].vehicleName;
-
-          if(this.ZichmetFormData === str)
-          {
-            this.selectedIndex = i;
-            this.childEvent.emit(this.datas[i]);
-          }
+        if (this.ZichmetFormData === str) {
+          this.selectedIndex = i;
+          this.childEvent.emit(this.datas[i]);
+        }
       }
-    } 
-
+    }
   }
-
 }
