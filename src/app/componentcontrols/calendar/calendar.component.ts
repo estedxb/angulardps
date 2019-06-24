@@ -154,13 +154,9 @@ export class CalendarComponent implements OnInit {
 
     this.selectedYear = this.findIndex(parseInt(calendarArray[2], 10));
 
-    this.logger.log("selected Year="+this.selectedYear);
-
   }
 
   findIndex(yearString) {
-
-    this.logger.log("selected Year string="+ yearString);
 
     for (let i: number = 0; i < this.dropDownYear.length; i++) {
       if (yearString === parseInt(this.dropDownYear[i], 10))
