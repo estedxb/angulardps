@@ -434,11 +434,14 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   onClickPost() {
+
+    this.logger.log('::::::::::::  requestCertificate');
     this.requestCertificate = new Summaries();
     this.requestCertificate.id = 0;
     this.requestCertificate.customerVatNumber = this.currentPerson.customerVatNumber;
-    this.requestCertificate.message = "";
-    this.requestCertificate.dateTime = Date.now.toString();
+    this.requestCertificate.message = "Request for medical result " + this.currentPerson.person.firstName;
+
+    this.requestCertificate.dateTime =  new Date().toLocaleString();
     this.requestCertificate.actionTypeId = "1";
     this.requestCertificate.objectId = this.currentPerson.person.socialSecurityNumber.number.toString();
     this.requestCertificate.objectDomain = "Person";
@@ -446,9 +449,23 @@ export class PersonDocumentComponent implements OnInit {
     this.requestCertificate.priority = 1;
     this.requestCertificate.isManual = true;
     this.requestCertificate.isFinished = false;
+    this.logger.log('index :: ', this.requestCertificate);
 
-    this.personService.requestCertificate(this.requestCertificate);
+    this.personService.requestCertificate(this.requestCertificate).subscribe(res => {
+      this.logger.log('requestCertificate Response :: ', res);
+    },
+    (err: HttpErrorResponse) => {
 
+      this.logger.log('Error :: ');
+      this.logger.log(err);
+      if (err.error instanceof Error) {
+        this.logger.log('Error occured=' + err.error.message);
+      } else {
+        this.logger.log('response code=' + err.status);
+        this.logger.log('response body=' + err.error);
+      }
+    }
+  );
   }
 
 }

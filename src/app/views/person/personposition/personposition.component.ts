@@ -292,13 +292,17 @@ export class PersonPositionComponent implements OnInit {
     );
   }
 
-  // set positions
-  // statute
-  // coefficients
-  // cost toggle
-  // km toggle
-  // extra information
-  loadPersonData(response) {
+  findIndex(position:number)
+  {
+    for(let i=0;i<this.maindatas.length;i++)
+    {
+        if(position === this.maindatas[i].id)
+          this.selectedIndexFunctie = i;
+    }
+  }
+
+  loadPersonData(response) 
+  {
 
     this.logger.log("respone body");
     this.logger.log(response);
@@ -318,8 +322,7 @@ export class PersonPositionComponent implements OnInit {
       // });
 
       this.logger.log("position id="+data.customerPostionId);
-
-      this.selectedIndexFunctie = parseInt(data.customerPostionId,10);
+      this.findIndex(parseInt(data.customerPostionId,10));
     }
 
     if (data.statute !== null && data.statute !== undefined && data.statute !== "") {
@@ -357,111 +360,6 @@ export class PersonPositionComponent implements OnInit {
     this.DpsPersonObject = data;
 
   }
-
-  // createObjectsForm() {
-
-  //   this.DpsPersonObject = new DpsPerson();
-  //   this.PersonObject = new Person();
-
-  //   this.SocialSecurityNumberObject = new SocialSecurityNumber();
-  //   this.SocialSecurityNumberObject.number = this.PersonPositionForm.get('socialSecurityNumber').value;
-  //   this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
-
-  //   this.DpsPersonObject.customerVatNumber = "123456789101";
-  //   this.DpsPersonObject.person = this.PersonObject;
-
-  //   this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
-  //   this.DpsPersonObject.person.placeOfBirth = this.PersonPositionForm.get('placeOfBirth').value;
-  //   this.DpsPersonObject.person.countryOfBirth = this.PersonPositionForm.get('countryOfBirth').value;
-  //   this.DpsPersonObject.person.nationality = this.PersonPositionForm.get('nationality').value;
-
-  //   this.DpsPersonObject.person.gender = new Gender();
-  //   this.DpsPersonObject.person.gender.genderId = 0;
-  //   this.DpsPersonObject.person.gender.title = "Male";
-
-  //   this.DpsPersonObject.person.firstName = this.AddPersonForm1.get('firstName').value;
-  //   this.DpsPersonObject.person.lastName = this.AddPersonForm1.get('lastName').value;
-
-  //   this.DpsPersonObject.person.address = new Address();
-  //   this.DpsPersonObject.person.address.street = this.AddPersonForm1.get('street').value;
-  //   this.DpsPersonObject.person.address.streetNumber = this.AddPersonForm1.get('streetNumber').value;
-  //   this.DpsPersonObject.person.address.bus = this.AddPersonForm1.get('bus').value;
-  //   this.DpsPersonObject.person.address.city = this.AddPersonForm1.get('city').value;
-  //   this.DpsPersonObject.person.address.postalCode = this.AddPersonForm1.get('postalCode').value;
-  //   this.DpsPersonObject.person.address.country = "New country";
-  //   this.DpsPersonObject.person.address.countryCode = "NX";
-
-  //   this.DpsPersonObject.person.email = new EmailAddress();
-  //   this.DpsPersonObject.person.email.emailAddress = this.AddPersonForm1.get('emailAddress').value;
-
-  //   this.DpsPersonObject.person.mobile = new PhoneNumber();
-  //   this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
-
-  //   this.DpsPersonObject.person.phone = new PhoneNumber();
-  //   this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
-
-  //   this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
-
-  //   this.DpsPersonObject.person.language = new Language();
-  //   this.DpsPersonObject.person.language.name = "";
-  //   this.DpsPersonObject.person.language.shortName = "";
-
-  //   this.DpsPersonObject.person.bankAccount = new BankAccount();
-  //   this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
-  //   this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
-
-  //   this.DpsPersonObject.person.travelMode = this.AddPersonForm1.get('travelMode').value;
-  //   this.DpsPersonObject.person.status = "";
-
-  //   this.DpsPersonObject.statute = new Statute();
-  //   this.DpsPersonObject.statute.name = "";
-  //   this.DpsPersonObject.statute.type = "";
-
-  //   this.DpsPersonObject.customerPostionId = "";
-  //   this.DpsPersonObject.renumeration = new Renumeration();
-  //   this.DpsPersonObject.renumeration.costReimbursment = false;
-
-  //   this.DpsPersonObject.addittionalInformation = "";
-  //   this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
-  //   this.DpsPersonObject.medicalAttestation.location = "";
-  //   this.DpsPersonObject.medicalAttestation.name = "";
-
-  //   this.DpsPersonObject.vcaAttestation = new Documents();
-  //   this.DpsPersonObject.vcaAttestation.location = "";
-  //   this.DpsPersonObject.vcaAttestation.name = "";
-
-  //   this.DpsPersonObject.constructionProfile = new ConstructionProfile();
-  //   this.DpsPersonObject.constructionCards = [];
-
-  //   this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
-  //   this.DpsPersonObject.studentAtWorkProfile.attestation = new Documents();
-  //   this.DpsPersonObject.studentAtWorkProfile.attestation.location = "";
-  //   this.DpsPersonObject.studentAtWorkProfile.attestation.name = "";
-  //   this.DpsPersonObject.studentAtWorkProfile.attestationDate = "10/10/2019";
-  //   this.DpsPersonObject.studentAtWorkProfile.contingent = 0;
-  //   this.DpsPersonObject.studentAtWorkProfile.balance = 0;
-
-  //   this.DpsPersonObject.driverProfiles = [];
-
-  //   let driverProfilesObject: DriverProfilesItem = new DriverProfilesItem();
-  //   driverProfilesObject.attestation = new Documents();
-  //   driverProfilesObject.attestation.location = "";
-  //   driverProfilesObject.attestation.name = "";
-
-  //   this.DpsPersonObject.driverProfiles.push(driverProfilesObject);
-
-  //   this.DpsPersonObject.otherDocuments = [];
-
-  //   let otherDocumentsObject: Documents = new Documents();
-  //   otherDocumentsObject.location = "";
-  //   otherDocumentsObject.name = "";
-
-  //   this.DpsPersonObject.otherDocuments.push(otherDocumentsObject);
-
-  //   this.DpsPersonObject.isEnabled = false;
-  //   this.DpsPersonObject.isArchived = false;
-
-  // }
 
   onChangeDropDownFunctie($event) {
 

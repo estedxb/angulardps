@@ -74,7 +74,7 @@ export class PersonService {
     this.getPersonbyIdURL = environment.dpsAPI + environment.getPersonById;
     this.postPersonURL = environment.dpsAPI + environment.CreatePerson;
     this.putPersonURL = environment.dpsAPI + environment.CreatePerson;
-    this.requestCertificateURL = "";
+    this.requestCertificateURL = environment.dpsAPI + environment.getSummary;
 
   }
 

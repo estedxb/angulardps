@@ -126,12 +126,19 @@ export class CalendarComponent implements OnInit {
   loadDOBDataNew(calendarData) {
 
     const calendarArray = calendarData.split('/');
+    let yearString = 0;
 
-    let yearString = parseInt(calendarArray[2],10)+2000;
+    if(parseInt(calendarArray[2],10) >= 0 && parseInt(calendarArray[2],10) <= 19)
+      yearString = parseInt(calendarArray[2],10)+2000;
+    else
+      yearString = (parseInt(calendarArray[2],10) + 1900);
+
     this.selectedIndex = parseInt(calendarArray[0],10);
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
 
-      for(let i=0;i<=this.dropDownYear.length;i++)
+    this.logger.log("year string="+yearString);
+
+      for(let i=0;i<this.dropDownYear.length;i++)
       {
           if(yearString.toString() === this.dropDownYear[i])
             this.selectedYear = i;
