@@ -1,5 +1,5 @@
 <select [ngModel]="selectedIndex" id="ddl_zichmet" name="ddl_zichmet" class="countries selectcomponent"
     (change)="onChangeZich($event)" ng-dropdown required="required">
-    <option *ngFor="let data of datas let j= index" [attr.data-index]="j" [value]="j">{{data.Country}}</option>
+    <option *ngFor="let data of dropdownData let j= index" [attr.data-index]="j" [value]="j">{{data.vehicleName}}</option>
 </select>
 <div class="error">{{ errorMsg }}</div>

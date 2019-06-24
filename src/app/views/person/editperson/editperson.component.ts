@@ -595,7 +595,7 @@ export class EditPersonComponent implements OnInit {
       }
 
       if (data.person.phone !== null) {
-        this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
+        // this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
       }
 
 
@@ -775,11 +775,11 @@ export class EditPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.zichmetdata = $event;
+    this.zichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event;
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
       }
 
     this.changeMessage();
@@ -837,7 +837,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vatNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
-    
+
     // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
     // this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
 

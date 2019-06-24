@@ -1237,9 +1237,11 @@ export class AddPersonComponent implements OnInit {
 
     this.zichmetdata = $event;
 
+    this.logger.log("received zich met="+$event.vehicleName);
+
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event;
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
       }
 
     this.changeMessage();
