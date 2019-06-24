@@ -5,6 +5,7 @@ import { LoginToken, CustomersList } from './models';
 import { UsersService } from './users.service';
 import { LoggingService } from './logging.service';
 import { CustomerListsService } from './customerlists.service';
+import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 declare var bootbox: '';
 @Injectable({
@@ -19,20 +20,38 @@ export class MsalService {
   VatNumber = '';
   errorMsg: string;
   public currentpage = 'login';
+  public Options = {
+    validateAuthority: true,
+    redirectUri: environment.webUrl + environment.B2CEnabled + environment.logInRedirectURL,
+    postLogoutRedirectUri: environment.webUrl + environment.B2CEnabled + environment.logOutRedirectURL,
+    // logger: Msal.Logger,
+    loadFrameTimeout: 1000,
+    navigateToLoginRequestUrl: true,
+    // state : '',
+    isAngular: true
+  };
 
   B2CTodoAccessTokenKey = environment.B2CTodoAccessTokenKey;
 
-  tenantConfig = {
+  public tenantConfig = {
     tenant: environment.tenantid,
     clientID: environment.clientId,
     signInPolicy: environment.signInPolicy,
     signUpPolicy: environment.signUpPolicy,
     forgotPasswordPolicy: environment.forgotPasswordPolicy,
-    redirectUri: environment.webUrl + environment.B2CEnabled + environment.logInRedirectURL,
+    // webApi: environment.webUrl + environment.B2CEnabled + environment.logInRedirectURL,
+    // redirectUri: environment.webUrl + environment.B2CEnabled + environment.logInRedirectURL,
     b2cScopes: ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation']
   };
 
-  constructor(private userService: UsersService, private customerListsService: CustomerListsService, private logger: LoggingService) { }
+
+  constructor(private userService: UsersService, private customerListsService: CustomerListsService, private logger: LoggingService) {
+    try {
+      this.getAccessTokenToCache();
+    } catch (e) {
+      localStorage.setItem('dpsuseraccesstoken', '');
+    }
+  }
   // Configure the authority for Azure AD B2C
   authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' + this.tenantConfig.signInPolicy;
 
@@ -40,23 +59,60 @@ export class MsalService {
    * B2C SignIn SignUp Policy Configuration
    */
   clientApplication = new Msal.UserAgentApplication(
-    this.tenantConfig.clientID, this.authority,
-    function (errorDesc: any, token: any, error: any, tokenType: any) {
-      //if (errorDesc !== '' && errorDesc !== undefined && errorDesc !== null) {
-      // alert('token :: ' + token);
-      this.saveAccessTokenToCache(token);
+    this.tenantConfig.clientID, this.authority, this.saveAccessTokenToCache, this.Options);
 
-      this.updateSessionStorage(token);
-      // } else {
-      //   alert('Error : ' + errorDesc);
-      //   console.log('error: ', errorDesc);
-      // }
-    }
-  );
 
+  saveAccessTokenToCache(errorDesc: any, token: any, error: any, tokenType: any): void {
+    localStorage.setItem('dpsuseraccesstoken', token);
+    this.updateSessionStorage(token);
+  }
+
+  getAccessTokenToCache(): string {
+    return localStorage.getItem('dpsuseraccesstoken');
+  }
+  public login(): void {
+    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
+      this.tenantConfig.signInPolicy;
+    this.authenticate();
+  }
+
+  public signup(): void {
+    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
+      this.tenantConfig.signUpPolicy;
+    this.authenticate();
+  }
+
+  public authenticate(): void {
+    this.logger.log('authenticate() - this.clientApplication.authority :: ' + this.clientApplication.authority);
+    this.logger.log('this.tenantConfig.b2cScopes :: ' + this.tenantConfig.b2cScopes);
+
+    this.clientApplication.loginRedirect(this.tenantConfig.b2cScopes);
+
+
+    /*
+    let _this = this;
+    _this.clientApplication.loginPopup(this.tenantConfig.b2cScopes).then(function (idToken: any) {
+      _this.clientApplication.acquireTokenSilent(_this.tenantConfig.b2cScopes).then(
+        function (accessToken: any) {
+          _this.saveAccessTokenToCache(accessToken);
+          this.updateSessionStorage(accessToken);
+        }, function (error: any) {
+          _this.clientApplication.acquireTokenPopup(_this.tenantConfig.b2cScopes).then(
+            function (accessToken: any) {
+              _this.saveAccessTokenToCache(accessToken);
+              this.updateSessionStorage(accessToken);
+            }, function (error: any) {
+              console.log('error: ', error);
+            });
+        });
+    }, function (error: any) {
+      console.log('error: ', error);
+    });
+    */
+  }
   updateSessionStorage(token: string) {
     // alert(this.getUser());
-    alert('1');
+    alert('0');
     console.log('Azure getUser()', this.getUser());
     this.ltkn.accessToken = token;
     this.ltkn.isLoggedIn = true;
@@ -94,46 +150,6 @@ export class MsalService {
     alert('4');
   }
 
-  public login(): void {
-    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
-      this.tenantConfig.signInPolicy;
-    this.authenticate();
-  }
-
-  public signup(): void {
-    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + this.tenantConfig.tenant + '/' +
-      this.tenantConfig.signUpPolicy;
-    this.authenticate();
-  }
-
-  public authenticate(): void {
-    this.logger.log('authenticate() - this.clientApplication.authority :: ' + this.clientApplication.authority);
-    this.logger.log('this.tenantConfig.b2cScopes :: ' + this.tenantConfig.b2cScopes);
-    // this.clientApplication.loginRedirect(this.tenantConfig.b2cScopes);
-    /*
-    let _this = this;
-    _this.clientApplication.loginPopup(this.tenantConfig.b2cScopes).then(function (idToken: any) {
-      _this.clientApplication.acquireTokenSilent(_this.tenantConfig.b2cScopes).then(
-        function (accessToken: any) {
-          _this.saveAccessTokenToCache(accessToken);
-        }, function (error: any) {
-          _this.clientApplication.acquireTokenPopup(_this.tenantConfig.b2cScopes).then(
-            function (accessToken: any) {
-              _this.saveAccessTokenToCache(accessToken);
-            }, function (error: any) {
-              console.log('error: ', error);
-            });
-        });
-    }, function (error: any) {
-      console.log('error: ', error);
-    });
-    */
-  }
-
-  saveAccessTokenToCache(accessToken: string): void {
-    sessionStorage.setItem(this.B2CTodoAccessTokenKey, accessToken);
-  }
-
   logout(): void {
     localStorage.removeItem('dpsLoginToken');
     this.clientApplication.logout();
@@ -157,4 +173,27 @@ export class MsalService {
     this.clientApplication.loginRedirect(this.tenantConfig.b2cScopes);
   }
 
+  /*
+  public redirectIfForgotPassword() {
+    let error = this.storage.getItem("error");
+    // An error should be there
+    if (error) {
+      // And the description should contain: AADB2C90118
+      let errorDesc = this.storage.getItem("error_description");
+      if (errorDesc.indexOf("AADB2C90118") > -1) {
+        // Set the authority to the forgot password
+        this.clientApplication.authority = this.applicationConfig.forgotPasswordAuthority;
+        // and head there.
+        this.login();
+        return false;
+      }
+    }
+    return true;
+  }
+  */
+
 }
+
+/*
+
+*/

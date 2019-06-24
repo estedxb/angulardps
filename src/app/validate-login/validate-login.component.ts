@@ -30,18 +30,19 @@ export class ValidateLoginComponent implements OnInit {
 
   ngOnInit() {
     if (!this.isUserLoggedIn()) {
+      // alert('Not Login');
       this.logger.log('this.isUserLoggedIn()', this.isUserLoggedIn());
       this.login();
     } else {
-      // alert('Login Found');
+      // alert('Logged in');
       const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
-      if (dpsLoginTokenString !== '' && dpsLoginTokenString !== null && dpsLoginTokenString !== undefined) {
+      let token = this.getAccesstoken() + '';
+      if ((dpsLoginTokenString !== '' && dpsLoginTokenString !== null && dpsLoginTokenString !== undefined) ||
+        (token !== '' && token !== null && token !== undefined)) {
         console.log('dpsLoginTokenString :: ' + dpsLoginTokenString);
         const dpsLoginToken: LoginToken = JSON.parse(dpsLoginTokenString);
         console.log('dpsLoginTokenString ===', dpsLoginToken);
         const VatNumber = dpsLoginToken.customerVatNumber;
-        let token = this.getAccesstoken() + '';
-        if (token === '') { token = 'Access-Token'; }
         if (VatNumber === '') { this.updateSessionStorage(token); }
       } else {
         this.login();
@@ -78,11 +79,12 @@ export class ValidateLoginComponent implements OnInit {
   }
 
   public getAccesstoken() {
-    // return this.msalService.
+    return this.msalService.getAccessTokenToCache();
   }
 
   updateSessionStorage(token: string) {
     try {
+      alert('updateSessionStorage');
       console.log('Azure getUser()', this.getUser());
       this.ltkn.accessToken = token;
       this.ltkn.isLoggedIn = true;
