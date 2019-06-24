@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { CanActivate } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Login, LoginToken } from './models';
 import { Observable } from 'rxjs/Observable';

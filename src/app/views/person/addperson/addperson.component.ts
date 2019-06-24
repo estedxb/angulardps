@@ -15,6 +15,7 @@ import {
 } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-addperson',
@@ -79,7 +80,6 @@ export class AddPersonComponent implements OnInit {
   public ssid: string;
   public totalString: string;
   public selectedPositionIndex: number = 0;
-  public selectedStatuteIndex:number = 0;
 
   public selectedlanguageObject: any = {
     name: "Dutch",
@@ -265,7 +265,6 @@ export class AddPersonComponent implements OnInit {
 
   FilterTheArchive() {
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-    this.selectedPositionIndex = 0;
   }
 
   ngOnInit() {
@@ -292,7 +291,7 @@ export class AddPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      vatNumber: new FormControl('', [Validators.required]),
+      telephoneNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -314,9 +313,6 @@ export class AddPersonComponent implements OnInit {
       countryOnetExpenseAllowancefBirth: new FormControl('', [Validators.required]),
       extra: new FormControl('', [Validators.required]),
     });
-
-
-    this.selectedPositionIndex = 0;
 
     this.AddPersonForm2.get('netExpenseAllowance').disable();
 
@@ -358,10 +354,9 @@ export class AddPersonComponent implements OnInit {
       });
     } else {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
-      // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      //this.router.navigate(['/login']);
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
-
   }
 
   fillDataDropDown(maindatas) {
@@ -371,13 +366,9 @@ export class AddPersonComponent implements OnInit {
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
-
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
-
-  this.selectedPositionIndex = 0; 
-
   }
 
   ShowMessage(MSG, Action) {
@@ -395,22 +386,22 @@ export class AddPersonComponent implements OnInit {
     this.dropDownYear = new Array<string>();
 
     let currentYear = new Date();
-    let year:number  = currentYear.getFullYear();
-    
+    let year: number = currentYear.getFullYear();
+
     for (let i = 1900; i < year; i++) {
       this.dropDownYear.push('' + i);
-      this.logger.log("i="+i);
-    }    
+      this.logger.log("i=" + i);
+    }
   }
 
   onChangeDropDownGender($event) {
-    if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
-    if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
-      this.DpsPersonObject.person.gender.title = $event.target.value;
-    } else {
-      this.DpsPersonObject.person.gender = new Gender();
-      this.DpsPersonObject.person.gender.title = $event.target.value;
-    }
+    if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
+        this.DpsPersonObject.person.gender.title = $event.target.value;
+      } else {
+        this.DpsPersonObject.person.gender = new Gender();
+        this.DpsPersonObject.person.gender.title = $event.target.value;
+      }
     this.logger.log(this.DpsPersonObject);
   }
 
@@ -438,20 +429,13 @@ export class AddPersonComponent implements OnInit {
   }
 
   onChangeDropDownFunctie($event) {
-    
-    this.logger.log("drop down function called");
     this.logger.log('selected functie=' + this.dataDropDownFunctie[$event.target.value]);
     //    this.DpsPersonObject.customerPostionId = this.dataDropDownFunctie[$event.target.value];
-
-    this.logger.log("selected index");
-    this.logger.log(typeof($event.target.value));
-
     this.DpsPersonObject.customerPostionId = $event.target.value;
 
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
     this.positionId = this.dataDropDownFunctieIds[$event.target.value];
 
-    this.selectedPositionIndex = $event.target.value;
 
     this.logger.log(this.DpsPersonObject);
     //this.updatePosition();
@@ -460,7 +444,7 @@ export class AddPersonComponent implements OnInit {
   updatePosition() {
 
     this.DpsPersonObject = this.message.data;
-    this.DpsPersonObject.customerPostionId = "" + this.selectedPositionIndex;
+    this.DpsPersonObject.customerPostionId = "" + this.positionId;
 
     this.changeMessage();
 
@@ -558,12 +542,14 @@ export class AddPersonComponent implements OnInit {
 
     }
 
-    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);      
+      this.logger.log("total string=" + this.totalString);
     }
   }
+
+
 
   newCustomSSIDValidator(ssid: string) {
 
@@ -579,23 +565,21 @@ export class AddPersonComponent implements OnInit {
     if (digits.length < 11)
       return false;
 
-    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
-    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
-    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
-    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
-    let genderDigits: number = parseInt(ssid.substring(9,12));
-    let firstNineDigits: string = digits.substring(0,9);
-    let x:number = 0;
-    let controlNumber: number  = -1;
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length - 2), 10);
+    let firstTwoDigits: number = parseInt(ssid.substring(0, 2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3, 5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6, 8));
+    let genderDigits: number = parseInt(ssid.substring(9, 12));
+    let firstNineDigits: string = digits.substring(0, 9);
+    let x: number = 0;
+    let controlNumber: number = -1;
 
-    if(secondTwoDigits <1 || secondTwoDigits>12)
-    {
+    if (secondTwoDigits < 1 || secondTwoDigits > 12) {
       //this.ShowMessage("Maand is ongeldig!",'');
       return false;
     }
 
-    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
-    {
+    if (thirdTwoDigits < 1 || thirdTwoDigits >= 32) {
       //this.ShowMessage("jaar is ongeldig!",'');
       return false;
     }
@@ -610,32 +594,29 @@ export class AddPersonComponent implements OnInit {
       controlNumber = 97 - newremainder;
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
     else {
-      x = parseInt(firstNineDigits,10);
+      x = parseInt(firstNineDigits, 10);
       let remainder: number = x % 97;
       controlNumber = 97 - remainder;
 
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
 
-    if(this.validSSID === true)
-    {
+    if (this.validSSID === true) {
       this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
-      this.setGender(genderDigits);  
+      this.setGender(genderDigits);
     }
 
     return this.validSSID;
@@ -647,37 +628,37 @@ export class AddPersonComponent implements OnInit {
     if (genderDigits % 2 === 0) {
       this._selectedIndexGender = 1;
       this.selectedGenderIndex = 1;
+      this.logger.log("person is female");
     }
     else {
       this._selectedIndexGender = 0;
       this.selectedGenderIndex = 0;
+      this.logger.log("person is male");
     }
 
   }
 
   setCalendar(year: number, month: number, day: number) {
 
-    this.AddPersonForm1.get('dateOfBirth').disable();
-    this.AddPersonForm1.get('monthOfBirth').disable();
-    this.AddPersonForm1.get('yearOfBirth').disable();
+    if (day >= 1 && day <= 31)
+      this._selectedIndexdays = day;
 
-    if( day>=1 && day<=31)
-        this._selectedIndexdays = day;
-    
-    if(month >=1 && month <=12)
-        this._selectedIndexMonth = month - 1;
-        
+    if (month >= 1 && month <= 12)
+      this._selectedIndexMonth = month - 1;
+
     this._selectedIndexYear = year;
 
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    if(year >=0 && year<=currentYearTwoDigits)
-    {
-      for(let i=0;i<this.dropDownYear.length;i++)
-      {
-        if(this.dropDownYear[i]===(year+2000).toString())
+    this.logger.log("month=" + month);
+    this.logger.log("day=" + day);
+    this.logger.log("year=" + year);
+
+    if (year >= 0 && year <= currentYearTwoDigits) {
+      for (let i = 0; i < this.dropDownYear.length; i++) {
+        if (this.dropDownYear[i] === (year + 2000).toString())
           this.selectedIndexYear = i;
       }
     }
@@ -770,7 +751,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.AddPersonForm1.get('vatNumber').value;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
   }
@@ -778,43 +759,25 @@ export class AddPersonComponent implements OnInit {
   getPersonbySSIDVatNumber() {
 
     if (this.validSSID === true) {
-
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
-      const customerVatNumber = this.AddPersonForm1.get('socialSecurityNumber').value;
+      const customerVatNumber = this.dpsLoginToken.customerVatNumber;
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
-      this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
-        this.logger.log("response=");
-        this.logger.log(res);
+      this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
+        this.logger.log("res=" + res);
         this.loadPersonData(res);
-        this.ShowMessage('Opgehaalde gegevens van Booem','');
+
       },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          this.logger.log('Error occured=' + err.error.message);
-          this.loadDOBFromSSID();
-        } else {
-          this.logger.log('response code=' + err.status);
-          this.logger.log('response body=' + err.error);
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.logger.log('Error occured=' + err.error.message);
+            this.loadDOBFromSSID();
+          } else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
+          }
         }
-      }
       );
-
-      // this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-      //   this.logger.log("res=" + res);
-      //   this.loadPersonData(res);
-
-      // },
-      //   (err: HttpErrorResponse) => {
-      //     if (err.error instanceof Error) {
-      //       this.logger.log('Error occured=' + err.error.message);
-      //       this.loadDOBFromSSID();
-      //     } else {
-      //       this.logger.log('response code=' + err.status);
-      //       this.logger.log('response body=' + err.error);
-      //     }
-      //   }
-      // );
     } else {
       this.logger.log('invalid SSN format');
       this.resetPeronData();
@@ -831,6 +794,8 @@ export class AddPersonComponent implements OnInit {
   }
 
   loadDOBData(dateOfBirth: string) {
+
+    this.logger.log('date of birth=' + dateOfBirth);
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -954,78 +919,68 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.controls.bic.setValue('');
 
     this.AddPersonForm1.controls.mobileNumber.setValue('');
-    this.AddPersonForm1.controls.vatNumber.setValue('');
+    this.AddPersonForm1.controls.telephoneNumber.setValue('');
   }
 
   loadPersonData(rdata) {
 
     const data = rdata;
 
-    if (data !== null) {
+    if (data !== null && data.person !== null) {
 
-      this.selectedPositionIndex = parseInt(data.CustomerPostionId,10);
+      this.selectedPositionIndex = data.CustomerPostionId;
 
-      const stringData: string = data.dateOfBirth.toString();
+      const stringData: string = data.person.dateOfBirth.toString();
       const dobArray = stringData.split('T');
       const dobString: string = dobArray[0];
       this.loadDOBData(dobString);
 
       const genderObject = new Gender();
 
-      if (data.gender !== null) {
-        genderObject.genderId = data.gender.genderId;
-        genderObject.title = data.gender.title;
+      if (data.person.gender !== null) {
+        genderObject.genderId = data.person.gender.genderId;
+        genderObject.title = data.person.gender.title;
         this.selectedGenderIndex = genderObject.genderId;
       }
 
-      this.AddPersonForm1.controls.placeOfBirth.setValue(data.placeOfBirth);
-      this.AddPersonForm1.controls.countryOfBirth.setValue(data.countryOfBirth);
-      this.AddPersonForm1.controls.nationality.setValue(data.nationality);
-      this.AddPersonForm1.controls.firstName.setValue(data.firstName);
-      this.AddPersonForm1.controls.lastName.setValue(data.lastName);
+      this.AddPersonForm1.controls.placeOfBirth.setValue(data.person.placeOfBirth);
+      this.AddPersonForm1.controls.countryOfBirth.setValue(data.person.countryOfBirth);
+      this.AddPersonForm1.controls.nationality.setValue(data.person.nationality);
+      this.AddPersonForm1.controls.firstName.setValue(data.person.firstName);
+      this.AddPersonForm1.controls.lastName.setValue(data.person.lastName);
     }
 
-    if (data.address !== null) {
-      this.AddPersonForm1.controls.street.setValue(data.address.street);
-      this.AddPersonForm1.controls.streetNumber.setValue(data.address.streetNumber);
-      this.AddPersonForm1.controls.bus.setValue(data.address.bus);
-      this.AddPersonForm1.controls.city.setValue(data.address.city);
-      this.AddPersonForm1.controls.postalCode.setValue(data.address.postalCode);
-      this.AddPersonForm1.controls.country.setValue(data.address.country);
-      this.AddPersonForm1.controls.emailAddress.setValue(data.email.emailAddress);
+    if (data.person.address !== null) {
+      this.AddPersonForm1.controls.street.setValue(data.person.address.street);
+      this.AddPersonForm1.controls.streetNumber.setValue(data.person.address.streetNumber);
+      this.AddPersonForm1.controls.bus.setValue(data.person.address.bus);
+      this.AddPersonForm1.controls.city.setValue(data.person.address.city);
+      this.AddPersonForm1.controls.postalCode.setValue(data.person.address.postalCode);
+      this.AddPersonForm1.controls.country.setValue(data.person.address.country);
+      this.AddPersonForm1.controls.emailAddress.setValue(data.person.email.emailAddress);
     }
 
-    if (data.language !== null && data.language !== undefined) {
-      this.languageString = data.language.name;
+    if (data.person.language !== null && data.person.language !== undefined) {
+      this.languageString = data.person.language.name;
     }
 
-    if (data.bankAccount !== null) {
-      this.AddPersonForm1.controls.iban.setValue(data.bankAccount.iban);
-      this.AddPersonForm1.controls.bic.setValue(data.bankAccount.bic);
+    if (data.person.bankAccount !== null) {
+      this.AddPersonForm1.controls.iban.setValue(data.person.bankAccount.iban);
+      this.AddPersonForm1.controls.bic.setValue(data.person.bankAccount.bic);
     }
 
-    if (data.mobile !== null) {
-      this.AddPersonForm1.controls.mobileNumber.setValue(data.mobile.number);
+    if (data.person.mobile !== null) {
+      this.AddPersonForm1.controls.mobileNumber.setValue(data.person.mobile.number);
     }
 
-    if (data.phone !== null) {
-      this.AddPersonForm1.controls.telephoneNumber.setValue(data.phone.number);
+    if (data.person.phone !== null) {
+      this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
-    if(data.customerVatNumber !== null) {
-      this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
+    if (data.person !== null) {
+      this.zichmetdata = data.person.travelMode;
     }
 
-    if (data !== null) {
-      this.zichmetdata = data.travelMode;
-    }
-
-  }
-
-  changeVatNumber(vatNumber) {
-    if(this.DpsPersonObject !== null) {
-      this.DpsPersonObject.customerVatNumber = vatNumber;
-    }
   }
 
   loadObjects(response: any) {
@@ -1037,8 +992,11 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.AddPersonForm1.get('vatNumber').value;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
+
+    this.DpsPersonObject = new DpsPerson();
+    this.DpsPersonObject.customerVatNumber = '';
 
     this.DpsPersonObject.person = new Person();
     this.DpsPersonObject.person.socialSecurityNumber = response.person.socialSecurityNumber;
@@ -1113,7 +1071,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.AddPersonForm1.get('vatNumber').value;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -1148,7 +1106,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
 
     this.DpsPersonObject.person.phone = new PhoneNumber();
-    this.DpsPersonObject.person.phone.number = "";
+    this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
@@ -1170,8 +1128,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
-    this.logger.log("selected position index= "+this.selectedPositionIndex);
-    this.DpsPersonObject.customerPostionId = "" + this.selectedPositionIndex;
+    this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
@@ -1237,11 +1194,9 @@ export class AddPersonComponent implements OnInit {
 
     this.zichmetdata = $event;
 
-    this.logger.log("received zich met="+$event.vehicleName);
-
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event.vehicleName;
+        this.DpsPersonObject.person.travelMode = $event;
       }
 
     this.changeMessage();
@@ -1315,7 +1270,7 @@ export class AddPersonComponent implements OnInit {
         this.DpsPersonObject.person.address = new Address();
         if (this.DpsPersonObject.person.address !== null && this.DpsPersonObject.person.address !== undefined) {
           this.DpsPersonObject.person.address.country = $event.Country;
-          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];          
+          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
         }
       }
     }
@@ -1401,16 +1356,14 @@ export class AddPersonComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      if(this.checkValidation())
-          this.showFormIndex = 2;
+      if (this.checkValidation())
+        this.showFormIndex = 2;
       else
-          this.ShowMessage("Inzendingen zijn onjuist !",'');
+        this.ShowMessage("Inzendingen zijn onjuist !", '');
 
       this.createObjectsForm1();
-      this.selectedPositionIndex = 0;
     } else {
       if (this.showFormIndex === 2) {
-        this.logger.log("called person post");        
         this.postPersonData();
         this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
         //this.showFormIndex = 3;

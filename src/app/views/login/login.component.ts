@@ -2,8 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../../shared/models';
-import { Router, CanActivate } from '@angular/router';
-// import { AuthService } from '../../shared/auth.service';
+import { Router } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
@@ -59,10 +58,6 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('dpsLoginToken');
     // this.msalService.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
-  }
-
-  B2CLogin() {
-    this.msalService.login();
   }
 
   login() {

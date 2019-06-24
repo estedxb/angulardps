@@ -14,6 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
+import { MsalService } from './shared/msal.service';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -26,7 +28,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
     })
   ],
-  providers: [routingProviders],
+  providers: [DatePipe, MsalService, routingProviders],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]
