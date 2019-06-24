@@ -14,6 +14,7 @@ import {
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-addperson',
@@ -386,9 +387,14 @@ export class AddPersonComponent implements OnInit {
 
   setDropDownYear() {
     this.dropDownYear = new Array<string>();
-    for (let i = 1900; i <= 2019; i++) {
+
+    let currentYear = new Date();
+    let year:number  = currentYear.getFullYear();
+    
+    for (let i = 1900; i < year; i++) {
       this.dropDownYear.push('' + i);
-    }
+      this.logger.log("i="+i);
+    }    
   }
 
   onChangeDropDownGender($event) {
@@ -559,6 +565,8 @@ export class AddPersonComponent implements OnInit {
 
     let digits: string = this.stripDigits(ssid);
 
+    this.logger.log("digits="+digits);
+
     if (digits.length < 11)
       return false;
 
@@ -567,17 +575,17 @@ export class AddPersonComponent implements OnInit {
     let secondTwoDigits: number = parseInt(ssid.substring(3,5));
     let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
     let genderDigits: number = parseInt(ssid.substring(9,12));
-    let firstNineDigits: number = parseInt(digits.substring(0,9));
-    let x:number = firstNineDigits;
+    let firstNineDigits: string = digits.substring(0,9);
+    let x:number = 0;
     let controlNumber: number  = -1;
 
-    if(secondTwoDigits <=1 || secondTwoDigits>=12)
+    if(secondTwoDigits <1 || secondTwoDigits>12)
     {
       //this.ShowMessage("Maand is ongeldig!",'');
       return false;
     }
 
-    if(thirdTwoDigits <=1 || thirdTwoDigits >=32)
+    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
     {
       //this.ShowMessage("jaar is ongeldig!",'');
       return false;
@@ -587,16 +595,14 @@ export class AddPersonComponent implements OnInit {
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    this.logger.log("current year=" + currentYearTwoDigits);
-    this.logger.log("first two digits=" + firstTwoDigits);
-    this.logger.log("first nine digits=" + firstNineDigits);
-    this.logger.log("third two digits=" + thirdTwoDigits);
+    this.logger.log("first two digits="+firstTwoDigits);    
+    this.logger.log("first nine digits="+firstNineDigits);
 
     if (firstTwoDigits >= 0 && firstTwoDigits <= currentYearTwoDigits && currentYear >= 2000) {
       x = parseInt(("2" + firstNineDigits), 10);
+      this.logger.log("x="+x);
       let newremainder: number = x % 97;
       controlNumber = 97 - newremainder;
-
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else
@@ -607,7 +613,7 @@ export class AddPersonComponent implements OnInit {
       }
     }
     else {
-      x = firstNineDigits;
+      x = parseInt(firstNineDigits,10);
       let remainder: number = x % 97;
       controlNumber = 97 - remainder;
 
@@ -655,6 +661,23 @@ export class AddPersonComponent implements OnInit {
         this._selectedIndexMonth = month - 1;
         
     this._selectedIndexYear = year;
+
+    let currentYear: any = new Date();
+    currentYear = currentYear.getFullYear();
+    let currentYearTwoDigits = currentYear % 100;
+
+    this.logger.log("month="+month);
+    this.logger.log("day="+day);
+    this.logger.log("year="+year);
+
+    if(year >=0 && year<=currentYearTwoDigits)
+    {
+      for(let i=0;i<this.dropDownYear.length;i++)
+      {
+        if(this.dropDownYear[i]===(year+2000).toString())
+          this.selectedIndexYear = i;
+      }
+    }
 
   }
 
