@@ -18,10 +18,11 @@
             </div>
             <div class="row">
               <div class="col-sm-12 inputWithImgNew">
-                <input formControlName="socialSecurityNumber" class="form-control"
+                <input #socialSecurityNumber formControlName="socialSecurityNumber" class="form-control" [maxlength]="15"
+                (keypress)="validatePersonSsid(socialSecurityNumber.value)"
                   name="socialSecurityNumber" type="text" required />
                 <div class="form-control-feedback"
-                  *ngIf="!customSSIDValidator(editPersonForm.controls.socialSecurityNumber.value) else newvalid">
+                  *ngIf="!newCustomSSIDValidator(socialSecurityNumber.value) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #newvalid>
@@ -30,12 +31,6 @@
               </div>
             </div>
           </div>
-          <!-- <mat-progress-spinner></mat-progress-spinner> -->
-          <!-- <ngx-spinner
-              bdColor="rgba(51,51,51,0.8)"
-              size="medium"
-              color="#blue"
-              type="ball-scale-multiple"><p style="font-size 20px; color: white">Loading...</p></ngx-spinner> -->
           <div class="col col-sm-5">
             <div class="row">
               <div class="col-sm-12">
@@ -44,7 +39,7 @@
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <app-calendar [componentType]="DOB" [CalendarData]="calendarData" (childEvent)="receiveDOBDate($event)"></app-calendar>
+                <app-calendar [disableAll]="disableDOB" [componentType]="DOB" [CalendarData]="calendarData" (childEvent)="receiveDOBDate($event)"></app-calendar>
               </div>
             </div>
           </div>
@@ -166,9 +161,9 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Vast nummer </label>
-            <input #telephoneNumber (change)="updateTelephoneNumber(telephoneNumber.value)" formControlName="telephoneNumber" class="form-control" name="telephoneNumber" type="text" required />
+            <input #vatNumber (change)="updateVatNumber(vatNumber.value)" formControlName="vatNumber" class="form-control" name="vatNumber" type="text" required />
             <div class="form-control-feedback"
-              *ngIf="editPersonForm.controls.telephoneNumber.invalid && (editPersonForm.controls.telephoneNumber.dirty || editPersonForm.controls.telephoneNumber.touched) else newvalidtelephoneNumber">
+              *ngIf="editPersonForm.controls.vatNumber.invalid && (editPersonForm.controls.vatNumber.dirty || editPersonForm.controls.vatNumber.touched) else newvalidtelephoneNumber">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidtelephoneNumber>
@@ -269,14 +264,15 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Verplaatst zich met </label>
-            <input #travelMode (change)="updatetravelMode(travelMode.value)" formControlName="travelMode" class="form-control" name="travelMode" type="text" required />
-            <div class="form-control-feedback"
+            <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet>
+            <!-- <input #travelMode (change)="updatetravelMode(travelMode.value)" formControlName="travelMode" class="form-control" name="travelMode" type="text" required /> -->
+            <!-- <div class="form-control-feedback"
               *ngIf="editPersonForm.controls.travelMode.invalid && (editPersonForm.controls.travelMode.dirty || editPersonForm.controls.travelMode.touched) else newvalidtravelMode">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidtravelMode>
               <img src="../../assets/img/ValidIcon.png" alt="">
-            </ng-template>
+            </ng-template> -->
 
           </div>
         </div>

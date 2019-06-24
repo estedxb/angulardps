@@ -16,6 +16,7 @@ export class PersonService {
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
+  private getPersonBySSIDBoemmURL = '';
   private requestCertificateURL = '';
   private getDpsScheduleURL = '';
   private getPersonbyIdURL = '';
@@ -27,6 +28,13 @@ export class PersonService {
   private postPersonDocumentsURL = '';
 
   constructor(private http: HttpClient, private logger: LoggingService) {
+
+    if(environment.dataFromAPI_JSON && environment.getPersonBySSIDBoemm !== '') {
+        this.getPersonBySSIDBoemmURL = environment.boemmAPI + environment.getPersonBySSIDBoemm;
+    }
+    else {
+      this.getPersonBySSIDBoemmURL = environment.getAssetsDataPath + 'persons.json';
+    }
 
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getPerson !== '') {
@@ -108,6 +116,15 @@ export class PersonService {
     }
     // this.logger.log(result);
     return result;
+  }
+
+  public getPersonBySSIDBoemm(ssid: string):Observable<DpsPerson> {
+
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const result = this.http.get<DpsPerson>(
+      this.getPersonBySSIDBoemmURL + '/' + ssid, this.httpOptions).catch(this.errorHandler);
+    return result;
+
   }
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<DpsPerson> {

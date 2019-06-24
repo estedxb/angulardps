@@ -30,6 +30,7 @@ export class EditPersonComponent implements OnInit {
   public dataDropDownGender;
   public showFormIndex = 1;
   public validSSID;
+  public disableDOB:boolean;
 
   public DpsPersonObject: DpsPerson;
   public oldDpsPersonObject: DpsPerson;
@@ -55,6 +56,7 @@ export class EditPersonComponent implements OnInit {
   public maindatas = [];
   public datas: DpsPostion;
   public selectedGenderIndex;
+  public zichmetdata;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
@@ -72,6 +74,8 @@ export class EditPersonComponent implements OnInit {
   public birthCountryString: string;
   public nationalityString: string;
   public languageString: string;
+
+  public totalString:string;
 
   public message;
   public bbic: any;
@@ -98,22 +102,14 @@ export class EditPersonComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    // this.data.currentMessage.subscribe(message => {
-    //   this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
-    //   );
 
+    this.disableDOB = true;
     this.onPageInit();
     this.loadDOBFromSSID();
     this.createObjectsForm1();
 
     /** spinner starts on init */
     this.spinner.show();
-
-    // setTimeout(() => {
-    //     /** spinner ends after 5 seconds */
-    //     this.spinner.hide();
-    // }, 15000);
 
   }
 
@@ -155,7 +151,7 @@ export class EditPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      telephoneNumber: new FormControl('', [Validators.required]),
+      vatNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -212,11 +208,184 @@ export class EditPersonComponent implements OnInit {
 
   }
 
+  newCustomSSIDValidator(ssid: string) {
+
+    this.validSSID = false;
+    let validSPCharacters = false;
+
+    if (ssid.length !== 15) {
+      return false;
+    }
+
+    let digits: string = this.stripDigits(ssid);
+
+    if (digits.length < 11)
+      return false;
+
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
+    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
+    let genderDigits: number = parseInt(ssid.substring(9,12));
+    let firstNineDigits: string = digits.substring(0,9);
+    let x:number = 0;
+    let controlNumber: number  = -1;
+
+    if(secondTwoDigits <1 || secondTwoDigits>12)
+    {
+      return false;
+    }
+
+    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
+    {
+      return false;
+    }
+
+    let currentYear: any = new Date();
+    currentYear = currentYear.getFullYear();
+    let currentYearTwoDigits = currentYear % 100;
+
+    if (firstTwoDigits >= 0 && firstTwoDigits <= currentYearTwoDigits && currentYear >= 2000) {
+      x = parseInt(("2" + firstNineDigits), 10);
+      let newremainder: number = x % 97;
+      controlNumber = 97 - newremainder;
+      if (controlNumber === lastTwoDigits)
+        this.validSSID = true;
+      else
+      {
+        this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+
+      }
+    }
+    else {
+      x = parseInt(firstNineDigits,10);
+      let remainder: number = x % 97;
+      controlNumber = 97 - remainder;
+
+      if (controlNumber === lastTwoDigits)
+        this.validSSID = true;
+      else
+      {
+        this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+      }
+
+    }
+
+    if(this.validSSID === true)
+    {
+      this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
+      this.setGender(genderDigits);  
+    }
+
+    return this.validSSID;
+
+  }
+
+  setGender(genderDigits: number) {
+
+    if (genderDigits % 2 === 0) {
+      this.selectedGenderIndex = 1;
+    }
+    else {
+      this.selectedGenderIndex = 0;
+    }
+
+  }
+
+  stripDigits(ssid: string) {
+
+    let digits: string = "";
+
+    for (let i: number = 0; i < ssid.length; i++) {
+      if (ssid.charAt(i) >= '0' && ssid.charAt(i) <= '9')
+        digits += ssid.charAt(i);
+    }
+    return digits;
+  }
+
+  setCalendar(year: number, month: number, day: number) {
+
+
+    const yearString: string = ""+year;
+    const monthString: string = ""+month;
+    const dayString: string = ""+day;
+
+    this.monthString = monthString;
+    this.dayString = dayString;
+    this.yearString = yearString;
+
+    this.calendarData = this.dayString + '/' + this.monthString + '/' + this.yearString;
+
+    this.logger.log("calendar data="+this.calendarData);
+
+    // if( day>=1 && day<=31)
+    //     this._selectedIndexdays = day;
+    
+    // if(month >=1 && month <=12)
+    //     this._selectedIndexMonth = month - 1;
+        
+    // this._selectedIndexYear = year;
+
+    // let currentYear: any = new Date();
+    // currentYear = currentYear.getFullYear();
+    // let currentYearTwoDigits = currentYear % 100;
+
+    // if(year >=0 && year<=currentYearTwoDigits)
+    // {
+    //   for(let i=0;i<this.dropDownYear.length;i++)
+    //   {
+    //     if(this.dropDownYear[i]===(year+2000).toString())
+    //       this.selectedIndexYear = i;
+    //   }
+    // }
+
+  }
+
+  validatePersonSsid($event) {
+
+    let ssid = $event;
+
+    if (ssid.length === 2) {
+      this.totalString = ssid + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+    }
+
+    if (ssid.length === 5) {
+      this.totalString = this.totalString + ssid.substring(3) + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (ssid.length === 8) {
+      this.totalString = this.totalString + ssid.substring(6) + "-";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (ssid.length === 12) {
+      this.totalString = this.totalString + ssid.substring(9) + ".";
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);
+
+    }
+
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
+      this.totalString = this.totalString + ssid.substring(13);
+      this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
+      this.logger.log("total string=" + this.totalString);      
+    }
+  }
+
   getPersonbySSIDVatNumber() {
 
     if (this.validSSID === true) {
 
-      const customerVatNumber = this.dpsLoginToken.customerVatNumber;
+      //const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
       this.loadPersonData();
 
@@ -353,18 +522,16 @@ export class EditPersonComponent implements OnInit {
     this.editPersonForm.controls.bic.setValue('');
 
     this.editPersonForm.controls.mobileNumber.setValue('');
-    this.editPersonForm.controls.telephoneNumber.setValue('');
+    this.editPersonForm.controls.vatNumber.setValue('');
   }
 
   loadPersonData() {
-
-    this.logger.log('load person data called');
 
     let newResponse: any = '';
     let data: any = '';
     const vatNumber = this.dpsLoginToken.customerVatNumber;
 
-    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, vatNumber).subscribe(dpsperson => {
+    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
       this.logger.log('new response');
       this.logger.log(dpsperson);
@@ -382,6 +549,10 @@ export class EditPersonComponent implements OnInit {
         this.languageString = data.person.language.name;
 
         const genderObject = new Gender();
+
+        if(data.customerVatNumber !== null) {
+          this.editPersonForm.controls.vatNumber.setValue(data.customerVatNumber);
+        }
 
         if (data.person.gender !== null) {
           genderObject.genderId = data.person.gender.genderId;
@@ -424,22 +595,18 @@ export class EditPersonComponent implements OnInit {
       }
 
       if (data.person.phone !== null) {
-        this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
+        // this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
       }
+
 
       this.DpsPersonObject = data;
 
       this.changeMessage();
     });
 
-    this.logger.log('ended calling the api');
-
   }
 
   receiveDOBDate($event) {
-
-    // this.logger.log('recevied date=');
-    // this.logger.log($event);
 
     this.monthString = $event.monthString;
     this.dayString = $event.dayString;
@@ -448,11 +615,8 @@ export class EditPersonComponent implements OnInit {
     let monthInNumber = -1;
     let counter = 0;
 
-    // this.logger.log('monthString=' + this.monthString);
-
     this.dropDownMonth.forEach(element => {
 
-      // this.logger.log('month=' + element);
       if (element === this.monthString) {
         monthInNumber = counter;
       }
@@ -477,7 +641,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   onCountryReceiveBirthPlace($event) {
-
 
     if (this.DpsPersonObject.person !== null) {
       this.DpsPersonObject.person.countryOfBirth = $event.Country;
@@ -602,6 +765,28 @@ export class EditPersonComponent implements OnInit {
     this.changeMessage();
   }
 
+  updateVatNumber(value:string) {
+
+    if(this.DpsPersonObject !== null)
+      this.DpsPersonObject.customerVatNumber = value;
+
+    this.changeMessage();
+  }
+
+  receiveZichMet($event) {
+
+    this.zichmetdata = $event.vehicleName;
+
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
+      }
+
+    this.changeMessage();
+
+  }
+
+
   updateTelephoneNumber(value: string) {
     this.DpsPersonObject.person.phone.number = value;
     this.changeMessage();
@@ -646,11 +831,13 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+    //this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
+    this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vatNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
+
     // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
     // this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
 
@@ -676,8 +863,8 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.mobile = new PhoneNumber();
     this.DpsPersonObject.person.mobile.number = this.editPersonForm.get('mobileNumber').value;
 
-    this.DpsPersonObject.person.phone = new PhoneNumber();
-    this.DpsPersonObject.person.phone.number = this.editPersonForm.get('telephoneNumber').value;
+    // this.DpsPersonObject.person.phone = new PhoneNumber();
+    // this.DpsPersonObject.person.phone.number = this.editPersonForm.get('vat').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 

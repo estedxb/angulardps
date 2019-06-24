@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
-import { CountriesService } from '../../shared/countries.service';
+import { vehicleService } from '../../shared/vehicle.service';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class ZichmetComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public datas: any = [];
+  public dropdownData: any = [];
   public selectedString: string;
 
   // tslint:disable-next-line: variable-name
@@ -26,7 +27,7 @@ export class ZichmetComponent implements OnInit {
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
   set selectedValue(value: any) { this._selectedValue = value; }
   get selectedValue(): any { return this._selectedValue; }
-  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.datas[this.selectedIndex]; }
+  set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dropdownData[this.selectedIndex]; }
   get selectedIndex(): number { return this._selectedIndex; }
   set value(value: any) { this._value = value; }
   get value(): any { return this._value; }
@@ -34,11 +35,11 @@ export class ZichmetComponent implements OnInit {
 
   SetInitialValue() {
     if (this.selectedValue === undefined) {
-      this.selectedValue = this.datas[this._selectedIndex];
+      this.selectedValue = this.dropdownData[this._selectedIndex];
     }
   }
   
-  onChange($event) {
+  onChangeZich($event) {
 
     this._selectedIndex = $event.target.value;
     this.selectedIndex = $event.target.value;
@@ -49,73 +50,66 @@ export class ZichmetComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private countriesService: CountriesService, private logger: LoggingService) { }
+  constructor(private vehicleService: vehicleService, private logger: LoggingService) { }
 
   ngOnInit() {
 
-    this.countriesService.getCountriesList().subscribe(countries => {
-      this.datas = countries;
+    this.vehicleService.getVehicles().subscribe(newdata => {
+      this.datas = newdata;
+      this.dropdownData = this.datas;
+
+      this.logger.log("datas");
+      this.logger.log(this.datas);
 
       // setDefault country
-      this.setDefaultCountry();
+      this.setDefaultVehicle();
 
       // set load initial data
-      this.loadInitialData(this.datas);
+      this.loadInitialData();
 
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
   }
 
-  setDefaultCountry() {
-    
-    for(let it=0;it<this.datas.length;it++)
-    {
-      if(this.datas[it].Country === "Belgium")
-      {
-        this._selectedIndex = it;
-        this.childEvent.emit(this.datas[it]);
-      }
-    }
+  setDefaultVehicle() {
+    this.selectedIndex = 0;
 
+    // for(let i=0;i<this.datas.length;i++)
+    //     this.dropdownData.push(this.datas[i].vehicleName);
   }
 
   ngDoCheck() {
 
     if (this.ZichmetFormData !== this.oldZichmetFormData) {
       this.oldZichmetFormData = this.ZichmetFormData;
-      this.loadInitialData(this.datas);
+      this.loadInitialData();
     }
 
   }
 
   ngAfterViewInit() {
     if (this.ZichmetFormData !== this.oldZichmetFormData) {
-      // this.logger.log('ngDoCheck countryForm data=' + this.CountryFormData);
       this.oldZichmetFormData = this.ZichmetFormData;
-      this.loadInitialData(this.datas);
+      this.loadInitialData();
     }
   }
 
-  loadInitialData(datas: any) {
-    if (datas.length !== 0) {
+  loadInitialData() {
 
-      for (let i = 0; i < this.datas.length; i++) {
-        const str:string = this.datas[i].Country;
-        const datString:Array<string> = str.split(" ");
+    if (this.datas.length !== 0)    
+    {
+      for (let i = 0; i < this.datas.length; i++) 
+      {
+        const str:string = this.datas[i].vehicleName;
 
-        if(str !== undefined && str != null)
-        {
-          if(this.oldZichmetFormData === str)
+          if(this.ZichmetFormData === str)
           {
-            this._selectedIndex = i;
+            this.selectedIndex = i;
             this.childEvent.emit(this.datas[i]);
           }
-        }
       }
     } 
-    else {
-    }
 
   }
 

@@ -86,7 +86,7 @@ export class AddPersonComponent implements OnInit {
     shortName: "nl"
   };
 
-  public showFormIndex = 2;
+  public showFormIndex = 1;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
