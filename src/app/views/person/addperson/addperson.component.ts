@@ -546,6 +546,8 @@ export class AddPersonComponent implements OnInit {
     }
   }
 
+
+
   newCustomSSIDValidator(ssid: string) {
 
     this.validSSID = false;
@@ -586,7 +588,11 @@ export class AddPersonComponent implements OnInit {
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else
+      {
         this.validSSID = false;
+        this.ShowMessage("Inzendingen zijn onjuist !",'');
+
+      }
     }
     else {
       x = firstNineDigits;
@@ -596,7 +602,10 @@ export class AddPersonComponent implements OnInit {
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else
+      {
         this.validSSID = false;
+        this.ShowMessage("Inzendingen zijn onjuist !",'');
+      }
 
     }
 
