@@ -59,7 +59,6 @@ export class PersonPositionComponent implements OnInit {
   public dateofBirth;
   public selectedGenderIndex;
   public selectedIndexFunctie;
-  public selectedIndexStatute;
   public kmtoggle;
   public nettoggle;
 
@@ -78,6 +77,7 @@ export class PersonPositionComponent implements OnInit {
   public statutes = [];
   public countStatutes: number;
 
+  public selectedIndexStatute:any = 0;
   public message: any;
 
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;

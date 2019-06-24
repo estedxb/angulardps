@@ -56,6 +56,7 @@ export class EditPersonComponent implements OnInit {
   public maindatas = [];
   public datas: DpsPostion;
   public selectedGenderIndex;
+  public zichmetdata;
 
   public id = 'dd_days';
   public currentlanguage = 'nl';
@@ -101,10 +102,6 @@ export class EditPersonComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.logger.log('SocialSecurityId :: ' + this.SocialSecurityId);
-    // this.data.currentMessage.subscribe(message => {
-    //   this.message = message ; this.logger.log("received message="); this.logger.log(this.message.data);}
-    //   );
 
     this.disableDOB = true;
     this.onPageInit();
@@ -113,11 +110,6 @@ export class EditPersonComponent implements OnInit {
 
     /** spinner starts on init */
     this.spinner.show();
-
-    // setTimeout(() => {
-    //     /** spinner ends after 5 seconds */
-    //     this.spinner.hide();
-    // }, 15000);
 
   }
 
@@ -159,7 +151,7 @@ export class EditPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      telephoneNumber: new FormControl('', [Validators.required]),
+      vatNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -241,13 +233,11 @@ export class EditPersonComponent implements OnInit {
 
     if(secondTwoDigits <1 || secondTwoDigits>12)
     {
-      //this.ShowMessage("Maand is ongeldig!",'');
       return false;
     }
 
     if(thirdTwoDigits <1 || thirdTwoDigits >=32)
     {
-      //this.ShowMessage("jaar is ongeldig!",'');
       return false;
     }
 
@@ -395,7 +385,7 @@ export class EditPersonComponent implements OnInit {
 
     if (this.validSSID === true) {
 
-      const customerVatNumber = this.dpsLoginToken.customerVatNumber;
+      //const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
       this.loadPersonData();
 
@@ -532,14 +522,15 @@ export class EditPersonComponent implements OnInit {
     this.editPersonForm.controls.bic.setValue('');
 
     this.editPersonForm.controls.mobileNumber.setValue('');
-    this.editPersonForm.controls.telephoneNumber.setValue('');
+    this.editPersonForm.controls.vatNumber.setValue('');
   }
 
   loadPersonData() {
 
     let newResponse: any = '';
     let data: any = '';
-    const vatNumber = this.dpsLoginToken.customerVatNumber;
+    //const vatNumber = this.dpsLoginToken.customerVatNumber;
+    const vatNumber = "123456789101";
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
@@ -559,6 +550,10 @@ export class EditPersonComponent implements OnInit {
         this.languageString = data.person.language.name;
 
         const genderObject = new Gender();
+
+        if(data.customerVatNumber !== null) {
+          this.editPersonForm.controls.vatNumber.setValue(data.customerVatNumber);
+        }
 
         if (data.person.gender !== null) {
           genderObject.genderId = data.person.gender.genderId;
@@ -603,6 +598,7 @@ export class EditPersonComponent implements OnInit {
       if (data.person.phone !== null) {
         this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
       }
+
 
       this.DpsPersonObject = data;
 
@@ -770,6 +766,28 @@ export class EditPersonComponent implements OnInit {
     this.changeMessage();
   }
 
+  updateVatNumber(value:string) {
+
+    if(this.DpsPersonObject !== null)
+      this.DpsPersonObject.customerVatNumber = value;
+
+    this.changeMessage();
+  }
+
+  receiveZichMet($event) {
+
+    this.zichmetdata = $event;
+
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
+        this.DpsPersonObject.person.travelMode = $event;
+      }
+
+    this.changeMessage();
+
+  }
+
+
   updateTelephoneNumber(value: string) {
     this.DpsPersonObject.person.phone.number = value;
     this.changeMessage();
@@ -814,9 +832,10 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+    //this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
+    this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vatNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
     // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
@@ -844,8 +863,8 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.mobile = new PhoneNumber();
     this.DpsPersonObject.person.mobile.number = this.editPersonForm.get('mobileNumber').value;
 
-    this.DpsPersonObject.person.phone = new PhoneNumber();
-    this.DpsPersonObject.person.phone.number = this.editPersonForm.get('telephoneNumber').value;
+    // this.DpsPersonObject.person.phone = new PhoneNumber();
+    // this.DpsPersonObject.person.phone.number = this.editPersonForm.get('vat').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
