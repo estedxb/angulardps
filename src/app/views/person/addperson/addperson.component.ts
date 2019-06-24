@@ -565,8 +565,6 @@ export class AddPersonComponent implements OnInit {
 
     let digits: string = this.stripDigits(ssid);
 
-    this.logger.log("digits="+digits);
-
     if (digits.length < 11)
       return false;
 
@@ -595,12 +593,8 @@ export class AddPersonComponent implements OnInit {
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    this.logger.log("first two digits="+firstTwoDigits);    
-    this.logger.log("first nine digits="+firstNineDigits);
-
     if (firstTwoDigits >= 0 && firstTwoDigits <= currentYearTwoDigits && currentYear >= 2000) {
       x = parseInt(("2" + firstNineDigits), 10);
-      this.logger.log("x="+x);
       let newremainder: number = x % 97;
       controlNumber = 97 - newremainder;
       if (controlNumber === lastTwoDigits)
