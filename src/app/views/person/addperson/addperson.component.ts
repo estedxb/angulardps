@@ -435,7 +435,7 @@ export class AddPersonComponent implements OnInit {
 
 
     this.logger.log(this.DpsPersonObject);
-    this.updatePosition();
+    //this.updatePosition();
   }
 
   updatePosition() {
@@ -571,6 +571,18 @@ export class AddPersonComponent implements OnInit {
     let x:number = firstNineDigits;
     let controlNumber: number  = -1;
 
+    if(secondTwoDigits <=1 || secondTwoDigits>=12)
+    {
+      //this.ShowMessage("Maand is ongeldig!",'');
+      return false;
+    }
+
+    if(thirdTwoDigits <=1 || thirdTwoDigits >=32)
+    {
+      //this.ShowMessage("jaar is ongeldig!",'');
+      return false;
+    }
+
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
@@ -590,7 +602,7 @@ export class AddPersonComponent implements OnInit {
       else
       {
         this.validSSID = false;
-        this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
@@ -604,13 +616,16 @@ export class AddPersonComponent implements OnInit {
       else
       {
         this.validSSID = false;
-        this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
 
-    this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
-    this.setGender(genderDigits);
+    if(this.validSSID === true)
+    {
+      this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
+      this.setGender(genderDigits);  
+    }
 
     return this.validSSID;
 
@@ -633,10 +648,12 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    this.logger.log("day="+day);
-    this.logger.log("month="+month);
-    this._selectedIndexdays = day;
-    this._selectedIndexMonth = month - 1;
+    if( day>=1 && day<=31)
+        this._selectedIndexdays = day;
+    
+    if(month >=1 && month <=12)
+        this._selectedIndexMonth = month - 1;
+        
     this._selectedIndexYear = year;
 
   }
