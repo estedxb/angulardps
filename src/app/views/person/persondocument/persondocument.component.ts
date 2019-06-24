@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import {
-  _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson, LoginToken
+  _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson, LoginToken, Summaries
 } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
@@ -45,7 +45,8 @@ export class PersonDocumentComponent implements OnInit {
   selectedOption: any;
   public documents: Documents;
   public personDocuments: PersonDocuments;
-  public driverProfilesItem: DriverProfilesItem
+  public driverProfilesItem: DriverProfilesItem;
+  public requestCertificate : Summaries;
   public currentPerson: DpsPerson;
 
   public data: DpsPerson;
@@ -433,7 +434,20 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   onClickPost() {
-    //this.personService.medicalAttestation()
+    this.requestCertificate = new Summaries();
+    this.requestCertificate.id = 0;
+    this.requestCertificate.customerVatNumber = this.currentPerson.customerVatNumber;
+    this.requestCertificate.message = "";
+    this.requestCertificate.dateTime = Date.now.toString();
+    this.requestCertificate.actionTypeId = "1";
+    this.requestCertificate.objectId = this.currentPerson.person.socialSecurityNumber.number.toString();
+    this.requestCertificate.objectDomain = "Person";
+    this.requestCertificate.secondId = "0";
+    this.requestCertificate.priority = 1;
+    this.requestCertificate.isManual = true;
+    this.requestCertificate.isFinished = false;
+
+    this.personService.requestCertificate(this.requestCertificate);
 
   }
 
