@@ -1324,12 +1324,20 @@ export class AddPersonComponent implements OnInit {
   }
 
   updateLastName(value: string) {
-    this.DpsPersonObject.person.lastName = value;
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null)
+              this.DpsPersonObject.person.lastName = value;
+
     this.changeMessage();
   }
 
   updateEmailAddress(value: string) {
-    this.DpsPersonObject.person.email.emailAddress = value;
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject.person!==null && this.DpsPersonObject.person.email !== null && this.DpsPersonObject.person.email !== undefined )
+              this.DpsPersonObject.person.email.emailAddress = value;
+
     this.changeMessage();
   }
 
