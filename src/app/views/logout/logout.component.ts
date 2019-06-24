@@ -21,7 +21,7 @@ export class LogoutComponent implements OnInit {
 
   logout(): void {
     this.logger.log('Logout');
-    this.msalService.logout();
+    // this.msalService.logout();
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
   }
 

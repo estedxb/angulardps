@@ -31,7 +31,7 @@ export class ValidateLoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.getAccessTokenFromCache()) {
-      this.updateSessionStorage();
+      // this.updateSessionStorage();
     } else { throw 'Access token does not exist for todo app.'; }
   }
   getAccessTokenFromCache(): boolean {
@@ -43,6 +43,7 @@ export class ValidateLoginComponent implements OnInit {
     return false;
   }
 
+  /*
   public useremail() { return this.msalService.getUserEmail(); }
   public login() { this.msalService.login(); }
   public signup() { this.msalService.signup(); }
@@ -105,4 +106,5 @@ export class ValidateLoginComponent implements OnInit {
       alert('2) ' + this.errorMsg);
     }
   }
+  */
 }
