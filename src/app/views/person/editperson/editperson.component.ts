@@ -426,6 +426,9 @@ export class EditPersonComponent implements OnInit {
     const monthString: string = dobArrayData[1];
     const dayString: string = dobArrayData[2];
 
+    this.logger.log("load dob data");
+    this.logger.log("daystring="+dayString+" monthString="+monthString+ " yearString="+yearString);
+
     this.monthString = monthString;
     this.dayString = dayString;
     this.yearString = yearString;

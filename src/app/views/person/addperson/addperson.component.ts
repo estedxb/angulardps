@@ -291,7 +291,7 @@ export class AddPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      telephoneNumber: new FormControl('', [Validators.required]),
+      vatNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -974,8 +974,11 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (data.person.phone !== null) {
-      this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
+      // this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
     }
+
+    if(data.customerVatNumber !== null)
+      this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
 
     if (data.person !== null) {
       this.zichmetdata = data.person.travelMode;
@@ -1071,7 +1074,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = this.AddPersonForm1.get('vatNumber').value;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -1105,8 +1108,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.mobile = new PhoneNumber();
     this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
 
-    this.DpsPersonObject.person.phone = new PhoneNumber();
-    this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
+    // this.DpsPersonObject.person.phone = new PhoneNumber();
+    // this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
@@ -1192,11 +1195,11 @@ export class AddPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.zichmetdata = $event;
+    this.zichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event;
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
       }
 
     this.changeMessage();
@@ -1255,6 +1258,87 @@ export class AddPersonComponent implements OnInit {
         this.DpsPersonObject.person.language.shortName = $event.shortName.toLowerCase();
 
       }
+  }
+
+  updateMobileNumber(value: string) {
+
+  if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+    if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.mobile !== null)
+          this.DpsPersonObject.person.mobile.number = value;
+
+    this.changeMessage();
+  }
+
+  updatePostalCode(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+            this.DpsPersonObject.person.address.postalCode = value;
+
+    this.changeMessage();
+  }
+
+  updateCity(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+    if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+          this.DpsPersonObject.person.address.city = value;
+
+    this.changeMessage();
+  }
+
+  updateBus(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+                this.DpsPersonObject.person.address.bus = value;  
+
+        this.changeMessage();
+  }
+
+  updateStreetNumber(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+              this.DpsPersonObject.person.address.streetNumber = value;
+    this.changeMessage();
+
+  }
+
+  updateStreet(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+              this.DpsPersonObject.person.address.street = value;
+
+    this.changeMessage();
+  }
+
+  updateFirstName(value: string) {
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null)
+                  this.DpsPersonObject.person.firstName = value;
+
+    this.changeMessage();
+  }
+
+  updateLastName(value: string) {
+    this.DpsPersonObject.person.lastName = value;
+    this.changeMessage();
+  }
+
+  updateEmailAddress(value: string) {
+    this.DpsPersonObject.person.email.emailAddress = value;
+    this.changeMessage();
+  }
+
+  updateVatNumber(value:string) {
+
+    if(this.DpsPersonObject !== null)
+      this.DpsPersonObject.customerVatNumber = value;
+
+    this.changeMessage();
   }
 
   onCountryReceive($event) {
@@ -1321,6 +1405,7 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.get('city').valid === true &&
       this.AddPersonForm1.get('postalCode').valid === true &&
       this.AddPersonForm1.get('mobileNumber').valid === true &&
+      this.AddPersonForm1.get('vatNumber').valid === true &&
       this.AddPersonForm1.get('emailAddress').valid === true &&
       this.AddPersonForm1.get('iban').valid === true) {
       console.log("form valid");
