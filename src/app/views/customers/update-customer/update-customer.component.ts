@@ -38,12 +38,12 @@ export class UpdateCustomerComponent implements OnInit {
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
         this.logger.log('Redirect Breaked 6');
-        this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
+        this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.logger.log('Redirect Breaked 5');
-      this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
   }
 

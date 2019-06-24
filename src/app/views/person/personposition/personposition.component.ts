@@ -58,8 +58,7 @@ export class PersonPositionComponent implements OnInit {
 
   public dateofBirth;
   public selectedGenderIndex;
-  public selectedIndexFunctie;
-  public selectedIndexStatute;
+  public selectedIndexFunctie =0;
   public kmtoggle;
   public nettoggle;
 
@@ -78,6 +77,7 @@ export class PersonPositionComponent implements OnInit {
   public statutes = [];
   public countStatutes: number;
 
+  public selectedIndexStatute:any = 0;
   public message: any;
 
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -278,8 +278,7 @@ export class PersonPositionComponent implements OnInit {
     const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-      this.logger.log('response=' + res);
-      this.logger.log(res);
+      this.logger.log("load person called");
       this.loadPersonData(res);
     },
       (err: HttpErrorResponse) => {
@@ -301,8 +300,9 @@ export class PersonPositionComponent implements OnInit {
   // extra information
   loadPersonData(response) {
 
-    this.logger.log(response.body);
-    const data = response.body;
+    this.logger.log("respone body");
+    this.logger.log(response);
+    const data = response;
     let counter: number = 0;
 
     this.logger.log("customer position id="+data.customerPostionId);
@@ -316,6 +316,8 @@ export class PersonPositionComponent implements OnInit {
       //     this.selectedIndexFunctie = counter;
       //   counter++;
       // });
+
+      this.logger.log("position id="+data.customerPostionId);
 
       this.selectedIndexFunctie = parseInt(data.customerPostionId,10);
     }
@@ -466,7 +468,9 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log("position id=" + this.dataDropDownFunctieIds[$event.target.value]);
 
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
-    this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+    //this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+
+    this.positionId = $event.target.value;
 
     this.updatePosition();
 

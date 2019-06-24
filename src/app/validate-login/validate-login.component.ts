@@ -22,6 +22,7 @@ export class ValidateLoginComponent implements OnInit {
   private ltkn: LoginToken = new LoginToken();
   private errorMsg = '';
   private message = '';
+  public access_token = '';
 
   constructor(
     private router: Router, private msalService: MsalService,
@@ -29,64 +30,33 @@ export class ValidateLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.isUserLoggedIn()) {
-      // alert('Not Login');
-      this.logger.log('this.isUserLoggedIn()', this.isUserLoggedIn());
-      this.login();
-    } else {
-      // alert('Logged in');
-      const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
-      let token = this.getAccesstoken() + '';
-      if ((dpsLoginTokenString !== '' && dpsLoginTokenString !== null && dpsLoginTokenString !== undefined) ||
-        (token !== '' && token !== null && token !== undefined)) {
-        console.log('dpsLoginTokenString :: ' + dpsLoginTokenString);
-        const dpsLoginToken: LoginToken = JSON.parse(dpsLoginTokenString);
-        console.log('dpsLoginTokenString ===', dpsLoginToken);
-        const VatNumber = dpsLoginToken.customerVatNumber;
-        if (VatNumber === '') { this.updateSessionStorage(token); }
-      } else {
-        this.login();
-      }
+    if (this.getAccessTokenFromCache()) {
+      this.updateSessionStorage();
+    } else { throw 'Access token does not exist for todo app.'; }
+  }
+  getAccessTokenFromCache(): boolean {
+    if (sessionStorage.hasOwnProperty(this.msalService.B2CTodoAccessTokenKey) &&
+      sessionStorage[this.msalService.B2CTodoAccessTokenKey] !== '') {
+      this.access_token = sessionStorage[this.msalService.B2CTodoAccessTokenKey];
+      return true;
     }
+    return false;
   }
 
-  public useremail() {
-    const useremail = this.msalService.getUserEmail();
-    return useremail;
-  }
+  public useremail() { return this.msalService.getUserEmail(); }
+  public login() { this.msalService.login(); }
+  public signup() { this.msalService.signup(); }
+  public logout() { this.msalService.logout(); }
+  public isUserLoggedIn() { return this.msalService.isLoggedIn(); }
+  public getUser() { return this.msalService.getUser(); }
+  public getUserEmail() { return this.msalService.getUserEmail(); }
+  public getAuthenticationToken() { return this.msalService.getAuthenticationToken(); }
 
-  public login() {
-    this.msalService.login();
-  }
-
-  public signup() {
-    this.msalService.signup();
-  }
-
-  public logout() {
-    this.msalService.logout();
-  }
-
-  public isUserLoggedIn() {
-    return this.msalService.isLoggedIn();
-  }
-
-  public getUser() {
-    return this.msalService.getUser();
-  }
-  public getUserEmail() {
-    return this.msalService.getUserEmail();
-  }
-
-  public getAccesstoken() {
-    return this.msalService.getAccessTokenToCache();
-  }
-
-  updateSessionStorage(token: string) {
+  updateSessionStorage() {
     try {
       alert('updateSessionStorage');
       console.log('Azure getUser()', this.getUser());
-      this.ltkn.accessToken = token;
+      this.ltkn.accessToken = this.access_token;
       this.ltkn.isLoggedIn = true;
       this.ltkn.userEmail = this.getUserEmail();
       this.ltkn.userName = this.getUser().name;
@@ -102,7 +72,7 @@ export class ValidateLoginComponent implements OnInit {
       }
 
       console.log('ltkn :: ', this.ltkn);
-      this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, token).subscribe(customersList => {
+      this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, this.access_token).subscribe(customersList => {
         this.logger.log('authLogin in customersList Found ::', customersList);
         console.log('customersList :: ', customersList);
         let customers: CustomersList[] = [];
@@ -135,5 +105,4 @@ export class ValidateLoginComponent implements OnInit {
       alert('2) ' + this.errorMsg);
     }
   }
-
 }

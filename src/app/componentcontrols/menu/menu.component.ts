@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
-// import { AuthService } from '../../shared/auth.service';
+
 import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
 

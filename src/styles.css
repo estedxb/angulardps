@@ -769,3 +769,13 @@ div#CustomerContact1 {
 #maincontentarea span.dot_3 {
   background-color: blue;
 }
+
+#maincontentarea .inputWithImgNew .euro input[type="text"].form-control {
+  padding-left: 18px;
+}
+
+#maincontentarea .inputWithImgNew .euro .fa-eur {
+  position: absolute;
+  left: 20px;
+  top: 13px;
+}

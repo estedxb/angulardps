@@ -15,6 +15,7 @@ import {
 } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-addperson',
@@ -353,10 +354,9 @@ export class AddPersonComponent implements OnInit {
       });
     } else {
       this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
-      // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      //this.router.navigate(['/login']);
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
-
   }
 
   fillDataDropDown(maindatas) {
@@ -366,12 +366,9 @@ export class AddPersonComponent implements OnInit {
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
-
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
-
-
   }
 
   ShowMessage(MSG, Action) {
@@ -389,22 +386,22 @@ export class AddPersonComponent implements OnInit {
     this.dropDownYear = new Array<string>();
 
     let currentYear = new Date();
-    let year:number  = currentYear.getFullYear();
-    
+    let year: number = currentYear.getFullYear();
+
     for (let i = 1900; i < year; i++) {
       this.dropDownYear.push('' + i);
-      this.logger.log("i="+i);
-    }    
+      this.logger.log("i=" + i);
+    }
   }
 
   onChangeDropDownGender($event) {
-    if(this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
-    if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
-      this.DpsPersonObject.person.gender.title = $event.target.value;
-    } else {
-      this.DpsPersonObject.person.gender = new Gender();
-      this.DpsPersonObject.person.gender.title = $event.target.value;
-    }
+    if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject.person.gender !== undefined && this.DpsPersonObject.person.gender !== null) {
+        this.DpsPersonObject.person.gender.title = $event.target.value;
+      } else {
+        this.DpsPersonObject.person.gender = new Gender();
+        this.DpsPersonObject.person.gender.title = $event.target.value;
+      }
     this.logger.log(this.DpsPersonObject);
   }
 
@@ -545,10 +542,10 @@ export class AddPersonComponent implements OnInit {
 
     }
 
-    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);      
+      this.logger.log("total string=" + this.totalString);
     }
   }
 
@@ -568,23 +565,21 @@ export class AddPersonComponent implements OnInit {
     if (digits.length < 11)
       return false;
 
-    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
-    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
-    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
-    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
-    let genderDigits: number = parseInt(ssid.substring(9,12));
-    let firstNineDigits: string = digits.substring(0,9);
-    let x:number = 0;
-    let controlNumber: number  = -1;
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length - 2), 10);
+    let firstTwoDigits: number = parseInt(ssid.substring(0, 2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3, 5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6, 8));
+    let genderDigits: number = parseInt(ssid.substring(9, 12));
+    let firstNineDigits: string = digits.substring(0, 9);
+    let x: number = 0;
+    let controlNumber: number = -1;
 
-    if(secondTwoDigits <1 || secondTwoDigits>12)
-    {
+    if (secondTwoDigits < 1 || secondTwoDigits > 12) {
       //this.ShowMessage("Maand is ongeldig!",'');
       return false;
     }
 
-    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
-    {
+    if (thirdTwoDigits < 1 || thirdTwoDigits >= 32) {
       //this.ShowMessage("jaar is ongeldig!",'');
       return false;
     }
@@ -599,32 +594,29 @@ export class AddPersonComponent implements OnInit {
       controlNumber = 97 - newremainder;
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
     else {
-      x = parseInt(firstNineDigits,10);
+      x = parseInt(firstNineDigits, 10);
       let remainder: number = x % 97;
       controlNumber = 97 - remainder;
 
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
 
-    if(this.validSSID === true)
-    {
+    if (this.validSSID === true) {
       this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
-      this.setGender(genderDigits);  
+      this.setGender(genderDigits);
     }
 
     return this.validSSID;
@@ -648,27 +640,25 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    if( day>=1 && day<=31)
-        this._selectedIndexdays = day;
-    
-    if(month >=1 && month <=12)
-        this._selectedIndexMonth = month - 1;
-        
+    if (day >= 1 && day <= 31)
+      this._selectedIndexdays = day;
+
+    if (month >= 1 && month <= 12)
+      this._selectedIndexMonth = month - 1;
+
     this._selectedIndexYear = year;
 
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    this.logger.log("month="+month);
-    this.logger.log("day="+day);
-    this.logger.log("year="+year);
+    this.logger.log("month=" + month);
+    this.logger.log("day=" + day);
+    this.logger.log("year=" + year);
 
-    if(year >=0 && year<=currentYearTwoDigits)
-    {
-      for(let i=0;i<this.dropDownYear.length;i++)
-      {
-        if(this.dropDownYear[i]===(year+2000).toString())
+    if (year >= 0 && year <= currentYearTwoDigits) {
+      for (let i = 0; i < this.dropDownYear.length; i++) {
+        if (this.dropDownYear[i] === (year + 2000).toString())
           this.selectedIndexYear = i;
       }
     }
@@ -1280,7 +1270,7 @@ export class AddPersonComponent implements OnInit {
         this.DpsPersonObject.person.address = new Address();
         if (this.DpsPersonObject.person.address !== null && this.DpsPersonObject.person.address !== undefined) {
           this.DpsPersonObject.person.address.country = $event.Country;
-          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];          
+          this.DpsPersonObject.person.address.countryCode = $event['Alpha-2'];
         }
       }
     }
@@ -1366,10 +1356,10 @@ export class AddPersonComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      if(this.checkValidation())
-          this.showFormIndex = 2;
+      if (this.checkValidation())
+        this.showFormIndex = 2;
       else
-          this.ShowMessage("Inzendingen zijn onjuist !",'');
+        this.ShowMessage("Inzendingen zijn onjuist !", '');
 
       this.createObjectsForm1();
     } else {

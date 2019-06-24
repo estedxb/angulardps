@@ -17,12 +17,18 @@ export class PositionsService {
     if (environment.dataFromAPI_JSON && environment.getPositionsByVatNumber !== '') {
       // this.logger.log('Data From Remote');
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
-      this.getPositionUrl = environment.dpsAPI + environment.getPosition;
-      this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
     } else {
-      this.logger.log('Data From JSON');
+      this.logger.log('getPositionsByVatNumberUrl Data From JSON');
       this.getPositionsByVatNumberUrl = environment.getAssetsDataPath + 'positions.json';
     }
+    if (environment.dataFromAPI_JSON && environment.getPosition !== '') {
+      this.getPositionUrl = environment.dpsAPI + environment.getPosition;
+    } else {
+      this.logger.log('getPositionUrl Data From JSON');
+      this.getPositionUrl = environment.getAssetsDataPath + 'positions.json';
+    }
+
+    this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
   }
 
   public getPositionsByVatNumber(parameter: string): Observable<DpsPostion[]> {

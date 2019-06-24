@@ -2,7 +2,8 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
-import { Router, CanActivate } from '@angular/router';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -15,13 +16,16 @@ export class AppComponent {
 
   constructor(
     private router: Router,
+    private location: Location,
     private logger: LoggingService) {
     this.logger.logF('environment.production :: ' + environment.production);
+    const pathString = location.path().replace('/', '');
 
     const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
-    if (dpsLoginTokenString === '' || dpsLoginTokenString === null || dpsLoginTokenString === undefined) {
-      if (environment.B2CEnabled === 'validate') {
-        this.router.navigate(['./' + environment.B2CEnabled + environment.logInRedirectURL]);
+    if (pathString !== environment.B2C + environment.logInRedirectURL &&
+      pathString !== environment.B2CSuccess + environment.logInRedirectURL) {
+      if (dpsLoginTokenString === '' || dpsLoginTokenString === null || dpsLoginTokenString === undefined) {
+        this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
       }
     }
   }

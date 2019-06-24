@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit {
   }
 
   @Input() public CalendarData: string;
+  @Input() public disableAll:boolean;
   @Input() public calendarDisableStatus = null;
   @Input() public calendardayDisableStatus = null;
   @Input() public calendarmonthDisableStatus = null;
@@ -97,6 +98,18 @@ export class CalendarComponent implements OnInit {
       this.loadDOBData(this.CalendarData);
     }
 
+    if(this.disableAll === true)
+    {
+      this.dayDisableStatus = true;
+      this.monthDisableStatus = true;
+      this.yearDisableStatus = true;
+    }
+    else {
+      this.dayDisableStatus = false;
+      this.monthDisableStatus = false;
+      this.yearDisableStatus = false;
+    }
+
     if (this.calendarDisableStatus === true) {
       // this.logger.log('in');
       this.dayDisableStatus = true;
@@ -116,15 +129,8 @@ export class CalendarComponent implements OnInit {
     const calendarArray = calendarData.split('/');
 
     this._selectedIndexdays = parseInt(calendarArray[0], 10);
-    // this._selectedIndexMonth = parseInt(calendarArray[1],10);
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
     this._selectedIndexYear = parseInt(calendarArray[2], 10);
-
-    // console.log("received data on calendar component");
-    // console.log("days="+calendarArray[0]);
-    // console.log("month="+calendarArray[1]);
-    // console.log("year="+calendarArray[2]);
-
 
     this.calendarObject.dayString = "" + calendarArray[0];
     this.calendarObject.monthString = "" + calendarArray[1];
