@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.CalendarData !== this.oldCalendarData) {
       this.oldCalendarData = this.CalendarData;
-      this.loadDOBData(this.CalendarData);
+      this.loadDOBDataNew(this.CalendarData);
     }
 
     if(this.disableAll === true)
@@ -124,6 +124,22 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  loadDOBDataNew(calendarData) {
+
+    const calendarArray = calendarData.split('/');
+
+    let yearString = parseInt(calendarArray[2],10)+2000;
+    this.selectedIndex = parseInt(calendarArray[0],10);
+    this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
+
+      for(let i=0;i<=this.dropDownYear.length;i++)
+      {
+          if(yearString.toString() === this.dropDownYear[i])
+            this.selectedYear = i;
+      }
+
+  }
+
   loadDOBData(calendarData) {
 
     const calendarArray = calendarData.split('/');
@@ -138,9 +154,13 @@ export class CalendarComponent implements OnInit {
 
     this.selectedYear = this.findIndex(parseInt(calendarArray[2], 10));
 
+    this.logger.log("selected Year="+this.selectedYear);
+
   }
 
   findIndex(yearString) {
+
+    this.logger.log("selected Year string="+ yearString);
 
     for (let i: number = 0; i < this.dropDownYear.length; i++) {
       if (yearString === parseInt(this.dropDownYear[i], 10))
