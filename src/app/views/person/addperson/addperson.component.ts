@@ -80,6 +80,7 @@ export class AddPersonComponent implements OnInit {
   public ssid: string;
   public totalString: string;
   public selectedPositionIndex: number = 0;
+  public selectedStatuteIndex: number = 0;
 
   public selectedlanguageObject: any = {
     name: "Dutch",
@@ -303,7 +304,8 @@ export class AddPersonComponent implements OnInit {
     });
 
     this.positionChosen = "";
-    this.positionId = -1;
+    this.positionId = 0;
+    this.selectedPositionIndex = 0;
 
     this.AddPersonForm2 = new FormGroup({
       functie: new FormControl('', [Validators.required]),
@@ -369,6 +371,7 @@ export class AddPersonComponent implements OnInit {
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
+    this.selectedPositionIndex  = 0;
   }
 
   ShowMessage(MSG, Action) {
@@ -434,8 +437,9 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.customerPostionId = $event.target.value;
 
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
-    this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+    // this.positionId = this.dataDropDownFunctieIds[$event.target.value];
 
+    this.positionId = $event.target.value;
 
     this.logger.log(this.DpsPersonObject);
     //this.updatePosition();
@@ -1131,7 +1135,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
-    this.DpsPersonObject.customerPostionId = '';
+    this.DpsPersonObject.customerPostionId = ""+this.selectedPositionIndex;
+    
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
@@ -1324,12 +1329,20 @@ export class AddPersonComponent implements OnInit {
   }
 
   updateLastName(value: string) {
-    this.DpsPersonObject.person.lastName = value;
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null)
+              this.DpsPersonObject.person.lastName = value;
+
     this.changeMessage();
   }
 
   updateEmailAddress(value: string) {
-    this.DpsPersonObject.person.email.emailAddress = value;
+
+    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+        if(this.DpsPersonObject.person!==null && this.DpsPersonObject.person.email !== null && this.DpsPersonObject.person.email !== undefined )
+              this.DpsPersonObject.person.email.emailAddress = value;
+
     this.changeMessage();
   }
 

@@ -26,6 +26,10 @@ export class AppComponent {
       pathString !== environment.B2CSuccess + environment.logInRedirectURL) {
       if (dpsLoginTokenString === '' || dpsLoginTokenString === null || dpsLoginTokenString === undefined) {
         this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+      } else {
+        if (pathString === '') {
+          this.router.navigate(['./' + environment.logInSuccessURL]);
+        }
       }
     }
   }
