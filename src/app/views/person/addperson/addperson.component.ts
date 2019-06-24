@@ -539,10 +539,10 @@ export class AddPersonComponent implements OnInit {
 
     }
 
-    if (ssid.length == 15) {
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log("total string=" + this.totalString);      
     }
   }
 
