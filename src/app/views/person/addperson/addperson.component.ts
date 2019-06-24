@@ -683,13 +683,20 @@ export class AddPersonComponent implements OnInit {
         {
           this.selectedIndexYear = i;
           this._selectedIndexYear = i;
+          this.yearString = "" +  (year + 2000).toString();
         }
       }
     }
+    else {
 
-    this.monthString = this.dropDownMonth[this.selectedIndexMonth];
-    this.dayString = this.dataDropDown[this.selectedIndex];
-    this.yearString = this.dropDownYear[this.selectedIndexYear];
+      this.yearString = "" +  (year + 1900).toString();
+     this.logger.log("year string="+this.yearString);
+    }
+
+    this.monthString = (this.selectedIndexMonth + 1);
+    this.dayString = this.dataDropDown[this.selectedIndex - 1];
+
+
 
     if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
       this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
