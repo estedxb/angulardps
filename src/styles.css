@@ -458,7 +458,7 @@ div#PersonContact {
   margin: 10px 0px 0px 0px;
   border-radius: 19px;
   line-height: 28px;
-  padding: 0px 15px;
+  padding: 0px 10px;
   height: 32px;
   vertical-align: middle;
   color: #fff;
@@ -496,7 +496,9 @@ div#PersonContact {
 .orangebtn-save img {
   width: 28px;
 }
-.greenbtn img,
+.greenbtn img {
+  margin: 1px -5px 0px 5px;
+}
 .greenbtnnew img {
   width: 28px;
 }
