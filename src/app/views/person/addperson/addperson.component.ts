@@ -431,16 +431,32 @@ export class AddPersonComponent implements OnInit {
       }
   }
 
+  findIndex(position:string)
+  {
+    this.logger.log("position="+position);
+    this.logger.log(this.maindatas);
+
+    for(let i=0;i<this.maindatas.length;i++)
+    {
+      if(this.maindatas[i].position.name !== undefined)
+        if(position === this.maindatas[i].position.name)
+        {
+          //this.selectedPositionIndex = this.maindatas[i].id;
+          this.logger.log("selectedPositionIndex="+this.selectedPositionIndex);
+          this.DpsPersonObject.customerPostionId = ""+ this.maindatas[i].id;
+        }
+    }
+
+  }
+
   onChangeDropDownFunctie($event) {
     this.logger.log('selected functie=' + this.dataDropDownFunctie[$event.target.value]);
     //    this.DpsPersonObject.customerPostionId = this.dataDropDownFunctie[$event.target.value];
-    this.DpsPersonObject.customerPostionId = $event.target.value;
-
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
     // this.positionId = this.dataDropDownFunctieIds[$event.target.value];
-
     this.positionId = $event.target.value;
-
+    this.findIndex(this.dataDropDownFunctie[$event.target.value]);
+    
     this.logger.log(this.DpsPersonObject);
     //this.updatePosition();
   }
@@ -923,7 +939,14 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.controls.bic.setValue('');
 
     this.AddPersonForm1.controls.mobileNumber.setValue('');
-    this.AddPersonForm1.controls.telephoneNumber.setValue('');
+    this.AddPersonForm1.controls.vatNumber.setValue('');
+  }
+
+  setIndexPosition(position:number)
+  {
+    for(let i=0;i<this.maindatas.length;i++)
+        if(position === this.maindatas[i].id)
+          this.selectedPositionIndex = i;
   }
 
   loadPersonData(rdata) {
@@ -932,7 +955,7 @@ export class AddPersonComponent implements OnInit {
 
     if (data !== null && data.person !== null) {
 
-      this.selectedPositionIndex = data.CustomerPostionId;
+    this.setIndexPosition(parseInt(data.CustomerPostionId,10));
 
       const stringData: string = data.person.dateOfBirth.toString();
       const dobArray = stringData.split('T');
@@ -1135,8 +1158,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
-    this.DpsPersonObject.customerPostionId = ""+this.selectedPositionIndex;
-    
+    this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
+
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 

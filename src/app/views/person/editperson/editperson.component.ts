@@ -723,6 +723,7 @@ export class EditPersonComponent implements OnInit {
     return this.validSSID;
   }
 
+
   updateMobileNumber(value: string) {
     this.DpsPersonObject.person.mobile.number = value;
     this.changeMessage();
