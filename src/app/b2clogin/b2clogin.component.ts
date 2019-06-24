@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Msal from 'msal';
-import { MsalService } from '../shared/msal.service';
+import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class B2cloginComponent implements OnInit {
   public sub;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router, private msalService: MsalService, private logger: LoggingService
+    private router: Router, private msalService: MsalServiceLocal, private logger: LoggingService
   ) { }
 
   ngOnInit() {

@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 
 import { Subscription } from 'rxjs/Subscription';
 import * as Msal from 'msal';
-import { MsalService } from '../shared/msal.service';
+import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
 import { CustomerListsService } from '../shared/customerlists.service';
@@ -25,7 +25,7 @@ export class ValidateLoginComponent implements OnInit {
   public access_token = '';
 
   constructor(
-    private router: Router, private msalService: MsalService,
+    private router: Router, private msalService: MsalServiceLocal,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 

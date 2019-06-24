@@ -6,20 +6,17 @@ import { LoginToken, CustomersList } from './models';
 import { LoggingService } from './logging.service';
 import { CustomerListsService } from './customerlists.service';
 
+
 declare var bootbox: '';
 @Injectable({
   providedIn: 'root'
 })
-export class MsalService {
+export class MsalServiceLocal {
   private ltkn: LoginToken = new LoginToken();
   public message: string;
-  public returnUrl: string;
-  public returnaddcustomerUrl: string;
   public dpsuservatnumber = '987654321000';
-  public VatNumber = '';
   public errorMsg: string;
-  public currentpage = 'login';
-  public clientApplication: Msal.UserAgentApplication;
+
   public clientApplicationPR: Msal.UserAgentApplication;
   public Options = {
     validateAuthority: true,
@@ -30,23 +27,18 @@ export class MsalService {
 
   B2CTodoAccessTokenKey = environment.B2CTodoAccessTokenKey;
 
-  b2cScopes = ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation'];
+  public b2cScopes = ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation'];
 
   // Configure the authority for Azure AD B2C
   authority = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
 
-  constructor(private customerListsService: CustomerListsService, private logger: LoggingService) {
-    try {
-      this.clientApplication = new Msal.UserAgentApplication(environment.clientId, this.authority, function (errorDesc: any, token: any, error: any, tokenType: any) {
-        alert(token);
-        this.saveAccessTokenToCache(token);
-        this.authCallback(errorDesc, token, error, tokenType);
-        console.log('in call back');
-      }, this.Options);
-    } catch (e) { localStorage.setItem('dpsuseraccesstoken', ''); }
-  }
+  clientApplication = new Msal.UserAgentApplication(environment.clientId, this.authority, this.authCallback, this.Options);
+
+  constructor(private customerListsService: CustomerListsService, private logger: LoggingService) { }
 
   private authCallback(errorDesc: any, token: any, error: any, tokenType: any): void {
+    alert(token);
+    this.saveAccessTokenToCache(token);
     if (token) {
       localStorage.setItem('dpsuseraccesstoken', token);
       this.logger.log('getAccesstoken :: ', this.getAuthenticationToken());
@@ -109,7 +101,7 @@ export class MsalService {
 
   public authenticate(): void {
     this.logger.log('authenticate() - this.clientApplication.authority :: ' + this.clientApplication.authority);
-    this.logger.log('this.tenantConfig.b2cScopes :: ' + this.b2cScopes);
+    this.logger.log('this.b2cScopes :: ' + this.b2cScopes);
     this.clientApplication.loginRedirect(this.b2cScopes);
 
   }
@@ -167,13 +159,13 @@ export class MsalService {
 
 /*
 let _this = this;
-_this.clientApplication.loginPopup(this.tenantConfig.b2cScopes).then(function (idToken: any) {
-  _this.clientApplication.acquireTokenSilent(_this.tenantConfig.b2cScopes).then(
+_this.clientApplication.loginPopup(this.b2cScopes).then(function (idToken: any) {
+  _this.clientApplication.acquireTokenSilent(_this.b2cScopes).then(
     function (accessToken: any) {
       _this.saveAccessTokenToCache(accessToken);
       this.updateSessionStorage(accessToken);
     }, function (error: any) {
-      _this.clientApplication.acquireTokenPopup(_this.tenantConfig.b2cScopes).then(
+      _this.clientApplication.acquireTokenPopup(_this.b2cScopes).then(
         function (accessToken: any) {
           _this.saveAccessTokenToCache(accessToken);
           this.updateSessionStorage(accessToken);

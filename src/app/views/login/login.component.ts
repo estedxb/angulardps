@@ -11,7 +11,7 @@ import { LoggingService } from '../../shared/logging.service';
 
 import { Subscription } from 'rxjs/Subscription';
 import * as Msal from 'msal';
-import { MsalService } from '../../shared/msal.service';
+import { MsalServiceLocal } from '../../shared/msal.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     public userService: UsersService,
     public customersService: CustomersService,
     public customerListsService: CustomerListsService,
-    private msalService: MsalService,
+    private msalService: MsalServiceLocal,
     private logger: LoggingService
   ) { }
 

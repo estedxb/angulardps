@@ -5,6 +5,8 @@ import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+import * as Msal from 'msal';
+import { MsalServiceLocal } from './shared/msal.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private location: Location,
+    private msalService: MsalServiceLocal,
     private logger: LoggingService) {
     this.logger.logF('environment.production :: ' + environment.production);
     const pathString = location.path().replace('/', '');
@@ -27,9 +30,7 @@ export class AppComponent {
       if (dpsLoginTokenString === '' || dpsLoginTokenString === null || dpsLoginTokenString === undefined) {
         this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
       } else {
-        if (pathString === '') {
-          this.router.navigate(['./' + environment.logInSuccessURL]);
-        }
+        if (pathString === '') { this.router.navigate(['./' + environment.logInSuccessURL]); }
       }
     }
   }

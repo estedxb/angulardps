@@ -15,7 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
-import { MsalService } from './shared/msal.service';
+import { MsalServiceLocal } from './shared/msal.service';
 
 @NgModule({
   declarations: [AppComponent, routingComponents],
@@ -28,7 +28,7 @@ import { MsalService } from './shared/msal.service';
       size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
     })
   ],
-  providers: [DatePipe, MsalService, routingProviders],
+  providers: [DatePipe, MsalServiceLocal, routingProviders],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]
