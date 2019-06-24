@@ -6,7 +6,7 @@ import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import * as Msal from 'msal';
-import { MsalService } from '../../shared/msal.service';
+import { MsalServiceLocal } from '../../shared/msal.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +15,7 @@ import { MsalService } from '../../shared/msal.service';
 })
 export class MenuComponent implements OnInit {
   @Input() SelectedPage: string;
-  constructor(private router: Router, private logger: LoggingService, private msalService: MsalService
+  constructor(private router: Router, private logger: LoggingService, private msalService: MsalServiceLocal
     //  , public authService: AuthService
   ) { }
 

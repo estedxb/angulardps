@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-
-// import { MsalService } from './shared/msal.service';
-
 // import { MsalModule, MsalGuard, MsalInterceptor, MsalService } from '@azure/msal-angular';
 import { LogLevel } from 'msal';
 
