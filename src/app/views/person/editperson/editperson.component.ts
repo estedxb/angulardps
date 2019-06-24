@@ -529,8 +529,7 @@ export class EditPersonComponent implements OnInit {
 
     let newResponse: any = '';
     let data: any = '';
-    //const vatNumber = this.dpsLoginToken.customerVatNumber;
-    const vatNumber = "123456789101";
+    const vatNumber = this.dpsLoginToken.customerVatNumber;
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
@@ -838,6 +837,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vatNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
+    
     // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
     // this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
 
