@@ -435,7 +435,11 @@ export class AddPersonComponent implements OnInit {
 
 
     this.logger.log(this.DpsPersonObject);
+<<<<<<< HEAD
 
+=======
+    //this.updatePosition();
+>>>>>>> a6fb0a18ac8a72b7e7abcea1df441eb13c2d7a1b
   }
 
   updatePosition() {
@@ -539,12 +543,14 @@ export class AddPersonComponent implements OnInit {
 
     }
 
-    if (ssid.length == 15) {
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log("total string=" + this.totalString);      
     }
   }
+
+
 
   newCustomSSIDValidator(ssid: string) {
 
@@ -569,6 +575,18 @@ export class AddPersonComponent implements OnInit {
     let x:number = firstNineDigits;
     let controlNumber: number  = -1;
 
+    if(secondTwoDigits <=1 || secondTwoDigits>=12)
+    {
+      //this.ShowMessage("Maand is ongeldig!",'');
+      return false;
+    }
+
+    if(thirdTwoDigits <=1 || thirdTwoDigits >=32)
+    {
+      //this.ShowMessage("jaar is ongeldig!",'');
+      return false;
+    }
+
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
@@ -586,7 +604,11 @@ export class AddPersonComponent implements OnInit {
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else
+      {
         this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+
+      }
     }
     else {
       x = firstNineDigits;
@@ -596,12 +618,18 @@ export class AddPersonComponent implements OnInit {
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else
+      {
         this.validSSID = false;
+        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+      }
 
     }
 
-    this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
-    this.setGender(genderDigits);
+    if(this.validSSID === true)
+    {
+      this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
+      this.setGender(genderDigits);  
+    }
 
     return this.validSSID;
 
@@ -624,10 +652,12 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    this.logger.log("day="+day);
-    this.logger.log("month="+month);
-    this._selectedIndexdays = day;
-    this._selectedIndexMonth = month - 1;
+    if( day>=1 && day<=31)
+        this._selectedIndexdays = day;
+    
+    if(month >=1 && month <=12)
+        this._selectedIndexMonth = month - 1;
+        
     this._selectedIndexYear = year;
 
   }

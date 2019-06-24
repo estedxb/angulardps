@@ -17,7 +17,7 @@ export const environment = {
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   forgotPasswordPolicy: 'B2C_1_SelfServicePasswordReset',
-  B2CTodoAccessTokenKey: 'b2c.access.token',
+  B2CTodoAccessTokenKey: 'dpsuseraccesstoken',
   getAssetsDataPath: '../../assets/data/',
   getPositionFileUploads: 'postion/',
   getPositionsDownloadTemplate: 'postion/Position1.pdf',
