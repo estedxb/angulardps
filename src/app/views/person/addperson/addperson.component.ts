@@ -372,7 +372,7 @@ export class AddPersonComponent implements OnInit {
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       this.logger.log("positon in maindatas=" + maindatas[i].id);
     }
-    this.selectedPositionIndex  = 0;
+    this.selectedPositionIndex = 0;
   }
 
   ShowMessage(MSG, Action) {
@@ -432,19 +432,16 @@ export class AddPersonComponent implements OnInit {
       }
   }
 
-  findIndex(position:string)
-  {
-    this.logger.log("position="+position);
+  findIndex(position: string) {
+    this.logger.log("position=" + position);
     this.logger.log(this.maindatas);
 
-    for(let i=0;i<this.maindatas.length;i++)
-    {
-      if(this.maindatas[i].position.name !== undefined)
-        if(position === this.maindatas[i].position.name)
-        {
+    for (let i = 0; i < this.maindatas.length; i++) {
+      if (this.maindatas[i].position.name !== undefined)
+        if (position === this.maindatas[i].position.name) {
           //this.selectedPositionIndex = this.maindatas[i].id;
-          this.logger.log("selectedPositionIndex="+this.selectedPositionIndex);
-          this.DpsPersonObject.customerPostionId = ""+ this.maindatas[i].id;
+          this.logger.log("selectedPositionIndex=" + this.selectedPositionIndex);
+          this.DpsPersonObject.customerPostionId = "" + this.maindatas[i].id;
         }
     }
 
@@ -457,7 +454,7 @@ export class AddPersonComponent implements OnInit {
     // this.positionId = this.dataDropDownFunctieIds[$event.target.value];
     this.positionId = $event.target.value;
     this.findIndex(this.dataDropDownFunctie[$event.target.value]);
-    
+
     this.logger.log(this.DpsPersonObject);
     //this.updatePosition();
   }
@@ -531,96 +528,154 @@ export class AddPersonComponent implements OnInit {
     }
     return digits;
   }
+  AutoFormatSSIDPress(event: any) {
+    let inputChar = event.key; //String.fromCharCode(event.key);
+    this.logger.log('AutoFormatSSIDPress inputChar = ' + inputChar);
+    let currentSSID = (<HTMLInputElement>event.target).value;
+    this.logger.log('AutoFormatSSIDPress currentSSID = ' + currentSSID);
+    const pattern = /[0-9]/;
+    if (!pattern.test(inputChar) || currentSSID.length > 14) {
+      // invalid character, prevent input
 
+      this.logger.log('AutoFormatSSIDPress preventDefault');
+      event.preventDefault();
+    } else {
+      let newSSID = currentSSID + inputChar;
+      this.logger.log('AutoFormatSSIDPress newSSID before = ' + newSSID);
+
+      if (newSSID.length === 2) {
+        newSSID += '.';
+      } else if (newSSID.length === 5) {
+        newSSID += '.';
+      } else if (newSSID.length === 8) {
+        newSSID += '-';
+      } else if (newSSID.length === 12) {
+        newSSID += '.';
+      }
+      this.logger.log('AutoFormatSSIDPress newSSID after = ' + newSSID);
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(newSSID);
+      event.preventDefault();
+    }
+  }
+
+  AutoFormatSSIDUp(event: any) {
+    let inputKey = event.key; //String.fromCharCode(event.key);
+    this.logger.log('AutoFormatSSIDUp inputKey = ' + inputKey);
+    let currentSSID = (<HTMLInputElement>event.target).value;
+    this.logger.log('AutoFormatSSIDUp currentSSID before= ' + currentSSID);
+    if (inputKey === 'Backspace' || inputKey === 'Delete') {
+      let newSSID = '';
+      for (var i = 0; i < currentSSID.length; i++) {
+        if (currentSSID.charAt(i) !== '.' && currentSSID.charAt(i) !== '-') {
+          newSSID += currentSSID.charAt(i);
+        }
+      }
+      this.logger.log('AutoFormatSSIDUp newSSID before= ' + newSSID);
+      newSSID = this.reFormatSSID(newSSID);
+      this.logger.log('AutoFormatSSIDUp newSSID after= ' + newSSID);
+      this.AddPersonForm1.get('socialSecurityNumber').setValue(newSSID);
+    }
+  }
+
+  reFormatSSID(SSID) {
+    if (SSID.length > 1) {
+      SSID = this.insertCharAt(SSID, 2, '.');
+      if (SSID.length > 4) {
+        SSID = this.insertCharAt(SSID, 5, '.');
+        if (SSID.length > 7) {
+          SSID = this.insertCharAt(SSID, 8,  '-');
+          if (SSID.length > 11) {
+            SSID = this.insertCharAt(SSID, 12,  '.');
+          }
+        }
+      }
+    }
+    this.logger.log('reFormatSSID SSID after = ) ' + SSID);
+    return SSID;
+  }
+  insertCharAt (SSID:string, index:number, newchar:string) {
+    if (index > 0)
+      return SSID.substring(0, index) + newchar + SSID.substring(index, SSID.length);
+
+    return newchar + SSID;
+  };
+/*
   format($event) {
 
     let counter = 0;
-    let characters:string = ""
+    let characters: string = ""
 
     let ssid = $event;
 
-    for(let i=0;i<ssid.length;i++)
-    {
-      if(i<2)
-      {
+    for (let i = 0; i < ssid.length; i++) {
+      if (i < 2) {
         //check digits
-        if(this.checkDigits(ssid.charAt(i)) === false )
+        if (this.checkDigits(ssid.charAt(i)) === false)
           this.AddPersonForm1.get('socialSecurityNumber').setValue("");
-        else
-        {
-          this.logger.log("ssid="+ssid);
-          if(i===1)
+        else {
+          this.logger.log("ssid=" + ssid);
+          if (i === 1)
             characters += ssid.charAt(i) + ".";
           else
             characters += ssid.charAt(i);
 
-            this.AddPersonForm1.get('socialSecurityNumber').setValue(characters);          
+          this.AddPersonForm1.get('socialSecurityNumber').setValue(characters);
         }
       }
 
-      if(i===2)
-      {
+      if (i === 2) {
         //check dot
         //this.AddPersonForm1.get('socialSecurityNumber').setValue("");
       }
 
-      if(i>=3 && i<5)
-      {
+      if (i >= 3 && i < 5) {
         // numbers
       }
 
-      if(i===5)
-      {
+      if (i === 5) {
         //check dot
       }
 
-      if(i>5 && i<8)
-      {
+      if (i > 5 && i < 8) {
         // numbers
       }
 
-      if(i===8)
-      {
+      if (i === 8) {
         // hyphen
       }
 
-      if(i>8 && i<12)
-      {
+      if (i > 8 && i < 12) {
 
       }
 
-      if(i===12)
-      {
+      if (i === 12) {
         // dot
       }
 
-      if(i>12 && i<=ssid.length)
-      {
+      if (i > 12 && i <= ssid.length) {
         // digits
       }
 
     }
 
   }
-
+*/
   validatePersonSsid($event) {
 
     let ssid = $event;
 
-    if(ssid.length ===1) {
-     this.logger.log("ssid="+ssid.length);
-      if(this.checkDigits(ssid)===false)
-      {        
+    if (ssid.length === 1) {
+      this.logger.log("ssid=" + ssid.length);
+      if (this.checkDigits(ssid) === false) {
         this.AddPersonForm1.get('socialSecurityNumber').setValue("");
       }
     }
 
-    if(ssid.length===2) {
+    if (ssid.length === 2) {
 
-      if(this.checkDigits(ssid)===true)
-      {
+      if (this.checkDigits(ssid) === true) {
         this.totalString = ssid + ".";
-        this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);  
+        this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       }
       else {
         this.AddPersonForm1.get('socialSecurityNumber').setValue("");
@@ -628,7 +683,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (ssid.length === 5) {
-      
+
       this.totalString = this.totalString + ssid.substring(3) + ".";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -636,7 +691,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (ssid.length === 8) {
-      this.logger.log("ssid="+ssid);
+      this.logger.log("ssid=" + ssid);
       this.totalString = this.totalString + ssid.substring(6) + "-";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -644,7 +699,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (ssid.length === 12) {
-      this.logger.log("ssid="+ssid);
+      this.logger.log("ssid=" + ssid);
       this.totalString = this.totalString + ssid.substring(9) + ".";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -652,7 +707,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
-      this.logger.log("ssid="+ssid);
+      this.logger.log("ssid=" + ssid);
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -752,38 +807,34 @@ export class AddPersonComponent implements OnInit {
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    if (day >= 1 && day <= 31)
-    {
+    if (day >= 1 && day <= 31) {
       this.selectedIndex = day;
       this._selectedIndexdays = day;
     }
 
-    if (month >= 1 && month <= 12)
-    {
+    if (month >= 1 && month <= 12) {
       this.selectedIndexMonth = month - 1;
       this._selectedIndexMonth = month - 1;
     }
 
     if (year >= 0 && year <= currentYearTwoDigits) {
       for (let i = 0; i < this.dropDownYear.length; i++) {
-        if (this.dropDownYear[i] === (year + 2000).toString())
-        {
+        if (this.dropDownYear[i] === (year + 2000).toString()) {
           this.selectedIndexYear = i;
           this._selectedIndexYear = i;
-          this.yearString = "" +  (year + 2000).toString();
+          this.yearString = "" + (year + 2000).toString();
         }
       }
     }
     else {
 
-      this.yearString = "" +  (year + 1900).toString();
+      this.yearString = "" + (year + 1900).toString();
 
       for (let i = 0; i < this.dropDownYear.length; i++) {
-        if (this.dropDownYear[i] === (year + 1900).toString())
-        {
+        if (this.dropDownYear[i] === (year + 1900).toString()) {
           this.selectedIndexYear = i;
           this._selectedIndexYear = i;
-          this.yearString = "" +  (year + 1900).toString();
+          this.yearString = "" + (year + 1900).toString();
         }
       }
     }
@@ -792,7 +843,7 @@ export class AddPersonComponent implements OnInit {
     this.dayString = this.dataDropDown[this.selectedIndex - 1];
 
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
       this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
 
@@ -894,23 +945,22 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('customerVatNumber=' + customerVatNumber);
 
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        this.logger.log("res=" + res);        
+        this.logger.log("res=" + res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
 
-          if(err.status === 204)
-          {
+          if (err.status === 204) {
             this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
-              this.logger.log("res=" + res);        
+              this.logger.log("res=" + res);
               this.formValid = true;
               this.loadPersonData(res);
             },
-            (err: HttpErrorResponse) => {
-                  this.logger.log('Error occured=' + err.error.message);
-                  this.formValid = true;
-                  this.loadDOBFromSSID();  
-                }
+              (err: HttpErrorResponse) => {
+                this.logger.log('Error occured=' + err.error.message);
+                this.formValid = true;
+                this.loadDOBFromSSID();
+              }
             );
           }
           else {
@@ -1070,11 +1120,10 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.controls.vatNumber.setValue('');
   }
 
-  setIndexPosition(position:number)
-  {
-    for(let i=0;i<this.maindatas.length;i++)
-        if(position === this.maindatas[i].id)
-          this.selectedPositionIndex = i;
+  setIndexPosition(position: number) {
+    for (let i = 0; i < this.maindatas.length; i++)
+      if (position === this.maindatas[i].id)
+        this.selectedPositionIndex = i;
   }
 
   loadPersonData(rdata) {
@@ -1083,7 +1132,7 @@ export class AddPersonComponent implements OnInit {
 
     if (data !== null && data.person !== null) {
 
-    this.setIndexPosition(parseInt(data.CustomerPostionId,10));
+      this.setIndexPosition(parseInt(data.CustomerPostionId, 10));
 
       const stringData: string = data.person.dateOfBirth.toString();
       const dobArray = stringData.split('T');
@@ -1132,7 +1181,7 @@ export class AddPersonComponent implements OnInit {
       // this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
     }
 
-    if(data.customerVatNumber !== null)
+    if (data.customerVatNumber !== null)
       this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
 
     if (data.person !== null) {
@@ -1418,88 +1467,88 @@ export class AddPersonComponent implements OnInit {
 
   updateMobileNumber(value: string) {
 
-  if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
-    if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.mobile !== null)
-          this.DpsPersonObject.person.mobile.number = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.mobile !== null)
+        this.DpsPersonObject.person.mobile.number = value;
 
     this.changeMessage();
   }
 
   updatePostalCode(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
-            this.DpsPersonObject.person.address.postalCode = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+        this.DpsPersonObject.person.address.postalCode = value;
 
     this.changeMessage();
   }
 
   updateCity(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
-    if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
-          this.DpsPersonObject.person.address.city = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+        this.DpsPersonObject.person.address.city = value;
 
     this.changeMessage();
   }
 
   updateBus(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
-                this.DpsPersonObject.person.address.bus = value;  
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+        this.DpsPersonObject.person.address.bus = value;
 
-        this.changeMessage();
+    this.changeMessage();
   }
 
   updateStreetNumber(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
-              this.DpsPersonObject.person.address.streetNumber = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person.mobile !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+        this.DpsPersonObject.person.address.streetNumber = value;
     this.changeMessage();
 
   }
 
   updateStreet(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
-              this.DpsPersonObject.person.address.street = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.address !== null)
+        this.DpsPersonObject.person.address.street = value;
 
     this.changeMessage();
   }
 
   updateFirstName(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null)
-                  this.DpsPersonObject.person.firstName = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null)
+        this.DpsPersonObject.person.firstName = value;
 
     this.changeMessage();
   }
 
   updateLastName(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
-        if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null)
-              this.DpsPersonObject.person.lastName = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null)
+        this.DpsPersonObject.person.lastName = value;
 
     this.changeMessage();
   }
 
   updateEmailAddress(value: string) {
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
-        if(this.DpsPersonObject.person!==null && this.DpsPersonObject.person.email !== null && this.DpsPersonObject.person.email !== undefined )
-              this.DpsPersonObject.person.email.emailAddress = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person.email !== null && this.DpsPersonObject.person.email !== undefined)
+        this.DpsPersonObject.person.email.emailAddress = value;
 
     this.changeMessage();
   }
 
-  updateVatNumber(value:string) {
+  updateVatNumber(value: string) {
 
-    if(this.DpsPersonObject !== null)
+    if (this.DpsPersonObject !== null)
       this.DpsPersonObject.customerVatNumber = value;
 
     this.changeMessage();

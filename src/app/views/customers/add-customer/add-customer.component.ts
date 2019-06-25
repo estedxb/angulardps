@@ -118,10 +118,10 @@ export class AddCustomerComponent implements OnInit {
   }
 
   onFormwardClick() {
+    document.getElementById('maincontent').scrollTo(0, 0);
 
     if (this.showFormIndex === 1) {
 
-      document.getElementById('maincontent').scrollTo(0, 0);
       this.logger.log('CTdata=' + this.CTdata);
       this.logger.log(this.CTdata);
       this.logger.log('HQdata=' + this.HQdata);
