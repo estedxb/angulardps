@@ -395,7 +395,6 @@ export class AddPersonComponent implements OnInit {
 
     for (let i = 1900; i < year; i++) {
       this.dropDownYear.push('' + i);
-      this.logger.log('i=' + i);
     }
   }
 
@@ -995,8 +994,6 @@ export class AddPersonComponent implements OnInit {
 
   loadDOBData(dateOfBirth: string) {
 
-    this.logger.log('date of birth=' + dateOfBirth);
-
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
     const monthString: string = dobArrayData[1];
@@ -1196,15 +1193,15 @@ export class AddPersonComponent implements OnInit {
 
   loadObjects(response: any) {
 
-    this.DpsPersonObject = new DpsPerson();
-    this.PersonObject = new Person();
+    // this.DpsPersonObject = new DpsPerson();
+    // this.PersonObject = new Person();
 
-    this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
-    this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
+    // this.SocialSecurityNumberObject = new SocialSecurityNumber();
+    // this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
+    // this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
-    this.DpsPersonObject.person = this.PersonObject;
+    // this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+    // this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject = new DpsPerson();
 

@@ -220,9 +220,11 @@ export class InvoiceSettingsComponent implements OnInit {
                       if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.payed === true)
                       {
                         this._selectedIndex = 0;
+                        this.selectedIndex = 0;
                       }
                       else {
                         this._selectedIndex = 1;
+                        this.selectedIndex = 1;
                       } 
                     }
                     else
