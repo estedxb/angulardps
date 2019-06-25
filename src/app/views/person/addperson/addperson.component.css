@@ -144,3 +144,8 @@
   left: 20px;
   top: 13px;
 }
+
+.floatbreak {
+  clear: both;
+  float: none;
+}
