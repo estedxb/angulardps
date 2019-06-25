@@ -19,6 +19,7 @@ import { CreateWorkTimeComponent } from './componentcontrols/createworktime/crea
 import { CreateContractComponent } from './componentcontrols/createcontract/createcontract.component';
 import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
 import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
+import { CalendarDOBComponent } from './componentcontrols/calendardob/calendardob.component';
 import { ZichmetComponent } from './componentcontrols/zichmet/zichmet.component';
 import { CurrencyComponent } from './componentcontrols/currency/currency.component';
 
@@ -111,9 +112,9 @@ export const routingComponents = [
   EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent, CalendarComponent,
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
-  CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent, B2cloginComponent,
+  CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
   CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
-  EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe
+  EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe, CalendarDOBComponent, B2cloginComponent
 ];
 
 export const entringComponents = [
