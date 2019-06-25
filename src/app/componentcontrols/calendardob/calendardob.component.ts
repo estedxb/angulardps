@@ -3,11 +3,11 @@ import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 import { LoggingService } from '../../shared/logging.service';
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  selector: 'app-calendardob',
+  templateUrl: './calendardob.component.html',
+  styleUrls: ['./calendardob.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarDOBComponent implements OnInit {
   set selectedValue(value: any) { this._selectedValuedays = value; }
   get selectedValue(): any { return this._selectedValuedays; }
   set selectedIndex(value: number) { this._selectedIndexdays = value; this.value = this.dataDropDown[this.selectedIndex]; }
@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.CalendarData !== this.oldCalendarData) {
       this.oldCalendarData = this.CalendarData;
-      this.loadDOBData(this.CalendarData);
+      this.loadDOBDataNew(this.CalendarData);
     }
 
     if (this.disableAll === true) {

@@ -68,7 +68,9 @@
                       [style.margin-left.px]="contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth * contract.workSchedule.workDays.length)"
                       [style.width.px]="contract.workSchedule.workDays[0].dayOfWeek * CellWidth * contract.workSchedule.workDays.length"
                       [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
+
                       <div class="contractActionbtngrp">
+
                         <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
                           *ngIf="! contract.childContractId > 0 "
                           (mouseover)="onContractOver(contract.customerContractId,true)"

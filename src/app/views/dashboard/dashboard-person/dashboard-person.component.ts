@@ -83,6 +83,7 @@ export class DashboardPersonComponent implements OnInit {
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.loginaccessToken = this.dpsLoginToken.accessToken;
     this.SelectedDates = this.getSelectedDates();
+    this.logger.log('onPageInit SelectedDates :: ' + this.SelectedDates);
     const localstartDate = this.startDate.getFullYear() + '-' + this.formateZero(this.startDate.getMonth() + 1)
       + '-' + this.formateZero(this.startDate.getDate());
     const localendDate = this.endDate.getFullYear() + '-' + this.formateZero(this.endDate.getMonth() + 1)
@@ -94,7 +95,7 @@ export class DashboardPersonComponent implements OnInit {
 
     this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
       .subscribe(dpsSchedule => {
-        this.logger.log('getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
+        this.logger.log('onPageInit getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
         this.maindatas = dpsSchedule.persons;
         this.onPersonKeyup('');
         this.logger.log('maindatas ::', this.maindatas);
@@ -105,7 +106,7 @@ export class DashboardPersonComponent implements OnInit {
         this.errorMsg = 'Fout bij het ophalen van de planning.';
       });
 
-    this.logger.log('this.currentPage : ' + this.currentPage);
+    this.logger.log('Dasboard-person onPageInit this.currentPage : ' + this.currentPage);
     if (this.currentPage === 'contract') {
       if (this.Id !== '' || this.Id !== undefined || this.Id !== null) {
         // openContract();

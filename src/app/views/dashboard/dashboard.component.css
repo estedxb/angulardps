@@ -465,7 +465,7 @@ sup.notify {
 }
 #PersonContents .contractActions {
   position: absolute;
-  border: 0px solid red;
+  border: 1px solid red;
   height: 34px;
   /*
   display: none;
@@ -477,7 +477,7 @@ sup.notify {
   width: 250px;
   height: 34px;
   padding: 0px;
-  border: 0px solid white;
+  border: 1px solid white;
 }
 #PersonContents .contractActionbtn {
   margin: 0px;
@@ -501,14 +501,14 @@ sup.notify {
   line-height: 34px;
   margin: -1px;
   vertical-align: middle;
-  border: 0px solid purple;
+  border: 1px solid purple;
 }
 #PersonContents .contractActionbtn .btnLeftIcon,
 #PersonContents .contractActionbtn .btnRightIcon {
   width: 34px;
   padding: 2px;
   margin: 0px;
-  border: 0px solid violet;
+  border: 1px solid violet;
 }
 
 #PersonContents .contractActionbtn .btnLeftIcon {
