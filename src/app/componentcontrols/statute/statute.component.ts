@@ -311,6 +311,9 @@ ngOnInit() {
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
 
+      this.logger.log("statutes=");
+      this.logger.log(this.statutes);
+
       this.fillTitles();
       this.setParitairCommitteArray();
 
