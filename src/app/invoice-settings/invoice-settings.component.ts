@@ -134,6 +134,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
+    this.logger.log("change detected");
+
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
       this.currencyDataShift[i] = '€';

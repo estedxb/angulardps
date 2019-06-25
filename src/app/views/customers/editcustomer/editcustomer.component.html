@@ -17,7 +17,7 @@
       </div>
       <div class="col col-sm-7"></div>
     </div>
-    <app-contactperson [CTFormData]="editObject" (childEvent)="receiveCTdata($event)"></app-contactperson>
+    <app-contactperson [page]="pageType" [CTFormData]="editObject" (childEvent)="receiveCTdata($event)"></app-contactperson>
   </div>
   <div id="CustomerDetails" class="customerBox">
     <div class="row panelheader">
