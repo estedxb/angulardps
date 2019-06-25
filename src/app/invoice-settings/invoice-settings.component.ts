@@ -307,9 +307,15 @@ export class InvoiceSettingsComponent implements OnInit {
                     }
   
                      if(this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false)
-                         this.currencyDataShift[0] = "€";
+                     {
+                      this.currencyDataShift[0] = "€";
+                      this.currencyShift = 0;
+                     }
                      else
-                       this.currencyDataShift[0] = "%";
+                     {
+                      this.currencyShift = 1;
+                      this.currencyDataShift[0] = "%";
+                     }
                      
                      this.shiftAllowances[0].amount = parseInt(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount,10);
                      this.shiftAllowances[0].shiftName = this.FPFormData.data.invoiceSettings.shiftAllowances[0].shiftName;
@@ -321,9 +327,15 @@ export class InvoiceSettingsComponent implements OnInit {
                         {
 
                           if(element.nominal === false)
-                              this.currencyDataShift[counter] = "€";
+                          {
+                            this.currencyDataShift[counter] = "€";
+                            this.currencyShift = 0;
+                          }
                           else
-                              this.currencyDataShift[counter] = "%";
+                          {
+                            this.currencyShift = 1;
+                            this.currencyDataShift[counter] = "%";
+                          }
 
                           this.addRows(element.shiftName,element.amount,element.nominal);
                           this.shiftAllowances[counter].nominal = element.nominal;
@@ -394,9 +406,15 @@ export class InvoiceSettingsComponent implements OnInit {
                       this.otherAllowances[anothercounter].nominal = element.nominal;
 
                       if(this.FPFormData.data.invoiceSettings.otherAllowances[0].nominal === false)
-                          this.currencyDataOther[0] = "€";
+                      {
+                        this.currencyOther = 0;
+                        this.currencyDataOther[0] = "€";
+                      }
                       else
-                          this.currencyDataOther[0] = "%";
+                      {
+                        this.currencyOther = 1;
+                        this.currencyDataOther[0] = "%";
+                      }
 
                     }
                     else 
@@ -412,9 +430,15 @@ export class InvoiceSettingsComponent implements OnInit {
                         formGroup.controls['AndreBox2'].setValue(element.amount);   
 
                         if(this.FPFormData.data.invoiceSettings.otherAllowances[anothercounter].nominal === false)
-                            this.currencyDataOther[anothercounter] = "€";
+                        {
+                          this.currencyOther = 0;
+                          this.currencyDataOther[anothercounter] = "€";
+                        }
                         else
-                            this.currencyDataOther[anothercounter] = "%";
+                        {
+                          this.currencyOther = 1;
+                          this.currencyDataOther[anothercounter] = "%";
+                        }
                       }                                      
                     }  
                       anothercounter += 1;
