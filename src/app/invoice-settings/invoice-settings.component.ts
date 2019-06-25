@@ -83,8 +83,8 @@ export class InvoiceSettingsComponent implements OnInit {
   public EchoChange:any = "1.69";
   public DimonaChange:any = "0.3510";
 
-  public currencyChoice:number = 0;
-  public currencyNewChoice:number = 0;
+  public currencyShift:number = 0;
+  public currencyOther:number = 0;
 
   constructor(private fb: FormBuilder, private logger: LoggingService) { } 
   
@@ -139,11 +139,13 @@ export class InvoiceSettingsComponent implements OnInit {
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
       this.currencyDataShift[i] = '€';
+      this.currencyShift = 0;
       this.changeObject();
     }
     else {
       this.shiftAllowances[i].nominal = true;
       this.currencyDataShift[i] = '%';
+      this.currencyShift = 1;
       this.changeObject();
     }
 
@@ -154,11 +156,13 @@ export class InvoiceSettingsComponent implements OnInit {
     if ( $event === '€') {
       this.otherAllowances[i].nominal = false;
       this.currencyDataOther[i] = '€';
+      this.currencyOther = 0;
       this.changeObject();
     }
     else {
       this.otherAllowances[i].nominal = true;
       this.currencyDataOther[i] = '%';
+      this.currencyOther = 1;
       this.changeObject();
     }
 
@@ -454,6 +458,9 @@ export class InvoiceSettingsComponent implements OnInit {
     this.shiftAllowanceCounter = 1;
     this.otherAllowanceCounter = 1;
 
+    this.currencyShift = 0;
+    this.currencyOther = 0;
+
     this.shiftAllowances.push(this.shiftAllowanceObject);
 
     if(this.otherAllowances.length === 0)
@@ -523,8 +530,6 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeInitialStatus();
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
-
-    
   }
 
   changeInitialStatus() {
