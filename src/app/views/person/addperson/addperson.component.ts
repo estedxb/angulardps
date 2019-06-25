@@ -1686,11 +1686,10 @@ export class AddPersonComponent implements OnInit {
 
         this.setPositionIFEmpty();
         this.postPersonData();
-        this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
+        // this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
         //this.showFormIndex = 3;
         //redirect to dashboard;
 
-        this.router.navigate(['/dashboard']);
       }
     }
   }
@@ -1699,13 +1698,14 @@ export class AddPersonComponent implements OnInit {
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
+      this.router.navigate(['/dashboard']);
       //this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
           this.ShowMessage('Persoon maakt record mislukt.', '');
-          this.showFormIndex = 4;
+          //this.showFormIndex = 4;
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
           this.logger.log('response code=' + err.status);
