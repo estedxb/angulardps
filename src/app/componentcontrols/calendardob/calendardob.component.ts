@@ -35,13 +35,8 @@ export class CalendarDOBComponent implements OnInit {
     this.selectedYear = 0;
     this.dropDownYear = [];
 
-    if (this.componentType === "Contract")
-      this.dropDownYear = ['' + today.getFullYear(), '' + (today.getFullYear() + 1)];
-    else {
-      for (let i: number = 1900; i <= 2020; i++)
-        this.dropDownYear.push("" + i);
-    }
-
+    for (let i: number = 1900; i <= 2020; i++)
+          this.dropDownYear.push("" + i);
 
     this.calendarObject = {
       dayString: '1',
@@ -126,21 +121,32 @@ export class CalendarDOBComponent implements OnInit {
   loadDOBDataNew(calendarData) {
 
     const calendarArray = calendarData.split('/');
-    let yearString = 0;
+    let yearString = "";
 
     let currentYear = (new Date()).getFullYear() % 100;
 
-    if (parseInt(calendarArray[2], 10) >= 0 && parseInt(calendarArray[2], 10) <= currentYear)
-      yearString = parseInt(calendarArray[2], 10) + 2000;
+    if(calendarArray[2].length === 2)
+    {
+      if (parseInt(calendarArray[2], 10) >= 0 && parseInt(calendarArray[2], 10) <= currentYear)
+          yearString = "" + (parseInt(calendarArray[2], 10) + 2000);
+      else
+          yearString = "" + (parseInt(calendarArray[2], 10) + 1900);
+    }
     else
-      yearString = (parseInt(calendarArray[2], 10) + 1900);
+    {
+      if(calendarArray[2].length === 4)
+          yearString = calendarArray[2];
+    }
 
     this.selectedIndex = parseInt(calendarArray[0], 10);
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
 
     for (let i = 0; i < this.dropDownYear.length; i++) {
-      if (yearString.toString() === this.dropDownYear[i])
+      if(yearString.toString() === this.dropDownYear[i])
+      {
         this.selectedYear = i;
+        this._selectedIndexYear = i;
+      }
     }
 
   }

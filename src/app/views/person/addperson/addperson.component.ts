@@ -808,16 +808,38 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
+    this.logger.log("year="+year);
+    this.logger.log("day="+day);
+    this.logger.log("month="+month);
+
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
 
-    if (day >= 1 && day <= 31) {
-      this.selectedIndex = day;
-      this._selectedIndexdays = day;
+    this.logger.log("days");
+    this.logger.log(this.dataDropDown);
+
+    this.AddPersonForm1.get('dateOfBirth').disable();
+    this.AddPersonForm1.get('monthOfBirth').disable();
+    this.AddPersonForm1.get('yearOfBirth').disable();
+
+    if (day >= 1 && day <= 31) 
+    {
+      for (let i = 0; i < this.dataDropDown.length; i++) 
+      {
+          if(day.toString() === this.dataDropDown[i])
+          {
+            this.logger.log("day found at i="+i);
+            this.logger.log(this.dataDropDown[i]);
+            this._selectedIndexdays = i;
+            this.selectedIndex = i+1;
+            // this._selectedIndexdays = i;
+          }
+      }
     }
 
-    if (month >= 1 && month <= 12) {
+    if (month >= 1 && month <= 12) 
+    {
       this.selectedIndexMonth = month - 1;
       this._selectedIndexMonth = month - 1;
     }
@@ -847,6 +869,7 @@ export class AddPersonComponent implements OnInit {
     this.monthString = (this.selectedIndexMonth + 1);
     this.dayString = this.dataDropDown[this.selectedIndex - 1];
 
+    this.logger.log("this.dayString="+this.dayString);
 
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
       this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
@@ -1000,6 +1023,8 @@ export class AddPersonComponent implements OnInit {
   }
 
   loadDOBData(dateOfBirth: string) {
+
+    this.logger.log("load dob data");
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -1353,7 +1378,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = this.AddPersonForm1.get('extra').value;
+    this.DpsPersonObject.addittionalInformation = ""+ this.extra;
 
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
     this.DpsPersonObject.medicalAttestation.location = '';
@@ -1413,6 +1438,8 @@ export class AddPersonComponent implements OnInit {
 
 
   receiveZichMet($event) {
+
+    this.logger.log("received zich met data="+$event.vehicleName);
 
     this.receiveZichmetdata = $event.vehicleName;
     this.zichmetdata = $event.vehicleName;
@@ -1683,7 +1710,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
 
     this.logger.log("extra="+this.extra);
-    this.DpsPersonObject.addittionalInformation = this.AddPersonForm1.get('extra').value;
+    this.DpsPersonObject.addittionalInformation = this.extra;
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
 
   }
@@ -1746,6 +1773,8 @@ export class AddPersonComponent implements OnInit {
 
   onBackwardClick() {
     this.showFormIndex = 1;
+    let ssid:string = this.AddPersonForm1.get('socialSecurityNumber').value;
+    this.newCustomSSIDValidator(ssid);
     this.ShowMessage('terug', '');
   }
 
