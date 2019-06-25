@@ -91,16 +91,18 @@
 
   <div class="col col-sm-3" *ngIf="showFormIndex === 1">
     <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
-        src="../../assets/svg/right-arrow.svg" style="width:20px" /></button><br />
-    <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-        src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
-  </div>
-  <div class="col col-sm-3" *ngIf="showFormIndex === 2">
-    <button class="greenbtnnew" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Bedrijf opslaan
-      <img src="../../assets/svg/checked.svg" style="width:20px;" /></button><br />
+        src="../../assets/svg/right-arrow.svg" style="width:20px" /></button>
+    <div class="floatbreak"></div>
     <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
         src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
   </div>
 
+  <div class="col col-sm-3" *ngIf="showFormIndex === 2">
+    <button class="greenbtnnew" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Bedrijf opslaan
+      <img src="../../assets/svg/checked.svg" style="width:20px;" /></button>
+    <div class="floatbreak"></div>
+    <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+        src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+  </div>
 
 </div>

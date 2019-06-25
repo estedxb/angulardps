@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import * as Msal from 'msal';
 import { MsalServiceLocal } from '../../shared/msal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -24,6 +25,8 @@ export class MenuComponent implements OnInit {
   logout(): void {
     this.logger.log('Logout');
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
+    localStorage.removeItem('dpsLoginToken');
+    this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     // this.msalService.logout();
   }
 }
