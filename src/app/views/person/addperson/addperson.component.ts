@@ -1299,6 +1299,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.nationality = this.recvdNationalityString;
 
     this.DpsPersonObject.person.travelMode = this.receiveZichmetdata;
+    this.zichmetdata = this.receiveZichmetdata;
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
@@ -1352,7 +1353,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = this.extra;
+    this.DpsPersonObject.addittionalInformation = this.AddPersonForm1.get('extra').value;
+
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
     this.DpsPersonObject.medicalAttestation.location = '';
     this.DpsPersonObject.medicalAttestation.name = '';
@@ -1413,6 +1415,7 @@ export class AddPersonComponent implements OnInit {
   receiveZichMet($event) {
 
     this.receiveZichmetdata = $event.vehicleName;
+    this.zichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -1674,7 +1677,15 @@ export class AddPersonComponent implements OnInit {
   }
 
   setPositionIFEmpty() {
+
+    this.DpsPersonObject.statute = new Statute();
+    this.DpsPersonObject.statute.name = this.dataDropDownStatute[this.selectedStatuteIndex];
+    this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
+
+    this.logger.log("extra="+this.extra);
+    this.DpsPersonObject.addittionalInformation = this.AddPersonForm1.get('extra').value;
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
+
   }
 
   onFormwardClick() {
@@ -1702,7 +1713,7 @@ export class AddPersonComponent implements OnInit {
   postPersonData() {
 
     this.ShowMessage('Persoonsrecord creëren ....', '');
-    
+
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
