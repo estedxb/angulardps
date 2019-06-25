@@ -584,9 +584,9 @@ export class AddPersonComponent implements OnInit {
       if (SSID.length > 4) {
         SSID = this.insertCharAt(SSID, 5, '.');
         if (SSID.length > 7) {
-          SSID = this.insertCharAt(SSID, 8,  '-');
+          SSID = this.insertCharAt(SSID, 8, '-');
           if (SSID.length > 11) {
-            SSID = this.insertCharAt(SSID, 12,  '.');
+            SSID = this.insertCharAt(SSID, 12, '.');
           }
         }
       }
@@ -594,73 +594,73 @@ export class AddPersonComponent implements OnInit {
     this.logger.log('reFormatSSID SSID after = ) ' + SSID);
     return SSID;
   }
-  insertCharAt (SSID:string, index:number, newchar:string) {
+  insertCharAt(SSID: string, index: number, newchar: string) {
     if (index > 0)
       return SSID.substring(0, index) + newchar + SSID.substring(index, SSID.length);
 
     return newchar + SSID;
   };
-/*
-  format($event) {
-
-    let counter = 0;
-    let characters: string = ""
-
-    let ssid = $event;
-
-    for (let i = 0; i < ssid.length; i++) {
-      if (i < 2) {
-        //check digits
-        if (this.checkDigits(ssid.charAt(i)) === false)
-          this.AddPersonForm1.get('socialSecurityNumber').setValue("");
-        else {
-          this.logger.log("ssid=" + ssid);
-          if (i === 1)
-            characters += ssid.charAt(i) + ".";
-          else
-            characters += ssid.charAt(i);
-
-          this.AddPersonForm1.get('socialSecurityNumber').setValue(characters);
+  /*
+    format($event) {
+  
+      let counter = 0;
+      let characters: string = ""
+  
+      let ssid = $event;
+  
+      for (let i = 0; i < ssid.length; i++) {
+        if (i < 2) {
+          //check digits
+          if (this.checkDigits(ssid.charAt(i)) === false)
+            this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+          else {
+            this.logger.log("ssid=" + ssid);
+            if (i === 1)
+              characters += ssid.charAt(i) + ".";
+            else
+              characters += ssid.charAt(i);
+  
+            this.AddPersonForm1.get('socialSecurityNumber').setValue(characters);
+          }
         }
+  
+        if (i === 2) {
+          //check dot
+          //this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+        }
+  
+        if (i >= 3 && i < 5) {
+          // numbers
+        }
+  
+        if (i === 5) {
+          //check dot
+        }
+  
+        if (i > 5 && i < 8) {
+          // numbers
+        }
+  
+        if (i === 8) {
+          // hyphen
+        }
+  
+        if (i > 8 && i < 12) {
+  
+        }
+  
+        if (i === 12) {
+          // dot
+        }
+  
+        if (i > 12 && i <= ssid.length) {
+          // digits
+        }
+  
       }
-
-      if (i === 2) {
-        //check dot
-        //this.AddPersonForm1.get('socialSecurityNumber').setValue("");
-      }
-
-      if (i >= 3 && i < 5) {
-        // numbers
-      }
-
-      if (i === 5) {
-        //check dot
-      }
-
-      if (i > 5 && i < 8) {
-        // numbers
-      }
-
-      if (i === 8) {
-        // hyphen
-      }
-
-      if (i > 8 && i < 12) {
-
-      }
-
-      if (i === 12) {
-        // dot
-      }
-
-      if (i > 12 && i <= ssid.length) {
-        // digits
-      }
-
+  
     }
-
-  }
-*/
+  */
   validatePersonSsid($event) {
 
     let ssid = $event;
@@ -917,25 +917,25 @@ export class AddPersonComponent implements OnInit {
   }
 
   setPersonVatNumber() {
-
-    const ssid: number = this.AddPersonForm1.get('socialSecurityNumber').value;
-
+    // const ssid: number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.createPersonObjects();
     this.getPersonbySSIDVatNumber();
   }
 
   createPersonObjects() {
+    try {
+      this.DpsPersonObject = new DpsPerson();
+      this.PersonObject = new Person();
 
-    this.DpsPersonObject = new DpsPerson();
-    this.PersonObject = new Person();
+      this.SocialSecurityNumberObject = new SocialSecurityNumber();
+      this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
+      this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
-    this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
-
-    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
-    this.DpsPersonObject.person = this.PersonObject;
-
+      this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+      this.DpsPersonObject.person = this.PersonObject;
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   getPersonbySSIDVatNumber() {
@@ -944,13 +944,13 @@ export class AddPersonComponent implements OnInit {
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
       const customerVatNumber = this.dpsLoginToken.customerVatNumber;
       this.logger.log('customerVatNumber=' + customerVatNumber);
-
+      this.logger.log('getPersonbySSIDVatNumber 1');
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
         this.logger.log("res=" + res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
-
+          this.logger.log('getPersonbySSIDVatNumber error ', err);
           if (err.status === 204) {
             this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
               this.logger.log("res=" + res);
@@ -1471,15 +1471,15 @@ export class AddPersonComponent implements OnInit {
       }
   }
 
-  changeTelephoneNumber(value:string) {
+  changeTelephoneNumber(value: string) {
 
-  if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
-      if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.phone !== null && this.DpsPersonObject.person.phone !== undefined)
-                this.DpsPersonObject.person.phone.number = value;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if (this.DpsPersonObject !== null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.phone !== null && this.DpsPersonObject.person.phone !== undefined)
+        this.DpsPersonObject.person.phone.number = value;
 
     this.changeMessage();
 
-}
+  }
 
   updateMobileNumber(value: string) {
 

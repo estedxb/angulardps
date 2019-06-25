@@ -29,8 +29,8 @@ export class PersonService {
 
   constructor(private http: HttpClient, private logger: LoggingService) {
 
-    if(environment.dataFromAPI_JSON && environment.getPersonBySSIDBoemm !== '') {
-        this.getPersonBySSIDBoemmURL = environment.boemmAPI + environment.getPersonBySSIDBoemm;
+    if (environment.dataFromAPI_JSON && environment.getPersonBySSIDBoemm !== '') {
+      this.getPersonBySSIDBoemmURL = environment.boemmAPI + environment.getPersonBySSIDBoemm;
     }
     else {
       this.getPersonBySSIDBoemmURL = environment.getAssetsDataPath + 'persons.json';
@@ -118,7 +118,7 @@ export class PersonService {
     return result;
   }
 
-  public getPersonBySSIDBoemm(ssid: string):Observable<DpsPerson> {
+  public getPersonBySSIDBoemm(ssid: string): Observable<DpsPerson> {
 
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const result = this.http.get<DpsPerson>(
@@ -128,6 +128,7 @@ export class PersonService {
   }
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<DpsPerson> {
+    this.logger.log('getPersonBySSIDVatnumber :: ' + this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const result = this.http.get<DpsPerson>(
       this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
