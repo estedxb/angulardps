@@ -84,8 +84,8 @@ export class AddPersonComponent implements OnInit {
   public selectedStatuteIndex: number = 0;
 
   public selectedlanguageObject: any = {
-    name: "Dutch",
-    shortName: "nl"
+    name: 'Dutch',
+    shortName: 'nl'
   };
 
   public showFormIndex = 1;
@@ -108,8 +108,8 @@ export class AddPersonComponent implements OnInit {
   public bbic: any = '';
   public iban: any = '';
 
-  public Id = "";
-  public currentPage = "";
+  public Id = '';
+  public currentPage = '';
   public formValid = true;
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
@@ -305,7 +305,7 @@ export class AddPersonComponent implements OnInit {
       travelMode: new FormControl('', [Validators.required])
     });
 
-    this.positionChosen = "";
+    this.positionChosen = '';
     this.positionId = 0;
     this.selectedPositionIndex = 0;
 
@@ -371,7 +371,7 @@ export class AddPersonComponent implements OnInit {
       let positionObject = maindatas[i].position.name;
       this.dataDropDownFunctie.push(positionObject);
       this.dataDropDownFunctieIds.push(maindatas[i].position.id);
-      this.logger.log("positon in maindatas=" + maindatas[i].id);
+      this.logger.log('positon in maindatas=' + maindatas[i].id);
     }
     this.selectedPositionIndex = 0;
   }
@@ -395,7 +395,7 @@ export class AddPersonComponent implements OnInit {
 
     for (let i = 1900; i < year; i++) {
       this.dropDownYear.push('' + i);
-      this.logger.log("i=" + i);
+      this.logger.log('i=' + i);
     }
   }
 
@@ -434,15 +434,15 @@ export class AddPersonComponent implements OnInit {
   }
 
   findIndex(position: string) {
-    this.logger.log("position=" + position);
+    this.logger.log('position=' + position);
     this.logger.log(this.maindatas);
 
     for (let i = 0; i < this.maindatas.length; i++) {
       if (this.maindatas[i].position.name !== undefined)
         if (position === this.maindatas[i].position.name) {
           //this.selectedPositionIndex = this.maindatas[i].id;
-          this.logger.log("selectedPositionIndex=" + this.selectedPositionIndex);
-          this.DpsPersonObject.customerPostionId = "" + this.maindatas[i].id;
+          this.logger.log('selectedPositionIndex=' + this.selectedPositionIndex);
+          this.DpsPersonObject.customerPostionId = '' + this.maindatas[i].id;
         }
     }
 
@@ -463,7 +463,7 @@ export class AddPersonComponent implements OnInit {
   updatePosition() {
 
     this.DpsPersonObject = this.message.data;
-    this.DpsPersonObject.customerPostionId = "" + this.positionId;
+    this.DpsPersonObject.customerPostionId = '' + this.positionId;
 
     this.changeMessage();
 
@@ -495,7 +495,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   onChangeDropDownDate($event) {
-    this.logger.log("selected day=" + $event.target.value);
+    this.logger.log('selected day=' + $event.target.value);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined) {
@@ -519,7 +519,7 @@ export class AddPersonComponent implements OnInit {
 
   stripDigits(ssid: string) {
 
-    let digits: string = "";
+    let digits: string = '';
 
     for (let i: number = 0; i < ssid.length; i++) {
       if (ssid.charAt(i) >= '0' && ssid.charAt(i) <= '9')
@@ -602,7 +602,7 @@ export class AddPersonComponent implements OnInit {
     format($event) {
   
       let counter = 0;
-      let characters: string = ""
+      let characters: string = ''
   
       let ssid = $event;
   
@@ -610,11 +610,11 @@ export class AddPersonComponent implements OnInit {
         if (i < 2) {
           //check digits
           if (this.checkDigits(ssid.charAt(i)) === false)
-            this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+            this.AddPersonForm1.get('socialSecurityNumber').setValue('');
           else {
-            this.logger.log("ssid=" + ssid);
+            this.logger.log('ssid=' + ssid);
             if (i === 1)
-              characters += ssid.charAt(i) + ".";
+              characters += ssid.charAt(i) + '.';
             else
               characters += ssid.charAt(i);
   
@@ -624,7 +624,7 @@ export class AddPersonComponent implements OnInit {
   
         if (i === 2) {
           //check dot
-          //this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+          //this.AddPersonForm1.get('socialSecurityNumber').setValue('');
         }
   
         if (i >= 3 && i < 5) {
@@ -664,52 +664,52 @@ export class AddPersonComponent implements OnInit {
     let ssid = $event;
 
     if (ssid.length === 1) {
-      this.logger.log("ssid=" + ssid.length);
+      this.logger.log('ssid=' + ssid.length);
       if (this.checkDigits(ssid) === false) {
-        this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+        this.AddPersonForm1.get('socialSecurityNumber').setValue('');
       }
     }
 
     if (ssid.length === 2) {
 
       if (this.checkDigits(ssid) === true) {
-        this.totalString = ssid + ".";
+        this.totalString = ssid + '.';
         this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       }
       else {
-        this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+        this.AddPersonForm1.get('socialSecurityNumber').setValue('');
       }
     }
 
     if (ssid.length === 5) {
 
-      this.totalString = this.totalString + ssid.substring(3) + ".";
+      this.totalString = this.totalString + ssid.substring(3) + '.';
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log('total string=' + this.totalString);
 
     }
 
     if (ssid.length === 8) {
-      this.logger.log("ssid=" + ssid);
-      this.totalString = this.totalString + ssid.substring(6) + "-";
+      this.logger.log('ssid=' + ssid);
+      this.totalString = this.totalString + ssid.substring(6) + '-';
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log('total string=' + this.totalString);
 
     }
 
     if (ssid.length === 12) {
-      this.logger.log("ssid=" + ssid);
-      this.totalString = this.totalString + ssid.substring(9) + ".";
+      this.logger.log('ssid=' + ssid);
+      this.totalString = this.totalString + ssid.substring(9) + '.';
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log('total string=' + this.totalString);
 
     }
 
     if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
-      this.logger.log("ssid=" + ssid);
+      this.logger.log('ssid=' + ssid);
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+      this.logger.log('total string=' + this.totalString);
     }
 
 
@@ -739,12 +739,12 @@ export class AddPersonComponent implements OnInit {
     let controlNumber: number = -1;
 
     if (secondTwoDigits < 1 || secondTwoDigits > 12) {
-      //this.ShowMessage("Maand is ongeldig!",'');
+      //this.ShowMessage('Maand is ongeldig!','');
       return false;
     }
 
     if (thirdTwoDigits < 1 || thirdTwoDigits >= 32) {
-      //this.ShowMessage("jaar is ongeldig!",'');
+      //this.ShowMessage('jaar is ongeldig!','');
       return false;
     }
 
@@ -753,14 +753,14 @@ export class AddPersonComponent implements OnInit {
     let currentYearTwoDigits = currentYear % 100;
 
     if (firstTwoDigits >= 0 && firstTwoDigits <= currentYearTwoDigits && currentYear >= 2000) {
-      x = parseInt(("2" + firstNineDigits), 10);
+      x = parseInt(('2' + firstNineDigits), 10);
       let newremainder: number = x % 97;
       controlNumber = 97 - newremainder;
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.ShowMessage('Inzendingen zijn onjuist !','');
 
       }
     }
@@ -773,7 +773,7 @@ export class AddPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.ShowMessage('Inzendingen zijn onjuist !','');
       }
 
     }
@@ -821,19 +821,19 @@ export class AddPersonComponent implements OnInit {
         if (this.dropDownYear[i] === (year + 2000).toString()) {
           this.selectedIndexYear = i;
           this._selectedIndexYear = i;
-          this.yearString = "" + (year + 2000).toString();
+          this.yearString = '' + (year + 2000).toString();
         }
       }
     }
     else {
 
-      this.yearString = "" + (year + 1900).toString();
+      this.yearString = '' + (year + 1900).toString();
 
       for (let i = 0; i < this.dropDownYear.length; i++) {
         if (this.dropDownYear[i] === (year + 1900).toString()) {
           this.selectedIndexYear = i;
           this._selectedIndexYear = i;
-          this.yearString = "" + (year + 1900).toString();
+          this.yearString = '' + (year + 1900).toString();
         }
       }
     }
@@ -901,8 +901,8 @@ export class AddPersonComponent implements OnInit {
     data.forEach(element => {
 
       // let obj = {
-      //      "name":  element.name,
-      //      "type": element.type
+      //      'name':  element.name,
+      //      'type': element.type
       // }
 
       this.dataDropDownStatute.push(element.name);
@@ -947,14 +947,14 @@ export class AddPersonComponent implements OnInit {
       this.logger.log('customerVatNumber=' + customerVatNumber);
       this.logger.log('getPersonbySSIDVatNumber 1');
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        this.logger.log("res=" + res);
+        this.logger.log('res=' + res);
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
           this.logger.log('getPersonbySSIDVatNumber error (' + err.status + ')', err);
           if (err.status === 204) {
             this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
-              this.logger.log("res=" + res);
+              this.logger.log('res=' + res);
               this.formValid = true;
               this.loadPersonData(res);
             },
@@ -1332,7 +1332,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
 
-    this.DpsPersonObject.person.status = "";
+    this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = this.selectedStatuteObject.name;
@@ -1342,7 +1342,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
-    this.logger.log("selectedPositionIndex="+this.selectedPositionIndex);
+    this.logger.log('selectedPositionIndex=' + this.selectedPositionIndex);
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
 
     this.DpsPersonObject.renumeration = new Renumeration();
@@ -1574,8 +1574,8 @@ export class AddPersonComponent implements OnInit {
 
   onCountryReceive($event) {
 
-    this.logger.log("on Country Receive=" + $event.Country);
-    this.logger.log("on Country Receive=" + $event['Alpha-2']);
+    this.logger.log('on Country Receive=' + $event.Country);
+    this.logger.log('on Country Receive=' + $event['Alpha-2']);
 
     this.recvdCountryString = $event.Country;
     this.recvdCountryCode = $event['Alpha-2'];
@@ -1639,7 +1639,7 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.get('vastNumber').valid === true &&
       this.AddPersonForm1.get('emailAddress').valid === true &&
       this.AddPersonForm1.get('iban').valid === true) {
-      console.log("form valid");
+      console.log('form valid');
       return true;
     }
   }
@@ -1680,14 +1680,13 @@ export class AddPersonComponent implements OnInit {
       if (this.checkValidation())
         this.showFormIndex = 2;
       else
-        this.ShowMessage("Inzendingen zijn onjuist !", '');
+        this.ShowMessage('Inzendingen zijn onjuist !', '');
 
       this.createObjectsForm1();
     } else {
 
-      if (this.showFormIndex === 2) 
-      {
-        
+      if (this.showFormIndex === 2) {
+
         this.setPositionIFEmpty();
         this.postPersonData();
         this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
