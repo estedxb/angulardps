@@ -38,6 +38,7 @@ export class AddCustomerComponent implements OnInit {
 
   public Id = "";
   public currentPage = "";
+  public pageType:string;
 
   public showFormIndex = 1;
   constructor(private customerService: CustomersService, private logger: LoggingService,
@@ -45,12 +46,15 @@ export class AddCustomerComponent implements OnInit {
 
     this.editObject = { data: '', page: '' };
 
+    this.pageType="add";
+
   }
 
 
   ngOnInit() {
     this.HQFormValid = true;
     this.CTFormValid = true;
+    this.pageType="add";
 
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
       localStorage.getItem('dpsLoginToken') !== '' &&

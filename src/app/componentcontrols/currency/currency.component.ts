@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,EventEmitter,Output } from '@angular/core';
+import { Component, OnInit, Input,EventEmitter,Output, ChangeDetectorRef } from '@angular/core';
 import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
@@ -45,6 +45,7 @@ export class CurrencyComponent implements OnInit {
     }
 
   constructor(private logger:LoggingService) { 
+
   }
 
   ngDoCheck() {
@@ -74,9 +75,23 @@ export class CurrencyComponent implements OnInit {
     this.datacurrencyDropDown = ['€', '%'];
 
     this.childEvent.emit(this.datacurrencyDropDown[0]);
-
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
+  }
 
+  ngAfterViewInit() {
+
+   setTimeout(() => {
+    this.currencyDataForm
+   },0); 
+
+  }
+
+  ngAfterContentInit() {
+
+    setTimeout(() => {
+      this.currencyDataForm
+     },0); 
+  
   }
 
 }

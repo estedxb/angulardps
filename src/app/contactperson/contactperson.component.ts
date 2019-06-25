@@ -21,6 +21,7 @@ export class ContactPersonComponent implements OnInit {
   public languageShortNameNEw;
 
   @Input() public CTFormData;
+  @Input() public page;
   @Output() public childEvent = new EventEmitter();
 
   public oldData: any = {};
@@ -82,9 +83,11 @@ export class ContactPersonComponent implements OnInit {
 
   ngDoCheck() {
 
+
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
         if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
+          this.logger.log("ctform data="+this.CTFormData.page);
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
           this.languageString = this.CTFormData.data.contact.language.name;
@@ -172,6 +175,10 @@ export class ContactPersonComponent implements OnInit {
   changeAls($event) {
     this.alsCheck = $event;
 
+    this.setJSONObject();
+
+    this.logger.log("als check ="+this.alsCheck);
+
   }
 
   setJSONObject() {
@@ -183,6 +190,8 @@ export class ContactPersonComponent implements OnInit {
     // "mobile": this.contact.mobile,
     // "phoneNumber": this.contact.phoneNumber,
     // "language": this.contact.language,
+
+    this.logger.log("json object sending="+this.alsCheck);
 
     this.CTdata = {
       'contact': this.contact,

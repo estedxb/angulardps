@@ -39,6 +39,7 @@ export class AddPersonComponent implements OnInit {
   public recvdCountryCode;
 
   public zichmetdata;
+  public receiveZichmetdata;
 
   public selectedStatuteObject: any = {};
 
@@ -293,7 +294,7 @@ export class AddPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      vatNumber: new FormControl('', [Validators.required]),
+      vastNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -1117,7 +1118,7 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.controls.bic.setValue('');
 
     this.AddPersonForm1.controls.mobileNumber.setValue('');
-    this.AddPersonForm1.controls.vatNumber.setValue('');
+    this.AddPersonForm1.controls.vastNumber.setValue('');
   }
 
   setIndexPosition(position: number) {
@@ -1178,11 +1179,13 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (data.person.phone !== null) {
-      // this.AddPersonForm1.controls.telephoneNumber.setValue(data.person.phone.number);
+      this.AddPersonForm1.controls.vastNumber.setValue(data.person.phone.number);
     }
 
-    if (data.customerVatNumber !== null)
-      this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
+
+    // if(data.customerVatNumber !== null)
+    //   this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
+
 
     if (data.person !== null) {
       this.zichmetdata = data.person.travelMode;
@@ -1203,7 +1206,10 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject = new DpsPerson();
-    this.DpsPersonObject.customerVatNumber = '';
+
+    // doubt here whether from token or from response
+    // this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
+    this.DpsPersonObject.customerVatNumber = response.customerVatNumber;
 
     this.DpsPersonObject.person = new Person();
     this.DpsPersonObject.person.socialSecurityNumber = response.person.socialSecurityNumber;
@@ -1278,7 +1284,7 @@ export class AddPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    this.DpsPersonObject.customerVatNumber = this.AddPersonForm1.get('vatNumber').value;
+    this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
@@ -1287,7 +1293,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.countryOfBirth = this.recvdCountryOfBirth;
     this.DpsPersonObject.person.nationality = this.recvdNationalityString;
 
-    this.DpsPersonObject.person.travelMode = this.zichmetdata;
+    this.DpsPersonObject.person.travelMode = this.receiveZichmetdata;
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
@@ -1312,8 +1318,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.mobile = new PhoneNumber();
     this.DpsPersonObject.person.mobile.number = this.AddPersonForm1.get('mobileNumber').value;
 
-    // this.DpsPersonObject.person.phone = new PhoneNumber();
-    // this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('telephoneNumber').value;
+    this.DpsPersonObject.person.phone = new PhoneNumber();
+    this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('vastNumber').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
@@ -1400,7 +1406,7 @@ export class AddPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.zichmetdata = $event.vehicleName;
+    this.receiveZichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
@@ -1464,6 +1470,16 @@ export class AddPersonComponent implements OnInit {
 
       }
   }
+
+  changeTelephoneNumber(value:string) {
+
+  if(this.DpsPersonObject !== undefined && this.DpsPersonObject.person !== undefined)
+      if(this.DpsPersonObject!==null && this.DpsPersonObject.person !== null && this.DpsPersonObject.person.phone !== null && this.DpsPersonObject.person.phone !== undefined)
+                this.DpsPersonObject.person.phone.number = value;
+
+    this.changeMessage();
+
+}
 
   updateMobileNumber(value: string) {
 
@@ -1618,7 +1634,7 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.get('city').valid === true &&
       this.AddPersonForm1.get('postalCode').valid === true &&
       this.AddPersonForm1.get('mobileNumber').valid === true &&
-      this.AddPersonForm1.get('vatNumber').valid === true &&
+      this.AddPersonForm1.get('vastNumber').valid === true &&
       this.AddPersonForm1.get('emailAddress').valid === true &&
       this.AddPersonForm1.get('iban').valid === true) {
       console.log("form valid");

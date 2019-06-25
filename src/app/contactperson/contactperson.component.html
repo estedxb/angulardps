@@ -106,7 +106,7 @@
                 </ng-template>
             </div>
 
-            <div class="col-sm-4 center-block middle-block" *ngIf="this.CTFormData.page !== 'edit' else blockelse">
+            <div class="col-sm-4 center-block middle-block" *ngIf="page === 'add' else blockelse">
                 <label class="titleBold"> Als gebruiker activeren? </label><br />
                 <ui-switch [checked]="alsCheck" (change)="changeAls($event)" size="small"> </ui-switch> &nbsp;
             </div>

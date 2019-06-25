@@ -23,6 +23,7 @@ export class EditCustomerComponent implements OnInit {
   public editObject: any = { data: '', page: '' };
   public oldHQdata: any;
   public dataCustomerEdit: any;
+  public pageType:string;
 
   constructor(
     private customerService: CustomersService, private data: DataService,
@@ -33,6 +34,8 @@ export class EditCustomerComponent implements OnInit {
       data: '',
       page: ''
     };
+
+    this.pageType = "edit";
 
   }
 
@@ -49,6 +52,7 @@ export class EditCustomerComponent implements OnInit {
   ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
+    this.pageType = "edit";
     this.vatNumber = this.CustomerVatNumber;
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
@@ -172,7 +176,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.contact.postion = response.contact.postion;
         this.HQdata.activateContactAsUser = response.activateContactAsUser;
         this.HQdata.formValid = true;
-        
+
         this.childEvent.emit(this.HQdata);    
       }
 

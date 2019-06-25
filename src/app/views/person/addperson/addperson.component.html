@@ -49,7 +49,11 @@
                   <label class="titleBold"> Rijkregisternummer </label>
                   <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber"
                     class="form-control" name="socialSecurityNumber" [maxlength]="15"
+<<<<<<< HEAD
                     (keypress)="AutoFormatSSIDPress($event)" (keyup)="AutoFormatSSIDUp($event)" type="text" required />
+=======
+                    (keypress)="validatePersonSsid(socialSecurityNumber.value)" type="text" required />
+>>>>>>> 0641031da70554fc3ab5677cc427445b761c7065
                   <div class="form-control-feedback"
                     *ngIf="!newCustomSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -203,10 +207,10 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Vast nummer </label>
-                  <input #vatNumber formControlName="vatNumber" class="form-control" name="vatNumber" type="text"
-                    (change)="changeVatNumber(vatNumber.value)" required />
+                  <input #vastNumber formControlName="vastNumber" class="form-control" name="vastNumber" type="text"
+                    (change)="changeTelephoneNumber(vastNumber.value)" required />
                   <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.vatNumber.invalid && (AddPersonForm1.controls.vatNumber.dirty || AddPersonForm1.controls.vatNumber.touched) else newvalidtelephoneNumber">
+                    *ngIf="AddPersonForm1.controls.vastNumber.invalid && (AddPersonForm1.controls.vastNumber.dirty || AddPersonForm1.controls.vastNumber.touched) else newvalidtelephoneNumber">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidtelephoneNumber>
