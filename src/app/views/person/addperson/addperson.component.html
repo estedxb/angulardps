@@ -411,7 +411,7 @@
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-2 netExpense">
-                    <ui-switch (change)="switchNetExpense($event)" size="small"> </ui-switch>
+                    <ui-switch [checked]="netExpenseSwitch" (change)="switchNetExpense($event)" size="small"> </ui-switch>
                   </div>
                   <div class="col-sm-10">
                     <label class="titleBold">onkostenvergoeding </label>
@@ -442,7 +442,7 @@
               <div class="col col-sm-6">
                 <div class="row netExpense">
                   <div class="col col-sm-2">
-                    <ui-switch (change)="changeKM($event)" size="small"> </ui-switch>
+                    <ui-switch [checked]="switchDistance" (change)="changeKM($event)" size="small"> </ui-switch>
                   </div>
                   <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
                 </div>
@@ -455,7 +455,7 @@
             </div>
             <div class="row inputWithImgNew PersonContactContent">
               <div class="col-sm-12 ">
-                <textarea rows="6" #extraRef (change)="addittionalInformation(extraRef.value)" cols="80"
+                <textarea rows="6" #extraRef class="form-control" formControlName="extra" (change)="addittionalInformation(extraRef.value)" cols="80"
                   name="extra"></textarea>
                 <div class="form-control-feedback"
                   *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">

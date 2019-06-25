@@ -83,6 +83,11 @@ export class AddPersonComponent implements OnInit {
   public selectedPositionIndex: number = 0;
   public selectedStatuteIndex: number = 0;
 
+  public netExpenseSwitch:boolean = false;
+  public switchDistance:boolean = false;
+
+  public extra:string = "";
+
   public selectedlanguageObject: any = {
     name: 'Dutch',
     shortName: 'nl'
@@ -511,6 +516,8 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm2.get('netExpenseAllowance').enable();
     else
       this.AddPersonForm2.get('netExpenseAllowance').disable();
+
+    this.netExpenseSwitch = $event;
 
     this.DpsPersonObject.renumeration.costReimbursment = $event;
     this.logger.log('event=' + $event);
@@ -1332,8 +1339,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
-    this.DpsPersonObject.statute.name = this.selectedStatuteObject.name;
-    this.DpsPersonObject.statute.type = this.selectedStatuteObject.type;
+    this.DpsPersonObject.statute.name = this.dataDropDownStatute[this.selectedStatuteIndex];
+    this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
 
     this.DpsPersonObject.person.language = new Language();
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
@@ -1345,7 +1352,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    this.DpsPersonObject.addittionalInformation = '';
+    this.DpsPersonObject.addittionalInformation = this.extra;
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
     this.DpsPersonObject.medicalAttestation.location = '';
     this.DpsPersonObject.medicalAttestation.name = '';
@@ -1443,15 +1450,15 @@ export class AddPersonComponent implements OnInit {
   }
   onChangeDropDownStatute($event) {
 
+    this.selectedStatuteObject.name = this.dataDropDownStatute[$event.target.value];
+    this.selectedStatuteObject.type = this.statutes[$event.target.value].type;
+
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       this.DpsPersonObject.statute = new Statute();
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
-
-      this.selectedStatuteObject.name = this.dataDropDownStatute[$event.target.value];
-      this.selectedStatuteObject.type = this.statutes[$event.target.value].type;
     }
-    this.logger.log(this.DpsPersonObject);
+
   }
 
   onLanguageReceive($event) {
@@ -1616,6 +1623,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   changeKM($event) {
+    this.switchDistance = $event;
     this.DpsPersonObject.renumeration.transportationAllowance = $event;
   }
 
@@ -1686,15 +1694,15 @@ export class AddPersonComponent implements OnInit {
 
         this.setPositionIFEmpty();
         this.postPersonData();
-        // this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
-        //this.showFormIndex = 3;
-        //redirect to dashboard;
 
       }
     }
   }
 
   postPersonData() {
+
+    this.ShowMessage('Persoonsrecord creëren ....', '');
+    
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
       this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
@@ -1708,9 +1716,17 @@ export class AddPersonComponent implements OnInit {
           //this.showFormIndex = 4;
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
-          this.logger.log('response code=' + err.status);
-          this.logger.log('response body=' + err.error);
-          this.ShowMessage('Persoon maakt record mislukt.', '');
+
+          if(err.status === 200)
+          {
+            this.router.navigate(['/dashboard']);
+            this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
+          }
+          else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
+            this.ShowMessage('Persoon maakt record mislukt.', '');
+          }
           // this.ShowMessage('Error occured='+err.error,'');
         }
       }

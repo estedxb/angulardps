@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.CalendarData !== this.oldCalendarData) {
       this.oldCalendarData = this.CalendarData;
-      this.loadDOBDataNew(this.CalendarData);
+      this.loadDOBData(this.CalendarData);
     }
 
     if (this.disableAll === true) {
