@@ -24,6 +24,6 @@ export class MenuComponent implements OnInit {
   logout(): void {
     this.logger.log('Logout');
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
-    this.msalService.logout();
+    // this.msalService.logout();
   }
 }

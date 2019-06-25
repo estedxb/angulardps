@@ -6,10 +6,8 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PARAMETERS } from '@angular/core/src/util/decorators';
 import { LoggingService } from './logging.service';
-import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 @Injectable({ providedIn: 'root' })
-
 export class AuthService {
   private getVerifyLoginUrl = '';
   public errorMsg;
