@@ -471,8 +471,6 @@ export class AddPersonComponent implements OnInit {
 
   onChangeDropDownYear($event) {
 
-    this.logger.log("year=" + $event.target.value);
-
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       if (this.DpsPersonObject.person !== null && this.DpsPersonObject.person !== undefined) {
 
@@ -1341,6 +1339,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
 
+    this.logger.log("selectedPositionIndex="+this.selectedPositionIndex);
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
 
     this.DpsPersonObject.renumeration = new Renumeration();
@@ -1666,6 +1665,10 @@ export class AddPersonComponent implements OnInit {
     this.openDialog();
   }
 
+  setPositionIFEmpty() {
+    this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
+  }
+
   onFormwardClick() {
     document.getElementById('maincontent').scrollTo(0, 0);
 
@@ -1678,7 +1681,11 @@ export class AddPersonComponent implements OnInit {
 
       this.createObjectsForm1();
     } else {
-      if (this.showFormIndex === 2) {
+
+      if (this.showFormIndex === 2) 
+      {
+        
+        this.setPositionIFEmpty();
         this.postPersonData();
         this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
         //this.showFormIndex = 3;
