@@ -532,17 +532,103 @@ export class AddPersonComponent implements OnInit {
     return digits;
   }
 
+  format($event) {
+
+    let counter = 0;
+    let characters:string = ""
+
+    let ssid = $event;
+
+    for(let i=0;i<ssid.length;i++)
+    {
+      if(i<2)
+      {
+        //check digits
+        if(this.checkDigits(ssid.charAt(i)) === false )
+          this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+        else
+        {
+          this.logger.log("ssid="+ssid);
+          if(i===1)
+            characters += ssid.charAt(i) + ".";
+          else
+            characters += ssid.charAt(i);
+
+            this.AddPersonForm1.get('socialSecurityNumber').setValue(characters);          
+        }
+      }
+
+      if(i===2)
+      {
+        //check dot
+        //this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+      }
+
+      if(i>=3 && i<5)
+      {
+        // numbers
+      }
+
+      if(i===5)
+      {
+        //check dot
+      }
+
+      if(i>5 && i<8)
+      {
+        // numbers
+      }
+
+      if(i===8)
+      {
+        // hyphen
+      }
+
+      if(i>8 && i<12)
+      {
+
+      }
+
+      if(i===12)
+      {
+        // dot
+      }
+
+      if(i>12 && i<=ssid.length)
+      {
+        // digits
+      }
+
+    }
+
+  }
+
   validatePersonSsid($event) {
 
     let ssid = $event;
 
-    if (ssid.length === 2) {
-      this.totalString = ssid + ".";
-      this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);
+    if(ssid.length ===1) {
+     this.logger.log("ssid="+ssid.length);
+      if(this.checkDigits(ssid)===false)
+      {        
+        this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+      }
+    }
+
+    if(ssid.length===2) {
+
+      if(this.checkDigits(ssid)===true)
+      {
+        this.totalString = ssid + ".";
+        this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);  
+      }
+      else {
+        this.AddPersonForm1.get('socialSecurityNumber').setValue("");
+      }
     }
 
     if (ssid.length === 5) {
+      
       this.totalString = this.totalString + ssid.substring(3) + ".";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -550,6 +636,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (ssid.length === 8) {
+      this.logger.log("ssid="+ssid);
       this.totalString = this.totalString + ssid.substring(6) + "-";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -557,6 +644,7 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (ssid.length === 12) {
+      this.logger.log("ssid="+ssid);
       this.totalString = this.totalString + ssid.substring(9) + ".";
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
@@ -564,13 +652,14 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
+      this.logger.log("ssid="+ssid);
       this.totalString = this.totalString + ssid.substring(13);
       this.AddPersonForm1.get('socialSecurityNumber').setValue(this.totalString);
       this.logger.log("total string=" + this.totalString);
     }
+
+
   }
-
-
 
   newCustomSSIDValidator(ssid: string) {
 
@@ -675,8 +764,6 @@ export class AddPersonComponent implements OnInit {
       this._selectedIndexMonth = month - 1;
     }
 
-    this.logger.log("year="+year);
-
     if (year >= 0 && year <= currentYearTwoDigits) {
       for (let i = 0; i < this.dropDownYear.length; i++) {
         if (this.dropDownYear[i] === (year + 2000).toString())
@@ -699,13 +786,10 @@ export class AddPersonComponent implements OnInit {
           this.yearString = "" +  (year + 1900).toString();
         }
       }
-
-     this.logger.log("year string="+this.yearString);
     }
 
     this.monthString = (this.selectedIndexMonth + 1);
     this.dayString = this.dataDropDown[this.selectedIndex - 1];
-
 
 
     if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null && this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
@@ -751,17 +835,14 @@ export class AddPersonComponent implements OnInit {
 
   checkDigits(digitString: string) {
 
-    let digitsValid = false;
-
     for (let index = 0; index < digitString.length; index++) {
       if (digitString[index] >= '0' && digitString[index] <= '9') {
-        digitsValid = true;
       } else {
-        digitsValid = false;
+        return false;
       }
     }
 
-    return digitsValid;
+    return true;
   }
 
   setDummyStatute(data) {
@@ -1521,6 +1602,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   onFormwardClick() {
+    document.getElementById('maincontent').scrollTo(0, 0);
 
     if (this.showFormIndex === 1) {
 
