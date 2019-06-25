@@ -918,7 +918,9 @@ export class AddPersonComponent implements OnInit {
 
   setPersonVatNumber() {
     // const ssid: number = this.AddPersonForm1.get('socialSecurityNumber').value;
+    this.logger.log('setPersonVatNumber');
     this.createPersonObjects();
+    this.logger.log('setPersonVatNumber after createPersonObjects');
     this.getPersonbySSIDVatNumber();
   }
 
@@ -939,6 +941,7 @@ export class AddPersonComponent implements OnInit {
   }
 
   getPersonbySSIDVatNumber() {
+    this.logger.log('getPersonbySSIDVatNumber in');
 
     if (this.validSSID === true) {
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
@@ -950,7 +953,7 @@ export class AddPersonComponent implements OnInit {
         this.loadPersonData(res);
       },
         (err: HttpErrorResponse) => {
-          this.logger.log('getPersonbySSIDVatNumber error ', err);
+          this.logger.log('getPersonbySSIDVatNumber error (' + err.status + ')', err);
           if (err.status === 204) {
             this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
               this.logger.log("res=" + res);
