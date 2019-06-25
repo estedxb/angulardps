@@ -109,6 +109,7 @@ export class AddPersonComponent implements OnInit {
 
   public Id = "";
   public currentPage = "";
+  public formValid = true;
 
   /***** Drop Down functions and variables for calendar days  ********************************************/
   private _selectedValuedays: any; private _selectedIndexdays: any = 0; private _daysvalue: any;
@@ -648,12 +649,10 @@ export class AddPersonComponent implements OnInit {
     if (genderDigits % 2 === 0) {
       this._selectedIndexGender = 1;
       this.selectedGenderIndex = 1;
-      this.logger.log("person is female");
     }
     else {
       this._selectedIndexGender = 0;
       this.selectedGenderIndex = 0;
-      this.logger.log("person is male");
     }
 
   }
@@ -676,6 +675,7 @@ export class AddPersonComponent implements OnInit {
       this._selectedIndexMonth = month - 1;
     }
 
+    this.logger.log("year="+year);
 
     if (year >= 0 && year <= currentYearTwoDigits) {
       for (let i = 0; i < this.dropDownYear.length; i++) {
@@ -690,6 +690,16 @@ export class AddPersonComponent implements OnInit {
     else {
 
       this.yearString = "" +  (year + 1900).toString();
+
+      for (let i = 0; i < this.dropDownYear.length; i++) {
+        if (this.dropDownYear[i] === (year + 1900).toString())
+        {
+          this.selectedIndexYear = i;
+          this._selectedIndexYear = i;
+          this.yearString = "" +  (year + 1900).toString();
+        }
+      }
+
      this.logger.log("year string="+this.yearString);
     }
 
@@ -812,12 +822,18 @@ export class AddPersonComponent implements OnInit {
           {
             this.personsService.getPersonBySSIDBoemm(ssid).subscribe(res => {
               this.logger.log("res=" + res);        
-              this.loadPersonData(res);      
+              this.formValid = true;
+              this.loadPersonData(res);
             },
             (err: HttpErrorResponse) => {
                   this.logger.log('Error occured=' + err.error.message);
-                  this.loadDOBFromSSID();  }
+                  this.formValid = true;
+                  this.loadDOBFromSSID();  
+                }
             );
+          }
+          else {
+            this.formValid = false;
           }
 
           // if (err.error instanceof Error) {
