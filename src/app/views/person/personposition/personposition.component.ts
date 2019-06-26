@@ -395,8 +395,9 @@ export class PersonPositionComponent implements OnInit {
     this.statuteChosen = "";
     if (this.DpsPersonObject !== null) {
       this.DpsPersonObject.statute = new Statute();
-      this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
+      this.DpsPersonObject.statute.name = this.statutes[$event.target.value].name;
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
+      this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].brightStaffingID;
     }
 
     this.changeMessage();

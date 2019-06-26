@@ -171,10 +171,10 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Vast nummer </label>
-            <input #vatNumber (change)="updateVatNumber(vatNumber.value)" formControlName="vatNumber"
-              class="form-control" name="vatNumber" type="text" required />
+            <input #vastNumber (change)="updateVastNumber(vastNumber.value)" formControlName="vastNumber"
+              class="form-control" name="vastNumber" type="text" required />
             <div class="form-control-feedback"
-              *ngIf="editPersonForm.controls.vatNumber.invalid && (editPersonForm.controls.vatNumber.dirty || editPersonForm.controls.vatNumber.touched) else newvalidtelephoneNumber">
+              *ngIf="editPersonForm.controls.vastNumber.invalid && (editPersonForm.controls.vastNumber.dirty || editPersonForm.controls.vastNumber.touched) else newvalidtelephoneNumber">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidtelephoneNumber>

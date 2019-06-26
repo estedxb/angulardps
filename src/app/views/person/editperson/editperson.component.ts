@@ -151,7 +151,7 @@ export class EditPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      vatNumber: new FormControl('', [Validators.required]),
+      vastNumber: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -559,8 +559,8 @@ export class EditPersonComponent implements OnInit {
 
         const genderObject = new Gender();
 
-        if(data.customerVatNumber !== null) {
-          this.editPersonForm.controls.vatNumber.setValue(data.customerVatNumber);
+        if(data.person.phone !== null) {
+          this.editPersonForm.controls.vastNumber.setValue(data.person.phone.number);
         }
 
         if (data.person.gender !== null) {
@@ -604,7 +604,11 @@ export class EditPersonComponent implements OnInit {
       }
 
       if (data.person.phone !== null) {
-        // this.editPersonForm.controls.telephoneNumber.setValue(data.person.phone.number);
+        this.editPersonForm.controls.vastNumber.setValue(data.person.phone.number);
+      }
+
+      if(data.person.travelMode !== null) {
+        this.zichmetdata = data.person.travelMode;
       }
 
 
@@ -775,10 +779,12 @@ export class EditPersonComponent implements OnInit {
     this.changeMessage();
   }
 
-  updateVatNumber(value:string) {
+  updateVastNumber(value:string) {
 
     if(this.DpsPersonObject !== null)
-      this.DpsPersonObject.customerVatNumber = value;
+      if( this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
+          if(this.DpsPersonObject.person.phone !== undefined && this.DpsPersonObject.person.phone !== null)
+              this.DpsPersonObject.person.phone.number = value;
 
     this.changeMessage();
   }
@@ -844,7 +850,7 @@ export class EditPersonComponent implements OnInit {
     //this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
-    this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vatNumber').value;
+    this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vastNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
 
@@ -892,6 +898,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = '';
     this.DpsPersonObject.statute.type = '';
+    this.DpsPersonObject.statute.brightStaffingID = 0;
 
     this.DpsPersonObject.customerPostionId = '';
     this.DpsPersonObject.renumeration = new Renumeration();
