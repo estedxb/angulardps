@@ -1,4 +1,6 @@
-<select [ngModel]="selectedIndex" id="dd_currency" name="dd_currency" class="currency selectcomponent"
+<form [formGroup]="currencyForm" novalidate id="currencyForm">
+    <select [ngModel]="selectedIndex" id="dd_currency" name="dd_currency" formControlName="currency" class="currency selectcomponent"
     (change)="onChange($event)" ng-dropdown required="required">
     <option *ngFor="let data of datacurrencyDropDown let i= index" [attr.data-index]="i" [value]="i">{{data}}</option>
 </select>
+</form>

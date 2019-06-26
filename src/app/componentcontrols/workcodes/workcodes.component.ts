@@ -81,7 +81,7 @@ export class WorkCodesComponent implements OnInit {
 
     if (this.disabled === true) {
       this.HQForm.get('WorkCode').disable();
-      this.HQForm.controls.WorkCode.setValue('');
+      //this.HQForm.controls.WorkCode.setValue('');
     } else {
       this.HQForm.get('WorkCode').enable();
     }
@@ -101,7 +101,7 @@ export class WorkCodesComponent implements OnInit {
 
     if (this.disabled === true) {
       this.HQForm.get('WorkCode').disable();
-      this.HQForm.controls.WorkCode.setValue('');
+      //this.HQForm.controls.WorkCode.setValue('');
     } else {
       this.HQForm.get('WorkCode').enable();
     }

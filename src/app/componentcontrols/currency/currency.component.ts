@@ -1,5 +1,6 @@
 import { Component, OnInit, Input,EventEmitter,Output, ChangeDetectorRef } from '@angular/core';
 import { LoggingService } from 'src/app/shared/logging.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-currency',
@@ -9,10 +10,14 @@ import { LoggingService } from 'src/app/shared/logging.service';
 export class CurrencyComponent implements OnInit {
 
   @Input() public currencyDataForm;
+  @Input() public disabled;
   @Output() public childEvent = new EventEmitter();
+
+  public currencyForm:FormGroup;
 
   public oldcurrencyData;
   public selectedString;
+  public olddisabled;
 
   public datacurrencyDropDown;
 
@@ -50,6 +55,19 @@ export class CurrencyComponent implements OnInit {
 
   ngDoCheck() {
 
+    this.logger.log("enable="+this.disabled);
+
+    if(this.disabled !== this.olddisabled)
+    {
+      this.olddisabled = this.disabled;
+
+      if(this.disabled === true)
+          this.currencyForm.get('currency').enable();
+      else
+          this.currencyForm.get('currency').disable();
+
+    }
+
     if(this.oldcurrencyData !== this.currencyDataForm)
     {
       this.oldcurrencyData = this.currencyDataForm; 
@@ -61,8 +79,15 @@ export class CurrencyComponent implements OnInit {
 
     this.datacurrencyDropDown = ['€', '%'];
 
+    if(this.disabled === true)
+        this.currencyForm.get('currency').enable();
+    else
+        this.currencyForm.get('currency').disable();
+
     if (this.currencyDataForm !== null && this.currencyDataForm !== undefined) 
     {
+      this.logger.log("currency ="+this.currencyDataForm);
+
       for (let i = 0; i < this.datacurrencyDropDown.length; i++) {
         if(this.currencyDataForm === this.datacurrencyDropDown[i])
             this._selectedIndex = i;
@@ -76,6 +101,18 @@ export class CurrencyComponent implements OnInit {
 
     this.childEvent.emit(this.datacurrencyDropDown[0]);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
+
+    this.currencyForm = new FormGroup({
+        currency: new FormControl('')
+    });
+
+    if(this.disabled === true)
+        this.currencyForm.get('currency').enable();
+    else
+        this.currencyForm.get('currency').disable();
+
+    this.logger.log("enable="+this.disabled);
+
   }
 
   ngAfterViewInit() {

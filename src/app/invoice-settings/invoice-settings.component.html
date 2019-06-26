@@ -102,7 +102,10 @@
                                                 <span>Ploegpremie</span>
                                         </div>
                                 </div>
-                                <div class="row dynrow" formArrayName="arrayBox" *ngFor="let Ploegpremiere of ISForm.controls.arrayBox.controls as result; let i=index; first as isFirst; last as isLast">
+
+                                <!-- ISForm.controls.arrayBox.controls -->
+
+                                <div class="row dynrow" formArrayName="arrayBox" *ngFor="let Ploegpremiere of this.ISForm.get('arrayBox')['controls'] as result; let i=index; first as isFirst; last as isLast">
                                         <div class="col col-sm-5" [formGroupName]="i">
                                                 <input #code (change)="setPgBox1(code.value,i)" type="text"
                                                         formControlName="PloegprimeBox1">
@@ -112,7 +115,7 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
-                                                <app-currency [currencyDataForm]="currencyShift" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
+                                                <app-currency [disabled]="ploegpremieSwitch" [currencyDataForm]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
                                         </div>
                                         <div class="col col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
                                                 <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,'')"
@@ -139,7 +142,9 @@
                                                 <span>Andere</span>
                                         </div>
                                 </div>
-                                <div formArrayName="arrayAndreBox" *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let r=index; first as isFirstA; last as isLastA">
+                                <!-- ISForm.controls.arrayAndreBox.controls -->
+
+                                <div formArrayName="arrayAndreBox" *ngFor="let Andre of this.ISForm.get('arrayAndreBox')['controls'] as nresult; let r=index; first as isFirstA; last as isLastA">
                                         <div [formGroupName]="r" class="row dynrow">
                                                 <div class="col col-sm-5">
                                                         <app-workcodes [initialWorkCode]="workCode[r]"
@@ -152,7 +157,7 @@
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
                                                 <div class="col col-sm-2">
-                                                        <app-currency [currencyDataForm]="currencyOther" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
+                                                        <app-currency [disabled]="andreSwitch" [currencyDataForm]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
                                                 </div>
                                                 <div class="col col-sm-2"
                                                         *ngIf="(nresult.length === 1 || isLastA) else removeA">
