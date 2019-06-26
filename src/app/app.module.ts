@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { AlertsModule } from 'angular-alert-module';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatAutocompleteModule, MatInputModule, MatTooltipModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -16,12 +17,14 @@ import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 import { MsalServiceLocal } from './shared/msal.service';
+import { SpinnerComponent } from './componentcontrols/spinner/spinner.component';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents],
+  declarations: [AppComponent, routingComponents, SpinnerComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule,
-    MatInputModule, MatDialogModule, MatSnackBarModule, AppRoutingModule, AngularFontAwesomeModule,
+    MatInputModule, MatDialogModule,MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AngularFontAwesomeModule,
     AutocompleteLibModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule, HttpClientModule,
     ModalModule.forRoot(), AlertModule.forRoot(), TimepickerModule.forRoot(), AlertsModule.forRoot(),
     UiSwitchModule.forRoot({

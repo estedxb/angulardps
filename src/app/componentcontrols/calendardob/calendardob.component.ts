@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 import { LoggingService } from '../../shared/logging.service';
+import { Form, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calendardob',
@@ -56,6 +57,7 @@ export class CalendarDOBComponent implements OnInit {
   @Input() public componentType = null;
   @Output() public childEvent = new EventEmitter();
 
+  public calendarForm:FormGroup;
   public dataDropDown: string[];
   public dropDownMonth: string[];
   public dropDownYear: Array<string>;
@@ -120,6 +122,8 @@ export class CalendarDOBComponent implements OnInit {
 
   loadDOBDataNew(calendarData) {
 
+    this.logger.log("calendar data="+calendarData);
+    
     const calendarArray = calendarData.split('/');
     let yearString = "";
 
@@ -138,7 +142,7 @@ export class CalendarDOBComponent implements OnInit {
           yearString = calendarArray[2];
     }
 
-    this.selectedIndex = parseInt(calendarArray[0], 10);
+    this.selectedIndex = parseInt(calendarArray[0], 10) - 1;
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
 
     for (let i = 0; i < this.dropDownYear.length; i++) {
@@ -255,5 +259,17 @@ export class CalendarDOBComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.calendarForm = new FormGroup({
+      dateOfBirth: new FormControl(''),
+      monthOfBirth: new FormControl(''),
+      yearOfBirth: new FormControl('')
+    });
+
+    this.calendarForm.get('dateOfBirth').disable();
+    this.calendarForm.get('monthOfBirth').disable();
+    this.calendarForm.get('yearOfBirth').disable();
+
+
   }
 }

@@ -1,23 +1,25 @@
+<form [formGroup]="calendarForm" novalidate id="calendarForm">
 <div class="row DOB">
   <div class="col col-sm-3">
-    <select id="dd_days" [(ngModel)]="selectedIndex" name="dd_days" class="inhaalrust selectcomponent"
+    <select id="dd_days" formControlName="dateOfBirth" [(ngModel)]="selectedIndex" name="dd_days" class="inhaalrust selectcomponent"
       (change)="onChangeDropDownDate($event)" ng-dropdown required="required" [disabled]="dayDisableStatus">
-      <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i">
+      <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i" [value]="i">
         {{data}}</option>
     </select>
   </div>
   <div class="col col-sm-5">
-    <select id="dd_months" [(ngModel)]="selectedMonth" name="dd_months" class="inhaalrust1 selectcomponent"
+    <select id="dd_months" formControlName="monthOfBirth" [(ngModel)]="selectedMonth" name="dd_months" class="inhaalrust1 selectcomponent"
       (change)="onChangeDropDownMonth($event)" ng-dropdown required="required" [disabled]="monthDisableStatus">
-      <option *ngFor="let data of dropDownMonth let i= index" [attr.data-index]="i" [value]="i">
+      <option *ngFor="let data of dropDownMonth let k= index" [attr.data-index]="k" [value]="k">
         {{data}}</option>
     </select>
   </div>
   <div class="col col-sm-4">
-    <select id="dd_year" name="dd_year" [(ngModel)]="selectedYear" class="inhaalrust2 selectcomponent"
+    <select id="dd_year" formControlName="yearOfBirth" name="dd_year" [(ngModel)]="selectedYear" class="inhaalrust2 selectcomponent"
       (change)="onChangeDropDownYear($event)" ng-dropdown required="required" [disabled]="yearDisableStatus">
-      <option *ngFor="let data of dropDownYear let i= index" [attr.data-index]="i" [value]="i">
+      <option *ngFor="let data of dropDownYear let j= index" [attr.data-index]="j" [value]="j">
         {{data}}</option>
     </select>
   </div>
 </div>
+</form>

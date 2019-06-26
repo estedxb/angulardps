@@ -210,6 +210,8 @@ export class EditPersonComponent implements OnInit {
 
   newCustomSSIDValidator(ssid: string) {
 
+    this.logger.log("validating ssid");
+
     this.validSSID = false;
     let validSPCharacters = false;
 
@@ -307,6 +309,10 @@ export class EditPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
+    this.logger.log("set calendar");
+    this.logger.log("day="+day);
+    this.logger.log("month="+month);
+    this.logger.log("year="+year);
 
     const yearString: string = ""+year;
     const monthString: string = ""+month;
