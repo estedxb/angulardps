@@ -187,7 +187,7 @@ export class UpdatePersonComponent implements OnInit {
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
 
-            if(err.status === 200)
+            if (err.status === 200)
               this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
 
           } else {
@@ -207,7 +207,7 @@ export class UpdatePersonComponent implements OnInit {
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
 
-            if(err.status === 200)
+            if (err.status === 200)
               this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
 
           } else {

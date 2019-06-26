@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { AlertsService } from 'angular-alert-module';
+
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { WorkSchedule, LoginToken, DpsUser, DpsWorkSchedule, WorkDays, WorkTimes, BreakTimes } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';

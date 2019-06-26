@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { AlertsService } from 'angular-alert-module'; // , private alerts: AlertsService
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { Location, LoginToken, DpsUser, Address } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -38,7 +37,7 @@ export class LocationsComponent implements OnInit {
       this.maindatas = locations;
       this.FilterTheArchive();
       this.logger.log('Locations Forms Data : ', this.maindatas);
-     // this.ShowMessage('Locations is listed successfully.', '');
+      // this.ShowMessage('Locations is listed successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 

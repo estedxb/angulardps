@@ -8,8 +8,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { AlertsModule } from 'angular-alert-module';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule, MatInputModule, MatTooltipModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -24,9 +23,9 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
   declarations: [AppComponent, routingComponents, SpinnerComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule,
-    MatInputModule, MatDialogModule,MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AngularFontAwesomeModule,
+    MatInputModule, MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AngularFontAwesomeModule,
     AutocompleteLibModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule, HttpClientModule,
-    ModalModule.forRoot(), AlertModule.forRoot(), TimepickerModule.forRoot(), AlertsModule.forRoot(),
+    ModalModule.forRoot(), AlertModule.forRoot(), TimepickerModule.forRoot(),
     UiSwitchModule.forRoot({
       size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
     })
