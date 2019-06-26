@@ -247,7 +247,6 @@ export class DashboardPersonComponent implements OnInit {
           dialogConfig.autoFocus = true;
           dialogConfig.width = '700px';
           dialogConfig.data = selectedContract;
-          this.logger.log('selectedContract :: ', selectedContract);
           dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
 
           const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
