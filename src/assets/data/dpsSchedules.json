@@ -1,34 +1,35 @@
 {
-  "startDate": "2019-05-20T00:00:00",
-  "endDate": "2019-05-25T00:00:00",
+  "id": 0,
+  "startDate": "2019-06-17T00:00:00",
+  "endDate": "2019-06-23T00:00:00",
   "customer": {
-    "customerVatpersonId": "123456789101",
-    "customerName": "CustomerTestName"
+    "customerVatNumber": "123456789101",
+    "customerName": null
   },
   "persons": [
     {
-      "personId": "62.11.18-012.12",
-      "personName": "Jannes Martin",
-      "positionName": "Function Two",
+      "personId": "84.12.20-315.60",
+      "personName": "Balaji  Subbiah",
+      "positionName": "New position",
       "personIsEnabled": true,
       "personIsArchived": false,
       "contracts": [
         {
-          "customerContractId": "1",
-          "customerContractName": "123456789101",
+          "customerContractId": "3",
+          "customerContractName": null,
           "workSchedule": {
             "workDays": [
               {
                 "dayOfWeek": 1,
                 "workTimes": [
                   {
-                    "startTime": "8:30",
-                    "endTime": "12:00",
+                    "startTime": "9:00",
+                    "endTime": "13:00",
                     "title": ""
                   },
                   {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
+                    "startTime": "14:00",
+                    "endTime": "17:00",
                     "title": ""
                   }
                 ],
@@ -38,18 +39,120 @@
                 "dayOfWeek": 2,
                 "workTimes": [
                   {
-                    "startTime": "8:30",
-                    "endTime": "12:00",
+                    "startTime": "9:00",
+                    "endTime": "13:00",
                     "title": ""
                   },
                   {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
+                    "startTime": "14:00",
+                    "endTime": "17:00",
                     "title": ""
                   }
                 ],
                 "breakTimes": null
               },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "9:00",
+                    "endTime": "13:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "14:00",
+                    "endTime": "17:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              }
+            ]
+          },
+          "parentContractId": 0,
+          "childContractId": 0
+        }
+      ]
+    },
+    {
+      "personId": "14.09.21-073.71",
+      "personName": "Jannes  Martin",
+      "positionName": "New position",
+      "personIsEnabled": true,
+      "personIsArchived": false,
+      "contracts": [
+        {
+          "customerContractId": "1",
+          "customerContractName": null,
+          "workSchedule": {
+            "workDays": [
+              {
+                "dayOfWeek": 1,
+                "workTimes": [
+                  {
+                    "startTime": "9:00",
+                    "endTime": "13:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "14:00",
+                    "endTime": "17:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 2,
+                "workTimes": [
+                  {
+                    "startTime": "9:00",
+                    "endTime": "13:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "14:00",
+                    "endTime": "17:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              },
+              {
+                "dayOfWeek": 3,
+                "workTimes": [
+                  {
+                    "startTime": "9:00",
+                    "endTime": "13:00",
+                    "title": ""
+                  },
+                  {
+                    "startTime": "14:00",
+                    "endTime": "17:00",
+                    "title": ""
+                  }
+                ],
+                "breakTimes": null
+              }
+            ]
+          },
+          "parentContractId": 0,
+          "childContractId": 0
+        }
+      ]
+    },
+    {
+      "personId": "84.09.16-343.34",
+      "personName": "Jannes  Martin",
+      "positionName": "New position",
+      "personIsEnabled": true,
+      "personIsArchived": false,
+      "contracts": [
+        {
+          "customerContractId": "2",
+          "customerContractName": null,
+          "workSchedule": {
+            "workDays": [
               {
                 "dayOfWeek": 3,
                 "workTimes": [
@@ -81,57 +184,11 @@
                   }
                 ],
                 "breakTimes": null
-              },
-              {
-                "dayOfWeek": 5,
-                "workTimes": [
-                  {
-                    "startTime": "8:30",
-                    "endTime": "12:00",
-                    "title": ""
-                  },
-                  {
-                    "startTime": "13:00",
-                    "endTime": "16:00",
-                    "title": ""
-                  }
-                ],
-                "breakTimes": null
-              },
-              {
-                "dayOfWeek": 6,
-                "workTimes": [
-                  {
-                    "startTime": "00:00",
-                    "endTime": "00:00",
-                    "title": ""
-                  },
-                  {
-                    "startTime": "00:00",
-                    "endTime": "00:00",
-                    "title": ""
-                  }
-                ],
-                "breakTimes": null
-              },
-              {
-                "dayOfWeek": 7,
-                "workTimes": [
-                  {
-                    "startTime": "00:00",
-                    "endTime": "00:00",
-                    "title": ""
-                  },
-                  {
-                    "startTime": "00:00",
-                    "endTime": "00:00",
-                    "title": ""
-                  }
-                ],
-                "breakTimes": null
               }
             ]
-          }
+          },
+          "parentContractId": 0,
+          "childContractId": 0
         }
       ]
     }

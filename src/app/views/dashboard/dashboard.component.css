@@ -139,11 +139,11 @@
   font-weight: 600;
   padding: 0px;
   text-align: center;
-  height: 102px;
+  height: 82px;
 }
 .Contents .col-split .centerline {
   width: 1px;
-  height: 102px;
+  height: 82px;
   border-right: 0.5px dotted rgba(255, 255, 255, 0.15);
   margin: auto;
 }
@@ -156,27 +156,29 @@
 }
 
 .Contents .col-split .workbar {
-  border-radius: 1.5px;
-  height: 3px;
+  border-radius: 2px;
+  height: 4px;
   position: absolute;
   vertical-align: middle;
-  margin-top: 50px;
+  margin-top: 41px;
   cursor: pointer;
 }
 
 .Contents .col-split .SelectedContract .workbar {
   border-radius: 5px;
   height: 10px;
-  margin-top: 48px;
+  margin-top: 39px;
 }
-.Contents .col-split .workbar .tt {
+.Contents .col-split .workbar .workbarTime {
   display: none;
   font-weight: lighter;
   font-size: 8px;
   color: #fff;
+  margin: auto;
   margin-top: -1px;
+  width: 60px;
 }
-.Contents .col-split .SelectedContract .workbar .tt {
+.Contents .col-split .SelectedContract .workbar .workbarTime {
   display: block;
 }
 
@@ -218,8 +220,8 @@
   width: auto;
 }
 .col-split-f {
-  min-width: 40px;
-  width: 40px;
+  min-width: 30px;
+  width: 30px;
   padding: 0px;
   margin: 0px;
 }
@@ -255,7 +257,7 @@
 }
 
 .dashboardactioncontent table .Contents button img {
-  width: 40px;
+  width: 30px;
 }
 
 .dashboardactioncontent {
@@ -465,29 +467,53 @@ sup.notify {
 }
 #PersonContents .contractActions {
   position: absolute;
-  border: 1px solid red;
-  height: 34px;
-  /*
+  border: 0px solid red;
+  height: 26px;
   display: none;
-  margin-top: -17px;
-  */
+  margin-top: -13px;
 }
 #PersonContents .contractActionbtngrp {
   margin: auto;
-  width: 250px;
-  height: 34px;
+  width: 240px;
+  height: 26px;
   padding: 0px;
-  border: 1px solid white;
+  border: 0px solid white;
+  text-align: center;
+}
+
+#PersonContents .contractActions .contractActionbtngrp .contractActionbtn1 {
+  width: 118px;
+  border: 0px solid #c2a133;
+  float: left;
+}
+#PersonContents .contractActions .contractActionbtngrp .contractActionbtn2 {
+  width: 118px;
+  border: 0px solid #9646e0;
+  float: right;
+}
+#PersonContents
+  .contractActions
+  .contractActionbtngrp
+  .contractActionbtn1
+  .contractActionbtn {
+  float: right;
+}
+#PersonContents
+  .contractActions
+  .contractActionbtngrp
+  .contractActionbtn2
+  .contractActionbtn {
+  float: left;
 }
 #PersonContents .contractActionbtn {
   margin: 0px;
   padding: 0px;
-  border-radius: 17px;
-  border: 1px solid #e37619;
+  border-radius: 13px;
+  border: 0px solid #e37619;
   background: #eaeaea;
   color: #fff;
-  height: 34px;
-  width: 34px;
+  height: 26px;
+  width: 26px;
   text-align: center;
   float: left;
 }
@@ -496,19 +522,20 @@ sup.notify {
 #PersonContents .contractActionbtn .btnRightTextContainer {
   display: none;
   font-weight: bold;
-  width: 84px;
-  height: 34px;
-  line-height: 34px;
-  margin: -1px;
+  width: 92px;
+  height: 26px;
+  line-height: 26px;
+  margin: 0;
   vertical-align: middle;
-  border: 1px solid purple;
+  border: 0px solid purple;
 }
 #PersonContents .contractActionbtn .btnLeftIcon,
 #PersonContents .contractActionbtn .btnRightIcon {
-  width: 34px;
+  width: 26px;
   padding: 2px;
   margin: 0px;
-  border: 1px solid violet;
+  border: 0px solid violet;
+  display: inline-block;
 }
 
 #PersonContents .contractActionbtn .btnLeftIcon {
@@ -521,23 +548,26 @@ sup.notify {
 #PersonContents .contractActionbtn .btnLeftTextContainer {
   float: left;
   background-image: linear-gradient(107deg, #58f40f, #009476);
-  border-bottom-left-radius: 17px;
-  border-top-left-radius: 17px;
+  border-bottom-left-radius: 13px;
+  border-top-left-radius: 13px;
 }
 #PersonContents .contractActionbtn .btnRightTextContainer {
   float: right;
   background-image: linear-gradient(107deg, #ff8000, #ad0000);
-  border-bottom-right-radius: 17px;
-  border-top-right-radius: 17px;
+  border-bottom-right-radius: 13px;
+  border-top-right-radius: 13px;
 }
 
 #PersonContents .contractActionbtn:hover {
-  width: 120px;
+  width: 118px;
 }
 
-#PersonContents .contractActionbtn:hover .btnLeftIcon,
+#PersonContents .contractActionbtn:hover .btnLeftIcon {
+  padding: 3px 0px;
+  margin: 0px;
+}
 #PersonContents .contractActionbtn:hover .btnRightIcon {
-  padding: 2px;
+  padding: 4px 0px;
   margin: 0px;
 }
 
@@ -548,8 +578,8 @@ sup.notify {
 
 #PersonContents .contractActionbtnGap {
   float: left;
-  width: 5px;
-  height: 34px;
+  width: 4px;
+  height: 26px;
   border: 0px solid green;
 }
 
@@ -558,8 +588,43 @@ sup.notify {
   display: block;
 }
 
+#triangleRight {
+  float: left;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  border-style: solid;
+  width: 0px;
+  height: 0px;
+  line-height: 0px;
+  border-width: 0px 100px 100px 100px;
+  border-color: transparent transparent #007bff transparent;
+  _border-color: #000 #000 #007bff #000;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  margin: 0;
+  padding: 0;
+}
+#triangleLeft {
+  float: right;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  border-style: solid;
+  width: 0px;
+  height: 0px;
+  line-height: 0px;
+  border-width: 0px 100px 100px 100px;
+  border-color: transparent transparent #007bff transparent;
+  _border-color: #000 #000 #007bff #000;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  margin: 0;
+  padding: 0;
+}
+
 .dashboardactioncontent table .Contents button.contractActionbtn img {
-  width: 25px;
+  width: 20px;
 }
 .HideMe {
   display: none;

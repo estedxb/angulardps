@@ -4,7 +4,7 @@ import { DpsContract, ContractStatus } from 'src/app/shared/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContractService } from 'src/app/shared/contract.service';
-import { LoggingService } from '../../shared/logging.service';
+import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
   selector: 'app-cancelcontract',

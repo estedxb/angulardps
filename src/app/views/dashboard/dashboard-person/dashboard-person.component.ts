@@ -2,13 +2,13 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {
-  DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken
+  DpsPerson, Person, SelectedContract, DpsSchedule, DpsSchedulePerson, WorkDays, DpsScheduleContract, LoginToken, WorkTimes,
 } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule, MatDialogRef, MAT_DIALOG_DATA
 } from '@angular/material';
-import { CreateContractComponent } from '../../../componentcontrols/createcontract/createcontract.component';
+import { CreateContractComponent } from './createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 
@@ -112,6 +112,39 @@ export class DashboardPersonComponent implements OnInit {
         // openContract();
       }
     }
+  }
+
+  CheckWeekDayinWorkDays(weekdaynumber: number, wDays: WorkDays[]) {
+    const FileteredWday = wDays.filter(wday => wday.dayOfWeek === weekdaynumber);
+    this.logger.log('CheckWeekDayinWorkDays(' + weekdaynumber + ', wDays) :: ',
+      wDays, 'FileteredWday ::' + (FileteredWday.length > 0), FileteredWday);
+    return FileteredWday.length > 0;
+  }
+
+  getWorkBarWidth(workday: WorkDays) {
+    return (this.getWorkEndFullTime(workday) - this.getWorkStartFullTime(workday)) * this.TimeConverterToPx;
+  }
+
+  getWorkEndFullTime(workday: WorkDays) {
+    let workTimeFullTime = 0;
+    let i = workday.workTimes.length - 1;
+    while (i > -1 || workTimeFullTime < 0) {
+      workTimeFullTime = parseInt(workday.workTimes[workday.workTimes.length - 1].endTime.split(':')[0], 0) * 60 +
+        parseInt(workday.workTimes[workday.workTimes.length - 1].endTime.split(':')[1], 0);
+      i -= 1;
+    }
+    return workTimeFullTime;
+  }
+
+  getWorkStartFullTime(workday: WorkDays) {
+    let workTimeFullTime = 0;
+    let i = 0;
+    while (i < workday.workTimes.length || workTimeFullTime < 0) {
+      workTimeFullTime = parseInt(workday.workTimes[0].startTime.split(':')[0], 0) * 60 +
+        parseInt(workday.workTimes[0].startTime.split(':')[1], 0);
+      i += 1;
+    }
+    return workTimeFullTime;
   }
 
   ShowMessage(MSG, Action) {
@@ -285,24 +318,46 @@ export class DashboardPersonComponent implements OnInit {
       }
 
     } catch (e) {
-      // alert(e.message);
+      alert('openContractDialog :: ' + e.message);
     }
   }
 
   getSelectedPersonContracts(personid) {
-    this.logger.log('getSelectedPersonContracts(' + personid + ') ');
     this.selectedPersonContracts = [];
-    if (this.maindatas.length > 0) {
-      this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
-      if (this.selectedPersondatas.length > 0) {
-        this.selectedPersonContracts = this.selectedPersondatas[0].contracts;
+    try {
+      this.logger.log('getSelectedPersonContracts(' + personid + ') ');
+      if (this.maindatas.length > 0) {
+        this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
+        if (this.selectedPersondatas.length > 0) {
+          try {
+            if (this.selectedPersondatas[0].contracts.length > 0) {
+              this.selectedPersonContracts = this.selectedPersondatas[0].contracts;
+            } else {
+              this.selectedPersonContracts = [];
+            }
+          } catch (e) {
+            this.selectedPersonContracts = [];
+          }
+        } else {
+          this.selectedPersonContracts = [];
+        }
       } else {
-        this.selectedPersonContracts = null;
+        try {
+          if (this.maindatas[0].contracts.length > 0) {
+            this.selectedPersonContracts = this.maindatas[0].contracts;
+          } else {
+            this.selectedPersonContracts = [];
+          }
+        } catch (e) {
+          this.selectedPersonContracts = [];
+        }
       }
-    } else {
-      this.selectedPersonContracts = this.maindatas[0].contracts;
+      this.logger.log('getSelectedPersonContracts(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
+      return this.selectedPersonContracts;
+    } catch (e) {
+      this.selectedPersonContracts = [];
+      alert('getSelectedPersonContracts 3 ::' + e.message);
     }
-    this.logger.log('getSelectedPersonContracts(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
     return this.selectedPersonContracts;
   }
 

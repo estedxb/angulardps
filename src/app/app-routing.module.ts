@@ -13,10 +13,8 @@ import { CountriesComponent } from './componentcontrols/countries/countries.comp
 import { StatuteComponent } from './componentcontrols/statute/statute.component';
 import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
-import { CancelContractComponent } from './componentcontrols/cancelcontract/cancelcontract.component';
 import { FileUploadComponent } from './componentcontrols/fileupload/fileupload.component';
 import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
-import { CreateContractComponent } from './componentcontrols/createcontract/createcontract.component';
 import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
 import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
 import { CalendarDOBComponent } from './componentcontrols/calendardob/calendardob.component';
@@ -54,6 +52,8 @@ import { DashboardActionComponent } from './views/dashboard/dashboardaction/dash
 import { DashboardPersonComponent } from './views/dashboard/dashboard-person/dashboard-person.component';
 import { BulkContractComponent } from './views/bulk-contract/bulk-contract.component';
 import { LogoutComponent } from './views/logout/logout.component';
+import { CancelContractComponent } from './views/dashboard/dashboard-person/cancelcontract/cancelcontract.component';
+import { CreateContractComponent } from './views/dashboard/dashboard-person/createcontract/createcontract.component';
 
 import { ValidateLoginComponent } from './validate-login/validate-login.component';
 import { B2cloginComponent } from './b2clogin/b2clogin.component';

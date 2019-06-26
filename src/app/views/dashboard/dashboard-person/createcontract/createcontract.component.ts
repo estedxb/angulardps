@@ -14,9 +14,9 @@ import { PersonService } from 'src/app/shared/person.service';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { CancelContractComponent } from '../cancelcontract/cancelcontract.component';
 import { saveAs } from 'file-saver';
-import { CalendarComponent } from '../calendar/calendar.component';
+import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.component';
 import { emit } from 'cluster';
-import { LoggingService } from '../../shared/logging.service';
+import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
   selector: 'app-createcontract',

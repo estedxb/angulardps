@@ -137,7 +137,7 @@ export enum FileType {
     OtherDocuments = 'OtherDocuments', DriversLicense = 'DriversLicense'
 }
 export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string; }
-export class DpsSchedule { startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
+export class DpsSchedule { id: number; startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
 export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
 export class DpsSchedulePerson {
     personId: string; personName: string; positionName: string; personIsEnabled: boolean; personIsArchived: boolean;
