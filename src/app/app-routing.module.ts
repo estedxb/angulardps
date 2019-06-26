@@ -14,7 +14,6 @@ import { StatuteComponent } from './componentcontrols/statute/statute.component'
 import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
 import { FileUploadComponent } from './componentcontrols/fileupload/fileupload.component';
-import { CreateWorkTimeComponent } from './componentcontrols/createworktime/createworktime.component';
 import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
 import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
 import { CalendarDOBComponent } from './componentcontrols/calendardob/calendardob.component';
@@ -113,13 +112,13 @@ export const routingComponents = [
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
   CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
-  CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
+  CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
   EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe, CalendarDOBComponent, B2cloginComponent
 ];
 
 export const entringComponents = [
   DPSSystemMessageComponent, CreateuserComponent, CreatelocationComponent, CreateWorkScheduleComponent,
-  CreatepositionComponent, CreateWorkTimeComponent, CancelContractComponent, CreateContractComponent
+  CreatepositionComponent, CancelContractComponent, CreateContractComponent
 ];
 
 export const routingProviders = [];

@@ -52,18 +52,6 @@ export class CreateContractComponent implements OnInit {
   public allowedEndMonth: any;
   public allowedEndDay: any;
 
-  /*
-  public allowedExtentedStartDate: Date;
-  public allowedExtentedEndDate: Date;
-
-  public allowedExtentedStartYear: any;
-  public allowedExtentedStartMonth: any;
-  public allowedExtentedStartDay: any;
-
-  public allowedExtentedEndYear: any;
-  public allowedExtentedEndMonth: any;
-  public allowedExtentedEndDay: any;
-*/
   public calendardayDisableStatus = null;
   public calendarmonthDisableStatus = null;
   public calendaryearDisableStatus = null;
@@ -128,9 +116,7 @@ export class CreateContractComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) {
   }
 
-  ngOnInit() {
-    this.onPageInit();
-  }
+  ngOnInit() {    this.onPageInit();  }
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -142,8 +128,6 @@ export class CreateContractComponent implements OnInit {
       this.logger.log('Snackbar Action :: ' + Action);
     });
   }
-
-  clearCtrl() { }
 
   formateZero(n) { return n > 9 ? n : '0' + n; }
 
@@ -218,24 +202,6 @@ export class CreateContractComponent implements OnInit {
 
     this.logger.log('setDatesRanges allowedStartDate :: ', this.allowedStartDate);
     this.logger.log('setDatesRanges allowedEndDate :: ', this.allowedEndDate);
-
-    /*
-    this.allowedExtentedStartDate = new Date(this.allowedEndDate);
-    this.allowedExtentedStartDate.setDate(this.allowedExtentedStartDate.getDate() + 1);
-    this.allowedExtentedStartYear = this.allowedExtentedStartDate.getFullYear();
-    this.allowedExtentedStartMonth = this.allowedExtentedStartDate.getMonth();
-    this.allowedExtentedStartDay = this.allowedExtentedStartDate.getDate();
-
-    this.allowedExtentedEndDate = new Date(this.allowedEndDate);
-    this.allowedExtentedEndDate.setDate(this.allowedExtentedEndDate.getDate() + 7);
-    this.allowedExtentedEndYear = this.allowedExtentedEndDate.getFullYear();
-    this.allowedExtentedEndMonth = this.allowedExtentedEndDate.getMonth();
-    this.allowedExtentedEndDay = this.allowedEndDate.getDate();
-
-    this.logger.log('setDatesRanges allowedExtentedStartDate :: ', this.allowedExtentedStartDate);
-    this.logger.log('setDatesRanges allowedExtentedEndDate :: ', this.allowedExtentedEndDate);
-    */
-
   }
 
   getContractAllowedWeekDays(dpsScheduleContracts: DpsScheduleContract[]) {
@@ -277,7 +243,8 @@ export class CreateContractComponent implements OnInit {
         this.contractAllowedDates = [1, 2, 3, 4, 5, 6, 7];
         this.logger.log('getContractAllowedWeekDays this contract skiped because no contracts for selected days');
       }
-      this.logger.log('getContractAllowedWeekDays contractAllowedDates for contractCount(' + contractCount + ')', this.contractAllowedDates);
+      this.logger.log('getContractAllowedWeekDays contractAllowedDates for contractCount(' + contractCount + ')',
+        this.contractAllowedDates);
     } catch (e) {
       this.ShowMessage(e.message, '');
       this.logger.log('getContractAllowedWeekDays Error! ', e.message);
@@ -299,7 +266,7 @@ export class CreateContractComponent implements OnInit {
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
-      //this.ShowMessage('Contract Positions fetched successfully.', '');
+      // this.ShowMessage('Contract Positions fetched successfully.', '');
       this.getLocationsByVatNumber();
     }, error => this.ShowMessage(error, 'error'));
   }
@@ -310,7 +277,7 @@ export class CreateContractComponent implements OnInit {
       this.locationsData = response;
       this.getWorkscheduleByVatNumber();
       this.logger.log('locationsData Form Data ::', this.locationsData);
-      //this.ShowMessage('locationsData fetched successfully.', '');
+      // this.ShowMessage('locationsData fetched successfully.', '');
     }, error => this.ShowMessage(error, 'error'));
   }
 
@@ -324,11 +291,11 @@ export class CreateContractComponent implements OnInit {
       }
 
       /*
-            if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
-              this.SetMode('update');
-            } else {
-              this.SetMode('new');
-            }
+        if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
+          this.SetMode('update');
+        } else {
+          this.SetMode('new');
+        }
       */
       this.SetMode();
 
@@ -344,7 +311,25 @@ export class CreateContractComponent implements OnInit {
       this.loadContract(this.VatNumber, this.contractId.toString());
       this.logger.log('SetMode update contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
       this.logger.log('SetMode update contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
+
     } else if (this.mode === 'edit') {
+      this.currentDpsContract.id = this.contractId;
+      this.loadContract(this.VatNumber, this.contractId.toString());
+      this.logger.log('SetMode edit contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
+      this.logger.log('SetMode edit contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
+
+      if (this.selectedStartYear === this.selectedEndYear) {
+        this.calendaryearDisableStatus = true;
+      } else { this.calendaryearDisableStatus = false; }
+
+      if (this.selectedStartMonth === this.selectedEndMonth) {
+        this.calendarmonthDisableStatus = true;
+      } else { this.calendarmonthDisableStatus = false; }
+      
+    } else if (this.mode === 'extend') {
+      this.currentDpsContract.parentContractId = this.contractId;
+      this.currentDpsContract.id = 0;
+      this.loadContract(this.VatNumber, this.currentDpsContract.parentContractId.toString());
       this.logger.log('SetMode edit contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
       this.logger.log('SetMode edit contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
 
@@ -356,46 +341,7 @@ export class CreateContractComponent implements OnInit {
         this.calendarmonthDisableStatus = true;
       } else { this.calendarmonthDisableStatus = false; }
 
-      /*
-      } else if (this.mode === 'extend') {
-  
-        this.logger.log('this.selectedStartDate 2 before', this.selectedStartDate);
-        this.selectedStartDate = new Date(this.allowedExtentedStartDate);
-        this.logger.log('this.selectedStartDate 2 after', this.selectedStartDate);
-        this.selectedStartYear = this.allowedExtentedStartYear;
-        this.selectedStartMonth = this.allowedExtentedStartMonth;
-        this.selectedStartDay = this.allowedExtentedStartDay;
-  
-        this.logger.log('this.selectedEndDate 2 before', this.selectedEndDate);
-        this.selectedEndDate = new Date(this.allowedExtentedEndDate);
-        this.logger.log('this.selectedEndDate 2 after', this.selectedEndDate);
-        this.selectedEndYear = this.allowedExtentedEndYear;
-        this.selectedEndMonth = this.allowedExtentedEndMonth;
-        this.selectedEndDay = this.allowedExtentedEndDay;
-  
-        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
-        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
-  
-        this.logger.log('SetMode extend - calendar data=' + this.calendarData);
-        this.logger.log('SetMode extend - calendarDataNew=' + this.calendarDataNew);
-        this.logger.log('SetMode extend - this.selectedStartDate  :: ' + mode, this.selectedStartDate);
-        this.logger.log('SetMode extend - this.selectedEndDate  :: ' + mode, this.selectedEndDate);
-  
-        this.createCurrentDpsContract();
-  
-        if (this.selectedStartYear === this.selectedEndYear) {
-          this.calendaryearDisableStatus = true;
-        } else { this.calendaryearDisableStatus = false; }
-  
-        if (this.selectedStartMonth === this.selectedEndMonth) {
-          this.calendarmonthDisableStatus = true;
-        } else { this.calendarmonthDisableStatus = false; }
-  */
     } else {
-      if (this.mode === 'extend') {
-        this.currentDpsContract.parentContractId = this.currentDpsContract.id;
-        this.currentDpsContract.id = 0;
-      }
       this.contractId = 0;
 
       this.logger.log('this.selectedStartDate 3 before', this.selectedStartDate);
@@ -652,10 +598,7 @@ export class CreateContractComponent implements OnInit {
     );
   }
 
-  onEnableEdit() {
-    this.mode = 'edit';
-    this.SetMode();
-  }
+  onEnableEdit() { this.mode = 'edit'; this.SetMode(); }
 
   onCancelEdit() {
     if (this.mode === 'edit' || this.mode === 'extend') {
@@ -664,10 +607,7 @@ export class CreateContractComponent implements OnInit {
     } else { this.dialog.closeAll(); }
   }
 
-  onExtented() {
-    this.mode = 'extend';
-    this.SetMode();
-  }
+  onExtented() { this.mode = 'extend'; this.SetMode(); }
 
   onCancelContractClick() {
     this.SelectedIndex = this.contractId;
@@ -911,6 +851,73 @@ export class CreateContractComponent implements OnInit {
 
 
 
+/*
+public allowedExtentedStartDate: Date;
+public allowedExtentedEndDate: Date;
+
+public allowedExtentedStartYear: any;
+public allowedExtentedStartMonth: any;
+public allowedExtentedStartDay: any;
+
+public allowedExtentedEndYear: any;
+public allowedExtentedEndMonth: any;
+public allowedExtentedEndDay: any;
+*/
+
+
+      /*
+      } else if (this.mode === 'extend') {
+  
+        this.logger.log('this.selectedStartDate 2 before', this.selectedStartDate);
+        this.selectedStartDate = new Date(this.allowedExtentedStartDate);
+        this.logger.log('this.selectedStartDate 2 after', this.selectedStartDate);
+        this.selectedStartYear = this.allowedExtentedStartYear;
+        this.selectedStartMonth = this.allowedExtentedStartMonth;
+        this.selectedStartDay = this.allowedExtentedStartDay;
+  
+        this.logger.log('this.selectedEndDate 2 before', this.selectedEndDate);
+        this.selectedEndDate = new Date(this.allowedExtentedEndDate);
+        this.logger.log('this.selectedEndDate 2 after', this.selectedEndDate);
+        this.selectedEndYear = this.allowedExtentedEndYear;
+        this.selectedEndMonth = this.allowedExtentedEndMonth;
+        this.selectedEndDay = this.allowedExtentedEndDay;
+  
+        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
+        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+  
+        this.logger.log('SetMode extend - calendar data=' + this.calendarData);
+        this.logger.log('SetMode extend - calendarDataNew=' + this.calendarDataNew);
+        this.logger.log('SetMode extend - this.selectedStartDate  :: ' + mode, this.selectedStartDate);
+        this.logger.log('SetMode extend - this.selectedEndDate  :: ' + mode, this.selectedEndDate);
+  
+        this.createCurrentDpsContract();
+  
+        if (this.selectedStartYear === this.selectedEndYear) {
+          this.calendaryearDisableStatus = true;
+        } else { this.calendaryearDisableStatus = false; }
+  
+        if (this.selectedStartMonth === this.selectedEndMonth) {
+          this.calendarmonthDisableStatus = true;
+        } else { this.calendarmonthDisableStatus = false; }
+  */
+    // } else {
 
 
 
+    //setDatesRanges
+/*
+this.allowedExtentedStartDate = new Date(this.allowedEndDate);
+this.allowedExtentedStartDate.setDate(this.allowedExtentedStartDate.getDate() + 1);
+this.allowedExtentedStartYear = this.allowedExtentedStartDate.getFullYear();
+this.allowedExtentedStartMonth = this.allowedExtentedStartDate.getMonth();
+this.allowedExtentedStartDay = this.allowedExtentedStartDate.getDate();
+
+this.allowedExtentedEndDate = new Date(this.allowedEndDate);
+this.allowedExtentedEndDate.setDate(this.allowedExtentedEndDate.getDate() + 7);
+this.allowedExtentedEndYear = this.allowedExtentedEndDate.getFullYear();
+this.allowedExtentedEndMonth = this.allowedExtentedEndDate.getMonth();
+this.allowedExtentedEndDay = this.allowedEndDate.getDate();
+
+this.logger.log('setDatesRanges allowedExtentedStartDate :: ', this.allowedExtentedStartDate);
+this.logger.log('setDatesRanges allowedExtentedEndDate :: ', this.allowedExtentedEndDate);
+*/

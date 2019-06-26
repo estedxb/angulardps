@@ -161,7 +161,7 @@
   position: absolute;
   vertical-align: middle;
   margin-top: 41px;
-  cursor: pointer;
+  cursor: default;
 }
 
 .Contents .col-split .SelectedContract .workbar {

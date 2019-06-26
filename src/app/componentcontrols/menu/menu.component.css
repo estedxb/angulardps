@@ -19,8 +19,6 @@ nav a img {
 }
 
 nav a:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border: 0.5px groove rgba(255, 255, 255, 0.075);
 }
 
 nav a:hover img {

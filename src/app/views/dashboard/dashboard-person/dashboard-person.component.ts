@@ -15,31 +15,13 @@ import { LoggingService } from '../../../shared/logging.service';
 @Component({
   selector: 'app-dashboardperson',
   templateUrl: './dashboard-person.component.html',
-  styleUrls: ['./../dashboard.component.css'],
-  animations: [
-    trigger('ExpandMe', [
-      state('initial', style({
-        backgroundColor: '#EAEAEA',
-        'border-radius': '35px',
-        width: '35px',
-        height: '35px'
-      })),
-      state('final', style({
-        backgroundColor: 'red',
-        'border-radius': '35px',
-        width: '175px',
-        height: '35px'
-      })),
-      transition('initial => final', [animate('0.5s 5000ms ease-in')]),
-      transition('final => initial', [animate('0.5s 5000ms ease-out')])
-    ])
-  ]
+  styleUrls: ['./../dashboard.component.css']
 })
 export class DashboardPersonComponent implements OnInit {
   @Input() NotificationCount: number;
   public maindatas: DpsSchedulePerson[] = [];
   public datas: DpsSchedulePerson[] = [];
-  public selectedPersondatas: DpsSchedulePerson[] = [];
+  public selectedPersondatas: DpsSchedulePerson;
   public selectedPersonContracts: DpsScheduleContract[] = [];
   public data: any;
   public currentPage = '';
@@ -116,8 +98,8 @@ export class DashboardPersonComponent implements OnInit {
 
   CheckWeekDayinWorkDays(weekdaynumber: number, wDays: WorkDays[]) {
     const FileteredWday = wDays.filter(wday => wday.dayOfWeek === weekdaynumber);
-    this.logger.log('CheckWeekDayinWorkDays(' + weekdaynumber + ', wDays) :: ',
-      wDays, 'FileteredWday ::' + (FileteredWday.length > 0), FileteredWday);
+    // this.logger.log('CheckWeekDayinWorkDays(' + weekdaynumber + ', wDays) :: ',
+    //  wDays, 'FileteredWday ::' + (FileteredWday.length > 0), FileteredWday);
     return FileteredWday.length > 0;
   }
 
@@ -164,11 +146,6 @@ export class DashboardPersonComponent implements OnInit {
     } else {
       this.RollOverContract = 0;
     }
-
-    // console.log('onContractOver elRef :: ', this.elRef);
-    // console.log('onContractOver offsetLeft :: ' + this.elRef.nativeElement.offsetLeft);
-    // console.log('onContractOver offsetTop :: ' + this.elRef.nativeElement.offsetTop);
-    // console.log('onContractOver(' + contractId.toString() + ',' + state + ')');
   }
 
   onPersonKeyup(value) {
@@ -177,36 +154,19 @@ export class DashboardPersonComponent implements OnInit {
       if (this.maindatas !== null && this.maindatas !== undefined) {
         if (this.maindatas.length > 0) {
           this.datas = this.maindatas
-            .map(pers => {
-              if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; }
-            });
-        } else {
-          this.datas = this.maindatas;
-        }
-      } else {
-        this.datas = this.maindatas;
-      }
-    } catch (e) {
-      this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message);
-    }
+            .map(pers => { if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; } });
+        } else { this.datas = this.maindatas; }
+      } else { this.datas = this.maindatas; }
+    } catch (e) { this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message); }
   }
 
-  addWeek() {
-    this.WeekDiff += 1;
-    this.onPageInit();
-  }
+  addWeek() { this.WeekDiff += 1; this.onPageInit(); }
 
-  minusWeek() {
-    this.WeekDiff -= 1;
-    this.onPageInit();
-  }
+  minusWeek() { this.WeekDiff -= 1; this.onPageInit(); }
 
-  formateZero(n) {
-    return n > 9 ? n : '0' + n;
-  }
+  formateZero(n) { return n > 9 ? n : '0' + n; }
 
   getSelectedDates() {
-    // const setdate = '2019-06-03';
     const curr = new Date();
 
     const adddays: number = this.WeekDiff * 7;
@@ -218,9 +178,7 @@ export class DashboardPersonComponent implements OnInit {
 
     if (curr.getUTCDay() === 0) {
       adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + 7 + curr.getUTCDay();
-    } else {
-      adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + curr.getUTCDay();
-    }
+    } else { adjustDaysForWeekStartDate = adjustDaysForWeekStartDate + curr.getUTCDay(); }
 
     this.logger.log('adjustDaysForWeekStartDate :: ' + adjustDaysForWeekStartDate);
 
@@ -260,12 +218,16 @@ export class DashboardPersonComponent implements OnInit {
   }
   getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
 
-  openContractDialog(personid, contractid, actionState, mode): void {
+  openContractDialog(index, personid, contractid, actionState, mode): void {
+    // this.logger.log('openContractDialog(' + index + ',' + personid + ',' + contractid + ',' + actionState + ',' + mode + ')');
+    // this.logger.log(this.startDate + ' and endDate :: ' + this.endDate);
     try {
       if (actionState) {
         if (mode !== undefined && mode !== null && mode !== '') {
+
           const selectedContract = new SelectedContract();
-          selectedContract.personContracts = this.getSelectedPersonContracts(personid);
+          selectedContract.personContracts = this.getSelectedPersonContracts(index, personid);
+
           selectedContract.contractId = contractid;
           selectedContract.personId = personid;
           selectedContract.mode = mode;
@@ -279,6 +241,7 @@ export class DashboardPersonComponent implements OnInit {
             selectedContract.startDate.setDate(selectedContract.startDate.getDate() + 7);
             selectedContract.endDate.setDate(selectedContract.endDate.getDate() + 7);
           }
+
           const dialogConfig = new MatDialogConfig();
           dialogConfig.disableClose = false;
           dialogConfig.autoFocus = true;
@@ -294,83 +257,79 @@ export class DashboardPersonComponent implements OnInit {
             this.data = result;
             this.logger.log('this.data ::', this.data);
             this.onPageInit();
-            /*
-            if (this.SelectedIndex >= 0) {
-              this.maindatas[this.SelectedIndex] = this.data;
-              this.FilterTheArchive();
-              this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
-            } else {
-              this.logger.log('this.data.id :: ', this.data.id);
-              if (parseInt('0' + this.data.id, 0) > 0) {
-                this.maindatas.push(this.data);
-                this.logger.log(' new this.maindatas :: ', this.maindatas);
-                this.FilterTheArchive();
-                this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
-              }
-            }
-            */
           });
         } else {
-          this.ShowMessage('Mode not selected.', '');
+          this.ShowMessage('Error mode not selected.', '');
         }
       } else {
         this.ShowMessage('Person is not archived or disabled.', '');
       }
-
     } catch (e) {
       alert('openContractDialog :: ' + e.message);
     }
   }
 
-  getSelectedPersonContracts(personid) {
+  getSelectedPersonContracts(index, personid) {
     this.selectedPersonContracts = [];
     try {
-      this.logger.log('getSelectedPersonContracts(' + personid + ') ');
-      if (this.maindatas.length > 0) {
-        this.selectedPersondatas = this.maindatas.map(pers => { if (pers.personId === personid) { return pers; } });
-        if (this.selectedPersondatas.length > 0) {
+      this.logger.log('getSelectedPersonContracts(' + index + ',' + personid + ') ');
+      if (this.datas.length > 0) {
+        this.selectedPersondatas = this.datas[index]; // this.datas.map(pers => { if (pers.personId === personid) { return pers; } });
+        if (this.selectedPersondatas !== null) {
           try {
-            if (this.selectedPersondatas[0].contracts.length > 0) {
-              this.selectedPersonContracts = this.selectedPersondatas[0].contracts;
-            } else {
-              this.selectedPersonContracts = [];
-            }
-          } catch (e) {
-            this.selectedPersonContracts = [];
-          }
-        } else {
-          this.selectedPersonContracts = [];
-        }
+            if (this.selectedPersondatas.contracts.length > 0) {
+              this.selectedPersonContracts = this.selectedPersondatas.contracts;
+            } else { this.selectedPersonContracts = []; }
+          } catch (e) { this.selectedPersonContracts = []; }
+        } else { this.selectedPersonContracts = []; }
       } else {
         try {
-          if (this.maindatas[0].contracts.length > 0) {
-            this.selectedPersonContracts = this.maindatas[0].contracts;
-          } else {
-            this.selectedPersonContracts = [];
-          }
-        } catch (e) {
-          this.selectedPersonContracts = [];
-        }
+          if (this.datas[0].contracts.length > 0) {
+            this.selectedPersonContracts = this.datas[0].contracts;
+          } else { this.selectedPersonContracts = []; }
+        } catch (e) { this.selectedPersonContracts = []; }
       }
       this.logger.log('getSelectedPersonContracts(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
-      return this.selectedPersonContracts;
-    } catch (e) {
-      this.selectedPersonContracts = [];
-      alert('getSelectedPersonContracts 3 ::' + e.message);
-    }
+
+    } catch (e) { this.selectedPersonContracts = []; }
+
     return this.selectedPersonContracts;
   }
 
   OpenAddPersonURL() {
-    this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/add');
-    this.router.navigate(['./person/add']);
+    this.router.navigate(['./person/add']); this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/add');
   }
   OpenBulkContractURL() {
-    this.logger.log(this.constructor.name + ' - ' + 'Redirect... ./bulkcontract');
-    this.router.navigate(['./bulkcontract']);
+    this.router.navigate(['./bulkcontract']); this.logger.log(this.constructor.name + ' - ' + 'Redirect... ./bulkcontract');
   }
   OpenUpdatePerson(SSID: string) {
-    this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/' + SSID);
-    this.router.navigate(['./person/' + SSID]);
+    this.router.navigate(['./person/' + SSID]); this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/' + SSID);
   }
 }
+
+
+
+
+ //openContractDialog // dialogRef.afterClosed()
+/*
+if (this.SelectedIndex >= 0) {
+  this.maindatas[this.SelectedIndex] = this.data;
+  this.FilterTheArchive();
+  this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
+} else {
+  this.logger.log('this.data.id :: ', this.data.id);
+  if (parseInt('0' + this.data.id, 0) > 0) {
+    this.maindatas.push(this.data);
+    this.logger.log(' new this.maindatas :: ', this.maindatas);
+    this.FilterTheArchive();
+    this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
+  }
+}
+*/
+
+
+    // onContractOver ...
+    // console.log('onContractOver elRef :: ', this.elRef);
+    // console.log('onContractOver offsetLeft :: ' + this.elRef.nativeElement.offsetLeft);
+    // console.log('onContractOver offsetTop :: ' + this.elRef.nativeElement.offsetTop);
+    // console.log('onContractOver(' + contractId.toString() + ',' + state + ')');
