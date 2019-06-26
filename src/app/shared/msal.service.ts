@@ -15,7 +15,7 @@ declare var bootbox: '';
 export class MsalServiceLocal {
   private ltkn: LoginToken = new LoginToken();
   public message: string;
-  public dpsuservatnumber = '987654321000';
+  public dpsuservatnumber = environment.DPSVATNumber;
   public errorMsg: string;
   public clientApplication;
 
