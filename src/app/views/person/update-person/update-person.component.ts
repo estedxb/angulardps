@@ -81,8 +81,8 @@ export class UpdatePersonComponent implements OnInit {
 
   filterData(message: any) {
 
-    this.logger.log('received message in update person');
-    this.logger.log(message.data);
+    // this.logger.log('received message in update person');
+    // this.logger.log(message.data);
 
     if (message.page === 'edit') {
       this.editPersonData = message.data;
@@ -128,11 +128,11 @@ export class UpdatePersonComponent implements OnInit {
         this.dpsPerson = dpsperson;
         this.person = this.dpsPerson.person;
 
-        this.logger.log('DPS Person Form Data : ');
-        this.logger.log(this.dpsPerson);
+        // this.logger.log('DPS Person Form Data : ');
+        // this.logger.log(this.dpsPerson);
 
-        this.logger.log('Person Form Data : ');
-        this.logger.log(this.person);
+        // this.logger.log('Person Form Data : ');
+        // this.logger.log(this.person);
 
         this.changeMessage();
 
@@ -177,16 +177,19 @@ export class UpdatePersonComponent implements OnInit {
     this.logger.log('forward click has been clicked!!');
 
     if (this.currentPage === 'editperson') {
-      this.logger.log('data collected');
-      this.logger.log(this.editPersonData);
+
+      this.ShowMessage('Persoon is succesvol geüpdatet.', '');
 
       this.personService.updatePosition(this.editPersonData).subscribe(res => {
         this.logger.log('response=' + res);
-        this.ShowMessage('Person updated successfully.', '');
+        this.ShowMessage('Persoon is succesvol geüpdatet.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            this.logger.log('Error occured=' + err.error.message);
+
+            if(err.status === 200)
+              this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
+
           } else {
             this.logger.log('response code=' + err.status);
             this.logger.log('response body=' + err.error);
@@ -199,11 +202,14 @@ export class UpdatePersonComponent implements OnInit {
     if (this.currentPage === 'positions') {
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log('response=' + res);
-        this.ShowMessage('Person updated successfully.', '');
+        this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            this.logger.log('Error occured=' + err.error.message);
+
+            if(err.status === 200)
+              this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
+
           } else {
             this.logger.log('response code=' + err.status);
             this.logger.log('response body=' + err.error);

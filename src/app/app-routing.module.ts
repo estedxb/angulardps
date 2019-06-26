@@ -62,7 +62,6 @@ import { EnableFilterPipe } from './pipes/enable-filter.pipe';
 import { ArchiveFilterPipe } from './pipes/archive-filter.pipe';
 import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
-import { TestArraysComponent } from './test-arrays/test-arrays.component';
 import { NumPipe } from './pipes/num.pipe';
 import { environment } from '../environments/environment';
 // Logger callback for MSAL
@@ -89,7 +88,6 @@ const routes: Routes = [
   { path: 'person/addperson', component: AddPersonComponent },
   { path: 'person/add', component: AddPersonComponent },
   { path: 'person/:id', component: UpdatePersonComponent },
-  { path: 'TestArrays', component: TestArraysComponent },
   { path: 'bulkcontract', component: BulkContractComponent },
   { path: 'person/:id/:page', component: UpdatePersonComponent },
   { path: 'b2clogin', component: B2cloginComponent },
@@ -113,7 +111,7 @@ export const routingComponents = [
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
   CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
-  CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, TestArraysComponent,
+  CreateWorkTimeComponent, CreateContractComponent, DashboardActionComponent, DashboardPersonComponent,
   EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe, CalendarDOBComponent, B2cloginComponent
 ];
 

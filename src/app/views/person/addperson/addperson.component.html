@@ -235,7 +235,7 @@
             </div>
           </div>
 
-          <app-spinner></app-spinner>
+          <ngx-spinner></ngx-spinner>
 
           <div id="CustomerContact" class="customerBox">
             <div class="row panelheader">
@@ -268,7 +268,6 @@
                   <label class="titleBold"> Geboorteland </label>
                   <app-countries [CountryFormData]="birthCountryString"
                     (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
-
                 </div>
               </div>
               <div class="row">
@@ -338,6 +337,7 @@
               </div>
             </div>
           </div>          
+          <ngx-spinner></ngx-spinner>
 
           <div id="PersonContact" class="customerBox">
             <div class="row panelheader">

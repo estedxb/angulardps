@@ -44,6 +44,7 @@ export class StatuteComponent implements OnInit {
 
   public countStatutes: number;
   public statuteSettings = [];
+  public newArrayCoeff = [];
 
   StatuteSettingsObject: StatuteSetting;
   statuteObject: Statute;
@@ -79,6 +80,7 @@ export class StatuteComponent implements OnInit {
     this.createCoefficientArray();
 
       if (this.STFormData != this.oldSFTFormData) {
+            this.createStatuteSettingsArrayEmpty();
             this.oldSFTFormData = this.STFormData;
           if (this.STFormData !== undefined  && this.STFormData.data !== null && this.STFormData.page === "edit") {
                 this.loadInitialData();
@@ -119,16 +121,36 @@ export class StatuteComponent implements OnInit {
 
         this.countStatutes = this.statutes.length;
         // this.createStatuteSettingsArrayEmpty();
+
+        // this.logger.log("statute array before loading");
+        // this.logger.log("statute array length="+this.statuteSettings.length);
+        // this.logger.log(typeof(this.statuteSettings));
+   
         this.copyArray(this.loadStatuteSettingsArray);
         this.loadStatuteSettingsArray.forEach(element => {
           this.onloadData(element,counter);
           counter++;
-        });                
+        });
+
+         this.loadCoefficients();
+
           if(counter > this.loadStatuteSettingsArray.length)
               this.emitData("load");
       }
     }
   }
+
+  loadCoefficients() {
+
+    this.newArrayCoeff = [];
+
+    for(let i=0;i<this.loadStatuteSettingsArray.length;i++) 
+      this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
+
+      this.logger.log("changed array");
+      this.logger.log(this.newArrayCoeff);
+  }
+
 
   copyArray(array:any)
   {
@@ -158,6 +180,7 @@ export class StatuteComponent implements OnInit {
     let counter:number = 0;
     this.lengthStatueSettings = this.statuteSettings.length;
 
+    this.statuteSettings = [];
 
       for(let counter =0; counter< this.statutes.length; counter+=1)
       {
@@ -183,6 +206,10 @@ export class StatuteComponent implements OnInit {
           this.statuteSettings.push(this.StatuteSettingsObject);
     
       }
+
+      this.logger.log("statute settings array created");
+      this.logger.log("lenght of array="+this.statuteSettings.length);
+      this.logger.log(this.statuteSettings);
 
       if(counter > this.statutes.length)
           this.emitData("create array empty paritaircommitee");
@@ -214,15 +241,18 @@ export class StatuteComponent implements OnInit {
       let number = arrayElement.paritairCommitee.number;
       this.JCString[counter] = number + " - " + name;
 
-      if(arrayElement.mealVoucherSettings.employerShare === 0 && arrayElement.mealVoucherSettings.totalWorth === 0 && arrayElement.mealVoucherSettings.minimumHours === 0)
-          this.logger.log("all zeroes at counter="+counter);
-      else
-          this.logger.log("values at counter="+counter);
+      // if(arrayElement.mealVoucherSettings.employerShare === 0 && arrayElement.mealVoucherSettings.totalWorth === 0 && arrayElement.mealVoucherSettings.minimumHours === 0)
+      //     this.logger.log("all zeroes at counter="+counter);
+      // else
+      //     this.logger.log("values at counter="+counter);
 
       if(arrayElement.mealVoucherSettings.employerShare === 0 && arrayElement.mealVoucherSettings.totalWorth === 0 && arrayElement.mealVoucherSettings.minimumHours === 0)
           this.isMealEnabled[counter] = false;
       else
           this.isMealEnabled[counter] = true;
+
+          // this.logger.log(this.statuteSettings);
+          // this.logger.log("lenght of array="+this.statuteSettings.length);    
   
       if(this.statuteSettings.length > 0)
       {
@@ -255,8 +285,7 @@ export class StatuteComponent implements OnInit {
   
         this.statuteSettings[counter] = this.StatuteSettingsObject;
   
-      }
-  
+      }  
 }
 
 createControls(Coefficient,TotalWorth,EmployerShare,MinimumHours) {
@@ -311,9 +340,6 @@ ngOnInit() {
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
 
-      this.logger.log("statutes=");
-      this.logger.log(this.statutes);
-
       this.fillTitles();
       this.setParitairCommitteArray();
 
@@ -344,8 +370,6 @@ ngOnInit() {
         counter += 1;
     });
 
-    this.logger.log("isMealEnabled is");
-    this.logger.log(this.isMealEnabled);
   }
 
   createCoefficientArray() {

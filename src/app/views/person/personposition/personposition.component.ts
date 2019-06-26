@@ -323,7 +323,6 @@ export class PersonPositionComponent implements OnInit {
       //   counter++;
       // });
 
-      this.logger.log("position id="+data.customerPostionId);
       this.findIndex(parseInt(data.customerPostionId,10));
     }
 

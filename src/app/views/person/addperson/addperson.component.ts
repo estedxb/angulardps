@@ -8,6 +8,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRe
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
 import { LoginToken } from '../../../shared/models';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
@@ -215,7 +216,7 @@ export class AddPersonComponent implements OnInit {
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
     private statuteService: StatuteService,
-    private route: ActivatedRoute, private router: Router
+    private route: ActivatedRoute, private router: Router,private spinner: NgxSpinnerService
   ) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
@@ -1732,6 +1733,13 @@ export class AddPersonComponent implements OnInit {
     if (this.showFormIndex === 1) {
 
       this.buttonPressed = true;
+
+      this.spinner.show();
+ 
+      setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+      }, 5000);
 
       if (this.checkValidation())
           this.showFormIndex = 2;

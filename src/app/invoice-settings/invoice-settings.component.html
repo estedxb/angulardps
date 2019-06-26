@@ -102,8 +102,7 @@
                                                 <span>Ploegpremie</span>
                                         </div>
                                 </div>
-                                <div class="row dynrow" formArrayName="arrayBox"
-                                        *ngFor="let Ploegpremiere of ISForm.controls.arrayBox.controls as result; let i=index; first as isFirst; last as isLast">
+                                <div class="row dynrow" formArrayName="arrayBox" *ngFor="let Ploegpremiere of ISForm.controls.arrayBox.controls as result; let i=index; first as isFirst; last as isLast">
                                         <div class="col col-sm-5" [formGroupName]="i">
                                                 <input #code (change)="setPgBox1(code.value,i)" type="text"
                                                         formControlName="PloegprimeBox1">
@@ -140,12 +139,9 @@
                                                 <span>Andere</span>
                                         </div>
                                 </div>
-                                <div formArrayName="arrayAndreBox"
-                                        *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let r=index; first as isFirstA; last as isLastA">
+                                <div formArrayName="arrayAndreBox" *ngFor="let Andre of ISForm.controls.arrayAndreBox.controls as nresult; let r=index; first as isFirstA; last as isLastA">
                                         <div [formGroupName]="r" class="row dynrow">
                                                 <div class="col col-sm-5">
-                                                        <!-- <input #codeA (change)="setPgABox1(codeA.value,i)" type="text"
-                                                        formControlName="AndreBox1"> -->
                                                         <app-workcodes [initialWorkCode]="workCode[r]"
                                                                 [disabled]="disableWorkCodes"
                                                                 (childEvent)="receiveWorkCode($event,r)">

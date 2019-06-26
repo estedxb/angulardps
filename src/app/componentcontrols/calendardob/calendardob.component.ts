@@ -121,8 +121,6 @@ export class CalendarDOBComponent implements OnInit {
   }
 
   loadDOBDataNew(calendarData) {
-
-    this.logger.log("calendar data="+calendarData);
     
     const calendarArray = calendarData.split('/');
     let yearString = "";

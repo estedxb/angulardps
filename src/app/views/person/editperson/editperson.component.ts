@@ -210,8 +210,6 @@ export class EditPersonComponent implements OnInit {
 
   newCustomSSIDValidator(ssid: string) {
 
-    this.logger.log("validating ssid");
-
     this.validSSID = false;
     let validSPCharacters = false;
 
@@ -309,11 +307,6 @@ export class EditPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    this.logger.log("set calendar");
-    this.logger.log("day="+day);
-    this.logger.log("month="+month);
-    this.logger.log("year="+year);
-
     const yearString: string = ""+year;
     const monthString: string = ""+month;
     const dayString: string = ""+day;
@@ -323,8 +316,6 @@ export class EditPersonComponent implements OnInit {
     this.yearString = yearString;
 
     this.calendarData = this.dayString + '/' + this.monthString + '/' + this.yearString;
-
-    this.logger.log("calendar data="+this.calendarData);
 
     // if( day>=1 && day<=31)
     //     this._selectedIndexdays = day;
@@ -431,9 +422,6 @@ export class EditPersonComponent implements OnInit {
     const yearString: string = dobArrayData[0];
     const monthString: string = dobArrayData[1];
     const dayString: string = dobArrayData[2];
-
-    this.logger.log("load dob data");
-    this.logger.log("daystring="+dayString+" monthString="+monthString+ " yearString="+yearString);
 
     this.monthString = monthString;
     this.dayString = dayString;
@@ -542,11 +530,7 @@ export class EditPersonComponent implements OnInit {
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
-      this.logger.log('new response');
-      this.logger.log(dpsperson);
       data = newResponse;
-
-      this.logger.log('countryOfBirth=' + data.person.countryOfBirth);
 
       if (data !== null && data.person !== null) {
 
