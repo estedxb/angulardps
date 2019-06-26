@@ -18,7 +18,7 @@ export class LanguagesComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public maindatas: any = [];
-  private datas: any = [];
+  public datas: any = [];
   public oldLanguageFormData: string;
 
   // tslint:disable-next-line: variable-name

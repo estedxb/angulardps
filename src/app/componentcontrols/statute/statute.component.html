@@ -3,7 +3,7 @@
   <div class="error">{{ errorMsg }}</div>
       <!-- SForm.controls.statuteArray.controls -->
 
-  <div class="customerBox" *ngFor="let statute of statutes; let i= index; trackBy: trackByFn" [attr.data-index]="i">
+  <div class="customerBox" *ngFor="let statute of statutes; let i= index" [attr.data-index]="i">
     <div class="row panelheader">
       <div class="col col-sm-5 fright">
         <h4> {{ statute.name }} </h4>
