@@ -2,7 +2,7 @@ export const environment = {
   name: 'prod',
   production: true,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
-  dpsAPI: 'https://dpsapisprd.azurewebsites.net/api/',
+  dpsAPI: 'https://dpsapiprd.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapiprd.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountprd.blob.core.windows.net',
   aadurl: 'https://digitalpayrollservices.b2clogin.com',
