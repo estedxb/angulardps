@@ -117,7 +117,7 @@ export class CreateContractComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) {
   }
 
-  ngOnInit() {    this.onPageInit();  }
+  ngOnInit() { this.onPageInit(); }
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -139,35 +139,30 @@ export class CreateContractComponent implements OnInit {
   }
 
   getDate(dt) {
-    this.logger.log('getDate :: ', dt);
     const returnDate: Date = new Date(dt.yearString + '-' + dt.monthString + '-' + dt.dayString);
-    this.logger.log('getDate returnDate :: ', returnDate);
+    this.logger.log('getDate :: ', dt, 'getDate returnDate :: ', returnDate);
     return returnDate;
   }
 
   getDateString(dt: Date) {
-    this.logger.log('getDateString :: ', dt);
     const returnDate = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
-    this.logger.log('getDateString returnDate :: ', returnDate);
+    this.logger.log('getDateString :: ', dt, 'getDateString returnDate :: ', returnDate);
     return returnDate;
   }
 
   getCalanderDateObject(dt: Date) {
-    this.logger.log('getCalanderDateObject :: ', dt);
     const returnDate = dt.getDate() + ' ' + this.monthNames[dt.getMonth()] + ' ' + dt.getFullYear();
-    this.logger.log('getCalanderDateObject returnDate 3 :: ', returnDate);
+    this.logger.log('getCalanderDateObject :: ', dt, 'getCalanderDateObject returnDate 3 :: ', returnDate);
     return returnDate;
   }
 
   onPageInit() {
     this.showLoading = true;
-
     this.logger.log('SelectedContract :: ', this.selectedContract);
-
     this.contractId = this.selectedContract.contractId;
     this.personid = this.selectedContract.personId;
     this.mode = this.selectedContract.mode;
-
+    
     this.logger.log('Current Contract ID :: ' + this.contractId);
     this.logger.log('Current VatNumber : ' + this.VatNumber);
 
@@ -187,20 +182,14 @@ export class CreateContractComponent implements OnInit {
   }
 
   setDatesRanges() {
-
-    this.logger.log('setDatesRanges selectedContract.startDate :: ', this.selectedContract.startDate);
-    this.logger.log('setDatesRanges selectedContract.endDate :: ', this.selectedContract.endDate);
-
     this.allowedStartDate = new Date(this.selectedContract.startDate);
     this.allowedStartYear = this.allowedStartDate.getFullYear();
     this.allowedStartMonth = this.allowedStartDate.getMonth();
     this.allowedStartDay = this.allowedStartDate.getDate();
-
     this.allowedEndDate = new Date(this.selectedContract.endDate);
     this.allowedEndYear = this.allowedEndDate.getFullYear();
     this.allowedEndMonth = this.allowedEndDate.getMonth();
     this.allowedEndDay = this.allowedEndDate.getDate();
-
     this.logger.log('setDatesRanges allowedStartDate :: ', this.allowedStartDate);
     this.logger.log('setDatesRanges allowedEndDate :: ', this.allowedEndDate);
   }

@@ -13,7 +13,6 @@ import { CountriesComponent } from './componentcontrols/countries/countries.comp
 import { StatuteComponent } from './componentcontrols/statute/statute.component';
 import { WorkCodesComponent } from './componentcontrols/workcodes/workcodes.component';
 import { LanguagesComponent } from './componentcontrols/languages/languages.component';
-import { FileUploadComponent } from './componentcontrols/fileupload/fileupload.component';
 import { DPSSystemMessageComponent } from './componentcontrols/dpssystem-message/dpssystem-message.component';
 import { CalendarComponent } from './componentcontrols/calendar/calendar.component';
 import { CalendarDOBComponent } from './componentcontrols/calendardob/calendardob.component';
@@ -107,7 +106,7 @@ export const routingComponents = [
   CountriesComponent, StatuteComponent, LanguagesComponent, InvoiceSettingsComponent, CurrencyComponent,
   HeadQuartersComponent, GeneralComponent, AddCustomerComponent, EditPersonComponent, ContactPersonComponent,
   EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent, CalendarComponent,
-  UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent, FileUploadComponent,
+  UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
   CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
   CreateContractComponent, DashboardActionComponent, DashboardPersonComponent,
