@@ -40,4 +40,11 @@ export class BulkContractComponent implements OnInit {
 
   }
 
+  onFormwardClick() {
+
+  }
+  onBackwardClick() {
+
+  }
+
 }

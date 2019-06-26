@@ -19,26 +19,8 @@ nav a img {
 }
 
 nav a:hover {
-  background-image: linear-gradient(
-    0deg,
-    #e3771900,
-    #e3771941,
-    rgba(255, 255, 255, 0.432),
-    #e3771941,
-    #e3771900
-  );
 }
 
-nav a:hover.Active {
-  background-image: linear-gradient(
-    0deg,
-    #ecb38100,
-    #e2a26941,
-    rgba(255, 255, 255, 0.432),
-    #e2a26941,
-    #ecb38100
-  ); /* rgba(128, 128, 128, 0.5);*/
-}
 nav a:hover img {
   width: 21px;
   height: 21px;
@@ -57,7 +39,7 @@ nav a .Label {
   text-shadow: 4px 3px 8px rgba(61, 56, 56, 0.94);
 }
 nav a:hover .Label {
-  display: block;
+  display: none;
 }
 
 nav {

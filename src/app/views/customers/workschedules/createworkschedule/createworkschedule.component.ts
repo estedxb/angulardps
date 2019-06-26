@@ -6,7 +6,6 @@ import { Address, LoginToken, DpsUser, DpsWorkSchedule, WorkSchedule, WorkDays, 
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { CreateWorkTimeComponent } from '../../../../componentcontrols/createworktime/createworktime.component';
 import { copyObj } from '@angular/animations/browser/src/util';
 import { LoggingService } from '../../../../shared/logging.service';
 
@@ -503,31 +502,7 @@ this.logger.log('onClickAdd EmptyData', this.data);
 this.openDialog();
 }
 
-openDialog(): void {
-try {
-const dialogConfig = new MatDialogConfig();
-dialogConfig.disableClose = false;
-dialogConfig.autoFocus = true;
-dialogConfig.width = '500px';
-dialogConfig.data = this.data;
-dialogConfig.ariaLabel = 'Arial Label Work Schedule Dialog';
 
-const dialogRef = this.dialog.open(CreateWorkTimeComponent, dialogConfig);
-
-// const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
-
-dialogRef.afterClosed().subscribe(result => {
-  this.logger.log('The dialog was closed');
-  this.data = result;
-  this.logger.log('this.data ::', this.data);
-  this.logger.log('this.SelectedRowID ::', this.SelectedRowID + '  :: this.SelectedWeekDay ::', this.SelectedWeekDay);
-  // Need to update currentDpsWorkSchedule and workScheduleRows
-  // this.maindatas[this.SelectedIndex] = this.data;
-  this.ShowMessage('Work Time "' + this.data + '" is updated successfully.', '');
-});
-
-} catch (e) { }
-}
 
 
 getWorkTimeOf() {

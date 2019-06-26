@@ -14,7 +14,7 @@
                 <textarea formControlName="reasonForcancellation" class="form-control" rows="5"
                     name="reasonForcancellation"></textarea>
                 <div class="form-control-feedback"
-                    *ngIf="CancelContractForm.controls.reasonForcancellation.invalid && (CancelContractForm.controls.reasonForcancellation.dirty || LocationForm.controls.reasonForcancellation.touched) else newvalid">
+                    *ngIf="CancelContractForm.controls.reasonForcancellation.invalid && (CancelContractForm.controls.reasonForcancellation.dirty || CancelContractForm.controls.reasonForcancellation.touched) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #newvalid>

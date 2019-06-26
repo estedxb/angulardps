@@ -14,7 +14,7 @@ export class LegalComponent implements OnInit {
   public currentlanguage = 'nl';
   public errorMsg;
   public maindatas: any = [];
-  private datas: any = [];
+  public datas: any = [];
   public oldlegalFormData;
   public selectedString: string;
 
