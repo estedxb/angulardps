@@ -32,6 +32,7 @@ export class CreateContractComponent implements OnInit {
   public contractAllowedDates: number[] = [];
   public selectedStartDate: Date;
   public selectedEndDate: Date;
+  public Contract = 'Contract';
 
   public selectedStartYear: any;
   public selectedStartMonth: any;
