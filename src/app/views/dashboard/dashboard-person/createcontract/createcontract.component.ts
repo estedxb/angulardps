@@ -98,8 +98,10 @@ export class CreateContractComponent implements OnInit {
   public isEndDateVaildErrorMsg = '';
   public isSelectedDateDoesNotHaveWorkErrorMsg = '';
   public isSelectedWeeksVaildErrorMsg = '';
+  public SpinnerShowing = false;
 
   public errorMsg: string;
+  public componentname: string = 'CreateContractComponent ';
 
   public monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
@@ -116,21 +118,11 @@ export class CreateContractComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateContractComponent>,
     private contractService: ContractService,
     private spinner: NgxSpinnerService,
-    @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) {
-  }
+    @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) { }
 
   ngOnInit() {
-    this.spinner.show('mySpinner', {
-      type: 'line-scale-party',
-      size: 'large',
-      bdColor: 'rgba(100,149,237, .8)',
-      color: 'white'
-    });
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 5000);
+    this.showSpinner();
+    setTimeout(() => { this.hideSpinner(); }, 2500);
     this.onPageInit();
   }
 
@@ -139,7 +131,7 @@ export class CreateContractComponent implements OnInit {
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);    
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
     });
@@ -260,38 +252,58 @@ export class CreateContractComponent implements OnInit {
     }
   }
 
+  showSpinner() {
+    if (!this.SpinnerShowing) {
+      this.SpinnerShowing = true;
+      this.spinner.show('mySpinner');
+    }
+  }
+  hideSpinner() {
+    if (this.SpinnerShowing) {
+      this.spinner.hide('mySpinner');
+      this.SpinnerShowing = false;
+    }
+  }
+
   LoadContractReason() {
     this.logger.log('getContractReason ');
+    this.showSpinner();
     this.contractService.getContractReason()
       .subscribe(contractReasons => {
         this.logger.log('LoadContractReason contractReasons', contractReasons);
         this.contractReasonDatas = contractReasons;
         this.getPositionsByVatNumber();
-      }, error => this.errorMsg = error);
+        this.hideSpinner();
+      }, error => this.errorHandle(error));
   }
 
   getPositionsByVatNumber() {
     this.dpsPositionsData = [];
+    this.showSpinner();
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
       // this.ShowMessage('Contract Positions fetched successfully.', '');
       this.getLocationsByVatNumber();
-    }, error => this.ShowMessage(error, 'error'));
+      this.hideSpinner();
+    }, error => this.errorHandle(error));
   }
 
   getLocationsByVatNumber() {
     this.locationsData = [];
+    this.showSpinner();
     this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.locationsData = response;
       this.getWorkscheduleByVatNumber();
       this.logger.log('locationsData Form Data ::', this.locationsData);
+      this.hideSpinner();
       // this.ShowMessage('locationsData fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+    }, error => this.errorHandle(error));
   }
 
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
+    this.showSpinner();
     this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsWorkSchedulesData = response;
 
@@ -310,7 +322,8 @@ export class CreateContractComponent implements OnInit {
 
       this.logger.log('DpsWorkSchedulesData Form Data : ', this.dpsWorkSchedulesData);
       //this.ShowMessage('WorkSchedules fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      this.hideSpinner();
+    }, error => this.errorHandle(error));
   }
 
   SetMode() {    
@@ -395,6 +408,8 @@ export class CreateContractComponent implements OnInit {
   }
 
   loadContract(vatNumber: string, cid: string) {
+
+    this.showSpinner();
     this.contractService.getContractByVatNoAndId(vatNumber, cid).subscribe(response => {
       this.logger.log('loadContract :: ', response);
 
@@ -464,9 +479,9 @@ export class CreateContractComponent implements OnInit {
       } else { this.calendarmonthDisableStatus = false; }
 
 
+      this.hideSpinner();
     });
   }
-
 
   getSelectedWeekDays() {
     this.logger.log('getSelectedWeekDays()');
@@ -504,6 +519,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   loadPerson(personid: string, vatNumber: string) {
+    this.showSpinner();
     this.personService.getPersonBySSIDVatnumber(personid, vatNumber).subscribe(response => {
       this.logger.log('personid :: ', personid);
       this.logger.log('loadPerson :: ', response);
@@ -521,10 +537,12 @@ export class CreateContractComponent implements OnInit {
   }
 
   onPrintContractClick() {
+    this.showSpinner();
     this.contractService.getPrintContractPDFFileURL(this.VatNumber, this.contractId).subscribe(
-      printContractPDFURLSuccess => {
-        const FileURL = printContractPDFURLSuccess;
-        saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
+      printPDFSuccess => {
+        this.hideSpinner();
+        const FileURL = printPDFSuccess.fileUrl;
+        saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');        
       },
       printContractPDFURLFailed => { this.ShowMessage('Fout! bij het afdrukken van het contract', ''); }
     );
@@ -571,6 +589,7 @@ export class CreateContractComponent implements OnInit {
 
   onApproveContractClick() {
     this.logger.log('onApproveContractClick :: ');
+    this.showSpinner();
     this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(
       approveContractSuccess => {
         this.logger.log(approveContractSuccess);
@@ -580,10 +599,13 @@ export class CreateContractComponent implements OnInit {
         } else {
           this.errorMsg = approveContractSuccess.message;
         }
+
+        this.hideSpinner();
       },
       approveContractFailed => {
+        this.hideSpinner();
         this.logger.log('approveContractFailed');
-        this.ShowMessage('Fout! bij het goedkeuren van het contract', ''); // Error! in approving the contract
+        this.ShowMessage('Fout! bij het goedkeuren van het contract', 'error'); // Error! in approving the contract
         this.logger.log('Approving the contract failed. ' + approveContractFailed);
       }
     );
@@ -748,39 +770,27 @@ export class CreateContractComponent implements OnInit {
               if (this.currentDpsContract.locationId > 0) {
 
                 if (this.mode === 'edit') {
+                  this.showSpinner();
                   this.contractService.updateContract(this.currentDpsContract).subscribe(
                     res => {
                       this.logger.log('  Contract Response :: ', res.body);
                       this.currentDpsContract = res.body;
                       this.ShowMessage('Contract succesvol opgeslagen', '');
                       this.dialogRef.close(this.currentDpsContract);
+                      this.hideSpinner();
                     },
-                    (err: HttpErrorResponse) => {
-                      if (err.error instanceof Error) {
-                        this.logger.log('Error occured=' + err.error.message);
-                      } else {
-                        this.logger.log('response code=' + err.status);
-                        this.logger.log('response body=' + err.error);
-                      }
-                    }
-                  );
+                    (err: HttpErrorResponse) => this.errorHandle(err));
                 } else {
+                  this.showSpinner();
                   this.contractService.createContract(this.currentDpsContract).subscribe(
                     res => {
                       this.logger.log('  Contract Response :: ', res.body);
                       this.currentDpsContract = res.body;
                       this.ShowMessage('Contract succesvol opgeslagen', '');
                       this.dialogRef.close(this.currentDpsContract);
+                      this.hideSpinner();
                     },
-                    (err: HttpErrorResponse) => {
-                      if (err.error instanceof Error) {
-                        this.logger.log('Error occured=' + err.error.message);
-                      } else {
-                        this.logger.log('response code=' + err.status);
-                        this.logger.log('response body=' + err.error);
-                      }
-                    }
-                  );
+                    (err: HttpErrorResponse) => this.errorHandle(err));
                   
                 }
               } else {
@@ -814,6 +824,26 @@ export class CreateContractComponent implements OnInit {
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedWeeksVaildErrorMsg);
       this.ShowMessage(errormsgnew, '');
+    }
+  }
+
+  errorHandle(err: any) {
+    if (err !== null) {
+      this.hideSpinner();
+      try {
+        if (err.error instanceof Error) {
+          this.ShowMessage(err.error.message, 'error');
+          this.logger.log(this.componentname + ' Error occured=' + err.error.message);
+        } else {
+          this.ShowMessage(err.error, 'error');
+          this.logger.log(this.componentname + ' response code=' + err.status);
+          this.logger.log(this.componentname + ' response body=' + err.error);
+        }
+      } catch (e) {
+        this.errorMsg = err;
+        this.ShowMessage(err, 'error');
+        this.logger.log(this.componentname + ' Error ' + err);
+      }
     }
   }
 
@@ -911,4 +941,11 @@ if (this.selectedStartYear === this.selectedEndYear) {
 if (this.selectedStartMonth === this.selectedEndMonth) {
   this.calendarmonthDisableStatus = true;
 } else { this.calendarmonthDisableStatus = false; }
+*/
+
+
+/*
+this.spinner.show('mySpinner', {
+  type: 'line-scale-party', size: 'default', bdColor: 'rgba(255, 255, 255, .8)', color: 'rgba(227, 119, 25, 1)'
+});
 */

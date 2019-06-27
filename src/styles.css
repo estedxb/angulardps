@@ -779,3 +779,7 @@ div#CustomerContact1 {
   left: 20px;
   top: 13px;
 }
+
+#mySpinner .overlay {
+  position: fixed;
+}

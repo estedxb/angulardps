@@ -63,15 +63,15 @@ export class ContractService {
     return this.http.put<any>(this.getContractURL, contract, { headers: httpHeaders, observe: 'response' });
   }
 
-  public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<string> {
+  public getPrintContractPDFFileURL(vatNumber: string, contractId: number): Observable<PrintContractPDF> {
     // this.logger.log('getContractById');
     let result: any = null;
     if (environment.dataFromAPI_JSON && environment.getPrintContractFileURL !== '') {
       this.logger.log('getPrintContractPDFFileURL API Data From = ' + this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId);
-      result = this.http.get<any>(this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
+      result = this.http.get<PrintContractPDF>(this.getPrintContractFileURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     } else {
       this.logger.log('getPrintContractPDFFileURL JSON Data From = ' + this.getPrintContractFileURL);
-      result = this.http.get<any>(this.getPrintContractFileURL).catch(this.errorHandler);
+      result = this.http.get<PrintContractPDF>(this.getPrintContractFileURL).catch(this.errorHandler);
     }
     this.logger.log('getPrintContractPDFFileURL result', result);
     return result;

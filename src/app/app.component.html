@@ -1,3 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<ngx-spinner></ngx-spinner>
+<div *ngIf="!formActive">{{jsonFormStatusMessage}}
+    <ngx-spinner name='mySpinner' bdColor="rgba(227, 119, 25, 0.6)" size="default" color="rgb(255, 255, 255)"
+        fullScreen="true" type="line-scale-party">
+        <p style="font-size: 20px; color: rgb(255,255,255)">Bezig met laden ...</p>
+    </ngx-spinner>
+</div>
 <router-outlet></router-outlet>
