@@ -61,8 +61,6 @@ export class StatuteComponent implements OnInit {
 
   setParitairCommitteArray() {
 
-    this.logger.log("array Paritair committee");
-
     for(let i=0;i<this.statutes.length;i++)
       this.arrayParitairCommitee.push(new ParitairCommitee());
 
@@ -115,12 +113,6 @@ export class StatuteComponent implements OnInit {
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") 
     {
 
-      this.logger.log("received statute settings array");
-      this.logger.log(this.STFormData.data.statuteSettings);
-      
-      this.logger.log("received invoice settings array");
-      this.logger.log(this.STFormData.data.InvoiceSettings);
-
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
@@ -154,8 +146,6 @@ export class StatuteComponent implements OnInit {
     for(let i=0;i<this.loadStatuteSettingsArray.length;i++) 
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
 
-      this.logger.log("changed array");
-      this.logger.log(this.newArrayCoeff);
   }
 
 
@@ -213,10 +203,6 @@ export class StatuteComponent implements OnInit {
           this.statuteSettings.push(this.StatuteSettingsObject);
     
       }
-
-      this.logger.log("statute settings array created");
-      this.logger.log("lenght of array="+this.statuteSettings.length);
-      this.logger.log(this.statuteSettings);
 
       if(counter > this.statutes.length)
           this.emitData("create array empty paritaircommitee");

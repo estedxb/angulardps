@@ -206,9 +206,6 @@ export class InvoiceSettingsComponent implements OnInit {
             this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
             this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
 
-            this.logger.log("invoiceSettings received");
-            this.logger.log(this.FPFormData.data.invoiceSettings);
-
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
                   if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
@@ -460,8 +457,6 @@ export class InvoiceSettingsComponent implements OnInit {
       this.loadSwitchOther = false;
     }
 
-    this.logger.log("currency data other");
-    this.logger.log(this.currencyDataOther);
   }
 
   ngOnInit() {
@@ -583,9 +578,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.ploegpremieSwitch = $event;
 
-    this.logger.log("shift allowances ="+this.shiftAllowances.length);
-    this.logger.log("length of Ploegprimebox1="+this.Ploegpremiere);
-
     if ($event === true) {
       this.shiftAllowance = true;
       this.ISForm.get('PloegprimeBox1').enable();
@@ -598,7 +590,6 @@ export class InvoiceSettingsComponent implements OnInit {
             formGroup.controls['PloegprimeBox1'].enable();
             formGroup.controls['PloegprimeBox2'].enable();
 
-            this.logger.log("counter="+counter);
       }
 
 
@@ -615,7 +606,6 @@ export class InvoiceSettingsComponent implements OnInit {
             formGroup.controls['PloegprimeBox1'].disable();
             formGroup.controls['PloegprimeBox2'].disable();
 
-            this.logger.log("counter="+counter);
       }
 
       this.clearShiftAllowances();

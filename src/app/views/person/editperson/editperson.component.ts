@@ -173,6 +173,7 @@ export class EditPersonComponent implements OnInit {
 
     this.editPersonForm.controls.socialSecurityNumber.setValue(this.SocialSecurityId);
     this.editPersonForm.controls.socialSecurityNumber.disable();
+    this.editPersonForm.controls.gender.disable();
 
     this.setPersonVatNumber();
 
@@ -292,6 +293,7 @@ export class EditPersonComponent implements OnInit {
       this.selectedGenderIndex = 0;
     }
 
+    this.editPersonForm.get('gender').disable();
   }
 
   stripDigits(ssid: string) {
