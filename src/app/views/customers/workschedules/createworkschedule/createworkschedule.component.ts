@@ -8,7 +8,7 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { copyObj } from '@angular/animations/browser/src/util';
 import { LoggingService } from '../../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createworkschedule',
   templateUrl: './createworkschedule.component.html',
@@ -40,7 +40,7 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
+    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>, private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule, private logger: LoggingService) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
     this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));
@@ -433,7 +433,7 @@ export class CreateWorkScheduleComponent implements OnInit {
     this.logger.log('this.isValidFri' + this.isValidFri);
     this.logger.log('this.isValidSat' + this.isValidSat);
     this.logger.log('this.isValidSun' + this.isValidSun);
-    
+
     if (this.WorkScheduleForm.valid && this.isValidMon && this.isValidTue && this.isValidWed
       && this.isValidThu && this.isValidFri && this.isValidSat && this.isValidSun) {
       if (this.currentDpsWorkSchedule !== undefined && this.currentDpsWorkSchedule !== null) {

@@ -3,6 +3,7 @@ import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
 import * as Msal from 'msal';
 import { MsalServiceLocal } from '../../shared/msal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-logout',
@@ -12,7 +13,7 @@ import { MsalServiceLocal } from '../../shared/msal.service';
 export class LogoutComponent implements OnInit {
 
   constructor(
-    private msalService: MsalServiceLocal,
+    private msalService: MsalServiceLocal, private spinner: NgxSpinnerService,
     private logger: LoggingService) { }
 
   ngOnInit() {

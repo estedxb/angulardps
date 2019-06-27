@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 import { LoggingService } from '../../shared/logging.service';
 import { Form, FormGroup, FormControl } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-calendardob',
@@ -28,7 +29,7 @@ export class CalendarDOBComponent implements OnInit {
   set valueYear(value: any) { this._selectedValueYear = value; }
   get valueYear(): any { return this._selectedValueYear; }
 
-  constructor(private logger: LoggingService) {
+  constructor(private spinner: NgxSpinnerService, private logger: LoggingService) {
 
     const today: Date = new Date();
     this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
@@ -37,7 +38,7 @@ export class CalendarDOBComponent implements OnInit {
     this.dropDownYear = [];
 
     for (let i: number = 1900; i <= 2020; i++)
-          this.dropDownYear.push("" + i);
+      this.dropDownYear.push("" + i);
 
     this.calendarObject = {
       dayString: '1',
@@ -57,7 +58,7 @@ export class CalendarDOBComponent implements OnInit {
   @Input() public componentType = null;
   @Output() public childEvent = new EventEmitter();
 
-  public calendarForm:FormGroup;
+  public calendarForm: FormGroup;
   public dataDropDown: string[];
   public dropDownMonth: string[];
   public dropDownYear: Array<string>;
@@ -121,31 +122,28 @@ export class CalendarDOBComponent implements OnInit {
   }
 
   loadDOBDataNew(calendarData) {
-    
+
     const calendarArray = calendarData.split('/');
     let yearString = "";
 
     let currentYear = (new Date()).getFullYear() % 100;
 
-    if(calendarArray[2].length === 2)
-    {
+    if (calendarArray[2].length === 2) {
       if (parseInt(calendarArray[2], 10) >= 0 && parseInt(calendarArray[2], 10) <= currentYear)
-          yearString = "" + (parseInt(calendarArray[2], 10) + 2000);
+        yearString = "" + (parseInt(calendarArray[2], 10) + 2000);
       else
-          yearString = "" + (parseInt(calendarArray[2], 10) + 1900);
+        yearString = "" + (parseInt(calendarArray[2], 10) + 1900);
     }
-    else
-    {
-      if(calendarArray[2].length === 4)
-          yearString = calendarArray[2];
+    else {
+      if (calendarArray[2].length === 4)
+        yearString = calendarArray[2];
     }
 
     this.selectedIndex = parseInt(calendarArray[0], 10) - 1;
     this.selectedMonth = parseInt(calendarArray[1], 10) - 1;
 
     for (let i = 0; i < this.dropDownYear.length; i++) {
-      if(yearString.toString() === this.dropDownYear[i])
-      {
+      if (yearString.toString() === this.dropDownYear[i]) {
         this.selectedYear = i;
         this._selectedIndexYear = i;
       }

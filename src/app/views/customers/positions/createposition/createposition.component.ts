@@ -8,7 +8,7 @@ import { environment } from '../../../../../environments/environment';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { LoggingService } from '../../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
@@ -34,7 +34,7 @@ export class CreatepositionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService,
-    private positionsService: PositionsService, private snackBar: MatSnackBar,
+    private positionsService: PositionsService, private snackBar: MatSnackBar, private spinner: NgxSpinnerService,
     private logger: LoggingService, public dialogRef: MatDialogRef<CreatepositionComponent>,
     @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
     this.currentPosition = posistionData;
@@ -95,11 +95,10 @@ export class CreatepositionComponent implements OnInit {
   createObjects() {
     this.currentPosition.position.name = this.PositionForm.get('name').value;
     this.currentPosition.position.taskDescription = this.PositionForm.get('taskDescription').value;
-    if (this.PositionForm.get('costCenter').value!==null || this.PositionForm.get('costCenter').value!==undefined || this.PositionForm.get('costCenter').value!=="")
-    {
+    if (this.PositionForm.get('costCenter').value !== null || this.PositionForm.get('costCenter').value !== undefined || this.PositionForm.get('costCenter').value !== "") {
       this.currentPosition.position.costCenter = this.PositionForm.get('costCenter').value;
     }
-    else{
+    else {
       this.currentPosition.position.costCenter = "0";
     }
     this.currentPosition.position.costCenter = this.PositionForm.get('costCenter').value;

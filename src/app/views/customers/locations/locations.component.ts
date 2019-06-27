@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from '../../../shared/locations.service';
 import { CreatelocationComponent } from './createlocation/createlocation.component';
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
@@ -24,7 +24,7 @@ export class LocationsComponent implements OnInit {
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
-    private locationsService: LocationsService, private logger: LoggingService,
+    private locationsService: LocationsService, private logger: LoggingService, private spinner: NgxSpinnerService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

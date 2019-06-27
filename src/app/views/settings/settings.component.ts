@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-settings',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
   public SelectedPage = 'Settings';
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
   }

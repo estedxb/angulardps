@@ -4,6 +4,7 @@ import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
 import { Summaries, LoginToken } from '../../../shared/models';
 import { LoggingService } from '../../../shared/logging.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-dashboardsummary',
   templateUrl: './dashboardaction.component.html',
@@ -21,7 +22,7 @@ export class DashboardActionComponent implements OnInit {
 
   @Input() public isForceZeroNotificationCount;
   @Output() public NotificationCount = new EventEmitter();
-  constructor(public summaryService: SummaryService, private router: Router, private logger: LoggingService) { }
+  constructor(public summaryService: SummaryService, private router: Router, private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   ngOnInit() {
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));

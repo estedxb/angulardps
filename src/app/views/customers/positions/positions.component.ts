@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from '../../../shared/positions.service';
 import { CreatepositionComponent } from './createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-positions',
   templateUrl: './positions.component.html',
@@ -25,7 +25,8 @@ export class PositionsComponent implements OnInit {
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
-    private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService
+    private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService, private logger: LoggingService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

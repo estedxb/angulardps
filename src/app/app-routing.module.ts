@@ -35,7 +35,6 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { CreateuserComponent } from './views/customers/users/createuser/createuser.component';
 import { CreatelocationComponent } from './views/customers/locations/createlocation/createlocation.component';
 import { LoginComponent } from './views/login/login.component';
-import { SchedulerComponent } from './views/scheduler/scheduler.component';
 import { CreateWorkScheduleComponent } from './views/customers/workschedules/createworkschedule/createworkschedule.component';
 import { CreatepositionComponent } from './views/customers/positions/createposition/createposition.component';
 import { UpdatePersonComponent } from './views/person/update-person/update-person.component';
@@ -76,7 +75,6 @@ const routes: Routes = [
   { path: 'customer/:id', component: UpdateCustomerComponent },
   { path: 'customer/:id/:page', component: UpdateCustomerComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: 'scheduler', component: SchedulerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'person/addperson', component: AddPersonComponent },
@@ -101,7 +99,7 @@ export const routingComponents = [
   LegalComponent, JointcommitteeComponent, WorkCodesComponent, UsersComponent, ValidateLoginComponent,
   CountriesComponent, StatuteComponent, LanguagesComponent, InvoiceSettingsComponent, CurrencyComponent,
   HeadQuartersComponent, GeneralComponent, AddCustomerComponent, EditPersonComponent, ContactPersonComponent,
-  EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, SchedulerComponent, CalendarComponent,
+  EditCustomerComponent, UpdateCustomerComponent, AddPersonComponent, CalendarComponent,
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
   CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,

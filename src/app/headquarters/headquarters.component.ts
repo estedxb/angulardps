@@ -13,6 +13,7 @@ import { ChildActivationEnd } from '@angular/router';
 import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-headquarters',
@@ -98,7 +99,7 @@ export class HeadQuartersComponent implements OnInit {
   // }
 
   ngDoCheck() {
-    
+
     //load Edit Page details
     if (this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== null && this.HQFormData.page === "edit") {
@@ -139,14 +140,14 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private data: DataService) {
+  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private customerService: CustomersService, private data: DataService) {
 
   }
 
   ngAfterViewInit() {
 
     //load Edit Page details
-    if (this.HQFormData!== null  && this.HQFormData !== undefined && this.oldData !== this.HQFormData) {
+    if (this.HQFormData !== null && this.HQFormData !== undefined && this.oldData !== this.HQFormData) {
       if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
@@ -165,51 +166,48 @@ export class HeadQuartersComponent implements OnInit {
     if (dpscustomer !== null) {
       console.log("setting customer data");
 
-      if(dpscustomer.customer !== null && dpscustomer.customer !== undefined)
-        {
-          console.log("firstname ="+dpscustomer.customer.name);
+      if (dpscustomer.customer !== null && dpscustomer.customer !== undefined) {
+        console.log("firstname =" + dpscustomer.customer.name);
 
-          this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
-          this.HQForm.controls['vatNumber'].disable();
-          this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
-          this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
+        this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
+        this.HQForm.controls['vatNumber'].disable();
+        this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
+        this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
 
-          if(this.dpsCustomer.customer.creditCheck !== null && this.dpsCustomer.customer.creditCheck !== undefined)
-          {
-            this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
-            this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;      
-          }
-          
-          this.legalString = dpscustomer.customer.legalForm;
+        if (this.dpsCustomer.customer.creditCheck !== null && this.dpsCustomer.customer.creditCheck !== undefined) {
+          this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit),
+            this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
+        }
 
-        if(dpscustomer.customer.address !== null && dpscustomer.customer.address !== undefined)
-        {
-        console.log("street ="+dpscustomer.customer.address.street);
-        this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
-        this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
-        this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
-        this.HQForm.controls['city'].setValue(dpscustomer.customer.address.city);
-        this.HQForm.controls['postalcode'].setValue(dpscustomer.customer.address.postalCode);  
+        this.legalString = dpscustomer.customer.legalForm;
 
-        this.countryString = dpscustomer.customer.address.country;
+        if (dpscustomer.customer.address !== null && dpscustomer.customer.address !== undefined) {
+          console.log("street =" + dpscustomer.customer.address.street);
+          this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
+          this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
+          this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
+          this.HQForm.controls['city'].setValue(dpscustomer.customer.address.city);
+          this.HQForm.controls['postalcode'].setValue(dpscustomer.customer.address.postalCode);
+
+          this.countryString = dpscustomer.customer.address.country;
+        }
+
+        //this.HQForm.controls['country'].setValue(dpscustomer.customer.address.country);
+        this.HQForm.controls['phonenumber'].setValue(dpscustomer.customer.phoneNumber.number);
+        this.HQForm.controls['generalEmail'].setValue(dpscustomer.customer.email.emailAddress);
+
+        if (dpscustomer.contractsEmail !== null && dpscustomer.contractsEmail !== undefined)
+          this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
+
+        if (dpscustomer.invoiceEmail !== null && dpscustomer.invoiceEmail !== undefined)
+          this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
+
+
+        // this.invoiceSettings = new InvoiceSettings();
+        // this.invoiceSettings = dpscustomer.invoiceSettings;
+
+        // this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
       }
-
-      //this.HQForm.controls['country'].setValue(dpscustomer.customer.address.country);
-      this.HQForm.controls['phonenumber'].setValue(dpscustomer.customer.phoneNumber.number);
-      this.HQForm.controls['generalEmail'].setValue(dpscustomer.customer.email.emailAddress);
-
-      if(dpscustomer.contractsEmail !== null && dpscustomer.contractsEmail !== undefined)
-        this.HQForm.controls['contractsEmail'].setValue(dpscustomer.contractsEmail.emailAddress);
-
-      if(dpscustomer.invoiceEmail !== null && dpscustomer.invoiceEmail !== undefined)
-        this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
-
-
-      // this.invoiceSettings = new InvoiceSettings();
-      // this.invoiceSettings = dpscustomer.invoiceSettings;
-
-      // this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
-    }
 
     }
 
@@ -258,9 +256,8 @@ export class HeadQuartersComponent implements OnInit {
     //all fields are validated
     //this.setCreditCheck();
 
-    if(this.creditCheck === null)
-    {
-      this.setCreditCheck(); 
+    if (this.creditCheck === null) {
+      this.setCreditCheck();
     }
 
     this.setAddress();
@@ -273,7 +270,7 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessage($event) {
     this.nlegalString = $event;
-    this.selectedLegalObject = {"FormName": $event};
+    this.selectedLegalObject = { "FormName": $event };
     this.setCustomerObject();
     this.createObjects();
   }
@@ -332,11 +329,11 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  updateFirstName(firstname:string) {
+  updateFirstName(firstname: string) {
     this.HQForm.controls['firstname'].setValue(firstname);
   }
 
-  updateLastName(lastname:string) {
+  updateLastName(lastname: string) {
     this.HQForm.controls['lastname'].setValue(lastname);
   }
 
@@ -351,7 +348,7 @@ export class HeadQuartersComponent implements OnInit {
 
   parseData(response: DPSCustomer) {
 
-    this.loadData(response);  
+    this.loadData(response);
 
     this.creditCheckboolean = response.customer.creditCheck.creditcheck;
     this.creditCheckPending = response.customer.creditCheck.creditCheckPending;
@@ -376,8 +373,7 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  clearFields()
-  {
+  clearFields() {
     this.HQForm.controls['firstname'].setValue("");
     this.HQForm.controls['officialname'].setValue("");
     this.HQForm.controls['street'].setValue("");
@@ -408,14 +404,13 @@ export class HeadQuartersComponent implements OnInit {
 
         this.legalString = verifiedCustomerData.customer.legalForm;
 
-        if(verifiedCustomerData.customer.address !== null)
-        {
+        if (verifiedCustomerData.customer.address !== null) {
           this.HQForm.controls['street'].setValue(verifiedCustomerData.customer.address.street);
           this.HQForm.controls['streetnumber'].setValue(verifiedCustomerData.customer.address.streetNumber);
           this.HQForm.controls['bus'].setValue(verifiedCustomerData.customer.address.bus);
           this.HQForm.controls['city'].setValue(verifiedCustomerData.customer.address.city);
           this.HQForm.controls['postalcode'].setValue(verifiedCustomerData.customer.address.postalCode);
-          this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);  
+          this.HQForm.controls['country'].setValue(verifiedCustomerData.customer.address.country);
         }
 
         if (verifiedCustomerData.customer.phoneNumber !== null && verifiedCustomerData.customer.phoneNumber.number !== null)
@@ -474,7 +469,7 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheck = new CreditCheck();
 
     // assigning credit check object
-    this.creditCheck.creditLimit = 0; 
+    this.creditCheck.creditLimit = 0;
     this.creditCheck.creditcheck = this.creditcheckEdit;
     this.creditCheck.creditCheckPending = false;
     this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
@@ -518,10 +513,9 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
-    if(this.nlegalString !== null && this.nlegalString !== undefined)
+    if (this.nlegalString !== null && this.nlegalString !== undefined)
       this.customer.legalForm = this.nlegalString;
-    else 
-    {
+    else {
       this.customer.legalForm = this.selectedLegalObject.FormName;
     }
 
@@ -572,71 +566,66 @@ export class HeadQuartersComponent implements OnInit {
     this.otherAllowance = new Array();
     this.invoiceSettings = new InvoiceSettings();
 
-    if(this.HQFormData !== null && this.HQFormData !== undefined)    
-    if(this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined )
-    {
+    if (this.HQFormData !== null && this.HQFormData !== undefined)
+      if (this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined) {
 
-      if(this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined)
-      {
-        this.mobilityAllowance.amountPerKm =     this.HQFormData.data.invoiceSettings.mobilityAllowance.amountPerKm;
-        this.mobilityAllowance.enabled =     this.HQFormData.data.invoiceSettings.mobilityAllowance.enabled;
-        this.invoiceSettings.mobilityAllowance = this.mobilityAllowance;
-      }
+        if (this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined) {
+          this.mobilityAllowance.amountPerKm = this.HQFormData.data.invoiceSettings.mobilityAllowance.amountPerKm;
+          this.mobilityAllowance.enabled = this.HQFormData.data.invoiceSettings.mobilityAllowance.enabled;
+          this.invoiceSettings.mobilityAllowance = this.mobilityAllowance;
+        }
 
-      if(this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null &&  this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
-      {
+        if (this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) {
           // assigning invoice settings 
-          this.lieuDaysAllowance.enabled =     this.HQFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
-          this.lieuDaysAllowance.payed =     this.HQFormData.data.invoiceSettings.lieuDaysAllowance.payed;
+          this.lieuDaysAllowance.enabled = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+          this.lieuDaysAllowance.payed = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.payed;
 
           this.invoiceSettings.lieuDaysAllowance = this.lieuDaysAllowance;
-      }
-      
-          this.invoiceSettings.holidayInvoiced   =   this.HQFormData.data.invoiceSettings.holidayInvoiced;
-          this.invoiceSettings.sicknessInvoiced  =   this.HQFormData.data.invoiceSettings.sicknessInvoiced;
-          this.invoiceSettings.shiftAllowance    =   this.HQFormData.data.invoiceSettings.shiftAllowance;
-     
-          let lengthOfOtherAllowanceArray =  0;
-          if(this.HQFormData.data.invoiceSettings.otherAllowances !== null && this.HQFormData.data.invoiceSettings.otherAllowances !== undefined)
-              lengthOfOtherAllowanceArray = this.HQFormData.data.invoiceSettings.otherAllowances.length;
-      
-          for(let count:number=0;count<lengthOfOtherAllowanceArray;count+=1)
-          {
-      
-            this.otherAllowanceObject = new OtherAllowance();
-      
-            this.otherAllowanceObject.amount =     this.HQFormData.data.invoiceSettings.otherAllowances[count].amount;
-            this.otherAllowanceObject.codeId =     this.HQFormData.data.invoiceSettings.otherAllowances[count].codeId;
-            this.otherAllowanceObject.nominal =      this.HQFormData.data.invoiceSettings.otherAllowances[count].nominal;
-      
-            this.otherAllowance.push(this.otherAllowanceObject);
-      
-          }
+        }
 
-          let lengthOfShiftAllowanceArray = 0;
-          if(this.HQFormData.data.invoiceSettings.shiftAllowances !== null && this.HQFormData.data.invoiceSettings.shiftAllowances !== undefined)
-                lengthOfShiftAllowanceArray = this.HQFormData.data.invoiceSettings.shiftAllowances.length;
-      
-          for(let i:number=0;i<lengthOfShiftAllowanceArray;i+=1)
-          {
-      
-            this.shiftAllowanceObject = new ShiftAllowance();
-      
-            this.shiftAllowanceObject.amount =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].amount;
-            this.shiftAllowanceObject.nominal =    this.HQFormData.data.invoiceSettings.shiftAllowances[i].nominal;
-            this.shiftAllowanceObject.timeSpan =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].timeSpan;
-            this.shiftAllowanceObject.shiftName =     this.HQFormData.data.invoiceSettings.shiftAllowances[i].shiftName;  
-        
-            this.shiftAllowance.push(this.shiftAllowanceObject);
-        
-          }
-                
-          this.invoiceSettings.shiftAllowances = this.shiftAllowance;
-          this.invoiceSettings.otherAllowances = this.otherAllowance;
-      
-    }
-      
-          //this.HQdata.invoiceSettings = this.invoiceSettings;
+        this.invoiceSettings.holidayInvoiced = this.HQFormData.data.invoiceSettings.holidayInvoiced;
+        this.invoiceSettings.sicknessInvoiced = this.HQFormData.data.invoiceSettings.sicknessInvoiced;
+        this.invoiceSettings.shiftAllowance = this.HQFormData.data.invoiceSettings.shiftAllowance;
+
+        let lengthOfOtherAllowanceArray = 0;
+        if (this.HQFormData.data.invoiceSettings.otherAllowances !== null && this.HQFormData.data.invoiceSettings.otherAllowances !== undefined)
+          lengthOfOtherAllowanceArray = this.HQFormData.data.invoiceSettings.otherAllowances.length;
+
+        for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) {
+
+          this.otherAllowanceObject = new OtherAllowance();
+
+          this.otherAllowanceObject.amount = this.HQFormData.data.invoiceSettings.otherAllowances[count].amount;
+          this.otherAllowanceObject.codeId = this.HQFormData.data.invoiceSettings.otherAllowances[count].codeId;
+          this.otherAllowanceObject.nominal = this.HQFormData.data.invoiceSettings.otherAllowances[count].nominal;
+
+          this.otherAllowance.push(this.otherAllowanceObject);
+
+        }
+
+        let lengthOfShiftAllowanceArray = 0;
+        if (this.HQFormData.data.invoiceSettings.shiftAllowances !== null && this.HQFormData.data.invoiceSettings.shiftAllowances !== undefined)
+          lengthOfShiftAllowanceArray = this.HQFormData.data.invoiceSettings.shiftAllowances.length;
+
+        for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) {
+
+          this.shiftAllowanceObject = new ShiftAllowance();
+
+          this.shiftAllowanceObject.amount = this.HQFormData.data.invoiceSettings.shiftAllowances[i].amount;
+          this.shiftAllowanceObject.nominal = this.HQFormData.data.invoiceSettings.shiftAllowances[i].nominal;
+          this.shiftAllowanceObject.timeSpan = this.HQFormData.data.invoiceSettings.shiftAllowances[i].timeSpan;
+          this.shiftAllowanceObject.shiftName = this.HQFormData.data.invoiceSettings.shiftAllowances[i].shiftName;
+
+          this.shiftAllowance.push(this.shiftAllowanceObject);
+
+        }
+
+        this.invoiceSettings.shiftAllowances = this.shiftAllowance;
+        this.invoiceSettings.otherAllowances = this.otherAllowance;
+
+      }
+
+    //this.HQdata.invoiceSettings = this.invoiceSettings;
   }
 
   setContacts() {

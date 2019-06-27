@@ -7,6 +7,7 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-contactperson',
@@ -36,7 +37,7 @@ export class ContactPersonComponent implements OnInit {
   contact: Contact;
   alsCheck: boolean;
 
-  constructor(private formBuilder: FormBuilder, private logger: LoggingService) {
+  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private logger: LoggingService) {
 
   }
 
@@ -87,7 +88,7 @@ export class ContactPersonComponent implements OnInit {
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
         if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
-          this.logger.log("ctform data="+this.CTFormData.page);
+          this.logger.log("ctform data=" + this.CTFormData.page);
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
           this.languageString = this.CTFormData.data.contact.language.name;
@@ -154,8 +155,8 @@ export class ContactPersonComponent implements OnInit {
 
     this.language.name = this.languageStringNew;
 
-    if(this.languageShortNameNEw !== undefined && this.languageShortNameNEw !== null)
-        this.language.shortName = this.languageShortNameNEw.toLowerCase();
+    if (this.languageShortNameNEw !== undefined && this.languageShortNameNEw !== null)
+      this.language.shortName = this.languageShortNameNEw.toLowerCase();
 
     this.contact.firstName = this.CTForm.get('firstname').value;
     this.contact.lastName = this.CTForm.get('lastname').value;
@@ -177,7 +178,7 @@ export class ContactPersonComponent implements OnInit {
 
     this.setJSONObject();
 
-    this.logger.log("als check ="+this.alsCheck);
+    this.logger.log("als check =" + this.alsCheck);
 
   }
 
@@ -191,7 +192,7 @@ export class ContactPersonComponent implements OnInit {
     // "phoneNumber": this.contact.phoneNumber,
     // "language": this.contact.language,
 
-    this.logger.log("json object sending="+this.alsCheck);
+    this.logger.log("json object sending=" + this.alsCheck);
 
     this.CTdata = {
       'contact': this.contact,

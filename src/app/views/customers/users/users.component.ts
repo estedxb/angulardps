@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -26,7 +26,8 @@ export class UsersComponent implements OnInit {
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
-    private usersService: UsersService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService) { }
+    private usersService: UsersService, private dialog: MatDialog,
+    private spinner: NgxSpinnerService, private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 

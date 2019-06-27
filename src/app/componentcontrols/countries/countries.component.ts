@@ -2,7 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 // import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
 import { LoggingService } from '../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
@@ -36,7 +36,7 @@ export class CountriesComponent implements OnInit {
       this.selectedValue = this.datas[this._selectedIndex];
     }
   }
-  
+
   onChange($event) {
 
     this._selectedIndex = $event.target.value;
@@ -52,7 +52,7 @@ export class CountriesComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private countriesService: CountriesService, private logger: LoggingService) { }
+  constructor(private countriesService: CountriesService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   ngOnInit() {
 
@@ -71,11 +71,9 @@ export class CountriesComponent implements OnInit {
   }
 
   setDefaultCountry() {
-    
-    for(let it=0;it<this.datas.length;it++)
-    {
-      if(this.datas[it].Country === "Belgium")
-      {
+
+    for (let it = 0; it < this.datas.length; it++) {
+      if (this.datas[it].Country === "Belgium") {
         this._selectedIndex = it;
         this.childEvent.emit(this.datas[it]);
       }
@@ -104,19 +102,17 @@ export class CountriesComponent implements OnInit {
     if (datas.length !== 0) {
 
       for (let i = 0; i < this.datas.length; i++) {
-        const str:string = this.datas[i].Country;
-        const datString:Array<string> = str.split(" ");
+        const str: string = this.datas[i].Country;
+        const datString: Array<string> = str.split(" ");
 
-        if(str !== undefined && str != null)
-        {
-          if(this.CountryFormData === str)
-          {
+        if (str !== undefined && str != null) {
+          if (this.CountryFormData === str) {
             this._selectedIndex = i;
             this.childEvent.emit(this.datas[i]);
           }
         }
       }
-    } 
+    }
     else {
     }
 

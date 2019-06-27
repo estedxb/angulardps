@@ -3,7 +3,7 @@ import { Contact, DpsUser, LoginToken, DPSCustomer, Customer, InvoiceSettings, C
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-editcustomer',
   templateUrl: './editcustomer.component.html',
@@ -23,12 +23,12 @@ export class EditCustomerComponent implements OnInit {
   public editObject: any = { data: '', page: '' };
   public oldHQdata: any;
   public dataCustomerEdit: any;
-  public pageType:string;
+  public pageType: string;
 
   constructor(
-    private customerService: CustomersService, private data: DataService,
+    private customerService: CustomersService, private data: DataService, private spinner: NgxSpinnerService,
     private logger: LoggingService) {
-      
+
     // this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.editObject = {
       data: '',
@@ -107,7 +107,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
         this.childEvent.emit(this.HQdata);
       }
-    
+
     }
 
   }
@@ -155,10 +155,8 @@ export class EditCustomerComponent implements OnInit {
       page: 'edit'
     };
 
-    if(response !== null && response !== undefined)
-    {
-      if(response.contact !== null && response.contact !== undefined)
-      {
+    if (response !== null && response !== undefined) {
+      if (response.contact !== null && response.contact !== undefined) {
         this.HQdata.contact.firstName = response.contact.firstName;
         this.HQdata.contact.lastName = response.contact.lastName;
         this.HQdata.contact.email = response.contact.email;
@@ -169,7 +167,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.activateContactAsUser = response.activateContactAsUser;
         this.HQdata.formValid = true;
 
-        this.childEvent.emit(this.HQdata);    
+        this.childEvent.emit(this.HQdata);
       }
 
     }
@@ -206,7 +204,7 @@ export class EditCustomerComponent implements OnInit {
           this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
           this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
           this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-    
+
         }
         this.childEvent.emit(this.HQdata);
       }

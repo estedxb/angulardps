@@ -9,7 +9,7 @@ import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',
@@ -29,8 +29,9 @@ export class UpdateCustomerComponent implements OnInit {
   public editCustomerData: any;
 
   constructor(// private routerEvent: RouterEvent,
-    private customerListsService: CustomerListsService, private customerService: CustomersService, private snackBar: MatSnackBar,
-    private logger: LoggingService, private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
+    private customerListsService: CustomerListsService, private customerService: CustomersService,
+    private snackBar: MatSnackBar, private spinner: NgxSpinnerService, private logger: LoggingService,
+    private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
     try {

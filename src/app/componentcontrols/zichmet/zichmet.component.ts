@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-zichmet',
@@ -50,7 +50,7 @@ export class ZichmetComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private vehicleService: vehicleService, private logger: LoggingService) { }
+  constructor(private vehicleService: vehicleService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   ngOnInit() {
 

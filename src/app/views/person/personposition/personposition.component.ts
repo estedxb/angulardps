@@ -7,12 +7,15 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRe
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 
 import {
-  DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
-  ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification, LoginToken
+  DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation,
+  Language, DpsPostion, _Position,
+  ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address,
+  EmailAddress, PhoneNumber, Statute, VcaCertification, LoginToken
 } from '../../../shared/models';
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from '../../../shared/logging.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-personposition',
@@ -58,7 +61,7 @@ export class PersonPositionComponent implements OnInit {
 
   public dateofBirth;
   public selectedGenderIndex;
-  public selectedIndexFunctie =0;
+  public selectedIndexFunctie = 0;
   public kmtoggle;
   public nettoggle;
 
@@ -77,7 +80,7 @@ export class PersonPositionComponent implements OnInit {
   public statutes = [];
   public countStatutes: number;
 
-  public selectedIndexStatute:any = 0;
+  public selectedIndexStatute: any = 0;
   public message: any;
 
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -95,7 +98,7 @@ export class PersonPositionComponent implements OnInit {
   constructor(
     private personsService: PersonService, private data: DataService,
     private logger: LoggingService, private positionsService: PositionsService,
-    private fb: FormBuilder, private dialog: MatDialog,
+    private fb: FormBuilder, private dialog: MatDialog, private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
@@ -117,11 +120,10 @@ export class PersonPositionComponent implements OnInit {
 
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
-      if(maindatas[i].position.name !== "")
-      {
-        this.dataDropDownFunctie.push(positionObject);      
+      if (maindatas[i].position.name !== "") {
+        this.dataDropDownFunctie.push(positionObject);
         this.dataDropDownFunctieIds.push(maindatas[i].position.id);
-        this.logger.log("positon in maindatas=" + maindatas[i].id); 
+        this.logger.log("positon in maindatas=" + maindatas[i].id);
       }
     }
 
@@ -294,24 +296,21 @@ export class PersonPositionComponent implements OnInit {
     );
   }
 
-  findIndex(position:number)
-  {
-    for(let i=0;i<this.maindatas.length;i++)
-    {
-        if(position === this.maindatas[i].id)
-          this.selectedIndexFunctie = i;
+  findIndex(position: number) {
+    for (let i = 0; i < this.maindatas.length; i++) {
+      if (position === this.maindatas[i].id)
+        this.selectedIndexFunctie = i;
     }
   }
 
-  loadPersonData(response) 
-  {
+  loadPersonData(response) {
 
     this.logger.log("respone body");
     this.logger.log(response);
     const data = response;
     let counter: number = 0;
 
-    this.logger.log("customer position id="+data.customerPostionId);
+    this.logger.log("customer position id=" + data.customerPostionId);
 
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) {
 
@@ -323,7 +322,7 @@ export class PersonPositionComponent implements OnInit {
       //   counter++;
       // });
 
-      this.findIndex(parseInt(data.customerPostionId,10));
+      this.findIndex(parseInt(data.customerPostionId, 10));
     }
 
     if (data.statute !== null && data.statute !== undefined && data.statute !== "") {

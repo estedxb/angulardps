@@ -215,8 +215,8 @@ export class AddPersonComponent implements OnInit {
     public http: HttpClient, private personsService: PersonService,
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
-    private statuteService: StatuteService,
-    private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService
+    private statuteService: StatuteService, private spinner: NgxSpinnerService,
+    private route: ActivatedRoute, private router: Router
   ) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {

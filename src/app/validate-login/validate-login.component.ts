@@ -9,6 +9,7 @@ import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../share
 import { CustomerListsService } from '../shared/customerlists.service';
 
 import { Router, CanActivate } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ValidateLoginComponent implements OnInit {
   public access_token = '';
 
   constructor(
-    private router: Router, private msalService: MsalServiceLocal,
+    private router: Router, private msalService: MsalServiceLocal, private spinner: NgxSpinnerService,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 

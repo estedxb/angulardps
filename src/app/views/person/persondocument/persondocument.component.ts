@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { environment } from '../../../../environments/environment';;
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-persondocument',
@@ -46,11 +46,14 @@ export class PersonDocumentComponent implements OnInit {
   public documents: Documents;
   public personDocuments: PersonDocuments;
   public driverProfilesItem: DriverProfilesItem;
-  public requestCertificate : Summaries;
+  public requestCertificate: Summaries;
   public currentPerson: DpsPerson;
 
   public data: DpsPerson;
-  constructor(private personService: PersonService, private dialog: MatDialog, private snackBar: MatSnackBar, private logger: LoggingService) { }
+  constructor(
+    private personService: PersonService, private dialog: MatDialog,
+    private spinner: NgxSpinnerService, private snackBar: MatSnackBar,
+    private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
@@ -301,8 +304,8 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   deleteStudentAtWorkAttestationFile() {
-    this.currentPerson.studentAtWorkProfile.attestation.name  = '';
-    this.currentPerson.studentAtWorkProfile.attestation.location  = '';
+    this.currentPerson.studentAtWorkProfile.attestation.name = '';
+    this.currentPerson.studentAtWorkProfile.attestation.location = '';
     this.updatePerson();
   }
 
@@ -441,7 +444,7 @@ export class PersonDocumentComponent implements OnInit {
     this.requestCertificate.customerVatNumber = this.currentPerson.customerVatNumber;
     this.requestCertificate.message = "Request for medical result " + this.currentPerson.person.firstName;
 
-    this.requestCertificate.dateTime =  new Date().toLocaleString();
+    this.requestCertificate.dateTime = new Date().toLocaleString();
     this.requestCertificate.actionTypeId = "1";
     this.requestCertificate.objectId = this.currentPerson.person.socialSecurityNumber.number.toString();
     this.requestCertificate.objectDomain = "Person";
@@ -454,18 +457,18 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.requestCertificate(this.requestCertificate).subscribe(res => {
       this.logger.log('requestCertificate Response :: ', res);
     },
-    (err: HttpErrorResponse) => {
+      (err: HttpErrorResponse) => {
 
-      this.logger.log('Error :: ');
-      this.logger.log(err);
-      if (err.error instanceof Error) {
-        this.logger.log('Error occured=' + err.error.message);
-      } else {
-        this.logger.log('response code=' + err.status);
-        this.logger.log('response body=' + err.error);
+        this.logger.log('Error :: ');
+        this.logger.log(err);
+        if (err.error instanceof Error) {
+          this.logger.log('Error occured=' + err.error.message);
+        } else {
+          this.logger.log('response code=' + err.status);
+          this.logger.log('response body=' + err.error);
+        }
       }
-    }
-  );
+    );
   }
 
 }

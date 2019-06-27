@@ -9,6 +9,8 @@ import * as Msal from 'msal';
 import { MsalServiceLocal } from '../../shared/msal.service';
 import { environment } from '../../../environments/environment';
 
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -16,7 +18,8 @@ import { environment } from '../../../environments/environment';
 })
 export class MenuComponent implements OnInit {
   @Input() SelectedPage: string;
-  constructor(private router: Router, private logger: LoggingService, private msalService: MsalServiceLocal
+  constructor(private router: Router, private spinner: NgxSpinnerService,
+    private logger: LoggingService, private msalService: MsalServiceLocal
     //  , public authService: AuthService
   ) { }
 

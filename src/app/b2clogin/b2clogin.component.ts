@@ -3,6 +3,7 @@ import * as Msal from 'msal';
 import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-b2clogin',

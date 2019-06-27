@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment.prod';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -33,8 +34,11 @@ export class UpdatePersonComponent implements OnInit {
   public personpositionData: any;
   public personDocumentsData: any;
 
-  constructor(private personService: PersonService, private data: DataService, private logger: LoggingService,
-    private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+  constructor(
+    private personService: PersonService, private data: DataService,
+    private logger: LoggingService, private spinner: NgxSpinnerService,
+    private route: ActivatedRoute, private router: Router,
+    private snackBar: MatSnackBar) {
     // this.logger.log('InSide :: Update Person');
     this.validateLogin();
     this.vatNumber = this.dpsLoginToken.customerVatNumber;

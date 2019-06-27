@@ -6,6 +6,7 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-general',
@@ -23,7 +24,7 @@ export class GeneralComponent implements OnInit {
   @Input() public GLFormData;
   @Output() public childEvent = new EventEmitter();
 
-  constructor(private logger: LoggingService) {
+  constructor(private spinner: NgxSpinnerService, private logger: LoggingService) {
     this.loadVCA = false;
     this.loadBlk = false;
   }

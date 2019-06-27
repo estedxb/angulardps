@@ -4,6 +4,7 @@ import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 // import { $ } from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-jointcommittee',
@@ -42,7 +43,7 @@ export class JointcommitteeComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private jointcommitteeService: JointcommitteeService, private logger: LoggingService) {
+  constructor(private jointcommitteeService: JointcommitteeService, private spinner: NgxSpinnerService, private logger: LoggingService) {
   }
 
   ngDoCheck() {
@@ -57,13 +58,13 @@ export class JointcommitteeComponent implements OnInit {
     let position = 0;
 
     for (let counter = 0; counter < datas.length; counter += 1) {
-      
+
       if (this.TypeWorker.toLowerCase() === datas[counter].type.toLowerCase()) {
         this.datas.push(datas[counter]);
       }
 
-      if((datas[counter].number + " - " + datas[counter].name)  === this.JCFormData)
-          position = counter;
+      if ((datas[counter].number + " - " + datas[counter].name) === this.JCFormData)
+        position = counter;
 
     }
 
@@ -88,14 +89,13 @@ export class JointcommitteeComponent implements OnInit {
 
   loadDropDownData(stringJCReceived) {
 
-    if(this.datas !== null && this.datas !== undefined)
-    {
+    if (this.datas !== null && this.datas !== undefined) {
       for (let i = 0; i < this.datas.length; i++) {
-        if ((this.datas[i].number + " - " + this.datas[i].name)  === stringJCReceived) {
+        if ((this.datas[i].number + " - " + this.datas[i].name) === stringJCReceived) {
           this._selectedIndex = i;
         }
       }
-  
+
     }
   }
 

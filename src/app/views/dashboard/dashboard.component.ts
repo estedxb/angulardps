@@ -6,6 +6,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar,
-    private logger: LoggingService) { }
+    private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   ngOnInit() {
     if (localStorage.getItem('dpsLoginToken') !== undefined &&

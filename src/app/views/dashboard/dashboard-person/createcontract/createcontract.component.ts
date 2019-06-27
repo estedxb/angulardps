@@ -120,7 +120,12 @@ export class CreateContractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
+    this.spinner.show('mySpinner', {
+      type: 'line-scale-party',
+      size: 'large',
+      bdColor: 'rgba(100,149,237, .8)',
+      color: 'white'
+    });
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */

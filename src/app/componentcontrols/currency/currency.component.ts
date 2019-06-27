@@ -1,6 +1,7 @@
-import { Component, OnInit, Input,EventEmitter,Output, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-currency',
@@ -13,7 +14,7 @@ export class CurrencyComponent implements OnInit {
   @Input() public disabled;
   @Output() public childEvent = new EventEmitter();
 
-  public currencyForm:FormGroup;
+  public currencyForm: FormGroup;
 
   public oldcurrencyData;
   public selectedString;
@@ -40,36 +41,34 @@ export class CurrencyComponent implements OnInit {
   }
 
   onChange($event) {
-  
-      this._selectedIndex = $event.target.value;
-      this.selectedIndex = $event.target.value;
-      this.selectedString = this.value;
-      this.childEvent.emit(this.value);
-  
-      return this.value;
-    }
 
-  constructor(private logger:LoggingService) { 
+    this._selectedIndex = $event.target.value;
+    this.selectedIndex = $event.target.value;
+    this.selectedString = this.value;
+    this.childEvent.emit(this.value);
+
+    return this.value;
+  }
+
+  constructor(private spinner: NgxSpinnerService, private logger: LoggingService) {
 
   }
 
   ngDoCheck() {
 
 
-    if(this.disabled !== this.olddisabled)
-    {
+    if (this.disabled !== this.olddisabled) {
       this.olddisabled = this.disabled;
 
-      if(this.disabled === true)
-          this.currencyForm.get('currency').enable();
+      if (this.disabled === true)
+        this.currencyForm.get('currency').enable();
       else
-          this.currencyForm.get('currency').disable();
+        this.currencyForm.get('currency').disable();
 
     }
 
-    if(this.oldcurrencyData !== this.currencyDataForm)
-    {
-      this.oldcurrencyData = this.currencyDataForm; 
+    if (this.oldcurrencyData !== this.currencyDataForm) {
+      this.oldcurrencyData = this.currencyDataForm;
       this.loadInitialData();
     }
   }
@@ -78,18 +77,17 @@ export class CurrencyComponent implements OnInit {
 
     this.datacurrencyDropDown = ['€', '%'];
 
-    if(this.disabled === true)
-        this.currencyForm.get('currency').enable();
+    if (this.disabled === true)
+      this.currencyForm.get('currency').enable();
     else
-        this.currencyForm.get('currency').disable();
+      this.currencyForm.get('currency').disable();
 
-    if (this.currencyDataForm !== null && this.currencyDataForm !== undefined) 
-    {
-      this.logger.log("currency ="+this.currencyDataForm);
+    if (this.currencyDataForm !== null && this.currencyDataForm !== undefined) {
+      this.logger.log("currency =" + this.currencyDataForm);
 
       for (let i = 0; i < this.datacurrencyDropDown.length; i++) {
-        if(this.currencyDataForm === this.datacurrencyDropDown[i])
-            this._selectedIndex = i;
+        if (this.currencyDataForm === this.datacurrencyDropDown[i])
+          this._selectedIndex = i;
       }
     }
 
@@ -102,21 +100,21 @@ export class CurrencyComponent implements OnInit {
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
     this.currencyForm = new FormGroup({
-        currency: new FormControl('')
+      currency: new FormControl('')
     });
 
-    if(this.disabled === true)
-        this.currencyForm.get('currency').enable();
+    if (this.disabled === true)
+      this.currencyForm.get('currency').enable();
     else
-        this.currencyForm.get('currency').disable();
+      this.currencyForm.get('currency').disable();
 
   }
 
   ngAfterViewInit() {
 
-   setTimeout(() => {
-    this.currencyDataForm
-   },0); 
+    setTimeout(() => {
+      this.currencyDataForm
+    }, 0);
 
   }
 
@@ -124,8 +122,8 @@ export class CurrencyComponent implements OnInit {
 
     setTimeout(() => {
       this.currencyDataForm
-     },0); 
-  
+    }, 0);
+
   }
 
 }

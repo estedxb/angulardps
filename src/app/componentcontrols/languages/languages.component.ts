@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LegalformService } from '../../shared/legalform.service';
 import { LanguagesService } from '../../shared/languages.service';
 import { LoggingService } from '../../shared/logging.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-languages',
@@ -41,7 +42,7 @@ export class LanguagesComponent implements OnInit {
 
   }
 
-  constructor(private languagesService: LanguagesService, private logger: LoggingService) { }
+  constructor(private languagesService: LanguagesService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
 
   ngDoCheck() {
 
@@ -58,15 +59,14 @@ export class LanguagesComponent implements OnInit {
 
     this.logger.log("replaceing datas");
 
-    for(let it=0;it<this.datas.length;it++)
-    {
+    for (let it = 0; it < this.datas.length; it++) {
 
-      if(this.datas[it].name==="Dutch")
-          this.datas[it].name = "Nederlands";
-      if(this.datas[it].name === "French")
-          this.datas[it].name = "Frans";
-        if(this.datas[it].name === "English")
-          this.datas[it].name = "Engels";  
+      if (this.datas[it].name === "Dutch")
+        this.datas[it].name = "Nederlands";
+      if (this.datas[it].name === "French")
+        this.datas[it].name = "Frans";
+      if (this.datas[it].name === "English")
+        this.datas[it].name = "Engels";
     }
 
     this.childEvent.emit(this.datas[0]);
@@ -81,7 +81,7 @@ export class LanguagesComponent implements OnInit {
       this.replaceDatasLanguage();
 
       this.loadInitialData(this.datas);
-      
+
     }, error => this.errorMsg = error);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
   }

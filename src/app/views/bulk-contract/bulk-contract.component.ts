@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-bulk-contract',
   templateUrl: './bulk-contract.component.html',
@@ -17,7 +17,7 @@ export class BulkContractComponent implements OnInit {
   public blkForm: FormGroup;
   public loadSwitchperson: boolean;
 
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService, ) { }
 
   ngOnInit() {
 

@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from '../../../shared/workschedules.service';
 import { CreateWorkScheduleComponent } from './createworkschedule/createworkschedule.component';
 import { LoggingService } from '../../../shared/logging.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-workschedules',
   templateUrl: './workschedules.component.html',

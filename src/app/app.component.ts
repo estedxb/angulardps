@@ -4,9 +4,11 @@ import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import * as Msal from 'msal';
 import { MsalServiceLocal } from './shared/msal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,7 @@ export class AppComponent {
     private router: Router,
     private location: Location,
     private msalService: MsalServiceLocal,
+    private spinner: NgxSpinnerService,
     private logger: LoggingService) {
     this.logger.logF('environment.production :: ' + environment.production);
     const pathString = location.path().replace('/', '');

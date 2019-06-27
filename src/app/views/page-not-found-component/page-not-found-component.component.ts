@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-page-not-found-component',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found-component.component.css']
 })
 export class PageNotFoundComponentComponent implements OnInit {
-  public positionid=2;
-  public locationid=2;
+  public positionid = 2;
+  public locationid = 2;
   public username = 'lewis@esteinternational.com';
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
   }
