@@ -121,7 +121,6 @@ export class EditCustomerComponent implements OnInit {
 
 
     if (this.FPdata !== null && this.FPdata !== undefined) {
-
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
       this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
@@ -134,7 +133,6 @@ export class EditCustomerComponent implements OnInit {
       this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
       this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
       this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-
     }
 
     this.childEvent.emit(this.HQdata);
@@ -148,8 +146,6 @@ export class EditCustomerComponent implements OnInit {
       this.HQdata.contact = this.CTdata.contact;
       this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
       this.HQdata.formValid = true;
-
-      this.childEvent.emit(this.HQdata);
     }
 
     if (this.STdata !== null && this.STdata !== undefined) {
@@ -163,7 +159,6 @@ export class EditCustomerComponent implements OnInit {
 
 
     if (this.FPdata !== null && this.FPdata !== undefined) {
-
       this.HQdata.invoiceSettings = new InvoiceSettings();
       this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
       this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
@@ -176,16 +171,20 @@ export class EditCustomerComponent implements OnInit {
       this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
       this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
       this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-
     }
+
+    this.childEvent.emit(this.HQdata);
 
   }
 
   receiveGeneralObject($event) {
 
     this.GLdata = $event;
+    this.logger.log("received general object");
+    this.logger.log($event);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
+
       if (this.GLdata !== null && this.GLdata !== undefined) {
         this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
         this.HQdata.bulkContractsEnabled = this.GLdata.blk;
@@ -213,6 +212,9 @@ export class EditCustomerComponent implements OnInit {
   receiveStatuteData($event) {
 
     this.STdata = $event;
+
+    this.logger.log("received st data");
+    this.logger.log(this.STdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
 
@@ -242,6 +244,9 @@ export class EditCustomerComponent implements OnInit {
   receiveInvoiceData($event) {
 
     this.FPdata = $event;
+
+    this.logger.log("received invoice data");
+    this.logger.log($event);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
 

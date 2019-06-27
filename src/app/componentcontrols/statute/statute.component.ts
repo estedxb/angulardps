@@ -133,8 +133,8 @@ export class StatuteComponent implements OnInit {
 
          this.loadCoefficients();
 
-          if(counter > this.loadStatuteSettingsArray.length)
-              this.emitData("load");
+          // if(counter > this.loadStatuteSettingsArray.length)
+          //     this.emitData("load");
       }
     }
   }
@@ -144,8 +144,14 @@ export class StatuteComponent implements OnInit {
     this.newArrayCoeff = [];
 
     for(let i=0;i<this.loadStatuteSettingsArray.length;i++) 
+    {
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
-
+      
+      if(this.statuteSettings[i] !== null && this.statuteSettings[i] !== undefined)
+          this.statuteSettings[i].coefficient = this.loadStatuteSettingsArray[i].coefficient;
+    }
+    
+    this.emitData("load");
   }
 
 
@@ -376,6 +382,7 @@ ngOnInit() {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
+    this.logger.log("changing coefficient");
     this.replaceArrayCoefficient(value, i);
   }
 
@@ -497,6 +504,9 @@ ngOnInit() {
 
   replaceArrayCoefficient(value:number,i: number) {
 
+    this.logger.log("statute settings length");
+    this.logger.log(this.statuteSettings.length);
+
   if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
     } else {
@@ -517,7 +527,7 @@ ngOnInit() {
   }
 
   emitData(message:string) {
-    // this.logger.log("called from ="+message);
+    this.logger.log("sending from ="+message);
     // this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
