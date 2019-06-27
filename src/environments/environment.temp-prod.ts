@@ -1,14 +1,14 @@
 export const environment = {
-  name: 'dev',
-  production: false,
+  name: 'prod',
+  production: true,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
-  dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
-  boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
-  blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
+  dpsAPI: 'https://dpsapiprd.azurewebsites.net/api/',
+  boemmAPI: 'https://boemmapiprd.azurewebsites.net/api/',
+  blobStorage: 'https://dpsstorageaccountprd.blob.core.windows.net',
   aadurl: 'https://digitalpayrollservices.b2clogin.com',
   tenantid: 'digitalpayrollservices.onmicrosoft.com',
-  clientId: '0a3fd7db-e748-4a4d-b9d5-e022ddc100e1',
-  webUrl: 'http://localhost:4200/',
+  clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
+  webUrl: 'https://dpsselfserviceportalprod.azurewebsites.net/',
   logInRedirectURL: 'login',
   logOutRedirectURL: 'logout',
   logInSuccessURL: 'dashboard',
@@ -74,5 +74,5 @@ export const environment = {
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
   getContractReasonURL: 'ContractReasons',
-  isLoggingRequired: true
+  isLoggingRequired: false
 };

@@ -18,7 +18,7 @@ import { Router, CanActivate } from '@angular/router';
 })
 export class ValidateLoginComponent implements OnInit {
   // public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-  public dpsuservatnumber = '987654321000';
+  public dpsuservatnumber = environment.DPSVATNumber;
   private ltkn: LoginToken = new LoginToken();
   private errorMsg = '';
   private message = '';

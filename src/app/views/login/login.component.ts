@@ -20,7 +20,7 @@ import { MsalServiceLocal } from '../../shared/msal.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
-  dpsuservatnumber = '987654321000';
+  dpsuservatnumber = environment.DPSVATNumber;
   errorMsg: string;
   private ltkn: LoginToken = new LoginToken();
   public currentpage = 'login';
@@ -65,62 +65,77 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
-      // Loading Now the First DpsUser from First DpsCustomer for Testing....
-      this.userService.getUsersByVatNumber(this.dpsuservatnumber).subscribe(usersList => {
-        this.logger.log('authLogin in usersList Found ::', usersList);
-        const FirstUser: DpsUser = usersList[0];
-        this.logger.log('authLogin in Selected User ::', FirstUser);
+      if (this.f.userid.value === 'DPS@Uid#2019' && this.f.password.value === 'DPS@Pwd#2019') {
+        this.ltkn.userRole = 'DPSAdmin';
+      } else if (this.f.userid.value === 'Cus@Uid#2019' && this.f.password.value === 'Cus@Pwd#2019') {
+        this.ltkn.userRole = 'Customer';
+      } else {
+        this.ltkn.userRole = 'Invalid';
+      }
 
-        this.ltkn.accessToken = 'Login-Access-Token';
-        this.ltkn.isLoggedIn = true;
-        this.ltkn.userRole = FirstUser.userRole;
-        this.ltkn.userName = FirstUser.user.firstName;
-        this.ltkn.userEmail = FirstUser.user.email.emailAddress;
-        if (FirstUser.customerVatNumber === '987654321000') {
-          this.ltkn.customerName = 'DPS';
-        } else {
-          this.ltkn.customerName = FirstUser.customerVatNumber;
-        }
-        this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
+      if (this.ltkn.userRole === 'DPSAdmin' || this.ltkn.userRole === 'Customer') {
 
-        if (this.f.userid.value.toLowerCase() === 'admin' && this.f.password.value.toLowerCase() === 'admin') {
-          this.ltkn.userRole = 'DPSAdmin';
-        } else { this.ltkn.userRole = 'Customer'; }
+        // Loading Now the First DpsUser from First DpsCustomer for Testing....
+        this.userService.getUsersByVatNumber(this.dpsuservatnumber).subscribe(usersList => {
+          this.logger.log('authLogin in usersList Found ::', usersList);
+          const FirstUser: DpsUser = usersList[0];
+          this.logger.log('authLogin in Selected User ::', FirstUser);
 
-        if (this.ltkn.customerVatNumber === this.dpsuservatnumber) {
-          this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
-            this.logger.log('authLogin in customersList Found ::', customersList);
-            let customers: CustomersList[] = [];
+          this.ltkn.accessToken = 'Login-Access-Token';
+          this.ltkn.isLoggedIn = true;
+          // this.ltkn.userRole = FirstUser.userRole;
+          this.ltkn.userName = FirstUser.user.firstName;
+          this.ltkn.userEmail = FirstUser.user.email.emailAddress;
+          if (FirstUser.customerVatNumber === environment.DPSVATNumber) {
+            this.ltkn.customerName = 'DPS';
+          } else {
+            this.ltkn.customerName = FirstUser.customerVatNumber;
+          }
+          this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
 
-            if (this.ltkn.userRole === 'DPSAdmin') {
-              customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
-            } else { customers = customersList; }
+          /*
+          if (this.f.userid.value === 'DPS@Uid#2019' && this.f.password.value === 'DPS@Pwd#2019') {
+            this.ltkn.userRole = 'DPSAdmin';
+          } else { this.ltkn.userRole = 'Customer'; }
+          */
 
-            if (customers.length > 0) {
-              this.message = 'Logged in successfully. Please wait...';
-              this.logger.log('Selected Customer', customers[0]);
-              this.ltkn.customerVatNumber = customers[0].item1;
-              this.ltkn.customerName = customers[0].item2;
-              this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
-              localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-              this.logger.log('1) authLogin in ::', this.ltkn);
-              this.logger.log('Redirect Breaked 4');
-              this.router.navigate(['./' + environment.logInSuccessURL]);
-            } else {
-              this.message = 'Logged in successfully, but customers not found. Please wait...';
-              localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-              this.logger.log('2) authLogin in ::', this.ltkn);
-              this.logger.log('Redirect Breaked 3');
-              this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
-            }
-          }, error => this.errorMsg = error);
-        } else {
-          localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-          this.logger.log('3) authLogin in ::', this.ltkn);
-          this.logger.log('Redirect Breaked 2');
-          this.router.navigate(['./' + environment.logInSuccessURL]);
-        }
-      }, error => this.errorMsg = error);
+          if (this.ltkn.customerVatNumber === this.dpsuservatnumber) {
+            this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
+              this.logger.log('authLogin in customersList Found ::', customersList);
+              let customers: CustomersList[] = [];
+
+              if (this.ltkn.userRole === 'DPSAdmin') {
+                customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
+              } else { customers = customersList; }
+
+              if (customers.length > 0) {
+                this.message = 'Logged in successfully. Please wait...';
+                this.logger.log('Selected Customer', customers[0]);
+                this.ltkn.customerVatNumber = customers[0].item1;
+                this.ltkn.customerName = customers[0].item2;
+                this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
+                localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+                this.logger.log('1) authLogin in ::', this.ltkn);
+                this.logger.log('Redirect Breaked 4');
+                this.router.navigate(['./' + environment.logInSuccessURL]);
+              } else {
+                this.message = 'Logged in successfully, but customers not found. Please wait...';
+                localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+                this.logger.log('2) authLogin in ::', this.ltkn);
+                this.logger.log('Redirect Breaked 3');
+                this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
+              }
+            }, error => this.errorMsg = error);
+          } else {
+            localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+            this.logger.log('3) authLogin in ::', this.ltkn);
+            this.logger.log('Redirect Breaked 2');
+            this.router.navigate(['./' + environment.logInSuccessURL]);
+          }
+        }, error => this.errorMsg = error);
+      } else {
+        this.message = 'Please enter username and password'; return;
+      }
     }
   }
 }
