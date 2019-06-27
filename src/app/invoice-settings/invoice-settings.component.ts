@@ -201,6 +201,11 @@ export class InvoiceSettingsComponent implements OnInit {
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
             this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
+            this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
+            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
+            this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
+            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
+
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
                   if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
@@ -273,12 +278,7 @@ export class InvoiceSettingsComponent implements OnInit {
                   }
   
             }
-
-            this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
-            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
-            this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
-            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
-        
+       
             if(this.FPFormData.data.invoiceSettings.shiftAllowances !== null && this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined )
               {
 
@@ -457,8 +457,6 @@ export class InvoiceSettingsComponent implements OnInit {
       this.loadSwitchOther = false;
     }
 
-    this.logger.log("currency data other");
-    this.logger.log(this.currencyDataOther);
   }
 
   ngOnInit() {
@@ -580,9 +578,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.ploegpremieSwitch = $event;
 
-    this.logger.log("shift allowances ="+this.shiftAllowances.length);
-    this.logger.log("length of Ploegprimebox1="+this.Ploegpremiere);
-
     if ($event === true) {
       this.shiftAllowance = true;
       this.ISForm.get('PloegprimeBox1').enable();
@@ -595,7 +590,6 @@ export class InvoiceSettingsComponent implements OnInit {
             formGroup.controls['PloegprimeBox1'].enable();
             formGroup.controls['PloegprimeBox2'].enable();
 
-            this.logger.log("counter="+counter);
       }
 
 
@@ -612,7 +606,6 @@ export class InvoiceSettingsComponent implements OnInit {
             formGroup.controls['PloegprimeBox1'].disable();
             formGroup.controls['PloegprimeBox2'].disable();
 
-            this.logger.log("counter="+counter);
       }
 
       this.clearShiftAllowances();
@@ -624,18 +617,22 @@ export class InvoiceSettingsComponent implements OnInit {
 
   transportCoefficient(value) {
     this.tCoefficient = parseFloat(value);
+    this.changeObject();
   }
 
   maaltichequesCoefficient(value) {
     this.mCoefficient = parseFloat(value);
+    this.changeObject();
   }
 
   onEchoChange(value) {
     this.EchoChange = parseFloat(value);
+    this.changeObject();
   }
 
   onDimonaChange(value) {
     this.DimonaChange = parseFloat(value);
+    this.changeObject();
   }
 
   isInvalid() {

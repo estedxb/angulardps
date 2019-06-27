@@ -55,7 +55,6 @@ export class CurrencyComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log("enable="+this.disabled);
 
     if(this.disabled !== this.olddisabled)
     {
@@ -110,8 +109,6 @@ export class CurrencyComponent implements OnInit {
         this.currencyForm.get('currency').enable();
     else
         this.currencyForm.get('currency').disable();
-
-    this.logger.log("enable="+this.disabled);
 
   }
 

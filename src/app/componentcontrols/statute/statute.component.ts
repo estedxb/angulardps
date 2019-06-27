@@ -61,8 +61,6 @@ export class StatuteComponent implements OnInit {
 
   setParitairCommitteArray() {
 
-    this.logger.log("array Paritair committee");
-
     for(let i=0;i<this.statutes.length;i++)
       this.arrayParitairCommitee.push(new ParitairCommitee());
 
@@ -114,6 +112,7 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") 
     {
+
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
@@ -134,8 +133,8 @@ export class StatuteComponent implements OnInit {
 
          this.loadCoefficients();
 
-          if(counter > this.loadStatuteSettingsArray.length)
-              this.emitData("load");
+          // if(counter > this.loadStatuteSettingsArray.length)
+          //     this.emitData("load");
       }
     }
   }
@@ -145,10 +144,14 @@ export class StatuteComponent implements OnInit {
     this.newArrayCoeff = [];
 
     for(let i=0;i<this.loadStatuteSettingsArray.length;i++) 
+    {
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
-
-      this.logger.log("changed array");
-      this.logger.log(this.newArrayCoeff);
+      
+      if(this.statuteSettings[i] !== null && this.statuteSettings[i] !== undefined)
+          this.statuteSettings[i].coefficient = this.loadStatuteSettingsArray[i].coefficient;
+    }
+    
+    this.emitData("load");
   }
 
 
@@ -206,10 +209,6 @@ export class StatuteComponent implements OnInit {
           this.statuteSettings.push(this.StatuteSettingsObject);
     
       }
-
-      this.logger.log("statute settings array created");
-      this.logger.log("lenght of array="+this.statuteSettings.length);
-      this.logger.log(this.statuteSettings);
 
       if(counter > this.statutes.length)
           this.emitData("create array empty paritaircommitee");
@@ -383,6 +382,7 @@ ngOnInit() {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
+    this.logger.log("changing coefficient");
     this.replaceArrayCoefficient(value, i);
   }
 
@@ -504,6 +504,9 @@ ngOnInit() {
 
   replaceArrayCoefficient(value:number,i: number) {
 
+    this.logger.log("statute settings length");
+    this.logger.log(this.statuteSettings.length);
+
   if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
     } else {
@@ -524,7 +527,7 @@ ngOnInit() {
   }
 
   emitData(message:string) {
-    // this.logger.log("called from ="+message);
+    this.logger.log("sending from ="+message);
     // this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
