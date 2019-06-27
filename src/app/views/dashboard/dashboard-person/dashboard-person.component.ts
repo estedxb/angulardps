@@ -11,6 +11,7 @@ import {
 import { CreateContractComponent } from './createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
+import { environment } from '../../../../environments/environment.temp-prod';
 
 @Component({
   selector: 'app-dashboardperson',
@@ -42,11 +43,12 @@ export class DashboardPersonComponent implements OnInit {
   public SelectedFriday = '';
   public SelectedSaturday = '';
   public SelectedSunday = '';
-  public ShowMorningDiff = 6;
-  public ShowNightDiff = 2;
+  public ShowMorningDiff = environment.MorningStart;
+  public ShowNightDiff = 24 - environment.EveningingEnd;
   public CellWidth = 120;
   public RollOverContract = 0;
   // public TimeConverterToPx = 0.09375;
+
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
 
   public currentState = 'initial';
@@ -103,30 +105,76 @@ export class DashboardPersonComponent implements OnInit {
     return FileteredWday.length > 0;
   }
 
-  getWorkBarWidth(workday: WorkDays) {
-    return (this.getWorkEndFullTime(workday) - this.getWorkStartFullTime(workday)) * this.TimeConverterToPx;
-  }
-
-  getWorkEndFullTime(workday: WorkDays) {
-    let workTimeFullTime = 0;
-    let i = workday.workTimes.length - 1;
-    while (i > -1 || workTimeFullTime < 0) {
-      workTimeFullTime = parseInt(workday.workTimes[workday.workTimes.length - 1].endTime.split(':')[0], 0) * 60 +
-        parseInt(workday.workTimes[workday.workTimes.length - 1].endTime.split(':')[1], 0);
-      i -= 1;
+  getWorkBarLeft(workday: WorkDays) {
+    let WorkBarLeft = 0;
+    if (workday !== null) {
+      if (workday.workTimes !== null) {
+        if (workday.workTimes.length > 0) {
+          const SI: number = this.getStartTimeIndex(workday);
+          WorkBarLeft = ((parseInt(workday.workTimes[SI].startTime.split(':')[0], 0) * 60) +
+            (parseInt(workday.workTimes[SI].startTime.split(':')[1], 0)) - ((this.ShowMorningDiff + this.ShowNightDiff) / 2 * 60)) * this.TimeConverterToPx;
+          // this.logger.log('WorkBarLeft :: ' + WorkBarLeft, WorkDays);
+        }
+      }
     }
-    return workTimeFullTime;
+    return WorkBarLeft;
   }
 
-  getWorkStartFullTime(workday: WorkDays) {
-    let workTimeFullTime = 0;
+  getWorkBarWidth(workday: WorkDays) {
+    let workBarWidth = 0;
+    if (workday !== null) {
+      if (workday.workTimes !== null) {
+        if (workday.workTimes.length > 0) {
+          const SI: number = this.getStartTimeIndex(workday);
+          const EI: number = this.getEndTimeIndex(workday);
+          workBarWidth = (
+            ((parseInt(workday.workTimes[EI].endTime.split(':')[0], 0) * 60) + parseInt(workday.workTimes[EI].endTime.split(':')[1], 0)) -
+            ((parseInt(workday.workTimes[SI].startTime.split(':')[0], 0) * 60) + parseInt(workday.workTimes[SI].startTime.split(':')[1], 0))
+          ) * this.TimeConverterToPx;
+          // this.logger.log('WorkBarWidth :: ' + workBarWidth, WorkDays);
+        }
+      }
+    }
+    return workBarWidth;
+  }
+
+  getWorkBarTime(workday: WorkDays) {
+    let workBarTime = '';
+    if (workday !== null) {
+      if (workday.workTimes !== null) {
+        if (workday.workTimes.length > 0) {
+          const SI: number = this.getStartTimeIndex(workday);
+          const EI: number = this.getEndTimeIndex(workday);
+          workBarTime = workday.workTimes[SI].startTime + ' - ' + workday.workTimes[EI].endTime;
+          // this.logger.log('workBarTime :: ' + workBarTime, WorkDays);
+        }
+      }
+    }
+    return workBarTime;
+  }
+
+  getStartTimeIndex(workday: WorkDays) {
+    let idx = -1;
     let i = 0;
-    while (i < workday.workTimes.length || workTimeFullTime < 0) {
-      workTimeFullTime = parseInt(workday.workTimes[0].startTime.split(':')[0], 0) * 60 +
-        parseInt(workday.workTimes[0].startTime.split(':')[1], 0);
+    while (workday.workTimes.length > i && idx < 0) {
+      if (workday.workTimes[i].startTime !== '00:00' && workday.workTimes[i].endTime !== '00:00') { idx = i; break; }
       i += 1;
     }
-    return workTimeFullTime;
+    // this.logger.log('getStartTimeIndex idx = ' + idx, workday);
+    if (idx === -1) { idx = 0; }
+    return idx;
+  }
+
+  getEndTimeIndex(workday: WorkDays) {
+    let idx = -1;
+    let i = workday.workTimes.length;
+    while (i > 0) {  // || idx < 0
+      i -= 1;
+      if (workday.workTimes[i].startTime !== '00:00' && workday.workTimes[i].endTime !== '00:00') { idx = i; break; }
+    }
+    // this.logger.log('getEndTimeIndex idx = ' + idx, workday);
+    if (idx === -1) { idx = workday.workTimes.length - 1; }
+    return idx;
   }
 
   ShowMessage(MSG, Action) {
@@ -267,6 +315,8 @@ export class DashboardPersonComponent implements OnInit {
       alert('openContractDialog :: ' + e.message);
     }
   }
+
+
 
   getSelectedPersonContracts(index, personid) {
     this.selectedPersonContracts = [];

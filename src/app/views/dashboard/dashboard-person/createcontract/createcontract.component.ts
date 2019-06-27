@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.component';
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-createcontract',
@@ -73,7 +74,7 @@ export class CreateContractComponent implements OnInit {
   public location: Location;
   public dpsWorkSchedule: DpsWorkSchedule;
   public contractReasons: ContractReason;
-  public currentDpsContract: DpsContract;
+  public currentDpsContract: DpsContract ;
   public contract: Contract;
   public currentPerson: Person;
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
@@ -114,10 +115,19 @@ export class CreateContractComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<CreateContractComponent>,
     private contractService: ContractService,
+    private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) {
   }
 
-  ngOnInit() { this.onPageInit(); }
+  ngOnInit() {
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
+    this.onPageInit();
+  }
 
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
@@ -301,8 +311,8 @@ export class CreateContractComponent implements OnInit {
   SetMode() {    
     this.logger.log('SetMode Mode :: ' + this.mode);
     if (this.mode === 'edit') {
-      // this.currentDpsContract.id = this.contractId;
-      // this.loadContract(this.VatNumber, this.contractId.toString());
+      this.currentDpsContract.id = this.contractId;
+      this.loadContract(this.VatNumber, this.contractId.toString());
       this.logger.log('SetMode update contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
       this.logger.log('SetMode update contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
 
@@ -359,19 +369,20 @@ export class CreateContractComponent implements OnInit {
     this.currentDpsContract.timeSheet = new TimeSheet();
 
     this.contract = new Contract();
-    this.logger.log('createCurrentDpsContract call getDateString selectedStartDate :: ', this.selectedStartDate);
-    this.contract.startDate = this.getDateString(this.selectedStartDate);
-    this.logger.log('createCurrentDpsContract call getDateString selectedEndDate :: ', this.selectedEndDate);
-    this.contract.endDate = this.getDateString(this.selectedEndDate);
-
-    this.contract.workSchedule = null;
-    this.contract.position = null;
-    this.contract.statute = new Statute();
-    this.contract.status = ContractStatus.Active;
-    this.contract.cancelReason = '';
-    this.contract.contractReason = this.contractReasonSelected;
-
     this.currentDpsContract.contract = this.contract;
+
+    this.logger.log('createCurrentDpsContract call getDateString selectedStartDate :: ', this.selectedStartDate);
+    this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate);
+    this.logger.log('createCurrentDpsContract call getDateString selectedEndDate :: ', this.selectedEndDate);
+    this.currentDpsContract.contract.endDate = this.getDateString(this.selectedEndDate);
+
+    this.currentDpsContract.contract.workSchedule = null;
+    this.currentDpsContract.contract.position = null;
+    this.currentDpsContract.contract.statute = new Statute();
+    this.currentDpsContract.contract.status = ContractStatus.Active;
+    this.currentDpsContract.contract.cancelReason = '';
+    this.currentDpsContract.contract.contractReason = this.contractReasonSelected;
+
     this.logger.log('createCurrentDpsContract  :: ', this.currentDpsContract);
 
     this.getSelectedWeekDays();
@@ -385,42 +396,36 @@ export class CreateContractComponent implements OnInit {
       this.currentDpsContract = response;
 
       if (this.mode !== 'extend') {
-        this.logger.log('loadContract this.selectedStartDate 4 before', this.selectedStartDate);
-        this.selectedStartDate = new Date(response.contract.startDate);
-        this.logger.log('this.selectedStartDate 4 after', this.selectedStartDate);
-
-        this.logger.log('loadContract this.selectedEndDate 4 before', this.selectedEndDate);
-        this.selectedEndDate = new Date(response.contract.endDate);
-        this.logger.log('loadContract this.selectedEndDate 4 after', this.selectedEndDate);
-
-
+        this.selectedStartDate = new Date(response.contract.startDate);   
         this.selectedStartYear = this.selectedStartDate.getFullYear();
         this.selectedStartMonth = this.selectedStartDate.getMonth();
         this.selectedStartDay = this.selectedStartDate.getDate();
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
 
+        this.selectedEndDate = new Date(response.contract.endDate);     
         this.selectedEndYear = this.selectedEndDate.getFullYear();
         this.selectedEndMonth = this.selectedEndDate.getMonth();
         this.selectedEndDay = this.selectedEndDate.getDate();
-        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
-      } else {
+        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;     
 
-        this.logger.log('loadContract this.selectedStartDate 3 before', this.selectedStartDate);
+      } else {
         this.selectedStartDate = new Date(this.allowedStartDate);
-        this.logger.log('loadContract this.selectedStartDate 3 after', this.selectedStartDate);
         this.selectedStartYear = this.allowedStartYear;
         this.selectedStartMonth = this.allowedStartMonth;
         this.selectedStartDay = this.allowedStartDay;
+        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
 
-        this.logger.log('loadContract this.selectedEndDate 3 before', this.selectedEndDate);
         this.selectedEndDate = new Date(this.allowedEndDate);
-        this.logger.log('loadContract this.selectedEndDate 3 after', this.selectedEndDate);
         this.selectedEndYear = this.allowedEndYear;
         this.selectedEndMonth = this.allowedEndMonth;
         this.selectedEndDay = this.allowedEndDay;
-
-        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+        
+        this.currentDpsContract.parentContractId = this.currentDpsContract.id;
+        this.contractId = 0;
+        this.currentDpsContract.id = 0;
+        this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate);
+        this.currentDpsContract.contract.endDate = this.getDateString(this.selectedEndDate);  
       }
       
       this.positionSelectedId = response.positionId;
@@ -428,25 +433,6 @@ export class CreateContractComponent implements OnInit {
       this.workScheduleSelected = response.workScheduleId;
       this.positionSelected = response.contract.position.name;
       this.contractReasonSelected = response.contract.contractReason;
-
-      this.logger.log('loadContract this.selectedStartDate  :: ', this.selectedStartDate);
-      this.logger.log('loadContract this.selectedEndDate  :: ', this.selectedEndDate);
-
-      this.logger.log('loadContract this.selectedStartYear  :: ', this.selectedStartYear);
-      this.logger.log('loadContract this.selectedStartMonth :: ', this.selectedStartMonth);
-      this.logger.log('loadContract this.selectedStartDay :: ', this.selectedStartDay);
-      this.logger.log('loadContract calendar data :: ' + this.calendarData);
-
-      this.logger.log('loadContract this.selectedEndYear  :: ', this.selectedEndYear);
-      this.logger.log('loadContract this.selectedEndMonth :: ', this.selectedEndMonth);
-      this.logger.log('loadContract this.selectedEndDay :: ', this.selectedEndDay);
-      this.logger.log('loadContract calendarDataNew :: ' + this.calendarDataNew);
-
-      this.logger.log('loadContract this.contractReasonSelected :: ', this.contractReasonSelected);
-      this.logger.log('loadContract this.positionSelectedId :: ', this.positionSelectedId);
-      this.logger.log('loadContract this.locationSelected :: ', this.locationSelected);
-      this.logger.log('loadContract this.workScheduleSelected :: ', this.workScheduleSelected);
-      this.logger.log('loadContract this.positionSelected :: ', this.positionSelected);
 
       if (this.selectedStartYear === this.selectedEndYear) {
         this.calendaryearDisableStatus = true;
@@ -460,9 +446,7 @@ export class CreateContractComponent implements OnInit {
 
       // const selectedposition: DpsPostion = this.getPosition();
       // this.logger.log('loadContract Position :: ', selectedposition);
-
-      this.createCurrentDpsContract();
-      this.currentDpsContract.id = this.contractId;
+            
       this.logger.log('SetMode edit contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
       this.logger.log('SetMode edit contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
 
@@ -474,12 +458,6 @@ export class CreateContractComponent implements OnInit {
         this.calendarmonthDisableStatus = true;
       } else { this.calendarmonthDisableStatus = false; }
 
-
-      if (this.mode === 'extend') {
-        this.currentDpsContract.parentContractId = this.contractId;
-        this.contractId = 0;
-        this.currentDpsContract.id = 0;
-      }
 
     });
   }
@@ -632,7 +610,7 @@ export class CreateContractComponent implements OnInit {
           this.isStartDateVaild = true;
           this.isStartDateVaildErrorMsg = '';
           this.selectedStartDate = this.getDate($event);
-          this.contract.startDate = this.getDateString(this.selectedStartDate); // this.createObjects();
+          this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate); // this.createObjects();
           this.getSelectedWeekDays();
         } else {
           this.isStartDateVaild = false;
@@ -661,7 +639,7 @@ export class CreateContractComponent implements OnInit {
           this.isEndDateVaild = true;
           this.isEndDateVaildErrorMsg = '';
           this.selectedEndDate = this.getDate($event);
-          this.contract.endDate = this.getDateString(this.selectedEndDate); // this.createObjects();
+          this.currentDpsContract.contract.endDate = this.getDateString(this.selectedEndDate); // this.createObjects();
           this.getSelectedWeekDays();
         } else {
           this.isEndDateVaild = false;
@@ -763,22 +741,43 @@ export class CreateContractComponent implements OnInit {
           if (this.currentDpsContract.positionId > 0) {
             if (this.currentDpsContract.workScheduleId > 0) {
               if (this.currentDpsContract.locationId > 0) {
-                this.contractService.createContract(this.currentDpsContract).subscribe(
-                  res => {
-                    this.logger.log('  Contract Response :: ', res.body);
-                    this.currentDpsContract = res.body;
-                    this.ShowMessage('Contract succesvol opgeslagen', '');
-                    this.dialogRef.close(this.currentDpsContract);
-                  },
-                  (err: HttpErrorResponse) => {
-                    if (err.error instanceof Error) {
-                      this.logger.log('Error occured=' + err.error.message);
-                    } else {
-                      this.logger.log('response code=' + err.status);
-                      this.logger.log('response body=' + err.error);
+
+                if (this.mode === 'edit') {
+                  this.contractService.updateContract(this.currentDpsContract).subscribe(
+                    res => {
+                      this.logger.log('  Contract Response :: ', res.body);
+                      this.currentDpsContract = res.body;
+                      this.ShowMessage('Contract succesvol opgeslagen', '');
+                      this.dialogRef.close(this.currentDpsContract);
+                    },
+                    (err: HttpErrorResponse) => {
+                      if (err.error instanceof Error) {
+                        this.logger.log('Error occured=' + err.error.message);
+                      } else {
+                        this.logger.log('response code=' + err.status);
+                        this.logger.log('response body=' + err.error);
+                      }
                     }
-                  }
-                );
+                  );
+                } else {
+                  this.contractService.createContract(this.currentDpsContract).subscribe(
+                    res => {
+                      this.logger.log('  Contract Response :: ', res.body);
+                      this.currentDpsContract = res.body;
+                      this.ShowMessage('Contract succesvol opgeslagen', '');
+                      this.dialogRef.close(this.currentDpsContract);
+                    },
+                    (err: HttpErrorResponse) => {
+                      if (err.error instanceof Error) {
+                        this.logger.log('Error occured=' + err.error.message);
+                      } else {
+                        this.logger.log('response code=' + err.status);
+                        this.logger.log('response body=' + err.error);
+                      }
+                    }
+                  );
+                  
+                }
               } else {
                 this.logger.log('Please Select Location');
                 this.ShowMessage('Selecteer alstublieft Plaats', '');

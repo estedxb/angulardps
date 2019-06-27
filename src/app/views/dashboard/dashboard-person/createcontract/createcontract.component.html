@@ -121,17 +121,10 @@
             </div>
         </div>
         <div class="row UpdateRow" *ngIf="mode==='update'">
-            <div class="col col-sm-3 center-block">
-                <button class="greenbtn transbtn" id="btnPrint" (click)="onPrintContractClick()"><span>Afdrukken</span>
-                </button>
+            <div class="col col-sm-3 center-block"> <button class="greenbtn transbtn" id="btnPrint"
+                    (click)="onPrintContractClick()"><span>Afdrukken</span></button>
             </div>
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false">&nbsp;</div>
-            <!--
-            <div class="col col-sm-3 center-block">
-                <button class="greenbtn greenbtn" id="btnExtened" (click)="onExtented()"><span>Verlengen</span>
-                </button>
-            </div>
-            -->
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser">
                 <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"
                     *ngIf="this.isDpsUser"><span>Goedkeuren</span>

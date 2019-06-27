@@ -474,11 +474,18 @@ sup.notify {
 }
 #PersonContents .contractActionbtngrp {
   margin: auto;
-  width: 240px;
   height: 26px;
   padding: 0px;
   border: 0px solid white;
   text-align: center;
+}
+
+#PersonContents .contractActionbtngrp.TwoButtonWidth {
+  width: 240px;
+}
+
+#PersonContents .contractActionbtngrp.OneButtonWidth {
+  width: 120px;
 }
 
 #PersonContents .contractActions .contractActionbtngrp .contractActionbtn1 {
@@ -491,6 +498,21 @@ sup.notify {
   border: 0px solid #9646e0;
   float: right;
 }
+
+#PersonContents
+  .contractActions
+  .contractActionbtngrp.OneButtonWidth
+  .contractActionbtn2
+  .contractActionbtn {
+  float: none;
+}
+#PersonContents
+  .contractActions
+  .contractActionbtngrp.OneButtonWidth
+  .contractActionbtn {
+  float: none;
+}
+
 #PersonContents
   .contractActions
   .contractActionbtngrp
