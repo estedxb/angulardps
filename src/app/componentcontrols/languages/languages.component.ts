@@ -59,8 +59,6 @@ export class LanguagesComponent implements OnInit {
 
   replaceDatasLanguage() {
 
-    this.logger.log("replaceing datas");
-
     for (let it = 0; it < this.datas.length; it++) {
 
       if (this.datas[it].name === "Dutch")
@@ -98,9 +96,6 @@ export class LanguagesComponent implements OnInit {
   }
 
   loadInitialData(datas) {
-
-    this.logger.log("language received=");
-    this.logger.log(this.LanguageFormData);
 
     if (datas.length !== 0) {
       for (let i = 0; i < datas.length; i++) {
