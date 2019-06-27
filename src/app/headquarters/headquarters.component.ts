@@ -263,7 +263,7 @@ export class HeadQuartersComponent implements OnInit {
     this.setAddress();
     this.setCustomerObject();
     //this.setStatuteSettingArray();
-    this.setContacts();
+    //this.setContacts();
     this.setDpsCustomer();
     //this.setInvoiceSettings();
   }
@@ -657,7 +657,7 @@ export class HeadQuartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
-    this.dpsCustomer.contact = this.contact;
+    // this.dpsCustomer.contact = this.contact;
 
     this.setJsonDataObject();
   }
@@ -709,6 +709,9 @@ export class HeadQuartersComponent implements OnInit {
 
     console.log("statuteSettings before sending to customer");
     console.log(this.HQFormData.data.statuteSettings);
+
+    console.log("contact data before sending");
+    console.log(this.HQFormData.data.contact);
 
     this.invoiceEmail = new EmailAddress();
     this.contractsEmail = new EmailAddress();

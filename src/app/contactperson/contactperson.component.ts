@@ -68,12 +68,14 @@ export class ContactPersonComponent implements OnInit {
           if (contactPerson.contact.phoneNumber.number !== undefined && contactPerson.contact.phoneNumber.number !== null)
             this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
-        this.languageString = contactPerson.contact.language.name;
+      if (contactPerson.contact.language !== null && contactPerson.contact.language !== undefined)
+            this.languageString = contactPerson.contact.language.name;
+      
         this.CTForm.controls['alsCheck'].disable();
 
         this.alsCheck = contactPerson.activateContactAsUser;
 
-        this.createObjects();
+        //this.createObjects();
 
       }
     }
@@ -91,9 +93,10 @@ export class ContactPersonComponent implements OnInit {
           this.logger.log("ctform data=" + this.CTFormData.page);
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
-          this.languageString = this.CTFormData.data.contact.language.name;
+            if(this.CTFormData.data.language !== null && this.CTFormData.data.language !== undefined)
+               this.languageString = this.CTFormData.data.contact.language.name;
           // this.languageString = "French";
-          this.createObjects();
+          //this.createObjects();
         }
       }
 
@@ -108,7 +111,7 @@ export class ContactPersonComponent implements OnInit {
         this.oldData = this.CTFormData;
         this.loadEditDetails(this.CTFormData.data);
         // this.languageString = "French";
-        this.createObjects();
+        //this.createObjects();
       }
     }
   }
@@ -128,7 +131,7 @@ export class ContactPersonComponent implements OnInit {
     });
 
     this.alsCheck = false;
-    this.createObjects();  // check validations
+    //this.createObjects();  // check validations
   }
 
   receiveMessageLanguage($event) {

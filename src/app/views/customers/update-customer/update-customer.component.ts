@@ -158,11 +158,19 @@ export class UpdateCustomerComponent implements OnInit {
       delete this.editCustomerData.formValid;
     }
 
+     /** spinner starts on init */
+     this.spinner.show();
+ 
+     setTimeout(() => {
+         /** spinner ends after 5 seconds */
+         this.spinner.hide();
+     }, 2000);
+
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
         this.ShowMessage('Customer Data Saved successfully. ', '');
         this.logger.log('response=' + res);
-        this.ShowMessage('Customer Data Saved successfully. ', '');
+        this.ShowMessage('Customer Data Saved successfully. ', '');        
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

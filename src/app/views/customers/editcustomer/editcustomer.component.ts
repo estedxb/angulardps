@@ -157,8 +157,9 @@ export class EditCustomerComponent implements OnInit {
       if (response.contact !== null && response.contact !== undefined) {
         this.HQdata.contact.firstName = response.contact.firstName;
         this.HQdata.contact.lastName = response.contact.lastName;
-        this.HQdata.contact.email = response.contact.email;
-        this.HQdata.contact.lastName = response.contact.language;
+        this.HQdata.contact.email = response.contact.email
+        this.HQdata.contact.language.name = response.contact.language.name;
+        this.HQdata.contact.language.shortName = response.contact.language.shortName;
         this.HQdata.contact.mobile = response.contact.mobile;
         this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
         this.HQdata.contact.postion = response.contact.postion;
