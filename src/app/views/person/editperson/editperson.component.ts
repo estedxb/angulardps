@@ -108,9 +108,6 @@ export class EditPersonComponent implements OnInit {
     this.loadDOBFromSSID();
     this.createObjectsForm1();
 
-    /** spinner starts on init */
-    this.spinner.show();
-
   }
 
   changeMessage() {

@@ -176,7 +176,7 @@ export class UpdateCustomerComponent implements OnInit {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
-  }, 1000);
+  }, 5000);
 
 
     if(this.editCustomerData.formValid === false)
