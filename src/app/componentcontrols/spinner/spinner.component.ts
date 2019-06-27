@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-spinner',
@@ -8,47 +8,24 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 })
 export class SpinnerComponent implements OnInit {
 
-  spinnerButtonOptions: MatProgressButtonOptions = {
-    active: false,
-    text: 'Spinner Button',
-    spinnerSize: 18,
-    raised: true,
-    stroked: false,
-    buttonColor: 'primary',
-    spinnerColor: 'accent',
-    fullWidth: false,
-    disabled: false,
-    mode: 'indeterminate',
-  }
-
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
 
-  }
-  
-  someFunc(): void {
-    this.spinnerButtonOptions.active = true;
-    setTimeout(() => {
-      this.spinnerButtonOptions.active = false;
-    }, 3500)
+      /** spinner starts on init */
+      // this.spinner.show();
+
+      this.spinner.show('mySpinner', {
+        type: 'line-scale-party', 
+        size: 'large', 
+        bdColor: 'rgba(100,149,237, .8)', 
+        color: 'white'
+      });
+
+      // setTimeout(() => {
+      //     /** spinner ends after 5 seconds */
+      //     this.spinner.hide();
+      // }, 15000);
   }
 
-  // someFunc2(): void {
-  //   this.barButtonOptions.active = true;
-  //   this.barButtonOptions.text = 'Saving Data...';
-  //   setTimeout(() => {
-  //     this.barButtonOptions.active = false;
-  //     this.barButtonOptions.text = 'Progress Bar Button';
-  //   }, 3500)
-  // }
-
-  // someFunc3(): void {
-  //   this.fabSpinnerButtonOptions.active = true;
-  //   this.fabSpinnerButtonOptions.text = 'Saving Data...';
-  //   setTimeout(() => {
-  //     this.fabSpinnerButtonOptions.active = false;
-  //     this.fabSpinnerButtonOptions.text = 'Progress Bar Button';
-  //   }, 3500)
-  // }
 }
