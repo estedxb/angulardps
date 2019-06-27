@@ -78,7 +78,7 @@ export class StatuteComponent implements OnInit {
     this.createCoefficientArray();
 
       if (this.STFormData != this.oldSFTFormData) {
-            this.createStatuteSettingsArrayEmpty();
+            //this.createStatuteSettingsArrayEmpty();
             this.oldSFTFormData = this.STFormData;
           if (this.STFormData !== undefined  && this.STFormData.data !== null && this.STFormData.page === "edit") {
                 this.loadInitialData();
@@ -119,11 +119,6 @@ export class StatuteComponent implements OnInit {
       if (this.loadStatuteSettingsArray !== null && this.loadStatuteSettingsArray !== undefined) {
 
         this.countStatutes = this.statutes.length;
-        // this.createStatuteSettingsArrayEmpty();
-
-        // this.logger.log("statute array before loading");
-        // this.logger.log("statute array length="+this.statuteSettings.length);
-        // this.logger.log(typeof(this.statuteSettings));
    
         this.copyArray(this.loadStatuteSettingsArray);
         this.loadStatuteSettingsArray.forEach(element => {
@@ -133,32 +128,62 @@ export class StatuteComponent implements OnInit {
 
          this.loadCoefficients();
 
-          // if(counter > this.loadStatuteSettingsArray.length)
-          //     this.emitData("load");
       }
     }
   }
 
+  
   loadCoefficients() {
 
     this.newArrayCoeff = [];
 
     for(let i=0;i<this.loadStatuteSettingsArray.length;i++) 
-    {
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
       
-      if(this.statuteSettings[i] !== null && this.statuteSettings[i] !== undefined)
-          this.statuteSettings[i].coefficient = this.loadStatuteSettingsArray[i].coefficient;
-    }
-    
+    this.logger.log("load coefficients statute settings array");
+    this.logger.log(this.statuteSettings);
+
     this.emitData("load");
+  }
+
+  cloneArray(){
+
+    // this.statuteSettings = this.loadStatuteSettingsArray;
+    let counter:number = 0;
+
+    this.loadStatuteSettingsArray.forEach(element => {
+      this.statuteSettings[counter].coefficient = element.coefficient;
+
+      // this.StatuteSettingsObject = new StatuteSetting();
+      // this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
+
+      // this.StatuteSettingsObject.mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
+      // this.StatuteSettingsObject.mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
+      // this.StatuteSettingsObject.mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
+  
+      // this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
+      // this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
+      // this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
+      // this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
+      // this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
+
+      // this.StatuteSettingsObject.statute = new Statute();
+      // this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
+      // this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
+      // this.StatuteSettingsObject.statute.brightStaffingID = parseInt(this.statutes[counter].BrightStaffingID,10);
+
+      // this.statuteSettings[counter] = this.StatuteSettingsObject;
+
+      counter++;
+    });
+
+    this.emitData("cloneArray");
+
   }
 
 
   copyArray(array:any)
   {
-    //this.statuteSettings = array;    
-
 
     let counter:number = 0;
 
@@ -171,8 +196,6 @@ export class StatuteComponent implements OnInit {
 
         counter += 1;
     });
-
-    //this.fillMealEnabled();
 
     this.emitData("load");
   }
@@ -210,8 +233,8 @@ export class StatuteComponent implements OnInit {
     
       }
 
-      if(counter > this.statutes.length)
-          this.emitData("create array empty paritaircommitee");
+      // if(counter > this.statutes.length)
+      //     this.emitData("create array empty paritaircommitee");
   }
 
   fillTitles() {
@@ -342,9 +365,6 @@ ngOnInit() {
       this.fillTitles();
       this.setParitairCommitteArray();
 
-      // this.isMealEnabled = new Array<number>(data.length);
-
-      // this.fillMealEnabled();
       this.countStatutes = data.length;
 
       if (this.statutes.length !== 0) {
@@ -352,6 +372,9 @@ ngOnInit() {
       }      
 
     }, error => this.errorMsg = error);
+
+    if(this.countStatutes > 0)
+        this.cloneArray();
 
   }
   
@@ -463,7 +486,7 @@ ngOnInit() {
       this.createArrayData();
       this.replaceArray(i);
     }
-    this.emitData("joint commitee");
+    this.emitData("JT");
 
   }
 
@@ -504,19 +527,21 @@ ngOnInit() {
 
   replaceArrayCoefficient(value:number,i: number) {
 
-    this.logger.log("statute settings length");
-    this.logger.log(this.statuteSettings.length);
-
   if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].coefficient = value;
-    } else {
-      this.createArrayData();
-    }
+      this.statuteSettings[i].coefficient = value; 
+    } 
+
     this.emitData("replace array coefficient");
 
   }
 
   replaceArray(i: number) {
+
+    this.logger.log("i="+i);
+    this.logger.log("coefficient = "+this.statuteSettings[i].coefficient);
+
+    this.cloneArray();
+
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
           this.statuteSettings[i].paritairCommitee.brightStaffingId = this.statuteSelectedString.BrightStaffingCommitteeId;
           this.statuteSettings[i].paritairCommitee.name = this.statuteSelectedString.name;
@@ -528,7 +553,7 @@ ngOnInit() {
 
   emitData(message:string) {
     this.logger.log("sending from ="+message);
-    // this.logger.log(this.statuteSettings);
+    this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 

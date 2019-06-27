@@ -80,8 +80,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   public tCoefficient:any = "1.20";
   public mCoefficient:any = "1.69";
-  public EchoChange:any = "1.69";
-  public DimonaChange:any = "0.3510";
+  public echoValue:any = "1.69";
+  public dimonaValue:any = "0.3510";
 
   public currencyShift:string = "";
   public currencyOther:string = "";
@@ -110,8 +110,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.tCoefficient = parseFloat(this.ISForm.get('Verplaatsingen').value);
     this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
-    this.EchoChange = parseFloat(this.ISForm.get('Echo').value);
-    this.DimonaChange = parseFloat(this.ISForm.get('Dimona').value);
+    this.echoValue = parseFloat(this.ISForm.get('Echo').value);
+    this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
@@ -124,8 +124,8 @@ export class InvoiceSettingsComponent implements OnInit {
       'otherAllowances': this.otherAllowances,
       'transportCoefficient': this.tCoefficient,
       'mealvoucherCoefficient': this.mCoefficient,
-      'ecoCoefficient': this.EchoChange,
-      'dimonaCost': this.DimonaChange
+      'ecoCoefficient': this.echoValue,
+      'dimonaCost': this.dimonaValue
     };
 
     this.childEvent.emit(jsonObject);
@@ -202,9 +202,9 @@ export class InvoiceSettingsComponent implements OnInit {
             this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
             this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
-            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
+            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
             this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
-            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
+            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
 
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
@@ -505,9 +505,9 @@ export class InvoiceSettingsComponent implements OnInit {
 
 
       Verplaatsingen: new FormControl(this.tCoefficient),
-      Dimona: new FormControl(this.DimonaChange),
-      Echo: new FormControl(this.EchoChange),
-      Maalticheques: new FormControl(this.maaltichequesCoefficient),
+      Dimona: new FormControl(this.dimonaValue),
+      Echo: new FormControl(this.echoValue),
+      Maalticheques: new FormControl(this.mCoefficient),
 
       AndreBox1: new FormControl(''),
       AndreBox2: new FormControl(''),
@@ -615,23 +615,23 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  transportCoefficient(value) {
+  transportCoefficientChange(value) {
     this.tCoefficient = parseFloat(value);
     this.changeObject();
   }
 
-  maaltichequesCoefficient(value) {
+  mCoefficientChange(value) {
     this.mCoefficient = parseFloat(value);
     this.changeObject();
   }
 
   onEchoChange(value) {
-    this.EchoChange = parseFloat(value);
+    this.echoValue = parseFloat(value);
     this.changeObject();
   }
 
   onDimonaChange(value) {
-    this.DimonaChange = parseFloat(value);
+    this.dimonaValue = parseFloat(value);
     this.changeObject();
   }
 

@@ -61,213 +61,66 @@ export class EditCustomerComponent implements OnInit {
 
   ngOnDestroy() { this.logger.log('object destroyed'); }
 
-  updateAllDatas(datas) {
-
-    if (this.CTdata !== null && this.CTdata !== undefined) {
-      this.HQdata.contact = this.CTdata.contact;
-      this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-      this.HQdata.formValid = true;
-    }
-
-    if (this.STdata !== null && this.STdata !== undefined) {
-      this.HQdata.statuteSettings = this.STdata;
-    }
-
-    if (this.GLdata !== null && this.GLdata !== undefined) {
-      this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-      this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-    }
-
-
-    if (this.FPdata !== null && this.FPdata !== undefined) {
-
-      this.HQdata.invoiceSettings = new InvoiceSettings();
-      this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-      this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-      this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-      this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-      this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-      this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-      this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-      this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
-      this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
-      this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
-      this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-
-    }
-
-    this.childEvent.emit(this.HQdata);
-
-  }
-
   receiveHQdata($event) {
+    this.logger.log("received HQ data");
+    this.logger.log($event);
 
     this.HQdata = $event;
-
-    if (this.CTdata !== null && this.CTdata !== undefined) {
-      this.HQdata.contact = this.CTdata.contact;
-      this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-      this.HQdata.formValid = true;
-    }
-
-    if (this.STdata !== null && this.STdata !== undefined) {
-      this.HQdata.statuteSettings = this.STdata;
-    }
-
-    if (this.GLdata !== null && this.GLdata !== undefined) {
-      this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-      this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-    }
-
-
-    if (this.FPdata !== null && this.FPdata !== undefined) {
-      this.HQdata.invoiceSettings = new InvoiceSettings();
-      this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-      this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-      this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-      this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-      this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-      this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-      this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-      this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
-      this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
-      this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
-      this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-    }
-
     this.childEvent.emit(this.HQdata);
   }
 
   receiveCTdata($event) {
+    this.logger.log("received CT data");
+    this.logger.log($event);
 
     this.CTdata = $event;
-
     if (this.CTdata !== null && this.CTdata !== undefined) {
       this.HQdata.contact = this.CTdata.contact;
       this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
       this.HQdata.formValid = true;
+
+      this.childEvent.emit(this.HQdata);
     }
-
-    if (this.STdata !== null && this.STdata !== undefined) {
-      this.HQdata.statuteSettings = this.STdata;
-    }
-
-    if (this.GLdata !== null && this.GLdata !== undefined) {
-      this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-      this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-    }
-
-
-    if (this.FPdata !== null && this.FPdata !== undefined) {
-      this.HQdata.invoiceSettings = new InvoiceSettings();
-      this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-      this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
-      this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
-      this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
-      this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
-      this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
-      this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
-      this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
-      this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
-      this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
-      this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-    }
-
-    this.childEvent.emit(this.HQdata);
 
   }
 
   receiveGeneralObject($event) {
-
-    this.GLdata = $event;
     this.logger.log("received general object");
     this.logger.log($event);
-
+    this.GLdata = $event;
     if (this.HQdata !== null && this.HQdata !== undefined) {
-
       if (this.GLdata !== null && this.GLdata !== undefined) {
         this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
         this.HQdata.bulkContractsEnabled = this.GLdata.blk;
       }
-
-      if (this.CTdata !== null && this.CTdata !== undefined) {
-        this.HQdata.contact = this.CTdata.contact;
-        this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-        this.HQdata.formValid = true;
-      }  
-
-      if (this.STdata !== null && this.STdata !== undefined) {
-        this.HQdata.statuteSettings = this.STdata;
-      }
-
-      if (this.FPdata !== null && this.FPdata !== undefined) {
-        this.HQdata.invoiceSettings = this.FPdata;
-      }
-
     }
 
     this.childEvent.emit(this.HQdata);
   }
 
   receiveStatuteData($event) {
-
-    this.STdata = $event;
-
     this.logger.log("received st data");
     this.logger.log(this.STdata);
-
+    this.STdata = $event;
     if (this.HQdata !== null && this.HQdata !== undefined) {
-
-      if (this.GLdata !== null && this.GLdata !== undefined) {
-        this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-        this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-      }
-
       if (this.STdata !== null && this.STdata !== undefined) {
         this.HQdata.statuteSettings = this.STdata;
+        this.childEvent.emit(this.HQdata);
       }
-
-      if (this.CTdata !== null && this.CTdata !== undefined) {
-        this.HQdata.contact = this.CTdata.contact;
-        this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-        this.HQdata.formValid = true;
-      }  
-
-      if (this.FPdata !== null && this.FPdata !== undefined) {
-        this.HQdata.invoiceSettings = this.FPdata;
-      }
+    
     }
 
-    this.childEvent.emit(this.HQdata);
   }
 
   receiveInvoiceData($event) {
 
+    this.logger.log("received invoice data");
+    this.logger.log(this.FPdata);
+
     this.FPdata = $event;
 
-    this.logger.log("received invoice data");
-    this.logger.log($event);
-
     if (this.HQdata !== null && this.HQdata !== undefined) {
-
-      if (this.GLdata !== null && this.GLdata !== undefined) {
-        this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
-        this.HQdata.bulkContractsEnabled = this.GLdata.blk;
-      }
-
-
-      if (this.STdata !== null && this.STdata !== undefined) {
-        this.HQdata.statuteSettings = this.STdata;
-      }
-
-      if (this.CTdata !== null && this.CTdata !== undefined) {
-        this.HQdata.contact = this.CTdata.contact;
-        this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-        this.HQdata.formValid = true;
-      }  
-
       if (this.FPdata !== null && this.FPdata !== undefined) {
-
         this.HQdata.invoiceSettings = new InvoiceSettings();
         this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
         this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
@@ -280,9 +133,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
         this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
         this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
-
       }
-
       this.childEvent.emit(this.HQdata);
     }
   }
