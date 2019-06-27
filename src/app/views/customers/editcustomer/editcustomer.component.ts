@@ -81,6 +81,10 @@ export class EditCustomerComponent implements OnInit {
       this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
       this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
       this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
+      this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
+      this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
+      this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
+      this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
 
     }
 
@@ -117,6 +121,9 @@ export class EditCustomerComponent implements OnInit {
   receiveStatuteData($event) {
 
     this.STdata = $event;
+
+    this.logger.log("Received statute data");
+    this.logger.log(this.STdata);
 
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.STdata !== null && this.STdata !== undefined) {
@@ -217,6 +224,11 @@ export class EditCustomerComponent implements OnInit {
           this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
           this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
           this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
+          this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
+          this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
+          this.HQdata.invoiceSettings.ecoCoefficient = this.FPdata.ecoCoefficient;
+          this.HQdata.invoiceSettings.dimonaCost = this.FPdata.dimonaCost;
+    
         }
         this.childEvent.emit(this.HQdata);
       }

@@ -201,6 +201,11 @@ export class InvoiceSettingsComponent implements OnInit {
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
             this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
+            this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
+            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
+            this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
+            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
+
             this.logger.log("invoiceSettings received");
             this.logger.log(this.FPFormData.data.invoiceSettings);
 
@@ -276,12 +281,7 @@ export class InvoiceSettingsComponent implements OnInit {
                   }
   
             }
-
-            this.ISForm.get('Verplaatsingen').setValue(this.FPFormData.data.invoiceSettings.transportCoefficient);
-            this.ISForm.get('Dimona').setValue(this.FPFormData.data.invoiceSettings.mealvoucherCoefficient);
-            this.ISForm.get('Echo').setValue(this.FPFormData.data.invoiceSettings.ecoCoefficient);
-            this.ISForm.get('Maalticheques').setValue(this.FPFormData.data.invoiceSettings.dimonaCost);
-        
+       
             if(this.FPFormData.data.invoiceSettings.shiftAllowances !== null && this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined )
               {
 
