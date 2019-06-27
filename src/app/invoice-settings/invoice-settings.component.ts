@@ -41,6 +41,7 @@ export class InvoiceSettingsComponent implements OnInit {
   holidayInvoiced: boolean;
   compensatoryRest: boolean;
   ploegpremieSwitch: boolean;
+  mobilitySwitch:boolean;
   andreSwitch: boolean;
   public disableWorkCodes: boolean;
 
@@ -114,12 +115,15 @@ export class InvoiceSettingsComponent implements OnInit {
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
 
+    this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
+    this.mobilityAllowanceObject.amountPerKm = this.ISForm.get('mobilebox').value;
+    
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
       'holidayInvoiced': this.holidayInvoiced,
       'mobilityAllowance': this.mobilityAllowanceObject,
-      'shiftAllowance': this.shiftAllowance,
+      'shiftAllowance': this.ploegpremieSwitch,
       'shiftAllowances': this.shiftAllowances,
       'otherAllowance': this.andreSwitch,
       'otherAllowances': this.otherAllowances,
@@ -687,7 +691,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeM($event) {
 
-    this.holidayInvoiced = $event;
+    // this.holidayInvoiced = $event;
+    this.mobilitySwitch = $event;
 
     if ($event === true) {
       this.ISForm.get('mobilebox').enable();

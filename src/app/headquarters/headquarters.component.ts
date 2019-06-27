@@ -263,7 +263,7 @@ export class HeadQuartersComponent implements OnInit {
     this.setAddress();
     this.setCustomerObject();
     //this.setStatuteSettingArray();
-    this.setContacts();
+    //this.setContacts();
     this.setDpsCustomer();
     //this.setInvoiceSettings();
   }
@@ -657,7 +657,7 @@ export class HeadQuartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
-    this.dpsCustomer.contact = this.contact;
+    // this.dpsCustomer.contact = this.contact;
 
     this.setJsonDataObject();
   }
@@ -670,7 +670,9 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   validity() {
-    if (this.HQForm.valid === true && !this.emptyData() && this.allowCustomer === true)
+    // && this.allowCustomer === true
+    
+    if (this.HQForm.valid === true && !this.emptyData() )
       return true;
 
     return false;
@@ -707,9 +709,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
-    console.log("statuteSettings before sending to customer");
-    console.log(this.HQFormData.data.statuteSettings);
-
     this.invoiceEmail = new EmailAddress();
     this.contractsEmail = new EmailAddress();
 
@@ -727,7 +726,7 @@ export class HeadQuartersComponent implements OnInit {
         "statuteSettings": this.HQFormData.data.statuteSettings,
         "contact": this.HQFormData.data.contact,
         "activateContactAsUser": false,
-        "formValid": true //validity()
+        "formValid": this.validity()
       };
       this.sendDatatoHome(this.HQdata);
     }

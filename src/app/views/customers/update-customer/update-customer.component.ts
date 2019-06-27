@@ -64,10 +64,23 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.onPageInit();
   }
 
   onPageInit() {
+
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+  }, 1000);
+
+    // this.setTimeout(() => {
+    //   this.spinner.hide();
+    // }, 1000);
+
     this.activeRoute.params.subscribe((routeParams: any) => {
       this.logger.log('routeParams :: ', routeParams);
       this.Id = routeParams.id;
@@ -98,6 +111,9 @@ export class UpdateCustomerComponent implements OnInit {
       }
       this.logger.log('ID :: ' + this.Id, 'CurrentPage :: ' + this.currentPage);
     });
+  }
+  setTimeout(arg0: () => void, arg1: number) {
+    throw new Error("Method not implemented.");
   }
 
   GetCustomerInfo(mode: number) {
@@ -154,6 +170,21 @@ export class UpdateCustomerComponent implements OnInit {
 
   onFormwardClick() {
     this.logger.log('forward click', this.editCustomerData);
+
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+  }, 5000);
+
+
+    if(this.editCustomerData.formValid === false)
+    {
+      this.ShowMessage('Onjuiste vermeldingen in formulier! ', '');
+      return;
+    }
+
     if (this.editCustomerData.formValid !== null) {
       delete this.editCustomerData.formValid;
     }
@@ -162,7 +193,7 @@ export class UpdateCustomerComponent implements OnInit {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
         this.ShowMessage('Customer Data Saved successfully. ', '');
         this.logger.log('response=' + res);
-        this.ShowMessage('Customer Data Saved successfully. ', '');
+        this.ShowMessage('Customer Data Saved successfully. ', '');        
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

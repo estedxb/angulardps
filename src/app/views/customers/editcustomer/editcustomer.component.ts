@@ -56,7 +56,6 @@ export class EditCustomerComponent implements OnInit {
     this.vatNumber = this.CustomerVatNumber;
     this.getCustomerByVatNumberEdit(this.vatNumber);
 
-    //this.ShowMessage("Loading Data Successfully", "");
   }
 
   ngOnDestroy() { this.logger.log('object destroyed'); }
@@ -121,11 +120,12 @@ export class EditCustomerComponent implements OnInit {
       if (this.FPdata !== null && this.FPdata !== undefined) {
         this.HQdata.invoiceSettings = new InvoiceSettings();
         this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
+        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;  
         this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
         this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
         this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
         this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+        this.HQdata.invoiceSettings.otherAllowance = this.FPdata.otherAllowance;
         this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
         this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
         this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;
@@ -155,14 +155,37 @@ export class EditCustomerComponent implements OnInit {
 
     if (response !== null && response !== undefined) {
       if (response.contact !== null && response.contact !== undefined) {
-        this.HQdata.contact.firstName = response.contact.firstName;
-        this.HQdata.contact.lastName = response.contact.lastName;
-        this.HQdata.contact.email = response.contact.email;
-        this.HQdata.contact.lastName = response.contact.language;
-        this.HQdata.contact.mobile = response.contact.mobile;
-        this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
-        this.HQdata.contact.postion = response.contact.postion;
-        this.HQdata.activateContactAsUser = response.activateContactAsUser;
+
+        if(this.HQdata.contact === null && this.HQdata.contact === undefined)
+          this.HQdata.contact = new Contact();
+
+        if(response.contact.firstName !== null && response.contact.firstName !== undefined)        
+          this.HQdata.contact.firstName = response.contact.firstName;
+
+        if(response.contact.lastName !== null && response.contact.lastName !== undefined)        
+          this.HQdata.contact.lastName = response.contact.lastName;
+
+        if(response.contact.email !== null && response.contact.email !== undefined)
+          this.HQdata.contact.email = response.contact.email;
+
+        if(response.contact.language.name !== null && response.contact.language.name !== undefined)  
+          this.HQdata.contact.language.name = response.contact.language.name;
+
+        if(response.contact.language.shortName !== null && response.contact.language.shortName !== undefined)  
+          this.HQdata.contact.language.shortName = response.contact.language.shortName;
+
+        if(response.contact.mobile !== null && response.contact.mobile !== undefined) 
+          this.HQdata.contact.mobile = response.contact.mobile;
+
+        if(response.contact.phoneNumber !== null && response.contact.phoneNumber !== undefined)
+          this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
+
+        if(response.contact.postion !== null && response.contact.postion !== undefined)  
+          this.HQdata.contact.postion = response.contact.postion;
+        
+        if(response.activateContactAsUser !== null && response.activateContactAsUser !== undefined )
+            this.HQdata.activateContactAsUser = response.activateContactAsUser;
+
         this.HQdata.formValid = true;
 
         this.childEvent.emit(this.HQdata);
@@ -197,6 +220,7 @@ export class EditCustomerComponent implements OnInit {
           this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
           this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
           this.HQdata.invoiceSettings.shiftAllowances = this.FPdata.shiftAllowances;
+          this.HQdata.invoiceSettings.otherAllowance = this.FPdata.otherAllowance;
           this.HQdata.invoiceSettings.otherAllowances = this.FPdata.otherAllowances;
           this.HQdata.invoiceSettings.transportCoefficient = this.FPdata.transportCoefficient;
           this.HQdata.invoiceSettings.mealvoucherCoefficient = this.FPdata.mealvoucherCoefficient;

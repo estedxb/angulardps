@@ -46,6 +46,8 @@ export class LanguagesComponent implements OnInit {
 
   ngDoCheck() {
 
+    this.logger.log(this.LanguageFormData);
+
     if (this.LanguageFormData !== undefined && this.LanguageFormData !== null) {
       if (this.LanguageFormData != this.oldLanguageFormData) {
         this.oldLanguageFormData = this.LanguageFormData;
@@ -56,8 +58,6 @@ export class LanguagesComponent implements OnInit {
   }
 
   replaceDatasLanguage() {
-
-    this.logger.log("replaceing datas");
 
     for (let it = 0; it < this.datas.length; it++) {
 
@@ -79,7 +79,6 @@ export class LanguagesComponent implements OnInit {
       this.datas = languages;
 
       this.replaceDatasLanguage();
-
       this.loadInitialData(this.datas);
 
     }, error => this.errorMsg = error);
@@ -102,6 +101,8 @@ export class LanguagesComponent implements OnInit {
       for (let i = 0; i < datas.length; i++) {
         if (datas[i].name === this.LanguageFormData) {
           this._selectedIndex = i;
+          this.selectedIndex = i;
+
         }
       }
     } else {
