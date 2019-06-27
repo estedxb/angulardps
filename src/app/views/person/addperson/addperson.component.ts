@@ -319,6 +319,7 @@ export class AddPersonComponent implements OnInit {
     this.positionId = 0;
     this.selectedPositionIndex = 0;
 
+
     this.AddPersonForm2 = new FormGroup({
       functie: new FormControl('', [Validators.required]),
       statute: new FormControl('', [Validators.required]),

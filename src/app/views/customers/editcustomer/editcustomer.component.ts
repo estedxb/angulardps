@@ -107,9 +107,7 @@ export class EditCustomerComponent implements OnInit {
         this.HQdata.statuteSettings = this.STdata;
         this.childEvent.emit(this.HQdata);
       }
-
     }
-
   }
 
   receiveInvoiceData($event) {

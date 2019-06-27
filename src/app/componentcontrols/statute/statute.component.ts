@@ -524,9 +524,6 @@ export class StatuteComponent implements OnInit {
 
   replaceArray(i: number) {
 
-    this.logger.log("i=" + i);
-    this.logger.log("coefficient = " + this.statuteSettings[i].coefficient);
-
     this.cloneArray();
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
