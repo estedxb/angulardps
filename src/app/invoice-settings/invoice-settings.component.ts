@@ -201,6 +201,9 @@ export class InvoiceSettingsComponent implements OnInit {
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
             this.andreSwitch = this.FPFormData.data.invoiceSettings.otherAllowance;
 
+            this.logger.log("invoiceSettings received");
+            this.logger.log(this.FPFormData.data.invoiceSettings);
+
             if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined)
             {
                   if(this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined)
@@ -624,18 +627,22 @@ export class InvoiceSettingsComponent implements OnInit {
 
   transportCoefficient(value) {
     this.tCoefficient = parseFloat(value);
+    this.changeObject();
   }
 
   maaltichequesCoefficient(value) {
     this.mCoefficient = parseFloat(value);
+    this.changeObject();
   }
 
   onEchoChange(value) {
     this.EchoChange = parseFloat(value);
+    this.changeObject();
   }
 
   onDimonaChange(value) {
     this.DimonaChange = parseFloat(value);
+    this.changeObject();
   }
 
   isInvalid() {

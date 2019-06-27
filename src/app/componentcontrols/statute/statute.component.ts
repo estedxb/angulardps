@@ -114,6 +114,13 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData.data.statuteSettings !== null && this.STFormData.page === "edit") 
     {
+
+      this.logger.log("received statute settings array");
+      this.logger.log(this.STFormData.data.statuteSettings);
+      
+      this.logger.log("received invoice settings array");
+      this.logger.log(this.STFormData.data.InvoiceSettings);
+
       this.loadStatuteSettingsArray = this.STFormData.data.statuteSettings;
       this.loadCoefficientArray(this.STFormData.data.statuteSettings);
 
