@@ -1314,7 +1314,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = this.statutes[this.selectedStatuteIndex].name;
     this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
-    this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].brightStaffingID;
+    this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].BrightStaffingID;
 
     this.DpsPersonObject.person.language = new Language();
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
@@ -1431,13 +1431,17 @@ export class AddPersonComponent implements OnInit {
 
     this.selectedStatuteObject.name = this.dataDropDownStatute[$event.target.value];
     this.selectedStatuteObject.type = this.statutes[$event.target.value].type;
-    this.selectedStatuteObject.brightStaffingID = this.statutes[$event.target.value].brightStaffingID;
+    this.selectedStatuteObject.brightStaffingID = this.statutes[$event.target.value].BrightStaffingID;
+
+    this.logger.log(this.statutes);
+    this.logger.log("selected object");
+    this.logger.log(this.selectedStatuteObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
       this.DpsPersonObject.statute = new Statute();
       this.DpsPersonObject.statute.name = this.dataDropDownStatute[$event.target.value];
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
-      this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].brightStaffingID;
+      this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].BrightStaffingID;
     }
 
   }
@@ -1710,7 +1714,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute = new Statute();
     this.DpsPersonObject.statute.name = this.statutes[this.selectedStatuteIndex].name;
     this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
-    this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].brightStaffingID;
+    this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].BrightStaffingID;
 
     if (this.extra !== "")
       this.DpsPersonObject.addittionalInformation = "" + this.extra;

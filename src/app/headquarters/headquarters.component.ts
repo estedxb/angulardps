@@ -205,10 +205,10 @@ export class HeadQuartersComponent implements OnInit {
         this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
 
 
-      this.invoiceSettings = new InvoiceSettings();
-      this.invoiceSettings = dpscustomer.invoiceSettings;
+      // this.invoiceSettings = new InvoiceSettings();
+      // this.invoiceSettings = dpscustomer.invoiceSettings;
 
-      this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
+      // this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
     }
 
     }
@@ -265,10 +265,10 @@ export class HeadQuartersComponent implements OnInit {
 
     this.setAddress();
     this.setCustomerObject();
-    this.setStatuteSettingArray();
+    //this.setStatuteSettingArray();
     this.setContacts();
     this.setDpsCustomer();
-    this.setInvoiceSettings();
+    //this.setInvoiceSettings();
   }
 
   receiveMessage($event) {
@@ -636,7 +636,7 @@ export class HeadQuartersComponent implements OnInit {
       
     }
       
-          this.HQdata.invoiceSettings = this.invoiceSettings;
+          //this.HQdata.invoiceSettings = this.invoiceSettings;
   }
 
   setContacts() {
@@ -668,8 +668,6 @@ export class HeadQuartersComponent implements OnInit {
     this.dpsCustomer.customer = this.customer;
     this.dpsCustomer.invoiceEmail = this.invoiceEmail;
     this.dpsCustomer.contractsEmail = this.contractsEmail;
-    this.dpsCustomer.invoiceSettings = this.invoiceSettings;
-    this.dpsCustomer.statuteSettings = this.statuteSetting;
     this.dpsCustomer.contact = this.contact;
 
     this.setJsonDataObject();
@@ -720,19 +718,22 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
+    console.log("statuteSettings before sending to customer");
+    console.log(this.HQFormData.data.statuteSettings);
+
     if (this.dpsCustomer !== null) {
       this.HQdata = {
         "customer": this.dpsCustomer.customer,
         "invoiceEmail": this.dpsCustomer.invoiceEmail,
         "contractsEmail": this.dpsCustomer.contractsEmail,
-        "invoiceSettings": this.dpsCustomer.invoiceSettings,
+        "invoiceSettings": this.HQFormData.data.invoiceSettings,
         "bulkContractsEnabled": false,
-        "statuteSettings": this.dpsCustomer.statuteSettings,
+        "statuteSettings": this.HQFormData.data.statuteSettings,
         "contact": this.dpsCustomer.contact,
         "activateContactAsUser": false,
         "formValid": true //validity()
       };
-      this.sendDatatoHome();
+      this.sendDatatoHome(this.HQdata);
     }
     else
       this.HQdata = null;
@@ -748,8 +749,11 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  sendDatatoHome() {
-    this.childEvent.emit(this.HQdata);
+  sendDatatoHome(data) {
+    console.log("HQdata before sending");
+    console.log(data);
+
+    this.childEvent.emit(data);
   }
 
 }
