@@ -721,15 +721,22 @@ export class HeadQuartersComponent implements OnInit {
     console.log("statuteSettings before sending to customer");
     console.log(this.HQFormData.data.statuteSettings);
 
+    this.invoiceEmail = new EmailAddress();
+    this.contractsEmail = new EmailAddress();
+
+    // assigning emailaddress objects
+    this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
+    this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;    
+
     if (this.dpsCustomer !== null) {
       this.HQdata = {
         "customer": this.dpsCustomer.customer,
-        "invoiceEmail": this.dpsCustomer.invoiceEmail,
-        "contractsEmail": this.dpsCustomer.contractsEmail,
+        "invoiceEmail": this.invoiceEmail,
+        "contractsEmail": this.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.HQFormData.data.statuteSettings,
-        "contact": this.dpsCustomer.contact,
+        "contact": this.HQFormData.data.contact,
         "activateContactAsUser": false,
         "formValid": true //validity()
       };

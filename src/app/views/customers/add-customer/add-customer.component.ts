@@ -39,6 +39,7 @@ export class AddCustomerComponent implements OnInit {
   public Id = "";
   public currentPage = "";
   public pageType: string;
+  public spinnerToggle:boolean = false;
 
   public showFormIndex = 1;
   constructor(private customerService: CustomersService, private logger: LoggingService,
@@ -229,6 +230,7 @@ export class AddCustomerComponent implements OnInit {
       // this.showFormIndex = 3;      
       this.logger.log('Redirect Breaked 11');
       this.router.navigate(['/dashboard']);
+      this.spinnerToggle = true;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
