@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
-import { AlertsService } from 'angular-alert-module';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';

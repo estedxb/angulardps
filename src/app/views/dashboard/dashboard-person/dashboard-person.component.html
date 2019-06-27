@@ -76,14 +76,15 @@
                         (mouseout)="onContractOver(contract.customerContractId,false)"
                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
                         <div class="contractActionbtngrp" (mouseover)="onContractOver(contract.customerContractId,true)"
-                          (mouseout)="onContractOver(contract.customerContractId,false)">
-                          <div class="contractActionbtn1">
+                          (mouseout)="onContractOver(contract.customerContractId,false)"
+                          [ngClass]="[ ! contract.childContractId > 0 ? 'TwoButtonWidth' : 'OneButtonWidth' ]">
+                          <div class="contractActionbtn1" *ngIf="! contract.childContractId > 0 ">
                             <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
                               *ngIf="! contract.childContractId > 0 "
                               (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
                               <div class="btnLeftTextContainer">
                                 <div id="triangleLeft"
-                                  style="border-color: transparent transparent rgb(226, 226, 226);  border-width: 0px 0px 26px 12px;">
+                                  style="border-color: transparent transparent rgb(226, 226, 226); border-width: 0px 0px 26px 12px;">
                                 </div>
                                 <div class="btnLeftText">Verlengen</div>
                               </div>
@@ -92,7 +93,7 @@
                               </div>
                             </button>
                           </div>
-                          <div class="contractActionbtnGap"></div>
+                          <div class="contractActionbtnGap" *ngIf="! contract.childContractId > 0 "></div>
                           <div class="contractActionbtn2">
                             <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
                               (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'update')">
@@ -129,11 +130,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -178,11 +179,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -227,11 +228,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -276,11 +277,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -325,11 +326,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -374,11 +375,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -423,11 +424,11 @@
                                     [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                     <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                     <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="((workday.workTimes[0].startTime.split(':')[0] * 60 | num) + (workday.workTimes[0].startTime.split(':')[1] | num) - (ShowMorningDiff * 60 | num)) * TimeConverterToPx"
+                                      [style.margin-left.px]="getWorkBarLeft(workday)"
                                       [style.width.px]="getWorkBarWidth(workday)">
                                       <!--Here we create Work Hours Div to Show While Rollover-->
                                       <div class="workbarTime">
-                                        {{workday.workTimes[0].startTime + ' - ' + workday.workTimes[workday.workTimes.length-1].endTime}}
+                                        {{getWorkBarTime(workday)}}
                                       </div>
                                     </div>
                                     <div class="centerline"></div>
@@ -444,7 +445,9 @@
               </ng-container>
             </td>
             <td class="col-split col-split-l">
-              <div class="centerline"></div>
+              <div class="FullCol Contract_0">
+                <div class="centerline"></div>
+              </div>
             </td>
           </tr>
           <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">

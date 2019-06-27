@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-// import { MsalModule, MsalGuard, MsalInterceptor, MsalService } from '@azure/msal-angular';
-import { LogLevel } from 'msal';
-
 import { CustomerSelectionComponent } from './componentcontrols/customerselection/customerselection.component';
 import { MenuComponent } from './componentcontrols/menu/menu.component';
 import { HeadersComponent } from './componentcontrols/headers/headers.component';
@@ -62,10 +59,9 @@ import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { NumPipe } from './pipes/num.pipe';
 import { environment } from '../environments/environment';
-// Logger callback for MSAL
-export function loggerCallback(logLevel, message, piiEnabled) {
-  console.log(message);
-}
+
+import { MsalGuard } from '@azure/msal-angular';
+
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },

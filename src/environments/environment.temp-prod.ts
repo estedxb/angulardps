@@ -15,6 +15,8 @@ export const environment = {
   B2CSuccess: 'validate',
   B2C: '',
   DPSVATNumber: '987654321000',
+  MorningStart: 6,
+  EveningingEnd: 22,
   logInSuccessNoCustomerURL: 'customer/add',
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',

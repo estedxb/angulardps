@@ -20,9 +20,14 @@ export class MsalServiceLocal {
   public clientApplication;
 
   B2CTodoAccessTokenKey = environment.B2CTodoAccessTokenKey;
-  authority = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
+  authority = environment.aadurl + '/tfp/' + environment.tenantid + '/' + environment.signInPolicy; //https://login.microsoftonline.com
 
-  public b2cScopes = ['https://' + environment.tenantid + '/' + environment.name + '/user_impersonation'];
+  public b2cScopes = [
+    'https://' + environment.tenantid + '/' + environment.name + '/user_impersonation',
+    'https://' + environment.tenantid + '/' + environment.name + '/openid',
+    'https://' + environment.tenantid + '/' + environment.name + '/email',
+    'https://' + environment.tenantid + '/' + environment.name + '/profile'
+  ];
 
   config: Msal.Configuration = {
     auth: {
@@ -44,27 +49,27 @@ export class MsalServiceLocal {
     this.clientApplication.handleRedirectCallback((error, response) => {
       this.logger.log('clientApplication Result', response);
       this.logger.log('clientApplication Error', error);
-
     });
 
   }
   saveAccessTokenToCache(accessToken: string): void { sessionStorage.setItem(this.B2CTodoAccessTokenKey, accessToken); }
 
   public login(): void {
-    this.clientApplication = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
+    this.clientApplication = environment.aadurl + '/tfp/' + environment.tenantid + '/' + environment.signInPolicy;
     this.authenticate();
   }
 
   public signup(): void {
-    this.clientApplication.authority = 'https://login.microsoftonline.com/tfp/' + environment.tenantid + '/' + environment.signUpPolicy;
+    this.clientApplication.authority = environment.aadurl + '/tfp/' + environment.tenantid + '/' + environment.signUpPolicy;
     this.authenticate();
   }
 
-  //this.logger.log('authenticate() - this.clientApplication.authority :: ' + this.clientApplication.authority);
+  // this.logger.log('authenticate() - this.clientApplication.authority :: ' + this.clientApplication.authority);
   public authenticate(): void {
     this.logger.log('this.b2cScopes :: ' + this.b2cScopes);
-    this.clientApplication.loginRedirect(this.b2cScopes);
+    // this.clientApplication.loginRedirect(this.b2cScopes);
   }
+
   /*
   updateSessionStorage(token: string) {
     // alert(this.getUser());

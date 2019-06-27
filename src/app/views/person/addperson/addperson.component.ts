@@ -34,7 +34,7 @@ export class AddPersonComponent implements OnInit {
   public addNewRow: boolean;
   public removeLastRemove: boolean;
 
-  public recordExists:boolean = false;
+  public recordExists: boolean = false;
 
   public recvdCountryString;
   public recvdNationalityString;
@@ -86,15 +86,15 @@ export class AddPersonComponent implements OnInit {
   public selectedPositionIndex: number = 0;
   public selectedStatuteIndex: number = 0;
 
-  public netExpenseSwitch:boolean = false;
-  public switchDistance:boolean = false;
+  public netExpenseSwitch: boolean = false;
+  public switchDistance: boolean = false;
 
   public dayIndex: number = 0;
   public monthIndex: number = 0;
   public yearIndex: number = 0;
   public buttonPressed: boolean = false;
 
-  public extra:string = "";
+  public extra: string = "";
 
   public selectedlanguageObject: any = {
     name: 'Dutch',
@@ -120,7 +120,7 @@ export class AddPersonComponent implements OnInit {
   public bban: any = '';
   public bbic: any = '';
   public iban: any = '';
-  public errorMessage:string = "";
+  public errorMessage: string = "";
 
   public Id = '';
   public currentPage = '';
@@ -216,7 +216,7 @@ export class AddPersonComponent implements OnInit {
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
     private statuteService: StatuteService,
-    private route: ActivatedRoute, private router: Router,private spinner: NgxSpinnerService
+    private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService
   ) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
@@ -378,8 +378,7 @@ export class AddPersonComponent implements OnInit {
 
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
-      if(maindatas[i].position.name !== "")
-      {
+      if (maindatas[i].position.name !== "") {
         this.dataDropDownFunctie.push(positionObject);
         this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       }
@@ -758,21 +757,17 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('monthOfBirth').disable();
     this.AddPersonForm1.get('yearOfBirth').disable();
 
-    if (day >= 1 && day <= 31) 
-    {
-      for (let i = 0; i < this.dataDropDown.length; i++) 
-      {
-          if(day.toString() === this.dataDropDown[i])
-          {
-            this._selectedIndexdays = i;
-            this.dayIndex = i;
-          
-          }
+    if (day >= 1 && day <= 31) {
+      for (let i = 0; i < this.dataDropDown.length; i++) {
+        if (day.toString() === this.dataDropDown[i]) {
+          this._selectedIndexdays = i;
+          this.dayIndex = i;
+
+        }
       }
     }
 
-    if (month >= 1 && month <= 12) 
-    {
+    if (month >= 1 && month <= 12) {
       // this.selectedIndexMonth = month - 1;
       this._selectedIndexMonth = month - 1;
       this.monthIndex = month - 1;
@@ -912,18 +907,16 @@ export class AddPersonComponent implements OnInit {
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
         //this.logger.log('res=' + res);
         //this.loadPersonData(res);
-        if(res.person.firstName === null || res.person.lastName === null || res.customerPostionId === null)
-        {
+        if (res.person.firstName === null || res.person.lastName === null || res.customerPostionId === null) {
           this.recordExists = false;
           this.enableALLFields();
           this.errorMessage = "";
         }
-        else
-        {
+        else {
           this.recordExists = true;
           this.disableAllFields();
-          this.ShowMessage('Persoon bestaat al!','');
-          this.errorMessage = "Persoon bestaat al!";  
+          this.ShowMessage('Persoon bestaat al!', '');
+          this.errorMessage = "Persoon bestaat al!";
         }
       },
         (err: HttpErrorResponse) => {
@@ -1101,11 +1094,11 @@ export class AddPersonComponent implements OnInit {
         this.selectedPositionIndex = i;
   }
 
-  setIndexStatute(statuteData:any) {
+  setIndexStatute(statuteData: any) {
 
-    for(let k=0;k<this.maindatas.length;k++)
-       if(statuteData.name === this.statutes[k].name)
-          this.selectedStatuteIndex = k;
+    for (let k = 0; k < this.maindatas.length; k++)
+      if (statuteData.name === this.statutes[k].name)
+        this.selectedStatuteIndex = k;
 
   }
 
@@ -1156,7 +1149,7 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.controls.bic.setValue(data.person.bankAccount.bic);
     }
 
-    if(data.statute !== null) {
+    if (data.statute !== null) {
       this.setIndexStatute(data.statute);
     }
 
@@ -1335,8 +1328,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    if(this.extra === "" && this.showFormIndex === 1)
-     this.DpsPersonObject.addittionalInformation = ""+ this.extra;
+    if (this.extra === "" && this.showFormIndex === 1)
+      this.DpsPersonObject.addittionalInformation = "" + this.extra;
 
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
     this.DpsPersonObject.medicalAttestation.location = '';
@@ -1397,7 +1390,7 @@ export class AddPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.logger.log("received zich met data="+$event.vehicleName);
+    this.logger.log("received zich met data=" + $event.vehicleName);
 
     this.receiveZichmetdata = $event.vehicleName;
     this.zichmetdata = $event.vehicleName;
@@ -1624,10 +1617,10 @@ export class AddPersonComponent implements OnInit {
 
   addittionalInformation($event) {
 
-    this.logger.log("extra="+$event);
+    this.logger.log("extra=" + $event);
 
-    if(this.DpsPersonObject !== undefined && this.DpsPersonObject !== null)
-        this.DpsPersonObject.addittionalInformation = $event;
+    if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null)
+      this.DpsPersonObject.addittionalInformation = $event;
 
     this.logger.log(this.DpsPersonObject);
   }
@@ -1652,27 +1645,26 @@ export class AddPersonComponent implements OnInit {
 
   }
 
-  disableAllFields()
-  {
-        this.AddPersonForm1.get('firstName').disable();
-        this.AddPersonForm1.get('lastName').disable();
-        this.AddPersonForm1.get('street').disable();
-        this.AddPersonForm1.get('streetNumber').disable();
-        this.AddPersonForm1.get('city').disable();
-        this.AddPersonForm1.get('postalCode').disable();
-        this.AddPersonForm1.get('mobileNumber').disable();
-        this.AddPersonForm1.get('vastNumber').disable();
-        this.AddPersonForm1.get('emailAddress').disable();
-        this.AddPersonForm1.get('iban').disable();
-        this.AddPersonForm1.get('bic').disable();
-        this.AddPersonForm1.get('bus').disable();
-        this.AddPersonForm1.get('placeOfBirth').disable();
+  disableAllFields() {
+    this.AddPersonForm1.get('firstName').disable();
+    this.AddPersonForm1.get('lastName').disable();
+    this.AddPersonForm1.get('street').disable();
+    this.AddPersonForm1.get('streetNumber').disable();
+    this.AddPersonForm1.get('city').disable();
+    this.AddPersonForm1.get('postalCode').disable();
+    this.AddPersonForm1.get('mobileNumber').disable();
+    this.AddPersonForm1.get('vastNumber').disable();
+    this.AddPersonForm1.get('emailAddress').disable();
+    this.AddPersonForm1.get('iban').disable();
+    this.AddPersonForm1.get('bic').disable();
+    this.AddPersonForm1.get('bus').disable();
+    this.AddPersonForm1.get('placeOfBirth').disable();
   }
 
   checkValidation() {
 
-    if(this.recordExists === true)
-        return false;
+    if (this.recordExists === true)
+      return false;
 
     if (this.AddPersonForm1.get('socialSecurityNumber').valid === true &&
       this.AddPersonForm1.get('firstName').valid === true &&
@@ -1726,7 +1718,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
     this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].BrightStaffingID;
 
-    if(this.extra !== "")
+    if (this.extra !== "")
       this.DpsPersonObject.addittionalInformation = "" + this.extra;
 
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
@@ -1741,19 +1733,19 @@ export class AddPersonComponent implements OnInit {
       this.buttonPressed = true;
 
       this.spinner.show();
- 
+
       setTimeout(() => {
-          /** spinner ends after 5 seconds */
-          this.spinner.hide();
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
       }, 5000);
 
       if (this.checkValidation())
-          this.showFormIndex = 2;
+        this.showFormIndex = 2;
       else
-        this.ShowMessage(''+this.errorMessage,'');
+        this.ShowMessage('' + this.errorMessage, '');
 
       this.createObjectsForm1();
-    } 
+    }
     else {
 
       if (this.showFormIndex === 2) {
@@ -1761,7 +1753,7 @@ export class AddPersonComponent implements OnInit {
         this.buttonPressed = true;
         this.setPositionIFEmpty();
 
-        if(this.maindatas.length === 0)
+        if (this.maindatas.length === 0)
           this.ShowMessage('Maak alstublieft positie voor de persoon !', '');
         else
           this.postPersonData();
@@ -1787,8 +1779,7 @@ export class AddPersonComponent implements OnInit {
           // this.ShowMessage('Error occured='+err.error.message,'');
         } else {
 
-          if(err.status === 200)
-          {
+          if (err.status === 200) {
             this.router.navigate(['/dashboard']);
             this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
           }

@@ -5,7 +5,7 @@ export const environment = {
   dpsAPI: 'https://dpsapistg.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapistg.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountstg.blob.core.windows.net',
-  aadurl: 'https://digitalpayrollservices.b2clogin.com',
+  aadurl: 'https://login.microsoftonline.com', // 'https://digitalpayrollservices.b2clogin.com', // 
   tenantid: 'digitalpayrollservices.onmicrosoft.com',
   clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
   webUrl: 'https://dpsselfserviceportalstg.azurewebsites.net/',
@@ -15,6 +15,8 @@ export const environment = {
   B2CSuccess: 'validate',
   B2C: '',
   DPSVATNumber: '987654321000',
+  MorningStart: 6,
+  EveningingEnd: 22,
   logInSuccessNoCustomerURL: 'customer/add',
   signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
   signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
