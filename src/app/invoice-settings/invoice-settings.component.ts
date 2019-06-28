@@ -571,7 +571,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
       }
 
-      this.clearShiftAllowances();
+      //this.clearShiftAllowances();
     }
 
     this.changeObject();
@@ -770,7 +770,7 @@ export class InvoiceSettingsComponent implements OnInit {
         formGroup.controls['AndreBox2'].disable();
       }
 
-      this.clearOtherAllowances();
+      //this.clearOtherAllowances();
     }
     this.changeObject();
 
