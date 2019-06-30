@@ -2,7 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-customerselection',
@@ -19,7 +19,7 @@ export class CustomerSelectionComponent implements OnInit {
   public customernames = [];
   public errorMsg;
   public show = false;
-  constructor(private customerLists: CustomerListsService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
+  constructor(private customerLists: CustomerListsService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
 
   oncustomerKeyup(value) {
     this.customernames = [];

@@ -9,7 +9,7 @@ import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',
@@ -30,7 +30,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
-    private snackBar: MatSnackBar, private spinner: NgxSpinnerService, private logger: LoggingService,
+    private snackBar: MatSnackBar, private spinner: NgxUiLoaderService, private logger: LoggingService,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
@@ -70,12 +70,12 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
 
-  //   this.spinner.show();
+    this.spinner.start();
 
-  //   setTimeout(() => {
-  //     /** spinner ends after 5 seconds */
-  //     this.spinner.hide();
-  // }, 1000);
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.stop();
+    }, 1000);
 
     // this.setTimeout(() => {
     //   this.spinner.hide();
@@ -169,18 +169,17 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   onFormwardClick() {
-     this.logger.log('forward click', this.editCustomerData);
+    this.logger.log('forward click', this.editCustomerData);
 
-  //   this.spinner.show();
+    this.spinner.start();
 
-  //   setTimeout(() => {
-  //     /** spinner ends after 5 seconds */
-  //     this.spinner.hide();
-  // }, 5000);
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.stop();
+    }, 5000);
 
 
-    if(this.editCustomerData.formValid === false)
-    {
+    if (this.editCustomerData.formValid === false) {
       this.ShowMessage('Onjuiste vermeldingen in formulier! ', '');
       return;
     }
@@ -193,7 +192,7 @@ export class UpdateCustomerComponent implements OnInit {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
         this.ShowMessage('Customer Data Saved successfully. ', '');
         this.logger.log('response=' + res);
-        this.ShowMessage('Customer Data Saved successfully. ', '');        
+        this.ShowMessage('Customer Data Saved successfully. ', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

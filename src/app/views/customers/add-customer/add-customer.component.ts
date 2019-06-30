@@ -12,7 +12,7 @@ import { DataService } from '../../../shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-add-customer',
@@ -39,10 +39,10 @@ export class AddCustomerComponent implements OnInit {
   public Id = "";
   public currentPage = "";
   public pageType: string;
-  public spinnerToggle:boolean = false;
+  public spinnerToggle: boolean = false;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService, private spinner: NgxSpinnerService, private logger: LoggingService,
+  constructor(private customerService: CustomersService, private spinner: NgxUiLoaderService, private logger: LoggingService,
     private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
 
     this.editObject = { data: '', page: '' };

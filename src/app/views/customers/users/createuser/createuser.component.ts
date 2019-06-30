@@ -7,7 +7,7 @@ import { UsersService } from 'src/app/shared/users.service';
 import { element } from '@angular/core/src/render3';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { LoggingService } from '../../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -33,7 +33,7 @@ export class CreateuserComponent implements OnInit {
   language: Language;
 
   constructor(
-    private formBuilder: FormBuilder, private userService: UsersService, private logger: LoggingService, private spinner: NgxSpinnerService,
+    private formBuilder: FormBuilder, private userService: UsersService, private logger: LoggingService, private spinner: NgxUiLoaderService,
     public dialogRef: MatDialogRef<CreateuserComponent>, @Inject(MAT_DIALOG_DATA) public userData: DpsUser) {
     this.currentUser = userData;
   }

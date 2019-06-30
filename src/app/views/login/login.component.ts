@@ -11,8 +11,8 @@ import { LoggingService } from '../../shared/logging.service';
 
 import { Subscription } from 'rxjs/Subscription';
 import * as Msal from 'msal';
-import { MsalServiceLocal } from '../../shared/msal.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+// import { MsalServiceLocal } from '../../shared/msal.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
     public userService: UsersService,
     public customersService: CustomersService,
     public customerListsService: CustomerListsService,
-    private msalService: MsalServiceLocal,
-    private spinner: NgxSpinnerService,
+    // private msalService: MsalServiceLocal,
+    private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 

@@ -13,7 +13,7 @@ import { ChildActivationEnd } from '@angular/router';
 import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-headquarters',
@@ -140,7 +140,7 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private customerService: CustomersService, private data: DataService) {
+  constructor(private formBuilder: FormBuilder, private spinner: NgxUiLoaderService, private customerService: CustomersService, private data: DataService) {
 
   }
 
@@ -671,8 +671,8 @@ export class HeadQuartersComponent implements OnInit {
 
   validity() {
     // && this.allowCustomer === true
-    
-    if (this.HQForm.valid === true && !this.emptyData() )
+
+    if (this.HQForm.valid === true && !this.emptyData())
       return true;
 
     return false;
@@ -714,7 +714,7 @@ export class HeadQuartersComponent implements OnInit {
 
     // assigning emailaddress objects
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
-    this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;    
+    this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
     if (this.dpsCustomer !== null) {
       this.HQdata = {

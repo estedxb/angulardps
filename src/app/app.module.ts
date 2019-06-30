@@ -12,60 +12,64 @@ import { MatAutocompleteModule, MatInputModule, MatTooltipModule } from '@angula
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
-import { MsalServiceLocal } from './shared/msal.service';
-import { SpinnerComponent } from './componentcontrols/spinner/spinner.component';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { environment } from '../environments/environment';
+import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
+import { ErrorComponent } from './error.component';
 
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { MsalModule } from '@azure/msal-angular';
-import { MsalInterceptor } from '@azure/msal-angular';
-import { LogLevel } from 'msal';
+import { HttpClientModule } from '@angular/common/http';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: '#e37719',
+  bgsOpacity: 0.5,
+  bgsPosition: 'center-center',
+  bgsSize: 60,
+  bgsType: 'ball-spin-clockwise-fade-rotating',
+  blur: 5,
+  fgsColor: 'white',
+  fgsPosition: 'center-center',
+  fgsSize: 60,
+  fgsType: 'rectangle-bounce',
+  gap: 24,
+  logoPosition: 'center-center',
+  logoSize: 200,
+  logoUrl: '../assets/svg/dpslogo.svg',
+  masterLoaderId: 'master',
+  overlayBorderRadius: '0',
+  overlayColor: 'rgba(227,119,25,0.5)',
+  pbColor: 'red',
+  pbDirection: 'ltr',
+  pbThickness: 3,
+  hasProgressBar: true,
+  text: 'Bezig met laden ...',
+  textColor: '#FFFFFF',
+  textPosition: 'center-center',
+  delay: 0,
+  maxTime: -1,
+  minTime: 500
+};
 
 export function loggerCallback(logLevel, message, piiEnabled) {
   console.log('client logging' + message);
 }
 
-export const protectedResourceMap: [string, string[]][] = [
-  [
-    'https://buildtodoservice.azurewebsites.net/api/todolist', ['api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user']
-  ],
-  ['https://graph.microsoft.com/v1.0/me', ['user.read']]
-];
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, SpinnerComponent],
+  declarations: [AppComponent, routingComponents, ErrorComponent],
   imports: [
-    BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule,
-    MatInputModule, MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AngularFontAwesomeModule,
-    AutocompleteLibModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule, HttpClientModule,
-    ModalModule.forRoot(), AlertModule.forRoot(), TimepickerModule.forRoot(),
-    UiSwitchModule.forRoot({
-      size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
-    }), MsalModule.forRoot({
-      clientID: environment.clientId,
-      authority: environment.aadurl + '/tfp/' + environment.tenantid + '/',
-      redirectUri: environment.webUrl + environment.B2CSuccess + environment.logInRedirectURL,
-      validateAuthority: true,
-      cacheLocation: 'localStorage',
-      postLogoutRedirectUri: environment.webUrl + environment.B2CSuccess + environment.logOutRedirectURL,
-      navigateToLoginRequestUrl: true,
-      popUp: false,
-      // consentScopes: ['user.read', 'api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user'],
-      // unprotectedResources: ["https://angularjs.org/"],
-      // protectedResourceMap: protectedResourceMap,
-      logger: loggerCallback,
-      // correlationId: '1234',
-      level: LogLevel.Verbose,
-      piiLoggingEnabled: true,
-
-    })
+    BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule, MatInputModule,
+    MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AutocompleteLibModule,
+    FormsModule, ReactiveFormsModule, HttpClientModule, AngularFontAwesomeModule, ModalModule.forRoot(),
+    AlertModule.forRoot(), TimepickerModule.forRoot(), NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    UiSwitchModule.forRoot({ size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff' })
   ],
-  providers: [DatePipe, MsalServiceLocal, routingProviders],
+  providers: [DatePipe, routingProviders],
   bootstrap: [AppComponent],
   exports: [],
   entryComponents: [entringComponents]
 })
 export class AppModule { }
+/*
+
+*/

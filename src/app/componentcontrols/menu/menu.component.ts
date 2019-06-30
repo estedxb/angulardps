@@ -6,10 +6,10 @@ import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import * as Msal from 'msal';
-import { MsalServiceLocal } from '../../shared/msal.service';
+// import { MsalServiceLocal } from '../../shared/msal.service';
 import { environment } from '../../../environments/environment';
 
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-menu',
@@ -18,8 +18,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class MenuComponent implements OnInit {
   @Input() SelectedPage: string;
-  constructor(private router: Router, private spinner: NgxSpinnerService,
-    private logger: LoggingService, private msalService: MsalServiceLocal
+  constructor(private router: Router, private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+    // , private msalService: MsalServiceLocal
     //  , public authService: AuthService
   ) { }
 

@@ -9,7 +9,7 @@ import {
 } from 'src/app/shared/models';
 import { DataService } from '../../shared/data.service';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   public CTFormValid: boolean;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
+  constructor(private customerService: CustomersService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
 
   ngOnInit() {
     this.HQFormValid = true;

@@ -15,6 +15,9 @@
     </div>
     <form [formGroup]="ContractForm" novalidate id="ContractForm">
         <div class="contactperson" id="maincontent">
+
+            <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
             <div class="row editicon" *ngIf="mode==='update'">
                 <div class="col-sm-12">
                     <button name="EditContract" (click)="onEnableEdit()" class=""><img

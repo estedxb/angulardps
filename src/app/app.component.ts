@@ -1,29 +1,33 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+/*
 import * as Msal from 'msal';
 import { MsalServiceLocal } from './shared/msal.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+*/
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Digital Payroll Services';
 
   constructor(
     private router: Router,
     private location: Location,
-    private msalService: MsalServiceLocal,
-    private spinner: NgxSpinnerService,
+    // private msalService: MsalServiceLocal,
+    private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
+
     this.logger.logF('environment.production :: ' + environment.production);
     const pathString = location.path().replace('/', '');
 
@@ -37,6 +41,14 @@ export class AppComponent {
       }
     }
   }
+  ngOnInit() {
+    this.spinner.start(); // start foreground spinner of the master loader with 'default' taskId
+    // Stop the foreground loading after 5s
+    setTimeout(() => {
+      this.spinner.stop(); // stop foreground spinner of the master loader with 'default' taskId
+    }, 3000);
+  }
+
 
 
   /*

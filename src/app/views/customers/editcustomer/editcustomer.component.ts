@@ -3,7 +3,7 @@ import { Contact, DpsUser, LoginToken, DPSCustomer, Customer, InvoiceSettings, C
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-editcustomer',
   templateUrl: './editcustomer.component.html',
@@ -26,7 +26,7 @@ export class EditCustomerComponent implements OnInit {
   public pageType: string;
 
   constructor(
-    private customerService: CustomersService, private data: DataService, private spinner: NgxSpinnerService,
+    private customerService: CustomersService, private data: DataService, private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
 
     // this.vatNumber = this.dpsLoginToken.customerVatNumber;
@@ -107,7 +107,7 @@ export class EditCustomerComponent implements OnInit {
       if (this.FPdata !== null && this.FPdata !== undefined) {
         this.HQdata.invoiceSettings = new InvoiceSettings();
         this.HQdata.invoiceSettings.lieuDaysAllowance = this.FPdata.lieuDaysAllowance;
-        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;  
+        this.HQdata.invoiceSettings.sicknessInvoiced = this.FPdata.sicknessInvoiced;
         this.HQdata.invoiceSettings.holidayInvoiced = this.FPdata.holidayInvoiced;
         this.HQdata.invoiceSettings.mobilityAllowance = this.FPdata.mobilityAllowance;
         this.HQdata.invoiceSettings.shiftAllowance = this.FPdata.shiftAllowance;
@@ -141,51 +141,47 @@ export class EditCustomerComponent implements OnInit {
     };
 
     if (response !== null && response !== undefined) {
-      if (response.contact !== null && response.contact !== undefined) {    
+      if (response.contact !== null && response.contact !== undefined) {
 
-        if(this.HQdata.contact === null || this.HQdata.contact === undefined)
+        if (this.HQdata.contact === null || this.HQdata.contact === undefined)
           this.HQdata.contact = new Contact();
-      
-        if(response.contact.firstName !== undefined && response.contact.firstName !== null )
+
+        if (response.contact.firstName !== undefined && response.contact.firstName !== null)
           this.HQdata.contact.firstName = response.contact.firstName;
 
-        if(response.contact.lastName !== null && response.contact.lastName !== undefined)        
+        if (response.contact.lastName !== null && response.contact.lastName !== undefined)
           this.HQdata.contact.lastName = response.contact.lastName;
 
-        if(response.contact.email !== null && response.contact.email !== undefined)
-        {
+        if (response.contact.email !== null && response.contact.email !== undefined) {
           this.HQdata.contact.email = new EmailAddress();
           this.HQdata.contact.email.emailAddress = response.contact.email.emailAddress;
         }
 
-        if(response.contact.language !== undefined && response.contact.language !== null)
-        {
+        if (response.contact.language !== undefined && response.contact.language !== null) {
           this.HQdata.contact.language = new Language();
 
-          if(response.contact.language.name !== null && response.contact.language.name !== undefined)  
-              this.HQdata.contact.language.name = response.contact.language.name;
+          if (response.contact.language.name !== null && response.contact.language.name !== undefined)
+            this.HQdata.contact.language.name = response.contact.language.name;
 
-          if(response.contact.language.shortName !== null && response.contact.language.shortName !== undefined)  
-              this.HQdata.contact.language.shortName = response.contact.language.shortName;
+          if (response.contact.language.shortName !== null && response.contact.language.shortName !== undefined)
+            this.HQdata.contact.language.shortName = response.contact.language.shortName;
         }
 
-        if(response.contact.mobile !== null && response.contact.mobile !== undefined) 
-        {
+        if (response.contact.mobile !== null && response.contact.mobile !== undefined) {
           this.HQdata.contact.mobile = new PhoneNumber();
           this.HQdata.contact.mobile.number = response.contact.mobile.number;
         }
 
-        if(response.contact.phoneNumber !== null && response.contact.phoneNumber !== undefined)
-        {
+        if (response.contact.phoneNumber !== null && response.contact.phoneNumber !== undefined) {
           this.HQdata.contact.phoneNumber = new PhoneNumber();
           this.HQdata.contact.phoneNumber.number = response.contact.phoneNumber.number;
         }
 
-        if(response.contact.postion !== null && response.contact.postion !== undefined)  
+        if (response.contact.postion !== null && response.contact.postion !== undefined)
           this.HQdata.contact.postion = response.contact.postion;
-        
-        if(response.activateContactAsUser !== null && response.activateContactAsUser !== undefined )
-            this.HQdata.activateContactAsUser = response.activateContactAsUser;
+
+        if (response.activateContactAsUser !== null && response.activateContactAsUser !== undefined)
+          this.HQdata.activateContactAsUser = response.activateContactAsUser;
 
         this.HQdata.formValid = true;
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 // import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
@@ -52,7 +52,10 @@ export class CountriesComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private countriesService: CountriesService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
+  constructor(
+    private countriesService: CountriesService,
+    private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   ngOnInit() {
 

@@ -17,7 +17,7 @@ import { saveAs } from 'file-saver';
 import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.component';
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-createcontract',
@@ -117,12 +117,12 @@ export class CreateContractComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<CreateContractComponent>,
     private contractService: ContractService,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxUiLoaderService,
     @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) { }
 
   ngOnInit() {
     this.showSpinner();
-    setTimeout(() => { this.hideSpinner(); }, 2500);
+    setTimeout(() => { this.spinner.stop(); }, 3000);
     this.onPageInit();
   }
 
@@ -131,7 +131,7 @@ export class CreateContractComponent implements OnInit {
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);    
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
     });
@@ -255,12 +255,14 @@ export class CreateContractComponent implements OnInit {
   showSpinner() {
     if (!this.SpinnerShowing) {
       this.SpinnerShowing = true;
-      this.spinner.show('mySpinner');
+      this.spinner.startLoader('loader-01');
+      // this.spinner.startBackgroundLoader('loader-01');
     }
   }
   hideSpinner() {
     if (this.SpinnerShowing) {
-      this.spinner.hide('mySpinner');
+      this.spinner.stopLoader('loader-01');
+      // this.spinner.stopBackgroundLoader('loader-01');
       this.SpinnerShowing = false;
     }
   }
@@ -848,8 +850,6 @@ export class CreateContractComponent implements OnInit {
   }
 
 }
-
-
 
 /*
 public allowedExtentedStartDate: Date;

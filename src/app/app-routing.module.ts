@@ -59,7 +59,12 @@ import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { NumPipe } from './pipes/num.pipe';
 import { environment } from '../environments/environment';
 
-import { MsalGuard } from '@azure/msal-angular';
+/*
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MsalServiceLocal } from './shared/msal.service';
+import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
+import { LogLevel } from 'msal';
+*/
 
 
 const routes: Routes = [
@@ -103,8 +108,9 @@ export const routingComponents = [
   UpdatePersonComponent, WorkSchedulesComponent, PositionsComponent, CancelContractComponent,
   LocationsComponent, PersonPositionComponent, PersonDocumentComponent, BulkContractComponent, CreateuserComponent,
   CreatelocationComponent, DPSSystemMessageComponent, CreateWorkScheduleComponent, CreatepositionComponent,
-  CreateContractComponent, DashboardActionComponent, DashboardPersonComponent,
-  EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe, CalendarDOBComponent, B2cloginComponent
+  CreateContractComponent, DashboardActionComponent, DashboardPersonComponent, B2cloginComponent,
+  EnableFilterPipe, ArchiveFilterPipe, WeekPipe, TimeSpliterPipe, NumPipe, CalendarDOBComponent
+  // , MsalModule
 ];
 
 export const entringComponents = [
@@ -112,4 +118,4 @@ export const entringComponents = [
   CreatepositionComponent, CancelContractComponent, CreateContractComponent
 ];
 
-export const routingProviders = [];
+export const routingProviders = []; // [ MsalServiceLocal, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }];

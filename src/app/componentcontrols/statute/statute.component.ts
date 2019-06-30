@@ -9,7 +9,7 @@ import {
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-statute',
@@ -57,7 +57,7 @@ export class StatuteComponent implements OnInit {
   lengthStatueSettings: number = 0;
 
   constructor(
-    private statuteService: StatuteService, private spinner: NgxSpinnerService,
+    private statuteService: StatuteService, private spinner: NgxUiLoaderService,
     private fb: FormBuilder, private logger: LoggingService) {
 
   }

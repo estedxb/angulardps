@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output,ChangeDetectorRef,ChangeDetectionStrategy  } from '@angular/core';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-currency',
@@ -55,7 +55,7 @@ export class CurrencyComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private spinner: NgxSpinnerService, private logger: LoggingService,private cdr: ChangeDetectorRef) {
+  constructor(private spinner: NgxUiLoaderService,private logger: LoggingService,private cdr: ChangeDetectorRef) {
 
   }
 
