@@ -10,6 +10,7 @@ import { TimeSpan } from '../shared/TimeSpan';
 import { LoggingService } from '../shared/logging.service';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -191,10 +192,15 @@ export class InvoiceSettingsComponent implements OnInit {
     //load Edit Page details
     if (this.FPFormData !== undefined && this.FPFormData !== null) {
       if (this.FPFormData.data !== null && this.FPFormData.data !== undefined) {
-        if (this.oldFPFormData !== this.FPFormData) {
+        if (this.oldFPFormData !== this.FPFormData) 
+        {
           this.oldFPFormData = this.FPFormData;
 
-          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) {
+          this.currencyDataOther = [];
+          this.currencyDataShift = [];
+
+          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) 
+          {
 
             this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
             this.sicknessInvoiced = this.loadSwitchSickness;
@@ -418,7 +424,7 @@ export class InvoiceSettingsComponent implements OnInit {
                 }
               });
             }
-
+            this.loadCurrencies();
           }
         }
       }
@@ -431,6 +437,44 @@ export class InvoiceSettingsComponent implements OnInit {
       this.loadSwitchTeam = false;
       this.loadSwitchOther = false;
     }
+
+
+  }
+
+  loadCurrencies() {
+
+    this.logger.log("load currencies");
+
+    let counter = 0;
+    this.currencyDataOther = [];
+    this.currencyDataShift = [];
+
+    this.logger.log(this.FPFormData.data.invoiceSettings);
+
+   if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+    if(this.FPFormData.data.invoiceSettings.otherAllowances !== undefined && this.FPFormData.data.invoiceSettings.otherAllowances!== null)
+    this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
+      this.logger.log(element);
+        if(element.nominal === true)
+          this.currencyDataOther[counter] = "%";
+        else
+        this.currencyDataOther[counter] = "€";
+        counter +=1;
+    });
+
+    counter = 0;
+    if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+   if(this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances!== null)
+    this.FPFormData.data.invoiceSettings.shiftAllowances.forEach((element) => {
+      if(element.nominal === true)
+        this.currencyDataShift[counter] = "%";
+      else
+        this.currencyDataShift[counter] = "€";
+        counter +=1;
+    });
+
+    this.logger.log(this.currencyDataOther);
+    this.logger.log(this.currencyDataShift);
 
   }
 
@@ -527,6 +571,8 @@ export class InvoiceSettingsComponent implements OnInit {
     this.changeInitialStatus();
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
+
+    this.loadCurrencies();
   }
 
   changeInitialStatus() {
@@ -842,7 +888,24 @@ export class InvoiceSettingsComponent implements OnInit {
     // this.changeObject();
   }
 
+  // wait till currency is fixed
+  searchAndRemove(index)
+  {
+    for(let i=0;i<this.Andre.length;i++)
+    {
+      const formGroup = this.Andre.controls[i] as FormGroup;
+      let amount = formGroup.controls['AndreBox2'].value;
+      let codeId = formGroup.controls['AndreBox1'].value;  
+      let currency = formGroup.controls['currency_other'].value;
+    }
+  }
+
+
   removeAndreRows(index) {
+
+  this.logger.log("removing index="+index);
+  this.logger.log(this.otherAllowances[index]);
+
     if (this.Andre.length != 1)
       this.Andre.removeAt(index);
     this.otherAllowances.splice(index, 1);

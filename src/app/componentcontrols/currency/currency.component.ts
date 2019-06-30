@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class CurrencyComponent implements OnInit {
 
   @Input() public currencyDataForm;
-  @Input() public disabled;
+  @Input() public inputdisabled;
   @Output() public childEvent = new EventEmitter();
 
   public currencyForm: FormGroup;
@@ -63,23 +63,15 @@ export class CurrencyComponent implements OnInit {
 
     if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
     {
+
       if (this.oldcurrencyData !== this.currencyDataForm) {
         this.oldcurrencyData = this.currencyDataForm;
         this.loadInitialData();
       }  
     }
 
-    if (this.disabled !== this.olddisabled) {
-      this.olddisabled = this.disabled;
-
-      if(this.currencyForm !== undefined && this.currencyForm !== null)
-      {
-        if(this.disabled === true)
-            this.currencyForm.get('currency').enable();
-        else
-            this.currencyForm.get('currency').disable();  
-      }
-  
+    if (this.inputdisabled !== this.olddisabled) {
+      this.olddisabled = this.inputdisabled;  
     }
 
 
@@ -88,14 +80,6 @@ export class CurrencyComponent implements OnInit {
   loadInitialData() {
 
     this.datacurrencyDropDown = ['€', '%'];
-
-    if(this.currencyForm !== undefined && this.currencyForm !== null)
-    {
-      if(this.disabled === true)
-          this.currencyForm.get('currency').enable();
-      else
-          this.currencyForm.get('currency').disable();  
-    }
 
     if (this.currencyDataForm !== undefined && this.currencyDataForm !== null) {
       for (let i = 0; i < this.datacurrencyDropDown.length; i++) {
@@ -112,29 +96,12 @@ export class CurrencyComponent implements OnInit {
     this.childEvent.emit(this.datacurrencyDropDown[0]);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
-    this.currencyForm = new FormGroup({
-      currency: new FormControl('')
-    });
-
     if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
     {
       if (this.oldcurrencyData !== this.currencyDataForm) {
         this.oldcurrencyData = this.currencyDataForm;
         this.loadInitialData();
       }  
-    }
-
-    if (this.disabled !== this.olddisabled) {
-      this.olddisabled = this.disabled;
-
-      if(this.currencyForm !== undefined && this.currencyForm !== null)
-      {
-        if(this.disabled === true)
-            this.currencyForm.get('currency').enable();
-        else
-            this.currencyForm.get('currency').disable();  
-      }
-  
     }
 
   }
