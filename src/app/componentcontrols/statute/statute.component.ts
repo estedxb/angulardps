@@ -350,7 +350,8 @@ export class StatuteComponent implements OnInit {
   ngOnInit() {
     this.SForm = new FormGroup({
       statuteArray: this.fb.array([]),
-      coefficientBox: new FormControl()
+      coefficientBox: new FormControl(),
+      checkbox: new FormControl()
     });
 
     this.statuteService.getStatutes().subscribe(data => {

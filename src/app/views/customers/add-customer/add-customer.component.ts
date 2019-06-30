@@ -290,10 +290,13 @@ export class AddCustomerComponent implements OnInit {
     this.HQdata.contact = new Contact();
     this.HQdata.contact.firstName = response.contact.firstName;
     this.HQdata.contact.lastName = response.contact.lastName;
-    this.HQdata.contact.email = response.contact.email;
+    this.HQdata.contact.email = new EmailAddress();
+    this.HQdata.contact.email.emailAddress = response.contact.email.emailAddress;
     this.HQdata.contact.lastName = response.contact.language;
-    this.HQdata.contact.mobile = response.contact.mobile;
-    this.HQdata.contact.phoneNumber = response.contact.phoneNumber;
+    this.HQdata.contact.mobile = new PhoneNumber();
+    this.HQdata.contact.mobile.number = response.contact.mobile.number;
+    this.HQdata.contact.phoneNumber = new PhoneNumber();
+    this.HQdata.contact.phoneNumber.number = response.contact.phoneNumber.number;
     this.HQdata.contact.postion = response.contact.postion;
     this.HQdata.activateContactAsUser = response.activateContactAsUser;
     this.HQdata.formValid = true;

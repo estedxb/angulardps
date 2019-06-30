@@ -32,10 +32,16 @@
       </div>
     </div>
     <div class="row mealrow">
-      <div class="col col-sm-12 ">
+      <div class="col col-sm-12">
         <input type="hidden" value="{{isMealEnabled[i]}}">
-        <ui-switch [checked]="isMealEnabled[i]" (change)="onMealChange($event,i)"></ui-switch>
-        <span class="titleBold">Maaltijdcheques</span>
+       <ui-switch [checked]="isMealEnabled[i]" (change)="onMealChange($event,i)"></ui-switch>
+
+        <!-- <div class="form-group checkbox-slide">
+          <input type="checkbox" value="isMealEnabled[i]" formControlName="checkbox" (change)="onMealChange($event,i)" [(ngModel)]="isMealEnabled[i]" id="radio-{{i}}" >
+          <label for="radio-{{i}}"></label>
+          <span class="titleBold">Maaltijdcheques</span>
+        </div> -->
+
       </div>
     </div>
       
