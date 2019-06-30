@@ -602,8 +602,7 @@ export class EditPersonComponent implements OnInit {
       this.DpsPersonObject = data;
 
       this.changeMessage();
-    });
-
+      });
   }
 
   receiveDOBDate($event) {

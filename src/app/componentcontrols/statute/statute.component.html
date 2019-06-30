@@ -32,17 +32,13 @@
       </div>
     </div>
     <div class="row mealrow">
-      <div class="col col-sm-12">
-        <input type="hidden" value="{{isMealEnabled[i]}}">
-       <ui-switch [checked]="isMealEnabled[i]" (change)="onMealChange($event,i)"></ui-switch>
-
-        <!-- <div class="form-group checkbox-slide">
-          <input type="checkbox" value="isMealEnabled[i]" formControlName="checkbox" (change)="onMealChange($event,i)" [(ngModel)]="isMealEnabled[i]" id="radio-{{i}}" >
-          <label for="radio-{{i}}"></label>
-          <span class="titleBold">Maaltijdcheques</span>
-        </div> -->
-
+      <div class="col col-sm-12" *ngIf="totalArray[i] === 0 && wegervaalArray[i] === 0 && minimumurenArray[i] === 0 else disabledclause">
+        <!-- <input type="hidden" value="{{isMealEnabled[i]}}"> -->
+           <ui-switch [checked]="false" (change)="onMealChange($event,i)"></ui-switch>
       </div>
+      <ng-template #disabledclause>
+        <ui-switch [checked]="true" (change)="onMealChange($event,i)"></ui-switch>
+      </ng-template>
     </div>
       
     <!-- <ng-container *ngIf="isMealEnabled[i]===true"> -->
