@@ -163,8 +163,8 @@ export class UpdateCustomerComponent implements OnInit {
   receiveEditCustomerData($event) {
     this.editCustomerData = $event;
 
-    this.logger.log("received customer data=");
-    this.logger.log(this.editCustomerData);
+    // this.logger.log("received customer data=");
+    // this.logger.log(this.editCustomerData);
 
   }
 

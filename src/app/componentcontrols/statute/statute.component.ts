@@ -141,8 +141,8 @@ export class StatuteComponent implements OnInit {
     for (let i = 0; i < this.loadStatuteSettingsArray.length; i++)
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
 
-    this.logger.log("load coefficients statute settings array");
-    this.logger.log(this.statuteSettings);
+    // this.logger.log("load coefficients statute settings array");
+    // this.logger.log(this.statuteSettings);
 
     this.emitData("load");
   }
@@ -154,6 +154,16 @@ export class StatuteComponent implements OnInit {
 
     this.loadStatuteSettingsArray.forEach(element => {
       this.statuteSettings[counter].coefficient = element.coefficient;
+      
+      if(element.mealVoucherSettings.totalWorth === 0 && element.mealVoucherSettings.employerShare === 0 && element.mealVoucherSettings.minimumHours === 0)
+        this.isMealEnabled[counter] = false;
+      else
+        this.isMealEnabled[counter] = true;
+
+        this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
+        this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
+        this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
+        this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
 
       // this.StatuteSettingsObject = new StatuteSetting();
       // this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
@@ -350,7 +360,8 @@ export class StatuteComponent implements OnInit {
   ngOnInit() {
     this.SForm = new FormGroup({
       statuteArray: this.fb.array([]),
-      coefficientBox: new FormControl()
+      coefficientBox: new FormControl(),
+      checkbox: new FormControl()
     });
 
     this.statuteService.getStatutes().subscribe(data => {
@@ -399,14 +410,14 @@ export class StatuteComponent implements OnInit {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
-    this.logger.log("changing coefficient");
+    // this.logger.log("changing coefficient");
     this.replaceArrayCoefficient(value, i);
   }
 
-  onMealChange(event, ctrlid: number) {
+  onMealChange($event, ctrlid: number) {
 
-    if (ctrlid >= 0 && ctrlid < 8) {
-      this.isMealEnabled[ctrlid] = event;
+    if (ctrlid >= 0 && ctrlid < this.countStatutes) {
+      this.isMealEnabled[ctrlid] = $event;
       // this.logger.log("event="+event);
     }
   }
@@ -480,11 +491,17 @@ export class StatuteComponent implements OnInit {
 
   replaceArrayWergever(i: number) {
 
+    this.logger.log("current statute settings");
+    this.logger.log(this.statuteSettings);
+
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i], 10);
-    } else {
-      this.createArrayData();
-    }
+     } 
+     //else {
+    //   this.createArrayData();
+    // }
+    this.logger.log("statuteSettings Array");
+    this.logger.log(this.statuteSettings);
     this.emitData("replace array Wergever");
 
   }
@@ -493,9 +510,10 @@ export class StatuteComponent implements OnInit {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i], 10);
-    } else {
-      this.createArrayData();
     }
+    // } else {
+    //   this.createArrayData();
+    // }
     this.emitData("replace array total");
 
   }
@@ -504,9 +522,10 @@ export class StatuteComponent implements OnInit {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i], 10);
-    } else {
-      this.createArrayData();
-    }
+     } 
+    //else {
+    //   this.createArrayData();
+    // }
 
     this.emitData("replace array minimum");
   }
@@ -536,8 +555,8 @@ export class StatuteComponent implements OnInit {
   }
 
   emitData(message: string) {
-    this.logger.log("sending from =" + message);
-    this.logger.log(this.statuteSettings);
+    // this.logger.log("sending from =" + message);
+    // this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 

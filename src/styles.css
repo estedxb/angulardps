@@ -319,6 +319,9 @@ div#PersonContact {
 #maincontentarea .inputWithImg .form-control-feedback img {
   padding: 10px 20px 7px 0px;
 }
+#maincontentarea #editPersonForm .inputWithImg img{
+  padding: 15px 20px 7px 0px;
+}
 
 #maincontentarea .inputWithImg div,
 .inputWithImg div {
@@ -782,4 +785,40 @@ div#CustomerContact1 {
 
 #mySpinner .overlay {
   position: fixed;
+}
+
+
+/*You can add global styles to this file, and also import other style files*/
+
+.checkbox-slide input[type=checkbox]{
+  opacity: 0;
+}
+
+.checkbox-slide label {
+  width: 60px;
+  height: 34px;
+  position: relative;
+  background: silver;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.checkbox-slide label::after {
+  content: "";
+  background: #fff;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  transition: all ease .4s;
+}
+
+input[type=checkbox]:checked + label{
+  background: green;
+}
+
+input[type=checkbox]:checked + label::after{
+  left: 30px;
 }

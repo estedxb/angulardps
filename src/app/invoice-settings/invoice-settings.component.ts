@@ -139,7 +139,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
-    this.logger.log("change detected");
+    // this.logger.log("change detected");
 
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
@@ -195,8 +195,12 @@ export class InvoiceSettingsComponent implements OnInit {
           this.oldFPFormData = this.FPFormData;
 
           if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) {
+
             this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
+            this.sicknessInvoiced = this.loadSwitchSickness;
             this.loadSwitchHolidays = this.FPFormData.data.invoiceSettings.holidayInvoiced;
+            this.holidayInvoiced = this.loadSwitchHolidays;
+
             this.loadSwitchTeam = this.FPFormData.data.invoiceSettings.shiftAllowance;
             this.ploegpremieSwitch = this.FPFormData.data.invoiceSettings.shiftAllowance;
             this.loadSwitchOther = this.FPFormData.data.invoiceSettings.otherAllowance;
@@ -210,6 +214,9 @@ export class InvoiceSettingsComponent implements OnInit {
             if (this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.FPFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) {
               if (this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined) {
                 this.loadSwitchInhaalrust = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
+
+                this.lieuDaysAllowanceObject.enabled = this.loadSwitchInhaalrust;
+                this.lieuDaysAllowanceObject.payed = this.FPFormData.data.invoiceSettings.lieuDaysAllowance.payed;
 
                 if (this.FPFormData.data.invoiceSettings.lieuDaysAllowance.enabled === true) {
                   this.ISForm.get('inhaalrust').enable();
@@ -234,6 +241,7 @@ export class InvoiceSettingsComponent implements OnInit {
             if (this.FPFormData.data.invoiceSettings.mobilityAllowance !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance !== undefined) {
               if (this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== null && this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled !== undefined) {
                 this.loadSwitchMobility = this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled;
+                this.mobilitySwitch = this.loadSwitchMobility;
 
                 if (this.FPFormData.data.invoiceSettings.mobilityAllowance.enabled === true) {
                   this.ISForm.get('mobilebox').enable();

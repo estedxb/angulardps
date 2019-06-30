@@ -160,14 +160,14 @@ export class HeadQuartersComponent implements OnInit {
 
   loadDataEdit(dpscustomer: any) {
 
-    console.log("loading customer data");
-    console.log(dpscustomer);
+    // console.log("loading customer data");
+    // console.log(dpscustomer);
 
     if (dpscustomer !== null) {
-      console.log("setting customer data");
+      // console.log("setting customer data");
 
       if (dpscustomer.customer !== null && dpscustomer.customer !== undefined) {
-        console.log("firstname =" + dpscustomer.customer.name);
+        // console.log("firstname =" + dpscustomer.customer.name);
 
         this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
         this.HQForm.controls['vatNumber'].disable();
@@ -182,7 +182,7 @@ export class HeadQuartersComponent implements OnInit {
         this.legalString = dpscustomer.customer.legalForm;
 
         if (dpscustomer.customer.address !== null && dpscustomer.customer.address !== undefined) {
-          console.log("street =" + dpscustomer.customer.address.street);
+          // console.log("street =" + dpscustomer.customer.address.street);
           this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
           this.HQForm.controls['streetnumber'].setValue(dpscustomer.customer.address.streetNumber);
           this.HQForm.controls['bus'].setValue(dpscustomer.customer.address.bus);
@@ -745,8 +745,8 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   sendDatatoHome(data) {
-    console.log("HQdata before sending");
-    console.log(data);
+    // console.log("HQdata before sending");
+    // console.log(data);
 
     this.childEvent.emit(data);
   }

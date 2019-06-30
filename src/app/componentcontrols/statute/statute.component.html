@@ -32,11 +32,13 @@
       </div>
     </div>
     <div class="row mealrow">
-      <div class="col col-sm-12 ">
-        <input type="hidden" value="{{isMealEnabled[i]}}">
-        <ui-switch [checked]="isMealEnabled[i]" (change)="onMealChange($event,i)"></ui-switch>
-        <span class="titleBold">Maaltijdcheques</span>
+      <div class="col col-sm-12" *ngIf="totalArray[i] === 0 && wegervaalArray[i] === 0 && minimumurenArray[i] === 0 else disabledclause">
+        <!-- <input type="hidden" value="{{isMealEnabled[i]}}"> -->
+           <ui-switch [checked]="false" (change)="onMealChange($event,i)"></ui-switch>
       </div>
+      <ng-template #disabledclause>
+        <ui-switch [checked]="true" (change)="onMealChange($event,i)"></ui-switch>
+      </ng-template>
     </div>
       
     <!-- <ng-container *ngIf="isMealEnabled[i]===true"> -->

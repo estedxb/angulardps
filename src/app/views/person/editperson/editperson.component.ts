@@ -271,6 +271,9 @@ export class EditPersonComponent implements OnInit {
       this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
       this.setGender(genderDigits);
     }
+    else {
+      this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
+    }
 
     return this.validSSID;
 
@@ -529,6 +532,7 @@ export class EditPersonComponent implements OnInit {
       if (data !== null && data.person !== null) {
 
         const stringData: string = data.person.dateOfBirth.toString();
+
         const dobArray = stringData.split('T');
         const dobString: string = dobArray[0];
         this.loadDOBData(dobString);
@@ -594,7 +598,6 @@ export class EditPersonComponent implements OnInit {
 
       this.changeMessage();
     });
-
   }
 
   receiveDOBDate($event) {
