@@ -46,7 +46,7 @@ export class LanguagesComponent implements OnInit {
 
   ngDoCheck() {
 
-    this.logger.log(this.LanguageFormData);
+    // this.logger.log(this.LanguageFormData);
 
     if (this.LanguageFormData !== undefined && this.LanguageFormData !== null) {
       if (this.LanguageFormData != this.oldLanguageFormData) {

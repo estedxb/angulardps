@@ -141,8 +141,8 @@ export class StatuteComponent implements OnInit {
     for (let i = 0; i < this.loadStatuteSettingsArray.length; i++)
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
 
-    this.logger.log("load coefficients statute settings array");
-    this.logger.log(this.statuteSettings);
+    // this.logger.log("load coefficients statute settings array");
+    // this.logger.log(this.statuteSettings);
 
     this.emitData("load");
   }
@@ -399,7 +399,7 @@ export class StatuteComponent implements OnInit {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
-    this.logger.log("changing coefficient");
+    // this.logger.log("changing coefficient");
     this.replaceArrayCoefficient(value, i);
   }
 
@@ -536,8 +536,8 @@ export class StatuteComponent implements OnInit {
   }
 
   emitData(message: string) {
-    this.logger.log("sending from =" + message);
-    this.logger.log(this.statuteSettings);
+    // this.logger.log("sending from =" + message);
+    // this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 

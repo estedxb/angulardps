@@ -70,12 +70,12 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
 
-    this.spinner.show();
+  //   this.spinner.show();
 
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-  }, 1000);
+  //   setTimeout(() => {
+  //     /** spinner ends after 5 seconds */
+  //     this.spinner.hide();
+  // }, 1000);
 
     // this.setTimeout(() => {
     //   this.spinner.hide();
@@ -163,20 +163,20 @@ export class UpdateCustomerComponent implements OnInit {
   receiveEditCustomerData($event) {
     this.editCustomerData = $event;
 
-    this.logger.log("received customer data=");
-    this.logger.log(this.editCustomerData);
+    // this.logger.log("received customer data=");
+    // this.logger.log(this.editCustomerData);
 
   }
 
   onFormwardClick() {
-    this.logger.log('forward click', this.editCustomerData);
+     this.logger.log('forward click', this.editCustomerData);
 
-    this.spinner.show();
+  //   this.spinner.show();
 
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-  }, 5000);
+  //   setTimeout(() => {
+  //     /** spinner ends after 5 seconds */
+  //     this.spinner.hide();
+  // }, 5000);
 
 
     if(this.editCustomerData.formValid === false)

@@ -90,7 +90,7 @@ export class ContactPersonComponent implements OnInit {
     if (this.oldData !== this.CTFormData) {
       if (this.CTFormData !== undefined) {
         if (this.CTFormData.data !== null && this.CTFormData.page === 'edit') {
-          this.logger.log("ctform data=" + this.CTFormData.page);
+          // this.logger.log("ctform data=" + this.CTFormData.page);
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
             if(this.CTFormData.data.language !== null && this.CTFormData.data.language !== undefined)
@@ -181,7 +181,7 @@ export class ContactPersonComponent implements OnInit {
 
     this.setJSONObject();
 
-    this.logger.log("als check =" + this.alsCheck);
+    // this.logger.log("als check =" + this.alsCheck);
 
   }
 
@@ -195,7 +195,7 @@ export class ContactPersonComponent implements OnInit {
     // "phoneNumber": this.contact.phoneNumber,
     // "language": this.contact.language,
 
-    this.logger.log("json object sending=" + this.alsCheck);
+    // this.logger.log("json object sending=" + this.alsCheck);
 
     this.CTdata = {
       'contact': this.contact,

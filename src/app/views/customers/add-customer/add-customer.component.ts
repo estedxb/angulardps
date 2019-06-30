@@ -90,36 +90,36 @@ export class AddCustomerComponent implements OnInit {
   }
 
   receiveGeneralObject($event) {
-    this.logger.log('received in home component GL data');
+    // this.logger.log('received in home component GL data');
     this.GLdata = $event;
-    this.logger.log(this.GLdata);
+    // this.logger.log(this.GLdata);
   }
 
   receiveStatuteData($event) {
-    this.logger.log('received in home component ST data');
+    // this.logger.log('received in home component ST data');
     this.STdata = $event;
-    this.logger.log(this.STdata);
+    // this.logger.log(this.STdata);
   }
 
   receiveInvoiceData($event) {
-    this.logger.log('received in home component IS data');
+    // this.logger.log('received in home component IS data');
     this.FPdata = $event;
-    this.logger.log(this.FPdata);
+    // this.logger.log(this.FPdata);
   }
 
   receiveHQdata($event) {
     this.HQdata = $event;
     this.HQFormValid = this.HQdata.formValid;
     this.currentVatNumber = this.HQdata.customer.vatNumber;
-    this.logger.log('received in home component HQ data');
-    this.logger.log(this.HQdata);
+    // this.logger.log('received in home component HQ data');
+    // this.logger.log(this.HQdata);
   }
 
   receiveCTdata($event) {
     this.CTdata = $event;
     this.CTFormValid = this.CTdata.formValid;
-    this.logger.log('received in home component CT data');
-    this.logger.log(this.CTdata);
+    // this.logger.log('received in home component CT data');
+    // this.logger.log(this.CTdata);
   }
 
   onFormwardClick() {
@@ -127,12 +127,12 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      this.logger.log('CTdata=' + this.CTdata);
-      this.logger.log(this.CTdata);
-      this.logger.log('HQdata=' + this.HQdata);
-      this.logger.log(this.HQdata);
+      // this.logger.log('CTdata=' + this.CTdata);
+      // this.logger.log(this.CTdata);
+      // this.logger.log('HQdata=' + this.HQdata);
+      // this.logger.log(this.HQdata);
 
-      this.logger.log('validity data=' + this.HQdata.formValid);
+      // this.logger.log('validity data=' + this.HQdata.formValid);
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
@@ -144,9 +144,9 @@ export class AddCustomerComponent implements OnInit {
           this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
           this.HQdata.contact = this.CTdata.contact;
 
-          this.logger.log('updated HQData=' + this.HQdata);
-          this.logger.log(this.HQdata.contact);
-          this.logger.log(this.CTdata.contact);
+          // this.logger.log('updated HQData=' + this.HQdata);
+          // this.logger.log(this.HQdata.contact);
+          // this.logger.log(this.CTdata.contact);
 
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
@@ -171,14 +171,14 @@ export class AddCustomerComponent implements OnInit {
 
     } else
       if (this.showFormIndex === 2) {
-        this.logger.log('Complete data=');
-        this.logger.log(this.GLdata);
+        // this.logger.log('Complete data=');
+        // this.logger.log(this.GLdata);
 
-        this.logger.log('HQdata');
-        this.logger.log(this.HQdata);
+        // this.logger.log('HQdata');
+        // this.logger.log(this.HQdata);
 
-        this.logger.log('this STdata');
-        this.logger.log(this.STdata);
+        // this.logger.log('this STdata');
+        // this.logger.log(this.STdata);
 
         if (this.HQdata !== null && this.HQdata !== undefined) {
           if (this.GLdata !== null && this.GLdata !== undefined) {
@@ -197,7 +197,7 @@ export class AddCustomerComponent implements OnInit {
           if (this.FPdata !== null && this.FPdata !== undefined)
             this.HQdata.invoiceSettings = this.FPdata;
 
-          this.logger.log(this.HQdata);
+          // this.logger.log(this.HQdata);
           this.updateData();
         }
         else {
@@ -221,11 +221,11 @@ export class AddCustomerComponent implements OnInit {
 
   updateData() {
 
-    this.logger.log("before update");
-    this.logger.log(this.HQdata);
+    // this.logger.log("before update");
+    // this.logger.log(this.HQdata);
 
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
-      this.logger.log('response=' + res);
+      // this.logger.log('response=' + res);
       this.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
       this.logger.log('Redirect Breaked 11');
@@ -303,16 +303,16 @@ export class AddCustomerComponent implements OnInit {
       page: 'edit'
     };
 
-    this.logger.log("response object in from api");
-    this.logger.log(this.editObject);
+    // this.logger.log("response object in from api");
+    // this.logger.log(this.editObject);
   }
 
   handleError(error: any) { }
 
   onBackwardClick() {
     document.getElementById('maincontent').scrollTo(0, 0);
-    this.logger.log("current vat number");
-    this.logger.log(this.currentVatNumber);
+    // this.logger.log("current vat number");
+    // this.logger.log(this.currentVatNumber);
     this.getCustomerByVatNumberEdit(this.currentVatNumber);
     this.showFormIndex = 1;
   }
