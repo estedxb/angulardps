@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from '../../../shared/positions.service';
 import { CreatepositionComponent } from './createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-positions',
   templateUrl: './positions.component.html',
@@ -26,7 +26,7 @@ export class PositionsComponent implements OnInit {
 
   constructor(
     private positionsService: PositionsService, private dialog: MatDialog, private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService, private logger: LoggingService
+    private spinner: NgxUiLoaderService, private logger: LoggingService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

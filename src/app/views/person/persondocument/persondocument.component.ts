@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { environment } from '../../../../environments/environment';;
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-persondocument',
@@ -52,7 +52,7 @@ export class PersonDocumentComponent implements OnInit {
   public data: DpsPerson;
   constructor(
     private personService: PersonService, private dialog: MatDialog,
-    private spinner: NgxSpinnerService, private snackBar: MatSnackBar,
+    private spinner: NgxUiLoaderService, private snackBar: MatSnackBar,
     private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

@@ -7,7 +7,7 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-contactperson',
@@ -37,7 +37,7 @@ export class ContactPersonComponent implements OnInit {
   contact: Contact;
   alsCheck: boolean;
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private logger: LoggingService) {
+  constructor(private formBuilder: FormBuilder, private spinner: NgxUiLoaderService, private logger: LoggingService) {
 
   }
 
@@ -68,9 +68,9 @@ export class ContactPersonComponent implements OnInit {
           if (contactPerson.contact.phoneNumber.number !== undefined && contactPerson.contact.phoneNumber.number !== null)
             this.CTForm.controls['telephone'].setValue(contactPerson.contact.phoneNumber.number);
 
-      if (contactPerson.contact.language !== null && contactPerson.contact.language !== undefined)
-            this.languageString = contactPerson.contact.language.name;
-      
+        if (contactPerson.contact.language !== null && contactPerson.contact.language !== undefined)
+          this.languageString = contactPerson.contact.language.name;
+
         this.CTForm.controls['alsCheck'].disable();
 
         this.alsCheck = contactPerson.activateContactAsUser;
@@ -93,8 +93,8 @@ export class ContactPersonComponent implements OnInit {
           this.logger.log("ctform data=" + this.CTFormData.page);
           this.oldData = this.CTFormData;
           this.loadEditDetails(this.CTFormData.data);
-            if(this.CTFormData.data.language !== null && this.CTFormData.data.language !== undefined)
-               this.languageString = this.CTFormData.data.contact.language.name;
+          if (this.CTFormData.data.language !== null && this.CTFormData.data.language !== undefined)
+            this.languageString = this.CTFormData.data.contact.language.name;
           // this.languageString = "French";
           //this.createObjects();
         }

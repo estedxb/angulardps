@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LegalformService } from '../../shared/legalform.service';
 import { LanguagesService } from '../../shared/languages.service';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-languages',
@@ -42,7 +42,7 @@ export class LanguagesComponent implements OnInit {
 
   }
 
-  constructor(private languagesService: LanguagesService, private spinner: NgxSpinnerService, private logger: LoggingService) { }
+  constructor(private languagesService: LanguagesService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
 
   ngDoCheck() {
 

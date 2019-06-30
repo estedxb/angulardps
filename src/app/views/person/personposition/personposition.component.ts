@@ -15,7 +15,7 @@ import {
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-personposition',
@@ -98,7 +98,7 @@ export class PersonPositionComponent implements OnInit {
   constructor(
     private personsService: PersonService, private data: DataService,
     private logger: LoggingService, private positionsService: PositionsService,
-    private fb: FormBuilder, private dialog: MatDialog, private spinner: NgxSpinnerService,
+    private fb: FormBuilder, private dialog: MatDialog, private spinner: NgxUiLoaderService,
     private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {

@@ -8,7 +8,7 @@ import { environment } from '../../../../../environments/environment';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { LoggingService } from '../../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
@@ -34,7 +34,7 @@ export class CreatepositionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService,
-    private positionsService: PositionsService, private snackBar: MatSnackBar, private spinner: NgxSpinnerService,
+    private positionsService: PositionsService, private snackBar: MatSnackBar, private spinner: NgxUiLoaderService,
     private logger: LoggingService, public dialogRef: MatDialogRef<CreatepositionComponent>,
     @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
     this.currentPosition = posistionData;

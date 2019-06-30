@@ -9,7 +9,7 @@ import {
 import { TimeSpan } from '../shared/TimeSpan';
 import { LoggingService } from '../shared/logging.service';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -41,7 +41,7 @@ export class InvoiceSettingsComponent implements OnInit {
   holidayInvoiced: boolean;
   compensatoryRest: boolean;
   ploegpremieSwitch: boolean;
-  mobilitySwitch:boolean;
+  mobilitySwitch: boolean;
   andreSwitch: boolean;
   public disableWorkCodes: boolean;
 
@@ -88,7 +88,7 @@ export class InvoiceSettingsComponent implements OnInit {
   public currencyShift: string = "";
   public currencyOther: string = "";
 
-  constructor(private fb: FormBuilder, private spinner: NgxSpinnerService, private logger: LoggingService) { }
+  constructor(private fb: FormBuilder, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
 
   /********************************************** DropDown  Inhaalrust drop down *************************/
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -117,7 +117,7 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
     this.mobilityAllowanceObject.amountPerKm = this.ISForm.get('mobilebox').value;
-    
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,

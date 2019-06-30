@@ -4,7 +4,7 @@ import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 // import { $ } from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-jointcommittee',
@@ -43,7 +43,7 @@ export class JointcommitteeComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private jointcommitteeService: JointcommitteeService, private spinner: NgxSpinnerService, private logger: LoggingService) {
+  constructor(private jointcommitteeService: JointcommitteeService, private spinner: NgxUiLoaderService, private logger: LoggingService) {
   }
 
   ngDoCheck() {

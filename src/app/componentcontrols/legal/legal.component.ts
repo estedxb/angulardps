@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { LegalForm, Forms } from '../../shared/models';
 import { LegalformService } from '../../shared/legalform.service';
 import { LoggingService } from './../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-legal',
@@ -85,7 +85,7 @@ export class LegalComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private legalformService: LegalformService, private spinner: NgxSpinnerService, private logger: LoggingService) {
+  constructor(private legalformService: LegalformService, private spinner: NgxUiLoaderService, private logger: LoggingService) {
   }
 
   ngOnInit() {

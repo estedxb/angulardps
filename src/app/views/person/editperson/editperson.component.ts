@@ -8,7 +8,7 @@ import {
 import { PersonService } from 'src/app/shared/person.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingService } from '../../../shared/logging.service';
 
@@ -30,7 +30,7 @@ export class EditPersonComponent implements OnInit {
   public dataDropDownGender;
   public showFormIndex = 1;
   public validSSID;
-  public disableDOB:boolean;
+  public disableDOB: boolean;
 
   public DpsPersonObject: DpsPerson;
   public oldDpsPersonObject: DpsPerson;
@@ -75,7 +75,7 @@ export class EditPersonComponent implements OnInit {
   public nationalityString: string;
   public languageString: string;
 
-  public totalString:string;
+  public totalString: string;
 
   public message;
   public bbic: any;
@@ -84,7 +84,7 @@ export class EditPersonComponent implements OnInit {
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
-    private spinner: NgxSpinnerService, private logger: LoggingService) { }
+    private spinner: NgxUiLoaderService, private logger: LoggingService) { }
 
   setDummyStatute() {
   }
@@ -220,22 +220,20 @@ export class EditPersonComponent implements OnInit {
     if (digits.length < 11)
       return false;
 
-    let lastTwoDigits: number = parseInt(digits.substring(digits.length-2),10);
-    let firstTwoDigits: number = parseInt(ssid.substring(0,2));
-    let secondTwoDigits: number = parseInt(ssid.substring(3,5));
-    let thirdTwoDigits: number = parseInt(ssid.substring(6,8));
-    let genderDigits: number = parseInt(ssid.substring(9,12));
-    let firstNineDigits: string = digits.substring(0,9);
-    let x:number = 0;
-    let controlNumber: number  = -1;
+    let lastTwoDigits: number = parseInt(digits.substring(digits.length - 2), 10);
+    let firstTwoDigits: number = parseInt(ssid.substring(0, 2));
+    let secondTwoDigits: number = parseInt(ssid.substring(3, 5));
+    let thirdTwoDigits: number = parseInt(ssid.substring(6, 8));
+    let genderDigits: number = parseInt(ssid.substring(9, 12));
+    let firstNineDigits: string = digits.substring(0, 9);
+    let x: number = 0;
+    let controlNumber: number = -1;
 
-    if(secondTwoDigits <1 || secondTwoDigits>12)
-    {
+    if (secondTwoDigits < 1 || secondTwoDigits > 12) {
       return false;
     }
 
-    if(thirdTwoDigits <1 || thirdTwoDigits >=32)
-    {
+    if (thirdTwoDigits < 1 || thirdTwoDigits >= 32) {
       return false;
     }
 
@@ -249,32 +247,29 @@ export class EditPersonComponent implements OnInit {
       controlNumber = 97 - newremainder;
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
     else {
-      x = parseInt(firstNineDigits,10);
+      x = parseInt(firstNineDigits, 10);
       let remainder: number = x % 97;
       controlNumber = 97 - remainder;
 
       if (controlNumber === lastTwoDigits)
         this.validSSID = true;
-      else
-      {
+      else {
         this.validSSID = false;
         //this.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
 
-    if(this.validSSID === true)
-    {
+    if (this.validSSID === true) {
       this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
-      this.setGender(genderDigits);  
+      this.setGender(genderDigits);
     }
 
     return this.validSSID;
@@ -306,9 +301,9 @@ export class EditPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    const yearString: string = ""+year;
-    const monthString: string = ""+month;
-    const dayString: string = ""+day;
+    const yearString: string = "" + year;
+    const monthString: string = "" + month;
+    const dayString: string = "" + day;
 
     this.monthString = monthString;
     this.dayString = dayString;
@@ -318,10 +313,10 @@ export class EditPersonComponent implements OnInit {
 
     // if( day>=1 && day<=31)
     //     this._selectedIndexdays = day;
-    
+
     // if(month >=1 && month <=12)
     //     this._selectedIndexMonth = month - 1;
-        
+
     // this._selectedIndexYear = year;
 
     // let currentYear: any = new Date();
@@ -370,10 +365,10 @@ export class EditPersonComponent implements OnInit {
 
     }
 
-    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {      
+    if (this.totalString !== undefined && this.totalString !== null && this.totalString.length === 13) {
       this.totalString = this.totalString + ssid.substring(13);
       this.editPersonForm.get('socialSecurityNumber').setValue(this.totalString);
-      this.logger.log("total string=" + this.totalString);      
+      this.logger.log("total string=" + this.totalString);
     }
   }
 
@@ -527,7 +522,7 @@ export class EditPersonComponent implements OnInit {
     let data: any = '';
     const vatNumber = this.dpsLoginToken.customerVatNumber;
 
-    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId,vatNumber).subscribe(dpsperson => {
+    this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, vatNumber).subscribe(dpsperson => {
       newResponse = dpsperson;
       data = newResponse;
 
@@ -542,7 +537,7 @@ export class EditPersonComponent implements OnInit {
 
         const genderObject = new Gender();
 
-        if(data.person.phone !== null) {
+        if (data.person.phone !== null) {
           this.editPersonForm.controls.vastNumber.setValue(data.person.phone.number);
         }
 
@@ -590,7 +585,7 @@ export class EditPersonComponent implements OnInit {
         this.editPersonForm.controls.vastNumber.setValue(data.person.phone.number);
       }
 
-      if(data.person.travelMode !== null) {
+      if (data.person.travelMode !== null) {
         this.zichmetdata = data.person.travelMode;
       }
 
@@ -762,12 +757,12 @@ export class EditPersonComponent implements OnInit {
     this.changeMessage();
   }
 
-  updateVastNumber(value:string) {
+  updateVastNumber(value: string) {
 
-    if(this.DpsPersonObject !== null)
-      if( this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
-          if(this.DpsPersonObject.person.phone !== undefined && this.DpsPersonObject.person.phone !== null)
-              this.DpsPersonObject.person.phone.number = value;
+    if (this.DpsPersonObject !== null)
+      if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null)
+        if (this.DpsPersonObject.person.phone !== undefined && this.DpsPersonObject.person.phone !== null)
+          this.DpsPersonObject.person.phone.number = value;
 
     this.changeMessage();
   }

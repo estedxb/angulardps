@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 import { Subscription } from 'rxjs/Subscription';
-import * as Msal from 'msal';
-import { MsalServiceLocal } from '../shared/msal.service';
+// import * as Msal from 'msal';
+// import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
 import { CustomerListsService } from '../shared/customerlists.service';
 
 import { Router, CanActivate } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -26,15 +26,21 @@ export class ValidateLoginComponent implements OnInit {
   public access_token = '';
 
   constructor(
-    private router: Router, private msalService: MsalServiceLocal, private spinner: NgxSpinnerService,
+    private router: Router,
+    // private msalService: MsalServiceLocal, 
+    private spinner: NgxUiLoaderService,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 
   ngOnInit() {
+    /*
     if (this.getAccessTokenFromCache()) {
       // this.updateSessionStorage();
     } else { throw 'Access token does not exist for todo app.'; }
+    */
   }
+
+  /*
   getAccessTokenFromCache(): boolean {
     if (sessionStorage.hasOwnProperty(this.msalService.B2CTodoAccessTokenKey) &&
       sessionStorage[this.msalService.B2CTodoAccessTokenKey] !== '') {
@@ -43,7 +49,7 @@ export class ValidateLoginComponent implements OnInit {
     }
     return false;
   }
-
+*/
   /*
   public useremail() { return this.msalService.getUserEmail(); }
   public login() { this.msalService.login(); }

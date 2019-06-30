@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-dpssystem-message',
@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DPSSystemMessageComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService) { }
+  constructor(private spinner: NgxUiLoaderService) { }
 
   ngOnInit() {
   }

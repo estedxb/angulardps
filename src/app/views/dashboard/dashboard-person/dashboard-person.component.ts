@@ -12,7 +12,7 @@ import { CreateContractComponent } from './createcontract/createcontract.compone
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from '../../../../environments/environment.temp-prod';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-dashboardperson',

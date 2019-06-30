@@ -9,7 +9,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment.prod';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class UpdatePersonComponent implements OnInit {
 
   constructor(
     private personService: PersonService, private data: DataService,
-    private logger: LoggingService, private spinner: NgxSpinnerService,
+    private logger: LoggingService, private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router,
     private snackBar: MatSnackBar) {
     // this.logger.log('InSide :: Update Person');

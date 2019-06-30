@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from '../../../shared/workschedules.service';
 import { CreateWorkScheduleComponent } from './createworkschedule/createworkschedule.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-workschedules',
   templateUrl: './workschedules.component.html',
@@ -26,7 +26,7 @@ export class WorkSchedulesComponent implements OnInit {
   // public VatNumber = this.dpsLoginToken.customerVatNumber;
 
   constructor(
-    private workschedulesService: WorkschedulesService, private logger: LoggingService,
+    private workschedulesService: WorkschedulesService, private logger: LoggingService, private spinner: NgxUiLoaderService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

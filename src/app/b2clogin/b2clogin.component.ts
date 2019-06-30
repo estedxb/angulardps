@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Msal from 'msal';
-import { MsalServiceLocal } from '../shared/msal.service';
+// import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-b2clogin',
@@ -15,13 +15,15 @@ export class B2cloginComponent implements OnInit {
   public sub;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router, private msalService: MsalServiceLocal, private logger: LoggingService
+    private router: Router,
+    // private msalService: MsalServiceLocal,
+    private logger: LoggingService
   ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
-      this.msalService.login();
+      // this.msalService.login();
     });
     /*
     if (!this.msalService.isLoggedIn()) {
