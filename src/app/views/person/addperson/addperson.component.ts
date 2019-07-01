@@ -216,7 +216,7 @@ export class AddPersonComponent implements OnInit {
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
     private statuteService: StatuteService,
-    // private spinner: NgxUiLoaderService,
+    private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router
   ) {
 

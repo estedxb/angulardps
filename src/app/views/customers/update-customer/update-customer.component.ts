@@ -31,7 +31,7 @@ export class UpdateCustomerComponent implements OnInit {
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
     private snackBar: MatSnackBar, private logger: LoggingService,
-    // private spinner: NgxUiLoaderService,
+    private spinner: NgxUiLoaderService,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
@@ -121,7 +121,8 @@ export class UpdateCustomerComponent implements OnInit {
     try {
       this.logger.log('this.vatNumber pageInit :: ' + this.vatNumber);
       this.customerListsService.getCustomers().subscribe(dpscustomer => {
-        this.dpsCustomer = dpscustomer.filter(cl => cl.item1 === this.vatNumber)[0];
+        // this.dpsCustomer = dpscustomer.filter(cl => cl.item1 === this.vatNumber)[0];
+        this.dpsCustomer = dpscustomer.filter(cl => cl.vatNumber === this.vatNumber)[0];
         this.logger.log('Customer Form Data : ', this.dpsCustomer);
         this.CustomerName = this.dpsCustomer.item2 + '';
         this.CustomerLogo = this.dpsCustomer.item4 !== undefined ? this.dpsCustomer.item4 + '' : '';

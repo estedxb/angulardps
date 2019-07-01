@@ -24,13 +24,21 @@ export class UsersService {
     }
   }
 
-  public getUsersByVatNumber(parameter: string): Observable<DpsUser[]> {
+  public getUsersByVatNumber(vatnumber: string): Observable<DpsUser[]> {
     // this.logger.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
-    const result = this.http.get<DpsUser[]>(
-      this.getUsersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
+    const result = this.http.get<DpsUser[]>(this.getUsersByVatNumberUrl + '/' + vatnumber).catch(this.errorHandler);
     // this.logger.log(result);
     return result;
   }
+
+/*
+  public getUsersByEmail(vatnumber: string, useremail: string): Observable<DpsUser> {
+    // this.logger.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
+    const result = this.http.get<DpsUser>(this.getUsersByVatNumberUrl + '/' + vatnumber + '/' + useremail).catch(this.errorHandler);
+    // this.logger.log(result);
+    return result;
+  }
+*/
 
   public createUser(dpsuser: DpsUser): Observable<any> {
     // this.logger.log('Create User Url', this.getUserUrl);
