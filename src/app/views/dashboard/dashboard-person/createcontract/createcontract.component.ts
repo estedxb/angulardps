@@ -34,6 +34,7 @@ export class CreateContractComponent implements OnInit {
   public selectedStartDate: Date;
   public selectedEndDate: Date;
   public Contract = 'Contract';
+  public isApproved = false;
 
   public selectedStartYear: any;
   public selectedStartMonth: any;
@@ -426,8 +427,8 @@ export class CreateContractComponent implements OnInit {
         this.selectedEndYear = this.selectedEndDate.getFullYear();
         this.selectedEndMonth = this.selectedEndDate.getMonth();
         this.selectedEndDay = this.selectedEndDate.getDate();
-        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;     
-
+        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+        this.isApproved = response.approved;
       } else {
         this.selectedStartDate = new Date(this.allowedStartDate);
         this.selectedStartYear = this.allowedStartYear;

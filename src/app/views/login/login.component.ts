@@ -83,37 +83,37 @@ export class LoginComponent implements OnInit {
         this.ltkn.isLoggedIn = true;
         this.ltkn.accessToken = this.generateAccessToken();
 
-        // Getting the CustomerList for the Login Email
-        this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
-          this.logger.log('authLogin in customersList Found ::', customersList);
+        if (this.ltkn.userRole === 'DPSAdmin') {
+          this.ltkn.customerVatNumber = this.dpsuservatnumber;
+          this.ltkn.customerName = 'Digital Payroll Services';
+          this.ltkn.customerlogo = '';
+          this.message = 'Logged in successfully, but customers not found. Please wait...';
+          localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+          this.logger.log('2) authLogin in ::', this.ltkn);
+          this.logger.log('Redirect Breaked 3');
+          this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
+        } else {
+          // Getting the CustomerList for the Login Email
+          this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
+            this.logger.log('authLogin in customersList Found ::', customersList);
 
-          if (customersList.length > 0) {
-            const FirstCustomer: CustomersList = customersList[0];
-            this.logger.log('Selected Customer', FirstCustomer);
-            this.message = 'Logged in successfully. Please wait...';
+            if (customersList.length > 0) {
+              const FirstCustomer: CustomersList = customersList[0];
+              this.logger.log('Selected Customer', FirstCustomer);
+              this.message = 'Logged in successfully. Please wait...';
 
-            this.ltkn.customerVatNumber = FirstCustomer.vatNumber;
-            this.ltkn.customerName = FirstCustomer.name;
-            this.ltkn.customerlogo = FirstCustomer.logo !== undefined ? FirstCustomer.logo + '' : '';
+              this.ltkn.customerVatNumber = FirstCustomer.vatNumber;
+              this.ltkn.customerName = FirstCustomer.name;
+              this.ltkn.customerlogo = FirstCustomer.logo !== undefined ? FirstCustomer.logo + '' : '';
 
-            localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-            this.logger.log('1) authLogin in ::', this.ltkn);
-            this.router.navigate(['./' + environment.logInSuccessURL]);
-          } else {
-            if (this.ltkn.userRole === 'DPSAdmin') {
-              this.ltkn.customerVatNumber = this.dpsuservatnumber;
-              this.ltkn.customerName = 'DPS';
-              this.ltkn.customerlogo = '';
-              this.message = 'Logged in successfully, but customers not found. Please wait...';
               localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-              this.logger.log('2) authLogin in ::', this.ltkn);
-              this.logger.log('Redirect Breaked 3');
-              this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
+              this.logger.log('1) authLogin in ::', this.ltkn);
+              this.router.navigate(['./' + environment.logInSuccessURL]);
             } else {
               this.message = 'Error: Login failed. Please enter a valid login 1'; return;
             }
-          }
-        }, error => this.errorMsg = error);
+          }, error => this.errorMsg = error);
+        }
       } else {
         this.message = 'Please enter username and password'; return;
       }

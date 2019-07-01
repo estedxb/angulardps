@@ -13,6 +13,7 @@ import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from '../../../../environments/environment.temp-prod';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { WorkSchedule } from '../../../shared/models';
 
 @Component({
   selector: 'app-dashboardperson',
@@ -176,6 +177,25 @@ export class DashboardPersonComponent implements OnInit {
     // this.logger.log('getEndTimeIndex idx = ' + idx, workday);
     if (idx === -1) { idx = workday.workTimes.length - 1; }
     return idx;
+  }
+
+  getContractButtonLeft(workDays: WorkDays[], buttonCount: number) {
+    // (contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth )) - (contract.workSchedule.workDays.length > 1 ? 0 : (CellWidth/2))
+    let buttonLeft = 0;
+    if (workDays[0].dayOfWeek === 1) {
+      if (buttonCount > 1 && workDays.length === 1) {
+        buttonLeft = -(this.CellWidth / 2);
+      } else {
+        buttonLeft = 0;
+      }
+    } else {
+      if (buttonCount === 1) {
+        buttonLeft = ((workDays[0].dayOfWeek - 1) * this.CellWidth) ;
+      } else {
+        buttonLeft = ((workDays[0].dayOfWeek - 1) * this.CellWidth) - (workDays.length > 1 ? 0 : (this.CellWidth / 2));
+      }
+    }
+    return buttonLeft;
   }
 
   ShowMessage(MSG, Action) {

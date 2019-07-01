@@ -1,5 +1,5 @@
-<app-headers></app-headers>
-<app-menu [SelectedPage]="SelectedPage"></app-menu>
+<app-headers [CustomerVatNumber]="vatNumber"></app-headers>
+<app-menu [CustomerVatNumber]="vatNumber" [SelectedPage]="SelectedPage"></app-menu>
 <div class="row">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6 center-block"><img src="../../assets/svg/createCustomer.svg" style="left:-15"><br />
@@ -54,7 +54,8 @@
               <div class="col col-sm-7"></div>
             </div>
 
-            <app-contactperson [page]="pageType" [CTFormData]="editObject" (childEvent)="receiveCTdata($event)"></app-contactperson>
+            <app-contactperson [page]="pageType" [CTFormData]="editObject" (childEvent)="receiveCTdata($event)">
+            </app-contactperson>
           </div>
         </div>
         <div id="from2" *ngIf="showFormIndex === 2">

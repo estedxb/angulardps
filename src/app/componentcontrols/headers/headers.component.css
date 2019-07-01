@@ -90,6 +90,7 @@ div.clogo_false .clogoInit {
   border-bottom: 1px solid #707070;
   cursor: pointer;
 }
+
 .cname span,
 .cname_true span,
 .cname_false span {
@@ -103,6 +104,10 @@ div.clogo_false .clogoInit {
   color: black;
   vertical-align: middle;
   line-height: 30px;
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .arrow {

@@ -114,12 +114,12 @@
         </div>
         <div class="row NewRow" *ngIf="mode==='new' || mode==='edit' || mode==='extend'">
             <div class="col col-sm-12 center-block">
-                <button class="greenbtn" id="btnSave" (click)="onCreateOrUpdateContractClick()"><span>Contract
-                        opslaan</span>
+                <button class="greenbtn" id="btnSave" (click)="onCreateOrUpdateContractClick()">
+                    <span>Contract opslaan</span>
                 </button>
                 &nbsp;
-                <button class="greenbtn redbtn" id="btnCancelEdit" name="btnCancelEdit"
-                    (click)="onCancelEdit()"><span>Annuleren</span>
+                <button class="greenbtn redbtn" id="btnCancelEdit" name="btnCancelEdit" (click)="onCancelEdit()">
+                    <span>Annuleren</span>
                 </button>
             </div>
         </div>
@@ -127,8 +127,8 @@
             <div class="col col-sm-3 center-block"> <button class="greenbtn transbtn" id="btnPrint"
                     (click)="onPrintContractClick()"><span>Afdrukken</span></button>
             </div>
-            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false">&nbsp;</div>
-            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser">
+            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false || isApproved">&nbsp;</div>
+            <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser && !isApproved">
                 <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"
                     *ngIf="this.isDpsUser"><span>Goedkeuren</span>
                 </button>
