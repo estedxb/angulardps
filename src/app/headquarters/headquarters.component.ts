@@ -114,15 +114,15 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
 
     this.HQForm = new FormGroup({
-      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.pattern("^[0-9]+$")]),
-      firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      officialname: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
+      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.pattern("^[a-zA-Z0-9]+$")]),
+      firstname: new FormControl('', [Validators.required]),
+      officialname: new FormControl('', [Validators.required]),
       creditCheck: new FormControl(),
       legalform: new FormControl(),
       creditLimit: new FormControl(),
       street: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
       streetnumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$")]),
-      bus: new FormControl('', Validators.pattern("^[0-9]+$")),
+      bus: new FormControl('', Validators.pattern("^[a-zA-Z0-9 ]+$")),
       city: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
       postalcode: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")]),
       country: new FormControl(''),
@@ -292,6 +292,9 @@ export class HeadQuartersComponent implements OnInit {
   creditLimitApi() {
 
     this.vatNumber = this.HQForm.get('vatNumber').value;
+
+    this.creditcheckEdit = false;
+    this.HQForm.get('creditLimit').setValue('');
 
     //if(this.HQForm.get('vatNumber').valid === true)    
     this.getCustomerByVatNumber(this.vatNumber);
