@@ -122,7 +122,7 @@ export class HeadQuartersComponent implements OnInit {
       creditLimit: new FormControl(),
       street: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
       streetnumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$")]),
-      bus: new FormControl('', Validators.pattern("^[a-zA-Z0-9 ]+$")),
+      bus: new FormControl(''),
       city: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
       postalcode: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")]),
       country: new FormControl(''),
@@ -224,7 +224,6 @@ export class HeadQuartersComponent implements OnInit {
       this.HQForm.get('officialname').valid === true &&
       this.HQForm.get('street').valid === true &&
       this.HQForm.get('streetnumber').valid === true &&
-      this.HQForm.get('bus').valid === true &&
       this.HQForm.get('city').valid === true &&
       this.HQForm.get('postalcode').valid === true &&
       this.HQForm.get('phonenumber').valid === true &&
