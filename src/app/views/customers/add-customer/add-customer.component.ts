@@ -132,6 +132,9 @@ export class AddCustomerComponent implements OnInit {
 
       this.logger.log('validity data=' + this.HQdata.formValid);
 
+      if(this.HQdata.formValid === false)
+        this.ShowMessage('Onjuiste invoer in invoerveld','');
+
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
           this.showFormIndex = 2;

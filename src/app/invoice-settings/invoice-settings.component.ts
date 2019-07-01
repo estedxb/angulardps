@@ -118,8 +118,12 @@ export class InvoiceSettingsComponent implements OnInit {
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
 
+    if(this.ISForm.get('mobilebox').value === "")
+      this.mobilityAllowanceObject.amountPerKm = 0;
+    else     
+      this.mobilityAllowanceObject.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
+
     this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
-    this.mobilityAllowanceObject.amountPerKm = this.ISForm.get('mobilebox').value;
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,

@@ -14,6 +14,7 @@ import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatSnackBarConfig, MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-headquarters',
@@ -144,6 +145,8 @@ export class HeadQuartersComponent implements OnInit {
     private formBuilder: FormBuilder,
     // private spinner: NgxUiLoaderService,
     private customerService: CustomersService,
+    private dialog: MatDialog, 
+    private snackBar: MatSnackBar,
     private data: DataService) {
 
   }
@@ -674,11 +677,48 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    // snackbarRef.onAction().subscribe(() => {
+    //   this.logger.log('Snackbar Action :: ' + Action);
+    // });
+  }
+
   validity() {
     // && this.allowCustomer === true
 
     if(this.HQForm.valid === false &&  this.HQForm.get('bus').value === "" && !this.emptyData())
       return true;
+
+    if(this.HQForm.valid === false)
+    {
+      if(this.HQForm.get('vatNumber').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
+        if(this.HQForm.get('firstname').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Naam','');
+        if(this.HQForm.get('officialname').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
+        if(this.HQForm.get('streetnumber').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
+        if(this.HQForm.get('street').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Straat','');
+        if(this.HQForm.get('city').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Nr','');
+        if(this.HQForm.get('postalcode').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
+        if(this.HQForm.get('phonenumber').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
+        if(this.HQForm.get('invoiceEmail').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
+        if(this.HQForm.get('contractsEmail').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
+        if(this.HQForm.get('generalEmail').invalid === true)
+        this.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
+    }
 
     if (this.HQForm.valid === true && !this.emptyData())
       return true;
