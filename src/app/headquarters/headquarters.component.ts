@@ -293,6 +293,9 @@ export class HeadQuartersComponent implements OnInit {
 
     this.vatNumber = this.HQForm.get('vatNumber').value;
 
+    this.creditcheckEdit = false;
+    this.HQForm.get('creditLimit').setValue('');
+
     //if(this.HQForm.get('vatNumber').valid === true)    
     this.getCustomerByVatNumber(this.vatNumber);
 
