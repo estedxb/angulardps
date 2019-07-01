@@ -131,7 +131,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -182,7 +182,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -233,7 +233,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -284,7 +284,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -335,7 +335,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -386,7 +386,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
@@ -437,7 +437,7 @@
                                         [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
                                         <!--Here we create Workbar with marginleft for starting time and working time as Width -->
                                         <div class="workbar"
-                                          [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
                                           [style.margin-left.px]="getWorkBarLeft(workday)"
                                           [style.width.px]="getWorkBarWidth(workday)">
                                           <!--Here we create Work Hours Div to Show While Rollover-->
