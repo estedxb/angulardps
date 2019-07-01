@@ -14,9 +14,9 @@
             <div class="error">{{ errorMsg }}</div>
             <div *ngFor="let customer of customernames">
                 <div id="customersList"
-                    *ngIf="customer && customer.item1 != null && customer.item1 != undefined && customer.item1 != '' && customer.item1 != 'undefined'  ">
-                    <a [routerLink]='["/customer/" + customer.item1]' (click)="closeMe()"
-                        title=" {{ customer.item1 }} -  {{ customer.item2 }} - {{ customer.item3 }}">{{customer.item2}}</a>
+                    *ngIf="customer && customer.vatNumber != null && customer.vatNumber != undefined && customer.vatNumber != '' && customer.vatNumber != 'undefined'  ">
+                    <a [routerLink]='["/customer/" + customer.vatNumber]' (click)="closeMe()"
+                        title=" {{ customer.vatNumber }} -  {{ customer.name }} - {{ customer.officialName }}">{{customer.name}}</a>
                 </div>
             </div>
         </div>

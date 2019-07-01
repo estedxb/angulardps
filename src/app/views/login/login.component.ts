@@ -68,13 +68,14 @@ export class LoginComponent implements OnInit {
       this.message = 'Please enter username and password'; return;
     } else {
 
+      // DPS Default Login this should be removed after B2C login 
+      if (this.fctrls.userid.value === 'DPS@Uid#2019') { this.fctrls.userid.setValue('DPS@2019.Uid'); }
+
       if (this.fctrls.userid.value === 'DPS@2019.Uid' && this.fctrls.password.value === 'DPS@Pwd#2019') {
         this.ltkn.userRole = 'DPSAdmin';
       } else if (this.fctrls.userid.value === 'Cus@Uid#2019' && this.fctrls.password.value === 'Cus@Pwd#2019') {
         this.ltkn.userRole = 'Customer';
-      } else {
-        this.ltkn.userRole = 'Invalid';
-      }
+      } else { this.ltkn.userRole = 'Invalid'; }
 
       if (this.ltkn.userRole === 'DPSAdmin' || this.ltkn.userRole === 'Customer') {
 
@@ -85,10 +86,9 @@ export class LoginComponent implements OnInit {
         // Getting the CustomerList for the Login Email
         this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
           this.logger.log('authLogin in customersList Found ::', customersList);
-          let customers: CustomersList[] = [];
 
-          if (customers.length > 0) {
-            const FirstCustomer: CustomersList = customers[0];
+          if (customersList.length > 0) {
+            const FirstCustomer: CustomersList = customersList[0];
             this.logger.log('Selected Customer', FirstCustomer);
             this.message = 'Logged in successfully. Please wait...';
 
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
 
             localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
             this.logger.log('1) authLogin in ::', this.ltkn);
-            this.router.navigate(['./' + environment.logInSuccessURL]);            
+            this.router.navigate(['./' + environment.logInSuccessURL]);
           } else {
             if (this.ltkn.userRole === 'DPSAdmin') {
               this.ltkn.customerVatNumber = this.dpsuservatnumber;
@@ -109,10 +109,10 @@ export class LoginComponent implements OnInit {
               this.logger.log('2) authLogin in ::', this.ltkn);
               this.logger.log('Redirect Breaked 3');
               this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
-            } else { 
+            } else {
               this.message = 'Error: Login failed. Please enter a valid login 1'; return;
             }
-          }        
+          }
         }, error => this.errorMsg = error);
       } else {
         this.message = 'Please enter username and password'; return;
