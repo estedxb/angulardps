@@ -115,7 +115,7 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
-                                                <app-currency [disabled]="ploegpremieSwitch" [currencyDataForm]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
+                                                <app-currency [inputdisabled]="ploegpremieSwitch" [currencyDataForm]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
                                         </div>
                                         <div class="col col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
                                                 <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,'')"
@@ -157,7 +157,7 @@
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
                                                 <div class="col col-sm-2">
-                                                        <app-currency [disabled]="andreSwitch" [currencyDataForm]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
+                                                        <app-currency [inputdisabled]="andreSwitch" [currencyDataForm]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
                                                 </div>
                                                 <div class="col col-sm-2"
                                                         *ngIf="(nresult.length === 1 || isLastA) else removeA">
@@ -171,7 +171,7 @@
                                                 <ng-template #removeA>
                                                         <div class="col col-sm-2">
                                                                 <button [disabled]="isInvalidOther()" #buttonA
-                                                                        (click)="removeAndreRows(i)" type="button"
+                                                                        (click)="removeAndreRows(r)" type="button"
                                                                         class="btnRemove">
                                                                         <img src="../../assets/svg/remove.svg" alt=""
                                                                                 height="17.5" width="17.5" />
