@@ -1,4 +1,4 @@
-import { NgModule, EventEmitter } from '@angular/core';
+import { NgModule, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,6 +68,7 @@ export function loggerCallback(logLevel, message, piiEnabled) {
   providers: [DatePipe, routingProviders],
   bootstrap: [AppComponent],
   exports: [],
+  schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [entringComponents]
 })
 export class AppModule { }
