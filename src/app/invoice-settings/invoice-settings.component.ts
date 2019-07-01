@@ -535,7 +535,7 @@ export class InvoiceSettingsComponent implements OnInit {
       AndreBox3: new FormControl(''),
 
       arrayAndreBox: this.fb.array([
-        this.createAndre('', '')
+        this.createAndre('', '',false)
       ]),
 
       arrayBox: this.fb.array([
@@ -832,14 +832,14 @@ export class InvoiceSettingsComponent implements OnInit {
 
   }
 
-  createAndre(value1, value2): FormGroup {
+  createAndre(value1, value2,nominal): FormGroup {
     this.addNewRow = false;
     this.removeLastRemove = true;
 
     return this.fb.group({
       AndreBox1: new FormControl(value1),
       AndreBox2: new FormControl(value2),
-      currency_other: new FormControl(''),
+      currency_other: new FormControl(nominal),
     });
 
   }
@@ -880,7 +880,7 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   addAndreRows(value1, value2, nominal) {
-    this.Andre.push(this.createAndre(value1, value2));
+    this.Andre.push(this.createAndre(value1, value2,nominal));
     this.otherAllowanceObject = new OtherAllowance();
     this.otherAllowanceObject.codeId = value1;
     this.otherAllowanceObject.amount = value2;
@@ -890,28 +890,60 @@ export class InvoiceSettingsComponent implements OnInit {
     // this.changeObject();
   }
 
-  // wait till currency is fixed
-  searchAndRemove(index)
+  searchAndRemove(element)
   {
+    this.logger.log("search and remove called");
+    this.logger.log(this.Andre.length);
+
     for(let i=0;i<this.Andre.length;i++)
     {
       const formGroup = this.Andre.controls[i] as FormGroup;
       let amount = formGroup.controls['AndreBox2'].value;
-      let codeId = formGroup.controls['AndreBox1'].value;  
-      let currency = formGroup.controls['currency_other'].value;
+      let codeId = this.workCode[i];  
+      let currency = this.currencyDataOther[i]==="%"?true:false;
+
+      if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
+      {
+        this.logger.log("removing at i="+i);
+        this.logger.log("Object to be removed=");
+        this.logger.log(this.Andre)
+        this.Andre.removeAt(i);
+        this.logger.log("Object to be removed=");
+        this.logger.log(this.otherAllowances[i]);
+        this.otherAllowances.splice(i, 1);
+        this.logger.log("editing other allowances");
+        this.logger.log(this.otherAllowances);
+        //this.refreshTable();
+
+      }
     }
+
   }
 
+  refreshTable() 
+  {
+    this.logger.log("refreshing table");
+    this.logger.log(this.Andre);
+
+    for(let i=0;i<this.Andre.length;i++)
+    {
+      const formGroup = this.Andre.controls[i] as FormGroup;
+      formGroup.controls['AndreBox1'].setValue(this.otherAllowances[i].codeId);
+      formGroup.controls['AndreBox2'].setValue(this.otherAllowances[i].amount);
+      this.currencyDataOther[i] = this.otherAllowances[i].nominal;
+    }
+
+  }
 
   removeAndreRows(index) {
 
-  this.logger.log("removing index="+index);
-  this.logger.log(this.otherAllowances[index]);
-
     if (this.Andre.length != 1)
-      this.Andre.removeAt(index);
-    this.otherAllowances.splice(index, 1);
+    {
+      this.searchAndRemove(this.otherAllowances[index]);
+      //this.Andre.removeAt(index);
+    }
     this.changeObject();
+
   }
 
   addRows(value1, value2, nominal) {
@@ -928,6 +960,10 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   removeRows(index) {
+
+    this.logger.log("the row to be removed ");
+    this.logger.log(this.Ploegpremiere[0]);
+
     if (this.Ploegpremiere.length != 1)
       this.Ploegpremiere.removeAt(index);
 

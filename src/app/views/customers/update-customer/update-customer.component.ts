@@ -71,12 +71,12 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
 
-    this.spinner.start();
+    // this.spinner.start();
 
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-       this.spinner.stop();
-    }, 1000);
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //    this.spinner.stop();
+    // }, 1000);
 
     // this.setTimeout(() => {
     //   this.spinner.hide();
@@ -172,11 +172,11 @@ export class UpdateCustomerComponent implements OnInit {
   onFormwardClick() {
     this.logger.log('forward click', this.editCustomerData);
 
-     this.spinner.start();
+    //  this.spinner.start();
 
-    setTimeout(() => {
-       this.spinner.stop();
-    }, 5000);
+    // setTimeout(() => {
+    //    this.spinner.stop();
+    // }, 5000);
 
 
     if (this.editCustomerData.formValid === false) {

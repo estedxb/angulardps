@@ -1732,11 +1732,11 @@ export class AddPersonComponent implements OnInit {
 
       this.buttonPressed = true;
 
-       this.spinner.start();
+      //  this.spinner.start();
 
-      setTimeout(() => {
-         this.spinner.stop();
-      }, 5000);
+      // setTimeout(() => {
+      //    this.spinner.stop();
+      // }, 5000);
 
       if (this.checkValidation())
         this.showFormIndex = 2;
