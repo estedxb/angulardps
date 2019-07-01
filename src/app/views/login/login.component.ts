@@ -3,17 +3,16 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../../shared/models';
 import { Router } from '@angular/router';
-import { CustomersService } from '../../shared/customers.service';
+// import { CustomersService } from '../../shared/customers.service';
 import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { environment } from '../../../environments/environment';
 import { LoggingService } from '../../shared/logging.service';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../../shared/msal.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,11 +30,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public userService: UsersService,
-    public customersService: CustomersService,
+    // public customersService: CustomersService,
     public customerListsService: CustomerListsService,
-    private snackBar: MatSnackBar,
     // private msalService: MsalServiceLocal,
-    // private spinner: NgxUiLoaderService,
+    private spinner: NgxSpinnerService,
     private logger: LoggingService
   ) { }
 
@@ -48,19 +46,8 @@ export class LoginComponent implements OnInit {
     this.logout();
   }
 
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get fctrls() { return this.loginForm.controls; }
 
   ShowForgotPassword() { this.currentpage = 'forgotpassword'; }
 
@@ -80,9 +67,10 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
-      if (this.f.userid.value === 'DPS@Uid#2019' && this.f.password.value === 'DPS@Pwd#2019') {
+
+      if (this.fctrls.userid.value === 'DPS@2019.Uid' && this.fctrls.password.value === 'DPS@Pwd#2019') {
         this.ltkn.userRole = 'DPSAdmin';
-      } else if (this.f.userid.value === 'Cus@Uid#2019' && this.f.password.value === 'Cus@Pwd#2019') {
+      } else if (this.fctrls.userid.value === 'Cus@Uid#2019' && this.fctrls.password.value === 'Cus@Pwd#2019') {
         this.ltkn.userRole = 'Customer';
       } else {
         this.ltkn.userRole = 'Invalid';
@@ -90,80 +78,56 @@ export class LoginComponent implements OnInit {
 
       if (this.ltkn.userRole === 'DPSAdmin' || this.ltkn.userRole === 'Customer') {
 
-        this.customersService.getCustomers().subscribe(customersList => {
-          // Loading Now the First DpsUser from First DpsCustomer for Testing....
-          this.userService.getUsersByVatNumber(customersList[0].customer.vatNumber).subscribe(usersList => {
-            this.logmein(usersList);
-          }, error => { this.ShowMessage(error, ''); this.errorMsg = error; this.logmein(null); });
-        }, error => { this.ShowMessage(error, ''); this.errorMsg = error; this.logmein(null); });
+        this.ltkn.userEmail = this.fctrls.userid.value;
+        this.ltkn.isLoggedIn = true;
+        this.ltkn.accessToken = this.generateAccessToken();
+
+        // Getting the CustomerList for the Login Email
+        this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
+          this.logger.log('authLogin in customersList Found ::', customersList);
+          let customers: CustomersList[] = [];
+
+          if (customers.length > 0) {
+            const FirstCustomer: CustomersList = customers[0];
+            this.logger.log('Selected Customer', FirstCustomer);
+            this.message = 'Logged in successfully. Please wait...';
+
+            this.ltkn.customerVatNumber = FirstCustomer.vatNumber;
+            this.ltkn.customerName = FirstCustomer.name;
+            this.ltkn.customerlogo = FirstCustomer.logo !== undefined ? FirstCustomer.logo + '' : '';
+
+            localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+            this.logger.log('1) authLogin in ::', this.ltkn);
+            this.router.navigate(['./' + environment.logInSuccessURL]);            
+          } else {
+            if (this.ltkn.userRole === 'DPSAdmin') {
+              this.ltkn.customerVatNumber = this.dpsuservatnumber;
+              this.ltkn.customerName = 'DPS';
+              this.ltkn.customerlogo = '';
+              this.message = 'Logged in successfully, but customers not found. Please wait...';
+              localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
+              this.logger.log('2) authLogin in ::', this.ltkn);
+              this.logger.log('Redirect Breaked 3');
+              this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
+            } else { 
+              this.message = 'Error: Login failed. Please enter a valid login 1'; return;
+            }
+          }        
+        }, error => this.errorMsg = error);
       } else {
         this.message = 'Please enter username and password'; return;
       }
     }
   }
-  logmein(usersList: DpsUser[]) {
-    this.logger.log('authLogin in usersList Found ::', usersList);
-    const FirstUser: DpsUser = usersList[0];
-    this.logger.log('authLogin in Selected User ::', FirstUser);
-
-    this.ltkn.accessToken = 'Login-Access-Token';
-    this.ltkn.isLoggedIn = true;
-    // this.ltkn.userRole = FirstUser.userRole;
-    this.ltkn.userName = FirstUser.user.firstName;
-    this.ltkn.userEmail = FirstUser.user.email.emailAddress;
-    if (FirstUser.customerVatNumber === environment.DPSVATNumber) {
-      this.ltkn.customerName = 'DPS';
-    } else {
-      this.ltkn.customerName = FirstUser.customerVatNumber;
-    }
-    this.ltkn.customerVatNumber = FirstUser.customerVatNumber;
-
-    /*
-    if (this.f.userid.value === 'DPS@Uid#2019' && this.f.password.value === 'DPS@Pwd#2019') {
-      this.ltkn.userRole = 'DPSAdmin';
-    } else { this.ltkn.userRole = 'Customer'; }
-    */
-
-    if (this.ltkn.customerVatNumber === this.dpsuservatnumber) {
-      this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
-        this.logger.log('authLogin in customersList Found ::', customersList);
-        let customers: CustomersList[] = [];
-
-        if (this.ltkn.userRole === 'DPSAdmin') {
-          customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
-        } else { customers = customersList; }
-
-        if (customers.length > 0) {
-          this.message = 'Logged in successfully. Please wait...';
-          this.logger.log('Selected Customer', customers[0]);
-          this.ltkn.customerVatNumber = customers[0].item1;
-          this.ltkn.customerName = customers[0].item2;
-          this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
-          localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-          this.logger.log('1) authLogin in ::', this.ltkn);
-          this.logger.log('Redirect Breaked 4');
-          this.router.navigate(['./' + environment.logInSuccessURL]);
-        } else {
-          this.message = 'Logged in successfully, but customers not found. Please wait...';
-          localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-          this.logger.log('2) authLogin in ::', this.ltkn);
-          this.logger.log('Redirect Breaked 3');
-          this.router.navigate(['./' + environment.logInSuccessNoCustomerURL]);
-        }
-      }, error => this.errorMsg = error);
-    } else {
-      localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
-      this.logger.log('3) authLogin in ::', this.ltkn);
-      this.logger.log('Redirect Breaked 2');
-      this.router.navigate(['./' + environment.logInSuccessURL]);
-    }
+  generateAccessToken() {
+    return 'Login-Access-Token';
   }
 }
 
 
 // for Real Login
 /*
-this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
+this.authService.verifyLogin(this.fctrls.userid.value, this.fctrls.password.value)
   .subscribe(data => {
     this.ltkn = data;
     this.logger.log('authLogin in authLogin.component ::');
@@ -188,7 +152,7 @@ this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
 
 
 /*
-this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
+this.authService.verifyLogin(this.fctrls.userid.value, this.fctrls.password.value)
   .subscribe(data => {
     this.ltkn = data;
     this.logger.log('authLogin in authLogin.component ::');
@@ -201,7 +165,7 @@ this.authService.verifyLogin(this.f.userid.value, this.f.password.value)
 
         this.ltkn.dpsUser = FirstUser;
         this.logger.log('authLogin in Login User ::', this.ltkn.dpsUser);
-        if (this.f.userid.value === 'admin' && this.f.password.value === 'admin') {
+        if (this.fctrls.userid.value === 'admin' && this.fctrls.password.value === 'admin') {
           this.ltkn.dpsUser.userRole = 'DPSAdmin';
         }
         if (this.ltkn.dpsUser === null) {
