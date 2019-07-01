@@ -82,6 +82,7 @@ export class StatuteComponent implements OnInit {
   ngDoCheck() {
     this.createCoefficientArray();
 
+    if(this.STFormData !== undefined && this.STFormData !== null)
     if (this.STFormData != this.oldSFTFormData) {
       //this.createStatuteSettingsArrayEmpty();
       this.oldSFTFormData = this.STFormData;
@@ -379,11 +380,26 @@ export class StatuteComponent implements OnInit {
         this.emitData("ngOnit");
       }
 
-    }, error => this.errorMsg = error);
+    }, error => this.errorMsg = error);    
 
     if (this.countStatutes > 0)
-      this.cloneArray();
+    {
+      if(this.STFormData.data === null || this.STFormData.data === undefined)
+          this.loadCoefficientsEmpty();
+      else
+        this.cloneArray();
+    }
 
+  }
+
+  loadCoefficientsEmpty() {
+
+    this.newArrayCoeff = [];
+
+    for (let i = 0; i < this.countStatutes; i++)
+      this.newArrayCoeff[i] = 0;
+
+    this.emitData("load");
   }
 
   fillMealEnabled() {
@@ -406,6 +422,7 @@ export class StatuteComponent implements OnInit {
 
     for (let i: number = 0; i < this.countStatutes; i++) {
       this.coefficientArray[i] = 0;
+      this.newArrayCoeff[i]= 0;
     }
 
   }

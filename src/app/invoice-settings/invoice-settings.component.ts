@@ -451,29 +451,32 @@ export class InvoiceSettingsComponent implements OnInit {
     this.currencyDataOther = [];
     this.currencyDataShift = [];
 
-    this.logger.log(this.FPFormData.data.invoiceSettings);
-
-   if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
-    if(this.FPFormData.data.invoiceSettings.otherAllowances !== undefined && this.FPFormData.data.invoiceSettings.otherAllowances!== null)
-    this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
-      this.logger.log(element);
-        if(element.nominal === true)
-          this.currencyDataOther[counter] = "%";
-        else
-        this.currencyDataOther[counter] = "€";
-        counter +=1;
-    });
+    if(this.FPFormData !== undefined && this.FPFormData !== null)
+    if(this.FPFormData.data !== undefined && this.FPFormData.data !== null)
+      if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+        if(this.FPFormData.data.invoiceSettings.otherAllowances !== undefined && this.FPFormData.data.invoiceSettings.otherAllowances!== null)
+        this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
+          this.logger.log(element);
+            if(element.nominal === true)
+              this.currencyDataOther[counter] = "%";
+            else
+            this.currencyDataOther[counter] = "€";
+            counter +=1;
+        });
 
     counter = 0;
-    if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
-   if(this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances!== null)
-    this.FPFormData.data.invoiceSettings.shiftAllowances.forEach((element) => {
-      if(element.nominal === true)
-        this.currencyDataShift[counter] = "%";
-      else
-        this.currencyDataShift[counter] = "€";
-        counter +=1;
-    });
+
+    if(this.FPFormData !== undefined && this.FPFormData !== null)
+    if(this.FPFormData.data !== undefined && this.FPFormData.data !== null)
+      if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+        if(this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances!== null)
+            this.FPFormData.data.invoiceSettings.shiftAllowances.forEach((element) => {
+          if(element.nominal === true)
+            this.currencyDataShift[counter] = "%";
+          else
+            this.currencyDataShift[counter] = "€";
+            counter +=1;
+        });
 
     this.logger.log(this.currencyDataOther);
     this.logger.log(this.currencyDataShift);

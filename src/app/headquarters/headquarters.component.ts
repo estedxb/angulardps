@@ -120,7 +120,7 @@ export class HeadQuartersComponent implements OnInit {
       creditCheck: new FormControl(),
       legalform: new FormControl(),
       creditLimit: new FormControl(),
-      street: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
+      street: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z0-9 ]+$")]),
       streetnumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$")]),
       bus: new FormControl(''),
       city: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
@@ -240,7 +240,6 @@ export class HeadQuartersComponent implements OnInit {
       console.log("name=" + this.HQForm.get('officialname').valid);
       console.log("street=" + this.HQForm.get('street').valid);
       console.log("streetnumber=" + this.HQForm.get('streetnumber').valid);
-      console.log("bus=" + this.HQForm.get('bus').valid);
       console.log("city=" + this.HQForm.get('city').valid);
       console.log("postalcode=" + this.HQForm.get('postalcode').valid);
       console.log("phonenumber=" + this.HQForm.get('phonenumber').valid);
@@ -677,6 +676,9 @@ export class HeadQuartersComponent implements OnInit {
 
   validity() {
     // && this.allowCustomer === true
+
+    if(this.HQForm.valid === false &&  this.HQForm.get('bus').value === "" && !this.emptyData())
+      return true;
 
     if (this.HQForm.valid === true && !this.emptyData())
       return true;

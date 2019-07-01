@@ -114,8 +114,8 @@ export class AddCustomerComponent implements OnInit {
     this.HQdata = $event;
     this.HQFormValid = this.HQdata.formValid;
     this.currentVatNumber = this.HQdata.customer.vatNumber;
-    // this.logger.log('received in home component HQ data');
-    // this.logger.log(this.HQdata);
+    this.logger.log('received in home component HQ data');
+    this.logger.log(this.HQdata);
   }
 
   receiveCTdata($event) {
@@ -130,12 +130,7 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      // this.logger.log('CTdata=' + this.CTdata);
-      // this.logger.log(this.CTdata);
-      // this.logger.log('HQdata=' + this.HQdata);
-      // this.logger.log(this.HQdata);
-
-      // this.logger.log('validity data=' + this.HQdata.formValid);
+      this.logger.log('validity data=' + this.HQdata.formValid);
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
