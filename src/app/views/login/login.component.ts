@@ -67,8 +67,9 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
+      
       // DPS Default Login this should be removed after B2C login 
-      if (this.fctrls.userid.value === 'DPS@Uid#2019'){ this.fctrls.userid.value = 'DPS@2019.Uid'; }
+      if (this.fctrls.userid.value === 'DPS@Uid#2019'){ this.fctrls.userid.setValue('DPS@2019.Uid'); }
 
       if (this.fctrls.userid.value === 'DPS@2019.Uid'  && this.fctrls.password.value === 'DPS@Pwd#2019') {
         this.ltkn.userRole = 'DPSAdmin';
