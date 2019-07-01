@@ -53,19 +53,19 @@ export class AppComponent implements OnInit {
       this.logger.log('authLogin in customersList Found ::', customersList);
       let customers: CustomersList[] = [];
       // if (this.ltkn.dpsUser.userRole === 'DPSAdmin') {
-      customers = customersList.filter(c => c.item1 !== this.dpsuservatnumber);
+      customers = customersList.filter(c => c.vatnumber !== this.dpsuservatnumber);
       // } else {
       //  customers = customersList;
       // }
 
       if (customers.length > 0) {
         this.logger.logF('Logged in successfully. Please wait...');
-        this.ltkn.customerVatNumber = customers[0].item1;
-        this.ltkn.customerName = customers[0].item2;
-        this.ltkn.customerlogo = customers[0].item4 !== undefined ? customers[0].item4 + '' : '';
+        this.ltkn.customerVatNumber = customers[0].vatnumber;
+        this.ltkn.customerName = customers[0].name;
+        this.ltkn.customerlogo = customers[0].logo !== undefined ? customers[0].logo + '' : '';
         localStorage.setItem('dpsLoginToken', JSON.stringify(this.ltkn));
 
-        this.logger.log('authLogin in customers Selected ::', customers[0].item2);
+        this.logger.log('authLogin in customers Selected ::', customers[0].name);
         this.logger.log('Selected customerVatNumber::', this.ltkn.customerVatNumber);
         this.logger.log('Selected customerName::', this.ltkn.customerName);
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... this.returnUrl', this.returnUrl);

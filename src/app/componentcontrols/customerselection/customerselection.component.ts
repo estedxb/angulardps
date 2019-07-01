@@ -28,7 +28,7 @@ export class CustomerSelectionComponent implements OnInit {
     this.customernames = [];
     if (this.customers.length > 0) {
       this.customernames = this.customers
-        .map(cust => { if (cust.item2.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } });
+        .map(cust => { if (cust.name.toLowerCase().indexOf(value.toLowerCase()) > -1) { return cust; } });
     } else {
       this.customernames = this.customers;
     }

@@ -67,8 +67,10 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.message = 'Please enter username and password'; return;
     } else {
+      // DPS Default Login this should be removed after B2C login 
+      if (this.fctrls.userid.value === 'DPS@Uid#2019'){ this.fctrls.userid.value = 'DPS@2019.Uid'; }
 
-      if (this.fctrls.userid.value === 'DPS@2019.Uid' && this.fctrls.password.value === 'DPS@Pwd#2019') {
+      if (this.fctrls.userid.value === 'DPS@2019.Uid'  && this.fctrls.password.value === 'DPS@Pwd#2019') {
         this.ltkn.userRole = 'DPSAdmin';
       } else if (this.fctrls.userid.value === 'Cus@Uid#2019' && this.fctrls.password.value === 'Cus@Pwd#2019') {
         this.ltkn.userRole = 'Customer';
@@ -85,10 +87,9 @@ export class LoginComponent implements OnInit {
         // Getting the CustomerList for the Login Email
         this.customerListsService.getCustomersbyUserEmail(this.ltkn.userEmail, 'token').subscribe(customersList => {
           this.logger.log('authLogin in customersList Found ::', customersList);
-          let customers: CustomersList[] = [];
 
-          if (customers.length > 0) {
-            const FirstCustomer: CustomersList = customers[0];
+          if (customersList.length > 0) {
+            const FirstCustomer: CustomersList = customersList[0];
             this.logger.log('Selected Customer', FirstCustomer);
             this.message = 'Logged in successfully. Please wait...';
 
