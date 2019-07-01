@@ -42,7 +42,11 @@ export class LanguagesComponent implements OnInit {
 
   }
 
-  constructor(private languagesService: LanguagesService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    private languagesService: LanguagesService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) { }
 
   ngDoCheck() {
 

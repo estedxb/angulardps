@@ -24,8 +24,10 @@ export class DashboardComponent implements OnInit {
   public dpsLoginToken: LoginToken = new LoginToken();
 
   constructor(
-    private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar,
-    private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+    private route: ActivatedRoute, private router: Router,
+    private snackBar: MatSnackBar,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   ngOnInit() {
     if (localStorage.getItem('dpsLoginToken') !== undefined &&

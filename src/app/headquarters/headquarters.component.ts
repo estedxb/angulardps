@@ -140,7 +140,11 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxUiLoaderService, private customerService: CustomersService, private data: DataService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    // private spinner: NgxUiLoaderService,
+    private customerService: CustomersService,
+    private data: DataService) {
 
   }
 

@@ -30,7 +30,7 @@ export class CalendarDOBComponent implements OnInit {
   get valueYear(): any { return this._selectedValueYear; }
 
   constructor(
-    private spinner: NgxUiLoaderService,
+    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
 
     const today: Date = new Date();

@@ -9,7 +9,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class DPSSystemMessageComponent implements OnInit {
 
-  constructor(private spinner: NgxUiLoaderService) { }
+  constructor(
+    // private spinner: NgxUiLoaderService
+  ) { }
 
   ngOnInit() {
   }

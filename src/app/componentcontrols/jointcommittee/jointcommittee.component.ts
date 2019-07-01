@@ -2,9 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { ParitairCommitee } from '../../shared/models';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
-// import { $ } from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+// import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-jointcommittee',
@@ -43,7 +42,11 @@ export class JointcommitteeComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private jointcommitteeService: JointcommitteeService, private spinner: NgxUiLoaderService, private logger: LoggingService) {
+  constructor(
+    private jointcommitteeService: JointcommitteeService,
+    // // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) {
   }
 
   ngDoCheck() {

@@ -122,7 +122,7 @@ export class CreateContractComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner();
-    setTimeout(() => { this.spinner.stop(); }, 3000);
+    setTimeout(() => { this.hideSpinner(); }, 3000);
     this.onPageInit();
   }
 
@@ -256,13 +256,11 @@ export class CreateContractComponent implements OnInit {
     if (!this.SpinnerShowing) {
       this.SpinnerShowing = true;
       this.spinner.startLoader('loader-01');
-      // this.spinner.startBackgroundLoader('loader-01');
     }
   }
   hideSpinner() {
     if (this.SpinnerShowing) {
       this.spinner.stopLoader('loader-01');
-      // this.spinner.stopBackgroundLoader('loader-01');
       this.SpinnerShowing = false;
     }
   }

@@ -38,7 +38,11 @@ export class WorkCodesComponent implements OnInit {
   SetInitialValue() { if (this.selectedValue === undefined) { this.selectedValue = this.datas[this.selectedIndex]; } }
   onChange($event) { this.selectedIndex = $event.target.value; return this.value; }
 
-  constructor(private workCodesService: WorkCodesService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    private workCodesService: WorkCodesService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) { }
 
   oncustomerKeyup(value) {
     // this.datas = [];

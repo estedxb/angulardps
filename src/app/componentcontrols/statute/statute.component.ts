@@ -57,8 +57,11 @@ export class StatuteComponent implements OnInit {
   lengthStatueSettings: number = 0;
 
   constructor(
-    private statuteService: StatuteService, private spinner: NgxUiLoaderService,
-    private fb: FormBuilder, private logger: LoggingService) {
+    private statuteService: StatuteService,
+    // // private spinner: NgxUiLoaderService,
+    private fb: FormBuilder,
+    private logger: LoggingService
+  ) {
 
   }
 
@@ -154,16 +157,16 @@ export class StatuteComponent implements OnInit {
 
     this.loadStatuteSettingsArray.forEach(element => {
       this.statuteSettings[counter].coefficient = element.coefficient;
-      
-      if(element.mealVoucherSettings.totalWorth === 0 && element.mealVoucherSettings.employerShare === 0 && element.mealVoucherSettings.minimumHours === 0)
+
+      if (element.mealVoucherSettings.totalWorth === 0 && element.mealVoucherSettings.employerShare === 0 && element.mealVoucherSettings.minimumHours === 0)
         this.isMealEnabled[counter] = false;
       else
         this.isMealEnabled[counter] = true;
 
-        this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
-        this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
-        this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-        this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
+      this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
+      this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
+      this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
+      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
 
       // this.StatuteSettingsObject = new StatuteSetting();
       // this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
@@ -496,8 +499,8 @@ export class StatuteComponent implements OnInit {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i], 10);
-     } 
-     //else {
+    }
+    //else {
     //   this.createArrayData();
     // }
     this.logger.log("statuteSettings Array");
@@ -522,7 +525,7 @@ export class StatuteComponent implements OnInit {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i], 10);
-     } 
+    }
     //else {
     //   this.createArrayData();
     // }

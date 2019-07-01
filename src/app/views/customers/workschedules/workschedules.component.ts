@@ -26,7 +26,8 @@ export class WorkSchedulesComponent implements OnInit {
   // public VatNumber = this.dpsLoginToken.customerVatNumber;
 
   constructor(
-    private workschedulesService: WorkschedulesService, private logger: LoggingService, private spinner: NgxUiLoaderService,
+    private workschedulesService: WorkschedulesService, private logger: LoggingService,
+    // private spinner: NgxUiLoaderService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

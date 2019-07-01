@@ -28,7 +28,10 @@ export class HomeComponent implements OnInit {
   public CTFormValid: boolean;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    private customerService: CustomersService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   ngOnInit() {
     this.HQFormValid = true;

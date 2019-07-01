@@ -19,7 +19,9 @@ export class CancelContractComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CancelContractComponent>, @Inject(MAT_DIALOG_DATA) public contractData: DpsContract,
-    private contractService: ContractService, private spinner: NgxUiLoaderService, private logger: LoggingService
+    private contractService: ContractService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
   ) {
     this.currentContract = contractData;
   }

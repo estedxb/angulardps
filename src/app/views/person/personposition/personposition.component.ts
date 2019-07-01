@@ -98,7 +98,8 @@ export class PersonPositionComponent implements OnInit {
   constructor(
     private personsService: PersonService, private data: DataService,
     private logger: LoggingService, private positionsService: PositionsService,
-    private fb: FormBuilder, private dialog: MatDialog, private spinner: NgxUiLoaderService,
+    private fb: FormBuilder, private dialog: MatDialog,
+    // private spinner: NgxUiLoaderService,
     private snackBar: MatSnackBar, private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {

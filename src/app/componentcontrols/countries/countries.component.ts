@@ -54,7 +54,7 @@ export class CountriesComponent implements OnInit {
 
   constructor(
     private countriesService: CountriesService,
-    private spinner: NgxUiLoaderService,
+    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
   ngOnInit() {

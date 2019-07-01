@@ -1,15 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomersService } from '../../shared/customers.service';
-
 import { LoggingService } from '../../shared/logging.service';
 import { Subscription } from 'rxjs/Subscription';
-
-import * as Msal from 'msal';
-// import { MsalServiceLocal } from '../../shared/msal.service';
 import { environment } from '../../../environments/environment';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+// import * as Msal from 'msal';
+// import { MsalServiceLocal } from '../../shared/msal.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,10 +16,11 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class MenuComponent implements OnInit {
   @Input() SelectedPage: string;
-  constructor(private router: Router, private spinner: NgxUiLoaderService,
-    private logger: LoggingService
-    // , private msalService: MsalServiceLocal
-    //  , public authService: AuthService
+  constructor(private router: Router,
+    private logger: LoggingService,
+    // private spinner: NgxUiLoaderService
+    // private msalService: MsalServiceLocal,
+    // public authService: AuthService
   ) { }
 
   ngOnInit() { }

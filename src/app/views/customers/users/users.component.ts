@@ -27,7 +27,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private usersService: UsersService, private dialog: MatDialog,
-    private spinner: NgxUiLoaderService, private snackBar: MatSnackBar, private logger: LoggingService) { }
+    // private spinner: NgxUiLoaderService,
+    private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 

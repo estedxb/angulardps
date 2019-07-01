@@ -22,7 +22,10 @@ export class DashboardActionComponent implements OnInit {
 
   @Input() public isForceZeroNotificationCount;
   @Output() public NotificationCount = new EventEmitter();
-  constructor(public summaryService: SummaryService, private router: Router, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    public summaryService: SummaryService, private router: Router,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   ngOnInit() {
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));

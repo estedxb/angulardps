@@ -40,7 +40,8 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>, private spinner: NgxUiLoaderService,
+    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
+    // private spinner: NgxUiLoaderService,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule, private logger: LoggingService) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
     this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));

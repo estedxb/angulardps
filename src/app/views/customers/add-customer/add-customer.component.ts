@@ -42,8 +42,11 @@ export class AddCustomerComponent implements OnInit {
   public spinnerToggle: boolean = false;
 
   public showFormIndex = 1;
-  constructor(private customerService: CustomersService, private spinner: NgxUiLoaderService, private logger: LoggingService,
-    private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router, ) {
+  constructor(
+    private customerService: CustomersService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService,
+    private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
 
     this.editObject = { data: '', page: '' };
 

@@ -26,7 +26,9 @@ export class EditCustomerComponent implements OnInit {
   public pageType: string;
 
   constructor(
-    private customerService: CustomersService, private data: DataService, private spinner: NgxUiLoaderService,
+    private customerService: CustomersService,
+    private data: DataService,
+    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
 
     // this.vatNumber = this.dpsLoginToken.customerVatNumber;

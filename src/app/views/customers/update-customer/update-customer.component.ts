@@ -30,7 +30,8 @@ export class UpdateCustomerComponent implements OnInit {
 
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
-    private snackBar: MatSnackBar, private spinner: NgxUiLoaderService, private logger: LoggingService,
+    private snackBar: MatSnackBar, private logger: LoggingService,
+    // private spinner: NgxUiLoaderService,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
@@ -74,7 +75,7 @@ export class UpdateCustomerComponent implements OnInit {
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */
-      this.spinner.stop();
+       this.spinner.stop();
     }, 1000);
 
     // this.setTimeout(() => {
@@ -171,11 +172,10 @@ export class UpdateCustomerComponent implements OnInit {
   onFormwardClick() {
     this.logger.log('forward click', this.editCustomerData);
 
-    this.spinner.start();
+     this.spinner.start();
 
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.stop();
+       this.spinner.stop();
     }, 5000);
 
 

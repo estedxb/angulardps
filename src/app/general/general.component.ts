@@ -24,7 +24,10 @@ export class GeneralComponent implements OnInit {
   @Input() public GLFormData;
   @Output() public childEvent = new EventEmitter();
 
-  constructor(private spinner: NgxUiLoaderService, private logger: LoggingService) {
+  constructor(
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) {
     this.loadVCA = false;
     this.loadBlk = false;
   }

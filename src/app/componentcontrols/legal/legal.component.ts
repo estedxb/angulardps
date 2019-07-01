@@ -85,7 +85,11 @@ export class LegalComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private legalformService: LegalformService, private spinner: NgxUiLoaderService, private logger: LoggingService) {
+  constructor(
+    private legalformService: LegalformService,
+    // // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) {
   }
 
   ngOnInit() {

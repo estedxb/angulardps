@@ -36,7 +36,8 @@ export class UpdatePersonComponent implements OnInit {
 
   constructor(
     private personService: PersonService, private data: DataService,
-    private logger: LoggingService, private spinner: NgxUiLoaderService,
+    private logger: LoggingService,
+    // private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router,
     private snackBar: MatSnackBar) {
     // this.logger.log('InSide :: Update Person');

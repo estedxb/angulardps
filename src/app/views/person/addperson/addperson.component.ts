@@ -215,7 +215,8 @@ export class AddPersonComponent implements OnInit {
     public http: HttpClient, private personsService: PersonService,
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
-    private statuteService: StatuteService, private spinner: NgxUiLoaderService,
+    private statuteService: StatuteService,
+    // private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router
   ) {
 
@@ -1731,11 +1732,10 @@ export class AddPersonComponent implements OnInit {
 
       this.buttonPressed = true;
 
-      this.spinner.start();
+       this.spinner.start();
 
       setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.stop();
+         this.spinner.stop();
       }, 5000);
 
       if (this.checkValidation())

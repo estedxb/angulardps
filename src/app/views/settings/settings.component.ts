@@ -8,7 +8,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class SettingsComponent implements OnInit {
   public SelectedPage = 'Settings';
-  constructor(private spinner: NgxUiLoaderService) { }
+  constructor(
+    // private spinner: NgxUiLoaderService
+  ) { }
 
   ngOnInit() {
   }

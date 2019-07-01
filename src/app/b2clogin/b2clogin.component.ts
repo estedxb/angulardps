@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Msal from 'msal';
+// import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
@@ -17,6 +17,7 @@ export class B2cloginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     // private msalService: MsalServiceLocal,
+    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 

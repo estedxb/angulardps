@@ -17,7 +17,9 @@ export class BulkContractComponent implements OnInit {
   public blkForm: FormGroup;
   public loadSwitchperson: boolean;
 
-  constructor(private spinner: NgxUiLoaderService, ) { }
+  constructor(
+    // private spinner: NgxUiLoaderService
+  ) { }
 
   ngOnInit() {
 

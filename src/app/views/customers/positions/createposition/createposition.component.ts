@@ -34,7 +34,8 @@ export class CreatepositionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService,
-    private positionsService: PositionsService, private snackBar: MatSnackBar, private spinner: NgxUiLoaderService,
+    private positionsService: PositionsService, private snackBar: MatSnackBar,
+    // private spinner: NgxUiLoaderService,
     private logger: LoggingService, public dialogRef: MatDialogRef<CreatepositionComponent>,
     @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
     this.currentPosition = posistionData;

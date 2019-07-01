@@ -5,8 +5,8 @@ import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 /*
 import * as Msal from 'msal';
 import { MsalServiceLocal } from './shared/msal.service';
@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    // private msalService: MsalServiceLocal,
     private spinner: NgxUiLoaderService,
+    // private msalService: MsalServiceLocal,
     private logger: LoggingService) {
 
     this.logger.logF('environment.production :: ' + environment.production);
@@ -42,14 +42,9 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.spinner.start(); // start foreground spinner of the master loader with 'default' taskId
-    // Stop the foreground loading after 5s
-    setTimeout(() => {
-      this.spinner.stop(); // stop foreground spinner of the master loader with 'default' taskId
-    }, 3000);
+    this.spinner.start();
+    setTimeout(() => { this.spinner.stop(); }, 3000);
   }
-
-
 
   /*
   getUserInfo(token: string, UserEmail: string) {

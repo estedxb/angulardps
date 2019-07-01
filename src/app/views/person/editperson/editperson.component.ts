@@ -84,7 +84,8 @@ export class EditPersonComponent implements OnInit {
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
-    private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   setDummyStatute() {
   }

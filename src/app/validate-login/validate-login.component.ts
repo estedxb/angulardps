@@ -28,7 +28,7 @@ export class ValidateLoginComponent implements OnInit {
   constructor(
     private router: Router,
     // private msalService: MsalServiceLocal, 
-    private spinner: NgxUiLoaderService,
+    // private spinner: NgxUiLoaderService,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 

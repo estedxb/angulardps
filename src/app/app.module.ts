@@ -15,11 +15,10 @@ import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { environment } from '../environments/environment';
-import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { ErrorComponent } from './error.component';
-
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#e37719',
   bgsOpacity: 0.5,
@@ -44,10 +43,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   hasProgressBar: true,
   text: 'Bezig met laden ...',
   textColor: '#FFFFFF',
-  textPosition: 'center-center',
-  delay: 0,
-  maxTime: -1,
-  minTime: 500
+  textPosition: 'center-center'
+  // ,
+  // delay: 0,
+  // maxTime: -1,
+  // minTime: 500  
 };
 
 export function loggerCallback(logLevel, message, piiEnabled) {
@@ -61,7 +61,8 @@ export function loggerCallback(logLevel, message, piiEnabled) {
     BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule, MatInputModule,
     MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AutocompleteLibModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, AngularFontAwesomeModule, ModalModule.forRoot(),
-    AlertModule.forRoot(), TimepickerModule.forRoot(), NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    AlertModule.forRoot(), TimepickerModule.forRoot(),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     UiSwitchModule.forRoot({ size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff' })
   ],
   providers: [DatePipe, routingProviders],

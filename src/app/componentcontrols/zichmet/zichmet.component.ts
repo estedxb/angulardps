@@ -50,7 +50,11 @@ export class ZichmetComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private vehicleService: vehicleService, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    private vehicleService: vehicleService,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService
+  ) { }
 
   ngOnInit() {
 

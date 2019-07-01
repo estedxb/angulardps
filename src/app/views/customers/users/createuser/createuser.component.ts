@@ -33,7 +33,9 @@ export class CreateuserComponent implements OnInit {
   language: Language;
 
   constructor(
-    private formBuilder: FormBuilder, private userService: UsersService, private logger: LoggingService, private spinner: NgxUiLoaderService,
+    private formBuilder: FormBuilder, private userService: UsersService,
+    private logger: LoggingService,
+    // private spinner: NgxUiLoaderService,
     public dialogRef: MatDialogRef<CreateuserComponent>, @Inject(MAT_DIALOG_DATA) public userData: DpsUser) {
     this.currentUser = userData;
   }

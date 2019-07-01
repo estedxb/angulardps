@@ -24,8 +24,11 @@ export class LocationsComponent implements OnInit {
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
 
   constructor(
-    private locationsService: LocationsService, private logger: LoggingService, private spinner: NgxUiLoaderService,
-    private dialog: MatDialog, private snackBar: MatSnackBar) { }
+    private locationsService: LocationsService,
+    private logger: LoggingService,
+    // private spinner: NgxUiLoaderService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 

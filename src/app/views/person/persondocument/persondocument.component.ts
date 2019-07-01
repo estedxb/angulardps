@@ -51,8 +51,10 @@ export class PersonDocumentComponent implements OnInit {
 
   public data: DpsPerson;
   constructor(
-    private personService: PersonService, private dialog: MatDialog,
-    private spinner: NgxUiLoaderService, private snackBar: MatSnackBar,
+    private personService: PersonService,
+    private dialog: MatDialog,
+    // private spinner: NgxUiLoaderService,
+    private snackBar: MatSnackBar,
     private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

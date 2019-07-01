@@ -88,7 +88,10 @@ export class InvoiceSettingsComponent implements OnInit {
   public currencyShift: string = "";
   public currencyOther: string = "";
 
-  constructor(private fb: FormBuilder, private spinner: NgxUiLoaderService, private logger: LoggingService) { }
+  constructor(
+    private fb: FormBuilder,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) { }
 
   /********************************************** DropDown  Inhaalrust drop down *************************/
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;

@@ -37,7 +37,10 @@ export class ContactPersonComponent implements OnInit {
   contact: Contact;
   alsCheck: boolean;
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxUiLoaderService, private logger: LoggingService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    // private spinner: NgxUiLoaderService,
+    private logger: LoggingService) {
 
   }
 
