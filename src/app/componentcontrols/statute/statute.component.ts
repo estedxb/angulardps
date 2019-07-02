@@ -432,8 +432,13 @@ export class StatuteComponent implements OnInit {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
-    // this.logger.log("changing coefficient");
-    this.replaceArrayCoefficient(value, i);
+
+    //Coefficient can only be 3.5 at most! 
+    if(value > 3.5)
+      this.replaceArrayCoefficient(3.5, i);
+    else
+      this.replaceArrayCoefficient(value, i);
+
   }
 
   onMealChange($event, ctrlid: number) {

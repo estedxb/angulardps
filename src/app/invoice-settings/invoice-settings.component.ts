@@ -10,6 +10,7 @@ import { TimeSpan } from '../shared/TimeSpan';
 import { LoggingService } from '../shared/logging.service';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -111,12 +112,22 @@ export class InvoiceSettingsComponent implements OnInit {
     }
   }
 
+//   Contract not valid: Dimona cost has to be at least 0.3300!
+// Contract not valid: Dimona cost can only be 0.3510 at most!
+// Contract not valid: Coefficient can only be 3.5 at most! 
+// Contract not valid: Gross salary has to be at least 5!
+
   changeObject() {
 
     this.tCoefficient = parseFloat(this.ISForm.get('Verplaatsingen').value);
     this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
+
+    // if(this.dimonaValue < environment.DimonaCostMinium || this.dimonaValue > environment.DimonaCostMaximum)
+    // {
+    // }
+      
 
     if(this.ISForm.get('mobilebox').value === "")
       this.mobilityAllowanceObject.amountPerKm = 0;
@@ -657,8 +668,19 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onDimonaChange(value) {
-    this.dimonaValue = parseFloat(value);
-    this.changeObject();
+
+    if(value > environment.DimonaCostMaximum || value < environment.DimonaCostMinium)
+    {
+      this.ISForm.get('Dimona').setValue(environment.DimonaCostMinium);
+      this.dimonaValue = environment.DimonaCostMinium;
+      this.changeObject();
+    }
+    else
+    {
+      this.dimonaValue = parseFloat(value);
+      this.changeObject();  
+    }
+
   }
 
   isInvalid() {
