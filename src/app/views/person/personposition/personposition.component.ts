@@ -297,44 +297,51 @@ export class PersonPositionComponent implements OnInit {
     );
   }
 
-  findIndex(position: number) {
+  findIndex(position) {
+
+    this.logger.log("position received="+position);
+
     for (let i = 0; i < this.maindatas.length; i++) {
+      this.logger.log(typeof(this.maindatas[i].id));
       if (position === this.maindatas[i].id)
         this.selectedIndexFunctie = i;
+        // this._selectedIndex = i;
     }
+  }
+
+  getIdOfPosition(position:string) {
+
+    for (let i = 0; i < this.maindatas.length; i++) {
+      this.logger.log(typeof(this.maindatas[i].id));
+      if (position === this.maindatas[i].position.name.toString())
+      {
+        return this.maindatas[i].id;
+      }
+    }
+
+    return "";
   }
 
   loadPersonData(response) {
 
-    this.logger.log("respone body");
-    this.logger.log(response);
     const data = response;
     let counter: number = 0;
 
-    this.logger.log("customer position id=" + data.customerPostionId);
+    this.logger.log("data received=");
+    this.logger.log(data.customerPostionId);
 
-    if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) {
+    if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) 
+        this.findIndex(parseInt(data.customerPostionId, 10));
 
-      counter = 0;
-      // this.maindatas.forEach((element) => {
-      //   this.logger.log("name="+element.position.name);
-      //   if (element.position.name === data.customerPostionId)
-      //     this.selectedIndexFunctie = counter;
-      //   counter++;
-      // });
-
-      this.findIndex(parseInt(data.customerPostionId, 10));
-    }
-
-    if (data.statute !== null && data.statute !== undefined && data.statute !== "") {
-
+    if (data.statute !== null && data.statute !== undefined && data.statute !== "") 
+    {
       counter = 0;
       this.statutes.forEach((element) => {
 
         if (element.name === data.statute.name)
           this.selectedIndexStatute = counter;
         counter++;
-      });
+      });      
     }
 
     //hourlyWage
@@ -366,12 +373,16 @@ export class PersonPositionComponent implements OnInit {
 
     this.logger.log("position id=" + this.dataDropDownFunctieIds[$event.target.value]);
 
+    this.logger.log("main datas");
+    this.logger.log(this.maindatas);
+
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
-    //this.positionId = this.dataDropDownFunctieIds[$event.target.value];
+    this.positionId =  this.getIdOfPosition(this.positionChosen);
 
-    this.positionId = $event.target.value;
+    this.DpsPersonObject.customerPostionId = "" + this.positionId;
+    this.changeMessage();
 
-    this.updatePosition();
+    //this.updatePosition();
 
   }
 

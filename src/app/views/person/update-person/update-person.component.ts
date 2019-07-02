@@ -205,19 +205,24 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if (this.currentPage === 'positions') {
+      //this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log('response=' + res);
-        this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
+        this.ShowMessage('Persoon is succesvol bijgewerkt 20.', '');
       },
         (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-
-            if (err.status === 200)
-              this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
-
-          } else {
-            this.logger.log('response code=' + err.status);
-            this.logger.log('response body=' + err.error);
+            if (err.status === 200){
+              this.ShowMessage('Persoon is succesvol bijgewerkt 40.', '');
+            }
+           else {            
+            if (err.status === 200){
+              this.ShowMessage('Persoon is succesvol bijgewerkt 30.', '');
+            }
+            else {
+              this.logger.log('response code=' + err.status);
+              this.logger.log('response body=' + err.error);
+              this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');  
+            }
           }
         }
       );
