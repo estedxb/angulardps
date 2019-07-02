@@ -1044,11 +1044,12 @@ export class AddPersonComponent implements OnInit {
   // bic from bban
   soapCallGetBIC() {
 
+
     const parser = new DOMParser();
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>';
+      + '<Value>'+this.bban+'</Value></BBANtoBIC></soap:Body></soap:Envelope>';
 
     const headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*')
