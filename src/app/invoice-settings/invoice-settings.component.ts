@@ -131,6 +131,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
 
+  
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -519,6 +521,14 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.currencyShift = "";
     this.currencyOther = "";
+
+    this.loadSwitchInhaalrust = false;
+    this.loadSwitchSickness = false;
+    this.loadSwitchHolidays = false;
+    this.loadSwitchMobility = false;
+    this.loadSwitchTeam = false;
+    this.loadSwitchOther = false;
+
 
     this.shiftAllowances.push(this.shiftAllowanceObject);
 
