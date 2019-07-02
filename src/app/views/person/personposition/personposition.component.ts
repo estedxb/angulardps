@@ -371,11 +371,6 @@ export class PersonPositionComponent implements OnInit {
 
   onChangeDropDownFunctie($event) {
 
-    this.logger.log("position id=" + this.dataDropDownFunctieIds[$event.target.value]);
-
-    this.logger.log("main datas");
-    this.logger.log(this.maindatas);
-
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
     this.positionId =  this.getIdOfPosition(this.positionChosen);
 
