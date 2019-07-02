@@ -112,9 +112,9 @@ export class InvoiceSettingsComponent implements OnInit {
     }
   }
 
-//   Contract not valid: Dimona cost has to be at least 0.3300!
+// Contract not valid: Dimona cost has to be at least 0.3300!
 // Contract not valid: Dimona cost can only be 0.3510 at most!
-// Contract not valid: Coefficient can only be 3.5 at most! 
+// Contract not valid: Coefficient can only be 3.5 at most!
 // Contract not valid: Gross salary has to be at least 5!
 
   changeObject() {
@@ -123,12 +123,7 @@ export class InvoiceSettingsComponent implements OnInit {
     this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
-
-    // if(this.dimonaValue < environment.DimonaCostMinium || this.dimonaValue > environment.DimonaCostMaximum)
-    // {
-    // }
-      
-
+     
     if(this.ISForm.get('mobilebox').value === "")
       this.mobilityAllowanceObject.amountPerKm = 0;
     else     
@@ -156,8 +151,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   onChangeDropDownCurrencyTeam($event, i) {
-
-    // this.logger.log("change detected");
 
     if ($event === '€') {
       this.shiftAllowances[i].nominal = false;
