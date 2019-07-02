@@ -47,7 +47,8 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit() {
     this.vcaObject = new VcaCertification();
-    this.blkContracten = false;
+    this.vcaObject.cerified = false;
+    this.blkContracten = false;    
   }
 
 

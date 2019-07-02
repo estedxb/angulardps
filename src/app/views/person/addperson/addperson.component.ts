@@ -1745,7 +1745,10 @@ export class AddPersonComponent implements OnInit {
       this.buttonPressed = true;
 
       if (this.checkValidation())
+      {
+        this.logger.log("validation"+this.formValid);
         this.showFormIndex = 2;
+      }
       else
         this.ShowMessage('' + this.errorMessage, '');
 
