@@ -7,11 +7,10 @@ import { StatuteService } from '../../../shared/statute.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { LoginToken } from '../../../shared/models';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import {
-  DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position,
+  DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position, LoginToken,
   ConstructionProfile, StudentAtWorkProfile, Documents, DriverProfilesItem, Address, EmailAddress, PhoneNumber, Statute, VcaCertification
 } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,7 +48,8 @@ export class AddPersonComponent implements OnInit {
   public validSSID: boolean;
 
   public functieBox: FormArray;
-  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public dpsLoginToken: LoginToken = new LoginToken();
+  public vatNumber: string = '';
   public languageString;
 
   public DpsPersonObject: DpsPerson;
@@ -235,7 +235,6 @@ export class AddPersonComponent implements OnInit {
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
-
   }
 
   openDialog(): void {
@@ -282,6 +281,16 @@ export class AddPersonComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.vatNumber = this.dpsLoginToken.customerVatNumber;
+    } else {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+    }
 
     this.setDropDownYear();
 

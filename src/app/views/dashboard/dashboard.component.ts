@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   public isForceZeroNotificationCount = false;
   public errorMsg;
   public dpsLoginToken: LoginToken = new LoginToken();
+  public vatNumber: string = '';
 
   constructor(
     private route: ActivatedRoute, private router: Router,
@@ -33,16 +34,15 @@ export class DashboardComponent implements OnInit {
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
       localStorage.getItem('dpsLoginToken') !== '' &&
       localStorage.getItem('dpsLoginToken') !== null) {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.vatNumber = this.dpsLoginToken.customerVatNumber;
       const sub = this.route.params.subscribe((params: any) => {
-        this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
         this.Id = params.id;
         this.currentPage = params.page;
         this.onPageInit();
       });
     } else {
-      this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
-      this.logger.log('Redirect Breaked 10');
       this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
   }
