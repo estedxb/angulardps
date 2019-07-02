@@ -511,7 +511,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
     this.otherAllowanceObject.amount = 0;
     this.otherAllowanceObject.codeId = 0;
-    this.otherAllowanceObject.nominal = false;
 
     this.shiftAllowances = [];
 
