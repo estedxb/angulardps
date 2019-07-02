@@ -155,6 +155,9 @@
   background-color: #e37619;
 }
 
+.Contents .col-split .workbar.purple {
+  background-color: purple;
+}
 .Contents .col-split .workbar {
   border-radius: 2px;
   height: 4px;

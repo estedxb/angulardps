@@ -13,6 +13,7 @@ import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from '../../../../environments/environment.temp-prod';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { WorkSchedule } from '../../../shared/models';
 
 @Component({
   selector: 'app-dashboardperson',
@@ -26,6 +27,7 @@ export class DashboardPersonComponent implements OnInit {
   public selectedPersondatas: DpsSchedulePerson;
   public selectedPersonContracts: DpsScheduleContract[] = [];
   public data: any;
+  public filterByName: string = '';
   public currentPage = '';
   public Id = '';
   public SelectedIndex = 0;
@@ -82,7 +84,8 @@ export class DashboardPersonComponent implements OnInit {
       .subscribe(dpsSchedule => {
         this.logger.log('onPageInit getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
         this.maindatas = dpsSchedule.persons;
-        this.onPersonKeyup('');
+        // this.datas = this.maindatas;
+        this.filterScheduleByName();
         this.logger.log('maindatas ::', this.maindatas);
         this.errorMsg = '';
       }, error => {
@@ -178,6 +181,25 @@ export class DashboardPersonComponent implements OnInit {
     return idx;
   }
 
+  getContractButtonLeft(workDays: WorkDays[], buttonCount: number) {
+    // (contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth )) - (contract.workSchedule.workDays.length > 1 ? 0 : (CellWidth/2))
+    let buttonLeft = 0;
+    if (workDays[0].dayOfWeek === 1) {
+      if (buttonCount > 1 && workDays.length === 1) {
+        buttonLeft = -(this.CellWidth / 2);
+      } else {
+        buttonLeft = 0;
+      }
+    } else {
+      if (buttonCount === 1) {
+        buttonLeft = ((workDays[0].dayOfWeek - 1) * this.CellWidth);
+      } else {
+        buttonLeft = ((workDays[0].dayOfWeek - 1) * this.CellWidth) - (workDays.length > 1 ? 0 : (this.CellWidth / 2));
+      }
+    }
+    return buttonLeft;
+  }
+
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
@@ -198,12 +220,19 @@ export class DashboardPersonComponent implements OnInit {
   }
 
   onPersonKeyup(value) {
+    this.filterByName = value;
+    this.filterScheduleByName();
+  }
+
+  filterScheduleByName() {
     try {
       this.datas = [];
       if (this.maindatas !== null && this.maindatas !== undefined) {
         if (this.maindatas.length > 0) {
+          console.log('this.maindatas', this.maindatas);
           this.datas = this.maindatas
-            .map(pers => { if (pers.personName.toLowerCase().indexOf(value.toLowerCase()) > -1) { return pers; } });
+            .map(pers => { if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1) { return pers; } });
+          console.log('this.datas', this.datas);
         } else { this.datas = this.maindatas; }
       } else { this.datas = this.maindatas; }
     } catch (e) { this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message); }

@@ -98,7 +98,7 @@ export class WorkScheduleRow { rowid: number; weekDayOf: WeekDayOf[]; }
 export class WeekDayOf { dayOfWeek: number; workTimes: WorkTimes; }
 export class DpsContract {
     id: number; customerVatNumber: string; personId: string; positionId: number; locationId: number; workScheduleId: number;
-    bsContractId: number; parentContractId: number; contract: Contract; timeSheet: TimeSheet;
+    bsContractId: number; parentContractId: number; childContractId: number; contract: Contract; timeSheet: TimeSheet; approved: boolean;
 }
 export class Contract {
     name: string; startDate: string; endDate: string; workSchedule: WorkSchedule; position: _Position; statute: Statute;
@@ -145,7 +145,7 @@ export class DpsSchedulePerson {
 }
 export class DpsScheduleContract {
     customerContractId: string; customerContractName: string; customerContractstatus: string;
-    childContractId: number; parentContractId: number; workSchedule: WorkSchedule;
+    childContractId: number; parentContractId: number; workSchedule: WorkSchedule; approved: boolean;
 }
 export class PrintContractPDF { contractId: string; fileUrl: string; }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string; }

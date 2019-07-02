@@ -22,12 +22,6 @@
   <div id="PersonContents" [ngClass]="NotificationCount > 0 ? '':'Expand'">
     <div class="row">
       <div class="col-sm-12 dashboardactioncontent dashboardpersoncontent">
-        <ng-container *ngFor="let personContract of datas">
-          <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-            <ng-container *ngFor="let contract of personContract.contracts">
-            </ng-container>
-          </ng-container>
-        </ng-container>
         <table>
           <tr class="Dates">
             <td colspan="2" class="col-split col-split-t">
@@ -44,101 +38,111 @@
             <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
             <td class="col-split col-split-l">&nbsp;</td>
           </tr>
-          <tr class="Contents" *ngFor="let personContract of datas  let idx= index">
-            <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
-              <div class="name">
-                {{personContract.personName}}</div>
-              <div class="position">
-                {{personContract.positionName}}
-              </div>
-            </td>
-            <td class="col-split col-split-f">
-              <button
-                (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled && !personContract.personIsArchived, 'new')"
-                *ngIf="personContract.personIsEnabled && !personContract.personIsArchived">
-                <img src="../../../../assets/svg/checklist_add.svg" />
-              </button>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Monday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Here we are Added the Extend and Edit Contract Button for all contract of the Person-->
-                      <div class="contractActions" [style.width.px]="CellWidth * contract.workSchedule.workDays.length"
-                        [style.margin-left.px]="(contract.workSchedule.workDays[0].dayOfWeek=== 1 ? 0 : ((contract.workSchedule.workDays[0].dayOfWeek -1) * CellWidth )) - (contract.workSchedule.workDays.length > 1 ? 0 : (CellWidth/2))"
-                        (mouseover)="onContractOver(contract.customerContractId,true)"
-                        (mouseout)="onContractOver(contract.customerContractId,false)"
-                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
-                        <div class="contractActionbtngrp" (mouseover)="onContractOver(contract.customerContractId,true)"
-                          (mouseout)="onContractOver(contract.customerContractId,false)"
-                          [ngClass]="[ ! contract.childContractId > 0 ? 'TwoButtonWidth' : 'OneButtonWidth' ]">
-                          <div class="contractActionbtn1" *ngIf="! contract.childContractId > 0 ">
-                            <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
-                              *ngIf="! contract.childContractId > 0 "
-                              (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
-                              <div class="btnLeftTextContainer">
-                                <div id="triangleLeft"
-                                  style="border-color: transparent transparent rgb(226, 226, 226); border-width: 0px 0px 26px 12px;">
-                                </div>
-                                <div class="btnLeftText">Verlengen</div>
+          <ng-container *ngFor="let personContract of datas let idx= index">
+            <ng-container *ngIf="personContract !== undefined">
+              <tr class="Contents">
+                <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
+                  <div class="name">
+                    {{personContract.personName}}</div>
+                  <div class="position">
+                    {{personContract.positionName}}
+                  </div>
+                </td>
+                <td class="col-split col-split-f">
+                  <button
+                    (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled && !personContract.personIsArchived, 'new')"
+                    *ngIf="personContract.personIsEnabled && !personContract.personIsArchived">
+                    <img src="../../../../assets/svg/checklist_add.svg" />
+                  </button>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Monday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Here we are Added the Extend and Edit Contract Button for all contract of the Person-->
+                          <div class="contractActions"
+                            [style.width.px]="CellWidth * contract.workSchedule.workDays.length"
+                            [style.margin-left.px]="getContractButtonLeft(contract.workSchedule.workDays, ((!contract.childContractId > 0) && contract.approved) ? 2 : 1 )"
+                            (mouseover)="onContractOver(contract.customerContractId,true)"
+                            (mouseout)="onContractOver(contract.customerContractId,false)"
+                            [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' ]">
+                            <div class="contractActionbtngrp"
+                              (mouseover)="onContractOver(contract.customerContractId,true)"
+                              (mouseout)="onContractOver(contract.customerContractId,false)"
+                              [ngClass]="[((!contract.childContractId > 0) && contract.approved) ? 'TwoButtonWidth' : 'OneButtonWidth' ]">
+                              <div class="contractActionbtn1"
+                                *ngIf="(!contract.childContractId > 0) && contract.approved ">
+                                <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
+                                  *ngIf="(!contract.childContractId > 0) && contract.approved"
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
+                                  <div class="btnLeftTextContainer">
+                                    <div id="triangleLeft"
+                                      style="border-color: transparent transparent rgb(226, 226, 226); border-width: 0px 0px 26px 12px;">
+                                    </div>
+                                    <div class="btnLeftText">Verlengen</div>
+                                  </div>
+                                  <div class="btnRightIcon">
+                                    <img src="../../../../assets/svg/extended.svg" alt="Extend">
+                                  </div>
+                                </button>
                               </div>
-                              <div class="btnRightIcon">
-                                <img src="../../../../assets/svg/extended.svg" alt="Extend">
+                              <div class="contractActionbtnGap"
+                                *ngIf="(!contract.childContractId > 0) && contract.approved"></div>
+                              <div class="contractActionbtn2">
+                                <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'update')">
+                                  <div class="btnLeftIcon">
+                                    <img src="../../../../assets/svg/eye.svg" alt="Extend">
+                                  </div>
+                                  <div class="btnRightTextContainer">
+                                    <div id="triangleRight"
+                                      style="border-color: transparent transparent transparent rgb(226, 226, 226);  border-width: 26px 0px 0px 12px;">
+                                    </div>
+                                    <div class="btnRightText">Weergeven</div>
+                                  </div>
+                                </button>
                               </div>
-                            </button>
+                            </div>
                           </div>
-                          <div class="contractActionbtnGap" *ngIf="! contract.childContractId > 0 "></div>
-                          <div class="contractActionbtn2">
-                            <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
-                              (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'update')">
-                              <div class="btnLeftIcon">
-                                <img src="../../../../assets/svg/eye.svg" alt="Extend">
-                              </div>
-                              <div class="btnRightTextContainer">
-                                <div id="triangleRight"
-                                  style="border-color: transparent transparent transparent rgb(226, 226, 226);  border-width: 26px 0px 0px 12px;">
-                                </div>
-                                <div class="btnRightText">Weergeven</div>
-                              </div>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
 
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(1,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 1">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(1,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 1">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -147,47 +151,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Tuesday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(2,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 2">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Tuesday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(2,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 2">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -196,47 +202,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Wednesday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(3,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 3">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Wednesday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(3,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 3">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -245,47 +253,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Thursday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(4,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 4">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Thursday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(4,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 4">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -294,47 +304,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Friday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(5,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 5">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Friday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(5,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 5">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -343,47 +355,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Saturday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(6,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 6">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Saturday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(6,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 6">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -392,47 +406,49 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-m">
-              <!--Sunday is Selected Date for this Column-->
-              <!--Checking Contracts not Null for the Person-->
-              <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
-                <!--Checking Contracts Found for the Person-->
-                <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
-                  <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
-                  <ng-container *ngFor="let contract of personContract.contracts">
-                    <!--Checking Contract has WorkDays not Null-->
-                    <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
-                      <!--Checking Contract WorkDays Found-->
-                      <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
-                        <!--Checking Selected Day is Found-->
-                        <ng-container *ngIf="CheckWeekDayinWorkDays(7,contract.workSchedule.workDays) else EmptyColum">
-                          <!--Loop WorkDays of the Contract-->
-                          <ng-container *ngFor="let workday of contract.workSchedule.workDays">
-                            <!--Checking dayOfWeek is Selected Date-->
-                            <ng-container *ngIf="workday.dayOfWeek === 7">
-                              <!--Checking workday.workTimes is not Null-->
-                              <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
-                                <!--Checking workday.workTimes is Found-->
-                                <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
-                                  <!--Here we create Full Column Clickable-->
-                                  <div class="FullCol Contract_{{contract.customerContractId}}"
-                                    (mouseover)="onContractOver(contract.customerContractId,true)"
-                                    (mouseout)="onContractOver(contract.customerContractId,false)"
-                                    [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
-                                    <!--Here we create Workbar with marginleft for starting time and working time as Width -->
-                                    <div class="workbar" [ngClass]="[ contract.childContractId>0 ? 'green': 'orange' ]"
-                                      [style.margin-left.px]="getWorkBarLeft(workday)"
-                                      [style.width.px]="getWorkBarWidth(workday)">
-                                      <!--Here we create Work Hours Div to Show While Rollover-->
-                                      <div class="workbarTime">
-                                        {{getWorkBarTime(workday)}}
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Sunday is Selected Date for this Column-->
+                  <!--Checking Contracts not Null for the Person-->
+                  <ng-container *ngIf="personContract.contracts !==null else EmptyColum">
+                    <!--Checking Contracts Found for the Person-->
+                    <ng-container *ngIf="personContract.contracts.length >0 else EmptyColum">
+                      <!--Loop Contracts of the Person to Check he has the Work for the Selected Day-->
+                      <ng-container *ngFor="let contract of personContract.contracts">
+                        <!--Checking Contract has WorkDays not Null-->
+                        <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
+                          <!--Checking Contract WorkDays Found-->
+                          <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
+                            <!--Checking Selected Day is Found-->
+                            <ng-container
+                              *ngIf="CheckWeekDayinWorkDays(7,contract.workSchedule.workDays) else EmptyColum">
+                              <!--Loop WorkDays of the Contract-->
+                              <ng-container *ngFor="let workday of contract.workSchedule.workDays">
+                                <!--Checking dayOfWeek is Selected Date-->
+                                <ng-container *ngIf="workday.dayOfWeek === 7">
+                                  <!--Checking workday.workTimes is not Null-->
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                    <!--Checking workday.workTimes is Found-->
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                      <!--Here we create Full Column Clickable-->
+                                      <div class="FullCol Contract_{{contract.customerContractId}}"
+                                        (mouseover)="onContractOver(contract.customerContractId,true)"
+                                        (mouseout)="onContractOver(contract.customerContractId,false)"
+                                        [ngClass]="[ RollOverContract === contract.customerContractId ? 'SelectedContract' : '' , (getWorkBarWidth(workday)) ? 'ShowMe' : 'HideMe' ]">
+                                        <!--Here we create Workbar with marginleft for starting time and working time as Width -->
+                                        <div class="workbar"
+                                          [ngClass]="[ contract.childContractId>0 ? 'green': !contract.approved ? 'purple' : 'orange' ]"
+                                          [style.margin-left.px]="getWorkBarLeft(workday)"
+                                          [style.width.px]="getWorkBarWidth(workday)">
+                                          <!--Here we create Work Hours Div to Show While Rollover-->
+                                          <div class="workbarTime">
+                                            {{getWorkBarTime(workday)}}
+                                          </div>
+                                        </div>
+                                        <div class="centerline"></div>
                                       </div>
-                                    </div>
-                                    <div class="centerline"></div>
-                                  </div>
+                                    </ng-container>
+                                  </ng-container>
                                 </ng-container>
                               </ng-container>
                             </ng-container>
@@ -441,15 +457,15 @@
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td class="col-split col-split-l">
-              <div class="FullCol Contract_0">
-                <div class="centerline"></div>
-              </div>
-            </td>
-          </tr>
+                </td>
+                <td class="col-split col-split-l">
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
           <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
             <td class="error" colspan="10">{{errorMsg}}</td>
           </tr>

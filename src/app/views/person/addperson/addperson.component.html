@@ -1,5 +1,5 @@
 <app-headers></app-headers>
-<app-menu [SelectedPage]="SelectedPage"></app-menu>
+<app-menu [CustomerVatNumber]="vatNumber" [SelectedPage]="SelectedPage"></app-menu>
 <div class="row">
   <div class="col col-sm-3"></div>
   <div class="col col-sm-6 center-block"><img src="../../../../assets/svg/createPerson.svg" style="left:-15"><br />
@@ -42,7 +42,7 @@
               </div>
               <div class="col col-sm-7"></div>
             </div>
-            
+
             <div class="fcontent">
               <div class="row">
                 <div class="col-sm-5 inputWithImg">
@@ -70,9 +70,9 @@
                       </select>
                     </div>
                     <div class="col col-sm-5">
-                      <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="monthIndex"
-                        name="dd_months" class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)"
-                        ng-dropdown required="required">
+                      <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="monthIndex" name="dd_months"
+                        class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
+                        required="required">
                         <option *ngFor="let data of dropDownMonth let j= index" [attr.data-index]="j" [value]="j">
                           {{data}}</option>
                       </select>
@@ -235,7 +235,7 @@
             </div>
           </div>
 
-          
+
           <div id="CustomerContact" class="customerBox">
             <div class="row panelheader">
               <div class="col col-sm-5 fright">
@@ -296,7 +296,7 @@
                 <div class="col-sm-6 inputWithImg">
                   <label class="titleBold"> Verplaatst zich met </label>
                   <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet>
- 
+
                 </div>
               </div>
             </div>
@@ -335,7 +335,7 @@
                 </button>
               </div>
             </div>
-          </div>          
+          </div>
 
           <div id="PersonContact" class="customerBox">
             <div class="row panelheader">
@@ -386,7 +386,8 @@
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-2 netExpense">
-                    <ui-switch [checked]="netExpenseSwitch" (change)="switchNetExpense($event)" size="small"> </ui-switch>
+                    <ui-switch [checked]="netExpenseSwitch" (change)="switchNetExpense($event)" size="small">
+                    </ui-switch>
                   </div>
                   <div class="col-sm-10">
                     <label class="titleBold">onkostenvergoeding </label>
@@ -429,8 +430,10 @@
             </div>
             <div class="row inputWithImgNew PersonContactContent">
               <div class="col-sm-12 ">
-                <textarea rows="6" #extraRef class="form-control" formControlName="extra" (change)="addittionalInformation(extraRef.value)" cols="80"
-                 (keypress)="addittionalInformation(extraRef.value)" (keyup)="addittionalInformation(extraRef.value)" name="extra"></textarea>
+                <textarea rows="6" #extraRef class="form-control" formControlName="extra"
+                  (change)="addittionalInformation(extraRef.value)" cols="80"
+                  (keypress)="addittionalInformation(extraRef.value)" (keyup)="addittionalInformation(extraRef.value)"
+                  name="extra"></textarea>
                 <div class="form-control-feedback"
                   *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">
                   <img src="../../assets/img/InvalidIcon.png" alt="">
