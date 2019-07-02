@@ -1,4 +1,3 @@
 <select [ngModel]="selectedIndex" id="dd_currency" name="dd_currency" [disabled]="!inputdisabled" class="currency selectcomponent"
     (change)="onChange($event)" ng-dropdown required="required">
 <option *ngFor="let data of datacurrencyDropDown let i= index" [attr.data-index]="i" [value]="i">{{data}}</option>
-<div class="error">{{ errorMsg }}</div>

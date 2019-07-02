@@ -145,17 +145,10 @@ export class StatuteComponent implements OnInit {
     for (let i = 0; i < this.loadStatuteSettingsArray.length; i++)
       this.newArrayCoeff[i] = this.loadStatuteSettingsArray[i].coefficient;
 
-      this.logger.log(this.loadStatuteSettingsArray);
-      this.logger.log(this.newArrayCoeff);
-    // this.logger.log("load coefficients statute settings array");
-    // this.logger.log(this.statuteSettings);
-
     this.emitData("load");
   }
 
   cloneArray() {
-
-    this.logger.log("clone array called");
 
     // this.statuteSettings = this.loadStatuteSettingsArray;
     let counter: number = 0;
@@ -439,8 +432,13 @@ export class StatuteComponent implements OnInit {
   onChangeCoefficient(value: number, i: number) {
     this.coefficient = value;
     this.coefficientArray[i] = value;
-    // this.logger.log("changing coefficient");
-    this.replaceArrayCoefficient(value, i);
+
+    //Coefficient can only be 3.5 at most! 
+    if(value > 3.5)
+      this.replaceArrayCoefficient(3.5, i);
+    else
+      this.replaceArrayCoefficient(value, i);
+
   }
 
   onMealChange($event, ctrlid: number) {

@@ -5,11 +5,11 @@ import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
   PhoneNumber, Address, StatuteSetting, Statute, ParitairCommitee, MealVoucherSettings,
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
-  InvoiceSettings, Language, Contact
+  InvoiceSettings, Language, Contact, LoginToken
 } from '../shared/models';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { LegalComponent } from '../../app/componentcontrols/legal/legal.component';
-import { ChildActivationEnd } from '@angular/router';
+import { ChildActivationEnd, ActivatedRoute, Router } from '@angular/router';
 import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
@@ -92,6 +92,10 @@ export class HeadQuartersComponent implements OnInit {
   changeEvent: MouseEvent;
   _isDisabled: boolean = true;
 
+  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+  public Id = "";
+  public currentPage = "";
+
   public EditdataFromComponents;
   public selectedLegalObject: any = { "FormName": "NV" };
 
@@ -139,6 +143,22 @@ export class HeadQuartersComponent implements OnInit {
     //this.legalString = "BVBA";
     this.createObjects();  //check validations
 
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+    localStorage.getItem('dpsLoginToken') !== '' &&
+    localStorage.getItem('dpsLoginToken') !== null) {
+    const sub = this.route.params.subscribe((params: any) => {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.Id = params.id;
+      this.currentPage = params.page;
+    });
+  } else {
+    // this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+    // // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+
+    // this.logger.log('Redirect Breaked 9');
+    // //this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+  }
+
   }
 
   constructor(
@@ -147,6 +167,8 @@ export class HeadQuartersComponent implements OnInit {
     private customerService: CustomersService,
     private dialog: MatDialog, 
     private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router,
     private data: DataService) {
 
   }
@@ -324,16 +346,27 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  handleError(errorMessage: any) {
+  handleError(errorMessage: HttpErrorResponse) {
+
+    // this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
+
+    this.ShowMessage("errorMessage="+errorMessage,'');
 
     this.allowCustomer = false;
 
     if (errorMessage.status === 400)
-      this.ErrorResponseMessage = "Btw-nummer is niet in correct formaat";
+      this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
     if (errorMessage.status === 204)
-      this.ErrorResponseMessage = "Geen record in ons systeem";
+      this.ShowMessage("Geen record in ons systeem",'');
     if (errorMessage.status === 409)
-      this.ErrorResponseMessage = "Klant met vatnummer bestaat al";
+    {
+      console.log('error conflict 409');
+      this.router.navigate(['/'+'customer/'+this.HQForm.get('vatNumber').value]);
+      this.router.navigate(['/dashboard']);
+
+      this.ShowMessage("Klant met vatnummer bestaat al",'');
+        
+    }
 
   }
 

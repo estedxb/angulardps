@@ -1602,7 +1602,15 @@ export class AddPersonComponent implements OnInit {
   }
 
   onHourlyWageReceive($event) {
-    this.DpsPersonObject.renumeration.hourlyWage = parseInt($event, 10);
+    if($event>=environment.grossHoulyWageMinimum)
+      this.DpsPersonObject.renumeration.hourlyWage = parseInt($event, 10);
+    else
+     {
+      // grossHoulyWageMinimum: 5,
+      this.AddPersonForm2.get('grossHourlyWage').setValue(5);
+      this.DpsPersonObject.renumeration.hourlyWage = 5;
+      this.ShowMessage('Het bruto-uurloon moet minstens 5 zijn','');
+     }
   }
 
   onNetExpensesReceive($event) {
@@ -1626,12 +1634,9 @@ export class AddPersonComponent implements OnInit {
 
   addittionalInformation($event) {
 
-    this.logger.log("extra=" + $event);
-
     if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null)
       this.DpsPersonObject.addittionalInformation = $event;
 
-    this.logger.log(this.DpsPersonObject);
   }
 
   enableALLFields() {
@@ -1683,7 +1688,6 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.get('city').valid === true &&
       this.AddPersonForm1.get('postalCode').valid === true &&
       this.AddPersonForm1.get('mobileNumber').valid === true &&
-      this.AddPersonForm1.get('vastNumber').valid === true &&
       this.AddPersonForm1.get('emailAddress').valid === true &&
       this.AddPersonForm1.get('iban').valid === true) {
       console.log('form valid');
@@ -1740,12 +1744,6 @@ export class AddPersonComponent implements OnInit {
     if (this.showFormIndex === 1) {
 
       this.buttonPressed = true;
-
-      //  this.spinner.start();
-
-      // setTimeout(() => {
-      //    this.spinner.stop();
-      // }, 5000);
 
       if (this.checkValidation())
         this.showFormIndex = 2;
