@@ -205,9 +205,9 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject = new StatuteSetting();
       this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
 
-      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0
-      this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0
-      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0
+      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0.0;
+      this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0.0;
+      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0.0;
       this.StatuteSettingsObject.coefficient = 0;
 
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
@@ -444,9 +444,9 @@ export class StatuteComponent implements OnInit {
   loadzeroArray() {
 
     for (let i: number = 0; i < this.statutes.length; i++) {
-      this.totalArray.push(0);
-      this.wegervaalArray.push(0);
-      this.minimumurenArray.push(0);
+      this.totalArray.push(0.0);
+      this.wegervaalArray.push(0.0);
+      this.minimumurenArray.push(0.0);
     }
 
   }
@@ -514,7 +514,7 @@ export class StatuteComponent implements OnInit {
     this.logger.log(this.statuteSettings);
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.employerShare = parseFloat(this.wegervaalArray[i]);
     }
     //else {
     //   this.createArrayData();
@@ -528,7 +528,7 @@ export class StatuteComponent implements OnInit {
   replaceArrayTotal(i: number) {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.totalWorth = parseFloat(this.totalArray[i]);
     }
     // } else {
     //   this.createArrayData();
@@ -540,7 +540,7 @@ export class StatuteComponent implements OnInit {
   replaceArrayMinimum(i: number) {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.minimumHours = parseFloat(this.minimumurenArray[i]);
     }
     //else {
     //   this.createArrayData();
