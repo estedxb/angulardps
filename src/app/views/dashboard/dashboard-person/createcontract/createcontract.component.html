@@ -53,9 +53,11 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Functie: </label>
-                    <select id="position" name="position" class='form-control' required [(ngModel)]='positionSelected'
-                        (ngModelChange)='onPositionsChange($event)' [ngModelOptions]="{standalone: true}"
+                    <label class="titleBold"> Functie: </label><br />
+                    <label class="titleNormal">{{positionSelectedName}}</label>
+                    <select id="position" name="position" class='form-control' required *ngIf="false"
+                        [(ngModel)]='positionSelectedName' (ngModelChange)='onPositionsChange($event)'
+                        [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let dpsPosition of dpsPositionsData'
                             [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
@@ -64,7 +66,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
                     <select id="position" name="position" class='form-control' required
-                        [(ngModel)]='contractReasonSelected' (ngModelChange)='onReasonChange($event)'
+                        [(ngModel)]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'
@@ -102,8 +104,9 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
-                    <select id="location" name="location" class='form-control' required [(ngModel)]='locationSelected'
-                        (ngModelChange)='onLocationChange($event)' [ngModelOptions]="{standalone: true}"
+                    <select id="location" name="location" class='form-control' required
+                        [(ngModel)]='locationSelectedName' (ngModelChange)='onLocationChange($event)'
+                        [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let location of locationsData' [value]="location.id">
                             {{location.name}} </option>
