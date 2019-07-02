@@ -122,8 +122,8 @@ export class ContactPersonComponent implements OnInit {
   ngOnInit() {
 
     this.CTForm = new FormGroup({
-      firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
+      firstname: new FormControl('', [Validators.required]),
+      lastname: new FormControl('', [Validators.required]),
       alsCheck: new FormControl(),
       language: new FormControl(''),
       position: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
