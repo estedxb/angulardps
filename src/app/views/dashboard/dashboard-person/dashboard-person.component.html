@@ -67,7 +67,7 @@
                         <ng-container *ngIf="contract.workSchedule.workDays !== null else EmptyColum">
                           <!--Here we are Added the Extend and Edit Contract Button for all contract of the Person-->
                           <div class="contractActions"
-                            [style.width.px]="CellWidth * contract.workSchedule.workDays.length"
+                            [style.width.px]="CellWidth * (contract.workSchedule.workDays[contract.workSchedule.workDays.length-1].dayOfWeek - contract.workSchedule.workDays[0].dayOfWeek + 1)"
                             [style.margin-left.px]="getContractButtonLeft(contract.workSchedule.workDays, ((!contract.childContractId > 0) && contract.approved) ? 2 : 1 )"
                             (mouseover)="onContractOver(contract.customerContractId,true)"
                             (mouseout)="onContractOver(contract.customerContractId,false)"
@@ -115,15 +115,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(1,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(1,contract.workSchedule.workDays) else EmptyColum_1">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 1">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_1">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_1">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -146,6 +146,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_1>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -166,15 +173,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(2,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(2,contract.workSchedule.workDays) else EmptyColum_2">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 2">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_2">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_2">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -197,6 +204,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_2>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -217,15 +231,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(3,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(3,contract.workSchedule.workDays) else EmptyColum_3">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 3">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_3">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_3">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -248,6 +262,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_3>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -268,15 +289,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(4,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(4,contract.workSchedule.workDays) else EmptyColum_4">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 4">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_4">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0 else EmptyColum_4">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -299,6 +320,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_4>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -319,15 +347,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(5,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(5,contract.workSchedule.workDays) else EmptyColum_5">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 5">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_5">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_5">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -350,6 +378,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_5>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -370,15 +405,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(6,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(6,contract.workSchedule.workDays) else EmptyColum_6">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 6">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_6">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_6">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -401,6 +436,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_6>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
@@ -421,15 +463,15 @@
                           <ng-container *ngIf="contract.workSchedule.workDays.length>0 else EmptyColum">
                             <!--Checking Selected Day is Found-->
                             <ng-container
-                              *ngIf="CheckWeekDayinWorkDays(7,contract.workSchedule.workDays) else EmptyColum">
+                              *ngIf="CheckWeekDayinWorkDays(7,contract.workSchedule.workDays) else EmptyColum_7">
                               <!--Loop WorkDays of the Contract-->
                               <ng-container *ngFor="let workday of contract.workSchedule.workDays">
                                 <!--Checking dayOfWeek is Selected Date-->
                                 <ng-container *ngIf="workday.dayOfWeek === 7">
                                   <!--Checking workday.workTimes is not Null-->
-                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum">
+                                  <ng-container *ngIf="workday.workTimes !==null else EmptyColum_7">
                                     <!--Checking workday.workTimes is Found-->
-                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum">
+                                    <ng-container *ngIf="workday.workTimes.length >0  else EmptyColum_7">
                                       <!--Here we create Full Column Clickable-->
                                       <div class="FullCol Contract_{{contract.customerContractId}}"
                                         (mouseover)="onContractOver(contract.customerContractId,true)"
@@ -452,6 +494,13 @@
                                 </ng-container>
                               </ng-container>
                             </ng-container>
+                            <ng-template #EmptyColum_7>
+                              <div class="FullCol Contract_{{contract.customerContractId}}"
+                                (mouseover)="onContractOver(contract.customerContractId,true)"
+                                (mouseout)="onContractOver(contract.customerContractId,false)">
+                                <div class="centerline"></div>
+                              </div>
+                            </ng-template>
                           </ng-container>
                         </ng-container>
                       </ng-container>
