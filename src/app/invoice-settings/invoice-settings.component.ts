@@ -124,10 +124,9 @@ export class InvoiceSettingsComponent implements OnInit {
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
 
-    if(this.dimonaValue < environment.DimonaCostMinium || this.dimonaValue > environment.DimonaCostMaximum)
-    {
-        this.showMessage('','');
-    }
+    // if(this.dimonaValue < environment.DimonaCostMinium || this.dimonaValue > environment.DimonaCostMaximum)
+    // {
+    // }
       
 
     if(this.ISForm.get('mobilebox').value === "")
