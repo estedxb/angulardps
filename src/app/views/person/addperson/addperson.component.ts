@@ -1033,7 +1033,7 @@ export class AddPersonComponent implements OnInit {
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
       this.logger.log('data=' + data);
       this.bban = data;
       this.soapCallGetBIC();

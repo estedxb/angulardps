@@ -165,6 +165,9 @@ export class AddCustomerComponent implements OnInit {
             }
           );
         }
+        else {
+          this.logger.log("one of the form is not valid");
+        }
       } else {
         this.logger.log('HQdata or CTdata is null or undefined !!');
       }

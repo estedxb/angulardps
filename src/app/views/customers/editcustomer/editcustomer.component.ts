@@ -44,8 +44,6 @@ export class EditCustomerComponent implements OnInit {
   ngDoCheck() {
     if (this.HQdata !== this.oldHQdata) {
       this.oldHQdata = this.HQdata;
-      // this.childEvent.emit(this.HQdata);
-      // this.data.currentMessage.subscribe(data => this.HQdata = data);
     }
   }
 

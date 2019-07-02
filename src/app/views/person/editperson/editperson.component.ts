@@ -315,27 +315,6 @@ export class EditPersonComponent implements OnInit {
 
     this.calendarData = this.dayString + '/' + this.monthString + '/' + this.yearString;
 
-    // if( day>=1 && day<=31)
-    //     this._selectedIndexdays = day;
-
-    // if(month >=1 && month <=12)
-    //     this._selectedIndexMonth = month - 1;
-
-    // this._selectedIndexYear = year;
-
-    // let currentYear: any = new Date();
-    // currentYear = currentYear.getFullYear();
-    // let currentYearTwoDigits = currentYear % 100;
-
-    // if(year >=0 && year<=currentYearTwoDigits)
-    // {
-    //   for(let i=0;i<this.dropDownYear.length;i++)
-    //   {
-    //     if(this.dropDownYear[i]===(year+2000).toString())
-    //       this.selectedIndexYear = i;
-    //   }
-    // }
-
   }
 
   validatePersonSsid($event) {

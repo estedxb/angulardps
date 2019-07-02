@@ -968,6 +968,8 @@ export class InvoiceSettingsComponent implements OnInit {
       formGroup.controls['AndreBox1'].setValue(this.otherAllowances[i].codeId);
       formGroup.controls['AndreBox2'].setValue(this.otherAllowances[i].amount);
       this.currencyDataOther[i] = this.otherAllowances[i].nominal;
+
+      this.Andre.removeAt(i);
     }
 
   }
