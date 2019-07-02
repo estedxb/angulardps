@@ -80,6 +80,8 @@ export class PersonDocumentComponent implements OnInit {
     });
 
   }
+ 
+
 
   onOptionSelected(event) {
     this.logger.log(event); //option value will be sent as event
@@ -163,6 +165,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadMedicalAttestationFileToActivity() {
     this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.MedicalAttestation, this.currentPerson.medicalAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
 
     }, error => {
       this.logger.log(error);
@@ -205,6 +208,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadVcaAttestationFileToActivity() {
     this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.VcaAttestation, this.currentPerson.vcaAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -250,6 +254,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadConstructionCardsFileToActivity() {
     this.personService.constructionCardsFile(this.constructionCardsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.ConstructionCards, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -296,6 +301,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadStudentAtWorkFileToActivity() {
     this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.currentPerson.studentAtWorkProfile.attestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -351,6 +357,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadDriversFileToActivity() {
     this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense, this.driverProfilesItem.attestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -413,6 +420,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadOtherDocumentsToActivity() {
     this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -432,7 +440,9 @@ export class PersonDocumentComponent implements OnInit {
     this.updatePerson();
   }
 
-
+  refreshPersonData() {
+    this.getPersonBySSIDVatnumber(this.SocialSecurityId, this.VatNumber);
+  }
 
   onStatusChange(event, i) {
     this.logger.log('Position index : ' + i + ', Enabled : ' + event);
