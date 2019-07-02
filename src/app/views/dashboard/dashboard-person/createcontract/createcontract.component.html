@@ -9,7 +9,7 @@
             <img src='../../../assets/svg/checklist_add.svg' *ngIf="mode==='new' || mode==='extend'">
             <img src='../../../assets/svg/checklist_eye.svg' *ngIf="mode==='update' || mode==='edit'">
             <!--<img src='../../../assets/svg/checklist_edit.svg' *ngIf="mode==='edit'">-->
-            <br /> <label>Contract aanmaken</label>
+            <br /> <label>{{ mode==='update' ? 'Contract raadplegen' : 'Contract aanmaken' }}</label>
             <hr>
         </div>
     </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 inputWithImg">
-                    <label class="titleBold"> Voorname: </label>
+                    <label class="titleBold"> Voornaam: </label>
                     <input formControlName="firstname" class="form-control" name="firstname" type="text" required
                         disabled />
                     <div class="form-control-feedback"
@@ -138,7 +138,7 @@
             </div>
             <div class="col col-sm-3 center-block">
                 <button class="greenbtn redbtn" id="btnCancelContract" name="btnCancelContract"
-                    (click)="onCancelContractClick()"><span>Annuleren</span>
+                    (click)="onCancelContractClick()"><span>Contract annuleren</span>
                 </button>
             </div>
         </div>

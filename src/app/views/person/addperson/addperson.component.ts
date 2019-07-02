@@ -309,7 +309,7 @@ export class AddPersonComponent implements OnInit {
       lastName: new FormControl('', [Validators.required]),
       street: new FormControl('', [Validators.required]),
       streetNumber: new FormControl('', [Validators.required]),
-      bus: new FormControl('', [Validators.required]),
+      bus: new FormControl('', []),
       city: new FormControl('', [Validators.required]),
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
