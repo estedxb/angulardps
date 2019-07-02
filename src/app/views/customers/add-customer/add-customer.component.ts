@@ -95,7 +95,7 @@ export class AddCustomerComponent implements OnInit {
   receiveGeneralObject($event) {
     // this.logger.log('received in home component GL data');
     this.GLdata = $event;
-    // this.logger.log(this.GLdata);
+    this.logger.log(this.GLdata);
   }
 
   receiveStatuteData($event) {
@@ -184,7 +184,7 @@ export class AddCustomerComponent implements OnInit {
         if (this.HQdata !== null && this.HQdata !== undefined) {
           if (this.GLdata !== null && this.GLdata !== undefined) {
             this.HQdata.customer.vcaCertification = new VcaCertification();
-            this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+            this.HQdata.customer.vcaCertification.cerified = this.GLdata.vcaObject.cerified;
             this.HQdata.bulkContractsEnabled = this.GLdata.blk;
           }
 

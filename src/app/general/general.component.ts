@@ -49,6 +49,8 @@ export class GeneralComponent implements OnInit {
     this.vcaObject = new VcaCertification();
     this.vcaObject.cerified = false;
     this.blkContracten = false;    
+
+    this.emitData();
   }
 
 
