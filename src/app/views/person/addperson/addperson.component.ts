@@ -49,7 +49,7 @@ export class AddPersonComponent implements OnInit {
 
   public functieBox: FormArray;
   public dpsLoginToken: LoginToken = new LoginToken();
-  public vatNumber: string = '';
+  public vatNumber = '';
   public languageString;
 
   public DpsPersonObject: DpsPerson;
@@ -83,18 +83,18 @@ export class AddPersonComponent implements OnInit {
   public selectedGenderIndex;
   public ssid: string;
   public totalString: string;
-  public selectedPositionIndex: number = 0;
-  public selectedStatuteIndex: number = 0;
+  public selectedPositionIndex = 0;
+  public selectedStatuteIndex = 0;
 
-  public netExpenseSwitch: boolean = false;
-  public switchDistance: boolean = false;
+  public netExpenseSwitch = false;
+  public switchDistance = false;
 
-  public dayIndex: number = 0;
-  public monthIndex: number = 0;
-  public yearIndex: number = 0;
-  public buttonPressed: boolean = false;
+  public dayIndex = 0;
+  public monthIndex = 0;
+  public yearIndex = 0;
+  public buttonPressed = false;
 
-  public extra: string = "";
+  public extra = '';
 
   public selectedlanguageObject: any = {
     name: 'Dutch',
@@ -120,7 +120,7 @@ export class AddPersonComponent implements OnInit {
   public bban: any = '';
   public bbic: any = '';
   public iban: any = '';
-  public errorMessage: string = "";
+  public errorMessage: string = '';
 
   public Id = '';
   public currentPage = '';
@@ -387,7 +387,7 @@ export class AddPersonComponent implements OnInit {
 
     for (let i = 0; i < maindatas.length; i++) {
       let positionObject = maindatas[i].position.name;
-      if (maindatas[i].position.name !== "") {
+      if (maindatas[i].position.name !== '') {
         this.dataDropDownFunctie.push(positionObject);
         this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       }
@@ -919,13 +919,13 @@ export class AddPersonComponent implements OnInit {
         if (res.person.firstName === null || res.person.lastName === null || res.customerPostionId === null) {
           this.recordExists = false;
           this.enableALLFields();
-          this.errorMessage = "";
+          this.errorMessage = '';
         }
         else {
           this.recordExists = true;
           this.disableAllFields();
           this.ShowMessage('Persoon bestaat al!', '');
-          this.errorMessage = "Persoon bestaat al!";
+          this.errorMessage = 'Persoon bestaat al!';
         }
       },
         (err: HttpErrorResponse) => {
@@ -970,7 +970,7 @@ export class AddPersonComponent implements OnInit {
 
   loadDOBData(dateOfBirth: string) {
 
-    this.logger.log("load dob data");
+    this.logger.log('load dob data');
 
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
@@ -1337,8 +1337,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.renumeration = new Renumeration();
     this.DpsPersonObject.renumeration.costReimbursment = false;
 
-    if (this.extra === "" && this.showFormIndex === 1)
-      this.DpsPersonObject.addittionalInformation = "" + this.extra;
+    if (this.extra === '' && this.showFormIndex === 1)
+      this.DpsPersonObject.addittionalInformation = '' + this.extra;
 
     this.DpsPersonObject.medicalAttestation = new MedicalAttestation();
     this.DpsPersonObject.medicalAttestation.location = '';
@@ -1399,7 +1399,7 @@ export class AddPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.logger.log("received zich met data=" + $event.vehicleName);
+    this.logger.log('received zich met data=' + $event.vehicleName);
 
     this.receiveZichmetdata = $event.vehicleName;
     this.zichmetdata = $event.vehicleName;
@@ -1445,7 +1445,7 @@ export class AddPersonComponent implements OnInit {
     this.selectedStatuteObject.brightStaffingID = this.statutes[$event.target.value].BrightStaffingID;
 
     this.logger.log(this.statutes);
-    this.logger.log("selected object");
+    this.logger.log('selected object');
     this.logger.log(this.selectedStatuteObject);
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
@@ -1602,15 +1602,14 @@ export class AddPersonComponent implements OnInit {
   }
 
   onHourlyWageReceive($event) {
-    if($event>=environment.grossHoulyWageMinimum)
+    if ($event >= environment.grossHoulyWageMinimum)
       this.DpsPersonObject.renumeration.hourlyWage = parseInt($event, 10);
-    else
-     {
+    else {
       // grossHoulyWageMinimum: 5,
       this.AddPersonForm2.get('grossHourlyWage').setValue(5);
       this.DpsPersonObject.renumeration.hourlyWage = 5;
-      this.ShowMessage('Het bruto-uurloon moet minstens 5 zijn','');
-     }
+      this.ShowMessage('Het bruto-uurloon moet minstens 5 zijn', '');
+    }
   }
 
   onNetExpensesReceive($event) {
@@ -1641,7 +1640,7 @@ export class AddPersonComponent implements OnInit {
 
   enableALLFields() {
 
-    this.logger.log("enabled all fields");
+    this.logger.log('enabled all fields');
 
     this.AddPersonForm1.get('firstName').enable();
     this.AddPersonForm1.get('lastName').enable();
@@ -1731,8 +1730,8 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.statute.type = this.statutes[this.selectedStatuteIndex].type;
     this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedStatuteIndex].BrightStaffingID;
 
-    if (this.extra !== "")
-      this.DpsPersonObject.addittionalInformation = "" + this.extra;
+    if (this.extra !== '')
+      this.DpsPersonObject.addittionalInformation = '' + this.extra;
 
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
 
