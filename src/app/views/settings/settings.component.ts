@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { LoggingService } from '../../shared/logging.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginToken } from 'src/app/shared/models';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-settings',
@@ -8,11 +12,24 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class SettingsComponent implements OnInit {
   public SelectedPage = 'Settings';
-  constructor(
+  public dpsLoginToken: LoginToken = new LoginToken();
+  public vatNumber: string = '';
+  constructor(  
+    private route: ActivatedRoute, private router: Router,
+    private logger: LoggingService,
     // private spinner: NgxUiLoaderService
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('dpsLoginToken') !== undefined &&
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
+      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+      this.vatNumber = this.dpsLoginToken.customerVatNumber;
+    } else {
+      this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+    }
   }
 
 }
