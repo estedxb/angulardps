@@ -943,7 +943,7 @@ export class InvoiceSettingsComponent implements OnInit {
       {
         this.logger.log("removing at i="+i);
         this.logger.log("Object to be removed=");
-        this.logger.log(this.Andre)
+        this.logger.log(this.Andre);
         this.Andre.removeAt(i);
         this.logger.log("Object to be removed=");
         this.logger.log(this.otherAllowances[i]);
@@ -959,8 +959,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   refreshTable() 
   {
-    this.logger.log("refreshing table");
-    this.logger.log(this.Andre);
 
     for(let i=0;i<this.Andre.length;i++)
     {

@@ -348,7 +348,7 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: HttpErrorResponse) {
 
-    this.ShowMessage("errorMessage="+errorMessage,'');
+    console.log("there is an error with api call to getCustomersbyVatNumber");
 
     this.allowCustomer = false;
 

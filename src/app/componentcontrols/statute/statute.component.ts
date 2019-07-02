@@ -46,6 +46,7 @@ export class StatuteComponent implements OnInit {
   public countStatutes: number;
   public statuteSettings = [];
   public newArrayCoeff = [];
+  public incrementer = 0;
 
   StatuteSettingsObject: StatuteSetting;
   statuteObject: Statute;
@@ -150,7 +151,6 @@ export class StatuteComponent implements OnInit {
 
   cloneArray() {
 
-    // this.statuteSettings = this.loadStatuteSettingsArray;
     let counter: number = 0;
 
     this.loadStatuteSettingsArray.forEach(element => {
@@ -164,27 +164,7 @@ export class StatuteComponent implements OnInit {
       this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
       this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
       this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
-
-      // this.StatuteSettingsObject = new StatuteSetting();
-      // this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
-
-      // this.StatuteSettingsObject.mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
-      // this.StatuteSettingsObject.mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-      // this.StatuteSettingsObject.mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
-
-      // this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-      // this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
-      // this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
-      // this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
-      // this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
-
-      // this.StatuteSettingsObject.statute = new Statute();
-      // this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
-      // this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
-      // this.StatuteSettingsObject.statute.brightStaffingID = parseInt(this.statutes[counter].BrightStaffingID,10);
-
-      // this.statuteSettings[counter] = this.StatuteSettingsObject;
+      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;     
 
       counter++;
     });
@@ -380,13 +360,25 @@ export class StatuteComponent implements OnInit {
       }
 
     }, error => this.errorMsg = error);    
-
+    
     if (this.countStatutes > 0)
     {
       if(this.STFormData.data === null || this.STFormData.data === undefined)
           this.loadCoefficientsEmpty();
       else
         this.cloneArray();
+    }
+  }
+
+  loadData() {
+
+    if(this.STFormData !== undefined && this.STFormData !== null)
+    if (this.STFormData != this.oldSFTFormData) {
+      //this.createStatuteSettingsArrayEmpty();
+      this.oldSFTFormData = this.STFormData;
+      if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+        this.loadInitialData();
+      }
     }
 
   }

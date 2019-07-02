@@ -30,7 +30,7 @@
     <app-general [GLFormData]="editObject" (childEvent)="receiveGeneralObject($event)"></app-general>
   </div>
   <div id="CustomerContact" class="statuteBox">
-      <app-statute [STFormData]="editObject" (childEvent)="receiveStatuteData($event)"></app-statute>
+      <app-statute *ngIf="editObject" [STFormData]="editObject" (childEvent)="receiveStatuteData($event)"></app-statute>
       <app-invoice-settings [FPFormData]="editObject" (childEvent)="receiveInvoiceData($event)"></app-invoice-settings>
     </div>
 </div>
