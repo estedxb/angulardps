@@ -348,16 +348,18 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: HttpErrorResponse) {
 
-    // this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
-
     this.ShowMessage("errorMessage="+errorMessage,'');
 
     this.allowCustomer = false;
 
     if (errorMessage.status === 400)
+    {
       this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
+    }
     if (errorMessage.status === 204)
+    {
       this.ShowMessage("Geen record in ons systeem",'');
+    }
     if (errorMessage.status === 409)
     {
       console.log('error conflict 409');
@@ -391,27 +393,29 @@ export class HeadQuartersComponent implements OnInit {
 
     this.loadData(response);
 
-    this.creditCheckboolean = response.customer.creditCheck.creditcheck;
-    this.creditCheckPending = response.customer.creditCheck.creditCheckPending;
-    this.creditCheckLimit = response.customer.creditCheck.creditLimit;
-    this.creditcheckEdit = response.customer.creditCheck.creditcheck;
+    if(response.customer.creditCheck !== undefined && response.customer.creditCheck !== null)
+    {
+      this.creditCheckboolean = response.customer.creditCheck.creditcheck;
+      this.creditCheckPending = response.customer.creditCheck.creditCheckPending;
+      this.creditCheckLimit = response.customer.creditCheck.creditLimit;
+      this.creditcheckEdit = response.customer.creditCheck.creditcheck;
+  
+      var today = new Date();
+      this.creditCheck = new CreditCheck();
+  
+      // assigning credit check object
+      this.creditCheck.creditLimit = this.creditCheckLimit; //this.creditCheckLimit;
+      this.creditCheck.creditcheck = this.creditCheckboolean;
+      this.creditCheck.creditCheckPending = this.creditCheckPending;
+      this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+  
+      if (this.creditCheckboolean === true)
+        this.creditLimit(this.creditCheckLimit);
+      else {
+        this.creditLimit(this.creditCheckLimit);
+      }
 
-    var today = new Date();
-    this.creditCheck = new CreditCheck();
-
-    // assigning credit check object
-    this.creditCheck.creditLimit = this.creditCheckLimit; //this.creditCheckLimit;
-    this.creditCheck.creditcheck = this.creditCheckboolean;
-    this.creditCheck.creditCheckPending = this.creditCheckPending;
-    this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-
-
-    if (this.creditCheckboolean === true)
-      this.creditLimit(this.creditCheckLimit);
-    else {
-      this.creditLimit(this.creditCheckLimit);
     }
-
   }
 
   clearFields() {
