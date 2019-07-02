@@ -546,7 +546,7 @@ export class HeadQuartersComponent implements OnInit {
     this.phoneNumber = new PhoneNumber();
 
     // assigning vca Object
-    this.vcaCertification.cerified = true;
+    this.vcaCertification.cerified = false;
 
     // assigning general email address object
     this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
