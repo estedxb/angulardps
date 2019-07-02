@@ -222,11 +222,7 @@ export class AddCustomerComponent implements OnInit {
 
   updateData() {
 
-    // this.logger.log("before update");
-    // this.logger.log(this.HQdata);
-
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
-      // this.logger.log('response=' + res);
       this.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
       this.logger.log('Redirect Breaked 11');

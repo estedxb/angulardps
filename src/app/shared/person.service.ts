@@ -91,7 +91,10 @@ export class PersonService {
     }
     // this.logger.log('PersonService getPersonsByVatNumber Data From = ' + getURL);
     const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
-    // this.logger.log(result);
+
+    this.logger.log("error");
+    this.logger.log(result);
+    
     return result;
   }
 
@@ -223,6 +226,9 @@ export class PersonService {
     } else if (error.status === 204) {
       this.logger.log('vat number doesnt exist ');
     } else if (error.status === 409) {
+      console.log('error conflict 409');
+      // this.router.navigate(['/'+'customer/'+'123456789101']);
+
       this.logger.log('user exists in the system, dont allow customer to create');
     } else {
       this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);

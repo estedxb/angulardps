@@ -415,8 +415,16 @@ export class PersonPositionComponent implements OnInit {
   }
 
   onHourlyWageReceive(grossHourlyWage: number) {
-    this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
-    this.changeMessage();
+
+    if(grossHourlyWage >=5)
+    {
+      this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
+      this.changeMessage();  
+    }
+    else {
+      
+    }
+
   }
 
 }
