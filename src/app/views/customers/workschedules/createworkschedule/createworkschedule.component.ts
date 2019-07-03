@@ -63,7 +63,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
-    this.WorkScheduleForm = new FormGroup({ name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 ]+$')]) });
+    this.WorkScheduleForm = new FormGroup({ name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9 -_.,#@!#%^&*()|\/?`~+=()]+$')]) });
     this.loadWorkScheduleToEdit();
   }
 
@@ -238,23 +238,8 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   addEmptyWorkTimeToCurrentDpsWorkSchedule() {
-    this.currentDpsWorkSchedule.workSchedule.workDays.forEach(function (wday) {
+    this.currentDpsWorkSchedule.workSchedule.workDays.forEach((wday) => {
       wday.workTimes.push({ startTime: '00:00', endTime: '00:00', title: '' });
-    });
-  }
-
-  removeWorkTimeFromCurrentDpsWorkSchedule(rowid) {
-    this.currentDpsWorkSchedule.workSchedule.workDays.forEach(function (wday) {
-      let i = 0;
-      let breaked = false;
-      wday.workTimes.forEach(function (wTimes) {
-        i += 1;
-        if (rowid === i && !breaked) {
-          this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule :: ', wTimes);
-          wday.workTimes.splice(rowid, 1);
-          breaked = true;
-        }
-      });
     });
   }
 
@@ -280,19 +265,39 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   removeRow(removeRowId: number) {
 
-    // this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
+    this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
     for (let i = 0; i < this.workScheduleRows.length; i++) {
-      // this.logger.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
+      this.logger.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
       const currentRow: WorkScheduleRow = this.workScheduleRows[i];
-      // this.logger.log('currentRow :: ', currentRow);
-      // this.logger.log('currentRow Row ID :: ', currentRow.rowid);
+      this.logger.log('currentRow :: ', currentRow);
+      this.logger.log('currentRow Row ID :: ', currentRow.rowid);
       if (currentRow.rowid === removeRowId) {
         this.workScheduleRows.splice(i, 1);
       }
     }
-    // this.logger.log('After Remove Index :: ', this.workScheduleRows);
+    this.logger.log('After Remove Index :: ', this.workScheduleRows);
     this.removeWorkTimeFromCurrentDpsWorkSchedule(removeRowId);
-    // this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
+    this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
+  }
+
+  removeWorkTimeFromCurrentDpsWorkSchedule(rowid) {
+
+    this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule workDays length :: '
+      + this.currentDpsWorkSchedule.workSchedule.workDays.length.toString());
+    this.currentDpsWorkSchedule.workSchedule.workDays.forEach((wday) => {
+      this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule wday :: ', wday);
+
+      let i = 0;
+      let breaked = false;
+      wday.workTimes.forEach((wTimes) => {
+        i += 1;
+        if (rowid === i && !breaked) {
+          this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule :: ', wTimes);
+          wday.workTimes.splice(rowid - 1, 1);
+          breaked = true;
+        }
+      });
+    });
   }
 
   ShowMessage(msg, action) { this.showmsg.emit({ MSG: msg, Action: action }); }
@@ -356,7 +361,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       isValid = false;
     } else {
       let i = 0;
-      let breaked = false;
+      const breaked = false;
       wday_workTimes.forEach(wwTimes => {
         i += 1;
         if (rowid + 1 !== i) {
@@ -405,7 +410,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       return true;
     } else {
       let s = (e.target.value % 24).toString();
-      if (s.length < 2) { s = '0' + s; };
+      if (s.length < 2) { s = '0' + s; }
       e.target.value = s;
       return false;
     }
@@ -417,7 +422,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       return true;
     } else {
       let s = (e.target.value % 60).toString();
-      if (s.length < 2) { s = '0' + s; };
+      if (s.length < 2) { s = '0' + s; }
       e.target.value = s;
       return false;
     }
