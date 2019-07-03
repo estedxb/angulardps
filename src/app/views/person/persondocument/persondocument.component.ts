@@ -574,9 +574,7 @@ export class PersonDocumentComponent implements OnInit {
       this.ShowMessage('Vraag attest aan succesvol', '');
     },
     (err: HttpErrorResponse) => {
-      if (err.status === 200){
-        this.ShowMessage('Vraag attest aan succesvol', '');
-      }
+      if (err.status === 200){        this.ShowMessage('Vraag attest aan succesvol', '');      }
      else {            
       if (err.status === 200){
         this.ShowMessage('Vraag attest aan succesvol', '');

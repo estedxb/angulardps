@@ -207,7 +207,6 @@ export class UpdatePersonComponent implements OnInit {
           }
         }
       );
-
     }
 
     if (this.currentPage === 'positions') {

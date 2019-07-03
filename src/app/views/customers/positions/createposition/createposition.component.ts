@@ -124,7 +124,6 @@ export class CreatepositionComponent implements OnInit {
       this.ShowMessage('File Url Not Found', '');
     }
   }
-
   // this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionsDownloadTemplate;
 
   downloadFile() { saveAs(environment.blobStorage + '/' + environment.getPositionsDownloadTemplate); }

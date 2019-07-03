@@ -62,6 +62,7 @@ export class LoginToken {
     accessToken: string; customerName: string; customerVatNumber: string; customerlogo: string;
     userName?: string; userEmail: string; userRole: string; isLoggedIn: boolean;
 }
+
 // dpsUser: DpsUser;
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
