@@ -59,7 +59,7 @@ export class CurrencyComponent implements OnInit {
 
   }
 
-  ngDoCheck() {
+  ngOnChanges() {
 
     if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
     {
@@ -74,8 +74,25 @@ export class CurrencyComponent implements OnInit {
       this.olddisabled = this.inputdisabled;  
     }
 
-
   }
+
+  // ngDoCheck() {
+
+  //   if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
+  //   {
+
+  //     if (this.oldcurrencyData !== this.currencyDataForm) {
+  //       this.oldcurrencyData = this.currencyDataForm;
+  //       this.loadInitialData();
+  //     }  
+  //   }
+
+  //   if (this.inputdisabled !== this.olddisabled) {
+  //     this.olddisabled = this.inputdisabled;  
+  //   }
+
+
+  // }
 
   loadInitialData() {
 

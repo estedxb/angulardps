@@ -994,8 +994,8 @@ export class AddPersonComponent implements OnInit {
     const parser = new DOMParser();
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-      + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-      + '<Value>BE46001664436336</Value>'
+      + '<soap12:Body><getBelgianBBAN xmlns="https://tempuri.org/">'
+      + '<Value>'+this.iban+'</Value>'
       + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
     const doc = parser.parseFromString(xmlString, 'text/xml');
@@ -1016,7 +1016,7 @@ export class AddPersonComponent implements OnInit {
 
     const parser = new DOMParser();
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-      + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+      + '<soap:Envelope xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
       + '<Value>'+this.bban+'</Value></BBANtoBIC></soap:Body></soap:Envelope>';
 

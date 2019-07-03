@@ -579,8 +579,6 @@ export class InvoiceSettingsComponent implements OnInit {
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
     this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;
 
-    // this.Ploegpremiere.push(this.createServants('',''));
-
     this.ISForm.get('mobilebox').disable();
     this.ISForm.get('PloegprimeBox1').disable();
     this.ISForm.get('PloegprimeBox2').disable();
@@ -653,7 +651,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
       }
 
-      //this.clearShiftAllowances();
     }
 
     this.changeObject();
@@ -693,9 +690,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   isInvalid() {
 
-    // console.log('is invalid =');
-    // console.log(this.ploegpremieSwitch);
-
     if (this.ploegpremieSwitch === true) {
       return false;
     }
@@ -704,9 +698,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   isInvalidOther() {
-
-    // console.log('is invalid andre =');
-    // console.log(this.andreSwitch);
 
     if (this.andreSwitch === true) {
       return false;
@@ -863,7 +854,6 @@ export class InvoiceSettingsComponent implements OnInit {
         formGroup.controls['AndreBox2'].disable();
       }
 
-      //this.clearOtherAllowances();
     }
     this.changeObject();
 

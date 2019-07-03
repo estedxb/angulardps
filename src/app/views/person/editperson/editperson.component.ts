@@ -414,7 +414,7 @@ export class EditPersonComponent implements OnInit {
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
       + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-      + '<Value>BE46001664436336</Value>'
+      + '<Value>'+this.iban+'</Value>'
       + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
     const doc = parser.parseFromString(xmlString, 'text/xml');
@@ -422,7 +422,7 @@ export class EditPersonComponent implements OnInit {
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
       this.logger.log('data=' + data);
       this.bban = data;
       this.soapCallGetBIC();
@@ -442,7 +442,7 @@ export class EditPersonComponent implements OnInit {
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
       this.logger.log('data=' + data);
       this.bbic = data;
     });
