@@ -46,6 +46,7 @@ export class StatuteComponent implements OnInit {
   public countStatutes: number;
   public statuteSettings = [];
   public newArrayCoeff = [];
+  public incrementer = 0;
 
   StatuteSettingsObject: StatuteSetting;
   statuteObject: Statute;
@@ -78,6 +79,19 @@ export class StatuteComponent implements OnInit {
 
   }
 
+  // ngOnChanges() {
+
+  //   this.createCoefficientArray();
+
+  //   if(this.STFormData !== undefined && this.STFormData !== null)
+  //   if (this.STFormData != this.oldSFTFormData) {
+  //     //this.createStatuteSettingsArrayEmpty();
+  //     this.oldSFTFormData = this.STFormData;
+  //     if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+  //       this.loadInitialData();
+  //     }
+  //   }
+  // }
 
   ngDoCheck() {
     this.createCoefficientArray();
@@ -150,7 +164,6 @@ export class StatuteComponent implements OnInit {
 
   cloneArray() {
 
-    // this.statuteSettings = this.loadStatuteSettingsArray;
     let counter: number = 0;
 
     this.loadStatuteSettingsArray.forEach(element => {
@@ -164,27 +177,7 @@ export class StatuteComponent implements OnInit {
       this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
       this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
       this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
-
-      // this.StatuteSettingsObject = new StatuteSetting();
-      // this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
-
-      // this.StatuteSettingsObject.mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
-      // this.StatuteSettingsObject.mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-      // this.StatuteSettingsObject.mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
-
-      // this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
-      // this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
-      // this.StatuteSettingsObject.paritairCommitee.name = this.arrayParitairCommitee[counter].name;
-      // this.StatuteSettingsObject.paritairCommitee.number = this.arrayParitairCommitee[counter].number;
-      // this.StatuteSettingsObject.paritairCommitee.type = this.arrayParitairCommitee[counter].type;
-
-      // this.StatuteSettingsObject.statute = new Statute();
-      // this.StatuteSettingsObject.statute.name = this.statutes[counter].name;
-      // this.StatuteSettingsObject.statute.type  = this.statutes[counter].type;
-      // this.StatuteSettingsObject.statute.brightStaffingID = parseInt(this.statutes[counter].BrightStaffingID,10);
-
-      // this.statuteSettings[counter] = this.StatuteSettingsObject;
+      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;     
 
       counter++;
     });
@@ -225,9 +218,9 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject = new StatuteSetting();
       this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
 
-      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0
-      this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0
-      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0
+      this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0.0;
+      this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0.0;
+      this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0.0;
       this.StatuteSettingsObject.coefficient = 0;
 
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
@@ -380,13 +373,25 @@ export class StatuteComponent implements OnInit {
       }
 
     }, error => this.errorMsg = error);    
-
+    
     if (this.countStatutes > 0)
     {
       if(this.STFormData.data === null || this.STFormData.data === undefined)
           this.loadCoefficientsEmpty();
       else
         this.cloneArray();
+    }
+  }
+
+  loadData() {
+
+    if(this.STFormData !== undefined && this.STFormData !== null)
+    if (this.STFormData != this.oldSFTFormData) {
+      //this.createStatuteSettingsArrayEmpty();
+      this.oldSFTFormData = this.STFormData;
+      if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+        this.loadInitialData();
+      }
     }
 
   }
@@ -452,9 +457,9 @@ export class StatuteComponent implements OnInit {
   loadzeroArray() {
 
     for (let i: number = 0; i < this.statutes.length; i++) {
-      this.totalArray.push(0);
-      this.wegervaalArray.push(0);
-      this.minimumurenArray.push(0);
+      this.totalArray.push(0.0);
+      this.wegervaalArray.push(0.0);
+      this.minimumurenArray.push(0.0);
     }
 
   }
@@ -522,7 +527,7 @@ export class StatuteComponent implements OnInit {
     this.logger.log(this.statuteSettings);
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.employerShare = parseInt(this.wegervaalArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.employerShare = parseFloat(this.wegervaalArray[i]);
     }
     //else {
     //   this.createArrayData();
@@ -536,7 +541,7 @@ export class StatuteComponent implements OnInit {
   replaceArrayTotal(i: number) {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.totalWorth = parseInt(this.totalArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.totalWorth = parseFloat(this.totalArray[i]);
     }
     // } else {
     //   this.createArrayData();
@@ -548,7 +553,7 @@ export class StatuteComponent implements OnInit {
   replaceArrayMinimum(i: number) {
 
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
-      this.statuteSettings[i].mealVoucherSettings.minimumHours = parseInt(this.minimumurenArray[i], 10);
+      this.statuteSettings[i].mealVoucherSettings.minimumHours = parseFloat(this.minimumurenArray[i]);
     }
     //else {
     //   this.createArrayData();

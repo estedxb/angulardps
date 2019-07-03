@@ -121,8 +121,8 @@ export class AddCustomerComponent implements OnInit {
   receiveCTdata($event) {
     this.CTdata = $event;
     this.CTFormValid = this.CTdata.formValid;
-    // this.logger.log('received in home component CT data');
-    // this.logger.log(this.CTdata);
+    this.logger.log('received in home component CT data');
+    this.logger.log(this.CTdata);
   }
 
   onFormwardClick() {
@@ -130,7 +130,12 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-      this.logger.log('validity data=' + this.HQdata.formValid);
+
+      this.logger.log("ct data is =");
+      this.logger.log(this.CTdata);
+      this.logger.log('validity HQ data=' + this.HQdata.formValid);
+      this.logger.log('validity CT data=' + this.CTdata.formValid);
+
 
       if(this.HQdata.formValid === false)
         this.ShowMessage('Onjuiste invoer in invoerveld','');
@@ -144,10 +149,6 @@ export class AddCustomerComponent implements OnInit {
 
           this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
           this.HQdata.contact = this.CTdata.contact;
-
-          // this.logger.log('updated HQData=' + this.HQdata);
-          // this.logger.log(this.HQdata.contact);
-          // this.logger.log(this.CTdata.contact);
 
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
@@ -164,6 +165,9 @@ export class AddCustomerComponent implements OnInit {
               }
             }
           );
+        }
+        else {
+          this.logger.log("one of the form is not valid");
         }
       } else {
         this.logger.log('HQdata or CTdata is null or undefined !!');

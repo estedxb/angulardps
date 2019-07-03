@@ -309,7 +309,7 @@ export class AddPersonComponent implements OnInit {
       lastName: new FormControl('', [Validators.required]),
       street: new FormControl('', [Validators.required]),
       streetNumber: new FormControl('', [Validators.required]),
-      bus: new FormControl('', [Validators.required]),
+      bus: new FormControl('', []),
       city: new FormControl('', [Validators.required]),
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
@@ -989,43 +989,13 @@ export class AddPersonComponent implements OnInit {
 
   }
 
-  // // get bban from iban
-  // soapCallGetBBAN() {
-
-  //   var xmlHttp = new XMLHttpRequest();
-  //   xmlHttp.open('POST','http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN',true);
-
-  //   //let sr = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><getBelgianBBAN xmlns="http://tempuri.org/"><Value>BE46001664436336</Value></getBelgianBBAN></soap:Body></soap:Envelope>';
-  //   let sr = '<?xml version="1.0" encoding="utf-8"?>'
-  //           +'<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-  //           +'<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-  //           +'<Value>BE46001664436336</Value></getBelgianBBAN>'
-  //           +'</soap12:Body></soap12:Envelope>';
-  //   let reponse:number = 0;
-
-  //   xmlHttp.onreadystatechange = () => {
-  //     if(xmlHttp.readyState == 4) {
-  //        if(xmlHttp.status == 200){
-  //          var xml = xmlHttp.responseXML;
-  //          reponse = parseInt(xml.getElementsByTagName("return")[0].childNodes[0].nodeValue);
-  //          this.logger.log("response="+reponse);
-  //        }
-  //     }
-  //   }
-
-  //   xmlHttp.setRequestHeader('Content-Type','text/xml');
-  //   xmlHttp.responseType = 'document';
-  //   xmlHttp.send(sr);
-
-  // }
-
   soapCallFetchBBAN() {
 
     const parser = new DOMParser();
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-      + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-      + '<Value>BE46001664436336</Value>'
+      + '<soap12:Body><getBelgianBBAN xmlns="https://tempuri.org/">'
+      + '<Value>'+this.iban+'</Value>'
       + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
     const doc = parser.parseFromString(xmlString, 'text/xml');
@@ -1033,7 +1003,7 @@ export class AddPersonComponent implements OnInit {
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
       this.logger.log('data=' + data);
       this.bban = data;
       this.soapCallGetBIC();
@@ -1041,20 +1011,20 @@ export class AddPersonComponent implements OnInit {
 
   }
 
-  // bic from bban
+  // BIC from BBAN
   soapCallGetBIC() {
 
     const parser = new DOMParser();
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-      + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+      + '<soap:Envelope xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>';
+      + '<Value>'+this.bban+'</Value></BBANtoBIC></soap:Body></soap:Envelope>';
 
     const headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/soap+xml');
 
-    this.http.post('http://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
+    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
       this.logger.log('data=' + data);
       this.bbic = data;
     });

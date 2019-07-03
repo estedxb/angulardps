@@ -348,7 +348,7 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: HttpErrorResponse) {
 
-    this.ShowMessage("errorMessage="+errorMessage,'');
+    console.log("there is an error with api call to getCustomersbyVatNumber");
 
     this.allowCustomer = false;
 
@@ -733,28 +733,28 @@ export class HeadQuartersComponent implements OnInit {
 
     if(this.HQForm.valid === false)
     {
-      if(this.HQForm.get('vatNumber').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
-        if(this.HQForm.get('firstname').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Naam','');
-        if(this.HQForm.get('officialname').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
-        if(this.HQForm.get('streetnumber').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
-        if(this.HQForm.get('street').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Straat','');
-        if(this.HQForm.get('city').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Nr','');
-        if(this.HQForm.get('postalcode').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
-        if(this.HQForm.get('phonenumber').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
-        if(this.HQForm.get('invoiceEmail').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
-        if(this.HQForm.get('contractsEmail').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
-        if(this.HQForm.get('generalEmail').invalid === true)
-        this.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
+      // if(this.HQForm.get('vatNumber').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
+      //   if(this.HQForm.get('firstname').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Naam','');
+      //   if(this.HQForm.get('officialname').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
+      //   if(this.HQForm.get('streetnumber').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
+      //   if(this.HQForm.get('street').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Straat','');
+      //   if(this.HQForm.get('city').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Nr','');
+      //   if(this.HQForm.get('postalcode').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
+      //   if(this.HQForm.get('phonenumber').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
+      //   if(this.HQForm.get('invoiceEmail').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
+      //   if(this.HQForm.get('contractsEmail').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
+      //   if(this.HQForm.get('generalEmail').invalid === true)
+      //   this.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
     }
 
     if (this.HQForm.valid === true && !this.emptyData())

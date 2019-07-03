@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './invoice-settings.component.html',
   styleUrls: ['./invoice-settings.component.css']
 })
-export class InvoiceSettingsComponent implements OnInit {
+export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   @Input() addRow: string;
   @Input() public FPFormData;
@@ -579,8 +579,6 @@ export class InvoiceSettingsComponent implements OnInit {
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
     this.Andre = this.ISForm.get('arrayAndreBox') as FormArray;
 
-    // this.Ploegpremiere.push(this.createServants('',''));
-
     this.ISForm.get('mobilebox').disable();
     this.ISForm.get('PloegprimeBox1').disable();
     this.ISForm.get('PloegprimeBox2').disable();
@@ -601,6 +599,11 @@ export class InvoiceSettingsComponent implements OnInit {
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
     this.loadCurrencies();
+  }
+
+  ngAfterViewInit() {
+
+    
   }
 
   changeInitialStatus() {
@@ -653,7 +656,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
       }
 
-      //this.clearShiftAllowances();
     }
 
     this.changeObject();
@@ -693,9 +695,6 @@ export class InvoiceSettingsComponent implements OnInit {
 
   isInvalid() {
 
-    // console.log('is invalid =');
-    // console.log(this.ploegpremieSwitch);
-
     if (this.ploegpremieSwitch === true) {
       return false;
     }
@@ -704,9 +703,6 @@ export class InvoiceSettingsComponent implements OnInit {
   }
 
   isInvalidOther() {
-
-    // console.log('is invalid andre =');
-    // console.log(this.andreSwitch);
 
     if (this.andreSwitch === true) {
       return false;
@@ -863,7 +859,6 @@ export class InvoiceSettingsComponent implements OnInit {
         formGroup.controls['AndreBox2'].disable();
       }
 
-      //this.clearOtherAllowances();
     }
     this.changeObject();
 
@@ -927,11 +922,27 @@ export class InvoiceSettingsComponent implements OnInit {
     // this.changeObject();
   }
 
-  searchAndRemove(element)
-  {
-    this.logger.log("search and remove called");
-    this.logger.log(this.Andre.length);
+  searchAndRemovePloegepremieElements(element) {
 
+    for(let i=0;i<this.Ploegpremiere.length;i++)
+    {
+      const formGroup = this.Ploegpremiere.controls[i] as FormGroup;
+      let codeId = formGroup.controls['PloegprimeBox1'].value;
+      let amount = formGroup.controls['PloegprimeBox2'].value;
+      let currency = this.currencyDataShift[i]==="%"?true:false;
+
+      if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
+      {
+        this.Ploegpremiere.removeAt(i);
+        this.shiftAllowances.splice(i, 1);
+        this.currencyDataShift.splice(i,1);
+      }
+    }
+
+  }
+
+  searchAndRemoveAndreElements(element)
+  {
     for(let i=0;i<this.Andre.length;i++)
     {
       const formGroup = this.Andre.controls[i] as FormGroup;
@@ -941,34 +952,26 @@ export class InvoiceSettingsComponent implements OnInit {
 
       if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
       {
-        this.logger.log("removing at i="+i);
-        this.logger.log("Object to be removed=");
-        this.logger.log(this.Andre)
         this.Andre.removeAt(i);
-        this.logger.log("Object to be removed=");
-        this.logger.log(this.otherAllowances[i]);
         this.otherAllowances.splice(i, 1);
-        this.logger.log("editing other allowances");
-        this.logger.log(this.otherAllowances);
-        //this.refreshTable();
-
+        this.workCode.splice(i,1);
+        this.currencyDataOther.splice(i,1);
       }
     }
+  }
+
+  resetCurrencyShift() {
+
+    for(let i=0;i<this.shiftAllowances.length;i++)
+       this.shiftAllowances[i].nominal = this.currencyDataShift[i]==="%"?true:false;
 
   }
 
-  refreshTable() 
-  {
-    this.logger.log("refreshing table");
-    this.logger.log(this.Andre);
 
-    for(let i=0;i<this.Andre.length;i++)
-    {
-      const formGroup = this.Andre.controls[i] as FormGroup;
-      formGroup.controls['AndreBox1'].setValue(this.otherAllowances[i].codeId);
-      formGroup.controls['AndreBox2'].setValue(this.otherAllowances[i].amount);
-      this.currencyDataOther[i] = this.otherAllowances[i].nominal;
-    }
+  resetCurrencies() {
+
+    for(let i=0;i<this.otherAllowances.length;i++)
+        this.otherAllowances[i].nominal = this.currencyDataOther[i]==="%"?true:false;
 
   }
 
@@ -976,8 +979,8 @@ export class InvoiceSettingsComponent implements OnInit {
 
     if (this.Andre.length != 1)
     {
-      this.searchAndRemove(this.otherAllowances[index]);
-      //this.Andre.removeAt(index);
+      this.searchAndRemoveAndreElements(this.otherAllowances[index]);
+      this.resetCurrencies();
     }
     this.changeObject();
 
@@ -998,14 +1001,15 @@ export class InvoiceSettingsComponent implements OnInit {
 
   removeRows(index) {
 
-    this.logger.log("the row to be removed ");
-    this.logger.log(this.Ploegpremiere[0]);
-
     if (this.Ploegpremiere.length != 1)
+    {
       this.Ploegpremiere.removeAt(index);
+          // remove from array shiftAllowances
+      this.shiftAllowances.splice(index, 1);
+      this.currencyDataShift.splice(index,1);
+      this.resetCurrencyShift();
+    }
 
-    // remove from array shiftAllowances
-    this.shiftAllowances.splice(index, 1);
 
     this.changeObject();
   }

@@ -31,10 +31,10 @@ export class PositionsService {
     this.getPositionUpdateUrl = environment.dpsAPI + environment.getPositionUpdate;
   }
 
-  public getPositionsByVatNumber(parameter: string): Observable<DpsPostion[]> {
-    // this.logger.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + parameter);
+  public getPositionsByVatNumber(vatNumber: string): Observable<DpsPostion[]> {
+    // this.logger.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + vatNumber);
     const result = this.http.get<DpsPostion[]>(
-      this.getPositionsByVatNumberUrl + '/' + parameter, this.httpOptions).catch(this.errorHandler);
+      this.getPositionsByVatNumberUrl + '/' + vatNumber, this.httpOptions).catch(this.errorHandler);
     // this.logger.log(result);
     return result;
   }

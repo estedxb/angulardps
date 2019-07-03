@@ -78,7 +78,7 @@ export class ContactPersonComponent implements OnInit {
 
         this.alsCheck = contactPerson.activateContactAsUser;
 
-        //this.createObjects();
+        this.createObjects();
 
       }
     }
@@ -213,6 +213,9 @@ export class ContactPersonComponent implements OnInit {
   validity() {
 
     this.checkValidations();
+
+    this.logger.log("validity of form");
+    this.logger.log(this.CTForm.valid);
 
     if (this.CTForm.valid === true && !this.emptyData()) {
       return true;

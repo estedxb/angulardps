@@ -44,8 +44,6 @@ export class EditCustomerComponent implements OnInit {
   ngDoCheck() {
     if (this.HQdata !== this.oldHQdata) {
       this.oldHQdata = this.HQdata;
-      // this.childEvent.emit(this.HQdata);
-      // this.data.currentMessage.subscribe(data => this.HQdata = data);
     }
   }
 
@@ -83,7 +81,7 @@ export class EditCustomerComponent implements OnInit {
     this.GLdata = $event;
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.GLdata !== null && this.GLdata !== undefined) {
-        this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+        this.HQdata.customer.vcaCertification.cerified = this.GLdata.vcaObject.cerified;
         this.HQdata.bulkContractsEnabled = this.GLdata.blk;
       }
     }
