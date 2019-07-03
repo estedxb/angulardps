@@ -31,6 +31,7 @@ export const environment = {
   getPositionsDownloadTemplate: 'position/Position1.pdf',
   getCustomerByVatNumber: 'Customer/GetCustomerByVatNumber',
   getCustomerByVatNumberEdit: 'Customer/',
+  getBIC:'Person/GetBIC',
   createCustomer: 'Customer',
   CreatePerson: 'Person',
   getUsers: 'User',

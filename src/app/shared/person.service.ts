@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
+import { TransitionCheckState } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PersonService {
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'my-auth-token' }) };
 
   private getPersonForCustomerbyCustomerVatNumberURL = '';
+  private getBICbyIBANURL = '';
   private getPersonForCustomerbySSIdNCVNURL = '';
   private getPersonBySSIDBoemmURL = '';
   private requestCertificateURL = '';
@@ -28,6 +30,10 @@ export class PersonService {
   private postPersonDocumentsURL = '';
 
   constructor(private http: HttpClient, private logger: LoggingService) {
+
+    if(environment.dataFromAPI_JSON && environment.getBIC !== '') {
+      this.getBICbyIBANURL = environment.dpsAPI + environment.getBIC;
+    }
 
     if (environment.dataFromAPI_JSON && environment.getPersonBySSIDBoemm !== '') {
       this.getPersonBySSIDBoemmURL = environment.boemmAPI + environment.getPersonBySSIDBoemm;
@@ -84,6 +90,19 @@ export class PersonService {
     // this.logger.log(result);
     return result;
   }
+
+  public getBICbyIBAN(iban:string): Observable<any> {
+
+    let getURL = this.getBICbyIBANURL;
+    if (environment.dataFromAPI_JSON && environment.getBIC !== '') {
+      getURL = getURL + '/' + iban;
+    }
+    this.logger.log(getURL);
+    const result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);
+    this.logger.log(result);
+    return result;
+  }
+
   public getPersonsByVatNumber(customervatnumber: string): Observable<any> {
     let getURL = this.getPersonForCustomerbyCustomerVatNumberURL;
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
@@ -94,7 +113,7 @@ export class PersonService {
 
     this.logger.log("error");
     this.logger.log(result);
-    
+
     return result;
   }
 
