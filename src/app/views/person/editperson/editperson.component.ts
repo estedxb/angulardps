@@ -11,6 +11,7 @@ import { DataService } from 'src/app/shared/data.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingService } from '../../../shared/logging.service';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-editperson',
@@ -84,6 +85,7 @@ export class EditPersonComponent implements OnInit {
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
+    private dialog: MatDialog, private snackBar: MatSnackBar,
     // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
@@ -410,57 +412,42 @@ export class EditPersonComponent implements OnInit {
 
   soapCallFetchBBAN() {
 
-    const parser = new DOMParser();
-    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-      + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
-      + '<soap12:Body><getBelgianBBAN xmlns="http://tempuri.org/">'
-      + '<Value>'+this.iban+'</Value>'
-      + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
+    this.iban = this.editPersonForm.get('iban').value;
 
-    const doc = parser.parseFromString(xmlString, 'text/xml');
-    const headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Content-Type', 'application/soap+xml');
+    this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
+      console.log('bic Data : ', response);
+      this.bbic = response.bic;
+      this.editPersonForm.controls.bic.setValue(this.bbic);
 
-    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
-      this.logger.log('data=' + data);
-      this.bban = data;
-      this.soapCallGetBIC();
-    });
+      if (this.DpsPersonObject !== null) {
+        if (this.DpsPersonObject.person !== null) {
+          this.DpsPersonObject.person.bankAccount = new BankAccount();
+          this.DpsPersonObject.person.bankAccount.iban = this.iban;
+          this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+        }
+      }  
+    }, error => this.ShowMessage(error, 'error'));
 
+    this.changeMessage();
   }
 
-  // bic from bban
-  soapCallGetBIC() {
-    const parser = new DOMParser();
-    const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
-      + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
-      + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-      + '<Value>string</Value></BBANtoBIC></soap:Body></soap:Envelope>';
-
-    const headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Content-Type', 'application/soap+xml');
-
-    this.http.post('https://www.ibanbic.be/IBANBIC.asmx?op=getBelgianBBAN', xmlString, { headers }).subscribe(data => {
-      this.logger.log('data=' + data);
-      this.bbic = data;
+  ShowMessage(MSG, Action) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      this.logger.log('Snackbar Action :: ' + Action);
     });
-
-    if (this.DpsPersonObject !== null) {
-      if (this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.bankAccount = new BankAccount();
-        this.DpsPersonObject.person.bankAccount.iban = this.iban;
-        this.DpsPersonObject.person.bankAccount.bic = this.bbic;
-        this.editPersonForm.controls.bic.setValue(this.bbic);
-      }
-      this.changeMessage();
-    }
-
   }
+
+
 
   setIbanNumber(value: string) {
+
     this.soapCallFetchBBAN();
+
   }
 
   onChangeDropDownGender($event) {

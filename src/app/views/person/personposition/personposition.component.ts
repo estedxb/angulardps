@@ -79,6 +79,8 @@ export class PersonPositionComponent implements OnInit {
   public statuteChosen: string;
   public statutes = [];
   public countStatutes: number;
+  public lastAddedPosition: string;
+  public lastAddedPositionId:string;
 
   public selectedIndexStatute: any = 0;
   public message: any;
@@ -124,13 +126,37 @@ export class PersonPositionComponent implements OnInit {
       if (maindatas[i].position.name !== "") {
         this.dataDropDownFunctie.push(positionObject);
         this.dataDropDownFunctieIds.push(maindatas[i].position.id);
-        this.logger.log("positon in maindatas=" + maindatas[i].id);
       }
     }
+
+    this.selectedIndexFunctie = this.dataDropDownFunctie.length - 1;
 
     this.getPersonbySSIDVatNumber();
   }
 
+  fillDataDropDownOnAdd(maindatas) {
+
+    this.dataDropDownFunctie = [];
+    this.dataDropDownFunctieIds = [];
+
+    for (let i = 0; i < maindatas.length; i++) {
+      let positionObject = maindatas[i].position.name;
+      if (maindatas[i].position.name !== "") {
+        this.dataDropDownFunctie.push(positionObject);
+        this.dataDropDownFunctieIds.push(maindatas[i].position.id);
+      }
+    }
+
+    this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+
+    this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
+    this.changeMessage();
+
+    //this.getPersonbySSIDVatNumber();
+
+  }
+
+  
 
   openDialog(): void {
     try {
@@ -155,7 +181,7 @@ export class PersonPositionComponent implements OnInit {
             //this.maindatas[this.SelectedIndexFunctie] = this.dataDropDownFunctie;
             this.maindatas.push(this.datas);
             this.FilterTheArchive();
-            this.fillDataDropDown(this.maindatas);
+            this.fillDataDropDownOnAdd(this.maindatas);
             this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
             this.logger.log('this.data.id :: ', this.datas.id);
@@ -172,7 +198,38 @@ export class PersonPositionComponent implements OnInit {
   }
 
   FilterTheArchive() {
+
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+    let sortedmaindatas = [];
+
+    let positionArrays = [];
+    let tempArray = this.maindatas;
+
+    for(let i=0;i<this.maindatas.length;i++)
+        positionArrays.push((this.maindatas[i].position.name.toLowerCase()));
+
+    this.lastAddedPosition = this.maindatas[this.maindatas.length -1].position.name;
+    this.lastAddedPositionId = this.maindatas[this.maindatas.length-1].id;
+
+    positionArrays.sort();
+ 
+    for(let i=0;i<positionArrays.length;i++)
+    {
+      let found:boolean = false;
+
+      for(let j=0;j<this.maindatas.length && !found;j++)
+        if(positionArrays[i] === this.maindatas[j].position.name.toLowerCase())
+        {
+          sortedmaindatas.push(this.maindatas[j]);
+          found = true;
+        }
+    }
+
+    this.maindatas = [];
+
+    for(let i=0;i<sortedmaindatas.length;i++)
+      this.maindatas.push(sortedmaindatas[i]);
+      
   }
 
   ShowMessage(MSG, Action) {
@@ -309,6 +366,19 @@ export class PersonPositionComponent implements OnInit {
     }
   }
 
+  getIndexOfPositionDropDownFunctie(position:string) {
+
+    let index = -1;
+    for(let i=0;i<this.dataDropDownFunctie.length;i++)
+    {
+      if(position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
+        index = i;
+    }
+
+    return index;
+
+  }
+
   getIdOfPosition(position:string) {
 
     for (let i = 0; i < this.maindatas.length; i++) {
@@ -327,7 +397,7 @@ export class PersonPositionComponent implements OnInit {
     const data = response;
     let counter: number = 0;
 
-    this.logger.log("data received=");
+    this.logger.log("data received is=");
     this.logger.log(data.customerPostionId);
 
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) 

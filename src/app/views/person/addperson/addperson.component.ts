@@ -393,7 +393,7 @@ export class AddPersonComponent implements OnInit {
         this.dataDropDownFunctieIds.push(maindatas[i].position.id);
       }
     }
-    this.selectedPositionIndex = 0;
+    this.selectedPositionIndex = this.dataDropDownFunctie.length - 1;
   }
 
   ShowMessage(MSG, Action) {
@@ -739,6 +739,9 @@ export class AddPersonComponent implements OnInit {
       this.setCalendar(firstTwoDigits, secondTwoDigits, thirdTwoDigits);
       this.setGender(genderDigits);
     }
+    else {
+      this.disableAllFields();
+    }
 
     return this.validSSID;
 
@@ -778,7 +781,6 @@ export class AddPersonComponent implements OnInit {
     }
 
     if (month >= 1 && month <= 12) {
-      // this.selectedIndexMonth = month - 1;
       this._selectedIndexMonth = month - 1;
       this.monthIndex = month - 1;
     }
@@ -786,8 +788,6 @@ export class AddPersonComponent implements OnInit {
     if (year >= 0 && year <= currentYearTwoDigits) {
       for (let i = 0; i < this.dropDownYear.length; i++) {
         if (this.dropDownYear[i] === (year + 2000).toString()) {
-          // this.selectedIndexYear = i;
-          // this._selectedIndexYear = i;
           this.yearIndex = i;
           this.yearString = '' + (year + 2000).toString();
         }
@@ -799,8 +799,6 @@ export class AddPersonComponent implements OnInit {
 
       for (let i = 0; i < this.dropDownYear.length; i++) {
         if (this.dropDownYear[i] === (year + 1900).toString()) {
-          // this.selectedIndexYear = i;
-          // this._selectedIndexYear = i;
           this.yearIndex = i;
           this.yearString = '' + (year + 1900).toString();
         }
@@ -907,16 +905,13 @@ export class AddPersonComponent implements OnInit {
   }
 
   getPersonbySSIDVatNumber() {
-    this.logger.log('getPersonbySSIDVatNumber in');
 
-    if (this.validSSID === true) {
+    if (this.validSSID === true) 
+    {
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
       const customerVatNumber = this.dpsLoginToken.customerVatNumber;
-      this.logger.log('customerVatNumber=' + customerVatNumber);
-      this.logger.log('getPersonbySSIDVatNumber 1');
+
       this.personsService.getPersonBySSIDVatnumber(ssid, customerVatNumber).subscribe(res => {
-        //this.logger.log('res=' + res);
-        //this.loadPersonData(res);
         if (res.person.firstName === null || res.person.lastName === null || res.customerPostionId === null) {
           this.recordExists = false;
           this.enableALLFields();
@@ -954,9 +949,9 @@ export class AddPersonComponent implements OnInit {
           }
         }
       );
-    } else {
+    } 
+    else {
       this.logger.log('invalid SSN format');
-      this.resetPeronData();
     }
 
   }
@@ -1045,18 +1040,27 @@ export class AddPersonComponent implements OnInit {
 
     this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
       console.log('bic Data : ', response);
-      this.bbic = response.bic;
-      this.AddPersonForm1.controls.bic.setValue(this.bbic);
 
-      if (this.DpsPersonObject !== null) {
-        if (this.DpsPersonObject.person !== null) {
-          this.DpsPersonObject.person.bankAccount = new BankAccount();
-          this.DpsPersonObject.person.bankAccount.iban = this.iban;
-          this.DpsPersonObject.person.bankAccount.bic = this.bbic;
-        }
-      }  
+      if(response !== null && response.bic !== undefined)
+      {
+        this.bbic = response.bic;
+
+        if(this.bbic === "")
+          this.ShowMessage("Ongeldig iban-nummer",'');
+        else
+          this.AddPersonForm1.controls.bic.setValue(this.bbic);
+  
+        if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
+          if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
+            this.DpsPersonObject.person.bankAccount = new BankAccount();
+            this.DpsPersonObject.person.bankAccount.iban = this.iban;
+            this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+          }
+        }    
+      }
     }, error => this.ShowMessage(error, 'error'));
 
+    this.changeMessage();
   }
 
   resetPeronData() {
@@ -1676,7 +1680,7 @@ export class AddPersonComponent implements OnInit {
       this.AddPersonForm1.get('postalCode').valid === true &&
       this.AddPersonForm1.get('mobileNumber').valid === true &&
       this.AddPersonForm1.get('emailAddress').valid === true &&
-      this.AddPersonForm1.get('iban').valid === true) {
+      this.AddPersonForm1.get('bic').value !== "") {
       console.log('form valid');
       return true;
     }
