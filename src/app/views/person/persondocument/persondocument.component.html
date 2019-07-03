@@ -46,15 +46,7 @@
       </div>
       <!--For loop Ends -->
     </div>
-    <div class="general">
-      <div class="row radiorow">
-        <div class="col-sm-12">
-          <ui-switch size="small" name="isConstructionSector" [checked]="isConstructionSector"
-            (change)="onConstructionSectorChange($event)"></ui-switch>
-          <div class="gap">&nbsp;</div><span class="titleBold">Bouwsector</span>
-        </div>
-      </div>
-    </div>
+    
     <div id="VCAAttest" class="customerBox">
       <div class="row">
         <div class="col col-sm-8 fleft">
@@ -90,7 +82,16 @@
       </div>
       <!--For loop Ends -->
     </div>
-    <div id="BuildingCards" class="customerBox">
+    <div class="general">
+      <div class="row radiorow">
+        <div class="col-sm-12">
+          <ui-switch size="small" name="isConstructionSector" [checked]="isConstructionSector"
+            (change)="onIsConstructionSectorChange($event)"></ui-switch>
+          <div class="gap">&nbsp;</div><span class="titleBold">Bouwsector</span>
+        </div>
+      </div>
+    </div>
+    <div id="BuildingCards" name="BuildingCards" class="customerBox" *ngIf="currentPerson.isConstructionSector===true">
       <div class="row">
         <div class="col col-sm-8 fleft">
           <h4>Bouwkaart(en)</h4>
@@ -103,7 +104,7 @@
         </div>
       </div>
     </div>
-    <div class="row UploadedFiles">
+    <div class="row UploadedFiles"  id="BuildingCardsUploadedFiles" name="BuildingCardsUploadedFiles" *ngIf="currentPerson.isConstructionSector===true" >
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->        
@@ -134,7 +135,7 @@
         </div>
       </div>
     </div>
-    <div id="StudentAttest" class="customerBox">
+    <div id="StudentAttest" name="StudentAttest" class="customerBox" *ngIf="currentPerson.isStudentAtWork===true" >
       <div class="row">
         <div class="col col-sm-5 fleft">
           <h4>Student @work attest</h4>
@@ -150,25 +151,26 @@
       <div class="row">
         <div class="col col-sm-4 fright">
           <label class="titleBold"> Datum attest: </label>
-          <input formControlName="attestationDate" class="form-control" name="attestationDate" type="date" />
-
+          <input formControlName="attestationDate" class="form-control" (change)="updateAttestationDate()" name="attestationDate" id="attestationDate" type="date" />
+          
+          
         </div>
         <div class="col col-sm-4 fright">
           <label class="titleBold"> Contigent: </label>
-          <input formControlName="contingent" class="form-control" name="contingent" type="text" />
+          <input formControlName="contingent" class="form-control" (change)="updateContingent()" name="contingent" id="contingent" type="number" />
 
         </div>
 
         <div class="col col-sm-4 fright">
           <label class="titleBold"> Resterend saldo: </label>
-          <input formControlName="balance" class="form-control" name="balance" type="text" />
+          <input formControlName="balance" class="form-control" (change)="updateBalance()" name="balance" id="balance" type="number" />
 
         </div>
       </div>
     </div>
 
     <!-- download file -->
-    <div class="row UploadedFiles">
+    <div class="row UploadedFiles" id="StudentAttestUploadedFiles" name="StudentAttestUploadedFiles"  *ngIf="currentPerson.isStudentAtWork===true">
     <div class="col-sm-5"></div>
     <div class="col-sm-7">
       <!--For loop Starts -->
@@ -199,11 +201,11 @@
         </div>
       </div>
     </div>
-    <div id="DrivingLicense" class="customerBox">
+    <div id="DrivingLicense" name="DrivingLicense" class="customerBox" *ngIf="currentPerson.isDriver===true">
       <div class="row">
         <div class="col col-sm-6 fleft">
           <select class="drivinglicenses selectcomponent" [(ngModel)]='selectedOption' (ngModelChange)='onOptionSelected($event)' id="ddl_drivinglicense" name="ddl_drivinglicense"  [ngModelOptions]="{standalone: true}"  required="">
-            <option [value]="vehicle.vehicleName"  *ngFor="let vehicle of vehiclesForLicense">{{vehicle.vehicleName}}
+            <option [value]="vehicle.type"  *ngFor="let vehicle of vehiclesForLicense">{{vehicle.type}}
             </option>
           </select>
         </div>
@@ -216,7 +218,7 @@
         </div>
       </div>
     </div>
-    <div class="row UploadedFiles">
+    <div class="row UploadedFiles" id="DrivingLicenseUploadedFiles" name="DrivingLicenseUploadedFiles" *ngIf="currentPerson.isDriver===true">
       <div class="col-sm-5"></div>
       <div class="col-sm-7">
         <!--For loop Starts -->
@@ -240,7 +242,7 @@
       </div>
       <!--For loop Ends -->
     </div>
-    <div id="BuildingCards" class="customerBox">
+    <div id="OtherDocuments" class="customerBox">
       <div class="row">
         <div class="col col-sm-7 fleft">
           <h4>Andere nuttige documenten</h4>

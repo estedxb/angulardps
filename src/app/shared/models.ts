@@ -66,8 +66,8 @@ export class LoginToken {
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
-    constructionCards: Documents[]; studentAtWorkProfile: StudentAtWorkProfile;
-    driverProfiles: DriverProfilesItem[]; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
+    constructionCards: Documents[];  isConstructionSector :boolean; studentAtWorkProfile: StudentAtWorkProfile; isStudentAtWork : boolean;
+    driverProfiles: DriverProfilesItem[]; isDriver: boolean; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
     brightStaffingId: number;
 }
 export class Person {
@@ -83,9 +83,9 @@ export class Renumeration {
     hourlyWage: number; costReimbursment: boolean; netCostReimbursment: number; transportationAllowance: boolean;
 }
 export class MedicalAttestation { location: string; name: string; }
-export class ConstructionProfile { constructionCards: Documents[]; }
-export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number; }
-export class DriverProfilesItem { type: string; attestation: Documents; }
+export class ConstructionProfile { constructionCards: Documents[]; isConstructionSector :boolean;}
+export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number;  }
+export class DriverProfilesItem { type: string; attestation: Documents;}
 export class Documents { location: string; name: string; }
 export class DpsWorkSchedule {
     id: number; customerVatNumber: string; name: string; workSchedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
