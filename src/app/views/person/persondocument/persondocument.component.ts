@@ -571,18 +571,23 @@ export class PersonDocumentComponent implements OnInit {
 
     this.personService.requestCertificate(this.requestCertificate).subscribe(res => {
       this.logger.log('requestCertificate Response :: ', res);
+      this.ShowMessage('Vraag attest aan succesvol', '');
     },
-      (err: HttpErrorResponse) => {
-
-        this.logger.log('Error :: ');
-        this.logger.log(err);
-        if (err.error instanceof Error) {
-          this.logger.log('Error occured=' + err.error.message);
-        } else {
-          this.logger.log('response code=' + err.status);
-          this.logger.log('response body=' + err.error);
-        }
+    (err: HttpErrorResponse) => {
+      if (err.status === 200){
+        this.ShowMessage('Vraag attest aan succesvol', '');
       }
+     else {            
+      if (err.status === 200){
+        this.ShowMessage('Vraag attest aan succesvol', '');
+      }
+      else {
+        this.logger.log('response code=' + err.status);
+        this.logger.log('response body=' + err.error);
+        this.ShowMessage('Vraag attest aan succesvol', '');
+      }
+    }
+  }
     );
   }
 
