@@ -85,6 +85,8 @@ export class AddPersonComponent implements OnInit {
   public totalString: string;
   public selectedPositionIndex = 0;
   public selectedStatuteIndex = 0;
+  public lastAddedPosition: string;
+  public lastAddedPositionId:string;
 
   public netExpenseSwitch = false;
   public switchDistance = false;
@@ -380,6 +382,40 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('gender').disable();
     this.selectedGenderIndex = 0;
     this.enableALLFields();
+  }
+
+  fillDataDropDownOnAdd(maindatas) {
+
+    this.dataDropDownFunctie = [];
+    this.dataDropDownFunctieIds = [];
+
+    for (let i = 0; i < maindatas.length; i++) {
+      let positionObject = maindatas[i].position.name;
+      if (maindatas[i].position.name !== "") {
+        this.dataDropDownFunctie.push(positionObject);
+        this.dataDropDownFunctieIds.push(maindatas[i].position.id);
+      }
+    }
+
+    this.selectedPositionIndex = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+    this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
+    this.changeMessage();
+
+    //this.getPersonbySSIDVatNumber();
+
+  }
+
+  getIndexOfPositionDropDownFunctie(position:string) {
+
+    let index = -1;
+    for(let i=0;i<this.dataDropDownFunctie.length;i++)
+    {
+      if(position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
+        index = i;
+    }
+
+    return index;
+
   }
 
   fillDataDropDown(maindatas) {
