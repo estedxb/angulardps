@@ -134,7 +134,10 @@ export class CreatepositionComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') { this.fileToUpload = files.item(0); }
 
-      if (this.fileToUpload !== null) { this.fileToUploadName = files.item(0).name; }
+      if (this.fileToUpload !== null) { 
+        this.fileToUploadName = files.item(0).name;
+        this.ShowMessage('werkpostfiche uploaden succesvol', '');
+      }
     }
   }
 
@@ -144,6 +147,7 @@ export class CreatepositionComponent implements OnInit {
       this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
         this.logger.log('uploadFileToActivity()', data);
         this.setContractWorkstationDocumentInfo(data);
+        this.ShowMessage('werkpostfiche uploaden succesvol', '');
         this.dialogRef.close(this.currentPosition);
       }, error => {
         this.logger.log('uploadFileToActivity() Error - ', error);
