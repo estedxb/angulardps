@@ -329,6 +329,7 @@ export class AddPersonComponent implements OnInit {
     this.positionId = 0;
     this.selectedPositionIndex = 0;
 
+    this.AddPersonForm1.get('bic').disable();
 
     this.AddPersonForm2 = new FormGroup({
       functie: new FormControl('', [Validators.required]),
@@ -1041,7 +1042,21 @@ export class AddPersonComponent implements OnInit {
 
   setIbanNumber(value: string) {
     this.iban = value;
-    this.soapCallFetchBBAN();
+
+    this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
+      console.log('bic Data : ', response);
+      this.bbic = response.bic;
+      this.AddPersonForm1.controls.bic.setValue(this.bbic);
+
+      if (this.DpsPersonObject !== null) {
+        if (this.DpsPersonObject.person !== null) {
+          this.DpsPersonObject.person.bankAccount = new BankAccount();
+          this.DpsPersonObject.person.bankAccount.iban = this.iban;
+          this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+        }
+      }  
+    }, error => this.ShowMessage(error, 'error'));
+
   }
 
   resetPeronData() {
@@ -1062,6 +1077,7 @@ export class AddPersonComponent implements OnInit {
 
     this.AddPersonForm1.controls.iban.setValue('');
     this.AddPersonForm1.controls.bic.setValue('');
+    this.AddPersonForm1.get('bic').disable();
 
     this.AddPersonForm1.controls.mobileNumber.setValue('');
     this.AddPersonForm1.controls.vastNumber.setValue('');
@@ -1126,6 +1142,7 @@ export class AddPersonComponent implements OnInit {
     if (data.person.bankAccount !== null) {
       this.AddPersonForm1.controls.iban.setValue(data.person.bankAccount.iban);
       this.AddPersonForm1.controls.bic.setValue(data.person.bankAccount.bic);
+      this.AddPersonForm1.get('bic').disable();
     }
 
     if (data.statute !== null) {
@@ -1289,6 +1306,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.bankAccount = new BankAccount();
     this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.AddPersonForm1.get('bic').value;
+    this.AddPersonForm1.get('bic').disable();
 
     this.DpsPersonObject.person.status = '';
 
@@ -1622,7 +1640,7 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('vastNumber').enable();
     this.AddPersonForm1.get('emailAddress').enable();
     this.AddPersonForm1.get('iban').enable();
-    this.AddPersonForm1.get('bic').enable();
+    //this.AddPersonForm1.get('bic').enable();
     this.AddPersonForm1.get('bus').enable();
     this.AddPersonForm1.get('placeOfBirth').enable();
 
@@ -1639,7 +1657,7 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('vastNumber').disable();
     this.AddPersonForm1.get('emailAddress').disable();
     this.AddPersonForm1.get('iban').disable();
-    this.AddPersonForm1.get('bic').disable();
+    //this.AddPersonForm1.get('bic').disable();
     this.AddPersonForm1.get('bus').disable();
     this.AddPersonForm1.get('placeOfBirth').disable();
   }
@@ -1776,7 +1794,7 @@ export class AddPersonComponent implements OnInit {
     this.showFormIndex = 1;
     //let ssid:string = this.AddPersonForm1.get('socialSecurityNumber').value;
     //this.newCustomSSIDValidator(ssid);
-    this.ShowMessage('terug', '');
+    //this.ShowMessage('terug', '');
   }
 
   isInvalid() {
