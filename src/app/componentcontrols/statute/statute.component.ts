@@ -79,6 +79,19 @@ export class StatuteComponent implements OnInit {
 
   }
 
+  // ngOnChanges() {
+
+  //   this.createCoefficientArray();
+
+  //   if(this.STFormData !== undefined && this.STFormData !== null)
+  //   if (this.STFormData != this.oldSFTFormData) {
+  //     //this.createStatuteSettingsArrayEmpty();
+  //     this.oldSFTFormData = this.STFormData;
+  //     if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+  //       this.loadInitialData();
+  //     }
+  //   }
+  // }
 
   ngDoCheck() {
     this.createCoefficientArray();
