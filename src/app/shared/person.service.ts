@@ -54,7 +54,7 @@ export class PersonService {
 
     if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
       // this.logger.log('Data From getVehicles Remote');
-      this.getVehiclesURL = environment.dpsAPI + environment.getVehicles;
+      this.getVehiclesURL = environment.boemmAPI + environment.getVehicles;
     } else {
       this.logger.log('Data From getVehicles JSON');
       this.getVehiclesURL = environment.getAssetsDataPath + 'vehicles.json';
@@ -86,7 +86,7 @@ export class PersonService {
 
   public getVehiclesForLicense(): Observable<any> {
     // this.logger.log('PersonService getVehiclesForLicense Data From = ' + this.getVehiclesURL);
-    const result = this.http.get<DpsPerson[]>(this.getVehiclesURL, this.httpOptions).catch(this.errorHandler);
+    const result = this.http.get<any[]>(this.getVehiclesURL, this.httpOptions).catch(this.errorHandler);
     // this.logger.log(result);
     return result;
   }
@@ -238,6 +238,18 @@ export class PersonService {
       observe: 'response'
     });
   }
+
+  
+  public updatePersonDocumentDetails(person: any): Observable<any> {
+    // this.logger.log("in update position call:");
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.putPersonURL, person, {
+      headers: httpHeaders,
+      observe: 'response'
+    });
+  }
+
+  
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {

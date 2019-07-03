@@ -11,7 +11,7 @@ import {
 import { CreateContractComponent } from './createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
-import { environment } from '../../../../environments/environment.temp-prod';
+import { environment } from '../../../../environments/environment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { WorkSchedule } from '../../../shared/models';
 

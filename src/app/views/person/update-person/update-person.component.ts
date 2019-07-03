@@ -96,8 +96,14 @@ export class UpdatePersonComponent implements OnInit {
 
     if (message.page === 'position') {
       this.personpositionData = message.data;
-      // this.logger.log("received person data=" + this.editPersonData);
+      // this.logger.log("received person data=" + this.editPersonData);      
     }
+
+    if (message.page === 'documents') {
+      this.personDocumentsData = message.data;
+      // this.logger.log("received person data=" + this.editPersonData);      
+    }
+
   }
 
   changeMessage() {
@@ -201,7 +207,6 @@ export class UpdatePersonComponent implements OnInit {
           }
         }
       );
-
     }
 
     if (this.currentPage === 'positions') {
@@ -229,10 +234,28 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if (this.currentPage === 'documents') {
-      this.logger.log('data collected for person documents');
-      this.logger.log(this.personDocumentsData);
+      if (this.personDocumentsData!==null  && this.personDocumentsData!==undefined )
+      this.personService.updatePersonDocumentDetails(this.personDocumentsData).subscribe(res => {
+        this.logger.log('response=' + res);
+        this.ShowMessage('Persoon is succesvol bijgewerkt 20.', '');
+      },
+        (err: HttpErrorResponse) => {
+            if (err.status === 200){
+              this.ShowMessage('Persoon is succesvol bijgewerkt 40.', '');
+            }
+           else {            
+            if (err.status === 200){
+              this.ShowMessage('Persoon is succesvol bijgewerkt 30.', '');
+            }
+            else {
+              this.logger.log('response code=' + err.status);
+              this.logger.log('response body=' + err.error);
+              this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');  
+            }
+          }
+        }
+      );
     }
-
   }
 
 }

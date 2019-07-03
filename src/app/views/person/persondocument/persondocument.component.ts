@@ -1,14 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef, MatDatepickerModule } from '@angular/material';
 import {
-  _Position, FileType, PersonDocuments, DriverProfilesItem, DpsUser, Documents, DpsPerson, LoginToken, Summaries
+  _Position, FileType, PersonDocuments, DriverProfilesItem, StudentAtWorkProfile, Documents, DpsPerson, LoginToken, Summaries
 } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { environment } from '../../../../environments/environment';;
 import { LoggingService } from '../../../shared/logging.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-persondocument',
@@ -28,6 +29,7 @@ export class PersonDocumentComponent implements OnInit {
   public isConstructionSector: boolean;
   public isStudentAtWork: boolean;
   public isDriver: boolean;
+  public studentAtWorkProfile: StudentAtWorkProfile;
 
   public medicalAttestationDocumentName: string;
   public vcaAttestationDocumentName: string;
@@ -55,6 +57,7 @@ export class PersonDocumentComponent implements OnInit {
     private dialog: MatDialog,
     // private spinner: NgxUiLoaderService,
     private snackBar: MatSnackBar,
+    private dataService: DataService,
     private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
@@ -78,7 +81,61 @@ export class PersonDocumentComponent implements OnInit {
       attestationDate: new FormControl('', [Validators.required]),
       file: new FormControl('')
     });
+    this. loadPersonDetailsToEdit();
+    this.createObjects();
+    
+    //this.hideElementsOnload();
+    
 
+  }
+
+  
+  updateBalance() {
+    this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
+    this.changeMessage();
+  }
+
+  updateContingent() {
+    this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+    this.changeMessage();
+  }
+
+  updateAttestationDate() {
+    this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;   
+    this.changeMessage();
+  }
+
+
+
+
+  createObjects() {
+    //this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
+    this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
+    this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+    this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;    
+
+    this.changeMessage();
+  }
+
+  loadPersonDetailsToEdit() {
+    this.logger.log('loadPersonDetailsToEdit :::::::::::: ');
+    this.logger.log('this.currentUser.user :: ', this.currentPerson);
+    if (this.currentPerson !== null) {    
+        this.PersonDocumentForm.controls.balance.setValue(this.currentPerson.studentAtWorkProfile.balance);
+        this.PersonDocumentForm.controls.contingent.setValue(this.currentPerson.studentAtWorkProfile.contingent);
+        this.PersonDocumentForm.controls.attestationDate.setValue(this.currentPerson.studentAtWorkProfile.attestationDate);  
+       
+        this.logger.log('this.currentPerson.isConstructionSector:: ', this.currentPerson.isConstructionSector);
+        this.isConstructionSector = this.currentPerson.isConstructionSector;
+        this.logger.log('this.currentPerson.isStudentAtWork :: ', this.currentPerson.isStudentAtWork);
+        this.isStudentAtWork = this.currentPerson.isStudentAtWork;
+        this.logger.log('this.currentPerson.IsDriver :: ', this.currentPerson.isDriver);
+        this.isDriver = this.currentPerson.isDriver;
+       
+        this.createObjects();
+        
+    }
+    
   }
 
   onOptionSelected(event) {
@@ -86,33 +143,81 @@ export class PersonDocumentComponent implements OnInit {
   }
 
 
-  onConstructionSectorChange($event) {
-    // this.currentPerson.constructionProfile. = $event;
-    // this.logger.log('after');
-    // this.logger.log(this.currentPerson);
+
+  changeMessage() {
+
+    if (this.currentPerson !== null) {
+      const newmessage: any = {
+        page: 'documents',
+        data: this.currentPerson
+      };
+      this.dataService.changeMessage(newmessage);
+    }
   }
 
-  onIsDriverChange($event) {
-    // this.currentPerson.constructionProfile. = $event;
-    // this.logger.log('after');
-    // this.logger.log(this.currentPerson);
+
+
+  onIsConstructionSectorChange($event : boolean) {
+     this.currentPerson.isConstructionSector = $event;
+     this.logger.log('after');
+     this.logger.log(this.currentPerson.isConstructionSector);    
+      if (this.currentPerson.isConstructionSector===true) {
+        document.getElementById('BuildingCards').hidden = false;
+        document.getElementById('BuildingCardsUploadedFiles').hidden = false;
+      }
+      else{
+        //BuildingCardsUploadedFiles
+        document.getElementById('BuildingCards').hidden = true;
+        document.getElementById('BuildingCardsUploadedFiles').hidden = true;
+      }
+      this.logger.log('after');
+      this.logger.log(this.currentPerson);
+      this.changeMessage();
+  }
+
+  onIsDriverChange($event : boolean) {
+    this.currentPerson.isDriver = $event;
+    this.logger.log('after');
+    this.logger.log(this.currentPerson.isDriver);    
+     if (this.currentPerson.isDriver===true) {
+       //DrivingLicenseUploadedFiles
+       document.getElementById('DrivingLicense').hidden = false;
+       document.getElementById('DrivingLicenseUploadedFiles').hidden = false;
+     }
+     else{
+       document.getElementById('DrivingLicense').hidden = true;
+       document.getElementById('DrivingLicenseUploadedFiles').hidden = true;
+     }
+     this.logger.log('after');
+     this.logger.log(this.currentPerson);
+     this.changeMessage();
   }
 
   onisStudentAtWorkChange($event) {
-    // this.currentPerson.constructionProfile. = $event;
-    // this.logger.log('after');
-    // this.logger.log(this.currentPerson);
+    this.currentPerson.isStudentAtWork = $event;
+    this.logger.log('after');
+    this.logger.log(this.currentPerson.isStudentAtWork);    
+     if (this.currentPerson.isStudentAtWork===true) {
+       document.getElementById('StudentAttest').hidden = false;
+       document.getElementById('StudentAttestUploadedFiles').hidden = false;
+       //StudentAttestUploadedFiles
+     }
+     else{
+       document.getElementById('StudentAttest').hidden = true;
+       document.getElementById('StudentAttestUploadedFiles').hidden = true;
+     }
+     this.logger.log('after');
+     this.logger.log(this.currentPerson);
+     this.changeMessage();
   }
+
+
 
 
   getVehiclesForLicense() {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
-      this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
-      //this.ShowMessage('vehicles fetched successfully.', '');
-      // Remove the  Vehicles with License in this.currentPerson
-      //this.vehiclesForLicense = this.vehiclesForLicense.filter( function( el ) {
-      //return !this.currentPerson.driverProfiles.includes( el );
+      this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);    
       this.vehiclesForLicense = this.vehiclesForLicense.filter((el) => !this.currentPerson.driverProfiles.includes(el));
     }, error => this.ShowMessage(error, 'error'));
 
@@ -163,6 +268,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadMedicalAttestationFileToActivity() {
     this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.MedicalAttestation, this.currentPerson.medicalAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
 
     }, error => {
       this.logger.log(error);
@@ -205,6 +311,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadVcaAttestationFileToActivity() {
     this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.VcaAttestation, this.currentPerson.vcaAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -250,6 +357,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadConstructionCardsFileToActivity() {
     this.personService.constructionCardsFile(this.constructionCardsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.ConstructionCards, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -296,6 +404,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadStudentAtWorkFileToActivity() {
     this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.currentPerson.studentAtWorkProfile.attestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -351,6 +460,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadDriversFileToActivity() {
     this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense, this.driverProfilesItem.attestation.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -413,6 +523,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadOtherDocumentsToActivity() {
     this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.refreshPersonData();
     }, error => {
       this.logger.log(error);
     });
@@ -432,7 +543,9 @@ export class PersonDocumentComponent implements OnInit {
     this.updatePerson();
   }
 
-
+  refreshPersonData() {
+    this.getPersonBySSIDVatnumber(this.SocialSecurityId, this.VatNumber);
+  }
 
   onStatusChange(event, i) {
     this.logger.log('Position index : ' + i + ', Enabled : ' + event);
@@ -458,18 +571,21 @@ export class PersonDocumentComponent implements OnInit {
 
     this.personService.requestCertificate(this.requestCertificate).subscribe(res => {
       this.logger.log('requestCertificate Response :: ', res);
+      this.ShowMessage('Vraag attest aan succesvol', '');
     },
-      (err: HttpErrorResponse) => {
-
-        this.logger.log('Error :: ');
-        this.logger.log(err);
-        if (err.error instanceof Error) {
-          this.logger.log('Error occured=' + err.error.message);
-        } else {
-          this.logger.log('response code=' + err.status);
-          this.logger.log('response body=' + err.error);
-        }
+    (err: HttpErrorResponse) => {
+      if (err.status === 200){        this.ShowMessage('Vraag attest aan succesvol', '');      }
+     else {            
+      if (err.status === 200){
+        this.ShowMessage('Vraag attest aan succesvol', '');
       }
+      else {
+        this.logger.log('response code=' + err.status);
+        this.logger.log('response body=' + err.error);
+        this.ShowMessage('Vraag attest aan succesvol', '');
+      }
+    }
+  }
     );
   }
 
