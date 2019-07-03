@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './invoice-settings.component.html',
   styleUrls: ['./invoice-settings.component.css']
 })
-export class InvoiceSettingsComponent implements OnInit {
+export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   @Input() addRow: string;
   @Input() public FPFormData;
@@ -599,6 +599,11 @@ export class InvoiceSettingsComponent implements OnInit {
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
     this.loadCurrencies();
+  }
+
+  ngAfterViewInit() {
+
+    
   }
 
   changeInitialStatus() {

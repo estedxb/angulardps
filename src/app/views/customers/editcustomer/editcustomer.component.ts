@@ -81,7 +81,7 @@ export class EditCustomerComponent implements OnInit {
     this.GLdata = $event;
     if (this.HQdata !== null && this.HQdata !== undefined) {
       if (this.GLdata !== null && this.GLdata !== undefined) {
-        this.HQdata.customer.vcaCertification = this.GLdata.vcaObject;
+        this.HQdata.customer.vcaCertification.cerified = this.GLdata.vcaObject.cerified;
         this.HQdata.bulkContractsEnabled = this.GLdata.blk;
       }
     }

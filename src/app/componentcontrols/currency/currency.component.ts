@@ -76,23 +76,22 @@ export class CurrencyComponent implements OnInit {
 
   }
 
-  // ngDoCheck() {
+  ngDoCheck() {
 
-  //   if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
-  //   {
+    if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
+    {
 
-  //     if (this.oldcurrencyData !== this.currencyDataForm) {
-  //       this.oldcurrencyData = this.currencyDataForm;
-  //       this.loadInitialData();
-  //     }  
-  //   }
+      if (this.oldcurrencyData !== this.currencyDataForm) {
+        this.oldcurrencyData = this.currencyDataForm;
+        this.loadInitialData();
+      }  
+    }
 
-  //   if (this.inputdisabled !== this.olddisabled) {
-  //     this.olddisabled = this.inputdisabled;  
-  //   }
+    if (this.inputdisabled !== this.olddisabled) {
+      this.olddisabled = this.inputdisabled;  
+    }
 
-
-  // }
+  }
 
   loadInitialData() {
 
