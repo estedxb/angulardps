@@ -2,10 +2,10 @@ export const environment = {
   name: 'prod',
   production: true,
   dataFromAPI_JSON: true, // True = From Remote :: False = From JSON
-  dpsAPI: 'https://dpsapisdev.azurewebsites.net/api/',
-  boemmAPI: 'https://boemmapidev.azurewebsites.net/api/',
-  blobStorage: 'https://dpsstorageaccountdev.blob.core.windows.net',
-  aadurl: 'https://login.microsoftonline.com', // 'https://digitalpayrollservices.b2clogin.com', // 
+  dpsAPI: 'https://dpsapiprd.azurewebsites.net/api/',
+  boemmAPI: 'https://boemmapiprd.azurewebsites.net/api/',
+  blobStorage: 'https://dpsstorageaccountprd.blob.core.windows.net',
+  aadurl: 'https://digitalpayrollservices.b2clogin.com',
   tenantid: 'digitalpayrollservices.onmicrosoft.com',
   clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
   webUrl: 'https://dpsselfserviceportalprod.azurewebsites.net/',
@@ -83,3 +83,4 @@ export const environment = {
   getContractReasonURL: 'ContractReasons',
   isLoggingRequired: false
 };
+

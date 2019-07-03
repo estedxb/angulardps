@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build-prod": "ng build --prod",
     "cleanWindows": "rmdir /s /q node_modules",
     "rebuild": "npm run cleanWindows && npm install && ng serve"
   },
