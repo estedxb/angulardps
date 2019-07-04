@@ -122,6 +122,7 @@ export class AddPersonComponent implements OnInit {
   public bban: any = '';
   public bbic: any = '';
   public iban: any = '';
+  public ibanValid = false;
   public errorMessage: string = '';
 
   public Id = '';
@@ -1085,9 +1086,15 @@ export class AddPersonComponent implements OnInit {
         this.bbic = response.bic;
 
         if(this.bbic === "")
+        {
+          this.ibanValid = false;
           this.ShowMessage("Ongeldig iban-nummer",'');
+        }
         else
+        {
+          this.ibanValid = true;
           this.AddPersonForm1.controls.bic.setValue(this.bbic);
+        }
   
         if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
           if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {

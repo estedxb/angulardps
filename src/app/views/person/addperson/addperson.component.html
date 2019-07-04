@@ -274,7 +274,7 @@
                   <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)"
                     name="iban" type="text" required />
                   <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
+                    *ngIf="!ibanValid && AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidiban>
