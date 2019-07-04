@@ -294,9 +294,9 @@ export class DashboardPersonComponent implements OnInit {
     this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
 
     // tslint:disable-next-line: max-line-length
-    return this.formateZero(this.startDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.startDate) + (this.startDate.getUTCFullYear() !== this.endDate.getUTCFullYear() ? 'this.startDate.getUTCFullYear()' : '') + ' - ' + this.formateZero(this.endDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.endDate) + '. ' + this.endDate.getUTCFullYear();
+    return this.formateZero(this.startDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.startDate) + (this.startDate.getUTCFullYear() !== this.endDate.getUTCFullYear() ? ' ' + this.startDate.getUTCFullYear() : '') + ' - ' + this.formateZero(this.endDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.endDate) + ' ' + this.endDate.getUTCFullYear();
   }
-  getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
+  getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'short' }); }
 
   openContractDialog(index, personid, contractid, personIsEnabled, personIsArchived, approved, mode): void {
     this.logger.log('openContractDialog(' + index + ',' + personid + ',' + contractid +

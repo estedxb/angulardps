@@ -8,7 +8,6 @@
         <div class="col-sm-12 center-block head">
             <img src='../../../assets/svg/checklist_add.svg' *ngIf="mode==='new' || mode==='extend'">
             <img src='../../../assets/svg/checklist_eye.svg' *ngIf="mode==='update' || mode==='edit'">
-            <!--<img src='../../../assets/svg/checklist_edit.svg' *ngIf="mode==='edit'">-->
             <br /> <label>{{ mode==='update' ? 'Contract raadplegen' : 'Contract aanmaken' }}</label>
             <hr>
         </div>
@@ -20,8 +19,8 @@
             <div class="row editicon" *ngIf="mode==='update'">
                 <div class="col-sm-12">
                     <button name="EditContract" (click)="onEnableEdit()" class="Editcontract"
-                        [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived'><img
-                            src="../../../assets/svg/editbox.svg" /></button>
+                        [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived'>
+                        <img src="../../../assets/svg/editbox.svg" /></button>
                 </div>
             </div>
             <div class="row">
