@@ -50,6 +50,7 @@ export class PersonDocumentComponent implements OnInit {
   public driverProfilesItem: DriverProfilesItem;
   public requestCertificate: Summaries;
   public currentPerson: DpsPerson;
+  public oldCurrentPerson: DpsPerson;
 
   public data: DpsPerson;
   constructor(
@@ -60,9 +61,26 @@ export class PersonDocumentComponent implements OnInit {
     private dataService: DataService,
     private logger: LoggingService) { }
 
-  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+    ngDoCheck() {
+      
+      if(this.oldCurrentPerson !== this.currentPerson)
+      {
+        this.oldCurrentPerson = this.currentPerson;
+        this.loadPersonDetailsToEdit();
+      }
 
-  ngOnInit() { this.onPageInit(); }
+    }
+
+  ngOnChanges(changes: SimpleChanges): void { 
+
+    this.onPageInit();   
+  }
+
+  ngOnInit() { 
+    
+    this.onPageInit(); 
+  
+}
 
   onPageInit() {
 
@@ -81,8 +99,10 @@ export class PersonDocumentComponent implements OnInit {
       attestationDate: new FormControl('', [Validators.required]),
       file: new FormControl('')
     });
-    this. loadPersonDetailsToEdit();
+
+    this. loadPersonDetailsToEdit();    
     this.createObjects();
+
     
     //this.hideElementsOnload();
     
@@ -110,32 +130,44 @@ export class PersonDocumentComponent implements OnInit {
 
   createObjects() {
     //this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
-    this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
-    this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
-    this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;    
+    if (this.currentPerson !== undefined && this.currentPerson !== null)
+    {
+      if(this.currentPerson.studentAtWorkProfile !== undefined && this.currentPerson.studentAtWorkProfile !== null )
+      {
+        this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
+        this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+        this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;    
 
-    this.changeMessage();
+        this.changeMessage();
+
+      }
+
+      this.isConstructionSector = this.currentPerson.isConstructionSector;
+      this.isDriver = this.currentPerson.isDriver;
+      this.isStudentAtWork = this.currentPerson.isStudentAtWork;
+    }
+
+         
+
+          
   }
 
   loadPersonDetailsToEdit() {
     this.logger.log('loadPersonDetailsToEdit :::::::::::: ');
     this.logger.log('this.currentUser.user :: ', this.currentPerson);
-    if (this.currentPerson !== null) {    
-        this.PersonDocumentForm.controls.balance.setValue(this.currentPerson.studentAtWorkProfile.balance);
-        this.PersonDocumentForm.controls.contingent.setValue(this.currentPerson.studentAtWorkProfile.contingent);
-        this.PersonDocumentForm.controls.attestationDate.setValue(this.currentPerson.studentAtWorkProfile.attestationDate);  
-       
-        this.logger.log('this.currentPerson.isConstructionSector:: ', this.currentPerson.isConstructionSector);
-        this.isConstructionSector = this.currentPerson.isConstructionSector;
-        this.logger.log('this.currentPerson.isStudentAtWork :: ', this.currentPerson.isStudentAtWork);
-        this.isStudentAtWork = this.currentPerson.isStudentAtWork;
-        this.logger.log('this.currentPerson.IsDriver :: ', this.currentPerson.isDriver);
-        this.isDriver = this.currentPerson.isDriver;
-       
-        this.createObjects();
+
+    //this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+    //this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);      
+    if(this.currentPerson !== undefined)
+      if(this.currentPerson.studentAtWorkProfile !== undefined && this.currentPerson.studentAtWorkProfile !== null )
+      {
+        this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+        this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
+        this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
+        this.PersonDocumentForm.get('attestationDate').setValue(this.currentPerson.studentAtWorkProfile.attestationDate); 
         
-    }
-    
+      }
+            
   }
 
   onOptionSelected(event) {
@@ -161,15 +193,7 @@ export class PersonDocumentComponent implements OnInit {
      this.currentPerson.isConstructionSector = $event;
      this.logger.log('after');
      this.logger.log(this.currentPerson.isConstructionSector);    
-      if (this.currentPerson.isConstructionSector===true) {
-        document.getElementById('BuildingCards').hidden = false;
-        document.getElementById('BuildingCardsUploadedFiles').hidden = false;
-      }
-      else{
-        //BuildingCardsUploadedFiles
-        document.getElementById('BuildingCards').hidden = true;
-        document.getElementById('BuildingCardsUploadedFiles').hidden = true;
-      }
+     
       this.logger.log('after');
       this.logger.log(this.currentPerson);
       this.changeMessage();
@@ -179,33 +203,18 @@ export class PersonDocumentComponent implements OnInit {
     this.currentPerson.isDriver = $event;
     this.logger.log('after');
     this.logger.log(this.currentPerson.isDriver);    
-     if (this.currentPerson.isDriver===true) {
-       //DrivingLicenseUploadedFiles
-       document.getElementById('DrivingLicense').hidden = false;
-       document.getElementById('DrivingLicenseUploadedFiles').hidden = false;
-     }
-     else{
-       document.getElementById('DrivingLicense').hidden = true;
-       document.getElementById('DrivingLicenseUploadedFiles').hidden = true;
-     }
+  
      this.logger.log('after');
      this.logger.log(this.currentPerson);
      this.changeMessage();
   }
 
   onisStudentAtWorkChange($event) {
+
     this.currentPerson.isStudentAtWork = $event;
     this.logger.log('after');
     this.logger.log(this.currentPerson.isStudentAtWork);    
-     if (this.currentPerson.isStudentAtWork===true) {
-       document.getElementById('StudentAttest').hidden = false;
-       document.getElementById('StudentAttestUploadedFiles').hidden = false;
-       //StudentAttestUploadedFiles
-     }
-     else{
-       document.getElementById('StudentAttest').hidden = true;
-       document.getElementById('StudentAttestUploadedFiles').hidden = true;
-     }
+
      this.logger.log('after');
      this.logger.log(this.currentPerson);
      this.changeMessage();
@@ -268,7 +277,9 @@ export class PersonDocumentComponent implements OnInit {
   uploadMedicalAttestationFileToActivity() {
     this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.MedicalAttestation, this.currentPerson.medicalAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
+     
 
     }, error => {
       this.logger.log(error);
@@ -311,6 +322,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadVcaAttestationFileToActivity() {
     this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.VcaAttestation, this.currentPerson.vcaAttestation.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
     }, error => {
       this.logger.log(error);
@@ -357,6 +369,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadConstructionCardsFileToActivity() {
     this.personService.constructionCardsFile(this.constructionCardsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.ConstructionCards, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
     }, error => {
       this.logger.log(error);
@@ -383,8 +396,9 @@ export class PersonDocumentComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.studentAtWorkFileToUpload = files.item(0);
 
-        this.currentPerson.studentAtWorkProfile.attestation.name = files.item(0).name;
-        this.currentPerson.studentAtWorkProfile.attestation.location = "";
+        // this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
+        // this.currentPerson.studentAtWorkProfile.attestation.name = files.item(0).name;
+        // this.currentPerson.studentAtWorkProfile.attestation.location = "";
         this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
         this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
         this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
@@ -402,8 +416,9 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadStudentAtWorkFileToActivity() {
-    this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.currentPerson.studentAtWorkProfile.attestation.name).subscribe(data => {
+    this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.studentAtWorkFileToUpload.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
     }, error => {
       this.logger.log(error);
@@ -460,6 +475,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadDriversFileToActivity() {
     this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense, this.driverProfilesItem.attestation.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
     }, error => {
       this.logger.log(error);
@@ -523,6 +539,7 @@ export class PersonDocumentComponent implements OnInit {
   uploadOtherDocumentsToActivity() {
     this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
       // do something, if upload success
+      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
     }, error => {
       this.logger.log(error);

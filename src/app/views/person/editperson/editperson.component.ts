@@ -739,11 +739,11 @@ export class EditPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.zichmetdata = $event.vehicleName;
+    this.zichmetdata = $event.type;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event.vehicleName;
+        this.DpsPersonObject.person.travelMode = $event.type;
       }
 
     this.changeMessage();
@@ -840,7 +840,7 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.bankAccount.iban = this.editPersonForm.get('iban').value;
     this.DpsPersonObject.person.bankAccount.bic = this.editPersonForm.get('bic').value;
 
-    this.DpsPersonObject.person.travelMode = this.editPersonForm.get('travelMode').value;
+    this.DpsPersonObject.person.travelMode = this.zichmetdata;
     this.DpsPersonObject.person.status = '';
 
     this.DpsPersonObject.statute = new Statute();
