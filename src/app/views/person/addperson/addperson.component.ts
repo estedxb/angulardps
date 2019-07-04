@@ -490,6 +490,9 @@ export class AddPersonComponent implements OnInit {
 
   findIndex(position: string) {
 
+    if(this.maindatas.length ===0)
+      this.DpsPersonObject.customerPostionId = "0";
+
     for (let i = 0; i < this.maindatas.length; i++) {
       if (this.maindatas[i].position.name !== undefined)
         if (position === this.maindatas[i].position.name) {
@@ -1785,7 +1788,7 @@ export class AddPersonComponent implements OnInit {
         this.buttonPressed = true;
         this.setPositionIFEmpty();
 
-        if (this.maindatas.length === 0)
+        if (this.maindatas.length === 0 || this.DpsPersonObject.customerPostionId === "-1" || this.DpsPersonObject.customerPostionId === "0")
           this.ShowMessage('Maak alstublieft positie voor de persoon !', '');
         else
           this.postPersonData();
