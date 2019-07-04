@@ -19,8 +19,9 @@
                                 </div>
                                 <div class="row">
                                         <div class="col col-sm-8 m50">
-                                                <select [ngModel]="selectedIndex" formControlName="inhaalrust" id="dd_inhaalrust"
-                                                        name="dd_inhaalrust" class="inhaalrust selectcomponent"
+                                                <select [ngModel]="selectedIndex" formControlName="inhaalrust"
+                                                        id="dd_inhaalrust" name="dd_inhaalrust"
+                                                        class="inhaalrust selectcomponent"
                                                         (change)="onChangeDropDown($event)" ng-dropdown
                                                         required="required">
                                                         <option *ngFor="let data of dataDropDown let i= index"
@@ -56,13 +57,14 @@
                                                 </div>
                                         </div>
                                 </div>
-                                <div class="row dynrow">
+                                <div class="row dynrow inputWithImgNew">
                                         <div class="col col-sm-2"></div>
-                                        <div class="col col-sm-6">
+                                        <div class="col col-sm-6 euro">
                                                 <input id="mobilebox" #mobilebox
                                                         (change)="setMobileBox(mobilebox.value)"
-                                                        formControlName="mobilebox" class="inputBoxInhaalrust"
-                                                        type="text" />
+                                                        formControlName="mobilebox"
+                                                        class="inputBoxInhaalrust form-control" type="text" /><i
+                                                        class="fa fa-eur" aria-hidden="true"></i>
                                         </div>
                                         <div class="col col-sm-4">
                                                 <span>per km</span>
@@ -70,30 +72,38 @@
                                 </div>
                         </div>
                         <div class="col-sm-7">
-                                <div class="row">                                        
-                                        <div class="col col-sm-6"><span style="font-size: 15px">Coëff verplaatsingen</span></div>
-                                        <div class="col col-sm-6"><span style="font-size: 15px">Coëff maaltijdcheques</span></div>
+                                <div class="row">
+                                        <div class="col col-sm-6"><span style="font-size: 15px">Coëff
+                                                        verplaatsingen</span></div>
+                                        <div class="col col-sm-6"><span style="font-size: 15px">Coëff
+                                                        maaltijdcheques</span></div>
                                 </div>
-                                <div class="row">                                        
-                                         <div class="col col-sm-6">
-                                                <input #transportCoefficient (change)="transportCoefficientChange(transportCoefficient.value)" type="number" value="1.20" formControlName="Verplaatsingen">
+                                <div class="row">
+                                        <div class="col col-sm-6">
+                                                <input #transportCoefficient
+                                                        (change)="transportCoefficientChange(transportCoefficient.value)"
+                                                        type="number" value="1.20" formControlName="Verplaatsingen">
                                         </div>
                                         <div class="col col-sm-6">
-                                                <input #maaltichequesCoefficient (change)="mCoefficientChange(maaltichequesCoefficient.value)" type="number" value="1.69" formControlName="Maalticheques">
-                                        </div>        
+                                                <input #maaltichequesCoefficient
+                                                        (change)="mCoefficientChange(maaltichequesCoefficient.value)"
+                                                        type="number" value="1.69" formControlName="Maalticheques">
+                                        </div>
                                 </div>
-                                
+
                                 <div class="row">
-                                                <div class="col col-sm-6">
-                                                       <span style="font-size: 15px">Coëff ecocheques</span>
-                                                       <input #echoCoefficient (change)="onEchoChange(echoCoefficient.value)" type="number" value="1.69" formControlName="Echo">
-                                               </div>
-                                               <div class="col col-sm-6">
-                                                       <span style="font-size: 15px">Dimona</span>
-                                                       <input #dimonaCost (change)="onDimonaChange(dimonaCost.value)" type="number" value="0.3510" formControlName="Dimona">
-                                               </div>
-                                       </div>
-       
+                                        <div class="col col-sm-6">
+                                                <span style="font-size: 15px">Coëff ecocheques</span>
+                                                <input #echoCoefficient (change)="onEchoChange(echoCoefficient.value)"
+                                                        type="number" value="1.69" formControlName="Echo">
+                                        </div>
+                                        <div class="col col-sm-6">
+                                                <span style="font-size: 15px">Dimona</span>
+                                                <input #dimonaCost (change)="onDimonaChange(dimonaCost.value)"
+                                                        type="number" value="0.3510" formControlName="Dimona">
+                                        </div>
+                                </div>
+
                                 <div class="row">
                                         <div class="col col-sm-12">
                                                 <ui-switch [checked]="loadSwitchTeam" (change)="onTeamChange($event)"
@@ -105,7 +115,8 @@
 
                                 <!-- ISForm.controls.arrayBox.controls -->
 
-                                <div class="row dynrow" formArrayName="arrayBox" *ngFor="let Ploegpremiere of this.ISForm.get('arrayBox')['controls'] as result; let i=index; first as isFirst; last as isLast">
+                                <div class="row dynrow" formArrayName="arrayBox"
+                                        *ngFor="let Ploegpremiere of this.ISForm.get('arrayBox')['controls'] as result; let i=index; first as isFirst; last as isLast">
                                         <div class="col col-sm-5" [formGroupName]="i">
                                                 <input #code (change)="setPgBox1(code.value,i)" type="text"
                                                         formControlName="PloegprimeBox1">
@@ -115,15 +126,20 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
-                                                <select id="dd_currency" name="dd_currency" [ngModel]="selectedCurrencyIndex[i]" formControlName="currency" [disabled]="!ploegpremieSwitch" class="currency selectcomponent"
-                                                        (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown required="required">
-                                                        <option *ngFor="let data of datacurrencyDropDown let k= index" [attr.data-index]="k" [value]="k">{{data}}</option>
+                                                <select id="dd_currency" name="dd_currency"
+                                                        [ngModel]="selectedCurrencyIndex[i]" formControlName="currency"
+                                                        [disabled]="!ploegpremieSwitch" class="currency selectcomponent"
+                                                        (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown
+                                                        required="required">
+                                                        <option *ngFor="let data of datacurrencyDropDown let k= index"
+                                                                [attr.data-index]="k" [value]="k">{{data}}</option>
                                                 </select>
                                                 <!-- <app-currency [CurrencyFormData]="currencyDataShift[i]" [inputdisabled]="ploegpremieSwitch" (childEvent)="onChangeDropDownCurrencyTeam($event,i)" ></app-currency> -->
                                         </div>
                                         <div class="col col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
-                                                <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,false)"
-                                                        type="button" class="btnAdd">
+                                                <button [disabled]="isInvalid()" #addButton
+                                                        (click)="addRows(code.value,amount.value,false)" type="button"
+                                                        class="btnAdd">
                                                         <img src="../../assets/svg/addblack.svg" alt="" height="17.5"
                                                                 width="17.5" />
                                                 </button>
@@ -148,7 +164,8 @@
                                 </div>
                                 <!-- ISForm.controls.arrayAndreBox.controls -->
 
-                                <div formArrayName="arrayAndreBox" *ngFor="let Andre of this.ISForm.get('arrayAndreBox')['controls'] as nresult; let r=index; first as isFirstA; last as isLastA">
+                                <div formArrayName="arrayAndreBox"
+                                        *ngFor="let Andre of this.ISForm.get('arrayAndreBox')['controls'] as nresult; let r=index; first as isFirstA; last as isLastA">
                                         <div [formGroupName]="r" class="row dynrow">
                                                 <div class="col col-sm-5">
                                                         <app-workcodes [initialWorkCode]="workCode[r]"
@@ -160,10 +177,17 @@
                                                         <input #amountA (change)="setPgABox2(amountA.value,r)"
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
-                                                <div class="col col-sm-2" >
-                                                        <select id="dd_currency_new" name="dd_currency_new" [ngModel]="selectedCurrencyIndexAndre[r]" formControlName="currency_other" [disabled]="!ploegpremieSwitch" class="currency selectcomponent"
-                                                                (change)="onChangeDropDownCurrencyOther($event,r)" ng-dropdown required="required">
-                                                                <option *ngFor="let data of datacurrencyDropDown let q= index" [attr.data-index]="q" [value]="q">{{data}}</option>
+                                                <div class="col col-sm-2">
+                                                        <select id="dd_currency_new" name="dd_currency_new"
+                                                                [ngModel]="selectedCurrencyIndexAndre[r]"
+                                                                formControlName="currency_other"
+                                                                [disabled]="!ploegpremieSwitch"
+                                                                class="currency selectcomponent"
+                                                                (change)="onChangeDropDownCurrencyOther($event,r)"
+                                                                ng-dropdown required="required">
+                                                                <option *ngFor="let data of datacurrencyDropDown let q= index"
+                                                                        [attr.data-index]="q" [value]="q">{{data}}
+                                                                </option>
                                                         </select>
                                                         <!-- <app-currency [CurrencyFormData]="currencyDataOther[r]"  [inputdisabled]="andreSwitch" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency> -->
                                                 </div>
