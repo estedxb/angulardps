@@ -271,3 +271,10 @@ div.customerBox div.customerBoxContect {
 #errorDisplay {
   margin: 10px 0px 0px 0px;
 }
+
+button.Editcontract img {
+  content: url("../../../../../assets/svg/editbox.svg");
+}
+button.Editcontract:disabled img {
+  content: url("../../../../../assets/svg/editbox_disabled.svg");
+}

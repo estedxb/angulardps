@@ -586,7 +586,17 @@ div#PersonContact {
 }
 .greenbtn:disabled,
 .greenbtnnew:disabled {
-  background-image: linear-gradient(90deg, #0fc600, #0fad01);
+  color: #a09f9f;
+  background-image: linear-gradient(90deg, #ccc, #ddd);
+  border: 1px solid #b0a6a6;
+}
+.greenbtn:hover:disabled,
+.greenbtnnew:hover:disabled {
+  color: #a09f9f;
+  font-weight: 400;
+  text-shadow: none;
+  -moz-text-shadow: none;
+  -webkit-text-shadow: none;
 }
 
 .redbtn:disabled {

@@ -31,7 +31,7 @@ export class PersonService {
 
   constructor(private http: HttpClient, private logger: LoggingService) {
 
-    if(environment.dataFromAPI_JSON && environment.getBIC !== '') {
+    if (environment.dataFromAPI_JSON && environment.getBIC !== '') {
       this.getBICbyIBANURL = environment.dpsAPI + environment.getBIC;
     }
 
@@ -91,7 +91,7 @@ export class PersonService {
     return result;
   }
 
-  public getBICbyIBAN(iban:string): Observable<any> {
+  public getBICbyIBAN(iban: string): Observable<any> {
 
     let getURL = this.getBICbyIBANURL;
     if (environment.dataFromAPI_JSON && environment.getBIC !== '') {
@@ -128,13 +128,13 @@ export class PersonService {
       dpsScheduleCall.customerVatNumber = customerVatNumber;
       dpsScheduleCall.startDate = startDate;
       dpsScheduleCall.endDate = endDate;
-      result = this.http.post<any>(getURL, dpsScheduleCall, this.httpOptions).catch(this.errorHandler);
+      result = this.http.post<DpsSchedule>(getURL, dpsScheduleCall, this.httpOptions).catch(this.errorHandler);
     } else {
       if (customerVatNumber !== '123456789101') {
         getURL = getURL.replace('.json', '_empty.json');
       }
       this.logger.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
-      result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);
+      result = this.http.get<DpsSchedule>(getURL, this.httpOptions).catch(this.errorHandler);
     }
     // this.logger.log(result);
     return result;
@@ -239,7 +239,7 @@ export class PersonService {
     });
   }
 
-  
+
   public updatePersonDocumentDetails(person: any): Observable<any> {
     // this.logger.log("in update position call:");
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -249,7 +249,7 @@ export class PersonService {
     });
   }
 
-  
+
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {

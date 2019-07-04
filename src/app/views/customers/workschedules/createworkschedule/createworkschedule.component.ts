@@ -223,7 +223,7 @@ export class CreateWorkScheduleComponent implements OnInit {
     return maxArrayLength;
   }
 
-  addEmptyRow() {
+  addEmptyRow(idx: number = 0) {
     let lastRowId = 0;
     // this.logger.log('this.workScheduleRows.length :: ', this.workScheduleRows.length);
     if (this.workScheduleRows.length > 0) {
@@ -232,7 +232,13 @@ export class CreateWorkScheduleComponent implements OnInit {
       lastRowId = lastRow.rowid;
     }
     this.logger.log('lastRow Row ID :: ', lastRowId);
-    this.workScheduleRows.push(this.getEmptyRowOf(lastRowId + 1));
+    if (idx !== 0) {
+      this.workScheduleRows.splice(idx, 0, this.getEmptyRowOf(lastRowId + 1));
+    }
+    else {
+      this.workScheduleRows.push(this.getEmptyRowOf(lastRowId + 1));
+    }
+
     this.addEmptyWorkTimeToCurrentDpsWorkSchedule();
     this.logger.log('this.currentDpsWorkSchedule after addEmptyRow:: ', this.currentDpsWorkSchedule);
   }
@@ -262,40 +268,45 @@ export class CreateWorkScheduleComponent implements OnInit {
     weekDayOf.workTimes.title = ''; // 'Data for Row (' + rowid + ') of weekday(' + dayOfWeek + ')';
     return weekDayOf;
   }
+  clearRow(removeRowId: number) {
+    this.workScheduleRows.splice(removeRowId, 1, this.loadDataOfRow(removeRowId));
+    this.logger.log('this.workScheduleRows after removeRow:: ', this.workScheduleRows);
+    this.clearWorkTimeFromCurrentDpsWorkSchedule(removeRowId);
+    this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
+  }
 
+  clearWorkTimeFromCurrentDpsWorkSchedule(rowid) {
+    this.currentDpsWorkSchedule.workSchedule.workDays.forEach((wday) => {
+      wday.workTimes.splice(rowid, 1, { startTime: '00:00', endTime: '00:00', title: '' });
+    });
+  }
   removeRow(removeRowId: number) {
-
-    this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
+    // this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
     for (let i = 0; i < this.workScheduleRows.length; i++) {
-      this.logger.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
+      // this.logger.log('this.workScheduleRows[i] :: ', this.workScheduleRows[i]);
       const currentRow: WorkScheduleRow = this.workScheduleRows[i];
-      this.logger.log('currentRow :: ', currentRow);
-      this.logger.log('currentRow Row ID :: ', currentRow.rowid);
-      if (currentRow.rowid === removeRowId) {
-        this.workScheduleRows.splice(i, 1);
-      }
+      // this.logger.log('currentRow :: ', currentRow);
+      if (currentRow.rowid === removeRowId) { this.workScheduleRows.splice(i, 1); }
     }
-    this.logger.log('After Remove Index :: ', this.workScheduleRows);
+    // this.logger.log('After Remove Index :: ', this.workScheduleRows);
     this.removeWorkTimeFromCurrentDpsWorkSchedule(removeRowId);
     this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
   }
 
   removeWorkTimeFromCurrentDpsWorkSchedule(rowid) {
-
-    this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule workDays length :: '
-      + this.currentDpsWorkSchedule.workSchedule.workDays.length.toString());
     this.currentDpsWorkSchedule.workSchedule.workDays.forEach((wday) => {
-      this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule wday :: ', wday);
-
       let i = 0;
       let breaked = false;
+      // this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule workDay[' + wday.dayOfWeek + ']  workTimes length :: '
+      //  + wday.workTimes.length.toString());
       wday.workTimes.forEach((wTimes) => {
-        i += 1;
-        if (rowid === i && !breaked) {
-          this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule :: ', wTimes);
-          wday.workTimes.splice(rowid - 1, 1);
+        this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule rowid  :: ' + rowid + ' :: i :: ' + i, wTimes);
+        if (rowid === i) {
+          this.logger.log('removeWorkTimeFromCurrentDpsWorkSchedule row spliced ', wday.workTimes[i]);
+          wday.workTimes.splice(rowid, 1);
           breaked = true;
         }
+        i += 1;
       });
     });
   }

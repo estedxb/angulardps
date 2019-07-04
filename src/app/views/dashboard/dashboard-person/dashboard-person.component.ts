@@ -50,6 +50,7 @@ export class DashboardPersonComponent implements OnInit {
   public ShowNightDiff = 24 - environment.EveningingEnd;
   public CellWidth = 120;
   public RollOverContract = 0;
+  public allowCreateContract = false;
   // public TimeConverterToPx = 0.09375;
 
   public TimeConverterToPx = this.CellWidth / ((24 - this.ShowMorningDiff - this.ShowNightDiff) * 60);
@@ -83,10 +84,11 @@ export class DashboardPersonComponent implements OnInit {
     this.personService.getDpsScheduleByVatNumber(this.vatNumber, localstartDate, localendDate)
       .subscribe(dpsSchedule => {
         this.logger.log('onPageInit getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
+        this.allowCreateContract = dpsSchedule.allowCreateContract;
         this.maindatas = dpsSchedule.persons;
         // this.datas = this.maindatas;
         this.filterScheduleByName();
-        this.logger.log('maindatas ::', this.maindatas);
+        this.logger.log('onPageInit maindatas ::', this.maindatas);
         this.errorMsg = '';
       }, error => {
         this.logger.log('onPageInit error while getting  getDpsScheduleByVatNumber('
@@ -296,50 +298,60 @@ export class DashboardPersonComponent implements OnInit {
   }
   getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'long' }); }
 
-  openContractDialog(index, personid, contractid, actionState, mode): void {
-    // this.logger.log('openContractDialog(' + index + ',' + personid + ',' + contractid + ',' + actionState + ',' + mode + ')');
+  openContractDialog(index, personid, contractid, personIsEnabled, personIsArchived, approved, mode): void {
+    this.logger.log('openContractDialog(' + index + ',' + personid + ',' + contractid +
+      ',' + personIsEnabled + ',' + personIsArchived + ',' + approved + ',' + mode + ')');
     // this.logger.log(this.startDate + ' and endDate :: ' + this.endDate);
     try {
-      if (actionState) {
-        if (mode !== undefined && mode !== null && mode !== '') {
-
-          const selectedContract = new SelectedContract();
-          selectedContract.personContracts = this.getSelectedPersonContracts(index, personid);
-
-          selectedContract.contractId = contractid;
-          selectedContract.personId = personid;
-          selectedContract.mode = mode;
-
-          this.logger.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
-
-          selectedContract.startDate = this.startDate;
-          selectedContract.endDate = this.endDate;
-
-          if (mode === 'extend') {
-            selectedContract.startDate.setDate(selectedContract.startDate.getDate() + 7);
-            selectedContract.endDate.setDate(selectedContract.endDate.getDate() + 7);
+      if (mode !== undefined && mode !== null && mode !== '') {
+        if (mode === 'extend' || mode === 'new') {
+          if (!this.allowCreateContract) {
+            this.ShowMessage('Customer not allowed to create or extend contract.', '');
+            return;
+          } else if (!personIsEnabled || personIsArchived) {
+            this.ShowMessage('Person is disabled or archived.', '');
+            return;
           }
-
-          const dialogConfig = new MatDialogConfig();
-          dialogConfig.disableClose = false;
-          dialogConfig.autoFocus = true;
-          dialogConfig.width = '700px';
-          dialogConfig.data = selectedContract;
-          dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
-
-          const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
-
-          dialogRef.afterClosed().subscribe(result => {
-            this.logger.log('The dialog was closed');
-            this.data = result;
-            this.logger.log('this.data ::', this.data);
-            this.onPageInit();
-          });
-        } else {
-          this.ShowMessage('Error mode not selected.', '');
         }
+
+        const selectedContract = new SelectedContract();
+        selectedContract.personContracts = this.getSelectedPersonContracts(index, personid);
+
+        selectedContract.contractId = contractid;
+        selectedContract.personId = personid;
+        selectedContract.mode = mode;
+        selectedContract.allowCreateContract = this.allowCreateContract;
+        selectedContract.approved = approved;
+        selectedContract.personIsEnabled = personIsEnabled;
+        selectedContract.personIsArchived = personIsArchived;
+
+        this.logger.log('open Create Contract  startDate ::', this.startDate + ' and endDate :: ' + this.endDate);
+
+        selectedContract.startDate = this.startDate;
+        selectedContract.endDate = this.endDate;
+
+        if (mode === 'extend') {
+          selectedContract.startDate.setDate(selectedContract.startDate.getDate() + 7);
+          selectedContract.endDate.setDate(selectedContract.endDate.getDate() + 7);
+        }
+
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = false;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '700px';
+        dialogConfig.data = selectedContract;
+        dialogConfig.ariaLabel = 'Arial Label Positions Dialog';
+
+        const dialogRef = this.dialog.open(CreateContractComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.logger.log('The dialog was closed');
+          this.data = result;
+          this.logger.log('this.data ::', this.data);
+          this.onPageInit();
+        });
       } else {
-        this.ShowMessage('Person is not archived or disabled.', '');
+        this.ShowMessage('Error mode not selected.', '');
       }
     } catch (e) {
       alert('openContractDialog :: ' + e.message);

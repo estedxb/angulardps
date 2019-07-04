@@ -61,13 +61,13 @@
                   </div>
                   <div class="mid bg">-</div>
                   <div class="end bg">
-                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}"
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}_HH"
                       [value]="weekDayOf.workTimes.endTime | timeSpliter: 1" [title]="weekDayOf.workTimes.title"
                       placeholder="00" maxlength="2" type="number" (keypress)="onKey($event)"
                       (keyup)="onHourKey($event)"
                       (blur)="OnTextBoxBlur($event.target.value,workScheduleRow.rowid,weekDayOf.dayOfWeek,'E','H')" />
                     <div class="mid">:</div>
-                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}"
+                    <input name="WorkSchedule_{{workScheduleRow.rowid}}_End_{{weekDayOf.dayOfWeek}}_MM"
                       [value]="weekDayOf.workTimes.endTime | timeSpliter: 2" [title]="weekDayOf.workTimes.title"
                       placeholder="00" maxlength="2" type="number" (keypress)="onKey($event)" (keyup)="onMinKey($event)"
                       (blur)="OnTextBoxBlur($event.target.value,workScheduleRow.rowid,weekDayOf.dayOfWeek,'E','M')" />
@@ -77,7 +77,9 @@
               <td>
                 <div class="row">
                   <div class="col col-sm-12 mat-dialog-close">
-                    <button (click)="removeRow(workScheduleRow.rowid)"><img
+                    <button (click)="removeRow(workScheduleRow.rowid)" *ngIf="workScheduleRows.length>2"><img
+                        src='../../../../../assets/svg/delete.svg' /></button>
+                    <button (click)="clearRow(workScheduleRow.rowid)"><img
                         src='../../../../../assets/svg/remove.svg' /></button>
                   </div>
                 </div>

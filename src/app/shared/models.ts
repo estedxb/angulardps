@@ -67,7 +67,7 @@ export class LoginToken {
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
-    constructionCards: Documents[];  isConstructionSector :boolean; studentAtWorkProfile: StudentAtWorkProfile; isStudentAtWork : boolean;
+    constructionCards: Documents[]; isConstructionSector: boolean; studentAtWorkProfile: StudentAtWorkProfile; isStudentAtWork: boolean;
     driverProfiles: DriverProfilesItem[]; isDriver: boolean; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
     brightStaffingId: number;
 }
@@ -84,9 +84,9 @@ export class Renumeration {
     hourlyWage: number; costReimbursment: boolean; netCostReimbursment: number; transportationAllowance: boolean;
 }
 export class MedicalAttestation { location: string; name: string; }
-export class ConstructionProfile { constructionCards: Documents[]; isConstructionSector :boolean;}
-export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number;  }
-export class DriverProfilesItem { type: string; attestation: Documents;}
+export class ConstructionProfile { constructionCards: Documents[]; isConstructionSector: boolean; }
+export class StudentAtWorkProfile { attestation: Documents; attestationDate: string; contingent: number; balance: number; }
+export class DriverProfilesItem { type: string; attestation: Documents; }
 export class Documents { location: string; name: string; }
 export class DpsWorkSchedule {
     id: number; customerVatNumber: string; name: string; workSchedule: WorkSchedule; isEnabled: boolean; isArchived: boolean;
@@ -121,7 +121,10 @@ export class Summaries {
     objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
 }
 
-export class SelectedContract { personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date; mode: string }
+export class SelectedContract {
+    personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date; mode: string;
+    approved: boolean; allowCreateContract: boolean; personIsEnabled: boolean; personIsArchived: boolean;
+}
 
 /*
 export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
@@ -138,7 +141,10 @@ export enum FileType {
     OtherDocuments = 'OtherDocuments', DriversLicense = 'DriversLicense'
 }
 export class DpsScheduleCall { customerVatNumber: string; startDate: string; endDate: string; }
-export class DpsSchedule { id: number; startDate: string; endDate: string; customer: DpsScheduleCustomer; persons: DpsSchedulePerson[]; }
+export class DpsSchedule {
+    id: number; allowCreateContract: boolean; startDate: string; endDate: string;
+    customer: DpsScheduleCustomer; persons: DpsSchedulePerson[];
+}
 export class DpsScheduleCustomer { customerVatNumber: string; customerName: string; }
 export class DpsSchedulePerson {
     personId: string; personName: string; positionName: string; personIsEnabled: boolean; personIsArchived: boolean;

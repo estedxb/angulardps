@@ -17,10 +17,10 @@
         <div class="contactperson" id="maincontent">
 
             <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
-
             <div class="row editicon" *ngIf="mode==='update'">
                 <div class="col-sm-12">
-                    <button name="EditContract" (click)="onEnableEdit()" class=""><img
+                    <button name="EditContract" (click)="onEnableEdit()" class="Editcontract"
+                        [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived'><img
                             src="../../../assets/svg/editbox.svg" /></button>
                 </div>
             </div>
@@ -133,12 +133,13 @@
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false || isApproved">&nbsp;</div>
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser && !isApproved">
                 <button class="greenbtn" id="btnApprove" (click)="onApproveContractClick()"
+                    [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived'
                     *ngIf="this.isDpsUser"><span>Goedkeuren</span>
                 </button>
             </div>
             <div class="col col-sm-3 center-block">
                 <button class="greenbtn redbtn" id="btnCancelContract" name="btnCancelContract"
-                    (click)="onCancelContractClick()"><span>Contract annuleren</span>
+                    (click)="onCancelContractClick()"><span>Annuleren</span>
                 </button>
             </div>
         </div>

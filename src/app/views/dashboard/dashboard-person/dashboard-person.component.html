@@ -42,16 +42,17 @@
             <ng-container *ngIf="personContract !== undefined">
               <tr class="Contents">
                 <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
-                  <div class="name">
+                  <div class="name"
+                    [ngClass]="{'notActive': (!personContract.personIsEnabled || personContract.personIsArchived)}">
                     {{personContract.personName}}</div>
                   <div class="position">
                     {{personContract.positionName}}
                   </div>
                 </td>
                 <td class="col-split col-split-f">
-                  <button
-                    (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled && !personContract.personIsArchived, 'new')"
-                    *ngIf="personContract.personIsEnabled && !personContract.personIsArchived">
+                  <!-- Persion is enable & Person is not archived & Add Button Will so only if the Customer is allowed to create create-->
+                  <button class="addContract" [ngClass]="{'disabled': !allowCreateContract}"
+                    (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled ,personContract.personIsArchived, false, 'new')">
                     <img src="../../../../assets/svg/checklist_add.svg" />
                   </button>
                 </td>
@@ -80,7 +81,7 @@
                                 *ngIf="(!contract.childContractId > 0) && contract.approved ">
                                 <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
                                   *ngIf="(!contract.childContractId > 0) && contract.approved"
-                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'extend')">
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled ,personContract.personIsArchived, contract.approved,'extend')">
                                   <div class="btnLeftTextContainer">
                                     <div id="triangleLeft"
                                       style="border-color: transparent transparent rgb(226, 226, 226); border-width: 0px 0px 26px 12px;">
@@ -96,7 +97,7 @@
                                 *ngIf="(!contract.childContractId > 0) && contract.approved"></div>
                               <div class="contractActionbtn2">
                                 <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
-                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled && !personContract.personIsArchived,'update')">
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled,personContract.personIsArchived, contract.approved,'update')">
                                   <div class="btnLeftIcon">
                                     <img src="../../../../assets/svg/eye.svg" alt="Extend">
                                   </div>
@@ -530,9 +531,9 @@
   <div id="PersonButtons" class="row">
     <div class="col col-sm-12 ">
       <button class="greybtn" (click)="OpenAddPersonURL()"><img src="../../../../assets/svg/AddPerson.svg"
-          alt="">Persoon
-        toevoegen</button>
-      <button class="greybtn" (click)="OpenBulkContractURL()"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
+          alt="">Persoon toevoegen</button>
+      <button class="greybtn" (click)="OpenBulkContractURL()" [disabled]="!allowCreateContract"
+        class="bulkcontract"><img src="../../../../assets/svg/layers.svg" alt="">Bulk
         contracten aanmaken</button>
     </div>
   </div>
