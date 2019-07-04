@@ -224,11 +224,20 @@ export class AddCustomerComponent implements OnInit {
     });
   }
 
+  updateLocalStorage(customerVatNumber,customerName) {
+    this.dpsLoginToken.customerVatNumber = customerVatNumber;
+    this.dpsLoginToken.customerName = customerName;
+    this.dpsLoginToken.customerlogo = '';
+    localStorage.setItem('dpsLoginToken', JSON.stringify(this.dpsLoginToken));
+    this.logger.log('dpsLoginToken :: ', this.dpsLoginToken);
+    }
+
   updateData() {
 
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
+      this.updateLocalStorage(this.HQdata.customer.vatNumber,this.HQdata.customer.name);
       this.logger.log('Redirect Breaked 11');
       this.router.navigate(['/dashboard']);
       this.spinnerToggle = true;
