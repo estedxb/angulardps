@@ -269,10 +269,16 @@ export class CreateWorkScheduleComponent implements OnInit {
     return weekDayOf;
   }
   clearRow(removeRowId: number) {
-    this.workScheduleRows.splice(removeRowId, 1, this.loadDataOfRow(removeRowId));
-    this.logger.log('this.workScheduleRows after removeRow:: ', this.workScheduleRows);
+
     this.clearWorkTimeFromCurrentDpsWorkSchedule(removeRowId);
     this.logger.log('this.currentDpsWorkSchedule after removeRow:: ', this.currentDpsWorkSchedule);
+    setTimeout(() => {
+      const newEmptyWorkScheduleRow = this.loadDataOfRow(removeRowId);
+      setTimeout(() => {
+        this.workScheduleRows.splice(removeRowId, 1, newEmptyWorkScheduleRow);
+        this.logger.log('this.workScheduleRows after removeRow:: ', this.workScheduleRows);
+      }, 100);
+    }, 50);
   }
 
   clearWorkTimeFromCurrentDpsWorkSchedule(rowid) {
@@ -280,6 +286,7 @@ export class CreateWorkScheduleComponent implements OnInit {
       wday.workTimes.splice(rowid, 1, { startTime: '00:00', endTime: '00:00', title: '' });
     });
   }
+
   removeRow(removeRowId: number) {
     // this.logger.log('Remove Row ID :: ' + removeRowId + ' :: this.workScheduleRows.length :: ' + this.workScheduleRows.length);
     for (let i = 0; i < this.workScheduleRows.length; i++) {
