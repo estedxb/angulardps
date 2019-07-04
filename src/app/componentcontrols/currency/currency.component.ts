@@ -11,7 +11,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class CurrencyComponent implements OnInit {
 
-  @Input() public currencyDataForm;
+  @Input() public CurrencyFormData;
   @Input() public inputdisabled;
   @Output() public childEvent = new EventEmitter();
 
@@ -55,17 +55,17 @@ export class CurrencyComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private spinner: NgxUiLoaderService,private logger: LoggingService,private cdr: ChangeDetectorRef) {
+  constructor(private spinner: NgxUiLoaderService,private logger: LoggingService,private cdr: ChangeDetectorRef) {  
 
   }
 
   ngOnChanges() {
 
-    if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
+    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
     {
 
-      if (this.oldcurrencyData !== this.currencyDataForm) {
-        this.oldcurrencyData = this.currencyDataForm;
+      if (this.oldcurrencyData !== this.CurrencyFormData) {
+        this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
       }  
     }
@@ -78,11 +78,15 @@ export class CurrencyComponent implements OnInit {
 
   ngDoCheck() {
 
-    if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
+    this.logger.log("ngDoCheck called");
+    this.logger.log("currencyFormData=");
+    this.logger.log(this.CurrencyFormData);
+
+    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
     {
 
-      if (this.oldcurrencyData !== this.currencyDataForm) {
-        this.oldcurrencyData = this.currencyDataForm;
+      if (this.oldcurrencyData !== this.CurrencyFormData) {
+        this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
       }  
     }
@@ -91,15 +95,17 @@ export class CurrencyComponent implements OnInit {
       this.olddisabled = this.inputdisabled;  
     }
 
+    this.refresh();
+
   }
 
   loadInitialData() {
 
     this.datacurrencyDropDown = ['€', '%'];
 
-    if (this.currencyDataForm !== undefined && this.currencyDataForm !== null) {
+    if (this.CurrencyFormData !== undefined && this.CurrencyFormData !== null) {
       for (let i = 0; i < this.datacurrencyDropDown.length; i++) {
-        if (this.currencyDataForm === this.datacurrencyDropDown[i])
+        if (this.CurrencyFormData === this.datacurrencyDropDown[i])
           this._selectedIndex = i;
       }
     }
@@ -112,12 +118,24 @@ export class CurrencyComponent implements OnInit {
     this.childEvent.emit(this.datacurrencyDropDown[0]);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
-    if(this.currencyDataForm !== undefined && this.currencyDataForm !== null)
+    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
     {
-      if (this.oldcurrencyData !== this.currencyDataForm) {
-        this.oldcurrencyData = this.currencyDataForm;
+      if (this.oldcurrencyData !== this.CurrencyFormData) {
+        this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
       }  
+    }
+    this.cdr.detectChanges();
+  }
+
+  ngAfterViewInit() {
+
+    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
+    {
+      if (this.oldcurrencyData !== this.CurrencyFormData) {
+        this.oldcurrencyData = this.CurrencyFormData;
+        this.loadInitialData();
+      }
     }
 
   }

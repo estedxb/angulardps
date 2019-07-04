@@ -115,10 +115,14 @@
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
-                                                <app-currency [inputdisabled]="ploegpremieSwitch" [currencyDataForm]="currencyDataShift[i]" (childEvent)="onChangeDropDownCurrencyTeam($event,i)"></app-currency>
+                                                <select id="dd_currency" name="dd_currency" [ngModel]="selectedCurrencyIndex[i]" formControlName="currency" [disabled]="!ploegpremieSwitch" class="currency selectcomponent"
+                                                        (change)="onChangeDropDownCurrencyTeam($event,i)" ng-dropdown required="required">
+                                                        <option *ngFor="let data of datacurrencyDropDown let k= index" [attr.data-index]="k" [value]="k">{{data}}</option>
+                                                </select>
+                                                <!-- <app-currency [CurrencyFormData]="currencyDataShift[i]" [inputdisabled]="ploegpremieSwitch" (childEvent)="onChangeDropDownCurrencyTeam($event,i)" ></app-currency> -->
                                         </div>
                                         <div class="col col-sm-2" *ngIf="(result.length === 1 || isLast) else remove">
-                                                <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,'')"
+                                                <button [disabled]="isInvalid()" #addButton (click)="addRows(code.value,amount.value,false)"
                                                         type="button" class="btnAdd">
                                                         <img src="../../assets/svg/addblack.svg" alt="" height="17.5"
                                                                 width="17.5" />
@@ -156,8 +160,12 @@
                                                         <input #amountA (change)="setPgABox2(amountA.value,r)"
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
-                                                <div class="col col-sm-2">
-                                                        <app-currency [inputdisabled]="andreSwitch" [currencyDataForm]="currencyDataOther[r]" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency>
+                                                <div class="col col-sm-2" >
+                                                        <select id="dd_currency_new" name="dd_currency_new" [ngModel]="selectedCurrencyIndexAndre[r]" formControlName="currency_other" [disabled]="!ploegpremieSwitch" class="currency selectcomponent"
+                                                                (change)="onChangeDropDownCurrencyOther($event,r)" ng-dropdown required="required">
+                                                                <option *ngFor="let data of datacurrencyDropDown let q= index" [attr.data-index]="q" [value]="q">{{data}}</option>
+                                                        </select>
+                                                        <!-- <app-currency [CurrencyFormData]="currencyDataOther[r]"  [inputdisabled]="andreSwitch" (childEvent)="onChangeDropDownCurrencyOther($event,r)"></app-currency> -->
                                                 </div>
                                                 <div class="col col-sm-2"
                                                         *ngIf="(nresult.length === 1 || isLastA) else removeA">

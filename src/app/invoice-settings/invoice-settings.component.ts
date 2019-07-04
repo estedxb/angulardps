@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 import {
   DPSCustomer, Customer, EmailAddress, VcaCertification, CreditCheck,
@@ -11,6 +11,8 @@ import { LoggingService } from '../shared/logging.service';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
+import { MatPaginator } from '@angular/material';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoice-settings',
@@ -23,6 +25,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   @Input() public FPFormData;
   @Output() public childEvent = new EventEmitter();
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   public id = 'ddl_jointcommittee';
   public currentlanguage = 'nl';
   public errorMsg;
@@ -31,6 +35,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   public newcounter: number = 0;
 
   public oldFPFormData: any = {};
+
+  public CurrencyFormData;
 
   // tslint:disable-next-line: variable-name
 
@@ -61,7 +67,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   otherAllowanceCounter: number;
   dataDropDown: string[];
   datacurrencyDropDown: string[];
-  selectedIndexCurrency: boolean;
+  selectedCurrencyIndex = [];
+  selectedCurrencyIndexAndre = [];
 
   public ISForm: FormGroup;
 
@@ -90,9 +97,48 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   public currencyOther: string = "";
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder,private cd: ChangeDetectorRef,
     // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
+
+
+  /********************************************** DropDown  Currency drop down *************************/
+  private _selectedValueCurrencyAndere: any; private _selectedInCurrencyAndere: any = 0; private _valueCurrencyAndere: any;
+
+  set selectedValueCurrencyAndere(value: any) { this._selectedValueCurrencyAndere = value; }
+  get selectedValueCurrencyAndere(): any { return this._selectedValueCurrencyAndere; }
+  set selectedIndexCurrencyAndere(value: number) { this._selectedInCurrencyAndere = value; this.valueCurrencyAndere = this.datacurrencyDropDown[this.selectedIndexCurrencyAndere]; }
+  get selectedIndexCurrencyAndere(): number { return this._selectedInCurrencyAndere; }
+  set valueCurrencyAndere(value: any) { this._valueCurrencyAndere = value; }
+  get valueCurrencyAndere(): any { return this._valueCurrencyAndere; }
+  resetToInitValueCurrencyAndere() { this.valueCurrencyAndere = this.selectedValueCurrencyAndere; }
+
+  SetInitialValueCurrencyAndere() {
+    if (this.selectedValueCurrencyAndere === undefined) {
+      this._selectedInCurrencyAndere = 0;
+      this.selectedValueCurrencyAndere = this.datacurrencyDropDown[this._selectedInCurrencyAndere];
+    }
+  }
+
+
+  /********************************************** DropDown  Currency drop down *************************/
+  private _selectedValueCurrency: any; private _selectedInCurrency: any = 0; private _valueCurrency: any;
+
+  set selectedValueCurrency(value: any) { this._selectedValueCurrency = value; }
+  get selectedValueCurrency(): any { return this._selectedValueCurrency; }
+  set selectedIndexCurrency(value: number) { this._selectedInCurrency = value; this.valueCurrency = this.datacurrencyDropDown[this.selectedIndexCurrency]; }
+  get selectedIndexCurrency(): number { return this._selectedInCurrency; }
+  set valueCurrency(value: any) { this._valueCurrency = value; }
+  get valueCurrency(): any { return this._valueCurrency; }
+  resetToInitValueCurrency() { this.valueCurrency = this.selectedValueCurrency; }
+
+  SetInitialValueCurrency() {
+    if (this.selectedValueCurrency === undefined) {
+      this._selectedInCurrency = 0;
+      this.selectedValueCurrency = this.datacurrencyDropDown[this._selectedInCurrency];
+    }
+  }
+  
 
   /********************************************** DropDown  Inhaalrust drop down *************************/
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -131,6 +177,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     this.mobilityAllowanceObject.enabled = this.mobilitySwitch;  
 
+    this.logger.log("shift allowances");
+    this.logger.log(this.shiftAllowances);
+
+    this.logger.log("other allowances ");
+    this.logger.log(this.otherAllowances);
+
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
       'sicknessInvoiced': this.sicknessInvoiced,
@@ -152,15 +204,17 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
-    if ($event === '€') {
+    this.logger.log("choosen value="+$event.target.value);
+
+    if ($event.target.value === "0") {
       this.shiftAllowances[i].nominal = false;
-      this.currencyDataShift[i] = '€';
+      this.currencyDataShift[i] = 0;
       this.currencyShift = "€";
       this.changeObject();
     }
     else {
       this.shiftAllowances[i].nominal = true;
-      this.currencyDataShift[i] = '%';
+      this.currencyDataShift[i] = 1;
       this.currencyShift = "%";
       this.changeObject();
     }
@@ -169,15 +223,15 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onChangeDropDownCurrencyOther($event, i) {
 
-    if ($event === '€') {
+    if ($event.target.value === "0") {
       this.otherAllowances[i].nominal = false;
-      this.currencyDataOther[i] = '€';
+      this.currencyDataOther[i] = 0;
       this.currencyOther = "€";
       this.changeObject();
     }
     else {
       this.otherAllowances[i].nominal = true;
-      this.currencyDataOther[i] = '%';
+      this.currencyDataOther[i] = 1;
       this.currencyOther = "%";
       this.changeObject();
     }
@@ -278,6 +332,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                 const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
                 formGroup.controls['PloegprimeBox1'].enable();
                 formGroup.controls['PloegprimeBox2'].enable();
+                formGroup.controls['currency'].enable();
               }
             }
             else {
@@ -289,6 +344,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                 const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
                 formGroup.controls['PloegprimeBox1'].disable();
                 formGroup.controls['PloegprimeBox2'].disable();
+                formGroup.controls['currency'].disable();
               }
 
             }
@@ -308,19 +364,23 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                   if (this.ploegpremieSwitch === false) {
                     formGroup.controls['PloegprimeBox1'].disable();
                     formGroup.controls['PloegprimeBox2'].disable();
+                    formGroup.controls['currency'].disable();
                   }
                   else {
                     formGroup.controls['PloegprimeBox1'].enable();
                     formGroup.controls['PloegprimeBox2'].enable();
+                    formGroup.controls['currency'].enable();
                   }
 
                   if (this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false) {
-                    this.currencyDataShift[0] = "€";
+                    this.currencyDataShift[0] = 0;
                     this.currencyShift = "€";
+                    this.selectedCurrencyIndex[0]  = 0;
                   }
                   else {
                     this.currencyShift = "%";
-                    this.currencyDataShift[0] = "%";
+                    this.currencyDataShift[0] = 1;
+                    this.selectedCurrencyIndex[0]  = 1;
                   }
 
                   this.shiftAllowances[0].amount = parseInt(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount, 10);
@@ -331,12 +391,14 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                   if (this.shiftAllowanceCounter < this.FPFormData.data.invoiceSettings.shiftAllowances.length) {
 
                     if (element.nominal === false) {
-                      this.currencyDataShift[counter] = "€";
+                      this.currencyDataShift[counter] = 0;
                       this.currencyShift = "€";
+                      this.selectedCurrencyIndex[counter]  = 0;
                     }
                     else {
                       this.currencyShift = "%";
-                      this.currencyDataShift[counter] = "%";
+                      this.currencyDataShift[counter] = 1;
+                      this.selectedCurrencyIndex[counter]  = 1;
                     }
 
                     this.addRows(element.shiftName, element.amount, element.nominal);
@@ -349,10 +411,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                     if (this.ploegpremieSwitch === false) {
                       formGroup.controls['PloegprimeBox1'].disable();
                       formGroup.controls['PloegprimeBox2'].disable();
+                      formGroup.controls['currency'].disable();
                     }
                     else {
                       formGroup.controls['PloegprimeBox1'].enable();
                       formGroup.controls['PloegprimeBox2'].enable();
+                      formGroup.controls['currency'].enable();
                     }
 
                   }
@@ -371,6 +435,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                 const formGroup = this.Andre.controls[nc] as FormGroup;
                 formGroup.controls['AndreBox1'].enable();
                 formGroup.controls['AndreBox2'].enable();
+                formGroup.controls['currency_other'].enable();
               }
             }
             else {
@@ -381,6 +446,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                 const formGroup = this.Andre.controls[nc] as FormGroup;
                 formGroup.controls['AndreBox1'].disable();
                 formGroup.controls['AndreBox2'].disable();
+                formGroup.controls['currency_other'].disable();
               }
             }
 
@@ -402,11 +468,13 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
                     if (this.FPFormData.data.invoiceSettings.otherAllowances[0].nominal === false) {
                       this.currencyOther = "€";
-                      this.currencyDataOther[0] = "€";
+                      this.currencyDataOther[0] = 0;
+                      this.selectedCurrencyIndexAndre[0] = 0;
                     }
                     else {
                       this.currencyOther = "%";
-                      this.currencyDataOther[0] = "%";
+                      this.currencyDataOther[0] = 1;
+                      this.selectedCurrencyIndexAndre[0] = 1;
                     }
 
                   }
@@ -422,11 +490,13 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
                       if (this.FPFormData.data.invoiceSettings.otherAllowances[anothercounter].nominal === false) {
                         this.currencyOther = "€";
-                        this.currencyDataOther[anothercounter] = "€";
+                        this.currencyDataOther[anothercounter] = 0;
+                        this.selectedCurrencyIndexAndre[anothercounter] = 0;
                       }
                       else {
                         this.currencyOther = "%";
-                        this.currencyDataOther[anothercounter] = "%";
+                        this.currencyDataOther[anothercounter] = 1;
+                        this.selectedCurrencyIndexAndre[anothercounter] = 1;
                       }
                     }
                   }
@@ -453,11 +523,10 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   loadCurrencies() {
 
-    this.logger.log("load currencies");
-
     let counter = 0;
     this.currencyDataOther = [];
     this.currencyDataShift = [];
+    this.selectedCurrencyIndex  = [];
 
     if(this.FPFormData !== undefined && this.FPFormData !== null)
     if(this.FPFormData.data !== undefined && this.FPFormData.data !== null)
@@ -466,9 +535,16 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
           this.logger.log(element);
             if(element.nominal === true)
-              this.currencyDataOther[counter] = "%";
+            {
+              this.currencyDataOther[counter] = 1;
+              this.selectedCurrencyIndexAndre[counter] = 1;
+            }
             else
-            this.currencyDataOther[counter] = "€";
+            {
+              this.currencyDataOther[counter] = 1;
+              this.selectedCurrencyIndexAndre[counter] = 0;
+            }
+
             counter +=1;
         });
 
@@ -480,14 +556,18 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         if(this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances!== null)
             this.FPFormData.data.invoiceSettings.shiftAllowances.forEach((element) => {
           if(element.nominal === true)
-            this.currencyDataShift[counter] = "%";
+          {
+            this.selectedCurrencyIndex[counter] = 1;
+            this.currencyDataShift[counter] = 1;
+          }
           else
-            this.currencyDataShift[counter] = "€";
+          {
+            this.selectedCurrencyIndex[counter] = 0;
+            this.currencyDataShift[counter] = 1;
+          }
+
             counter +=1;
         });
-
-    this.logger.log(this.currencyDataOther);
-    this.logger.log(this.currencyDataShift);
 
   }
 
@@ -596,12 +676,15 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
-    this.loadCurrencies();
+    //this.loadCurrencies();
+
+    this.cd.detectChanges();
+
   }
 
   ngAfterViewInit() {
 
-
+    this.cd.detectChanges();
   }
 
   changeInitialStatus() {
@@ -624,7 +707,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onTeamChange($event) {
 
-    this.ploegpremieSwitch = $event;
+    this.ploegpremieSwitch = $event;    
 
     if ($event === true) {
       this.shiftAllowance = true;
@@ -636,6 +719,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
         formGroup.controls['PloegprimeBox1'].enable();
         formGroup.controls['PloegprimeBox2'].enable();
+        formGroup.controls['currency'].enable();
 
       }
 
@@ -651,6 +735,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         const formGroup = this.Ploegpremiere.controls[counter] as FormGroup;
         formGroup.controls['PloegprimeBox1'].disable();
         formGroup.controls['PloegprimeBox2'].disable();
+        formGroup.controls['currency'].disable();
 
       }
 
@@ -844,6 +929,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       for (let counter = 0; counter < this.otherAllowances.length; counter++) {
         const formGroup = this.Andre.controls[counter] as FormGroup;
         formGroup.controls['AndreBox2'].enable();
+        formGroup.controls['currency_other'].enable();
       }
 
     } else {
@@ -855,6 +941,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       for (let counter = 0; counter < this.otherAllowances.length; counter++) {
         const formGroup = this.Andre.controls[counter] as FormGroup;
         formGroup.controls['AndreBox2'].disable();
+        formGroup.controls['currency_other'].disable();
       }
 
     }
@@ -916,8 +1003,9 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.otherAllowanceObject.amount = value2;
     this.otherAllowanceObject.nominal = nominal;
     this.otherAllowances.push(this.otherAllowanceObject);
+    this.selectedCurrencyIndexAndre.push(0);
     this.otherAllowanceCounter++;
-    // this.changeObject();
+    this.changeObject();
   }
 
   searchAndRemovePloegepremieElements(element) {
@@ -927,7 +1015,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       const formGroup = this.Ploegpremiere.controls[i] as FormGroup;
       let codeId = formGroup.controls['PloegprimeBox1'].value;
       let amount = formGroup.controls['PloegprimeBox2'].value;
-      let currency = this.currencyDataShift[i]==="%"?true:false;
+      let currency = this.currencyDataShift[i]===1?true:false;
 
       if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
       {
@@ -941,12 +1029,14 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   searchAndRemoveAndreElements(element)
   {
+    this.logger.log("inside search remove andre elements");
+
     for(let i=0;i<this.Andre.length;i++)
     {
       const formGroup = this.Andre.controls[i] as FormGroup;
       let amount = formGroup.controls['AndreBox2'].value;
       let codeId = this.workCode[i];
-      let currency = this.currencyDataOther[i]==="%"?true:false;
+      let currency = this.selectedCurrencyIndexAndre[i]===1?true:false;
 
       if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
       {
@@ -954,6 +1044,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         this.otherAllowances.splice(i, 1);
         this.workCode.splice(i,1);
         this.currencyDataOther.splice(i,1);
+        this.selectedCurrencyIndexAndre.splice(i,1);
       }
     }
   }
@@ -961,7 +1052,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   resetCurrencyShift() {
 
     for(let i=0;i<this.shiftAllowances.length;i++)
-       this.shiftAllowances[i].nominal = this.currencyDataShift[i]==="%"?true:false;
+      this.shiftAllowances[i].nominal = this.selectedCurrencyIndexAndre[i]===1?true:false;
 
   }
 
@@ -969,23 +1060,22 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   resetCurrencies() {
 
     for(let i=0;i<this.otherAllowances.length;i++)
-        this.otherAllowances[i].nominal = this.currencyDataOther[i]==="%"?true:false;
+      this.otherAllowances[i].nominal = this.selectedCurrencyIndexAndre[i]===1?true:false;
 
   }
 
-  removeAndreRows(index) {
+  removeAndreRows(index) {    
 
     if (this.Andre.length != 1)
     {
       this.searchAndRemoveAndreElements(this.otherAllowances[index]);
       this.resetCurrencies();
+      this.changeObject();
     }
-    this.changeObject();
 
   }
 
   addRows(value1, value2, nominal) {
-
     this.Ploegpremiere.push(this.createServants(value1, value2));
     this.shiftAllowanceObject = new ShiftAllowance();
     this.shiftAllowanceObject.shiftName = value1;
@@ -993,18 +1083,20 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.shiftAllowanceObject.timeSpan = "02:02:02";
     this.shiftAllowanceObject.nominal = nominal;
     this.shiftAllowances.push(this.shiftAllowanceObject);
+    this.selectedCurrencyIndex.push(0);
     this.shiftAllowanceCounter++;
-    // this.changeObject();
+    this.changeObject();
   }
 
   removeRows(index) {
 
-    if (this.Ploegpremiere.length != 1)
+    if(this.Ploegpremiere.length != 1)
     {
       this.Ploegpremiere.removeAt(index);
           // remove from array shiftAllowances
       this.shiftAllowances.splice(index, 1);
       this.currencyDataShift.splice(index,1);
+      this.selectedCurrencyIndex.splice(index,1);
       this.resetCurrencyShift();
     }
 
