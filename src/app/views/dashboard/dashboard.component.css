@@ -208,6 +208,9 @@
   clear: both;
   cursor: pointer;
 }
+.Contents .col-split .name.notActive {
+  color: #6e4e4e;
+}
 .Contents .col-split .position {
   color: #646464;
   font-weight: normal;
@@ -246,7 +249,8 @@
   min-height: 400px;
 }
 #PersonContents.Expand {
-  min-height: 1000px;
+  /*min-height: 1000px;*/
+  min-height: calc(100vh - 400px);
 }
 
 #PersonContents .row {
@@ -657,4 +661,90 @@ sup.notify {
 }
 .ShowMe {
   display: block;
+}
+
+.addContract img {
+  content: url("../../../assets/svg/checklist_add.svg");
+}
+.addContract:disabled img {
+  content: url("../../../assets/svg/checklist_add_disabled.svg");
+}
+.addContract.disabled img {
+  content: url("../../../assets/svg/checklist_add_disabled.svg");
+}
+#PersonButtons button.bulkcontract {
+  color: #fff;
+  background: rgba(100, 100, 100, 0.35);
+}
+#PersonButtons button.bulkcontract img {
+  content: url("../../../assets/svg/layers.svg");
+}
+#PersonButtons button.bulkcontract:disabled {
+  color: #a09f9f;
+}
+#PersonButtons button.bulkcontract:disabled img {
+  content: url("../../../assets/svg/layers_disabled.svg");
+}
+
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn
+  .btnLeftTextContainer {
+  background-image: linear-gradient(107deg, #58f40f, #009476);
+}
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn:disabled
+  .btnLeftTextContainer {
+  background-image: linear-gradient(107deg, #57f40f5e, #00947663);
+}
+
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn
+  .btnLeftTextContainer
+  .btnLeftText {
+  color: #fff;
+}
+
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn:disabled
+  .btnLeftTextContainer
+  .btnLeftText {
+  color: #f4f4f4;
+}
+
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn
+  .btnRightIcon
+  img {
+  content: url("../../../assets/svg/extended.svg");
+}
+
+#PersonContents
+  .dashboardactioncontent
+  table
+  .Contents
+  .contractActionbtn1
+  button.contractActionbtn:disabled
+  .btnRightIcon
+  img {
+  content: url("../../../assets/svg/extended_disabled.svg");
 }

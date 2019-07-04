@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import {
   Contract, DpsUser, Statute, Person, ContractStatus, DpsContract, _Position, Location, LoginToken, ApproveContract, WorkDays,
@@ -101,6 +102,9 @@ export class CreateContractComponent implements OnInit {
   public isSelectedDateDoesNotHaveWorkErrorMsg = '';
   public isSelectedWeeksVaildErrorMsg = '';
   public SpinnerShowing = false;
+  public allowCreateContract = false;
+  public personIsEnabled = false;
+  public personIsArchived = true;
 
   public errorMsg: string;
   public componentname: string = 'CreateContractComponent ';
@@ -189,6 +193,9 @@ export class CreateContractComponent implements OnInit {
     this.contractId = this.selectedContract.contractId;
     this.personid = this.selectedContract.personId;
     this.mode = this.selectedContract.mode;
+    this.allowCreateContract = this.selectedContract.allowCreateContract;
+    this.personIsEnabled = this.selectedContract.personIsEnabled;
+    this.personIsArchived = this.selectedContract.personIsArchived;
     
     this.logger.log('Current Contract ID :: ' + this.contractId);
     this.logger.log('Current VatNumber : ' + this.VatNumber);
@@ -342,15 +349,30 @@ export class CreateContractComponent implements OnInit {
       const dpsPositions = this.dpsPositionsData.filter(p => p.id === this.positionSelectedId);
       this.logger.log('dpsPositions :: ', dpsPositions);
       if (dpsPositions.length > 0) {
-        this.positionSelectedName = dpsPositions[0].position.name;
         this.SetMode();
-        this.logger.log('positionSelectedName 2 :: ' + this.positionSelectedName, dpsPositions[0]);
-        this.currentDpsContract.contract.position = dpsPositions[0].position;
+        if (this.mode === 'new') {
+          this.positionSelectedName = dpsPositions[0].position.name;
+          setTimeout(() => {
+            this.logger.log('positionSelectedName 2 :: ' + this.positionSelectedName, dpsPositions[0]);
+            this.currentDpsContract.contract.position = dpsPositions[0].position;
+            this.currentDpsContract.contract.statute = personinfo.statute;
+            this.hideSpinner(); 
+          }, 100);
+        }
       } else {
-        this.positionSelectedName = 'Positie niet gevonden'; this.logger.log('positionSelectedName 1 ::' + this.positionSelectedName);
-        this.currentDpsContract.contract.position = null;
-      }      
-      this.currentDpsContract.contract.statute = personinfo.statute;
+        this.SetMode();
+        if (this.mode === 'new') {
+          this.positionSelectedName = 'Positie niet gevonden';
+          setTimeout(() => {
+            this.logger.log('positionSelectedName 1 ::' + this.positionSelectedName);
+            this.currentDpsContract.contract.position = null;
+            this.currentDpsContract.contract.statute = personinfo.statute;
+            this.hideSpinner();
+          }, 100);
+        }
+      }
+
+      this.logger.log('loadPerson currentDpsContract  ' , this.currentDpsContract);
       // this.hideSpinner();
     }, error => this.errorHandle(error));
   }
@@ -390,8 +412,8 @@ export class CreateContractComponent implements OnInit {
       this.logger.log('SetMode create contract - calendarDataNew=' + this.calendarDataNew);
       this.logger.log('SetMode create contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
       this.logger.log('SetMode create contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
-
-      this.createCurrentDpsContract(); 
+      
+      this.createCurrentDpsContract();
 
       if (this.selectedStartYear === this.selectedEndYear) {
         this.calendaryearDisableStatus = true;
@@ -399,8 +421,7 @@ export class CreateContractComponent implements OnInit {
 
       if (this.selectedStartMonth === this.selectedEndMonth) {
         this.calendarmonthDisableStatus = true;
-      } else { this.calendarmonthDisableStatus = false; }
-      this.hideSpinner();
+      } else { this.calendarmonthDisableStatus = false; }      
     }    
   }
 
@@ -415,10 +436,8 @@ export class CreateContractComponent implements OnInit {
     this.currentDpsContract.positionId = this.positionSelectedId;
     this.currentDpsContract.parentContractId = 0;
     this.currentDpsContract.bsContractId = 0;
-    this.currentDpsContract.timeSheet = new TimeSheet();
-
-    this.contract = new Contract();
-    this.currentDpsContract.contract = this.contract;
+    this.currentDpsContract.timeSheet = new TimeSheet();    
+    this.currentDpsContract.contract = new Contract();
 
     this.logger.log('createCurrentDpsContract call getDateString selectedStartDate :: ', this.selectedStartDate);
     this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate);
@@ -509,7 +528,7 @@ export class CreateContractComponent implements OnInit {
       if (this.selectedStartMonth === this.selectedEndMonth) {
         this.calendarmonthDisableStatus = true;
       } else { this.calendarmonthDisableStatus = false; }
-
+      this.logger.log('loadPerson currentDpsContract  ', this.currentDpsContract);
       this.hideSpinner();
     }, error => this.errorHandle(error));
   }
