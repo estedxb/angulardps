@@ -102,7 +102,7 @@ export class ZichmetComponent implements OnInit {
   loadInitialData() {
     if (this.datas.length !== 0) {
       for (let i = 0; i < this.datas.length; i++) {
-        const str: string = this.datas[i].vehicleName;
+        const str: string = this.datas[i].type;
 
         if (this.ZichmetFormData === str) {
           this.selectedIndex = i;
