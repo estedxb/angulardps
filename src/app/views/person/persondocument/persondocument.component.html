@@ -84,11 +84,18 @@
     </div>
     <div class="general">
       <div class="row radiorow">
-        <div class="col-sm-12">
-          <ui-switch size="small" name="isConstructionSector" [checked]="isConstructionSector"
+        <div class="col-sm-12" *ngIf="currentPerson.isConstructionSector === true else switchelseBouwsector">
+          <ui-switch size="small" name="isConstructionSector" [checked]="true"
             (change)="onIsConstructionSectorChange($event)"></ui-switch>
           <div class="gap">&nbsp;</div><span class="titleBold">Bouwsector</span>
         </div>
+        <ng-template #switchelseBouwsector>      
+            <div class="col-sm-12">
+                <ui-switch size="small" name="isConstructionSector" [checked]="false"
+                (change)="onIsConstructionSectorChange($event)"></ui-switch>
+              <div class="gap">&nbsp;</div><span class="titleBold">Bouwsector</span>    
+            </div>    
+        </ng-template>
       </div>
     </div>
     <div id="BuildingCards" name="BuildingCards" class="customerBox" *ngIf="currentPerson.isConstructionSector===true">
@@ -128,11 +135,18 @@
     </div>
     <div class="general">
       <div class="row radiorow">
-        <div class="col-sm-12">
+        <div class="col-sm-12" *ngIf="currentPerson.isStudentAtWork === true else switchelseStudent">
           <ui-switch size="small" name="isStudentAtWork" [checked]="isStudentAtWork"
             (change)="onisStudentAtWorkChange($event)"></ui-switch>
           <div class="gap">&nbsp;</div><span class="titleBold">Student @Work</span>
         </div>
+        <ng-template #switchelseStudent>      
+            <div class="col-sm-12">
+                <ui-switch size="small" name="isStudentAtWork" [checked]="false"
+                (change)="onisStudentAtWorkChange($event)"></ui-switch>
+              <div class="gap">&nbsp;</div><span class="titleBold">Student @Work</span>    
+            </div>    
+        </ng-template>
       </div>
     </div>
     <div id="StudentAttest" name="StudentAttest" class="customerBox" *ngIf="currentPerson.isStudentAtWork===true" >
@@ -174,6 +188,7 @@
     <div class="col-sm-5"></div>
     <div class="col-sm-7">
       <!--For loop Starts -->
+      <div  *ngIf="currentPerson.studentAtWorkProfile.attestation !== undefined && currentPerson.studentAtWorkProfile.attestation">
       <div *ngIf="currentPerson.studentAtWorkProfile.attestation.name !== undefined && currentPerson.studentAtWorkProfile.attestation.name !== null && currentPerson.studentAtWorkProfile.attestation.name !== ''"
         class="row inforow">
         <div class="col-sm-1 actioneyebtn">
@@ -189,15 +204,23 @@
         </div>
       </div>
     </div>
+    </div>
     <!--For loop Ends -->
   </div>
      <!-- download file -->
     <div class="general">
       <div class="row radiorow">
-        <div class="col-sm-12">
+        <div class="col-sm-12" *ngIf="currentPerson.isDriver === true else switchelseChauffeur">
           <ui-switch size="small" name="isDriver" [checked]="isDriver" (change)="onIsDriverChange($event)"></ui-switch>
           <div class="gap">&nbsp;</div><span class="titleBold">Chauffeur / bestuurder</span>
         </div>
+        <ng-template #switchelseChauffeur>      
+            <div class="col-sm-12">
+                <ui-switch size="small" name="isDriver" [checked]="false"
+                (change)="onIsDriverChange($event)"></ui-switch>
+              <div class="gap">&nbsp;</div><span class="titleBold">Chauffeur / bestuurder</span>    
+            </div>    
+        </ng-template>
       </div>
     </div>
     <div id="DrivingLicense" name="DrivingLicense" class="customerBox" *ngIf="currentPerson.isDriver===true">

@@ -56,7 +56,8 @@ body {
   font-weight: bold;
 }
 .scrollbar {
-  height: 580px;
+  min-height: calc(100vh - 580px);
+  /*height: 580px;*/
   overflow-y: scroll;
   padding-right: 20px;
 }
@@ -323,6 +324,11 @@ div#PersonContact {
 #maincontentarea .inputWithImg .form-control-feedback img {
   padding: 10px 20px 7px 0px;
 }
+
+#maincontentarea.updateModel .inputWithImg .form-control-feedback img {
+  padding: 16px 20px 7px 0px;
+}
+
 #maincontentarea #editPersonForm .inputWithImg img {
   padding: 15px 20px 7px 0px;
 }

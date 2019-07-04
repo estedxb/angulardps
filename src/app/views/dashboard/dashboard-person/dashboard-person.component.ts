@@ -233,7 +233,7 @@ export class DashboardPersonComponent implements OnInit {
         if (this.maindatas.length > 0) {
           console.log('this.maindatas', this.maindatas);
           this.datas = this.maindatas
-            .map(pers => { if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1) { return pers; } });
+            .map(pers => { if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1 && !pers.personIsArchived) { return pers; } });
           console.log('this.datas', this.datas);
         } else { this.datas = this.maindatas; }
       } else { this.datas = this.maindatas; }
