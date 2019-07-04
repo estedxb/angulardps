@@ -1769,16 +1769,12 @@ export class AddPersonComponent implements OnInit {
     document.getElementById('maincontent').scrollTo(0, 0);
 
     if (this.showFormIndex === 1) {
-
       this.buttonPressed = true;
 
       if (this.checkValidation())
-      {
-        this.logger.log("validation"+this.formValid);
         this.showFormIndex = 2;
-      }
       else
-        this.ShowMessage('' + this.errorMessage, '');
+        this.ShowMessage('Er zijn onjuiste vermeldingen in het formulier','');
 
       this.createObjectsForm1();
     }

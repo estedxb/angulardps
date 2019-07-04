@@ -129,9 +129,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     else     
       this.mobilityAllowanceObject.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
 
-    this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
-
-  
+    this.mobilityAllowanceObject.enabled = this.mobilitySwitch;  
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
@@ -603,7 +601,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    
+
   }
 
   changeInitialStatus() {
@@ -947,7 +945,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     {
       const formGroup = this.Andre.controls[i] as FormGroup;
       let amount = formGroup.controls['AndreBox2'].value;
-      let codeId = this.workCode[i];  
+      let codeId = this.workCode[i];
       let currency = this.currencyDataOther[i]==="%"?true:false;
 
       if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
