@@ -2,6 +2,9 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 import { LoggingService } from '../../shared/logging.service';
+import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
+
 // import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
@@ -21,6 +24,7 @@ export class CustomerSelectionComponent implements OnInit {
   public show = false;
   constructor(
     private customerLists: CustomerListsService,
+    private router: Router,
     // // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
@@ -51,6 +55,20 @@ export class CustomerSelectionComponent implements OnInit {
     if (this.isDpsUser) {
       this.show = !this.show;
     }
+  }
+
+  addCustomer() {
+    this.show = false;
+    this.updateLocalStorage();
+    this.router.navigate(['./customer/add']);
+  }
+
+  updateLocalStorage() {
+    this.dpsLoginToken.customerVatNumber = environment.DPSVATNumber;
+    this.dpsLoginToken.customerName = environment.DPSCustomerName;
+    this.dpsLoginToken.customerlogo = '';
+    localStorage.setItem('dpsLoginToken', JSON.stringify(this.dpsLoginToken));
+    this.logger.log('dpsLoginToken :: ', this.dpsLoginToken);
   }
 
   closeMe() { this.show = false; }

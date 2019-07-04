@@ -19,7 +19,7 @@ import { MsalServiceLocal } from './shared/msal.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Digital Payroll Services';
+  title = environment.DPSCustomerName;
 
   constructor(
     private router: Router,

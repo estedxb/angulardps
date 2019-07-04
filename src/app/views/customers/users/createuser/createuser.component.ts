@@ -59,7 +59,7 @@ export class CreateuserComponent implements OnInit {
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       usertype: new FormControl(''),
       mobile: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
-      telephone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
+      telephone: new FormControl('', [Validators.pattern('^[0-9]+')]),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
     this.loadUserToEdit();

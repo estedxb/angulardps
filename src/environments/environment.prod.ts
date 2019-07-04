@@ -14,6 +14,7 @@ export const environment = {
   logInSuccessURL: 'dashboard',
   B2CSuccess: 'validate',
   B2C: '',
+  DPSCustomerName: 'Digital Payroll Services',
   DPSVATNumber: '987654321000',
   MorningStart: 6,
   EveningingEnd: 22,
