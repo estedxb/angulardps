@@ -61,31 +61,19 @@ export class PersonDocumentComponent implements OnInit {
     private dataService: DataService,
     private logger: LoggingService) { }
 
-    ngDoCheck() {
-      
-      if(this.oldCurrentPerson !== this.currentPerson)
-      {
-        this.oldCurrentPerson = this.currentPerson;
-        this.loadPersonDetailsToEdit();
-      }
-
+  ngDoCheck() {
+    if (this.oldCurrentPerson !== this.currentPerson) {
+      this.oldCurrentPerson = this.currentPerson;
+      this.loadPersonDetailsToEdit();
     }
-
-  ngOnChanges(changes: SimpleChanges): void { 
-
-    this.onPageInit();   
   }
 
-  ngOnInit() { 
-    
-    this.onPageInit(); 
-  
-}
+  ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
+
+  ngOnInit() { this.onPageInit(); }
 
   onPageInit() {
-
     this.getPersonBySSIDVatnumber(this.SocialSecurityId, this.VatNumber);
-
     this.PersonDocumentForm = new FormGroup({
       UploadMedicalAttestation: new FormControl(''),
       UploadVcaAttestation: new FormControl(''),
@@ -100,16 +88,11 @@ export class PersonDocumentComponent implements OnInit {
       file: new FormControl('')
     });
 
-    this. loadPersonDetailsToEdit();    
+    this.loadPersonDetailsToEdit();
     this.createObjects();
-
-    
-    //this.hideElementsOnload();
-    
-
+    // this.hideElementsOnload();
   }
 
-  
   updateBalance() {
     this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
     this.changeMessage();
@@ -121,63 +104,45 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   updateAttestationDate() {
-    this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;   
+    this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;
     this.changeMessage();
   }
 
-
-
-
   createObjects() {
-    //this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
-    if (this.currentPerson !== undefined && this.currentPerson !== null)
-    {
-      if(this.currentPerson.studentAtWorkProfile !== undefined && this.currentPerson.studentAtWorkProfile !== null )
-      {
+    // this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
+    if (this.currentPerson !== undefined && this.currentPerson !== null) {
+      if (this.currentPerson.studentAtWorkProfile !== undefined && this.currentPerson.studentAtWorkProfile !== null) {
         this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;
         this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
-        this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;    
-
+        this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;
         this.changeMessage();
-
       }
-
       this.isConstructionSector = this.currentPerson.isConstructionSector;
       this.isDriver = this.currentPerson.isDriver;
       this.isStudentAtWork = this.currentPerson.isStudentAtWork;
     }
-
-         
-
-          
   }
 
   loadPersonDetailsToEdit() {
     this.logger.log('loadPersonDetailsToEdit :::::::::::: ');
     this.logger.log('this.currentUser.user :: ', this.currentPerson);
 
-    //this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
-    //this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);      
-    if(this.currentPerson !== undefined)
-      if(this.currentPerson.studentAtWorkProfile !== undefined && this.currentPerson.studentAtWorkProfile !== null )
-      {
-        this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+    // this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+    // this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+    if (this.currentPerson !== undefined) {
+      if (this.currentPerson.studentAtWorkProfile !== undefined &&
+        this.currentPerson.studentAtWorkProfile !== null) {
+        this.logger.log("balance=" + this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
-        this.PersonDocumentForm.get('attestationDate').setValue(this.currentPerson.studentAtWorkProfile.attestationDate); 
-        
+        this.PersonDocumentForm.get('attestationDate').setValue(this.currentPerson.studentAtWorkProfile.attestationDate);
       }
-            
+    }
   }
 
-  onOptionSelected(event) {
-    this.logger.log(event); //option value will be sent as event
-  }
-
-
+  onOptionSelected(event) { this.logger.log(event); }//option value will be sent as event 
 
   changeMessage() {
-
     if (this.currentPerson !== null) {
       const newmessage: any = {
         page: 'documents',
@@ -187,46 +152,37 @@ export class PersonDocumentComponent implements OnInit {
     }
   }
 
-
-
-  onIsConstructionSectorChange($event : boolean) {
-     this.currentPerson.isConstructionSector = $event;
-     this.logger.log('after');
-     this.logger.log(this.currentPerson.isConstructionSector);    
-     
-      this.logger.log('after');
-      this.logger.log(this.currentPerson);
-      this.changeMessage();
+  onIsConstructionSectorChange($event: boolean) {
+    this.currentPerson.isConstructionSector = $event;
+    this.logger.log('after');
+    this.logger.log(this.currentPerson.isConstructionSector);
+    this.logger.log('after');
+    this.logger.log(this.currentPerson);
+    this.changeMessage();
   }
 
-  onIsDriverChange($event : boolean) {
+  onIsDriverChange($event: boolean) {
     this.currentPerson.isDriver = $event;
     this.logger.log('after');
-    this.logger.log(this.currentPerson.isDriver);    
-  
-     this.logger.log('after');
-     this.logger.log(this.currentPerson);
-     this.changeMessage();
+    this.logger.log(this.currentPerson.isDriver);
+    this.logger.log('after');
+    this.logger.log(this.currentPerson);
+    this.changeMessage();
   }
 
   onisStudentAtWorkChange($event) {
-
     this.currentPerson.isStudentAtWork = $event;
     this.logger.log('after');
-    this.logger.log(this.currentPerson.isStudentAtWork);    
-
-     this.logger.log('after');
-     this.logger.log(this.currentPerson);
-     this.changeMessage();
+    this.logger.log(this.currentPerson.isStudentAtWork);
+    this.logger.log('after');
+    this.logger.log(this.currentPerson);
+    this.changeMessage();
   }
-
-
-
 
   getVehiclesForLicense() {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
-      this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);    
+      this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
       this.vehiclesForLicense = this.vehiclesForLicense.filter((el) => !this.currentPerson.driverProfiles.includes(el));
     }, error => this.ShowMessage(error, 'error'));
 
@@ -279,7 +235,7 @@ export class PersonDocumentComponent implements OnInit {
       // do something, if upload success
       this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
-     
+
 
     }, error => {
       this.logger.log(error);
@@ -473,18 +429,21 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadDriversFileToActivity() {
-    this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense, this.driverProfilesItem.attestation.name).subscribe(data => {
-      // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
-      this.refreshPersonData();
-    }, error => {
-      this.logger.log(error);
-    });
+    this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber,
+      this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense,
+      this.driverProfilesItem.attestation.name).subscribe(data => {
+        // do something, if upload success
+        this.ShowMessage('succesvol geupload', '');
+        this.refreshPersonData();
+      }, error => {
+        this.logger.log(error);
+      });
   }
 
   downloadDriversLicenseFile(index: number) {
     this.logger.log('index :: ', index);
-    saveAs(environment.blobStorage + '' + this.currentPerson.driverProfiles[index].attestation.location, this.currentPerson.driverProfiles[index].attestation.name);
+    saveAs(environment.blobStorage + '' + this.currentPerson.driverProfiles[index].attestation.location,
+      this.currentPerson.driverProfiles[index].attestation.name);
   }
 
   deleteDriversLicense(index: number) {
@@ -537,13 +496,14 @@ export class PersonDocumentComponent implements OnInit {
 
 
   uploadOtherDocumentsToActivity() {
-    this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
-      // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
-      this.refreshPersonData();
-    }, error => {
-      this.logger.log(error);
-    });
+    this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber,
+      this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
+        // do something, if upload success
+        this.ShowMessage('succesvol geupload', '');
+        this.refreshPersonData();
+      }, error => {
+        this.logger.log(error);
+      });
   }
 
 
@@ -590,19 +550,19 @@ export class PersonDocumentComponent implements OnInit {
       this.logger.log('requestCertificate Response :: ', res);
       this.ShowMessage('Vraag attest aan succesvol', '');
     },
-    (err: HttpErrorResponse) => {
-      if (err.status === 200){        this.ShowMessage('Vraag attest aan succesvol', '');      }
-     else {            
-      if (err.status === 200){
-        this.ShowMessage('Vraag attest aan succesvol', '');
+      (err: HttpErrorResponse) => {
+        if (err.status === 200) { this.ShowMessage('Vraag attest aan succesvol', ''); }
+        else {
+          if (err.status === 200) {
+            this.ShowMessage('Vraag attest aan succesvol', '');
+          }
+          else {
+            this.logger.log('response code=' + err.status);
+            this.logger.log('response body=' + err.error);
+            this.ShowMessage('Vraag attest aan succesvol', '');
+          }
+        }
       }
-      else {
-        this.logger.log('response code=' + err.status);
-        this.logger.log('response body=' + err.error);
-        this.ShowMessage('Vraag attest aan succesvol', '');
-      }
-    }
-  }
     );
   }
 
