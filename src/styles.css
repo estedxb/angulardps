@@ -313,6 +313,13 @@ div#PersonContact {
   padding-right: 0px;
 }
 
+#maincontentarea.updateModel .inputWithImg img {
+  padding: 15px 23px 7px 0px;
+}
+.updateModel .inputWithImg img {
+  padding: 12px 23px 7px 0px;
+}
+
 #maincontentarea .inputWithImg img,
 .inputWithImg img {
   position: absolute;
@@ -321,6 +328,7 @@ div#PersonContact {
   color: #9a0c19;
   top: 33px;
 }
+
 #maincontentarea .inputWithImg .form-control-feedback img {
   padding: 10px 20px 7px 0px;
 }
