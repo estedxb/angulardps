@@ -45,6 +45,9 @@ export class ZichmetComponent implements OnInit {
     this.selectedIndex = $event.target.value;
     this.selectedString = this.value;
 
+    this.logger.log("this value");
+    this.logger.log(this.value);
+
     this.childEvent.emit(this.value);
 
     return this.value;

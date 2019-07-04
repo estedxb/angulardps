@@ -1092,7 +1092,7 @@ export class AddPersonComponent implements OnInit {
             this.DpsPersonObject.person.bankAccount.iban = this.iban;
             this.DpsPersonObject.person.bankAccount.bic = this.bbic;
           }
-        }    
+        }
       }
     }, error => this.ShowMessage(error, 'error'));
 
@@ -1427,14 +1427,14 @@ export class AddPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.logger.log('received zich met data=' + $event.vehicleName);
+    this.logger.log('received zich met data=' + $event.type);
 
-    this.receiveZichmetdata = $event.vehicleName;
-    this.zichmetdata = $event.vehicleName;
+    this.receiveZichmetdata = $event.type;
+    this.zichmetdata = $event.type;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event.vehicleName;
+        this.DpsPersonObject.person.travelMode = $event.type;
       }
 
     this.changeMessage();
