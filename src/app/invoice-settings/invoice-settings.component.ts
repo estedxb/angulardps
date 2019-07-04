@@ -96,6 +96,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   public currencyShift: string = "";
   public currencyOther: string = "";
 
+  public invoiceSettings:InvoiceSettings;
+
   constructor(
     private fb: FormBuilder,private cd: ChangeDetectorRef,
     // private spinner: NgxUiLoaderService,
@@ -182,6 +184,40 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     this.logger.log("other allowances ");
     this.logger.log(this.otherAllowances);
+
+    // transportCoefficient: number; mealvoucherCoefficient: number; ecoCoefficient: number; dimonaCost: number;
+    // lieuDaysAllowance?: LieuDaysAllowance; sicknessInvoiced?: boolean; holidayInvoiced?: boolean; mobilityAllowance?: MobilityAllowance;
+    // otherAllowance?: boolean; shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
+
+    this.invoiceSettings = new InvoiceSettings();
+
+    this.invoiceSettings.transportCoefficient = this.tCoefficient;
+    this.invoiceSettings.ecoCoefficient = this.echoValue;
+    this.invoiceSettings.dimonaCost = this.dimonaValue;
+    this.invoiceSettings.mealvoucherCoefficient = this.mCoefficient;
+
+    this.invoiceSettings.lieuDaysAllowance = new LieuDaysAllowance();
+    this.invoiceSettings.lieuDaysAllowance.enabled = this.lieuDaysAllowanceObject.enabled;
+    this.invoiceSettings.lieuDaysAllowance.payed = this.lieuDaysAllowanceObject.payed;
+
+    this.invoiceSettings.sicknessInvoiced = this.sicknessInvoiced;
+    this.invoiceSettings.holidayInvoiced = this.holidayInvoiced;    
+    this.invoiceSettings.otherAllowance = this.andreSwitch;
+
+    this.invoiceSettings.otherAllowances = [];
+
+    for(let i=0;i<this.otherAllowances.length;i++)
+      this.invoiceSettings.otherAllowances.push(this.otherAllowances[i]);
+
+     this.invoiceSettings.mobilityAllowance = new MobilityAllowance();
+
+      if(this.ISForm.get('mobilebox').value === "")
+        this.invoiceSettings.mobilityAllowance.amountPerKm = 0;
+      else     
+        this.invoiceSettings.mobilityAllowance.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
+
+    this.invoiceSettings.mobilityAllowance.enabled = this.mobilitySwitch;
+
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
