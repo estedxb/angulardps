@@ -611,7 +611,7 @@ export class CreateContractComponent implements OnInit {
             if (this.SelectedIndex > -1) {
               // maindatas Update Contract
               this.maindatas[this.SelectedIndex] = this.currentDpsContract;
-              this.ShowMessage('Contract succesvol geannuleerd met volgende reden"' + this.currentDpsContract.contract.cancelReason + '".', '');
+              this.ShowMessage('Contract succesvol geannuleerd met volgende reden "' + this.currentDpsContract.contract.cancelReason + '".', '');
               this.dialogRef.close(null);
               // this.maindatas.splice(this.SelectedIndex, 1);
             }
