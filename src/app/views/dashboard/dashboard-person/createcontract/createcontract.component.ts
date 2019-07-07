@@ -20,7 +20,6 @@ import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
-
 @Component({
   selector: 'app-createcontract',
   templateUrl: './createcontract.component.html',
@@ -96,11 +95,13 @@ export class CreateContractComponent implements OnInit {
   public isEndDateVaild = true;
   public isSelectedDateDoesNotHaveWork = true;
   public isSelectedWeeksVaild = true;
+  public isWorkScheduleVaild = false;
 
   public isStartDateVaildErrorMsg = '';
   public isEndDateVaildErrorMsg = '';
   public isSelectedDateDoesNotHaveWorkErrorMsg = '';
   public isSelectedWeeksVaildErrorMsg = '';
+  public isWorkScheduleVaildErrorMsg = '';
   public SpinnerShowing = false;
   public allowCreateContract = false;
   public personIsEnabled = false;
@@ -188,7 +189,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   onPageInit() {
-    
+
     this.showLoading = true;
     this.logger.log('SelectedContract :: ', this.selectedContract);
     this.contractId = this.selectedContract.contractId;
@@ -782,6 +783,13 @@ export class CreateContractComponent implements OnInit {
         });
 
         this.logger.log('onWorkScheduleChange  workScheduleInit workSchedule.workDays :: ', workSchedule.workDays);
+        if (workSchedule.workDays.length < 1) {
+          this.isWorkScheduleVaild = false;
+          this.isWorkScheduleVaildErrorMsg = 'Please select the proper work schedule';
+        } else {
+          this.isWorkScheduleVaild = true;
+          this.isWorkScheduleVaildErrorMsg = '';
+        }
         this.currentDpsContract.contract.workSchedule = workSchedule;
         this.logger.log('onWorkScheduleChange  workSchedule :: ', workSchedule);
       }
@@ -797,7 +805,8 @@ export class CreateContractComponent implements OnInit {
   }
 
   onCreateOrUpdateContractClick() {
-    if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedDateDoesNotHaveWork && this.isSelectedWeeksVaild) {
+    if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedDateDoesNotHaveWork &&
+      this.isSelectedWeeksVaild && this.isWorkScheduleVaild) {
       if (this.ContractForm.valid) {
         if (this.currentDpsContract !== undefined && this.currentDpsContract !== null) {
           if (this.currentDpsContract.positionId > 0) {
@@ -836,6 +845,7 @@ export class CreateContractComponent implements OnInit {
       errormsgnew = this.getErrorMsg(errormsgnew, this.isEndDateVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedWeeksVaildErrorMsg);
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isWorkScheduleVaildErrorMsg);
       this.ShowMessage(errormsgnew, '');
     }
   }
