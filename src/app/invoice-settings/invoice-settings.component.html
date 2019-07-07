@@ -118,11 +118,11 @@
                                 <div class="row dynrow" formArrayName="arrayBox"
                                         *ngFor="let Ploegpremiere of this.ISForm.get('arrayBox')['controls'] as result; let i=index; first as isFirst; last as isLast">
                                         <div class="col col-sm-5" [formGroupName]="i">
-                                                <input #code (change)="setPgBox1(code.value,i)" type="text"
+                                                <input #code (change)="setPgBox1(code.value,i)" type="text" style="height: 32px;"
                                                         formControlName="PloegprimeBox1">
                                         </div>
                                         <div class="col col-sm-3" [formGroupName]="i">
-                                                <input #amount (change)="setPgBox2(amount.value,i)" type="number"
+                                                <input #amount (change)="setPgBox2(amount.value,i)" type="number" style="height: 32px;"
                                                         formControlName="PloegprimeBox2">
                                         </div>
                                         <div class="col col-sm-2" [formGroupName]="i">
@@ -174,7 +174,7 @@
                                                         </app-workcodes>
                                                 </div>
                                                 <div class="col col-sm-3">
-                                                        <input #amountA (change)="setPgABox2(amountA.value,r)"
+                                                        <input #amountA (change)="setPgABox2(amountA.value,r)" style="height: 32px;"
                                                                 type="number" formControlName="AndreBox2">
                                                 </div>
                                                 <div class="col col-sm-2">

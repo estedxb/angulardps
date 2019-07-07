@@ -1089,6 +1089,7 @@ export class AddPersonComponent implements OnInit {
         {
           this.ibanValid = false;
           this.ShowMessage("Ongeldig iban-nummer",'');
+          this.AddPersonForm1.controls.bic.setValue('');
         }
         else
         {
