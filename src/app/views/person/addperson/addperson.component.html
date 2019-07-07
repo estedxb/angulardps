@@ -1,484 +1,491 @@
 <app-headers></app-headers>
 <app-menu [CustomerVatNumber]="vatNumber" [SelectedPage]="SelectedPage"></app-menu>
-<div class="row">
-  <div class="col col-sm-3"></div>
-  <div class="col col-sm-6 center-block"><img src="../../../../assets/svg/createPerson.svg" style="left:-15"><br />
-    <div class="pagehead">PERSOON AANMAKEN</div>
-  </div>
-  <div class="col col-sm-3"></div>
-</div>
-
-<div class="row" id="formState">
-  <div class="col col-sm-3"></div>
-  <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-    1. Persoonlijke gegevens
-    <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
-  </div>
-  <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
-    2. Functie
-    <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
-  </div>
-  <ng-template #secondpage>
-    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
-      2. Functie
-      <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col col-sm-3"></div>
+    <div class="col col-sm-6 center-block"><img src="../../../../assets/svg/createPerson.svg" style="left:-15"><br />
+      <div class="pagehead">PERSOON AANMAKEN</div>
     </div>
-  </ng-template>
+    <div class="col col-sm-3"></div>
+  </div>
 
-  <div class="col col-sm-3"></div>
-</div>
+  <div class="row" id="formState">
+    <div class="col col-sm-3"></div>
+    <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+      1. Persoonlijke gegevens
+      <hr style="background-color:#9A0C19;" /><img src="../../assets/svg/circle.svg">
+    </div>
+    <div *ngIf="showFormIndex === 1 else secondpage" class="col col-sm-3 center-block mw-350" style="color:#C7C7C7;">
+      2. Functie
+      <hr style="background-color:#C7C7C7;" /><input type="checkbox" id="formOk" value="0" disabled checked />
+    </div>
+    <ng-template #secondpage>
+      <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
+        2. Functie
+        <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
+      </div>
+    </ng-template>
 
-<div class="row">
-  <div class="col col-sm-3"></div>
-  <div class="col col-sm-6" id="maincontentarea">
-    <div class="scrollbar" id="maincontent">
-      <form [formGroup]="AddPersonForm1" id="AddPersonForm1" novalidate>
-        <div id="from2" *ngIf="showFormIndex === 1">
-          <div id="CustomerDetails" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Algemeen</h4>
-                <hr>
+    <div class="col col-sm-3"></div>
+  </div>
+
+  <div class="row">
+    <div class="col col-sm-3"></div>
+    <div class="col col-sm-6" id="maincontentarea">
+      <div class="scrollbar" id="maincontent">
+        <form [formGroup]="AddPersonForm1" id="AddPersonForm1" novalidate>
+          <div id="from2" *ngIf="showFormIndex === 1">
+            <div id="CustomerDetails" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Algemeen</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
               </div>
-              <div class="col col-sm-7"></div>
-            </div>
-            <div class="fcontent">
-              <div class="row">
-                <div class="col-sm-5 inputWithImg">
-                  <label class="titleBold"> Rijkregisternummer </label>
-                  <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber"
-                    class="form-control" name="socialSecurityNumber" [maxlength]="15"
-                    (keypress)="AutoFormatSSIDPress($event)" (keyup)="AutoFormatSSIDUp($event)" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="!newCustomSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalid>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col col-sm-5 DOBCont"><label class="titleBold"> Geboortedatum
-                  </label>
-                  <div class="row DOB">
-                    <div class="col col-sm-3">
-                      <select formControlName="dateOfBirth" id="dd_days" [(ngModel)]="dayIndex" name="dd_days"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown
-                        required="required">
-                        <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i" [value]="i">
-                          {{data}}</option>
-                      </select>
+              <div class="fcontent">
+                <div class="row">
+                  <div class="col-sm-5 inputWithImg">
+                    <label class="titleBold"> Rijkregisternummer </label>
+                    <input #socialSecurityNumber (blur)="setPersonVatNumber()" formControlName="socialSecurityNumber"
+                      class="form-control" name="socialSecurityNumber" [maxlength]="15"
+                      (keypress)="AutoFormatSSIDPress($event)" (keyup)="AutoFormatSSIDUp($event)" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="!newCustomSSIDValidator(AddPersonForm1.controls.socialSecurityNumber.value) else newvalid">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
-                    <div class="col col-sm-5">
-                      <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="monthIndex" name="dd_months"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
-                        required="required">
-                        <option *ngFor="let data of dropDownMonth let j= index" [attr.data-index]="j" [value]="j">
-                          {{data}}</option>
-                      </select>
+                    <ng-template #newvalid>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col col-sm-5 DOBCont"><label class="titleBold"> Geboortedatum
+                    </label>
+                    <div class="row DOB">
+                      <div class="col col-sm-3">
+                        <select formControlName="dateOfBirth" id="dd_days" [(ngModel)]="dayIndex" name="dd_days"
+                          class="inhaalrust selectcomponent" (change)="onChangeDropDownDate($event)" ng-dropdown
+                          required="required">
+                          <option *ngFor="let data of dataDropDown let i= index" [attr.data-index]="i" [value]="i">
+                            {{data}}</option>
+                        </select>
+                      </div>
+                      <div class="col col-sm-5">
+                        <select formControlName="monthOfBirth" id="dd_months" [(ngModel)]="monthIndex" name="dd_months"
+                          class="inhaalrust selectcomponent" (change)="onChangeDropDownMonth($event)" ng-dropdown
+                          required="required">
+                          <option *ngFor="let data of dropDownMonth let j= index" [attr.data-index]="j" [value]="j">
+                            {{data}}</option>
+                        </select>
+                      </div>
+                      <div class="col col-sm-4">
+                        <select formControlName="yearOfBirth" id="dd_year" name="dd_year" [(ngModel)]="yearIndex"
+                          class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown
+                          required="required">
+                          <option *ngFor="let data of dropDownYear let r= index" [attr.data-index]="r" [value]="r">
+                            {{data}}</option>
+                        </select>
+                      </div>
                     </div>
-                    <div class="col col-sm-4">
-                      <select formControlName="yearOfBirth" id="dd_year" name="dd_year" [(ngModel)]="yearIndex"
-                        class="inhaalrust selectcomponent" (change)="onChangeDropDownYear($event)" ng-dropdown
-                        required="required">
-                        <option *ngFor="let data of dropDownYear let r= index" [attr.data-index]="r" [value]="r">
-                          {{data}}</option>
-                      </select>
+                  </div>
+                  <div class="col-sm-2 inputWithImg">
+                    <label class="titleBold">Geslacht </label>
+                    <select formControlName="gender" id="gender" (change)="onChangeDropDownGender($event)" name="gender"
+                      class="gender selectcomponent" [(ngModel)]="selectedGenderIndex">
+                      <option *ngFor="let data of dataDropDownGender let i= index" [attr.data-index]="i" [value]="i">
+                        {{data}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Voornaam </label>
+                    <input formControlName="firstName" change="updateFirstName(firstName.value)" class="form-control"
+                      name="firstName" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.firstName.invalid && (AddPersonForm1.controls.firstName.dirty || AddPersonForm1.controls.firstName.touched) else newvalidfirstname">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
+                    <ng-template #newvalidfirstname>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Familienaam </label>
+                    <input formControlName="lastName" class="form-control" change="updateLastName(lastName.value)"
+                      name="lastName" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.lastName.invalid && (AddPersonForm1.controls.lastName.dirty || AddPersonForm1.controls.lastName.touched) else newvalidlastName">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidlastName>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
                   </div>
                 </div>
-                <div class="col-sm-2 inputWithImg">
-                  <label class="titleBold">Geslacht </label>
-                  <select formControlName="gender" id="gender" (change)="onChangeDropDownGender($event)" name="gender"
-                    class="gender selectcomponent" [(ngModel)]="selectedGenderIndex">
-                    <option *ngFor="let data of dataDropDownGender let i= index" [attr.data-index]="i" [value]="i">
-                      {{data}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Voornaam </label>
-                  <input formControlName="firstName" change="updateFirstName(firstName.value)" class="form-control"
-                    name="firstName" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.firstName.invalid && (AddPersonForm1.controls.firstName.dirty || AddPersonForm1.controls.firstName.touched) else newvalidfirstname">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Straat </label>
+                    <input formControlName="street" class="form-control" change="updateStreet(street.value)"
+                      name="street" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.street.invalid && (AddPersonForm1.controls.street.dirty || AddPersonForm1.controls.street.touched) else newvalidstreet">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidstreet>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
                   </div>
-                  <ng-template #newvalidfirstname>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Familienaam </label>
-                  <input formControlName="lastName" class="form-control" change="updateLastName(lastName.value)"
-                    name="lastName" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.lastName.invalid && (AddPersonForm1.controls.lastName.dirty || AddPersonForm1.controls.lastName.touched) else newvalidlastName">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                  <div class="col-sm-3 inputWithImg">
+                    <label class="titleBold"> Nr. </label>
+                    <input formControlName="streetNumber" class="form-control" name="streetNumber" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.streetNumber.invalid && (AddPersonForm1.controls.streetNumber.dirty || AddPersonForm1.controls.streetNumber.touched) else newvalidstreetNumber">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidstreetNumber>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
                   </div>
-                  <ng-template #newvalidlastName>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Straat </label>
-                  <input formControlName="street" class="form-control" change="updateStreet(street.value)" name="street"
-                    type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.street.invalid && (AddPersonForm1.controls.street.dirty || AddPersonForm1.controls.street.touched) else newvalidstreet">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidstreet>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-3 inputWithImg">
-                  <label class="titleBold"> Nr. </label>
-                  <input formControlName="streetNumber" class="form-control" name="streetNumber" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.streetNumber.invalid && (AddPersonForm1.controls.streetNumber.dirty || AddPersonForm1.controls.streetNumber.touched) else newvalidstreetNumber">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidstreetNumber>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-3 inputWithImg">
-                  <label class="titleBold"> Bus </label>
-                  <input formControlName="bus" class="form-control" change="" name="bus" type="text" required />
-                  <!-- <div class="form-control-feedback"
+                  <div class="col-sm-3 inputWithImg">
+                    <label class="titleBold"> Bus </label>
+                    <input formControlName="bus" class="form-control" change="" name="bus" type="text" required />
+                    <!-- <div class="form-control-feedback"
                     *ngIf="AddPersonForm1.controls.bus.invalid && (AddPersonForm1.controls.bus.dirty || AddPersonForm1.controls.bus.touched) else newvalidbus">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
                   <ng-template #newvalidbus>
                     <img src="../../assets/img/ValidIcon.png" alt="">
                   </ng-template> -->
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Plaats </label>
-                  <input #city formControlName="city" class="form-control" change="updateCity(city.value)" name="city"
-                    type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.city.invalid && (AddPersonForm1.controls.city.dirty || AddPersonForm1.controls.city.touched) else newvalidcity">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
                   </div>
-                  <ng-template #newvalidcity>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
                 </div>
-                <div class="col-sm-3 inputWithImg">
-                  <label class="titleBold"> Postcode </label>
-                  <input #postalCode formControlName="postalCode" change="updatePostalCode(postalCode.value)"
-                    class="form-control" name="postalCode" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.postalCode.invalid && (AddPersonForm1.controls.postalCode.dirty || AddPersonForm1.controls.postalCode.touched) else newvalidpostalCode">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidpostalCode>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-3 inputWithImg">
-                  <label class="titleBold"> Land </label>
-                  <app-countries [CountryFormData]="countryString" (childEvent)="onCountryReceive($event)">
-                  </app-countries>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Mobiel nummer </label>
-                  <input formControlName="mobileNumber" class="form-control" name="mobileNumber" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.mobileNumber.invalid && (AddPersonForm1.controls.mobileNumber.dirty || AddPersonForm1.controls.mobileNumber.touched) else newvalidmobileNumber">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidmobileNumber>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Vast nummer </label>
-                  <input #vastNumber formControlName="vastNumber" class="form-control" name="vastNumber" type="text"
-                    (change)="changeTelephoneNumber(vastNumber.value)" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.vastNumber.invalid && (AddPersonForm1.controls.vastNumber.dirty || AddPersonForm1.controls.vastNumber.touched) else newvalidtelephoneNumber">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidtelephoneNumber>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> E-mail adres </label>
-                  <input formControlName="emailAddress" class="form-control" name="emailAddress" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.emailAddress.invalid && (AddPersonForm1.controls.emailAddress.dirty || AddPersonForm1.controls.emailAddress.touched) else newvalidemailAddress">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidemailAddress>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Taal </label>
-                  <app-languages [LanguageFormData]="languageString" (childEvent)="onLanguageReceive($event)">
-                  </app-languages>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div id="CustomerContact" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Contractgegevens</h4>
-                <hr>
-              </div>
-              <div class="col col-sm-7"></div>
-            </div>
-            <div class="fcontent">
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Nationaliteit </label>
-                  <app-countries [CountryFormData]="nationalityString"
-                    (childEvent)="onCountryReceiveNationality($event)"></app-countries>
-
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Geboorteplaats </label>
-                  <input formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.placeOfBirth.invalid && (AddPersonForm1.controls.placeOfBirth.dirty || AddPersonForm1.controls.placeOfBirth.touched) else newvalidbirthPlace">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidbirthPlace>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Geboorteland </label>
-                  <app-countries [CountryFormData]="birthCountryString"
-                    (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> IBAN </label>
-                  <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)"
-                    name="iban" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="!ibanValid && AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidiban>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> BIC </label>
-                  <input formControlName="bic" class="form-control" name="bic" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.bic.invalid && (AddPersonForm1.controls.bic.dirty || AddPersonForm1.controls.bic.touched) else newvalidbic">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidbic>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Verplaatst zich met </label>
-                  <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form [formGroup]="AddPersonForm2" novalidate id="AddPersonForm2">
-
-        <div id="from1" *ngIf="showFormIndex === 2">
-          <div id="CustomerDetails" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Functie</h4>
-                <hr>
-              </div>
-              <div class="col col-sm-7"></div>
-            </div>
-            <div class="row PersonContactContent">
-              <div class="col-sm-12">
-                <label class="titleBold">Functie</label>
-              </div>
-            </div>
-            <div class="row PersonContactContent">
-              <div class="col-sm-7">
-                <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
-                  (change)="onChangeDropDownFunctie($event)" [(ngModel)]="selectedPositionIndex" ng-dropdown
-                  required="required">
-                  <option *ngFor="let data of dataDropDownFunctie let k= index" [attr.data-index]="k" [value]="k">
-                    {{data}}</option>
-                </select>
-              </div>
-              <div class="col col-sm-1">
-                <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
-                  <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div id="PersonContact" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Verloning</h4>
-                <hr>
-              </div>
-              <div class="col col-sm-7"></div>
-            </div>
-
-            <div class="row PersonContactContent">
-              <div class="col-sm-3">
                 <div class="row">
-                  <div class="col-sm-12">
-                    <label class="titleBold"> Statuut </label>
-                  </div>
-                </div>
-                <div class="row ">
-                  <div class="col-sm-12">
-                    <select formControlName="statute" id="dd_statute" name="dd_statute"
-                      [(ngModel)]="selectedStatuteIndex" class="inhaalrust selectcomponent"
-                      (change)="onChangeDropDownStatute($event)" ng-dropdown required="required">
-                      <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
-                        {{data}}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <label class="titleBold"> Bruto uurloon </label>
-                  </div>
-                </div>
-                <div class="row inputWithImgNew">
-                  <div class="col-sm-12">
-                    <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control"
-                      (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
-                      required />
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Plaats </label>
+                    <input #city formControlName="city" class="form-control" change="updateCity(city.value)" name="city"
+                      type="text" required />
                     <div class="form-control-feedback"
-                      *ngIf="AddPersonForm2.controls.grossHourlyWage.invalid && (AddPersonForm2.controls.grossHourlyWage.dirty || AddPersonForm2.controls.grossHourlyWage.touched) else newvalid">
+                      *ngIf="AddPersonForm1.controls.city.invalid && (AddPersonForm1.controls.city.dirty || AddPersonForm1.controls.city.touched) else newvalidcity">
                       <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
-                    <ng-template #newvalid><img src="../../assets/img/ValidIcon.png" alt=""></ng-template>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="row">
-                  <div class="col-sm-2 netExpense">
-                    <ui-switch [checked]="netExpenseSwitch" (change)="switchNetExpense($event)" size="small">
-                    </ui-switch>
-                  </div>
-                  <div class="col-sm-10">
-                    <label class="titleBold">onkostenvergoeding </label>
-                  </div>
-                </div>
-                <div class="row inputWithImgNew">
-                  <div class="col-sm-12 euro">
-                    <input #netExpenseAllowance formControlName="netExpenseAllowance"
-                      (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
-                      name="netExpenseAllowance" type="text" required />
-                    <i class="fa fa-eur" aria-hidden="true"></i>
-                    <div class="form-control-feedback"
-                      *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
-                      <img src="../../assets/img/InvalidIcon.png" alt="">
-                    </div>
-                    <ng-template #newvalid>
+                    <ng-template #newvalidcity>
                       <img src="../../assets/img/ValidIcon.png" alt="">
                     </ng-template>
+                  </div>
+                  <div class="col-sm-3 inputWithImg">
+                    <label class="titleBold"> Postcode </label>
+                    <input #postalCode formControlName="postalCode" change="updatePostalCode(postalCode.value)"
+                      class="form-control" name="postalCode" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.postalCode.invalid && (AddPersonForm1.controls.postalCode.dirty || AddPersonForm1.controls.postalCode.touched) else newvalidpostalCode">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidpostalCode>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-3 inputWithImg">
+                    <label class="titleBold"> Land </label>
+                    <app-countries [CountryFormData]="countryString" (childEvent)="onCountryReceive($event)">
+                    </app-countries>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Mobiel nummer </label>
+                    <input formControlName="mobileNumber" class="form-control" name="mobileNumber" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.mobileNumber.invalid && (AddPersonForm1.controls.mobileNumber.dirty || AddPersonForm1.controls.mobileNumber.touched) else newvalidmobileNumber">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidmobileNumber>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Vast nummer </label>
+                    <input #vastNumber formControlName="vastNumber" class="form-control" name="vastNumber" type="text"
+                      (change)="changeTelephoneNumber(vastNumber.value)" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.vastNumber.invalid && (AddPersonForm1.controls.vastNumber.dirty || AddPersonForm1.controls.vastNumber.touched) else newvalidtelephoneNumber">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidtelephoneNumber>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> E-mail adres </label>
+                    <input formControlName="emailAddress" class="form-control" name="emailAddress" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.emailAddress.invalid && (AddPersonForm1.controls.emailAddress.dirty || AddPersonForm1.controls.emailAddress.touched) else newvalidemailAddress">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidemailAddress>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Taal </label>
+                    <app-languages [LanguageFormData]="languageString" (childEvent)="onLanguageReceive($event)">
+                    </app-languages>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div id="CustomerContact" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Contractgegevens</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
+              </div>
+              <div class="fcontent">
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Nationaliteit </label>
+                    <app-countries [CountryFormData]="nationalityString"
+                      (childEvent)="onCountryReceiveNationality($event)"></app-countries>
+
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Geboorteplaats </label>
+                    <input formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.placeOfBirth.invalid && (AddPersonForm1.controls.placeOfBirth.dirty || AddPersonForm1.controls.placeOfBirth.touched) else newvalidbirthPlace">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidbirthPlace>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Geboorteland </label>
+                    <app-countries [CountryFormData]="birthCountryString"
+                      (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> IBAN </label>
+                    <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)"
+                      name="iban" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="!ibanValid && AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidiban>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> BIC </label>
+                    <input formControlName="bic" class="form-control" name="bic" type="text" required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.bic.invalid && (AddPersonForm1.controls.bic.dirty || AddPersonForm1.controls.bic.touched) else newvalidbic">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidbic>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Verplaatst zich met </label>
+                    <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet>
 
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div id="CustomerContact1" class="customerBox">
-            <div class="row PersonContactContent">
-              <div class="col col-sm-6">
-                <div class="row netExpense">
-                  <div class="col col-sm-2">
-                    <ui-switch [checked]="switchDistance" (change)="changeKM($event)" size="small"> </ui-switch>
+        </form>
+
+        <form [formGroup]="AddPersonForm2" novalidate id="AddPersonForm2">
+
+          <div id="from1" *ngIf="showFormIndex === 2">
+            <div id="CustomerDetails" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Functie</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
+              </div>
+              <div class="row PersonContactContent">
+                <div class="col-sm-12">
+                  <label class="titleBold">Functie</label>
+                </div>
+              </div>
+              <div class="row PersonContactContent">
+                <div class="col-sm-7">
+                  <select formControlName="functie" id="dd_functie" name="dd_functie" class="inhaalrust selectcomponent"
+                    (change)="onChangeDropDownFunctie($event)" [(ngModel)]="selectedPositionIndex" ng-dropdown
+                    required="required">
+                    <option *ngFor="let data of dataDropDownFunctie let k= index" [attr.data-index]="k" [value]="k">
+                      {{data}}</option>
+                  </select>
+                </div>
+                <div class="col col-sm-1">
+                  <button [disabled]="isInvalid()" #addButton (click)="onClickAdd()" type="button" class="btnAdd">
+                    <img src="../../../assets/img/add.png" alt="" height="17.5" width="17.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="PersonContact" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Verloning</h4>
+                  <hr>
+                </div>
+                <div class="col col-sm-7"></div>
+              </div>
+
+              <div class="row PersonContactContent">
+                <div class="col-sm-3">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label class="titleBold"> Statuut </label>
+                    </div>
                   </div>
-                  <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
+                  <div class="row ">
+                    <div class="col-sm-12">
+                      <select formControlName="statute" id="dd_statute" name="dd_statute"
+                        [(ngModel)]="selectedStatuteIndex" class="inhaalrust selectcomponent"
+                        (change)="onChangeDropDownStatute($event)" ng-dropdown required="required">
+                        <option *ngFor="let data of dataDropDownStatute let i= index" [attr.data-index]="i" [value]="i">
+                          {{data}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label class="titleBold"> Bruto uurloon </label>
+                    </div>
+                  </div>
+                  <div class="row inputWithImgNew">
+                    <div class="col-sm-12">
+                      <input #grossHourlyWage formControlName="grossHourlyWage" class="form-control"
+                        (change)="onHourlyWageReceive(grossHourlyWage.value)" name="grossHourlyWage" type="text"
+                        required />
+                      <div class="form-control-feedback"
+                        *ngIf="AddPersonForm2.controls.grossHourlyWage.invalid && (AddPersonForm2.controls.grossHourlyWage.dirty || AddPersonForm2.controls.grossHourlyWage.touched) else newvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                      </div>
+                      <ng-template #newvalid><img src="../../assets/img/ValidIcon.png" alt=""></ng-template>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-2 netExpense">
+                      <ui-switch [checked]="netExpenseSwitch" (change)="switchNetExpense($event)" size="small">
+                      </ui-switch>
+                    </div>
+                    <div class="col-sm-10">
+                      <label class="titleBold">onkostenvergoeding </label>
+                    </div>
+                  </div>
+                  <div class="row inputWithImgNew">
+                    <div class="col-sm-12 euro">
+                      <input #netExpenseAllowance formControlName="netExpenseAllowance"
+                        (change)="onNetExpensesReceive(netExpenseAllowance.value)" class="form-control"
+                        name="netExpenseAllowance" type="text" required />
+                      <i class="fa fa-eur" aria-hidden="true"></i>
+                      <div class="form-control-feedback"
+                        *ngIf="AddPersonForm2.controls.netExpenseAllowance.invalid && (AddPersonForm2.controls.netExpenseAllowance.dirty || AddPersonForm2.controls.netExpenseAllowance.touched) else newvalid">
+                        <img src="../../assets/img/InvalidIcon.png" alt="">
+                      </div>
+                      <ng-template #newvalid>
+                        <img src="../../assets/img/ValidIcon.png" alt="">
+                      </ng-template>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="CustomerContact1" class="customerBox">
+              <div class="row PersonContactContent">
+                <div class="col col-sm-6">
+                  <div class="row netExpense">
+                    <div class="col col-sm-2">
+                      <ui-switch [checked]="switchDistance" (change)="changeKM($event)" size="small"> </ui-switch>
+                    </div>
+                    <div class="col col-sm-10"><label class="titleBold">Kilometervergoeding</label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="CustomerContact" class="customerBox">
+              <div class="row PersonContactContent">
+                <div class="col-sm-12"><label class="titleBold">Extra informatie</label></div>
+              </div>
+              <div class="row inputWithImgNew PersonContactContent">
+                <div class="col-sm-12 ">
+                  <textarea rows="6" #extraRef class="form-control" formControlName="extra"
+                    (change)="addittionalInformation(extraRef.value)" cols="80"
+                    (keypress)="addittionalInformation(extraRef.value)" (keyup)="addittionalInformation(extraRef.value)"
+                    name="extra"></textarea>
+                  <div class="form-control-feedback"
+                    *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">
+                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                  </div>
+                  <ng-template #newvalid>
+                    <img src="../../assets/img/ValidIcon.png" alt="">
+                  </ng-template>
+
                 </div>
               </div>
             </div>
           </div>
-          <div id="CustomerContact" class="customerBox">
-            <div class="row PersonContactContent">
-              <div class="col-sm-12"><label class="titleBold">Extra informatie</label></div>
-            </div>
-            <div class="row inputWithImgNew PersonContactContent">
-              <div class="col-sm-12 ">
-                <textarea rows="6" #extraRef class="form-control" formControlName="extra"
-                  (change)="addittionalInformation(extraRef.value)" cols="80"
-                  (keypress)="addittionalInformation(extraRef.value)" (keyup)="addittionalInformation(extraRef.value)"
-                  name="extra"></textarea>
-                <div class="form-control-feedback"
-                  *ngIf="AddPersonForm2.controls.extra.invalid && (AddPersonForm2.controls.extra.dirty || AddPersonForm2.controls.extra.touched) else newvalid">
-                  <img src="../../assets/img/InvalidIcon.png" alt="">
+
+          <div id="from1" *ngIf="showFormIndex === 3">
+            <div id="CustomerDetails" class="customerBox">
+              <div class="row panelheader">
+                <div class="col col-sm-5 fright">
+                  <h4>Persoon aangemaakt</h4>
+                  <hr>
                 </div>
-                <ng-template #newvalid>
-                  <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template>
-
+                <div class="col col-sm-7"></div>
+                <label class="center-block">Persoon succesvol aangemaakt</label>
               </div>
             </div>
           </div>
-        </div>
 
-        <div id="from1" *ngIf="showFormIndex === 3">
-          <div id="CustomerDetails" class="customerBox">
-            <div class="row panelheader">
-              <div class="col col-sm-5 fright">
-                <h4>Persoon aangemaakt</h4>
-                <hr>
-              </div>
-              <div class="col col-sm-7"></div>
-              <label class="center-block">Persoon succesvol aangemaakt</label>
-            </div>
-          </div>
-        </div>
+        </form>
 
-      </form>
-
+      </div>
     </div>
-  </div>
 
-  <div class="col col-sm-3">
-    <ng-container *ngIf="showFormIndex === 1">
-      <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
-          src="../../assets/svg/right-arrow.svg" style="width:20px" /></button>
-      <div class="floatbreak"></div>
-      <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-          src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
-    </ng-container>
+    <div class="col col-sm-3">
+      <ng-container *ngIf="showFormIndex === 1">
+        <button class="orangebtn" id="forward" (click)="onFormwardClick()">Volgende stap <img
+            src="../../assets/svg/right-arrow.svg" style="width:20px" /></button>
+        <div class="floatbreak"></div>
+        <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+            src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+      </ng-container>
 
-    <ng-container *ngIf="showFormIndex === 2">
-      <button class="greenbtnnew" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Persoon opslaan
-        <img src="../../assets/svg/checked.svg" style="width:20px;" /></button>
-      <div class="floatbreak"></div>
-      <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
-          src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
-    </ng-container>
+      <ng-container *ngIf="showFormIndex === 2">
+        <button class="greenbtnnew" id="forward" (click)="onFormwardClick()" *ngIf="showFormIndex === 2">Persoon opslaan
+          <img src="../../assets/svg/checked.svg" style="width:20px;" /></button>
+        <div class="floatbreak"></div>
+        <button class="orangebtn" id="backward" (click)="onBackwardClick()" [disabled]="showFormIndex === 1"><img
+            src="../../assets/svg/left-arrow.svg" style="width:20px" /> Terug</button>
+      </ng-container>
+    </div>
   </div>
 </div>
