@@ -56,6 +56,7 @@
                     <label class="titleNormal">{{positionSelectedName}}</label>
                     <select id="position" name="position" class='form-control' required *ngIf="false"
                         [(ngModel)]='positionSelectedName' (ngModelChange)='onPositionsChange($event)'
+                        [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let dpsPosition of dpsPositionsData'
                             [value]="dpsPosition.position.name">{{dpsPosition.position.name}}</option>
@@ -63,8 +64,8 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
-                    <select id="position" name="position" class='form-control' required
-                        [(ngModel)]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
+                    <select id="contractReason" name="contractReason" class='form-control' required
+                        [ngModel]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'

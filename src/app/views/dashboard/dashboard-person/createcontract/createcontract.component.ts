@@ -19,6 +19,7 @@ import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.c
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { DPSSystemMessageComponent } from '../../../../componentcontrols/dpssystem-message/dpssystem-message.component';
 
 @Component({
   selector: 'app-createcontract',
@@ -96,12 +97,14 @@ export class CreateContractComponent implements OnInit {
   public isSelectedDateDoesNotHaveWork = true;
   public isSelectedWeeksVaild = true;
   public isWorkScheduleVaild = false;
+  public isLocationVaild = false;
 
   public isStartDateVaildErrorMsg = '';
   public isEndDateVaildErrorMsg = '';
   public isSelectedDateDoesNotHaveWorkErrorMsg = '';
   public isSelectedWeeksVaildErrorMsg = '';
   public isWorkScheduleVaildErrorMsg = '';
+  public isLocationVaildErrorMsg = '';
   public SpinnerShowing = false;
   public allowCreateContract = false;
   public personIsEnabled = false;
@@ -114,12 +117,28 @@ export class CreateContractComponent implements OnInit {
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  ShowMessage(MSG, Action) {
+  ShowMessage(MSG, Action = '') {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+    const snackbarRef = this.snackBar.open(MSG.re, Action, snackBarConfig);
+
+    snackbarRef.onAction().subscribe(() => {
+      this.logger.log('Snackbar Action :: ' + Action);
+    });
+  }
+
+  ShowMessageCustom(title, msg, Action = '') {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.openFromComponent(DPSSystemMessageComponent, {
+      verticalPosition: 'top',
+      duration: 5000,
+      data: { Title: title, MSG: msg }
+    });
 
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
@@ -206,6 +225,7 @@ export class CreateContractComponent implements OnInit {
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl(''),
+      contractReason: new FormControl(''),
       workSchedule: new FormControl(''),
       location: new FormControl(''),
       calendarStartDate: new FormControl(''),
@@ -285,7 +305,7 @@ export class CreateContractComponent implements OnInit {
         this.logger.log('LoadContractReason contractReasons', contractReasons);
         this.contractReasonDatas = contractReasons;
         if (this.contractReasonDatas.length > 0) {
-          this.contractReasonSelectedName = this.contractReasonDatas[0].name;
+          this.contractReasonSelectedName = this.contractReasonDatas[0].BrightStaffing_Contract_Reason_ID;
         }
         this.getPositionsByVatNumber();
         // this.hideSpinner();
@@ -309,6 +329,14 @@ export class CreateContractComponent implements OnInit {
     this.showSpinner();
     this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.locationsData = response;
+      if (this.locationsData.length > 0) {
+        this.locationSelectedName = this.locationsData[0].id;
+        this.isLocationVaildErrorMsg = '';
+        this.isLocationVaild = true;
+      } else {
+        this.isLocationVaildErrorMsg = 'Selecteer de Vestiging';
+        this.isLocationVaild = false;
+      }
       this.getWorkscheduleByVatNumber();
       this.logger.log('locationsData Form Data ::', this.locationsData);
       // this.hideSpinner();
@@ -563,7 +591,7 @@ export class CreateContractComponent implements OnInit {
         this.selectedWeekDays.push(selectedWeekDay);
       } else {
         this.isSelectedWeeksVaild = false;
-        this.isSelectedWeeksVaildErrorMsg = 'Selected weekdays are not allowed or this weekdays are already has contract.';
+        this.isSelectedWeeksVaildErrorMsg = 'Geselecteerde weekdagen zijn niet toegestaan of deze weekdagen hebben al een contract.';
       }
 
     }
@@ -571,11 +599,6 @@ export class CreateContractComponent implements OnInit {
     this.onWorkScheduleChange(this.workScheduleSelected);
   }
 
-  getErrorMsg(errormsgnew, AddMsg) {
-    if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
-      if (AddMsg !== '') { return errormsgnew + '/n' + AddMsg; } else { return errormsgnew; }
-    } else { return AddMsg; }
-  }
 
   onPrintContractClick() {
     this.showSpinner();
@@ -690,14 +713,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isStartDateVaild = false;
-          this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
+          this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
           this.ShowMessage(this.isStartDateVaildErrorMsg, '');
           this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
           // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
         this.isStartDateVaild = false;
-        this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
+        this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
         this.ShowMessage(this.isStartDateVaildErrorMsg, '');
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
         // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
@@ -719,14 +742,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isEndDateVaild = false;
-          this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
+          this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
           this.ShowMessage(this.isEndDateVaildErrorMsg, '');
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
           // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         }
       } else {
         this.isEndDateVaild = false;
-        this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
+        this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
         this.ShowMessage(this.isEndDateVaildErrorMsg, '');
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
         // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
@@ -796,7 +819,7 @@ export class CreateContractComponent implements OnInit {
         this.logger.log('onWorkScheduleChange  workScheduleInit workSchedule.workDays :: ', workSchedule.workDays);
         if (workSchedule.workDays.length < 1) {
           this.isWorkScheduleVaild = false;
-          this.isWorkScheduleVaildErrorMsg = 'Please select the proper work schedule';
+          this.isWorkScheduleVaildErrorMsg = 'Selecteer het juiste Werkrooster';
         } else {
           this.isWorkScheduleVaild = true;
           this.isWorkScheduleVaildErrorMsg = '';
@@ -817,7 +840,7 @@ export class CreateContractComponent implements OnInit {
 
   onCreateOrUpdateContractClick() {
     if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedDateDoesNotHaveWork &&
-      this.isSelectedWeeksVaild && this.isWorkScheduleVaild) {
+      this.isSelectedWeeksVaild && this.isWorkScheduleVaild && this.isLocationVaild) {
       if (this.ContractForm.valid) {
         if (this.currentDpsContract !== undefined && this.currentDpsContract !== null) {
           if (this.currentDpsContract.positionId > 0) {
@@ -845,20 +868,27 @@ export class CreateContractComponent implements OnInit {
           } else { this.ShowMessage('Selecteer alstublieft Fuunctie', ''); }
         } else { this.ShowMessage('Contract is undefined', ''); }
       } else {
-        this.logger.log('Form is Not Vaild');
-        if (this.ContractForm.controls.firstname) {
-          this.ShowMessage('Form is Not Vaild', '');
-        } else { this.ShowMessage('Form is Not Vaild', ''); }
+        this.logger.log('Formulier is niet geldig');
+        this.ShowMessageCustom('Error...', 'Formulier is niet geldig', '');
       }
     } else {
+      this.logger.log('Date is Not Vaild or Work Schedule Not Vaild');
       let errormsgnew = '';
+      errormsgnew = this.getErrorMsg(errormsgnew, 'Formulier is niet geldig');
       errormsgnew = this.getErrorMsg(errormsgnew, this.isStartDateVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isEndDateVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedWeeksVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isWorkScheduleVaildErrorMsg);
-      this.ShowMessage(errormsgnew, '');
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isLocationVaildErrorMsg);
+      this.logger.log(errormsgnew);
+      this.ShowMessageCustom('Error...', errormsgnew);
     }
+  }
+  getErrorMsg(errormsgnew, AddMsg) {
+    if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
+      if (AddMsg !== '' && AddMsg !== undefined && AddMsg !== null) { return errormsgnew + '\n' + AddMsg; } else { return errormsgnew; }
+    } else { if (AddMsg !== '' && AddMsg !== undefined && AddMsg !== null) { return AddMsg; } else { return '...'; } }
   }
 
   errorHandle(err: any) {
@@ -866,16 +896,16 @@ export class CreateContractComponent implements OnInit {
       this.hideSpinner();
       try {
         if (err.error instanceof Error) {
-          this.ShowMessage(err.error.message, 'error');
+          this.ShowMessageCustom('Error...', err.error.message);
           this.logger.log(this.componentname + ' Error occured=' + err.error.message);
         } else {
-          this.ShowMessage(err.error, 'error');
+          this.ShowMessageCustom('Error...', err.error);
           this.logger.log(this.componentname + ' response code=' + err.status);
           this.logger.log(this.componentname + ' response body=' + err.error);
         }
       } catch (e) {
         this.errorMsg = err;
-        this.ShowMessage(err, 'error');
+        this.ShowMessageCustom('Error...', err);
         this.logger.log(this.componentname + ' Error ' + err);
       }
     }
