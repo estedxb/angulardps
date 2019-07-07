@@ -13,7 +13,7 @@
   float: left;
 }
 .scrollbar {
-  height: auto;
+  height: calc(100vh - 188px);
   overflow-y: scroll;
   padding-right: 20px;
   overflow-x: hidden;
@@ -277,9 +277,7 @@
 }
 
 .dashboardpersoncontent {
-  height: auto;
-  max-height: 800px;
-  height: calc(100vh - 570px);
+  height: calc(100vh - 440px);
 }
 
 .dashboardactioncontent table {
@@ -342,6 +340,7 @@ sup.notify {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  height: calc(100vh);
 }
 
 .dashboardactioncontent div.row {

@@ -595,33 +595,41 @@ export class CreateContractComponent implements OnInit {
       dialogConfig.data = this.currentDpsContract;
       dialogConfig.ariaLabel = 'Arial Label Location Dialog';
       this.logger.log('dialogConfig.data :: ', dialogConfig.data);
-      const dialogRef = this.dialog.open(CancelContractComponent, dialogConfig);
+      // const dialogRef = this.dialog.open(CancelContractComponent, dialogConfig);
 
-      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
-        this.ShowMessage($event.MSG, $event.Action);
-      });
+      this.contractService.getContractByVatNoAndId(this.VatNumber, this.contractId.toString()).subscribe(response => {
+        this.logger.log('loadContract :: ', response);
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.logger.log('The dialog was closed');
+        dialogConfig.data = response;
+        const dialogRef = this.dialog.open(CancelContractComponent, dialogConfig);
 
-        this.currentDpsContract = result;
-        this.logger.log('this.data ::', this.currentDpsContract);
-        if (this.SelectedIndex > -1) {
-          // maindatas Update Contract
-          this.maindatas[this.SelectedIndex] = this.currentDpsContract;
-          this.ShowMessage('cancelReason "' + this.currentDpsContract.contract.cancelReason + '" is updated successfully.', '');
-        } else {
-          // maindatas Add Contract
-          this.logger.log('this.data.id :: ', this.currentDpsContract.id);
-          if (parseInt('0' + this.currentDpsContract.id, 0) > 0) {
-            this.maindatas.push(this.currentDpsContract);
-            this.logger.log('New Contract Added Successfully :: ', this.maindatas);
-            // this.FilterTheArchive();
-            this.ShowMessage('Contract "' + this.currentDpsContract.contract.name + '" is added successfully.', '');
+        dialogRef.afterClosed().subscribe(result => {
+          this.logger.log('The dialog was closed');
+          this.currentDpsContract = result;
+          this.logger.log('this.data ::', this.currentDpsContract);
+          if (this.currentDpsContract !== null) {
+            if (this.SelectedIndex > -1) {
+              // maindatas Update Contract
+              this.maindatas[this.SelectedIndex] = this.currentDpsContract;
+              this.ShowMessage('Contract succesvol geannuleerd met volgende reden "'
+                + this.currentDpsContract.contract.cancelReason + '".', '');
+              this.dialogRef.close(null);
+              // this.maindatas.splice(this.SelectedIndex, 1);
+            }
+            /*else {
+              // maindatas Add Contract
+              this.logger.log('this.data.id :: ', this.currentDpsContract.id);
+              if (parseInt('0' + this.currentDpsContract.id, 0) > 0) {
+                this.maindatas.push(this.currentDpsContract);
+                this.logger.log('New Contract Added Successfully :: ', this.maindatas);
+                // this.FilterTheArchive();
+                this.ShowMessage('Contract "' + this.currentDpsContract.contract.name + '" is added successfully.', '');
+              }
+            }
+            */
           }
-        }
-
-      });
+        });
+      }, error => this.errorHandle(error));
     } catch (e) { }
   }
 

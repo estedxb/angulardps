@@ -3,7 +3,7 @@
 <form [formGroup]="CancelContractForm" novalidate name="CancelContractForm" id="CancelContractForm">
     <div class="row center-block">
         <div class="col-sm-12 mat-dialog-close">
-            <button mat-button [mat-dialog-close]="currentContract" class=""><img
+            <button mat-button (click)="onCloseCancelContract()" class=""><img
                     src="../../../../../assets/svg/closebox.svg" /></button>
         </div>
     </div>

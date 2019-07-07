@@ -35,16 +35,10 @@ export class CancelContractComponent implements OnInit {
 
   }
 
-  createObjects() {
-
-    this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value;
-    this.currentContract.contract.status = ContractStatus.Active;
-
-  }
-
 
   onCancelContractClick() {
-    this.createObjects();
+    this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value;
+    this.currentContract.contract.status = ContractStatus.Cancelled;
     this.logger.log('currentContract ::', this.currentContract);
     // if (this.ContractForm.valid) {
     if (this.currentContract.id !== undefined && this.currentContract.id !== null && this.currentContract.id !== 0) {
@@ -52,7 +46,7 @@ export class CancelContractComponent implements OnInit {
       this.contractService.updateContract(this.currentContract).subscribe(res => {
         this.logger.log('  Contract Response :: ', res.body);
         this.currentContract = res.body;
-        //this.dialogRef.close(this.currentContract);
+        this.dialogRef.close(this.currentContract);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -63,12 +57,11 @@ export class CancelContractComponent implements OnInit {
           }
         }
       );
-
     }
+  }
 
-    // } else {
-    //   this.logger.log('Form is Not Vaild');
-    // }
+  onCloseCancelContract() {
+    this.dialogRef.close(null);
   }
 
 }
