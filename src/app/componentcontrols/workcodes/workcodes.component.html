@@ -1,7 +1,7 @@
 <div class="error">{{ errorMsg }}</div>
 <form [formGroup]="HQForm" novalidate id="hqform">
 
-  <input type="text" class="form-control workcode" [ngStyle]="{'opacity': disabled===false ? '1' : '0.8' }" formControlName="WorkCode" name="WorkCode" readonly (click)="show=true">
+  <input type="text" style="height: 32px;" class="form-control workcode" [ngStyle]="{'opacity': disabled===false ? '1' : '0.8' }" formControlName="WorkCode" name="WorkCode" readonly (click)="show=true">
   <ng-container *ngIf="show">
     <div class="dialog">
       <div class="compHeader"><button (click)="closeMe()" class="close"><span class="close-thik"></span></button></div>

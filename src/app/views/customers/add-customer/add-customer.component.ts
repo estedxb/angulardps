@@ -47,9 +47,7 @@ export class AddCustomerComponent implements OnInit {
     // private spinner: NgxUiLoaderService,
     private logger: LoggingService,
     private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
-
     this.editObject = { data: '', page: '' };
-
     this.pageType = "add";
 
   }
@@ -130,12 +128,10 @@ export class AddCustomerComponent implements OnInit {
 
     if (this.showFormIndex === 1) {
 
-
       this.logger.log("ct data is =");
       this.logger.log(this.CTdata);
       this.logger.log('validity HQ data=' + this.HQdata.formValid);
       this.logger.log('validity CT data=' + this.CTdata.formValid);
-
 
       if (this.HQdata.formValid === false)
         this.ShowMessage('Onjuiste invoer in invoerveld', '');
@@ -149,7 +145,6 @@ export class AddCustomerComponent implements OnInit {
 
           this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
           this.HQdata.contact = this.CTdata.contact;
-
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
             this.logger.log('response=' + res);
@@ -176,14 +171,6 @@ export class AddCustomerComponent implements OnInit {
 
     } else
       if (this.showFormIndex === 2) {
-        // this.logger.log('Complete data=');
-        // this.logger.log(this.GLdata);
-
-        // this.logger.log('HQdata');
-        // this.logger.log(this.HQdata);
-
-        // this.logger.log('this STdata');
-        // this.logger.log(this.STdata);
 
         if (this.HQdata !== null && this.HQdata !== undefined) {
           if (this.GLdata !== null && this.GLdata !== undefined) {
