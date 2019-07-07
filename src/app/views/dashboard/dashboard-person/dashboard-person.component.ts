@@ -321,6 +321,7 @@ export class DashboardPersonComponent implements OnInit {
         selectedContract.personId = personid;
         selectedContract.mode = mode;
         selectedContract.allowCreateContract = this.allowCreateContract;
+        selectedContract.allowCreateContract = true;
         selectedContract.approved = approved;
         selectedContract.personIsEnabled = personIsEnabled;
         selectedContract.personIsArchived = personIsArchived;

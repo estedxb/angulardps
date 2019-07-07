@@ -284,6 +284,9 @@ export class CreateContractComponent implements OnInit {
       .subscribe(contractReasons => {
         this.logger.log('LoadContractReason contractReasons', contractReasons);
         this.contractReasonDatas = contractReasons;
+        if (this.contractReasonDatas.length > 0) {
+          this.contractReasonSelectedName = this.contractReasonDatas[0].name;
+        }
         this.getPositionsByVatNumber();
         // this.hideSpinner();
       }, error => this.errorHandle(error));
