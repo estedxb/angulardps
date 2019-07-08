@@ -564,14 +564,14 @@ export class HeadQuartersComponent implements OnInit {
       this.customer.legalForm = this.selectedLegalObject.FormName;
     }
 
-      var today = new Date();
-      this.customer.creditCheck = new CreditCheck();
-  
-      // assigning credit check object
-      this.customer.creditCheck.creditLimit = this.HQForm.get('creditLimit').value;
-      this.customer.creditCheck.creditcheck = this.creditcheckEdit;
-      this.customer.creditCheck.creditCheckPending = this.creditCheckPending;
-      this.customer.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+    var today = new Date();
+    this.customer.creditCheck = new CreditCheck();
+
+    // assigning credit check object
+    this.customer.creditCheck.creditLimit = this.HQForm.get('creditLimit').value;
+    this.customer.creditCheck.creditcheck = this.creditcheckEdit;
+    this.customer.creditCheck.creditCheckPending = this.creditCheckPending;
+    this.customer.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
   
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.address = this.address;

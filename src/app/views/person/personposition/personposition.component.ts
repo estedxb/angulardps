@@ -114,8 +114,6 @@ export class PersonPositionComponent implements OnInit {
 
     //SetInitialValue();
     this.logger.log("social security id=" + this.SocialSecurityId);
-
-    this.DpsPersonObject = new DpsPerson();
   }
 
   fillDataDropDown(maindatas) {
@@ -152,10 +150,19 @@ export class PersonPositionComponent implements OnInit {
     this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
 
     this.logger.log("selected index");
-    this.logger.log(this.selectedIndexFunctie);
+    this.logger.log(this.selectedIndexFunctie);    
 
-    this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
-    this.changeMessage();
+    if(this.lastAddedPosition === "0" || this.lastAddedPosition === "-1")
+    {
+      this.ShowMessage("position index not found",'');
+      return;
+    }
+    else
+    {
+      this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
+      this.changeMessage();  
+    }
+
 
     //this.getPersonbySSIDVatNumber();
 
@@ -258,6 +265,7 @@ export class PersonPositionComponent implements OnInit {
 
   changeMessage() {
 
+    this.logger.log("person data changed");
     this.logger.log(this.DpsPersonObject);
 
     if (this.DpsPersonObject !== null) {
@@ -293,6 +301,9 @@ export class PersonPositionComponent implements OnInit {
       this.logger.log(data);
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
+
+    this.DpsPersonObject = new DpsPerson();
+    this.DpsPersonObject.renumeration = new Renumeration();
 
     this.data.currentMessage.subscribe(message => this.message = message);
     this.updatePosition();
@@ -402,6 +413,9 @@ export class PersonPositionComponent implements OnInit {
     const data = response;
     let counter: number = 0;
 
+    this.logger.log("response");
+    this.logger.log(response);
+
     this.logger.log("data received is=");
     this.logger.log(data.customerPostionId);
 
@@ -427,9 +441,11 @@ export class PersonPositionComponent implements OnInit {
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject = data;
 
+    this.logger.log("data from renumeration");
+    this.logger.log(data.renumeration);
+
     if(data.renumeration !== null && data.renumeration !== undefined)
     {
-  
       this.DpsPersonObject.renumeration = new Renumeration();
       this.DpsPersonObject.renumeration.hourlyWage = data.renumeration.hourlyWage;
       this.DpsPersonObject.renumeration.netCostReimbursment = data.renumeration.netCostReimbursment;
@@ -437,7 +453,7 @@ export class PersonPositionComponent implements OnInit {
       this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
   
       this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
-      this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);  
+      this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
 
       this.kmtoggle = data.renumeration.transportationAllowance;
       this.nettoggle = data.renumeration.costReimbursment;
@@ -479,7 +495,7 @@ export class PersonPositionComponent implements OnInit {
   changeKM($event) {
 
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-    if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+    if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
       {
         this.DpsPersonObject.renumeration.transportationAllowance = $event;
         this.changeMessage();
@@ -493,7 +509,7 @@ export class PersonPositionComponent implements OnInit {
       this.DpsPersonObject.statute = new Statute();
       this.DpsPersonObject.statute.name = this.statutes[$event.target.value].name;
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
-      this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].brightStaffingID;
+      this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].BrightStaffingID;
 
       this.changeMessage();
     }
@@ -503,7 +519,7 @@ export class PersonPositionComponent implements OnInit {
 
   addittionalInformation(value: string) {
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
         {
           this.DpsPersonObject.addittionalInformation = value;      
           this.changeMessage();
@@ -512,7 +528,7 @@ export class PersonPositionComponent implements OnInit {
 
   onNetExpensesReceive(netExpenseAllowance: number) {
     if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
       {
         this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
         this.changeMessage();    
@@ -521,8 +537,12 @@ export class PersonPositionComponent implements OnInit {
 
   onHourlyWageReceive(grossHourlyWage: number) {
 
-    if(grossHourlyWage >=5 )
+    this.logger.log("dps person object");
+    this.logger.log(this.DpsPersonObject);
+
+    if(grossHourlyWage >=5)
     {
+      this.logger.log("dps person object if");
       if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       {
         if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
@@ -532,8 +552,9 @@ export class PersonPositionComponent implements OnInit {
         }
       }
     }
-    else {
-
+    else 
+    {
+      this.logger.log("dps person object else");
       if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       {
         if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
