@@ -86,10 +86,9 @@ export class ContractService {
     this.logger.log('getApproveContract Data From = ' + this.getApproveContractURL);
 
     if (environment.dataFromAPI_JSON && environment.getApproveContractURL !== '') {
-      this.getApproveContractURL = this.getApproveContractURL + '/' + vatNumber + '/' + contractId;
-      result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
+      result = this.http.get<any>(this.getApproveContractURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     } else {
-      result = this.http.get<any>(this.getApproveContractURL).catch(this.errorHandler);
+      result = this.http.get<any>(this.getApproveContractURL + '/' + vatNumber + '/' + contractId).catch(this.errorHandler);
     }
     this.logger.log(result);
     return result;
