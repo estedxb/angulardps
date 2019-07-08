@@ -802,6 +802,8 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
+    this.logger.log("year="+year);
+
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
     let currentYearTwoDigits = currentYear % 100;
@@ -1102,12 +1104,12 @@ export class AddPersonComponent implements OnInit {
             this.DpsPersonObject.person.bankAccount = new BankAccount();
             this.DpsPersonObject.person.bankAccount.iban = this.iban;
             this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+            this.changeMessage();
           }
         }
       }
     }, error => this.ShowMessage(error, 'error'));
 
-    this.changeMessage();
   }
 
   resetPeronData() {
