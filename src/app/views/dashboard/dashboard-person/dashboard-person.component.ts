@@ -381,12 +381,9 @@ export class DashboardPersonComponent implements OnInit {
         } catch (e) { this.selectedPersonContracts = []; }
       }
       this.logger.log('getSelectedPersonContracts(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
-
     } catch (e) { this.selectedPersonContracts = []; }
-
     return this.selectedPersonContracts;
   }
-
   OpenAddPersonURL() {
     this.router.navigate(['./person/add']); this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/add');
   }

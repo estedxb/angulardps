@@ -116,13 +116,13 @@ export class CreateContractComponent implements OnInit {
   public monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
-
+  
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG.re, Action, snackBarConfig);
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
 
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
