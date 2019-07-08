@@ -13,7 +13,7 @@
   float: left;
 }
 .scrollbar {
-  height: calc(100vh - 335px);
+  height: calc(100vh - 245px);
   /*height: 820px;*/
   overflow-y: scroll;
   padding-right: 0px;

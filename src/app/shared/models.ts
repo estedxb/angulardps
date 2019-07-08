@@ -160,3 +160,5 @@ export class ApproveContract { customerVatNumber: string; contractId: string; }
 
 // tslint:disable-next-line: variable-name
 export class ContractReason { name: string; BrightStaffing_Contract_Reason_ID: string; }
+
+export class ErrorMSG { Title: string; MSG: String; }

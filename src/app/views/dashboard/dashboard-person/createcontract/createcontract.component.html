@@ -64,8 +64,8 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
-                    <select id="position" name="position" class='form-control' required
-                        [(ngModel)]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
+                    <select id="contractReason" name="contractReason" class='form-control' required
+                        [ngModel]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'
