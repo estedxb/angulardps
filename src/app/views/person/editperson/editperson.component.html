@@ -258,7 +258,7 @@
             <label class="titleBold"> IBAN </label>
             <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban" type="text" required />
             <div class="form-control-feedback"
-              *ngIf="editPersonForm.controls.iban.invalid && (editPersonForm.controls.iban.dirty || editPersonForm.controls.iban.touched) else newvalidiban">
+              *ngIf="!ibanValid || (editPersonForm.controls.iban.invalid && (editPersonForm.controls.iban.dirty || editPersonForm.controls.iban.touched)) else newvalidiban">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidiban>
@@ -270,7 +270,7 @@
             <input #bic (change)="updateBIC(bic.value)" formControlName="bic" class="form-control" name="bic"
               type="text" required />
             <div class="form-control-feedback"
-              *ngIf="editPersonForm.controls.bic.invalid && (editPersonForm.controls.bic.dirty || editPersonForm.controls.bic.touched) else newvalidbic">
+              *ngIf="!ibanValid || (editPersonForm.controls.bic.invalid && (editPersonForm.controls.bic.dirty || editPersonForm.controls.bic.touched)) else newvalidbic">
               <img src="../../assets/img/InvalidIcon.png" alt="">
             </div>
             <ng-template #newvalidbic>

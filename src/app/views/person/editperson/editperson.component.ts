@@ -82,6 +82,7 @@ export class EditPersonComponent implements OnInit {
   public bbic: any;
   public bban: any;
   public iban: any;
+  public ibanValid: boolean = false;
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
@@ -174,6 +175,7 @@ export class EditPersonComponent implements OnInit {
     this.editPersonForm.controls.socialSecurityNumber.setValue(this.SocialSecurityId);
     this.editPersonForm.controls.socialSecurityNumber.disable();
     this.editPersonForm.controls.gender.disable();
+    this.editPersonForm.controls.bic.disable();
 
     this.setPersonVatNumber();
 
@@ -417,15 +419,32 @@ export class EditPersonComponent implements OnInit {
     this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
       console.log('bic Data : ', response);
       this.bbic = response.bic;
-      this.editPersonForm.controls.bic.setValue(this.bbic);
 
-      if (this.DpsPersonObject !== null) {
-        if (this.DpsPersonObject.person !== null) {
-          this.DpsPersonObject.person.bankAccount = new BankAccount();
-          this.DpsPersonObject.person.bankAccount.iban = this.iban;
-          this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+      if(response !== null && response.bic !== undefined)
+      {
+        this.bbic = response.bic;
+
+        if(this.bbic === "")
+        {
+          this.ibanValid = false;
+          this.ShowMessage("Ongeldig iban-nummer",'');
+          this.editPersonForm.controls.bic.setValue('');
         }
-      }  
+        else
+        {
+          this.ibanValid = true;
+          this.editPersonForm.controls.bic.setValue(this.bbic);          
+        }
+
+        if (this.DpsPersonObject !== null) {
+          if (this.DpsPersonObject.person !== null) {
+            this.DpsPersonObject.person.bankAccount = new BankAccount();
+            this.DpsPersonObject.person.bankAccount.iban = this.iban;
+            this.DpsPersonObject.person.bankAccount.bic = this.bbic;
+          }
+        }  
+
+      }      
     }, error => this.ShowMessage(error, 'error'));
 
     this.changeMessage();
@@ -445,6 +464,9 @@ export class EditPersonComponent implements OnInit {
 
 
   setIbanNumber(value: string) {
+
+    this.bbic = "";
+    this.editPersonForm.controls.bic.setValue(this.bbic);
 
     this.soapCallFetchBBAN();
 
@@ -795,15 +817,11 @@ export class EditPersonComponent implements OnInit {
     this.SocialSecurityNumberObject.number = this.SocialSecurityId;
     this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
 
-    //this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
     this.DpsPersonObject.person = this.PersonObject;
 
     this.DpsPersonObject.customerVatNumber = this.editPersonForm.get('vastNumber').value;
     this.DpsPersonObject.person.socialSecurityNumber = this.PersonObject.socialSecurityNumber;
     this.DpsPersonObject.person.placeOfBirth = this.editPersonForm.get('placeOfBirth').value;
-
-    // this.DpsPersonObject.person.countryOfBirth = this.editPersonForm.get('countryOfBirth').value;
-    // this.DpsPersonObject.person.nationality = this.editPersonForm.get('nationality').value;
 
     this.DpsPersonObject.person.gender = new Gender();
     this.DpsPersonObject.person.gender.genderId = 0;
@@ -818,17 +836,12 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.person.address.bus = this.editPersonForm.get('bus').value;
     this.DpsPersonObject.person.address.city = this.editPersonForm.get('city').value;
     this.DpsPersonObject.person.address.postalCode = this.editPersonForm.get('postalCode').value;
-    // this.DpsPersonObject.person.address.country = 'New country';
-    // this.DpsPersonObject.person.address.countryCode = 'NX';
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.editPersonForm.get('emailAddress').value;
 
     this.DpsPersonObject.person.mobile = new PhoneNumber();
     this.DpsPersonObject.person.mobile.number = this.editPersonForm.get('mobileNumber').value;
-
-    // this.DpsPersonObject.person.phone = new PhoneNumber();
-    // this.DpsPersonObject.person.phone.number = this.editPersonForm.get('vat').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
 
@@ -861,7 +874,6 @@ export class EditPersonComponent implements OnInit {
     this.DpsPersonObject.vcaAttestation.location = '';
     this.DpsPersonObject.vcaAttestation.name = '';
 
-    // this.DpsPersonObject.constructionProfile = new ConstructionProfile();
     this.DpsPersonObject.constructionCards = [];
 
     this.DpsPersonObject.studentAtWorkProfile = new StudentAtWorkProfile();
