@@ -114,6 +114,8 @@ export class PersonPositionComponent implements OnInit {
 
     //SetInitialValue();
     this.logger.log("social security id=" + this.SocialSecurityId);
+
+    this.DpsPersonObject = new DpsPerson();
   }
 
   fillDataDropDown(maindatas) {
@@ -148,6 +150,9 @@ export class PersonPositionComponent implements OnInit {
     }
 
     this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+
+    this.logger.log("selected index");
+    this.logger.log(this.selectedIndexFunctie);
 
     this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
     this.changeMessage();
@@ -322,7 +327,7 @@ export class PersonPositionComponent implements OnInit {
   onPageInit() {
   }
 
-  switchNetExpense($event) {
+  switchNetExpense($event) {    
     this.DpsPersonObject.renumeration.costReimbursment = $event;
 
     if ($event === true) {
@@ -416,27 +421,38 @@ export class PersonPositionComponent implements OnInit {
 
     //hourlyWage
     //netCostReimbursment
-    this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
-    this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
-
     //transportationAllowance
     //costReimbursment
-    this.kmtoggle = data.renumeration.transportationAllowance;
-    this.nettoggle = data.renumeration.costReimbursment;
-
-
-    if (this.nettoggle === true) {
-      this.PersonPositionForm.controls.netExpenseAllowance.enable();
-    }
-    else {
-      this.PersonPositionForm.controls.netExpenseAllowance.disable();
-    }
-
-    this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
 
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject = data;
 
+    if(data.renumeration !== null && data.renumeration !== undefined)
+    {
+  
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.hourlyWage = data.renumeration.hourlyWage;
+      this.DpsPersonObject.renumeration.netCostReimbursment = data.renumeration.netCostReimbursment;
+      this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+      this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
+  
+      this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
+      this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);  
+
+      this.kmtoggle = data.renumeration.transportationAllowance;
+      this.nettoggle = data.renumeration.costReimbursment;
+
+      if (this.nettoggle === true) {
+        this.PersonPositionForm.controls.netExpenseAllowance.enable();
+      }
+      else {
+        this.PersonPositionForm.controls.netExpenseAllowance.disable();
+      }
+  
+    }
+  
+    this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
+  
   }
 
   onChangeDropDownFunctie($event) {
@@ -461,8 +477,13 @@ export class PersonPositionComponent implements OnInit {
   }
 
   changeKM($event) {
-    this.DpsPersonObject.renumeration.transportationAllowance = $event;
-    this.changeMessage();
+
+    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+    if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+      {
+        this.DpsPersonObject.renumeration.transportationAllowance = $event;
+        this.changeMessage();
+      }
   }
 
   onChangeDropDownStatute($event) {
@@ -473,34 +494,55 @@ export class PersonPositionComponent implements OnInit {
       this.DpsPersonObject.statute.name = this.statutes[$event.target.value].name;
       this.DpsPersonObject.statute.type = this.statutes[$event.target.value].type;
       this.DpsPersonObject.statute.brightStaffingID = this.statutes[$event.target.value].brightStaffingID;
+
+      this.changeMessage();
     }
 
-    this.changeMessage();
 
   }
 
   addittionalInformation(value: string) {
-    this.DpsPersonObject.addittionalInformation = value;
-
-    this.changeMessage();
+    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+        {
+          this.DpsPersonObject.addittionalInformation = value;      
+          this.changeMessage();
+        }
   }
 
   onNetExpensesReceive(netExpenseAllowance: number) {
-    this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
-    this.changeMessage();
+    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject !== undefined)
+      {
+        this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+        this.changeMessage();    
+      }
   }
 
   onHourlyWageReceive(grossHourlyWage: number) {
 
     if(grossHourlyWage >=5 )
     {
-      this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
-      this.changeMessage();
+      if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      {
+        if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
+        {
+          this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
+          this.changeMessage();  
+        }
+      }
     }
     else {
-      this.PersonPositionForm.get('grossHourlyWage').setValue(5);
-      this.DpsPersonObject.renumeration.hourlyWage = 5;
-      this.changeMessage();
+
+      if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      {
+        if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
+        {
+          this.PersonPositionForm.get('grossHourlyWage').setValue(5);
+          this.DpsPersonObject.renumeration.hourlyWage = 5;
+          this.changeMessage();  
+        }
+      }
     }
 
   }

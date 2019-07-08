@@ -141,12 +141,6 @@ export class UpdatePersonComponent implements OnInit {
         this.dpsPerson = dpsperson;
         this.person = this.dpsPerson.person;
 
-        // this.logger.log('DPS Person Form Data : ');
-        // this.logger.log(this.dpsPerson);
-
-        // this.logger.log('Person Form Data : ');
-        // this.logger.log(this.person);
-
         this.changeMessage();
 
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
@@ -165,12 +159,13 @@ export class UpdatePersonComponent implements OnInit {
 
   archiveClick() {
 
-    if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
-
+    if (this.dpsPerson !== undefined && this.dpsPerson !== null) 
+    {
       this.dpsPerson.isArchived = true;
       this.personService.updatePosition(this.dpsPerson).subscribe(res => {
         // console.log("response=" + res);
-        this.ShowMessage('Person archived successfully.', '');
+        this.ShowMessage('archivering kan niet ongedaan worden gemaakt', '');
+        this.router.navigate(['/dashboard']);
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -210,7 +205,7 @@ export class UpdatePersonComponent implements OnInit {
           }
         );
       }
-      
+
     }
 
     if (this.currentPage === 'positions') {
