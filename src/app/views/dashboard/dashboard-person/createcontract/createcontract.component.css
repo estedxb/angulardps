@@ -269,6 +269,21 @@ div.customerBox div.customerBoxContect {
   min-width: 135px;
 }
 
+.UpdateRow .col #btnPrint.greenbtn:disabled,
+.UpdateRow .col #btnExtened.greenbtn:disabled,
+.UpdateRow .col #btnApprove.greenbtn:disabled,
+.UpdateRow .col #btnCancelContract.greenbtn:disabled,
+.transbtn:disabled {
+  color: #a09f9f;
+  border: 1px solid #b0a6a6;
+  text-shadow: none;
+  -moz-text-shadow: none;
+  -webkit-text-shadow: none;
+  outline: 0px;
+  font-weight: 400px;
+  background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
+}
+
 #errorDisplay {
   margin: 10px 0px 0px 0px;
 }

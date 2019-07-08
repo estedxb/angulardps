@@ -122,7 +122,7 @@ export class CreateContractComponent implements OnInit {
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG.re, Action, snackBarConfig);
+    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
 
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
