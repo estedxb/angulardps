@@ -141,11 +141,23 @@ export class PersonDocumentComponent implements OnInit {
         let year = x.getFullYear();
         this.logger.log('getFullYear() ::::::: ', year);
         let month =  x.getMonth() +1 ;
+        let mm ='';
+        let dd ='';
+        if(month < 10)
+        {
+          mm = '0'+ month;
+        }
         this.logger.log('getMonth() ::::::::: ', month);
         let day = x.getDate();
+        if(day < 10)
+        {
+          dd = '0'+ day;
+        }
         this.logger.log('getDay() ::::::: ', day);
-        
-        let attestationDate = month.toString() +'/'+ day.toString() +'/'+ year.toString();
+        //value="2013-01-08"
+        let attestationDate = year.toString() +'-'+ mm +'-'+ day.toString();
+
+        this.logger.log('attestationDate ::::::: ', attestationDate);
 
         
         this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
