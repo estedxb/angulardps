@@ -56,7 +56,7 @@ body {
   font-weight: bold;
 }
 .scrollbar {
-  height: calc(100vh - 335px);
+  height: calc(100vh - 314px);
   /*height: 580px;*/
   overflow-y: scroll;
   padding-right: 20px;
