@@ -5,7 +5,6 @@ import { Contract, DpsContract, PrintContractPDF, ApproveContractSuccess, Approv
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoggingService } from './logging.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -48,7 +47,6 @@ export class ContractService {
       this.logger.log('getContractReasonURL Data From JSON');
       this.getContractReasonURL = environment.getAssetsDataPath + 'contractreason.json';
     }
-
   }
 
   public createContract(contract: DpsContract): Observable<any> {

@@ -13,6 +13,7 @@
   font-size: 17px;
   font-weight: bold;
 }
+
 .orangebtn:disabled {
   background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
 }
