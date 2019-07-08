@@ -360,19 +360,18 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.studentAtWorkFileToUpload = files.item(0);
-
         // this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
-         this.currentPerson.studentAtWorkProfile.attestation.name = ""; // files.item(0).name;
-         this.currentPerson.studentAtWorkProfile.attestation.location = "";
-        this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
-        this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
-        this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+        // this.currentPerson.studentAtWorkProfile.attestation.name = ""; // files.item(0).name;
+        // this.currentPerson.studentAtWorkProfile.attestation.location = "";
+        //this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
+        //this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
+       // this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
         this.personDocuments = new PersonDocuments();
-        this.personDocuments.customerVatNumber = this.VatNumber;
-        this.personDocuments.fileName = files.item(0).name;
-        this.personDocuments.file = files.item(0);
+        //this.personDocuments.customerVatNumber = this.VatNumber;
+        //this.personDocuments.fileName = files.item(0).name;
+        //this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.StudentAtWork;
-        this.personDocuments.personId = this.SocialSecurityId;
+        //this.personDocuments.personId = this.SocialSecurityId;
         this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadStudentAtWorkFileToActivity();
 
