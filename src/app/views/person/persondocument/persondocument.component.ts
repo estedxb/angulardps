@@ -29,6 +29,7 @@ export class PersonDocumentComponent implements OnInit {
   public isConstructionSector: boolean;
   public isStudentAtWork: boolean;
   public isDriver: boolean;
+  
   public studentAtWorkProfile: StudentAtWorkProfile;
 
   public medicalAttestationDocumentName: string;
@@ -135,7 +136,19 @@ export class PersonDocumentComponent implements OnInit {
         this.logger.log("balance=" + this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
-        this.PersonDocumentForm.get('attestationDate').setValue(this.currentPerson.studentAtWorkProfile.attestationDate);
+        
+        let  x = new Date (this.currentPerson.studentAtWorkProfile.attestationDate);
+        let year = x.getFullYear();
+        this.logger.log('getFullYear() ::::::: ', year);
+        let month =  x.getMonth() +1 ;
+        this.logger.log('getMonth() ::::::::: ', month);
+        let day = x.getDate();
+        this.logger.log('getDay() ::::::: ', day);
+        
+        let attestationDate = month.toString() +'/'+ day.toString() +'/'+ year.toString();
+
+        
+        this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
       }
     }
   }
@@ -158,7 +171,8 @@ export class PersonDocumentComponent implements OnInit {
     this.logger.log(this.currentPerson.isConstructionSector);
     this.logger.log('after');
     this.logger.log(this.currentPerson);
-    this.changeMessage();
+    //this.changeMessage();
+    this.updatePerson();
   }
 
   onIsDriverChange($event: boolean) {
@@ -167,7 +181,8 @@ export class PersonDocumentComponent implements OnInit {
     this.logger.log(this.currentPerson.isDriver);
     this.logger.log('after');
     this.logger.log(this.currentPerson);
-    this.changeMessage();
+    //this.changeMessage();
+    this.updatePerson();
   }
 
   onisStudentAtWorkChange($event) {
@@ -176,7 +191,8 @@ export class PersonDocumentComponent implements OnInit {
     this.logger.log(this.currentPerson.isStudentAtWork);
     this.logger.log('after');
     this.logger.log(this.currentPerson);
-    this.changeMessage();
+    //this.changeMessage();
+    this.updatePerson();
   }
 
   getVehiclesForLicense() {
@@ -215,7 +231,7 @@ export class PersonDocumentComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.medicalAttestationFileToUpload = files.item(0);
 
-        this.currentPerson.medicalAttestation.name = files.item(0).name;
+       // this.currentPerson.medicalAttestation.name = files.item(0).name;
         this.currentPerson.medicalAttestation.location = "";
         this.logger.log('this.VatNumber :: ', this.VatNumber);
         this.personDocuments = new PersonDocuments();
@@ -224,6 +240,7 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.MedicalAttestation;
         this.personDocuments.personId = this.SocialSecurityId;
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadMedicalAttestationFileToActivity();
 
       }
@@ -231,14 +248,15 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadMedicalAttestationFileToActivity() {
-    this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.MedicalAttestation, this.currentPerson.medicalAttestation.name).subscribe(data => {
+    this.personService.updateMedicalAttestationFile(this.medicalAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.MedicalAttestation, this.medicalAttestationFileToUpload.name).subscribe(data => {
       // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
+      this.ShowMessage('succesvol geupload', '');
 
 
     }, error => {
       this.logger.log(error);
+      this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
     });
   }
 
@@ -260,7 +278,7 @@ export class PersonDocumentComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.vcaAttestationFileToUpload = files.item(0);
 
-        this.currentPerson.vcaAttestation.name = files.item(0).name;
+       // this.currentPerson.vcaAttestation.name = files.item(0).name;
         this.currentPerson.vcaAttestation.location = "";
         this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
@@ -268,7 +286,7 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = files.item(0).name;
         this.personDocuments.personId = this.SocialSecurityId;
-
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadVcaAttestationFileToActivity();
 
       }
@@ -276,11 +294,12 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadVcaAttestationFileToActivity() {
-    this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.VcaAttestation, this.currentPerson.vcaAttestation.name).subscribe(data => {
+    this.personService.vcaAttestationFile(this.vcaAttestationFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.VcaAttestation, this.vcaAttestationFileToUpload.name).subscribe(data => {
       // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
+      this.ShowMessage('succesvol geupload', '');
     }, error => {
+      this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
       this.logger.log(error);
     });
   }
@@ -306,7 +325,7 @@ export class PersonDocumentComponent implements OnInit {
         this.constructionCardsToUpload = files.item(0);
 
         this.documents = new Documents();
-        this.documents.name = files.item(0).name;
+        this.documents.name = "" ; //files.item(0).name;
         this.documents.location = "";
         this.currentPerson.constructionCards.push(this.documents);
         this.personDocuments = new PersonDocuments();
@@ -315,7 +334,7 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.ConstructionCards;
         this.personDocuments.personId = this.SocialSecurityId;
-
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadConstructionCardsFileToActivity();
 
       }
@@ -323,11 +342,13 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadConstructionCardsFileToActivity() {
-    this.personService.constructionCardsFile(this.constructionCardsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.ConstructionCards, this.documents.name).subscribe(data => {
+    this.personService.constructionCardsFile(this.constructionCardsToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.ConstructionCards, this.constructionCardsToUpload.name).subscribe(data => {
       // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
+      this.ShowMessage('succesvol geupload', '');
+      
     }, error => {
+      this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
       this.logger.log(error);
     });
   }
@@ -351,20 +372,19 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.studentAtWorkFileToUpload = files.item(0);
-
         // this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
-        // this.currentPerson.studentAtWorkProfile.attestation.name = files.item(0).name;
+        // this.currentPerson.studentAtWorkProfile.attestation.name = ""; // files.item(0).name;
         // this.currentPerson.studentAtWorkProfile.attestation.location = "";
-        this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
-        this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
-        this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+        //this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
+        //this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
+       // this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
         this.personDocuments = new PersonDocuments();
-        this.personDocuments.customerVatNumber = this.VatNumber;
-        this.personDocuments.fileName = files.item(0).name;
-        this.personDocuments.file = files.item(0);
+        //this.personDocuments.customerVatNumber = this.VatNumber;
+        //this.personDocuments.fileName = files.item(0).name;
+        //this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.StudentAtWork;
-        this.personDocuments.personId = this.SocialSecurityId;
-
+        //this.personDocuments.personId = this.SocialSecurityId;
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadStudentAtWorkFileToActivity();
 
       }
@@ -374,9 +394,10 @@ export class PersonDocumentComponent implements OnInit {
   uploadStudentAtWorkFileToActivity() {
     this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.studentAtWorkFileToUpload.name).subscribe(data => {
       // do something, if upload success
-      this.ShowMessage('succesvol geupload', '');
       this.refreshPersonData();
+      this.ShowMessage('succesvol geupload', '');
     }, error => {
+      this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
       this.logger.log(error);
     });
   }
@@ -398,11 +419,9 @@ export class PersonDocumentComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') {
         this.driversFileToUpload = files.item(0);
-
-
         this.driverProfilesItem = new DriverProfilesItem();
         this.documents = new Documents();
-        this.documents.name = files.item(0).name;
+        this.documents.name = ''; //files.item(0).name;
         this.documents.location = '';
         this.driverProfilesItem.attestation = this.documents;
         this.driverProfilesItem.type = this.selectedOption;
@@ -414,9 +433,8 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = this.selectedOption;
         this.personDocuments.personId = this.SocialSecurityId;
-
         this.logger.log('this.selectedOption; :: ', this.selectedOption);
-
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadDriversFileToActivity();
 
       }
@@ -431,11 +449,12 @@ export class PersonDocumentComponent implements OnInit {
   uploadDriversFileToActivity() {
     this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber,
       this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense,
-      this.driverProfilesItem.attestation.name).subscribe(data => {
+      this.driversFileToUpload.name).subscribe(data => {
         // do something, if upload success
-        this.ShowMessage('succesvol geupload', '');
         this.refreshPersonData();
+        this.ShowMessage('succesvol geupload', '');
       }, error => {
+        this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
         this.logger.log(error);
       });
   }
@@ -461,7 +480,7 @@ export class PersonDocumentComponent implements OnInit {
         this.otherDocumentsToUpload = files.item(0);
 
         this.documents = new Documents();
-        this.documents.name = files.item(0).name;
+        this.documents.name = "" ; //files.item(0).name;
         this.documents.location = "";
         this.currentPerson.otherDocuments.push(this.documents);
         this.personDocuments = new PersonDocuments();
@@ -470,7 +489,7 @@ export class PersonDocumentComponent implements OnInit {
         this.personDocuments.file = files.item(0);
         this.personDocuments.fileType = FileType.OtherDocuments;
         this.personDocuments.personId = this.SocialSecurityId;
-
+        this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadOtherDocumentsToActivity();
 
       }
@@ -497,11 +516,12 @@ export class PersonDocumentComponent implements OnInit {
 
   uploadOtherDocumentsToActivity() {
     this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber,
-      this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.documents.name).subscribe(data => {
+      this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.otherDocumentsToUpload.name).subscribe(data => {
         // do something, if upload success
-        this.ShowMessage('succesvol geupload', '');
         this.refreshPersonData();
+        this.ShowMessage('succesvol geupload', '');
       }, error => {
+        this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
         this.logger.log(error);
       });
   }

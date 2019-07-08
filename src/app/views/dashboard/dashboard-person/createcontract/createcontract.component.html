@@ -64,8 +64,8 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Contractreden: </label>
-                    <select id="position" name="position" class='form-control' required
-                        [(ngModel)]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
+                    <select id="contractReason" name="contractReason" class='form-control' required
+                        [ngModel]='contractReasonSelectedName' (ngModelChange)='onReasonChange($event)'
                         [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let contractReason of contractReasonDatas'
@@ -111,7 +111,6 @@
                             {{location.name}} </option>
                     </select>
                 </div>
-
             </div>
         </div>
         <div class="row NewRow" *ngIf="mode==='new' || mode==='edit' || mode==='extend'">
@@ -127,7 +126,7 @@
         </div>
         <div class="row UpdateRow" *ngIf="mode==='update'">
             <div class="col col-sm-3 center-block"> <button class="greenbtn transbtn" id="btnPrint"
-                    (click)="onPrintContractClick()"><span>Afdrukken</span></button>
+                    [disabled]="!isApproved" (click)="onPrintContractClick()"><span>Afdrukken</span></button>
             </div>
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser===false || isApproved">&nbsp;</div>
             <div class="col col-sm-6 center-block" *ngIf="this.isDpsUser && !isApproved">

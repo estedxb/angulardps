@@ -19,6 +19,7 @@ import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.c
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { DPSSystemMessageComponent } from '../../../../componentcontrols/dpssystem-message/dpssystem-message.component';
 
 @Component({
   selector: 'app-createcontract',
@@ -31,7 +32,7 @@ export class CreateContractComponent implements OnInit {
 
   ContractForm: FormGroup;
   public selectedWeekDays: number[] = [];
-  public contractAllowedDates: number[] = [];
+  public contractWorkingDates: number[] = [];
   public selectedStartDate: Date;
   public selectedEndDate: Date;
   public Contract = 'Contract';
@@ -93,15 +94,17 @@ export class CreateContractComponent implements OnInit {
   public calendarDataNew: string;
   public isStartDateVaild = true;
   public isEndDateVaild = true;
-  public isSelectedDateDoesNotHaveWork = true;
   public isSelectedWeeksVaild = true;
+  public isSelectedDateDoesNotHaveWork = true;
   public isWorkScheduleVaild = false;
+  public isLocationVaild = false;
 
   public isStartDateVaildErrorMsg = '';
   public isEndDateVaildErrorMsg = '';
-  public isSelectedDateDoesNotHaveWorkErrorMsg = '';
   public isSelectedWeeksVaildErrorMsg = '';
-  public isWorkScheduleVaildErrorMsg = '';
+  public isSelectedDateDoesNotHaveWorkErrorMsg = ''; // 'Werkschema heeft geen werkdagen voor de geselecteerde datums';
+  public isWorkScheduleVaildErrorMsg = 'Selecteer het juiste Werkrooster';
+  public isLocationVaildErrorMsg = 'Selecteer de Vestiging';
   public SpinnerShowing = false;
   public allowCreateContract = false;
   public personIsEnabled = false;
@@ -113,13 +116,29 @@ export class CreateContractComponent implements OnInit {
   public monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
-
+  
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
     const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
+
+    snackbarRef.onAction().subscribe(() => {
+      this.logger.log('Snackbar Action :: ' + Action);
+    });
+  }
+
+  ShowMessageCustom(title, msg, Action = '') {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = 5000;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.openFromComponent(DPSSystemMessageComponent, {
+      verticalPosition: 'top',
+      duration: 5000,
+      data: { Title: title, MSG: msg }
+    });
 
     snackbarRef.onAction().subscribe(() => {
       this.logger.log('Snackbar Action :: ' + Action);
@@ -206,6 +225,7 @@ export class CreateContractComponent implements OnInit {
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       position: new FormControl(''),
+      contractReason: new FormControl(''),
       workSchedule: new FormControl(''),
       location: new FormControl(''),
       calendarStartDate: new FormControl(''),
@@ -213,7 +233,7 @@ export class CreateContractComponent implements OnInit {
     });
 
     this.setDatesRanges();
-    this.getContractAllowedWeekDays(this.selectedContract.personContracts);
+    this.getContractWorkingWeekDays(this.selectedContract.personContracts);
     this.LoadContractReason();
   }
 
@@ -230,50 +250,64 @@ export class CreateContractComponent implements OnInit {
     this.logger.log('setDatesRanges allowedEndDate :: ', this.allowedEndDate);
   }
 
-  getContractAllowedWeekDays(dpsScheduleContracts: DpsScheduleContract[]) {
+  getContractWorkingWeekDays(dpsScheduleContracts: DpsScheduleContract[]) {
     try {
       let contractCount = 0;
-      this.logger.log('getContractAllowedWeekDays dpsScheduleContracts ', dpsScheduleContracts);
+      this.logger.log('getContractWorkingWeekDays dpsScheduleContracts ', dpsScheduleContracts);
+      // Checking the Person Has Contract or Not
       if (this.selectedContract.personContracts !== null) {
+        // Looping the person contracts to find working schedule days
         dpsScheduleContracts.forEach(dpsScheduleContract => {
           contractCount += 1;
+          // Avoiding the selected contract for editing
           if (dpsScheduleContract.customerContractId !== this.contractId.toString()) {
+            // Avoiding the contracts does not have work schedules
             if (dpsScheduleContract.workSchedule !== null) {
+              // Looping the work schedule days of the current contract
               dpsScheduleContract.workSchedule.workDays.forEach(workDay => {
-                this.logger.log('getContractAllowedWeekDays workDay[' + workDay.dayOfWeek + '].workTimes', workDay.workTimes);
+                this.logger.log('getContractWorkingWeekDays workDay[' + workDay.dayOfWeek + '].workTimes', workDay.workTimes);
                 let isWorkScheduleFound = false;
+                // Checking the workday has working times
                 if (workDay.workTimes !== null) {
+                  // Looping the workday working times to find the working day has working time
                   workDay.workTimes.forEach(workTime => {
-                    this.logger.log('getContractAllowedWeekDays work startTime ' + workTime.startTime + ' :: endTime ' + workTime.endTime);
-                    if (!( // workTime.startTime === '00:00' && workTime.endTime === '00:00'
+                    this.logger.log('getContractWorkingWeekDays work startTime ' + workTime.startTime + ' :: endTime ' + workTime.endTime);
+
+                    // Checking Start time and end time is not 00:00
+                    if (!( //workTime.startTime === '00:00' && workTime.endTime === '00:00'
                       (parseInt(workTime.startTime.split(':')[0], 0) === 0 && parseInt(workTime.startTime.split(':')[1], 0) === 0) &&
                       (parseInt(workTime.endTime.split(':')[0], 0) === 0 && parseInt(workTime.endTime.split(':')[1], 0) === 0)
                     )) {
                       isWorkScheduleFound = true;
-                      this.logger.log('getContractAllowedWeekDays isWorkScheduleFound = ' + isWorkScheduleFound);
+                      this.logger.log('getContractWorkingWeekDays isWorkScheduleFound = true');
                     } else {
-                      this.logger.log('getContractAllowedWeekDays isWorkScheduleFound = False');
+                      this.logger.log('getContractWorkingWeekDays isWorkScheduleFound = False');
                     }
                   });
                 }
-                if (!isWorkScheduleFound) { this.contractAllowedDates.push(workDay.dayOfWeek); }
-                this.logger.log('getContractAllowedWeekDays workDays loop end of' + workDay.dayOfWeek);
+                // If the work schedule found for the week day then add this weekday to the contractWorkingDates
+                if (isWorkScheduleFound) { this.contractWorkingDates.push(workDay.dayOfWeek); }
+                this.logger.log('getContractWorkingWeekDays workDays (' + isWorkScheduleFound +
+                  ') loop end of ' + workDay.dayOfWeek, this.contractWorkingDates);
               });
             } else {
-              if (this.selectedContract.personContracts.length === 1) { this.contractAllowedDates = [1, 2, 3, 4, 5, 6, 7]; }
-              this.logger.log('getContractAllowedWeekDays this contract skiped because this is the selected contract');
+              // if there is no contract for the person other then the selected contract for editing then contractWorkingDates is null
+              if (this.selectedContract.personContracts.length === 1) { this.contractWorkingDates = []; }
+              this.logger.log('getContractWorkingWeekDays this contract skiped because this is the selected contract');
             }
           }
         });
       } else {
-        this.contractAllowedDates = [1, 2, 3, 4, 5, 6, 7];
-        this.logger.log('getContractAllowedWeekDays this contract skiped because no contracts for selected days');
+        // if there is no contract for the person then contractWorkingDates is null
+        this.contractWorkingDates = [];
+        this.logger.log('getContractWorkingWeekDays this contract skiped because no contracts for selected days');
       }
-      this.logger.log('getContractAllowedWeekDays contractAllowedDates for contractCount(' + contractCount + ')',
-        this.contractAllowedDates);
+
+      this.logger.log('getContractWorkingWeekDays contractWorkingDates for contractCount(' + contractCount + ')',
+        this.contractWorkingDates);
     } catch (e) {
-      this.ShowMessage(e.message, '');
-      this.logger.log('getContractAllowedWeekDays Error! ', e.message);
+      this.ShowMessage(e.message, 'error');
+      this.logger.log('getContractWorkingWeekDays Error! ', e.message);
     }
   }
 
@@ -284,6 +318,9 @@ export class CreateContractComponent implements OnInit {
       .subscribe(contractReasons => {
         this.logger.log('LoadContractReason contractReasons', contractReasons);
         this.contractReasonDatas = contractReasons;
+        if (this.contractReasonDatas.length > 0) {
+          this.contractReasonSelectedName = this.contractReasonDatas[0].BrightStaffing_Contract_Reason_ID;
+        }
         this.getPositionsByVatNumber();
         // this.hideSpinner();
       }, error => this.errorHandle(error));
@@ -306,6 +343,14 @@ export class CreateContractComponent implements OnInit {
     this.showSpinner();
     this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.locationsData = response;
+      if (this.locationsData.length > 0) {
+        this.locationSelectedName = this.locationsData[0].id;
+        this.isLocationVaildErrorMsg = '';
+        this.isLocationVaild = true;
+      } else {
+        this.isLocationVaildErrorMsg = 'Selecteer de Vestiging';
+        this.isLocationVaild = false;
+      }
       this.getWorkscheduleByVatNumber();
       this.logger.log('locationsData Form Data ::', this.locationsData);
       // this.hideSpinner();
@@ -324,6 +369,7 @@ export class CreateContractComponent implements OnInit {
       } else {
         this.ShowMessage('Persoon niet geselecteerd', '');
         this.hideSpinner();
+        this.dialogRef.close(null);
       }
 
       /*
@@ -432,7 +478,7 @@ export class CreateContractComponent implements OnInit {
     this.currentDpsContract.customerVatNumber = this.VatNumber;
     this.currentDpsContract.personId = this.personid;
     this.currentDpsContract.workScheduleId = 0;
-    this.currentDpsContract.locationId = 0;
+    this.currentDpsContract.locationId = this.locationSelectedName;
     this.currentDpsContract.positionId = this.positionSelectedId;
     this.currentDpsContract.parentContractId = 0;
     this.currentDpsContract.bsContractId = 0;
@@ -541,6 +587,9 @@ export class CreateContractComponent implements OnInit {
 
     loopDate = new Date(this.selectedStartDate);
     let i = 0;
+    this.isSelectedWeeksVaild = true;
+    this.isSelectedWeeksVaildErrorMsg = '';
+
     while (loopDate.getDate() <= this.selectedEndDate.getDate() && i < 9) {
       i += 1;
       this.logger.log('loopDate(' + i + ') :: (' + this.selectedEndDate + ')=> ' + loopDate);
@@ -553,26 +602,21 @@ export class CreateContractComponent implements OnInit {
         selectedWeekDay = 7;
       }
 
-      this.logger.log('contractAllowedDates', this.contractAllowedDates);
+      this.logger.log('contractWorkingDates', this.contractWorkingDates);
 
-      if ((this.contractAllowedDates.indexOf(selectedWeekDay) > -1) || this.contractAllowedDates.length === 0) {
-        this.logger.log('getSelectedWeekDays in after contractAllowedDates');
-        this.selectedWeekDays.push(selectedWeekDay);
-      } else {
+      // Checking the selected dates already has the contract or not
+      if ((this.contractWorkingDates.indexOf(selectedWeekDay) > -1)) { // || this.contractWorkingDates.length === 0
         this.isSelectedWeeksVaild = false;
-        this.isSelectedWeeksVaildErrorMsg = 'Selected weekdays are not allowed or this weekdays are already has contract.';
+        this.isSelectedWeeksVaildErrorMsg = 'Geselecteerde weekdagen zijn niet toegestaan of deze weekdagen hebben al een contract.';
+      } else {
+        this.logger.log('getSelectedWeekDays in after contractWorkingDates');
+        this.selectedWeekDays.push(selectedWeekDay);
       }
-
     }
     this.logger.log('getSelectedWeekDays selectedWeekDays', this.selectedWeekDays);
     this.onWorkScheduleChange(this.workScheduleSelected);
   }
 
-  getErrorMsg(errormsgnew, AddMsg) {
-    if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
-      if (AddMsg !== '') { return errormsgnew + '/n' + AddMsg; } else { return errormsgnew; }
-    } else { return AddMsg; }
-  }
 
   onPrintContractClick() {
     this.showSpinner();
@@ -687,14 +731,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isStartDateVaild = false;
-          this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
+          this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
           this.ShowMessage(this.isStartDateVaildErrorMsg, '');
           this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
           // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
         this.isStartDateVaild = false;
-        this.isStartDateVaildErrorMsg = 'Please choose the date with in the selected week';
+        this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
         this.ShowMessage(this.isStartDateVaildErrorMsg, '');
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
         // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
@@ -716,14 +760,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isEndDateVaild = false;
-          this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
+          this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
           this.ShowMessage(this.isEndDateVaildErrorMsg, '');
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
           // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         }
       } else {
         this.isEndDateVaild = false;
-        this.isEndDateVaildErrorMsg = 'Please choose the date with in the selected week';
+        this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
         this.ShowMessage(this.isEndDateVaildErrorMsg, '');
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
         // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
@@ -767,6 +811,7 @@ export class CreateContractComponent implements OnInit {
   onWorkScheduleChange(event) {
     try {
       this.logger.log('onWorkScheduleChange event :: ' + event); // option value will be sent as event
+
       if (event !== 0 && event !== undefined && event !== null && event !== '') {
         this.workScheduleSelected = event;
         this.currentDpsContract.workScheduleId = this.workScheduleSelected;
@@ -791,12 +836,20 @@ export class CreateContractComponent implements OnInit {
         });
 
         this.logger.log('onWorkScheduleChange  workScheduleInit workSchedule.workDays :: ', workSchedule.workDays);
+
         if (workSchedule.workDays.length < 1) {
-          this.isWorkScheduleVaild = false;
-          this.isWorkScheduleVaildErrorMsg = 'Please select the proper work schedule';
+          if (this.workScheduleSelected !== null && this.workScheduleSelected !== undefined && this.workScheduleSelected !== '') {
+            this.isSelectedDateDoesNotHaveWork = false;
+            this.isSelectedDateDoesNotHaveWorkErrorMsg = 'Werkschema heeft geen werkdagen voor de geselecteerde datums';
+          } else {
+            this.isWorkScheduleVaild = false;
+            this.isWorkScheduleVaildErrorMsg = 'Selecteer het juiste Werkrooster';
+          }
         } else {
           this.isWorkScheduleVaild = true;
           this.isWorkScheduleVaildErrorMsg = '';
+          this.isSelectedDateDoesNotHaveWork = true;
+          this.isSelectedDateDoesNotHaveWorkErrorMsg = ''; // 'Werkschema heeft geen werkdagen voor de geselecteerde datums';
         }
         this.currentDpsContract.contract.workSchedule = workSchedule;
         this.logger.log('onWorkScheduleChange  workSchedule :: ', workSchedule);
@@ -813,14 +866,25 @@ export class CreateContractComponent implements OnInit {
   }
 
   onCreateOrUpdateContractClick() {
-    if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedDateDoesNotHaveWork &&
-      this.isSelectedWeeksVaild && this.isWorkScheduleVaild) {
+    // Checking for the Selected Date is Vaild , Selected Dates Has Working Days, 
+    // WorkSchedule is Selected or not  and Location is Selected or not
+    console.log('in 1');
+    if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedWeeksVaild &&
+      this.isSelectedDateDoesNotHaveWork && this.isWorkScheduleVaild && this.isLocationVaild) {
+      console.log('in 2');
+      // Checking the Form is Vaild or not
       if (this.ContractForm.valid) {
+        console.log('in 3');
         if (this.currentDpsContract !== undefined && this.currentDpsContract !== null) {
+          console.log('in 4');
           if (this.currentDpsContract.positionId > 0) {
+            console.log('in 5');
             if (this.currentDpsContract.workScheduleId > 0) {
+              console.log('in 6');
               if (this.currentDpsContract.locationId > 0) {
+                console.log('in 7');
                 if (this.mode === 'edit') {
+                  console.log('in 8');
                   this.showSpinner();
                   this.contractService.updateContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
@@ -829,6 +893,7 @@ export class CreateContractComponent implements OnInit {
                     this.hideSpinner();
                   }, (err: HttpErrorResponse) => this.errorHandle(err));
                 } else {
+                  console.log('in 9');
                   this.showSpinner();
                   this.contractService.createContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
@@ -840,22 +905,33 @@ export class CreateContractComponent implements OnInit {
               } else { this.ShowMessage('Selecteer alstublieft Plaats', ''); }
             } else { this.ShowMessage('Selecteer alstublieft werkschema', ''); }
           } else { this.ShowMessage('Selecteer alstublieft Fuunctie', ''); }
-        } else { this.ShowMessage('Contract is undefined', ''); }
+        } else { this.ShowMessage('Contract is niet gedefinieerd', ''); }
       } else {
-        this.logger.log('Form is Not Vaild');
-        if (this.ContractForm.controls.firstname) {
-          this.ShowMessage('Form is Not Vaild', '');
-        } else { this.ShowMessage('Form is Not Vaild', ''); }
+        this.logger.log('Formulier is niet geldig');
+        this.ShowMessageCustom('Error...', 'Formulier is niet geldig', '');
       }
     } else {
+      this.logger.log('Date is Not Vaild or Work Schedule Not Vaild');
+      this.logger.log(this.isStartDateVaild + ',' + this.isEndDateVaild + ',' + this.isSelectedDateDoesNotHaveWork + ',' +
+        this.isSelectedWeeksVaild + ',' + this.isWorkScheduleVaild + ',' + this.isLocationVaild);
+      this.logger.log(this.isStartDateVaildErrorMsg, this.isEndDateVaildErrorMsg, this.isSelectedWeeksVaildErrorMsg);
+      this.logger.log(this.isSelectedDateDoesNotHaveWorkErrorMsg, this.isWorkScheduleVaildErrorMsg, this.isLocationVaildErrorMsg);
       let errormsgnew = '';
       errormsgnew = this.getErrorMsg(errormsgnew, this.isStartDateVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isEndDateVaildErrorMsg);
-      errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedWeeksVaildErrorMsg);
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isWorkScheduleVaildErrorMsg);
-      this.ShowMessage(errormsgnew, '');
+      errormsgnew = this.getErrorMsg(errormsgnew, this.isLocationVaildErrorMsg);
+      this.logger.log(errormsgnew);
+      this.ShowMessageCustom('Error...', errormsgnew);
     }
+  }
+
+  getErrorMsg(errormsgnew, AddMsg) {
+    if (errormsgnew !== '' && errormsgnew !== undefined && errormsgnew !== null) {
+      if (AddMsg !== '' && AddMsg !== undefined && AddMsg !== null) { return errormsgnew + '\n' + AddMsg; } else { return errormsgnew; }
+    } else { if (AddMsg !== '' && AddMsg !== undefined && AddMsg !== null) { return AddMsg; } else { return ''; } }
   }
 
   errorHandle(err: any) {
@@ -863,16 +939,16 @@ export class CreateContractComponent implements OnInit {
       this.hideSpinner();
       try {
         if (err.error instanceof Error) {
-          this.ShowMessage(err.error.message, 'error');
+          this.ShowMessageCustom('Error...', err.error.message);
           this.logger.log(this.componentname + ' Error occured=' + err.error.message);
         } else {
-          this.ShowMessage(err.error, 'error');
+          this.ShowMessageCustom('Error...', err.error);
           this.logger.log(this.componentname + ' response code=' + err.status);
           this.logger.log(this.componentname + ' response body=' + err.error);
         }
       } catch (e) {
         this.errorMsg = err;
-        this.ShowMessage(err, 'error');
+        this.ShowMessageCustom('Error...', err);
         this.logger.log(this.componentname + ' Error ' + err);
       }
     }

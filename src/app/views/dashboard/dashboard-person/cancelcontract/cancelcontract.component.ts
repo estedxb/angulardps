@@ -34,8 +34,6 @@ export class CancelContractComponent implements OnInit {
     });
 
   }
-
-
   onCancelContractClick() {
     this.currentContract.contract.cancelReason = this.CancelContractForm.get('reasonForcancellation').value;
     this.currentContract.contract.status = ContractStatus.Cancelled;

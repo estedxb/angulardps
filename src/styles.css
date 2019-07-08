@@ -489,7 +489,20 @@ div#PersonContact {
   outline: 0px;
   border: 0px;
 }
-
+.orangebtn:disabled,
+.greenbtn:disabled,
+.greenbtnnew:disabled,
+.greenButton:disabled,
+.whitebtn:disabled {
+  color: #a09f9f;
+  border: 1px solid #b0a6a6;
+  text-shadow: none;
+  -moz-text-shadow: none;
+  -webkit-text-shadow: none;
+  background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
+  outline: 0px;
+  font-weight: 400;
+}
 .orangebtn:hover,
 .greenbtn:hover,
 .greenbtnnew:hover,
@@ -500,6 +513,19 @@ div#PersonContact {
   text-shadow: 0 0 2px #000;
   -moz-text-shadow: 0 0 2px #000;
   -webkit-text-shadow: 0 0 2px #000;
+}
+
+.orangebtn:disabled :hover,
+.greenbtn:disabled:hover,
+.greenbtnnew:disabled:hover,
+.greenButton:disabled:hover,
+.whitebtn:hover {
+  color: #fff;
+  font-weight: 400;
+  text-shadow: none;
+  -moz-text-shadow: none;
+  -webkit-text-shadow: none;
+  background-image: linear-gradient(104deg, #e1e1e1, #c7c7c7);
 }
 
 .orangebtn img,

@@ -1,12 +1,5 @@
 <app-headers></app-headers>
 <app-menu [CustomerVatNumber]="vatNumber" [SelectedPage]="SelectedPage"></app-menu>
-<<<<<<< HEAD
-
-<div class="row">
-  <div class="col col-sm-3"></div>
-  <div class="col col-sm-6 center-block"><img src="../../../../assets/svg/createPerson.svg" style="left:-15"><br />
-    <div class="pagehead">PERSOON AANMAKEN</div>
-=======
 <div class="container-fluid">
   <div class="row">
     <div class="col col-sm-3"></div>
@@ -14,9 +7,7 @@
       <div class="pagehead">PERSOON AANMAKEN</div>
     </div>
     <div class="col col-sm-3"></div>
->>>>>>> 3d27a0e3ea56ba2b022989077b79216e35b1e6bc
   </div>
-
   <div class="row" id="formState">
     <div class="col col-sm-3"></div>
     <div class="col col-sm-3 center-block mw-350" style="color:#9A0C19;">
@@ -33,10 +24,8 @@
         <hr style="background-color:#9A0C19;" /><input type="checkbox" id="formOk" value="1" disabled checked />
       </div>
     </ng-template>
-
     <div class="col col-sm-3"></div>
   </div>
-
   <div class="row">
     <div class="col col-sm-3"></div>
     <div class="col col-sm-6" id="maincontentarea">
@@ -264,35 +253,22 @@
                       (childEvent)="onCountryReceiveNationality($event)"></app-countries>
 
                   </div>
-                  <ng-template #newvalidbirthPlace>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> Geboorteland </label>
-                  <app-countries [CountryFormData]="birthCountryString"
-                    (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> IBAN </label>
-                  <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)"
-                    name="iban" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="!ibanValid || (AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched)) else newvalidiban">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Geboorteplaats </label>
+                    <input formControlName="placeOfBirth" class="form-control" name="placeOfBirth" type="text"
+                      required />
+                    <div class="form-control-feedback"
+                      *ngIf="AddPersonForm1.controls.placeOfBirth.invalid && (AddPersonForm1.controls.placeOfBirth.dirty || AddPersonForm1.controls.placeOfBirth.touched) else newvalidbirthPlace">
+                      <img src="../../assets/img/InvalidIcon.png" alt="">
+                    </div>
+                    <ng-template #newvalidbirthPlace>
+                      <img src="../../assets/img/ValidIcon.png" alt="">
+                    </ng-template>
                   </div>
-                  <ng-template #newvalidiban>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template>
-                </div>
-                <div class="col-sm-6 inputWithImg">
-                  <label class="titleBold"> BIC </label>
-                  <input formControlName="bic" class="form-control" name="bic" type="text" required />
-                  <div class="form-control-feedback"
-                    *ngIf="!ibanValid || (AddPersonForm1.controls.bic.invalid && (AddPersonForm1.controls.bic.dirty || AddPersonForm1.controls.bic.touched)) else newvalidbic">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
+                  <div class="col-sm-6 inputWithImg">
+                    <label class="titleBold"> Geboorteland </label>
+                    <app-countries [CountryFormData]="birthCountryString"
+                      (childEvent)="onCountryReceiveBirthPlace($event)"></app-countries>
                   </div>
                 </div>
                 <div class="row">
@@ -301,7 +277,7 @@
                     <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)"
                       name="iban" type="text" required />
                     <div class="form-control-feedback"
-                      *ngIf="!ibanValid && AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched) else newvalidiban">
+                      *ngIf="!ibanValid || (AddPersonForm1.controls.iban.invalid && (AddPersonForm1.controls.iban.dirty || AddPersonForm1.controls.iban.touched)) else newvalidiban">
                       <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #newvalidiban>
@@ -312,7 +288,7 @@
                     <label class="titleBold"> BIC </label>
                     <input formControlName="bic" class="form-control" name="bic" type="text" required />
                     <div class="form-control-feedback"
-                      *ngIf="AddPersonForm1.controls.bic.invalid && (AddPersonForm1.controls.bic.dirty || AddPersonForm1.controls.bic.touched) else newvalidbic">
+                      *ngIf="!ibanValid || (AddPersonForm1.controls.bic.invalid && (AddPersonForm1.controls.bic.dirty || AddPersonForm1.controls.bic.touched)) else newvalidbic">
                       <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #newvalidbic>
