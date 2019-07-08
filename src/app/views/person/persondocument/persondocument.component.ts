@@ -136,7 +136,19 @@ export class PersonDocumentComponent implements OnInit {
         this.logger.log("balance=" + this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
-        this.PersonDocumentForm.get('attestationDate').setValue(this.currentPerson.studentAtWorkProfile.attestationDate);
+        
+        let  x = new Date (this.currentPerson.studentAtWorkProfile.attestationDate);
+        let year = x.getFullYear();
+        this.logger.log('getFullYear() ::::::: ', year);
+        let month =  x.getMonth() +1 ;
+        this.logger.log('getMonth() ::::::::: ', month);
+        let day = x.getDate();
+        this.logger.log('getDay() ::::::: ', day);
+        
+        let attestationDate = month.toString() +'/'+ day.toString() +'/'+ year.toString();
+
+        
+        this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
       }
     }
   }
