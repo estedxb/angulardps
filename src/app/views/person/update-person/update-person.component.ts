@@ -31,6 +31,7 @@ export class UpdatePersonComponent implements OnInit {
   public Action = '';
   public Id = '';
   public editPersonData: any;
+  public editPersonValid:boolean = false;
   public personpositionData: any;
   public personDocumentsData: any;
 
@@ -91,6 +92,7 @@ export class UpdatePersonComponent implements OnInit {
 
     if (message.page === 'edit') {
       this.editPersonData = message.data;
+      this.editPersonValid = message.valid;
       // this.logger.log("received person data=" + this.editPersonData);
     }
 
@@ -189,24 +191,25 @@ export class UpdatePersonComponent implements OnInit {
 
     if (this.currentPage === 'editperson') {
 
-      this.ShowMessage('Persoon is succesvol geüpdatet.', '');
-
-      this.personService.updatePosition(this.editPersonData).subscribe(res => {
-        this.logger.log('response=' + res);
+      if(this.editPersonValid === true) {
         this.ShowMessage('Persoon is succesvol geüpdatet.', '');
-      },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-
-            if (err.status === 200)
-              this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
-
-          } else {
-            this.logger.log('response code=' + err.status);
-            this.logger.log('response body=' + err.error);
+        this.personService.updatePosition(this.editPersonData).subscribe(res => {
+          this.logger.log('response=' + res);
+          this.ShowMessage('Persoon is succesvol geüpdatet.', '');
+        },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+  
+              if (err.status === 200)
+                this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
+  
+            } else {
+              this.logger.log('response code=' + err.status);
+              this.logger.log('response body=' + err.error);
+            }
           }
-        }
-      );
+        );
+      }     
     }
 
     if (this.currentPage === 'positions') {

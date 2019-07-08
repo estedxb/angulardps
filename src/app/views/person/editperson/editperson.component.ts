@@ -114,12 +114,22 @@ export class EditPersonComponent implements OnInit {
 
   }
 
+  checkValidation() {
+
+    if(this.validSSID === true && this.editPersonForm.get('bic').value !== "" && this.ibanValid === true)
+      return true;
+
+    return false;
+
+  }
+
   changeMessage() {
 
     if (this.DpsPersonObject !== null) {
       const newmessage: any = {
         page: 'edit',
-        data: this.DpsPersonObject
+        data: this.DpsPersonObject,
+        valid: this.checkValidation()
       };
       this.data.changeMessage(newmessage);
     }
@@ -418,7 +428,6 @@ export class EditPersonComponent implements OnInit {
 
     this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
       console.log('bic Data : ', response);
-      this.bbic = response.bic;
 
       if(response !== null && response.bic !== undefined)
       {
@@ -433,7 +442,7 @@ export class EditPersonComponent implements OnInit {
         else
         {
           this.ibanValid = true;
-          this.editPersonForm.controls.bic.setValue(this.bbic);          
+          this.editPersonForm.controls.bic.setValue(this.bbic);      
         }
 
         if (this.DpsPersonObject !== null) {
@@ -568,6 +577,7 @@ export class EditPersonComponent implements OnInit {
       if (data.person.bankAccount !== null) {
         this.editPersonForm.controls.iban.setValue(data.person.bankAccount.iban);
         this.editPersonForm.controls.bic.setValue(data.person.bankAccount.bic);
+        this.ibanValid = true;
       }
 
       if (data.person.mobile !== null) {
