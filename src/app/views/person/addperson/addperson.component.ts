@@ -1437,10 +1437,7 @@ export class AddPersonComponent implements OnInit {
     }
   }
 
-
   receiveZichMet($event) {
-
-    this.logger.log('received zich met data=' + $event.type);
 
     this.receiveZichmetdata = $event.vehicleName;
     this.zichmetdata = $event.vehicleName;
