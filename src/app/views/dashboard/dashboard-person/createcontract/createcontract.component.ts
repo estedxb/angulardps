@@ -116,7 +116,7 @@ export class CreateContractComponent implements OnInit {
   public monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  
+
   ShowMessage(MSG, Action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
@@ -222,8 +222,8 @@ export class CreateContractComponent implements OnInit {
     this.logger.log('Current VatNumber : ' + this.VatNumber);
 
     this.ContractForm = new FormGroup({
-      firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
+      firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
+      lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
       position: new FormControl(''),
       contractReason: new FormControl(''),
       workSchedule: new FormControl(''),
