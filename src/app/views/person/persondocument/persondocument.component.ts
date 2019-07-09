@@ -179,13 +179,12 @@ export class PersonDocumentComponent implements OnInit {
             return this.selectedOption;
         }
         }
-
  
       }
     }
   }
 
-  onOptionSelected(event) { this.logger.log(event); }//option value will be sent as event 
+  onOptionSelected(event) { this.logger.log(event); }
 
   changeMessage() {
     if (this.currentPerson !== null) {
@@ -398,7 +397,6 @@ export class PersonDocumentComponent implements OnInit {
     this.updatePerson();
   }
 
-
   handleStudentAtWorkFileInput(files: FileList) {
     if (files.length > 0) {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
@@ -548,7 +546,6 @@ export class PersonDocumentComponent implements OnInit {
     );
   }
 
-
   uploadOtherDocumentsToActivity() {
     this.personService.otherDocumentsFile(this.otherDocumentsToUpload, this.VatNumber,
       this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.otherDocumentsToUpload.name).subscribe(data => {
@@ -620,5 +617,4 @@ export class PersonDocumentComponent implements OnInit {
       }
     );
   }
-
 }
