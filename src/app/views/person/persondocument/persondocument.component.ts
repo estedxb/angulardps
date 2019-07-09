@@ -230,7 +230,11 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
       this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
-      this.vehiclesForLicense = this.vehiclesForLicense.filter((el) => !this.currentPerson.driverProfiles.includes(el));
+      if(this.currentPerson.driverProfiles!=null)
+      {
+        this.vehiclesForLicense = this.vehiclesForLicense.filter((el) => !this.currentPerson.driverProfiles.includes(el));
+      }
+      
     }, error => this.ShowMessage(error, 'error'));
 
   }
