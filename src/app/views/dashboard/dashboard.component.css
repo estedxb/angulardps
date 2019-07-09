@@ -276,8 +276,10 @@
   overflow: auto;
 }
 
-.dashboardpersoncontent {
-  height: calc(100vh - 440px);
+#PersonContents .dashboardpersoncontent {
+  min-height: 300px;
+  min-height: calc(100vh - 120px);
+  height: auto;
 }
 
 .dashboardactioncontent table {

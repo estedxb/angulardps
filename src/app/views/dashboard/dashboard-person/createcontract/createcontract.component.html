@@ -29,7 +29,7 @@
                     <input formControlName="firstname" class="form-control" name="firstname" type="text" required
                         disabled />
                     <div class="form-control-feedback"
-                        *ngIf="ContractForm.controls.firstname.invalid && (ContractForm.controls.firstname.dirty || ContractForm.controls.firstname.touched) else newvalid">
+                        *ngIf="ContractForm.controls.firstname.invalid && (ContractForm.controls.firstname.dirty || ContractForm.controls.firstname.untouched) else newvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #newvalid>
@@ -42,7 +42,7 @@
                     <input formControlName="lastname" class="form-control" name="lastname" type="text" required
                         disabled />
                     <div class="form-control-feedback"
-                        *ngIf="ContractForm.controls.lastname.invalid && (ContractForm.controls.lastname.dirty || ContractForm.controls.lastname.touched) else anewvalid">
+                        *ngIf="ContractForm.controls.lastname.invalid && (ContractForm.controls.lastname.dirty || ContractForm.controls.lastname.untouched) else anewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #anewvalid>
