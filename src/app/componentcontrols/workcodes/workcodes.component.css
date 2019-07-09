@@ -17,6 +17,10 @@ input[type="number"] {
   overflow: hidden;
   outline: none;
 }
+.form-control:disabled, .form-control[readonly] {
+  background-color: rgb(235, 235, 228);
+  opacity: 1;
+}
 
 .dialog:hover {
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);

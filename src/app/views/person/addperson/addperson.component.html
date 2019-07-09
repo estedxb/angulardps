@@ -148,13 +148,6 @@
                   <div class="col-sm-3 inputWithImg">
                     <label class="titleBold"> Bus </label>
                     <input formControlName="bus" class="form-control" change="" name="bus" type="text" required />
-                    <!-- <div class="form-control-feedback"
-                    *ngIf="AddPersonForm1.controls.bus.invalid && (AddPersonForm1.controls.bus.dirty || AddPersonForm1.controls.bus.touched) else newvalidbus">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                  </div>
-                  <ng-template #newvalidbus>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                  </ng-template> -->
                   </div>
                 </div>
                 <div class="row">
@@ -297,7 +290,8 @@
                   </div>
                   <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Verplaatst zich met </label>
-                    <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet>
+                    <app-vehicle-types [vehicleFormData]="zichmetdata" (childEvent)="receiveZichMet($event)" ></app-vehicle-types>
+                    <!-- <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet> -->
 
                   </div>
                 </div>

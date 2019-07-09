@@ -119,6 +119,12 @@ body {
 .selectcomponent:hover {
   box-shadow: 0px 3px 6px rgba(227, 118, 25, 0.4);
 }
+
+.selectcomponent:disabled{
+      color: rgb(84, 84, 84);
+    cursor: default;
+    background-color: rgb(235, 235, 228);
+}
 .selectcomponent option {
   white-space: nowrap;
   overflow: hidden;
@@ -830,6 +836,11 @@ div#CustomerContact1 {
 
 #maincontentarea .inputWithImgNew .euro input[type="text"].form-control {
   padding-left: 18px;
+}
+
+#maincontentarea .inputWithImgNew .euro input[type="text"].form-control:disabled {
+  background-color: rgb(235, 235, 228);
+  opacity: 1;
 }
 
 #maincontentarea .inputWithImgNew .euro .fa-eur {

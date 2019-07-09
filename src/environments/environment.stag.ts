@@ -79,6 +79,7 @@ export const environment = {
   actionURL_8: 'person/$id$/document',
   actionURL_9: 'dashboard/contract/$id$',
   getVehicles: 'DriversAttestations',
+  getVehicleUrlNew: '',
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
   getContractReasonURL: 'ContractReasons',

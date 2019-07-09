@@ -809,22 +809,70 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
-    if (this.dpsCustomer !== null) {
-      this.HQdata = {
-        "customer": this.dpsCustomer.customer,
-        "invoiceEmail": this.invoiceEmail,
-        "contractsEmail": this.contractsEmail,
-        "invoiceSettings": this.HQFormData.data.invoiceSettings,
-        "bulkContractsEnabled": false,
-        "statuteSettings": this.HQFormData.data.statuteSettings,
-        "contact": this.HQFormData.data.contact,
-        "activateContactAsUser": false,
-        "formValid": this.validity()
-      };
-      this.sendDatatoHome(this.HQdata);
+    console.log(this.HQFormData.data.invoiceSettings);
+
+    if(this.HQFormData.data.invoiceSettings === null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": "",
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.HQFormData.data.statuteSettings,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null; 
     }
-    else
-      this.HQdata = null;
+
+    if(this.HQFormData.data.statuteSettings === null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.HQFormData.data.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": "",
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+      
+    }
+
+    if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.HQFormData.data.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.HQFormData.data.statuteSettings,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+    }
+
+    
   }
 
 

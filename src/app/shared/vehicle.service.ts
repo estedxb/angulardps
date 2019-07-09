@@ -8,14 +8,28 @@ import { LoggingService } from './logging.service';
 export class vehicleService {
   private getVehicleUrl = '';
 
+  private getVehicleUrlNew = '';
+
   constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
       this.getVehicleUrl = environment.boemmAPI + environment.getVehicles;
     } else {
       this.getVehicleUrl = environment.getAssetsDataPath + 'vehicles.json';
     }
+
+    if(environment.dataFromAPI_JSON && environment.getVehicleUrlNew === '')
+    {
+      this.getVehicleUrlNew = environment.getAssetsDataPath + 'vehicles.json';
+    }
     // this.logger.log('Data From = ' + this.getStatuteUrl);
   }
+
+  public getVehiclesNew(): Observable<any> {
+    this.logger.log("getVehicles url="+this.getVehicleUrlNew);
+    const result = this.http.get<any>(this.getVehicleUrlNew).catch(this.errorHandler);
+    return result;
+  }
+
 
   public getVehicles(): Observable<any> {
     this.logger.log("getVehicles url="+this.getVehicleUrl);

@@ -162,6 +162,9 @@ export class UpdatePersonComponent implements OnInit {
     if (this.dpsPerson !== undefined && this.dpsPerson !== null) 
     {
       this.dpsPerson.isArchived = true;
+
+      //ifcontracts are active then it should be given a warning other disabled
+
       this.personService.updatePosition(this.dpsPerson).subscribe(res => {
         // console.log("response=" + res);
         this.ShowMessage('archivering kan niet ongedaan worden gemaakt', '');

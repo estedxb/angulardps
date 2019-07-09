@@ -317,7 +317,7 @@ export class AddPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      vastNumber: new FormControl('', [Validators.required]),
+      vastNumber: new FormControl(''),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -1442,12 +1442,12 @@ export class AddPersonComponent implements OnInit {
 
     this.logger.log('received zich met data=' + $event.type);
 
-    this.receiveZichmetdata = $event.type;
-    this.zichmetdata = $event.type;
+    this.receiveZichmetdata = $event.vehicleName;
+    this.zichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event.type;
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
       }
 
     this.changeMessage();
