@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';;
 import { LoggingService } from '../../../shared/logging.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DataService } from 'src/app/shared/data.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-persondocument',
@@ -109,6 +110,12 @@ export class PersonDocumentComponent implements OnInit {
     this.changeMessage();
   }
 
+  updateDrivinglicenses() {
+    this.currentPerson.driverProfiles = this.PersonDocumentForm.get('attestationDate').value;
+    this.currentPerson.driverProfiles.push(this.driverProfilesItem);
+    this.changeMessage();
+  }
+
   createObjects() {
     // this.currentPerson.studentAtWorkProfile = new StudentAtWorkProfile();
     if (this.currentPerson !== undefined && this.currentPerson !== null) {
@@ -138,29 +145,42 @@ export class PersonDocumentComponent implements OnInit {
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
         
         let  x = new Date (this.currentPerson.studentAtWorkProfile.attestationDate);
-        let year = x.getFullYear();
+        let year = x.getFullYear().toString();
         this.logger.log('getFullYear() ::::::: ', year);
-        let month =  x.getMonth() +1 ;
-        let mm ='';
-        let dd ='';
-        if(month < 10)
+        let month =  (x.getMonth() +1).toString() ;
+        //let mm ='';
+        //let dd ='';
+
+        if(Number(month) < 10)
         {
-          mm = '0'+ month;
+          month = '0'+ month;
         }
         this.logger.log('getMonth() ::::::::: ', month);
-        let day = x.getDate();
-        if(day < 10)
+        let day = x.getDate().toString();
+
+        if(Number(day) < 10)
         {
-          dd = '0'+ day;
+          day = '0'+ day;
         }
-        this.logger.log('getDay() ::::::: ', day);
-        //value="2013-01-08"
-        let attestationDate = year.toString() +'-'+ mm +'-'+ day.toString();
 
-        this.logger.log('attestationDate ::::::: ', attestationDate);
-
-        
+        this.logger.log('getDay() ::::::: ', day);     
+        let attestationDate = year +'-'+ month +'-'+ day;
+        this.logger.log('attestationDate ::::::: ', attestationDate);        
         this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
+
+       // vehicle.type = this.currentPerson.driverProfiles
+       for (let driverProfile of this.currentPerson.driverProfiles) {
+        
+        if (driverProfile.attestation.name !== undefined && driverProfile.attestation.name !== null && driverProfile.attestation.name !== '') {
+
+            this.logger.log('attestation.name ::: ',driverProfile.attestation.name);
+            this.selectedOption = driverProfile.attestation.name.split('.').slice(0, -1).join('.') ;
+            this.logger.log('this.selectedOption::: ', this.selectedOption);
+            return this.selectedOption;
+        }
+        }
+
+ 
       }
     }
   }
@@ -404,7 +424,7 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadStudentAtWorkFileToActivity() {
-    this.personService.constructionCardsFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.studentAtWorkFileToUpload.name).subscribe(data => {
+    this.personService.studentAtWorkFile(this.studentAtWorkFileToUpload, this.VatNumber, this.currentPerson.person.socialSecurityNumber.number, FileType.StudentAtWork, this.studentAtWorkFileToUpload.name).subscribe(data => {
       // do something, if upload success
       this.refreshPersonData();
       this.ShowMessage('succesvol geupload', '');
@@ -448,6 +468,7 @@ export class PersonDocumentComponent implements OnInit {
         this.logger.log('this.selectedOption; :: ', this.selectedOption);
         this.ShowMessage('Bezig met uploaden van bestanden ...', '');
         this.uploadDriversFileToActivity();
+        //this.updatePerson();
 
       }
     }
@@ -459,9 +480,11 @@ export class PersonDocumentComponent implements OnInit {
   }
 
   uploadDriversFileToActivity() {
-    this.personService.constructionCardsFile(this.driversFileToUpload, this.VatNumber,
+    let ext = this.driversFileToUpload.name.split('.').pop();
+    this.personService.driversFile(this.driversFileToUpload, this.VatNumber,
       this.currentPerson.person.socialSecurityNumber.number, FileType.DriversLicense,
-      this.driversFileToUpload.name).subscribe(data => {
+      this.driverProfilesItem.type + '.' + ext).subscribe(data => {
+        this.currentPerson.person.socialSecurityNumber.number
         // do something, if upload success
         this.refreshPersonData();
         this.ShowMessage('succesvol geupload', '');
@@ -527,7 +550,7 @@ export class PersonDocumentComponent implements OnInit {
 
 
   uploadOtherDocumentsToActivity() {
-    this.personService.constructionCardsFile(this.otherDocumentsToUpload, this.VatNumber,
+    this.personService.otherDocumentsFile(this.otherDocumentsToUpload, this.VatNumber,
       this.currentPerson.person.socialSecurityNumber.number, FileType.OtherDocuments, this.otherDocumentsToUpload.name).subscribe(data => {
         // do something, if upload success
         this.refreshPersonData();
