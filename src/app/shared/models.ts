@@ -69,7 +69,7 @@ export class DpsPerson {
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
     constructionCards: Documents[]; isConstructionSector: boolean; studentAtWorkProfile: StudentAtWorkProfile; isStudentAtWork: boolean;
     driverProfiles: DriverProfilesItem[]; isDriver: boolean; otherDocuments: Documents[]; isEnabled: boolean; isArchived: boolean;
-    brightStaffingId: number;
+    brightStaffingId: number; activeContractCount: number;
 }
 export class Person {
     socialSecurityNumber: SocialSecurityNumber; dateOfBirth: string; placeOfBirth: string; countryOfBirth: string; nationality: string;
@@ -161,4 +161,4 @@ export class ApproveContract { customerVatNumber: string; contractId: string; }
 // tslint:disable-next-line: variable-name
 export class ContractReason { name: string; BrightStaffing_Contract_Reason_ID: string; }
 
-export class ErrorMSG { Title: string; MSG: String; }
+export class ErrorMSG { Title: string; MSG: string; }

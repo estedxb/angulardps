@@ -24,16 +24,17 @@ export class UpdatePersonComponent implements OnInit {
   public PersonInitial = '';
   public PersonName = '';
   public currentPage = '';
-  public dpsPerson: any;
+  public dpsPerson: DpsPerson;
   public person: any;
   public vatNumber: string;
   public SocialSecurityId: string;
   public Action = '';
   public Id = '';
   public editPersonData: any;
-  public editPersonValid:boolean = false;
+  public editPersonValid = false;
   public personpositionData: any;
   public personDocumentsData: any;
+  public archiveDisable = false;
 
   constructor(
     private personService: PersonService, private data: DataService,
@@ -98,12 +99,12 @@ export class UpdatePersonComponent implements OnInit {
 
     if (message.page === 'position') {
       this.personpositionData = message.data;
-      // this.logger.log("received person data=" + this.editPersonData);      
+      // this.logger.log("received person data=" + this.editPersonData);
     }
 
     if (message.page === 'documents') {
       this.personDocumentsData = message.data;
-      // this.logger.log("received person data=" + this.editPersonData);      
+      // this.logger.log("received person data=" + this.editPersonData);
     }
 
   }
@@ -144,13 +145,16 @@ export class UpdatePersonComponent implements OnInit {
         this.changeMessage();
 
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
+
+        if (this.dpsPerson.activeContractCount > 0) { this.archiveDisable = true; }
+
         if (this.dpsPerson.person.lastName === '' || this.dpsPerson.person.lastName === null ||
           this.dpsPerson.person.lastName === undefined) {
           this.PersonInitial = this.dpsPerson.person.firstName.substring(0, 2);
         } else {
           this.PersonInitial = this.dpsPerson.person.firstName.substring(0, 1) + this.dpsPerson.person.lastName.substring(0, 1);
         }
-        //this.ShowMessage('Person fetched successfully.', '');
+        // this.ShowMessage('Person fetched successfully.', '');
       }, error => this.ShowMessage(error, 'error'));
     } catch (e) {
       this.PersonName = 'Error!!';
@@ -158,28 +162,26 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   archiveClick() {
+    if (confirm('Weet je zeker dat je deze persoon wilt verwijderen?')) {
 
-    if (this.dpsPerson !== undefined && this.dpsPerson !== null) 
-    {
-      this.dpsPerson.isArchived = true;
+      if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
+        this.dpsPerson.isArchived = true;
 
-      //ifcontracts are active then it should be given a warning other disabled
+        // if contracts are active then it should be given a warning other disabled
 
-      this.personService.updatePosition(this.dpsPerson).subscribe(res => {
-        // console.log("response=" + res);
-        this.ShowMessage('archivering kan niet ongedaan worden gemaakt', '');
-        this.router.navigate(['/dashboard']);
-      },
-        (err: HttpErrorResponse) => {
+        this.personService.updatePosition(this.dpsPerson).subscribe(res => {
+          // console.log("response=" + res);
+          this.ShowMessage('archivering kan niet ongedaan worden gemaakt', '');
+          this.router.navigate(['/dashboard']);
+        }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             console.log('Error occured=' + err.error.message);
           } else {
             console.log('response code=' + err.status);
             console.log('response body=' + err.error);
           }
-        }
-      );
-
+        });
+      }
     }
   }
 
@@ -189,7 +191,7 @@ export class UpdatePersonComponent implements OnInit {
 
     if (this.currentPage === 'editperson') {
 
-      if(this.editPersonValid === true) {
+      if (this.editPersonValid === true) {
         this.ShowMessage('Persoon is succesvol geüpdatet.', '');
         this.personService.updatePosition(this.editPersonData).subscribe(res => {
           this.logger.log('response=' + res);
@@ -197,10 +199,11 @@ export class UpdatePersonComponent implements OnInit {
         },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
-  
-              if (err.status === 200)
+
+              if (err.status === 200) {
                 this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
-  
+              }
+
             } else {
               this.logger.log('response code=' + err.status);
               this.logger.log('response body=' + err.error);
@@ -212,23 +215,21 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if (this.currentPage === 'positions') {
-      //this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
+      // this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log('response=' + res);
         this.ShowMessage('Persoon is succesvol bijgewerkt 20.', '');
       },
         (err: HttpErrorResponse) => {
-            if (err.status === 200){
-              this.ShowMessage('Persoon is succesvol bijgewerkt 40.', '');
-            }
-           else {            
-            if (err.status === 200){
+          if (err.status === 200) {
+            this.ShowMessage('Persoon is succesvol bijgewerkt 40.', '');
+          } else {
+            if (err.status === 200) {
               this.ShowMessage('Persoon is succesvol bijgewerkt 30.', '');
-            }
-            else {
+            } else {
               this.logger.log('response code=' + err.status);
               this.logger.log('response body=' + err.error);
-              this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');  
+              this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');
             }
           }
         }
@@ -236,28 +237,26 @@ export class UpdatePersonComponent implements OnInit {
     }
 
     if (this.currentPage === 'documents') {
-      if (this.personDocumentsData!==null  && this.personDocumentsData!==undefined )
-      this.personService.updatePersonDocumentDetails(this.personDocumentsData).subscribe(res => {
-        this.logger.log('response=' + res);
-        this.ShowMessage('Persoon is succesvol bijgewerkt 20.', '');
-      },
-        (err: HttpErrorResponse) => {
-            if (err.status === 200){
+      if (this.personDocumentsData !== null && this.personDocumentsData !== undefined) {
+        this.personService.updatePersonDocumentDetails(this.personDocumentsData).subscribe(res => {
+          this.logger.log('response=' + res);
+          this.ShowMessage('Persoon is succesvol bijgewerkt 20.', '');
+        },
+          (err: HttpErrorResponse) => {
+            if (err.status === 200) {
               this.ShowMessage('Persoon is succesvol bijgewerkt 40.', '');
-            }
-           else {            
-            if (err.status === 200){
-              this.ShowMessage('Persoon is succesvol bijgewerkt 30.', '');
-            }
-            else {
-              this.logger.log('response code=' + err.status);
-              this.logger.log('response body=' + err.error);
-              this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');  
+            } else {
+              if (err.status === 200) {
+                this.ShowMessage('Persoon is succesvol bijgewerkt 30.', '');
+              } else {
+                this.logger.log('response code=' + err.status);
+                this.logger.log('response body=' + err.error);
+                this.ShowMessage('Persoon is succesvol bijgewerkt 10.', '');
+              }
             }
           }
-        }
-      );
+        );
+      }
     }
   }
-
 }
