@@ -136,7 +136,7 @@
                 </button>
             </div>
             <div class="col col-sm-3 center-block">
-                <button class="greenbtn redbtn" id="btnCancelContract" name="btnCancelContract"
+                <button class="greenbtn redbtn" id="btnCancelContract" name="btnCancelContract" [disabled]="isApproved"
                     (click)="onCancelContractClick()"><span>Annuleren</span>
                 </button>
             </div>

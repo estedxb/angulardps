@@ -117,32 +117,26 @@ export class CreateContractComponent implements OnInit {
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  ShowMessage(MSG, Action) {
+  ShowMessage(msg, action) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
+    this.logger.log('ShowMessageCustom ', msg);
+    const snackbarRef = this.snackBar.open(msg, action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => { this.logger.log('Snackbar Action :: ' + action); });
   }
 
-  ShowMessageCustom(title, msg, Action = '') {
+  ShowMessageCustom(title, msg, action = '') {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = 5000;
     snackBarConfig.horizontalPosition = 'center';
     snackBarConfig.verticalPosition = 'top';
+    this.logger.log('ShowMessageCustom ', msg);
     const snackbarRef = this.snackBar.openFromComponent(DPSSystemMessageComponent, {
-      verticalPosition: 'top',
-      duration: 5000,
-      data: { Title: title, MSG: msg }
+      verticalPosition: 'top', duration: 5000, data: { Title: title, MSG: msg }
     });
-
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
+    snackbarRef.onAction().subscribe(() => { this.logger.log('Snackbar Action :: ' + action); });
   }
 
   formateZero(n) { return n > 9 ? n : '0' + n; }
@@ -221,6 +215,7 @@ export class CreateContractComponent implements OnInit {
     this.logger.log('Current Contract ID :: ' + this.contractId);
     this.logger.log('Current VatNumber : ' + this.VatNumber);
 
+    // Get the form controls for managing the control data
     this.ContractForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z 0-9]+$')]),
@@ -232,11 +227,15 @@ export class CreateContractComponent implements OnInit {
       calendarEndDate: new FormControl('')
     });
 
+    // Setting the Dates Allowed Ranges
     this.setDatesRanges();
+    // Getting the workdays of the person in other contracts for the selected week
     this.getContractWorkingWeekDays(this.selectedContract.personContracts);
+    // Loading the form Datas Starts from Contract Reason first
     this.LoadContractReason();
   }
 
+  // Setting the Dates Allowed Ranges
   setDatesRanges() {
     this.allowedStartDate = new Date(this.selectedContract.startDate);
     this.allowedStartYear = this.allowedStartDate.getFullYear();
@@ -250,6 +249,7 @@ export class CreateContractComponent implements OnInit {
     this.logger.log('setDatesRanges allowedEndDate :: ', this.allowedEndDate);
   }
 
+  // Getting the workdays of the person in other contracts for the selected week
   getContractWorkingWeekDays(dpsScheduleContracts: DpsScheduleContract[]) {
     try {
       let contractCount = 0;
@@ -274,18 +274,21 @@ export class CreateContractComponent implements OnInit {
                     this.logger.log('getContractWorkingWeekDays work startTime ' + workTime.startTime + ' :: endTime ' + workTime.endTime);
 
                     // Checking Start time and end time is not 00:00
-                    if (!( //workTime.startTime === '00:00' && workTime.endTime === '00:00'
+                    if (!(
                       (parseInt(workTime.startTime.split(':')[0], 0) === 0 && parseInt(workTime.startTime.split(':')[1], 0) === 0) &&
                       (parseInt(workTime.endTime.split(':')[0], 0) === 0 && parseInt(workTime.endTime.split(':')[1], 0) === 0)
                     )) {
+                      // If StartTime and EndTime is not 00:00 the Work Found
                       isWorkScheduleFound = true;
                       this.logger.log('getContractWorkingWeekDays isWorkScheduleFound = true');
                     } else {
+                      // Work not Found so no need to change the isWorkScheduleFound because we already set it in initialzing with false 
+                      // so only we need to change true if we found work for the day
                       this.logger.log('getContractWorkingWeekDays isWorkScheduleFound = False');
                     }
                   });
                 }
-                // If the work schedule found for the week day then add this weekday to the contractWorkingDates
+                // If the work schedule found for the week day then add this weekday to the already has workdays (contractWorkingDates) 
                 if (isWorkScheduleFound) { this.contractWorkingDates.push(workDay.dayOfWeek); }
                 this.logger.log('getContractWorkingWeekDays workDays (' + isWorkScheduleFound +
                   ') loop end of ' + workDay.dayOfWeek, this.contractWorkingDates);
@@ -506,9 +509,8 @@ export class CreateContractComponent implements OnInit {
   loadContract(vatNumber: string, cid: string) {
     this.showSpinner();
     this.contractService.getContractByVatNoAndId(vatNumber, cid).subscribe(response => {
-      this.logger.log('loadContract :: ', response);
-
       this.currentDpsContract = response;
+      this.logger.log('loadContract :: ', response);
 
       if (this.mode !== 'extend') {
         this.selectedStartDate = new Date(response.contract.startDate);
@@ -682,19 +684,20 @@ export class CreateContractComponent implements OnInit {
     this.showSpinner();
     this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(
       approveContractSuccess => {
-        this.logger.log(approveContractSuccess);
-        this.ShowMessage(approveContractSuccess.message, '');
+        this.logger.log('onApproveContractClick', approveContractSuccess);
         if (approveContractSuccess.accessStatus) {
-          this.dialog.closeAll();
+          this.ShowMessage('Contract met succes goedgekeurd', '');
+          // this.dialog.closeAll();
+          this.isApproved = true;
         } else {
-          this.errorMsg = approveContractSuccess.message;
+          this.isApproved = false;
+          this.errorMsg = 'Fout! bij het goedkeuren van het contract. ' + approveContractSuccess.message;
+          this.ShowMessage(this.errorMsg, ''); // Error! in approving the contract
         }
-
         this.hideSpinner();
       },
       approveContractFailed => {
         this.hideSpinner();
-        this.logger.log('approveContractFailed');
         this.ShowMessage('Fout! bij het goedkeuren van het contract', 'error'); // Error! in approving the contract
         this.logger.log('Approving the contract failed. ' + approveContractFailed);
       }
@@ -868,23 +871,15 @@ export class CreateContractComponent implements OnInit {
   onCreateOrUpdateContractClick() {
     // Checking for the Selected Date is Vaild , Selected Dates Has Working Days, 
     // WorkSchedule is Selected or not  and Location is Selected or not
-    console.log('in 1');
     if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedWeeksVaild &&
       this.isSelectedDateDoesNotHaveWork && this.isWorkScheduleVaild && this.isLocationVaild) {
-      console.log('in 2');
       // Checking the Form is Vaild or not
       if (this.ContractForm.valid) {
-        console.log('in 3');
         if (this.currentDpsContract !== undefined && this.currentDpsContract !== null) {
-          console.log('in 4');
           if (this.currentDpsContract.positionId > 0) {
-            console.log('in 5');
             if (this.currentDpsContract.workScheduleId > 0) {
-              console.log('in 6');
               if (this.currentDpsContract.locationId > 0) {
-                console.log('in 7');
                 if (this.mode === 'edit') {
-                  console.log('in 8');
                   this.showSpinner();
                   this.contractService.updateContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
@@ -907,7 +902,6 @@ export class CreateContractComponent implements OnInit {
           } else { this.ShowMessage('Selecteer alstublieft Fuunctie', ''); }
         } else { this.ShowMessage('Contract is niet gedefinieerd', ''); }
       } else {
-        this.logger.log('Formulier is niet geldig');
         this.ShowMessageCustom('Error...', 'Formulier is niet geldig', '');
       }
     } else {
@@ -923,7 +917,6 @@ export class CreateContractComponent implements OnInit {
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isWorkScheduleVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isLocationVaildErrorMsg);
-      this.logger.log(errormsgnew);
       this.ShowMessageCustom('Error...', errormsgnew);
     }
   }
@@ -942,14 +935,14 @@ export class CreateContractComponent implements OnInit {
           this.ShowMessageCustom('Error...', err.error.message);
           this.logger.log(this.componentname + ' Error occured=' + err.error.message);
         } else {
-          this.ShowMessageCustom('Error...', err.error);
+          this.ShowMessageCustom('Error...', JSON.stringify(err.error));
           this.logger.log(this.componentname + ' response code=' + err.status);
-          this.logger.log(this.componentname + ' response body=' + err.error);
+          this.logger.log(this.componentname + ' response body=', err.error);
         }
       } catch (e) {
         this.errorMsg = err;
-        this.ShowMessageCustom('Error...', err);
-        this.logger.log(this.componentname + ' Error ' + err);
+        this.ShowMessageCustom('Error...', JSON.stringify(err));
+        this.logger.log(this.componentname + ' Error ', err);
       }
     }
   }
