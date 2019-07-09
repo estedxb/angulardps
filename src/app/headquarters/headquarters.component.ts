@@ -119,7 +119,7 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
 
     this.HQForm = new FormGroup({
-      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.pattern("^[a-zA-Z0-9]+$")]),
+      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12),Validators.maxLength(12),Validators.pattern("^[a-zA-Z0-9]+$")]),
       firstname: new FormControl('', [Validators.required]),
       officialname: new FormControl('', [Validators.required]),
       creditCheck: new FormControl(),
