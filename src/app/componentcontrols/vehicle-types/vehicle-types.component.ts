@@ -1,20 +1,18 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
-  selector: 'app-zichmet',
-  templateUrl: './zichmet.component.html',
-  styleUrls: ['./zichmet.component.css']
+  selector: 'app-vehicle-types',
+  templateUrl: './vehicle-types.component.html',
+  styleUrls: ['./vehicle-types.component.css']
 })
+export class VehicleTypesComponent implements OnInit {
 
-export class ZichmetComponent implements OnInit {
-
-  @Input() public ZichmetFormData;
+  @Input() public vehicleFormData;
   @Output() public childEvent = new EventEmitter();
 
-  public oldZichmetFormData;
+  public oldvehicleFormData;
   public id = 'ddl_legalform';
   public currentlanguage = 'nl';
   public errorMsg;
@@ -39,14 +37,11 @@ export class ZichmetComponent implements OnInit {
     }
   }
 
-  onChangeZich($event) {
+  onChangeVehicle($event) {
 
     this._selectedIndex = $event.target.value;
     this.selectedIndex = $event.target.value;
     this.selectedString = this.value;
-
-    this.logger.log("this value");
-    this.logger.log(this.value);
 
     this.childEvent.emit(this.value);
 
@@ -61,12 +56,9 @@ export class ZichmetComponent implements OnInit {
 
   ngOnInit() {
 
-    this.vehicleService.getVehicles().subscribe(newdata => {
+    this.vehicleService.getVehiclesNew().subscribe(newdata => {
       this.datas = newdata;
       this.dropdownData = this.datas;
-
-      this.logger.log('datas');
-      this.logger.log(this.datas);
 
       // setDefault country
       this.setDefaultVehicle();
@@ -80,26 +72,22 @@ export class ZichmetComponent implements OnInit {
   }
 
   setDefaultVehicle() {
-    this.selectedIndex = 0;
-    
+    this.selectedIndex = 0;    
     this.childEvent.emit(this.dropdownData[this.selectedIndex]);
-
-    // for(let i=0;i<this.datas.length;i++)
-    //     this.dropdownData.push(this.datas[i].vehicleName);
   }
 
   ngDoCheck() {
 
-    if (this.ZichmetFormData !== this.oldZichmetFormData) {
-      this.oldZichmetFormData = this.ZichmetFormData;
+    if (this.vehicleFormData !== this.oldvehicleFormData) {
+      this.oldvehicleFormData = this.vehicleFormData;
       this.loadInitialData();
     }
 
   }
 
   ngAfterViewInit() {
-    if (this.ZichmetFormData !== this.oldZichmetFormData) {
-      this.oldZichmetFormData = this.ZichmetFormData;
+    if (this.vehicleFormData !== this.oldvehicleFormData) {
+      this.oldvehicleFormData = this.vehicleFormData;
       this.loadInitialData();
     }
   }
@@ -109,11 +97,12 @@ export class ZichmetComponent implements OnInit {
       for (let i = 0; i < this.datas.length; i++) {
         const str: string = this.datas[i].type;
 
-        if (this.ZichmetFormData === str) {
+        if (this.vehicleFormData === str) {
           this.selectedIndex = i;
           this.childEvent.emit(this.datas[i]);
         }
       }
     }
   }
+
 }

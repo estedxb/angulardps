@@ -152,7 +152,7 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log("selected index");
     this.logger.log(this.selectedIndexFunctie);    
 
-    if(this.lastAddedPosition === "0" || this.lastAddedPosition === "-1")
+    if(this.lastAddedPosition === "0" || this.lastAddedPosition === "-1"  || this.lastAddedPosition === null) 
     {
       this.ShowMessage("position index not found",'');
       return;
@@ -163,9 +163,7 @@ export class PersonPositionComponent implements OnInit {
       this.changeMessage();  
     }
 
-
     //this.getPersonbySSIDVatNumber();
-
   }
 
   
@@ -220,8 +218,11 @@ export class PersonPositionComponent implements OnInit {
     for(let i=0;i<this.maindatas.length;i++)
         positionArrays.push((this.maindatas[i].position.name.toLowerCase()));
 
-    this.lastAddedPosition = this.maindatas[this.maindatas.length -1].position.name;
-    this.lastAddedPositionId = this.maindatas[this.maindatas.length-1].id;
+    if(this.maindatas !== null && this.maindatas !== undefined)
+    {
+      this.lastAddedPosition = this.maindatas[this.maindatas.length-1].position.name;
+      this.lastAddedPositionId = this.maindatas[this.maindatas.length-1].id;  
+    }
 
     positionArrays.sort();
  
@@ -305,8 +306,12 @@ export class PersonPositionComponent implements OnInit {
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject.renumeration = new Renumeration();
 
+    this.nettoggle = true;
+    this.kmtoggle = true;
+
     this.data.currentMessage.subscribe(message => this.message = message);
     this.updatePosition();
+
   }
 
   onClickAdd() {
@@ -384,6 +389,8 @@ export class PersonPositionComponent implements OnInit {
 
   getIndexOfPositionDropDownFunctie(position:string) {
 
+    this.logger.log("position ="+position);
+
     let index = -1;
     for(let i=0;i<this.dataDropDownFunctie.length;i++)
     {
@@ -413,6 +420,9 @@ export class PersonPositionComponent implements OnInit {
     const data = response;
     let counter: number = 0;
 
+    this.DpsPersonObject = new DpsPerson();
+    this.DpsPersonObject = data;
+
     this.logger.log("response");
     this.logger.log(response);
 
@@ -421,16 +431,44 @@ export class PersonPositionComponent implements OnInit {
 
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) 
         this.findIndex(parseInt(data.customerPostionId, 10));
+    else {
+
+      this.logger.log("null customer positon id");
+
+      this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+      this.logger.log("selected index functie="+this.selectedIndexFunctie);
+      this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
+
+    }
 
     if (data.statute !== null && data.statute !== undefined && data.statute !== "") 
     {
       counter = 0;
       this.statutes.forEach((element) => {
 
-        if (element.name === data.statute.name)
+        if(element.name === data.statute.name)
+        {
           this.selectedIndexStatute = counter;
+          this.DpsPersonObject.statute = new Statute();
+          this.DpsPersonObject.statute.name = data.statute.name;
+          this.DpsPersonObject.statute.type = data.statute.type;
+          this.DpsPersonObject.statute.brightStaffingID = data.statute.BrightStaffingID;    
+        }
         counter++;
       });      
+
+      this.changeMessage();
+
+    }
+    else {
+
+      this.selectedIndexStatute = 0;
+
+      this.DpsPersonObject.statute = new Statute();
+      this.DpsPersonObject.statute.name = this.statutes[this.selectedIndexStatute].name;
+      this.DpsPersonObject.statute.type = this.statutes[this.selectedIndexStatute].type;
+      this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedIndexStatute].BrightStaffingID;
+
     }
 
     //hourlyWage
@@ -438,25 +476,25 @@ export class PersonPositionComponent implements OnInit {
     //transportationAllowance
     //costReimbursment
 
-    this.DpsPersonObject = new DpsPerson();
-    this.DpsPersonObject = data;
 
     this.logger.log("data from renumeration");
-    this.logger.log(data.renumeration);
+    this.logger.log(data);
 
     if(data.renumeration !== null && data.renumeration !== undefined)
     {
       this.DpsPersonObject.renumeration = new Renumeration();
       this.DpsPersonObject.renumeration.hourlyWage = data.renumeration.hourlyWage;
       this.DpsPersonObject.renumeration.netCostReimbursment = data.renumeration.netCostReimbursment;
+
+      this.kmtoggle = data.renumeration.transportationAllowance;
+      this.nettoggle = data.renumeration.costReimbursment;
+
       this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
       this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
   
       this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
       this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
 
-      this.kmtoggle = data.renumeration.transportationAllowance;
-      this.nettoggle = data.renumeration.costReimbursment;
 
       if (this.nettoggle === true) {
         this.PersonPositionForm.controls.netExpenseAllowance.enable();
@@ -464,7 +502,13 @@ export class PersonPositionComponent implements OnInit {
       else {
         this.PersonPositionForm.controls.netExpenseAllowance.disable();
       }
-  
+
+      this.changeMessage();
+    }
+    else {
+          this.DpsPersonObject.renumeration = new Renumeration();          
+          this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+          this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
     }
   
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);

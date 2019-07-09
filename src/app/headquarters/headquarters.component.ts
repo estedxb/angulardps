@@ -203,9 +203,9 @@ export class HeadQuartersComponent implements OnInit {
         this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
         this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
 
-        if (this.dpsCustomer.customer.creditCheck !== null && this.dpsCustomer.customer.creditCheck !== undefined) {
+        if (dpscustomer.customer.creditCheck !== null && dpscustomer.customer.creditCheck !== undefined) {
           this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit);
-            this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
+          this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
         }
 
         this.legalString = dpscustomer.customer.legalForm;
@@ -809,22 +809,70 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
-    if (this.dpsCustomer !== null) {
-      this.HQdata = {
-        "customer": this.dpsCustomer.customer,
-        "invoiceEmail": this.invoiceEmail,
-        "contractsEmail": this.contractsEmail,
-        "invoiceSettings": this.HQFormData.data.invoiceSettings,
-        "bulkContractsEnabled": false,
-        "statuteSettings": this.HQFormData.data.statuteSettings,
-        "contact": this.HQFormData.data.contact,
-        "activateContactAsUser": false,
-        "formValid": this.validity()
-      };
-      this.sendDatatoHome(this.HQdata);
+    console.log(this.HQFormData.data.invoiceSettings);
+
+    if(this.HQFormData.data.invoiceSettings === null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": "",
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.HQFormData.data.statuteSettings,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null; 
     }
-    else
-      this.HQdata = null;
+
+    if(this.HQFormData.data.statuteSettings === null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.HQFormData.data.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": "",
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+      
+    }
+
+    if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+    {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.HQFormData.data.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.HQFormData.data.statuteSettings,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+    }
+
+    
   }
 
 

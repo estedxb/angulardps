@@ -698,6 +698,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.ISForm.get('PloegprimeBox2').disable();
     this.ISForm.get('currency').disable();
 
+    this.ISForm.get('currency_other').disable();
+
     this.ISForm.get('AndreBox1').disable();
     this.ISForm.get('AndreBox2').disable();
 
@@ -706,7 +708,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.disableWorkCodes = true;
 
     this.ploegpremieSwitch = false;
-    this.andreSwitch = false;
+    this.andreSwitch = false;    
 
     this.changeInitialStatus();
 
@@ -730,6 +732,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     for (let counter = 0; counter < this.otherAllowances.length; counter++) {
       const formGroup = this.Andre.controls[counter] as FormGroup;
       formGroup.controls['AndreBox2'].disable();
+      formGroup.controls['currency_other'].disable();
     }
 
 
@@ -737,7 +740,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       const formGroup = this.Ploegpremiere.controls[nc] as FormGroup;
       formGroup.controls['PloegprimeBox1'].disable();
       formGroup.controls['PloegprimeBox2'].disable();
+      formGroup.controls['currency'].disable();
     }
+
+    this.ploegpremieSwitch = false;
+    this.andreSwitch = false;    
+
 
   }
 

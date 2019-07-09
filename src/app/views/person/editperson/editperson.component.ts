@@ -162,7 +162,7 @@ export class EditPersonComponent implements OnInit {
       postalCode: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required]),
-      vastNumber: new FormControl('', [Validators.required]),
+      vastNumber: new FormControl(''),
       emailAddress: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
@@ -591,6 +591,9 @@ export class EditPersonComponent implements OnInit {
       if (data.person.travelMode !== null) {
         this.zichmetdata = data.person.travelMode;
       }
+      else {
+        this.DpsPersonObject.person.travelMode = this.zichmetdata;
+      }
 
 
       this.DpsPersonObject = data;
@@ -771,11 +774,14 @@ export class EditPersonComponent implements OnInit {
 
   receiveZichMet($event) {
 
-    this.zichmetdata = $event.type;
+    this.logger.log("received vehicle type");
+    this.logger.log($event.vehicleName);
+
+    this.zichmetdata = $event.vehicleName;
 
     if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
       if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
-        this.DpsPersonObject.person.travelMode = $event.type;
+        this.DpsPersonObject.person.travelMode = $event.vehicleName;
       }
 
     this.changeMessage();

@@ -19,6 +19,7 @@ import { ErrorComponent } from './error.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
+import { VehicleTypesComponent } from './componentcontrols/vehicle-types/vehicle-types.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#e37719',
   bgsOpacity: 0.5,
@@ -56,7 +57,7 @@ export function loggerCallback(logLevel, message, piiEnabled) {
 
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, ErrorComponent],
+  declarations: [AppComponent, routingComponents, ErrorComponent, VehicleTypesComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule, MatInputModule,
     MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AutocompleteLibModule,
