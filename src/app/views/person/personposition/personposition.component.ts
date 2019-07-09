@@ -579,8 +579,8 @@ export class PersonPositionComponent implements OnInit {
       }
   }
 
-  onHourlyWageReceive(grossHourlyWage: number) {
-
+  onHourlyWageReceive(grossHourlyWage: number) 
+  {
     this.logger.log("dps person object");
     this.logger.log(this.DpsPersonObject);
 

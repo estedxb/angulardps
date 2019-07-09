@@ -60,7 +60,7 @@ export class VehicleTypesComponent implements OnInit {
       this.datas = newdata;
       this.dropdownData = this.datas;
 
-      // setDefault country
+      // setDefault country      
       this.setDefaultVehicle();
 
       // set load initial data
@@ -72,8 +72,9 @@ export class VehicleTypesComponent implements OnInit {
   }
 
   setDefaultVehicle() {
-    this.selectedIndex = 0;    
-    this.childEvent.emit(this.dropdownData[this.selectedIndex]);
+
+      this.selectedIndex = 0;
+      this.childEvent.emit(this.dropdownData[this.selectedIndex]);
   }
 
   ngDoCheck() {
@@ -95,7 +96,7 @@ export class VehicleTypesComponent implements OnInit {
   loadInitialData() {
     if (this.datas.length !== 0) {
       for (let i = 0; i < this.datas.length; i++) {
-        const str: string = this.datas[i].type;
+        const str: string = this.datas[i].vehicleName;
 
         if (this.vehicleFormData === str) {
           this.selectedIndex = i;

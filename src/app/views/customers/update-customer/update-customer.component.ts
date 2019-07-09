@@ -190,9 +190,9 @@ export class UpdateCustomerComponent implements OnInit {
 
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
-        this.ShowMessage('Customer Data Saved successfully. ', '');
+        this.ShowMessage('Klantgegevens succesvol opgeslagen', '');
         this.logger.log('response=' + res);
-        this.ShowMessage('Customer Data Saved successfully. ', '');
+        this.ShowMessage('Klantgegevens succesvol opgeslagen', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

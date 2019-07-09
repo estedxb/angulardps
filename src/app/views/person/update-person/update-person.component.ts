@@ -164,13 +164,11 @@ export class UpdatePersonComponent implements OnInit {
   archiveClick() {
     if (confirm('Weet je zeker dat je deze persoon wilt verwijderen?')) {
 
+      // if contracts are active then it should be given a warning otherwise disabled
+
       if (this.dpsPerson !== undefined && this.dpsPerson !== null) {
         this.dpsPerson.isArchived = true;
-
-        // if contracts are active then it should be given a warning other disabled
-
         this.personService.updatePosition(this.dpsPerson).subscribe(res => {
-          // console.log("response=" + res);
           this.ShowMessage('archivering kan niet ongedaan worden gemaakt', '');
           this.router.navigate(['/dashboard']);
         }, (err: HttpErrorResponse) => {

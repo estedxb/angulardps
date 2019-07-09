@@ -87,6 +87,7 @@ export class AddPersonComponent implements OnInit {
   public selectedStatuteIndex = 0;
   public lastAddedPosition: string;
   public lastAddedPositionId:string;
+  public lastSelectedVehicle = "";
 
   public netExpenseSwitch = false;
   public switchDistance = false;
@@ -1214,6 +1215,8 @@ export class AddPersonComponent implements OnInit {
     // if(data.customerVatNumber !== null)
     //   this.AddPersonForm1.controls.vatNumber.setValue(data.customerVatNumber);
 
+    this.logger.log("travelMode=");
+    this.logger.log(data.person.travelMode);
 
     if (data.person !== null) {
       this.zichmetdata = data.person.travelMode;
