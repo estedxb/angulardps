@@ -232,7 +232,8 @@
         <div class="row">
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> IBAN </label>
-            <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban" type="text" required />
+            <input #iban formControlName="iban" class="form-control" (change)="setIbanNumber(iban.value)" name="iban"
+              type="text" required />
             <div class="form-control-feedback"
               *ngIf="!ibanValid || (editPersonForm.controls.iban.invalid && (editPersonForm.controls.iban.dirty || editPersonForm.controls.iban.touched)) else newvalidiban">
               <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -255,7 +256,8 @@
           </div>
           <div class="col-sm-6 inputWithImg">
             <label class="titleBold"> Verplaatst zich met </label>
-            <app-vehicle-types [vehicleFormData]="zichmetdata" (childEvent)="receiveZichMet($event)" ></app-vehicle-types>
+            <app-vehicle-types [vehicleFormData]="zichmetdata" (childEvent)="receiveZichMet($event)">
+            </app-vehicle-types>
             <!-- <app-zichmet [ZichmetFormData]="zichmetdata" (childEvent)="receiveZichMet($event)"></app-zichmet> -->
           </div>
         </div>
