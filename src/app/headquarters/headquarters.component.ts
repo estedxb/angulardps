@@ -885,7 +885,6 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
-<<<<<<< HEAD
     if(this.HQFormData !== undefined && this.HQFormData !== null)
     {
         if(this.HQFormData.data !== undefined && this.HQFormData.data !== null)
@@ -937,51 +936,9 @@ export class HeadQuartersComponent implements OnInit {
             
           }             
         }
-=======
-    console.log(this.HQFormData.data.invoiceSettings);
-
-    if (this.HQFormData.data.invoiceSettings === null) {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          'customer': this.dpsCustomer.customer,
-          'invoiceEmail': this.invoiceEmail,
-          'contractsEmail': this.contractsEmail,
-          'invoiceSettings': '',
-          'bulkContractsEnabled': false,
-          'statuteSettings': this.HQFormData.data.statuteSettings,
-          'contact': this.HQFormData.data.contact,
-          'activateContactAsUser': false,
-          'formValid': this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null;
-    }
-
-    if (this.HQFormData.data.statuteSettings === null) {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          'customer': this.dpsCustomer.customer,
-          'invoiceEmail': this.invoiceEmail,
-          'contractsEmail': this.contractsEmail,
-          'invoiceSettings': this.HQFormData.data.invoiceSettings,
-          'bulkContractsEnabled': false,
-          'statuteSettings': '',
-          'contact': this.HQFormData.data.contact,
-          'activateContactAsUser': false,
-          'formValid': this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null;
-
->>>>>>> 355b0667c5be971a2aac02af693b7c18fda3c5fb
     }
     else {
 
-<<<<<<< HEAD
       // console.log("else send");
 
       if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
@@ -1002,29 +959,9 @@ export class HeadQuartersComponent implements OnInit {
         }
         else
           this.HQdata = null;
-=======
-    if (this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null) {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          'customer': this.dpsCustomer.customer,
-          'invoiceEmail': this.invoiceEmail,
-          'contractsEmail': this.contractsEmail,
-          'invoiceSettings': this.HQFormData.data.invoiceSettings,
-          'bulkContractsEnabled': false,
-          'statuteSettings': this.HQFormData.data.statuteSettings,
-          'contact': this.HQFormData.data.contact,
-          'activateContactAsUser': false,
-          'formValid': this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
->>>>>>> 355b0667c5be971a2aac02af693b7c18fda3c5fb
       }
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 355b0667c5be971a2aac02af693b7c18fda3c5fb
   }
 
 
