@@ -292,7 +292,7 @@ export class HeadQuartersComponent implements OnInit {
     //this.setStatuteSettingArray();
     //this.setContacts();
     this.setDpsCustomer();
-    //this.setInvoiceSettings();
+    this.setInvoiceSettings();
   }
 
   receiveMessage($event) {
@@ -610,7 +610,69 @@ export class HeadQuartersComponent implements OnInit {
     this.statuteSetting.push(this.statuteSettingObject);
   }
 
-  setInvoiceSettings() {
+  setInvoiceSettingsEmpty() {
+
+    this.lieuDaysAllowance = new LieuDaysAllowance();
+    this.mobilityAllowance = new MobilityAllowance();
+
+    this.shiftAllowance = new Array();
+    this.otherAllowance = new Array();
+
+    this.invoiceSettings = new InvoiceSettings();
+
+    this.invoiceSettings.mobilityAllowance = new MobilityAllowance();
+    this.invoiceSettings.mobilityAllowance.amountPerKm = 0;
+    this.invoiceSettings.mobilityAllowance.enabled = false;
+
+    this.invoiceSettings.lieuDaysAllowance = new LieuDaysAllowance();
+    this.invoiceSettings.lieuDaysAllowance.enabled = false;
+    this.invoiceSettings.lieuDaysAllowance.payed = false;
+
+    this.invoiceSettings.holidayInvoiced = false;
+    this.invoiceSettings.sicknessInvoiced = false;
+
+    this.invoiceSettings.shiftAllowances = new Array();
+    this.invoiceSettings.otherAllowances = new Array();
+
+    let lengthOfOtherAllowanceArray = 1;
+
+    for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) 
+    {
+      this.otherAllowanceObject = new OtherAllowance();
+
+      this.otherAllowanceObject.amount = 0;
+      this.otherAllowanceObject.codeId = 0;
+      this.otherAllowanceObject.nominal = false;
+
+      this.invoiceSettings.otherAllowances.push(this.otherAllowanceObject);
+    }
+
+    let lengthOfShiftAllowanceArray =1;
+
+    for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) 
+    {
+
+      this.shiftAllowanceObject = new ShiftAllowance();
+
+      this.shiftAllowanceObject.amount   = 0;
+      this.shiftAllowanceObject.nominal  = false;
+      this.shiftAllowanceObject.timeSpan = "";
+      this.shiftAllowanceObject.shiftName = "";
+
+      this.invoiceSettings.shiftAllowances.push(this.shiftAllowanceObject);
+
+    }
+
+    this.invoiceSettings.shiftAllowance = false;
+    this.invoiceSettings.otherAllowance = false;
+
+    console.log("invoice settings empty");
+    console.log(this.invoiceSettings);
+
+  }
+
+  setInvoiceSettings() 
+  {
 
     this.lieuDaysAllowance = new LieuDaysAllowance();
     this.mobilityAllowance = new MobilityAllowance();
@@ -619,19 +681,21 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceSettings = new InvoiceSettings();
 
     if (this.HQFormData !== null && this.HQFormData !== undefined)
-      if (this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined) {
-
-        if (this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined) {
+    {
+      if (this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined) 
+      {
+        if (this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined) 
+        {
           this.mobilityAllowance.amountPerKm = this.HQFormData.data.invoiceSettings.mobilityAllowance.amountPerKm;
           this.mobilityAllowance.enabled = this.HQFormData.data.invoiceSettings.mobilityAllowance.enabled;
           this.invoiceSettings.mobilityAllowance = this.mobilityAllowance;
         }
 
-        if (this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) {
+        if (this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) 
+        {
           // assigning invoice settings 
           this.lieuDaysAllowance.enabled = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
           this.lieuDaysAllowance.payed = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.payed;
-
           this.invoiceSettings.lieuDaysAllowance = this.lieuDaysAllowance;
         }
 
@@ -643,8 +707,8 @@ export class HeadQuartersComponent implements OnInit {
         if (this.HQFormData.data.invoiceSettings.otherAllowances !== null && this.HQFormData.data.invoiceSettings.otherAllowances !== undefined)
           lengthOfOtherAllowanceArray = this.HQFormData.data.invoiceSettings.otherAllowances.length;
 
-        for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) {
-
+        for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) 
+        {
           this.otherAllowanceObject = new OtherAllowance();
 
           this.otherAllowanceObject.amount = this.HQFormData.data.invoiceSettings.otherAllowances[count].amount;
@@ -652,14 +716,15 @@ export class HeadQuartersComponent implements OnInit {
           this.otherAllowanceObject.nominal = this.HQFormData.data.invoiceSettings.otherAllowances[count].nominal;
 
           this.otherAllowance.push(this.otherAllowanceObject);
-
         }
 
         let lengthOfShiftAllowanceArray = 0;
+
         if (this.HQFormData.data.invoiceSettings.shiftAllowances !== null && this.HQFormData.data.invoiceSettings.shiftAllowances !== undefined)
           lengthOfShiftAllowanceArray = this.HQFormData.data.invoiceSettings.shiftAllowances.length;
 
-        for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) {
+        for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) 
+        {
 
           this.shiftAllowanceObject = new ShiftAllowance();
 
@@ -676,8 +741,9 @@ export class HeadQuartersComponent implements OnInit {
         this.invoiceSettings.otherAllowances = this.otherAllowance;
 
       }
+      //this.HQdata.invoiceSettings = this.invoiceSettings;
+    }
 
-    //this.HQdata.invoiceSettings = this.invoiceSettings;
   }
 
   setContacts() {
@@ -801,6 +867,8 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
+    console.log("sending json data");
+
     this.invoiceEmail = new EmailAddress();
     this.contractsEmail = new EmailAddress();
 
@@ -808,70 +876,83 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
-    console.log(this.HQFormData.data.invoiceSettings);
-
-    if(this.HQFormData.data.invoiceSettings === null)
+    if(this.HQFormData !== undefined && this.HQFormData !== null)
     {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": "",
-          "bulkContractsEnabled": false,
-          "statuteSettings": this.HQFormData.data.statuteSettings,
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null; 
-    }
-
-    if(this.HQFormData.data.statuteSettings === null)
-    {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": this.HQFormData.data.invoiceSettings,
-          "bulkContractsEnabled": false,
-          "statuteSettings": "",
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null;
+        if(this.HQFormData.data !== undefined && this.HQFormData.data !== null)
+        {
+          // console.log("if send");
+          // console.log(this.HQFormData.data.invoiceSettings);
+          if(this.HQFormData.data.invoiceSettings === null || this.HQFormData.data.invoiceSettings === undefined)
+          {
+            this.setInvoiceSettingsEmpty();
       
+            if (this.dpsCustomer !== null) {
+              this.HQdata = {
+                "customer": this.dpsCustomer.customer,
+                "invoiceEmail": this.invoiceEmail,
+                "contractsEmail": this.contractsEmail,
+                "invoiceSettings": this.invoiceSettings,
+                "bulkContractsEnabled": false,
+                "statuteSettings": this.HQFormData.data.statuteSettings,
+                "contact": this.HQFormData.data.contact,
+                "activateContactAsUser": false,
+                "formValid": this.validity()
+              };
+              this.sendDatatoHome(this.HQdata);
+            }
+            else
+              this.HQdata = null; 
+          }
+      
+          if(this.HQFormData.data.statuteSettings === null || this.HQFormData.data.statuteSettings === undefined)
+          {
+            this.setStatuteSettingArray();
+      
+            if (this.dpsCustomer !== null) {
+              this.HQdata = {
+                "customer": this.dpsCustomer.customer,
+                "invoiceEmail": this.invoiceEmail,
+                "contractsEmail": this.contractsEmail,
+                "invoiceSettings": this.invoiceSettings,
+                "bulkContractsEnabled": false,
+                "statuteSettings": this.statuteSetting,
+                "contact": this.HQFormData.data.contact,
+                "activateContactAsUser": false,
+                "formValid": this.validity()
+              };
+              this.sendDatatoHome(this.HQdata);
+            }
+            else
+              this.HQdata = null;
+            
+          }             
+        }
     }
+    else {
 
-    if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
-    {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": this.HQFormData.data.invoiceSettings,
-          "bulkContractsEnabled": false,
-          "statuteSettings": this.HQFormData.data.statuteSettings,
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
+      // console.log("else send");
+
+      if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+      {
+        if (this.dpsCustomer !== null) {
+          this.HQdata = {
+            "customer": this.dpsCustomer.customer,
+            "invoiceEmail": this.invoiceEmail,
+            "contractsEmail": this.contractsEmail,
+            "invoiceSettings": this.HQFormData.data.invoiceSettings,
+            "bulkContractsEnabled": false,
+            "statuteSettings": this.HQFormData.data.statuteSettings,
+            "contact": this.HQFormData.data.contact,
+            "activateContactAsUser": false,
+            "formValid": this.validity()
+          };
+          this.sendDatatoHome(this.HQdata);
+        }
+        else
+          this.HQdata = null;
       }
-      else
-        this.HQdata = null;
     }
 
-    
   }
 
 
