@@ -885,9 +885,9 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
-    if(this.HQFormData === undefined || this.HQFormData === null)
+    if(this.HQFormData !== undefined && this.HQFormData !== null)
     {
-        if(this.HQFormData.data === undefined || this.HQFormData.data === null)
+        if(this.HQFormData.data !== undefined && this.HQFormData.data !== null)
         {
           if(this.HQFormData.data.invoiceSettings === null || this.HQFormData.data.invoiceSettings === undefined)
           {
