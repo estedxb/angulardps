@@ -133,8 +133,7 @@ export class PersonDocumentComponent implements OnInit {
     this.logger.log('loadPersonDetailsToEdit :::::::::::: ');
     this.logger.log('this.currentUser.user :: ', this.currentPerson);
 
-    // this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
-    // this.logger.log("balance="+this.currentPerson.studentAtWorkProfile.balance);
+
     if (this.currentPerson !== undefined) {
       if (this.currentPerson.studentAtWorkProfile !== undefined &&
         this.currentPerson.studentAtWorkProfile !== null) {
@@ -142,29 +141,28 @@ export class PersonDocumentComponent implements OnInit {
         this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
 
-        let x = new Date(this.currentPerson.studentAtWorkProfile.attestationDate);
-        let year = x.getFullYear().toString();
-        this.logger.log('getFullYear() ::::::: ', year);
-        let month = (x.getMonth() + 1).toString();
-        //let mm ='';
-        //let dd ='';
+        if (this.currentPerson.studentAtWorkProfile.attestationDate !== null) {
+          let attDate = new Date(this.currentPerson.studentAtWorkProfile.attestationDate);
+          let year = attDate.getFullYear().toString();
+          this.logger.log('getFullYear() ::::::: ', year);
+          let month = (attDate.getMonth() + 1).toString();
 
-        if (Number(month) < 10) {
-          month = '0' + month;
+          if (Number(month) < 10) {
+            month = '0' + month;
+          }
+          this.logger.log('getMonth() ::::::::: ', month);
+          let day = attDate.getDate().toString();
+
+          if (Number(day) < 10) {
+            day = '0' + day;
+          }
+
+          this.logger.log('getDay() ::::::: ', day);
+          let attestationDate = year + '-' + month + '-' + day;
+          this.logger.log('attestationDate ::::::: ', attestationDate);
+          this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
         }
-        this.logger.log('getMonth() ::::::::: ', month);
-        let day = x.getDate().toString();
 
-        if (Number(day) < 10) {
-          day = '0' + day;
-        }
-
-        this.logger.log('getDay() ::::::: ', day);
-        let attestationDate = year + '-' + month + '-' + day;
-        this.logger.log('attestationDate ::::::: ', attestationDate);
-        this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
-
-        // vehicle.type = this.currentPerson.driverProfiles
         for (let driverProfile of this.currentPerson.driverProfiles) {
 
           if (driverProfile.attestation.name !== undefined && driverProfile.attestation.name !== null && driverProfile.attestation.name !== '') {
@@ -440,7 +438,12 @@ export class PersonDocumentComponent implements OnInit {
         this.documents.name = ''; //files.item(0).name;
         this.documents.location = '';
         this.driverProfilesItem.attestation = this.documents;
-        this.driverProfilesItem.type = this.selectedOption;
+        if (this.selectedOption !== null && this.selectedOption !== undefined && this.selectedOption !== '') {
+          this.driverProfilesItem.type = this.selectedOption;
+        }
+        else {
+          this.driverProfilesItem.type = "A";
+        }
 
         this.currentPerson.driverProfiles.push(this.driverProfilesItem);
         this.personDocuments = new PersonDocuments();
