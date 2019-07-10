@@ -65,7 +65,7 @@ export class CreateContractComponent implements OnInit {
   public maindatas = [];
   public dpsPositionsData: DpsPostion[] = [];
   public locationsData = [];
-  public dpsWorkSchedulesData = [];
+  public dpsWorkSchedulesData: DpsWorkSchedule[] = [];
   public contractReasonDatas: ContractReason[] = [];
 
   public positionSelectedName: any;
@@ -231,8 +231,8 @@ export class CreateContractComponent implements OnInit {
     this.setDatesRanges();
     // Getting the workdays of the person in other contracts for the selected week
     this.getContractWorkingWeekDays(this.selectedContract.personContracts);
-    // Loading the form Datas Starts from Contract Reason first
-    this.LoadContractReason();
+    // Loading the form Datas Starts from get Location first
+    this.getLocationsByVatNumber();
   }
 
   // Setting the Dates Allowed Ranges
@@ -314,7 +314,59 @@ export class CreateContractComponent implements OnInit {
     }
   }
 
-  LoadContractReason() {
+  getLocationsByVatNumber() {
+    this.locationsData = [];
+    this.showSpinner();
+    this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
+      this.locationsData = response;
+
+      if (this.locationsData.length > 0) {
+        this.locationSelectedName = this.locationsData[0].id;
+        this.isLocationVaildErrorMsg = '';
+        this.isLocationVaild = true;
+        this.getWorkscheduleByVatNumber();
+        this.logger.log('locationsData Form Data ::', this.locationsData);
+      } else {
+        this.isLocationVaildErrorMsg = 'Selecteer de Vestiging';
+        this.isLocationVaild = false;
+
+        this.ShowMessage('Voeg de locatie toe voordat u een contract aanmaakt', '');
+        this.hideSpinner();
+        this.dialogRef.close(null);
+      }
+      // this.hideSpinner();
+      // this.ShowMessage('locationsData fetched successfully.', '');
+    }, error => this.errorHandle(error));
+  }
+
+  getWorkscheduleByVatNumber() {
+    this.dpsWorkSchedulesData = [];
+    this.showSpinner();
+    this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
+      this.dpsWorkSchedulesData = response;
+
+      if (this.dpsWorkSchedulesData.length > 0) {
+        this.workScheduleSelected = this.dpsWorkSchedulesData[0].id;
+        this.getContractReason();
+      } else {
+        this.ShowMessage('Voeg het werkschema toe voordat u een contract maakt', '');
+        this.hideSpinner();
+        this.dialogRef.close(null);
+      }
+
+      /*
+        if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
+          this.SetMode('update');
+        } else {
+          this.SetMode('new');
+        }
+      */
+
+      // this.ShowMessage('WorkSchedules fetched successfully.', '');
+    }, error => this.errorHandle(error));
+  }
+
+  getContractReason() {
     this.logger.log('getContractReason ');
     this.showSpinner();
     this.contractService.getContractReason()
@@ -336,36 +388,7 @@ export class CreateContractComponent implements OnInit {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
       // this.ShowMessage('Contract Positions fetched successfully.', '');
-      this.getLocationsByVatNumber();
-      // this.hideSpinner();
-    }, error => this.errorHandle(error));
-  }
-
-  getLocationsByVatNumber() {
-    this.locationsData = [];
-    this.showSpinner();
-    this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
-      this.locationsData = response;
-      if (this.locationsData.length > 0) {
-        this.locationSelectedName = this.locationsData[0].id;
-        this.isLocationVaildErrorMsg = '';
-        this.isLocationVaild = true;
-      } else {
-        this.isLocationVaildErrorMsg = 'Selecteer de Vestiging';
-        this.isLocationVaild = false;
-      }
-      this.getWorkscheduleByVatNumber();
-      this.logger.log('locationsData Form Data ::', this.locationsData);
-      // this.hideSpinner();
-      // this.ShowMessage('locationsData fetched successfully.', '');
-    }, error => this.errorHandle(error));
-  }
-
-  getWorkscheduleByVatNumber() {
-    this.dpsWorkSchedulesData = [];
-    this.showSpinner();
-    this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
-      this.dpsWorkSchedulesData = response;
+      // this.getLocationsByVatNumber();
 
       if (this.personid !== null && this.personid !== undefined && this.personid !== '') {
         this.loadPerson(this.personid, this.VatNumber);
@@ -375,17 +398,11 @@ export class CreateContractComponent implements OnInit {
         this.dialogRef.close(null);
       }
 
-      /*
-        if (this.contractId !== null && this.contractId !== undefined && this.contractId !== 0) {
-          this.SetMode('update');
-        } else {
-          this.SetMode('new');
-        }
-      */
-
-      // this.ShowMessage('WorkSchedules fetched successfully.', '');
+      // this.hideSpinner();
     }, error => this.errorHandle(error));
   }
+
+
   loadPerson(personid: string, vatNumber: string) {
     this.showSpinner();
     this.personService.getPersonBySSIDVatnumber(personid, vatNumber).subscribe(personinfo => {
@@ -869,6 +886,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   onCreateOrUpdateContractClick() {
+    this.logger.log('onCreateOrUpdateContractClick :: ', this.currentDpsContract);
     // Checking for the Selected Date is Vaild , Selected Dates Has Working Days, 
     // WorkSchedule is Selected or not  and Location is Selected or not
     if (this.isStartDateVaild && this.isEndDateVaild && this.isSelectedWeeksVaild &&

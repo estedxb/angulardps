@@ -19,7 +19,7 @@
                     <label class="titleBold"> Naam </label>
                     <input formControlName="name" class="form-control" name="name" type="text" required />
                     <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.name.invalid && (LocationForm.controls.name.dirty || LocationForm.controls.name.touched) else newvalid">
+                        *ngIf="LocationForm.controls.name.invalid && (LocationForm.controls.name.dirty || LocationForm.controls.name.untouched) else newvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #newvalid>
@@ -32,7 +32,7 @@
                     <label class="titleBold"> Straat </label>
                     <input formControlName="street" class="form-control" name="street" />
                     <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.street.invalid && (LocationForm.controls.street.dirty || LocationForm.controls.street.touched) else dnewvalid">
+                        *ngIf="LocationForm.controls.street.invalid && (LocationForm.controls.street.dirty || LocationForm.controls.street.untouched) else dnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #dnewvalid>
@@ -43,7 +43,7 @@
                     <label class="titleBold">Nummer </label>
                     <input formControlName="number" class="form-control" name="number" />
                     <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.number.invalid && (LocationForm.controls.number.dirty || LocationForm.controls.number.touched) else cnewvalid">
+                        *ngIf="LocationForm.controls.number.invalid && (LocationForm.controls.number.dirty || LocationForm.controls.number.untouched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #cnewvalid>
@@ -54,7 +54,7 @@
                     <label class="titleBold">Bus </label>
                     <input formControlName="bus" class="form-control" name="bus" />
                     <!-- <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.bus.invalid && (LocationForm.controls.bus.dirty || LocationForm.controls.bus.touched) else cnewvalid">
+                        *ngIf="LocationForm.controls.bus.invalid && (LocationForm.controls.bus.dirty || LocationForm.controls.bus.untouched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #cnewvalid>
@@ -68,7 +68,7 @@
                     <label class="titleBold"> Plaats </label>
                     <input formControlName="place" class="form-control" name="place" />
                     <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.place.invalid && (LocationForm.controls.place.dirty || LocationForm.controls.place.touched) else enewvalid">
+                        *ngIf="LocationForm.controls.place.invalid && (LocationForm.controls.place.dirty || LocationForm.controls.place.untouched) else enewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #enewvalid>
@@ -79,7 +79,7 @@
                     <label class="titleBold"> Postcode </label>
                     <input (blur)="updateData()" formControlName="postcode" class="form-control" name="postcode" />
                     <div class="form-control-feedback"
-                        *ngIf="LocationForm.controls.postcode.invalid && (LocationForm.controls.postcode.dirty || LocationForm.controls.postcode.touched) else fnewvalid">
+                        *ngIf="LocationForm.controls.postcode.invalid && (LocationForm.controls.postcode.dirty || LocationForm.controls.postcode.untouched) else fnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #fnewvalid>

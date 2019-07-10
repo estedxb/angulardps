@@ -15,41 +15,41 @@ export class UsersService {
 
   constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getUsersByVatNumber !== '') {
-      // this.logger.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getUsersByVatNumberUrl = environment.dpsAPI + environment.getUsersByVatNumber;
       this.getUserUrl = environment.dpsAPI + environment.getUser;
     } else {
-      this.logger.log('Data From JSON');
+      console.log('Data From JSON');
       this.getUsersByVatNumberUrl = environment.getAssetsDataPath + 'users.json';
     }
   }
 
   public getUsersByVatNumber(vatnumber: string): Observable<DpsUser[]> {
-    // this.logger.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
+    // console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
     const result = this.http.get<DpsUser[]>(this.getUsersByVatNumberUrl + '/' + vatnumber).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
-/*
-  public getUsersByEmail(vatnumber: string, useremail: string): Observable<DpsUser> {
-    // this.logger.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
-    const result = this.http.get<DpsUser>(this.getUsersByVatNumberUrl + '/' + vatnumber + '/' + useremail).catch(this.errorHandler);
-    // this.logger.log(result);
-    return result;
-  }
-*/
+  /*
+    public getUsersByEmail(vatnumber: string, useremail: string): Observable<DpsUser> {
+      // console.log('UserService Data From = ' + this.getUsersByVatNumberUrl + '/' + parameter);
+      const result = this.http.get<DpsUser>(this.getUsersByVatNumberUrl + '/' + vatnumber + '/' + useremail).catch(this.errorHandler);
+      // console.log(result);
+      return result;
+    }
+  */
 
   public createUser(dpsuser: DpsUser): Observable<any> {
-    // this.logger.log('Create User Url', this.getUserUrl);
-    // this.logger.log('createUser', dpsuser);
+    // console.log('Create User Url', this.getUserUrl);
+    // console.log('createUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<DpsUser>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateUser(dpsuser: DpsUser): Observable<any> {
-    // this.logger.log('Update User Url', this.getUserUrl);
-    // this.logger.log('updateUser', dpsuser);
+    // console.log('Update User Url', this.getUserUrl);
+    // console.log('updateUser', dpsuser);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.getUserUrl, dpsuser, { headers: httpHeaders, observe: 'response' });
   }

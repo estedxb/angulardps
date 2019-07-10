@@ -14,7 +14,7 @@
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Ondernemingsnummer </label>
                 <input (change)="clearError()" (blur)="creditLimitApi()" formControlName="vatNumber" name="vatNumber"
-                    class="form-control" type="text" required />
+                    maxlength="12" class="form-control" type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.vatNumber.invalid && (HQForm.controls.vatNumber.dirty || HQForm.controls.vatNumber.touched || HQForm.controls.vatNumber.untouched ) else valid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -44,7 +44,8 @@
         <div class="row">
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Naam </label>
-                <input #firstname formControlName="firstname" (change)="updateData()" class="form-control" name="firstname" type="text" required />
+                <input #firstname formControlName="firstname" (change)="updateData()" class="form-control"
+                    name="firstname" type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.firstname.invalid && (HQForm.controls.firstname.untouched || HQForm.controls.firstname.dirty || HQForm.controls.firstname.touched) else valida">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -56,7 +57,8 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Officiële naam </label>
-                <input #lastname formControlName="officialname" (change)="updateData()" class="form-control" name="officialname" type="text" required />
+                <input #lastname formControlName="officialname" (change)="updateData()" class="form-control"
+                    name="officialname" type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.officialname.invalid && (HQForm.controls.officialname.untouched || HQForm.controls.officialname.dirty || HQForm.controls.officialname.touched) else newvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -76,7 +78,8 @@
         <div class="row">
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Straat </label>
-                <input formControlName="street" class="form-control" (change)="updateData()" name="street" type="text" required />
+                <input formControlName="street" class="form-control" (change)="updateData()" name="street" type="text"
+                    required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.street.invalid && (HQForm.controls.street.untouched || HQForm.controls.street.dirty || HQForm.controls.street.touched) else validc">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -88,7 +91,8 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Nr. </label>
-                <input formControlName="streetnumber" class="form-control" (change)="updateData()" name="streetnumber" type="text" required />
+                <input formControlName="streetnumber" class="form-control" (change)="updateData()" name="streetnumber"
+                    type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.streetnumber.invalid && (HQForm.controls.streetnumber.untouched || HQForm.controls.streetnumber.dirty || HQForm.controls.streetnumber.touched) else validn">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -100,7 +104,8 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Bus </label>
-                <input formControlName="bus" class="form-control" (change)="updateData()" name="bus" type="text" required />
+                <input formControlName="bus" class="form-control" (change)="updateData()" name="bus" type="text"
+                    required />
                 <!-- <div class="form-control-feedback"
                     *ngIf="HQForm.controls.bus.invalid && ( HQForm.controls.bus.dirty || HQForm.controls.bus.touched) else validq">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -114,7 +119,8 @@
         <div class="row">
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Plaats </label>
-                <input formControlName="city" class="form-control" (change)="updateData()" name="city" type="text" required />
+                <input formControlName="city" class="form-control" (change)="updateData()" name="city" type="text"
+                    required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.city.invalid && (HQForm.controls.city.untouched || HQForm.controls.city.dirty || HQForm.controls.city.touched) else valids">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -126,7 +132,8 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Postcode </label>
-                <input formControlName="postalcode" class="form-control" (change)="updateData()" name="postalcode" type="text" required />
+                <input formControlName="postalcode" class="form-control" (change)="updateData()" name="postalcode"
+                    type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.postalcode.invalid && (HQForm.controls.postalcode.untouched || HQForm.controls.postalcode.dirty || HQForm.controls.postalcode.touched) else validw">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -146,7 +153,8 @@
         <div class="row">
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Telefoonnummer </label>
-                <input formControlName="phonenumber" class="form-control" (change)="updateData()" name="phonenumber" type="text" required />
+                <input formControlName="phonenumber" class="form-control" (change)="updateData()" name="phonenumber"
+                    type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.phonenumber.invalid && (HQForm.controls.phonenumber.untouched || HQForm.controls.phonenumber.dirty || HQForm.controls.phonenumber.touched) else validf">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -158,7 +166,8 @@
 
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Algemeen e-mail adres </label>
-                <input type="email" formControlName="generalEmail"(change)="updateData()" class="form-control" name="generalEmail" required />
+                <input type="email" formControlName="generalEmail" (change)="updateData()" class="form-control"
+                    name="generalEmail" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.generalEmail.invalid && (HQForm.controls.generalEmail.untouched || HQForm.controls.generalEmail.dirty || HQForm.controls.generalEmail.touched) else validj">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -173,7 +182,8 @@
         <div class="row">
             <div class="col-sm-6 inputWithImg">
                 <label class="titleBold"> Facturatie e-mail adres </label>
-                <input type="email" formControlName="invoiceEmail" (change)="updateData()" class="form-control" name="invoiceEmail" />
+                <input type="email" formControlName="invoiceEmail" (change)="updateData()" class="form-control"
+                    name="invoiceEmail" />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.invoiceEmail.invalid && (HQForm.controls.invoiceEmail.untouched || HQForm.controls.invoiceEmail.dirty || HQForm.controls.invoiceEmail.touched) else validi">
                     <img src="../../assets/img/InvalidIcon.png" alt="">

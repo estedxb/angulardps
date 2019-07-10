@@ -21,7 +21,7 @@ export class CustomersService {
       this.getCustomersByVatNumberEditUrl = environment.dpsAPI + environment.getCustomerByVatNumberEdit;
       this.createCustomerURL = environment.dpsAPI + environment.createCustomer;
     } else {
-      // console.log('Data From JSON getCustomers');
+      console.log('Data From JSON getCustomers');
       this.getCustomersListUrl = environment.getAssetsDataPath + 'customers.json';
     }
   }
@@ -34,16 +34,14 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumberEdit(parameter: string): Observable<DPSCustomer> {
-
     // console.log('edit call to get customer by vat Number');
     const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/' + parameter).catch(this.errorHandler);
     // console.log('result=' + result);
     return result;
-
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
+    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);    
     const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
     // console.log(result);
     return result;
@@ -60,14 +58,12 @@ export class CustomersService {
       headers: httpHeaders,
       observe: 'response'
     });
-
   }
 
   public createCustomer(customer: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
     return this.http.post<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
       observe: 'response'
@@ -84,8 +80,6 @@ export class CustomersService {
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
-
     return Observable.throwError(error);
   }
-
 }

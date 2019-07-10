@@ -28,7 +28,7 @@
                                 <label class="titleBold"> Functiebeschrijving </label>
                                 <input formControlName="name" class="form-control" name="name" type="text" />
                                 <div class="form-control-feedback"
-                                    *ngIf="PositionForm.controls.name.invalid && (PositionForm.controls.name.dirty || PositionForm.controls.name.touched) else enewvalid">
+                                    *ngIf="PositionForm.controls.name.invalid && (PositionForm.controls.name.dirty || PositionForm.controls.name.untouched) else enewvalid">
                                     <img src="../../assets/img/InvalidIcon.png" alt="">
                                 </div>
                                 <ng-template #enewvalid>
@@ -42,7 +42,7 @@
                                 <input formControlName="costCenter" class="form-control" name="costCenter"
                                     type="text" />
                                 <!-- <div class="form-control-feedback"
-                                    *ngIf="PositionForm.controls.costCenter.invalid && (PositionForm.controls.costCenter.dirty || PositionForm.controls.costCenter.touched) else enewvalid">
+                                    *ngIf="PositionForm.controls.costCenter.invalid && (PositionForm.controls.costCenter.dirty || PositionForm.controls.costCenter.untouched) else enewvalid">
                                     <img src="../../assets/img/InvalidIcon.png" alt="">
                                 </div>
                                 <ng-template #enewvalid>
@@ -65,7 +65,7 @@
                         <textarea formControlName="taskDescription" rows="7" class="form-control"
                             name="taskDescription"></textarea>
                         <!-- <div class="form-control-feedback"
-                            *ngIf="PositionForm.controls.taskDescription.invalid && (PositionForm.controls.taskDescription.dirty || PositionForm.controls.taskDescription.touched) else fnewvalid">
+                            *ngIf="PositionForm.controls.taskDescription.invalid && (PositionForm.controls.taskDescription.dirty || PositionForm.controls.taskDescription.untouched) else fnewvalid">
                             <img src="../../assets/img/InvalidIcon.png" alt="">
                         </div>
                         <ng-template #fnewvalid>

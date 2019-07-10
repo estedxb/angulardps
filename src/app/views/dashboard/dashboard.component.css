@@ -278,7 +278,7 @@
 
 #PersonContents .dashboardpersoncontent {
   min-height: 300px;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 440px);
   height: auto;
 }
 

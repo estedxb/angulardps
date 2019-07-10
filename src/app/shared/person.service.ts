@@ -44,35 +44,35 @@ export class PersonService {
 
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getPerson !== '') {
-      // this.logger.log('Data From getPerson Remote');
+      // console.log('Data From getPerson Remote');
       this.getPersonURL = environment.dpsAPI + environment.getPerson;
       this.postPersonDocumentsURL = environment.dpsAPI + environment.postPersonDocuments;
     } else {
-      this.logger.log('Data From getPerson JSON');
+      console.log('Data From getPerson JSON');
       this.getPersonURL = environment.getAssetsDataPath + 'locations.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getVehicles !== '') {
-      // this.logger.log('Data From getVehicles Remote');
+      // console.log('Data From getVehicles Remote');
       this.getVehiclesURL = environment.boemmAPI + environment.getVehicles;
     } else {
-      this.logger.log('Data From getVehicles JSON');
+      console.log('Data From getVehicles JSON');
       this.getVehiclesURL = environment.getAssetsDataPath + 'vehicles.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
-      // this.logger.log('Data From getPersonsByVatNumber Remote');
+      // console.log('Data From getPersonsByVatNumber Remote');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.dpsAPI + environment.getPersonsByVatNumber;
     } else {
-      this.logger.log('Data From getPersonsByVatNumber JSON');
+      console.log('Data From getPersonsByVatNumber JSON');
       this.getPersonForCustomerbyCustomerVatNumberURL = environment.getAssetsDataPath + 'persons.json';
     }
 
     if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
-      // this.logger.log('Data From getDpsSchedule Remote');
+      // console.log('Data From getDpsSchedule Remote');
       this.getDpsScheduleURL = environment.dpsAPI + environment.getDpsSchedules;
     } else {
-      this.logger.log('Data From getDpsSchedule JSON');
+      console.log('Data From getDpsSchedule JSON');
       this.getDpsScheduleURL = environment.getAssetsDataPath + 'dpsSchedules.json';
     }
 
@@ -85,9 +85,9 @@ export class PersonService {
   }
 
   public getVehiclesForLicense(): Observable<any> {
-    // this.logger.log('PersonService getVehiclesForLicense Data From = ' + this.getVehiclesURL);
+    // console.log('PersonService getVehiclesForLicense Data From = ' + this.getVehiclesURL);
     const result = this.http.get<any[]>(this.getVehiclesURL, this.httpOptions).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -97,9 +97,9 @@ export class PersonService {
     if (environment.dataFromAPI_JSON && environment.getBIC !== '') {
       getURL = getURL + '/' + iban;
     }
-    this.logger.log(getURL);
+    console.log(getURL);
     const result = this.http.get<any>(getURL, this.httpOptions).catch(this.errorHandler);
-    this.logger.log(result);
+    console.log(result);
     return result;
   }
 
@@ -108,11 +108,11 @@ export class PersonService {
     if (environment.dataFromAPI_JSON && environment.getPersonsByVatNumber !== '') {
       getURL = getURL + '/' + customervatnumber;
     }
-    // this.logger.log('PersonService getPersonsByVatNumber Data From = ' + getURL);
+    // console.log('PersonService getPersonsByVatNumber Data From = ' + getURL);
     const result = this.http.get<DpsPerson[]>(getURL, this.httpOptions).catch(this.errorHandler);
 
-    this.logger.log("error");
-    this.logger.log(result);
+    console.log("error");
+    console.log(result);
 
     return result;
   }
@@ -120,10 +120,10 @@ export class PersonService {
   public getDpsScheduleByVatNumber(customerVatNumber: string, startDate: string, endDate: string): Observable<DpsSchedule> {
     let getURL = this.getDpsScheduleURL;
     let result = null;
-    // this.logger.log('PersonService getDpsScheduleByVatNumber ');
+    // console.log('PersonService getDpsScheduleByVatNumber ');
     if (environment.dataFromAPI_JSON && environment.getDpsSchedules !== '') {
       getURL = getURL + '/';
-      this.logger.log('PersonService API getDpsScheduleByVatNumber Data From = ' + getURL);
+      console.log('PersonService API getDpsScheduleByVatNumber Data From = ' + getURL);
       let dpsScheduleCall = new DpsScheduleCall();
       dpsScheduleCall.customerVatNumber = customerVatNumber;
       dpsScheduleCall.startDate = startDate;
@@ -133,10 +133,10 @@ export class PersonService {
       if (customerVatNumber !== '123456789101') {
         getURL = getURL.replace('.json', '_empty.json');
       }
-      this.logger.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
+      console.log('PersonService JSON getDpsScheduleByVatNumber Data From = ' + getURL);
       result = this.http.get<DpsSchedule>(getURL, this.httpOptions).catch(this.errorHandler);
     }
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -150,7 +150,7 @@ export class PersonService {
   }
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<DpsPerson> {
-    // this.logger.log('getPersonBySSIDVatnumber :: ' + this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber);
+    // console.log('getPersonBySSIDVatnumber :: ' + this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const result = this.http.get<DpsPerson>(
       this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
@@ -177,7 +177,7 @@ export class PersonService {
   updateMedicalAttestationFile(fileToUpload: File, CustomerVatNumber: string, ssid: string, fileType: string, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    // this.logger.log('formData:::', formData);
+    // console.log('formData:::', formData);
     return this.http.post<any>(this.postPersonDocumentsURL + '/' + CustomerVatNumber + '/' + ssid + '/' + fileType + '/' + fileName, formData,
       { observe: 'response' }).pipe(map(() => true))
       .catch((e) => this.handleError(e));
@@ -231,7 +231,7 @@ export class PersonService {
 
 
   public updatePosition(person: any): Observable<any> {
-    // this.logger.log("in update position call:");
+    // console.log("in update position call:");
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.putPersonURL, person, {
       headers: httpHeaders,
@@ -241,7 +241,7 @@ export class PersonService {
 
 
   public updatePersonDocumentDetails(person: any): Observable<any> {
-    // this.logger.log("in update position call:");
+    // console.log("in update position call:");
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.putPersonURL, person, {
       headers: httpHeaders,
@@ -253,9 +253,9 @@ export class PersonService {
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-     console.log('vat number not correct format');
+      console.log('vat number not correct format');
     } else if (error.status === 204) {
-    console.log('vat number doesnt exist ');
+      console.log('vat number doesnt exist ');
     } else if (error.status === 409) {
       console.log('error conflict 409');
       // this.router.navigate(['/'+'customer/'+'123456789101']);

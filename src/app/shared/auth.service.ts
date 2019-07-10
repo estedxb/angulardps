@@ -27,12 +27,12 @@ export class AuthService {
 
   public verifyLogin(userid: string, Password: string): Observable<LoginToken> {
     try {
-      // this.logger.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
+      // console.log('Verify Login Data From  = ' + this.getVerifyLoginUrl);
       const result = this.http.get<LoginToken>(this.getVerifyLoginUrl, this.httpOptions).catch(this.errorHandler);
-      // this.logger.log(result);
+      // console.log(result);
       return result;
     } catch (e) {
-      this.logger.log('Error verifyLogin !' + e.message);
+      console.log('Error verifyLogin !' + e.message);
       return null;
     }
   }
@@ -41,6 +41,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('dpsLoginToken');
-    this.logger.log('Logout...');
+    console.log('Logout...');
   }
 }

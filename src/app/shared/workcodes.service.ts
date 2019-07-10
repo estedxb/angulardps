@@ -15,13 +15,13 @@ export class WorkCodesService {
     } else {
       this.getWorkCodeUrl = environment.getAssetsDataPath + 'jointcommittee.json';
     }
-    // this.logger.log('Data From = ' + this.getWorkCodeUrl);
+    // console.log('Data From = ' + this.getWorkCodeUrl);
   }
 
   public getWorkCodes(): Observable<WorkCodes[]> {
-    // this.logger.log('LegalformService Data From = ' + this.getWorkCodeUrl);
+    // console.log('LegalformService Data From = ' + this.getWorkCodeUrl);
     const result = this.http.get<WorkCodes[]>(this.getWorkCodeUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 

@@ -22,10 +22,10 @@ export class SummaryService {
 
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getSummaryURL !== '') {
-      // this.logger.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getSummaryURL = environment.dpsAPI + environment.getSummaryURL;
     } else {
-      this.logger.log('Data From JSON');
+      console.log('Data From JSON');
       this.getSummaryURL = environment.getAssetsDataPath + 'summary.json';
     }
 
@@ -36,18 +36,18 @@ export class SummaryService {
   public getSummaryByVatnumber(customervatnumber: string): Observable<any> {
     let getURL = this.getSummaryURL;
     if (environment.dataFromAPI_JSON && environment.getSummaryURL !== '') { getURL = getURL + '/' + customervatnumber; }
-    this.logger.log('SummaryService Data From = ' + getURL);
+    console.log('SummaryService Data From = ' + getURL);
     const result = this.http.get<Summaries[]>(getURL, this.httpOptions).catch(this.errorHandler);
-    this.logger.log(result);
+    console.log(result);
     return result;
   }
 
   public updateSummaryByVatnumberAndSummaryID(summaries: Summaries): Observable<any> {
     const getURL = this.getSummary;
-    // this.logger.log('SummaryService Update Summaries ');
-    // this.logger.log('getURL :: ', getURL, summaries);
+    // console.log('SummaryService Update Summaries ');
+    // console.log('getURL :: ', getURL, summaries);
     const result = this.http.put<Summaries[]>(getURL, summaries, this.httpOptions).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -55,9 +55,9 @@ export class SummaryService {
     if (error.status === 400) {
       console.log('vat number not correct format');
     } else if (error.status === 204) {
-     console.log('vat number doesnt exist ');
+      console.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-     console.log('user exists in the system, dont allow customer to create');
+      console.log('user exists in the system, dont allow customer to create');
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }

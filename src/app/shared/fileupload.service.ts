@@ -19,11 +19,11 @@ export class FileuploadService {
   constructor(private http: HttpClient, private logger: LoggingService) {
     // , private header: HttpHeaders
     if (environment.dataFromAPI_JSON && environment.getFileUploads !== '') {
-      this.logger.log('Data From Remote');
+      console.log('Data From Remote');
       // this.getFileUploadsURL = environment.dpsAPI + environment.getPosition;
 
     } else {
-      this.logger.log('Data From JSON');
+      console.log('Data From JSON');
       // this.getFileUploadsURL = '';
     }
   }
@@ -37,7 +37,7 @@ export class FileuploadService {
       formData.append('file', fileToUpload, fileToUpload.name);
     }
 
-    this.logger.log('formData:::', formData);
+    console.log('formData:::', formData);
     new Response(formData).text().then(console.log)
 
     return this.http.post<any>(this.getPositionUpdateUrl, /*JSON.stringify(position)+""+*/ formData, {
