@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginToken, DpsUser, User, EmailAddress, PhoneNumber, Language } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private usersService: UsersService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, private logger: LoggingService) { }
+    private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
@@ -39,22 +39,11 @@ export class UsersComponent implements OnInit {
       this.maindatas = users;
       this.FilterTheArchive();
       this.logger.log('Users Form Data : ', this.maindatas);
-      //this.ShowMessage('Users fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Users fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
   }
 
   FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
 
   openDialog(): void {
     try {
@@ -66,7 +55,7 @@ export class UsersComponent implements OnInit {
       dialogConfig.ariaLabel = 'Arial Label Location Dialog';
 
       const dialogRef = this.dialog.open(CreateuserComponent, dialogConfig);
-      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.logger.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
         this.logger.log('The dialog was closed');
@@ -76,7 +65,7 @@ export class UsersComponent implements OnInit {
           // maindatas Update User
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
-          this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is updated successfully.', '');
+          this.logger.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is updated successfully.', '');
         } else {
           // maindatas Add User
           this.logger.log('this.data.user :: ', this.data.user);
@@ -86,7 +75,7 @@ export class UsersComponent implements OnInit {
                 this.maindatas.push(this.data);
                 this.logger.log('New User Added Successfully :: ', this.maindatas);
                 this.FilterTheArchive();
-                this.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is added successfully.', '');
+                this.logger.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is added successfully.', '');
               } else {
                 this.logger.log('New User Added Failed :: ', this.maindatas);
               }
@@ -164,7 +153,7 @@ export class UsersComponent implements OnInit {
     this.data = this.maindatas[i];
     this.data.isArchived = true;
     this.updateUsers();
-    this.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is deleted successfully.', '');
+    this.logger.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is deleted successfully.', '');
   }
 
   onStatusChange(event, i) {
@@ -179,7 +168,7 @@ export class UsersComponent implements OnInit {
     } else {
       EnabledStatus = 'disabled';
     }
-    this.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName
+    this.logger.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName
       + '" is ' + EnabledStatus + ' successfully.', '');
   }
 

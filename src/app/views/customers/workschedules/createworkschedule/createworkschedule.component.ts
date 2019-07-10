@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 // tslint:disable-next-line: max-line-length
 import { Address, LoginToken, DpsUser, DpsWorkSchedule, WorkSchedule, WorkDays, WorkTimes, WorkScheduleRow, WeekDayOf, BreakTimes } from '../../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -40,7 +40,7 @@ export class CreateWorkScheduleComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
+    public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule, private logger: LoggingService) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
     this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));

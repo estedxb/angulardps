@@ -5,7 +5,7 @@ import {
   TimeSheet, DpsPostion, DpsScheduleContract, DpsWorkSchedule, WorkSchedule, SelectedContract, ContractReason
 } from 'src/app/shared/models';
 
-import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
@@ -18,7 +18,6 @@ import { saveAs } from 'file-saver';
 import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.component';
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { DPSSystemMessageComponent } from '../../../../componentcontrols/dpssystem-message/dpssystem-message.component';
 
 @Component({
   selector: 'app-createcontract',
@@ -115,27 +114,6 @@ export class CreateContractComponent implements OnInit {
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  ShowMessage(msg, action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    this.logger.log('ShowMessageCustom ', msg);
-    const snackbarRef = this.snackBar.open(msg, action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => { this.logger.log('Snackbar Action :: ' + action); });
-  }
-
-  ShowMessageCustom(title, msg, action = '') {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    this.logger.log('ShowMessageCustom ', msg);
-    const snackbarRef = this.snackBar.openFromComponent(DPSSystemMessageComponent, {
-      verticalPosition: 'top', duration: 5000, data: { Title: title, MSG: msg }
-    });
-    snackbarRef.onAction().subscribe(() => { this.logger.log('Snackbar Action :: ' + action); });
-  }
 
   formateZero(n) { return n > 9 ? n : '0' + n; }
 
@@ -167,13 +145,11 @@ export class CreateContractComponent implements OnInit {
     return returnDate;
   }
 
-
   constructor(
     private positionsService: PositionsService,
     private personService: PersonService,
     private locationsService: LocationsService,
     private workschedulesService: WorkschedulesService,
-    private snackBar: MatSnackBar,
     private logger: LoggingService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<CreateContractComponent>,
@@ -294,7 +270,7 @@ export class CreateContractComponent implements OnInit {
       this.logger.log('getContractWorkingWeekDays contractWorkingDates for contractCount(' + contractCount + ')',
         this.contractWorkingDates);
     } catch (e) {
-      this.ShowMessage(e.message, 'error');
+      this.logger.ShowMessage(e.message, 'error');
       this.logger.log('getContractWorkingWeekDays Error! ', e.message);
     }
   }
@@ -315,12 +291,12 @@ export class CreateContractComponent implements OnInit {
         this.isLocationVaildErrorMsg = 'Selecteer de Vestiging';
         this.isLocationVaild = false;
 
-        this.ShowMessage('Voeg de locatie toe voordat u een contract aanmaakt', '');
+        this.logger.ShowMessage('Voeg de locatie toe voordat u een contract aanmaakt', '');
         this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
       // this.hideSpinner();
-      // this.ShowMessage('locationsData fetched successfully.', '');
+      // this.logger.ShowMessage('locationsData fetched successfully.', '');
     }, error => this.errorHandle(error));
   }
 
@@ -334,7 +310,7 @@ export class CreateContractComponent implements OnInit {
         this.workScheduleSelected = this.dpsWorkSchedulesData[0].id;
         this.getContractReason();
       } else {
-        this.ShowMessage('Voeg het werkschema toe voordat u een contract maakt', '');
+        this.logger.ShowMessage('Voeg het werkschema toe voordat u een contract maakt', '');
         this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
@@ -347,7 +323,7 @@ export class CreateContractComponent implements OnInit {
         }
       */
 
-      // this.ShowMessage('WorkSchedules fetched successfully.', '');
+      // this.logger.ShowMessage('WorkSchedules fetched successfully.', '');
     }, error => this.errorHandle(error));
   }
 
@@ -372,13 +348,13 @@ export class CreateContractComponent implements OnInit {
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
-      // this.ShowMessage('Contract Positions fetched successfully.', '');
+      // this.logger.ShowMessage('Contract Positions fetched successfully.', '');
       // this.getLocationsByVatNumber();
 
       if (this.personid !== null && this.personid !== undefined && this.personid !== '') {
         this.loadPerson(this.personid, this.VatNumber);
       } else {
-        this.ShowMessage('Persoon niet geselecteerd', '');
+        this.logger.ShowMessage('Persoon niet geselecteerd', '');
         this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
@@ -630,7 +606,7 @@ export class CreateContractComponent implements OnInit {
         const FileURL = printPDFSuccess.fileUrl;
         saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
       },
-      printContractPDFURLFailed => { this.ShowMessage('Fout! bij het afdrukken van het contract', ''); }
+      printContractPDFURLFailed => { this.logger.ShowMessage('Fout! bij het afdrukken van het contract', ''); }
     );
   }
 
@@ -659,7 +635,7 @@ export class CreateContractComponent implements OnInit {
             if (this.SelectedIndex > -1) {
               // maindatas Update Contract
               this.maindatas[this.SelectedIndex] = this.currentDpsContract;
-              this.ShowMessage('Contract succesvol geannuleerd met volgende reden "'
+              this.logger.ShowMessage('Contract succesvol geannuleerd met volgende reden "'
                 + this.currentDpsContract.contract.cancelReason + '".', '');
               this.dialogRef.close(null);
               // this.maindatas.splice(this.SelectedIndex, 1);
@@ -671,7 +647,7 @@ export class CreateContractComponent implements OnInit {
                 this.maindatas.push(this.currentDpsContract);
                 this.logger.log('New Contract Added Successfully :: ', this.maindatas);
                 // this.FilterTheArchive();
-                this.ShowMessage('Contract "' + this.currentDpsContract.contract.name + '" is added successfully.', '');
+                this.logger.ShowMessage('Contract "' + this.currentDpsContract.contract.name + '" is added successfully.', '');
               }
             }
             */
@@ -688,19 +664,19 @@ export class CreateContractComponent implements OnInit {
       approveContractSuccess => {
         this.logger.log('onApproveContractClick', approveContractSuccess);
         if (approveContractSuccess.accessStatus) {
-          this.ShowMessage('Contract met succes goedgekeurd', '');
+          this.logger.ShowMessage('Contract met succes goedgekeurd', '');
           // this.dialog.closeAll();
           this.isApproved = true;
         } else {
           this.isApproved = false;
           this.errorMsg = 'Fout! bij het goedkeuren van het contract. ' + approveContractSuccess.message;
-          this.ShowMessage(this.errorMsg, ''); // Error! in approving the contract
+          this.logger.ShowMessage(this.errorMsg, ''); // Error! in approving the contract
         }
         this.logger.hideSpinner();
       },
       approveContractFailed => {
         this.logger.hideSpinner();
-        this.ShowMessage('Fout! bij het goedkeuren van het contract', 'error'); // Error! in approving the contract
+        this.logger.ShowMessage('Fout! bij het goedkeuren van het contract', 'error'); // Error! in approving the contract
         this.logger.log('Approving the contract failed. ' + approveContractFailed);
       }
     );
@@ -737,14 +713,14 @@ export class CreateContractComponent implements OnInit {
         } else {
           this.isStartDateVaild = false;
           this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
-          this.ShowMessage(this.isStartDateVaildErrorMsg, '');
+          this.logger.ShowMessage(this.isStartDateVaildErrorMsg, '');
           this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
           // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
         this.isStartDateVaild = false;
         this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
-        this.ShowMessage(this.isStartDateVaildErrorMsg, '');
+        this.logger.ShowMessage(this.isStartDateVaildErrorMsg, '');
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
         // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
       }
@@ -766,14 +742,14 @@ export class CreateContractComponent implements OnInit {
         } else {
           this.isEndDateVaild = false;
           this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
-          this.ShowMessage(this.isEndDateVaildErrorMsg, '');
+          this.logger.ShowMessage(this.isEndDateVaildErrorMsg, '');
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
           // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         }
       } else {
         this.isEndDateVaild = false;
         this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
-        this.ShowMessage(this.isEndDateVaildErrorMsg, '');
+        this.logger.ShowMessage(this.isEndDateVaildErrorMsg, '');
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
         // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
       }
@@ -886,7 +862,7 @@ export class CreateContractComponent implements OnInit {
                   this.logger.showSpinner();
                   this.contractService.updateContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
-                    this.ShowMessage('Contract succesvol opgeslagen', '');
+                    this.logger.ShowMessage('Contract succesvol opgeslagen', '');
                     this.dialogRef.close(this.currentDpsContract);
                     this.logger.hideSpinner();
                   }, (err: HttpErrorResponse) => this.errorHandle(err));
@@ -895,17 +871,17 @@ export class CreateContractComponent implements OnInit {
                   this.logger.showSpinner();
                   this.contractService.createContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
-                    this.ShowMessage('Contract succesvol opgeslagen', '');
+                    this.logger.ShowMessage('Contract succesvol opgeslagen', '');
                     this.dialogRef.close(this.currentDpsContract);
                     this.logger.hideSpinner();
                   }, (err: HttpErrorResponse) => this.errorHandle(err));
                 }
-              } else { this.ShowMessage('Selecteer alstublieft Plaats', ''); }
-            } else { this.ShowMessage('Selecteer alstublieft werkschema', ''); }
-          } else { this.ShowMessage('Selecteer alstublieft Fuunctie', ''); }
-        } else { this.ShowMessage('Contract is niet gedefinieerd', ''); }
+              } else { this.logger.ShowMessage('Selecteer alstublieft Plaats', ''); }
+            } else { this.logger.ShowMessage('Selecteer alstublieft werkschema', ''); }
+          } else { this.logger.ShowMessage('Selecteer alstublieft Fuunctie', ''); }
+        } else { this.logger.ShowMessage('Contract is niet gedefinieerd', ''); }
       } else {
-        this.ShowMessageCustom('Error...', 'Formulier is niet geldig', '');
+        this.logger.ShowMessageCustom('Error...', 'Formulier is niet geldig', '');
       }
     } else {
       this.logger.log('Date is Not Vaild or Work Schedule Not Vaild');
@@ -920,7 +896,7 @@ export class CreateContractComponent implements OnInit {
       errormsgnew = this.getErrorMsg(errormsgnew, this.isSelectedDateDoesNotHaveWorkErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isWorkScheduleVaildErrorMsg);
       errormsgnew = this.getErrorMsg(errormsgnew, this.isLocationVaildErrorMsg);
-      this.ShowMessageCustom('Error...', errormsgnew);
+      this.logger.ShowMessageCustom('Error...', errormsgnew);
     }
   }
 
@@ -935,16 +911,16 @@ export class CreateContractComponent implements OnInit {
       this.logger.hideSpinner();
       try {
         if (err.error instanceof Error) {
-          this.ShowMessageCustom('Error...', err.error.message);
+          this.logger.ShowMessageCustom('Error...', err.error.message);
           this.logger.log(this.componentname + ' Error occured=' + err.error.message);
         } else {
-          this.ShowMessageCustom('Error...', JSON.stringify(err.error));
+          this.logger.ShowMessageCustom('Error...', JSON.stringify(err.error));
           this.logger.log(this.componentname + ' response code=' + err.status);
           this.logger.log(this.componentname + ' response body=', err.error);
         }
       } catch (e) {
         this.errorMsg = err;
-        this.ShowMessageCustom('Error...', JSON.stringify(err));
+        this.logger.ShowMessageCustom('Error...', JSON.stringify(err));
         this.logger.log(this.componentname + ' Error ', err);
       }
     }

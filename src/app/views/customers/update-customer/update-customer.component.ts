@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Customer, DPSCustomer, LoginToken, DpsUser } from 'src/app/shared/models';
 import { CustomersService } from 'src/app/shared/customers.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
@@ -30,8 +29,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
-    private snackBar: MatSnackBar, private logger: LoggingService,
-    private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
+    private logger: LoggingService, private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
     try {
@@ -46,17 +44,6 @@ export class UpdateCustomerComponent implements OnInit {
       this.logger.log('Redirect Breaked 5');
       this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -116,8 +103,8 @@ export class UpdateCustomerComponent implements OnInit {
         this.CustomerName = this.dpsCustomer.name + '';
         this.CustomerLogo = this.dpsCustomer.logo !== undefined ? this.dpsCustomer.logo + '' : '';
         if (mode === 1) { this.updateLocalStorage(); }
-        //this.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
-      }, error => this.ShowMessage(error, 'error'));
+        //this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
+      }, error => this.logger.ShowMessage(error, 'error'));
     } catch (e) {
       this.CustomerName = 'Error!!';
     }
@@ -170,7 +157,7 @@ export class UpdateCustomerComponent implements OnInit {
 
 
     if (this.editCustomerData.formValid === false) {
-      this.ShowMessage('Onjuiste vermeldingen in formulier! ', '');
+      this.logger.ShowMessage('Onjuiste vermeldingen in formulier! ', '');
       return;
     }
 
@@ -180,17 +167,17 @@ export class UpdateCustomerComponent implements OnInit {
 
     if (this.editCustomerData !== undefined && this.editCustomerData !== null && this.editCustomerData !== '') {
       this.customerService.createCustomerUpdate(this.editCustomerData).subscribe(res => {
-        this.ShowMessage('Klantgegevens succesvol opgeslagen', '');
+        this.logger.ShowMessage('Klantgegevens succesvol opgeslagen', '');
         this.logger.log('response=' + res);
-        this.ShowMessage('Klantgegevens succesvol opgeslagen', '');
+        this.logger.ShowMessage('Klantgegevens succesvol opgeslagen', '');
       },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             this.logger.log('Error occured=' + err.error.message);
-            this.ShowMessage('' + err.error.message, '');
+            this.logger.ShowMessage('' + err.error.message, '');
           } else {
             this.logger.log('response code=' + err.status, 'response body=' + err.error);
-            this.ShowMessage('' + err.status + '' + err.error, '');
+            this.logger.ShowMessage('' + err.status + '' + err.error, '');
           }
         }
       );

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { getMinutes } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { environment } from '../../environments/environment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { DPSSystemMessageComponent } from '../componentcontrols/dpssystem-message/dpssystem-message.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,12 @@ export class LoggingService {
   public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   public SpinnerShowing = false;
+
+  constructor(private snackBar: MatSnackBar, private spinner: NgxUiLoaderService) {
+    const date = new Date();
+    this.dateString = this.Trim(date.getDate(), 2) + ' ' + this.monthNames[date.getMonth() + 1] + ' ' + date.getFullYear()
+      + ' ' + this.Trim(date.getHours(), 2) + ':' + this.Trim(date.getMinutes(), 2);
+  }
 
   public showSpinner() {
     if (!this.SpinnerShowing) {
@@ -28,11 +36,30 @@ export class LoggingService {
     }
   }
 
-  constructor(private spinner: NgxUiLoaderService) {
-    const date = new Date();
-    this.dateString = this.Trim(date.getDate(), 2) + ' ' + this.monthNames[date.getMonth() + 1] + ' ' + date.getFullYear()
-      + ' ' + this.Trim(date.getHours(), 2) + ':' + this.Trim(date.getMinutes(), 2);
+  ShowMessage(msg, action, _duration = 4000) {
+    this.log('ShowMessage :: ' + msg);
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = _duration;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    const snackbarRef = this.snackBar.open(msg, action, snackBarConfig);
+    snackbarRef.onAction().subscribe(() => {
+      this.log('Snackbar Action :: ' + action);
+    });
   }
+
+  ShowMessageCustom(title, msg, action = '', _duration = 4000) {
+    const snackBarConfig = new MatSnackBarConfig();
+    snackBarConfig.duration = _duration;
+    snackBarConfig.horizontalPosition = 'center';
+    snackBarConfig.verticalPosition = 'top';
+    this.log('ShowMessageCustom ', msg);
+    const snackbarRef = this.snackBar.openFromComponent(DPSSystemMessageComponent, {
+      verticalPosition: 'top', duration: _duration, data: { Title: title, MSG: msg }
+    });
+    snackbarRef.onAction().subscribe(() => { this.log('Snackbar Action :: ' + action); });
+  }
+
 
   Trim(data: number, len: number) {
     let prefix = '';

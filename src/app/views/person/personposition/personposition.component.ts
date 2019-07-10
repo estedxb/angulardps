@@ -3,7 +3,7 @@ import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 
 import {
@@ -100,15 +100,15 @@ export class PersonPositionComponent implements OnInit {
     private personsService: PersonService, private data: DataService,
     private logger: LoggingService, private positionsService: PositionsService,
     private fb: FormBuilder, private dialog: MatDialog,
-    private snackBar: MatSnackBar, private statuteService: StatuteService) {
+    private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      //this.ShowMessage('Positions fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
 
     //SetInitialValue();
     this.logger.log("social security id=" + this.SocialSecurityId);
@@ -157,7 +157,7 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log(this.selectedIndexFunctie);
 
     if (this.lastAddedPosition === "0" || this.lastAddedPosition === "-1" || this.lastAddedPosition === null) {
-      this.ShowMessage("position index not found", '');
+      this.logger.ShowMessage("position index not found", '');
       return;
     }
     else {
@@ -195,7 +195,7 @@ export class PersonPositionComponent implements OnInit {
             this.maindatas.push(this.datas);
             this.FilterTheArchive();
             this.fillDataDropDownOnAdd(this.maindatas);
-            this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
+            this.logger.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
             this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
@@ -203,7 +203,7 @@ export class PersonPositionComponent implements OnInit {
               this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
               this.fillDataDropDownOnAdd(this.maindatas);
-              this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
+              this.logger.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
             }
           }
         }
@@ -252,17 +252,6 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log("main datas");
     this.logger.log(this.maindatas);
 
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   setDummyStatute(data) {

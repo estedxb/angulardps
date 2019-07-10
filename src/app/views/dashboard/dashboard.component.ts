@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DpsPerson, Person, LoginToken } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from 'src/environments/environment';
 
@@ -25,7 +23,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, private router: Router,
-    private snackBar: MatSnackBar,
     private logger: LoggingService) { }
 
   ngOnInit() {
@@ -62,14 +59,4 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
 }

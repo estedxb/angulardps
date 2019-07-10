@@ -10,7 +10,7 @@ import {
 } from 'src/app/shared/models';
 import { DataService } from '../../../shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -44,7 +44,7 @@ export class AddCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomersService,
     private logger: LoggingService,
-    private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
+    private dialog: MatDialog, private route: ActivatedRoute, private router: Router) {
     this.editObject = { data: '', page: '' };
     this.pageType = "add";
 
@@ -132,10 +132,10 @@ export class AddCustomerComponent implements OnInit {
       this.logger.log('validity CT data=' + this.CTdata.formValid);
 
       if (this.HQdata.formValid === false)
-        this.ShowMessage('Onjuiste invoer in invoerveld', '');
+        this.logger.ShowMessage('Onjuiste invoer in invoerveld', '');
 
       if (this.CTdata.formValid === false)
-        this.ShowMessage('Onjuiste invoer in invoerveld', '');
+        this.logger.ShowMessage('Onjuiste invoer in invoerveld', '');
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
@@ -149,11 +149,11 @@ export class AddCustomerComponent implements OnInit {
 
           this.customerService.createCustomer(this.HQdata).subscribe(res => {
             this.logger.log('response=' + res);
-            this.ShowMessage("Klantrecord met succes gemaakt!", '');
+            this.logger.ShowMessage("Klantrecord met succes gemaakt!", '');
           },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                this.ShowMessage("Geen klant te maken!", '');
+                this.logger.ShowMessage("Geen klant te maken!", '');
                 this.logger.log('Error occured=' + err.error.message);
               } else {
                 this.logger.log('response code=' + err.status);
@@ -200,18 +200,6 @@ export class AddCustomerComponent implements OnInit {
 
   }
 
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
   updateLocalStorage(customerVatNumber, customerName) {
     this.dpsLoginToken.customerVatNumber = customerVatNumber;
     this.dpsLoginToken.customerName = customerName;
@@ -223,7 +211,7 @@ export class AddCustomerComponent implements OnInit {
   updateData() {
 
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
-      this.ShowMessage('Klantrecord met succes gemaakt!', '');
+      this.logger.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
       this.updateLocalStorage(this.HQdata.customer.vatNumber, this.HQdata.customer.name);
       this.logger.log('Redirect Breaked 11');
@@ -232,7 +220,7 @@ export class AddCustomerComponent implements OnInit {
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          this.ShowMessage("Geen klant te maken!", '');
+          this.logger.ShowMessage("Geen klant te maken!", '');
           this.logger.log('Error occured=' + err.error.message);
         } else {
           this.logger.log('response code=' + err.status);

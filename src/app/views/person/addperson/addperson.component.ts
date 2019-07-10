@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
 
@@ -217,7 +217,7 @@ export class AddPersonComponent implements OnInit {
   constructor(
     public http: HttpClient, private personsService: PersonService,
     private positionsService: PositionsService, private logger: LoggingService,
-    private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
+    private fb: FormBuilder, private dialog: MatDialog,
     private statuteService: StatuteService,
     private route: ActivatedRoute, private router: Router
   ) {
@@ -229,8 +229,8 @@ export class AddPersonComponent implements OnInit {
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      //this.ShowMessage('Positions fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
 
 
     this.statuteService.getStatutes().subscribe(data => {
@@ -267,14 +267,14 @@ export class AddPersonComponent implements OnInit {
 
             this.fillDataDropDown(this.maindatas)
             this.FilterTheArchive();
-            this.ShowMessage('posities "' + this.datas.position.name + '" is succesvol bijgewerkt.', '');
+            this.logger.ShowMessage('posities "' + this.datas.position.name + '" is succesvol bijgewerkt.', '');
           } else {
             this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
               this.maindatas.push(this.datas);
               this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
-              this.ShowMessage('posities "' + this.datas.position.name + '" is bijgewerkt. succesvol toegevoegd.', '');
+              this.logger.ShowMessage('posities "' + this.datas.position.name + '" is bijgewerkt. succesvol toegevoegd.', '');
             }
           }
         }
@@ -363,8 +363,8 @@ export class AddPersonComponent implements OnInit {
       this.FilterTheArchive();
       this.dataDropDownFunctie = this.maindatas;
       this.fillDataDropDown(this.maindatas);
-      // this.ShowMessage('Positions fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      // this.logger.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
 
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
@@ -434,17 +434,6 @@ export class AddPersonComponent implements OnInit {
       }
     }
     this.selectedPositionIndex = this.dataDropDownFunctie.length - 1;
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   setDropDownYear() {
@@ -739,12 +728,12 @@ export class AddPersonComponent implements OnInit {
     let controlNumber: number = -1;
 
     if (secondTwoDigits < 1 || secondTwoDigits > 12) {
-      //this.ShowMessage('Maand is ongeldig!','');
+      //this.logger.ShowMessage('Maand is ongeldig!','');
       return false;
     }
 
     if (thirdTwoDigits < 1 || thirdTwoDigits >= 32) {
-      //this.ShowMessage('jaar is ongeldig!','');
+      //this.logger.ShowMessage('jaar is ongeldig!','');
       return false;
     }
 
@@ -760,7 +749,7 @@ export class AddPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage('Inzendingen zijn onjuist !','');
+        //this.logger.ShowMessage('Inzendingen zijn onjuist !','');
 
       }
     }
@@ -773,7 +762,7 @@ export class AddPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage('Inzendingen zijn onjuist !','');
+        //this.logger.ShowMessage('Inzendingen zijn onjuist !','');
       }
 
     }
@@ -964,7 +953,7 @@ export class AddPersonComponent implements OnInit {
         else {
           this.recordExists = true;
           this.disableAllFields();
-          this.ShowMessage('Persoon bestaat al!', '');
+          this.logger.ShowMessage('Persoon bestaat al!', '');
           this.errorMessage = 'Persoon bestaat al!';
         }
       },
@@ -1090,7 +1079,7 @@ export class AddPersonComponent implements OnInit {
 
         if (this.bbic === "") {
           this.ibanValid = false;
-          this.ShowMessage("Ongeldig iban-nummer", '');
+          this.logger.ShowMessage("Ongeldig iban-nummer", '');
           this.AddPersonForm1.controls.bic.setValue('');
         }
         else {
@@ -1107,7 +1096,7 @@ export class AddPersonComponent implements OnInit {
           }
         }
       }
-    }, error => this.ShowMessage(error, 'error'));
+    }, error => this.logger.ShowMessage(error, 'error'));
 
   }
 
@@ -1647,7 +1636,7 @@ export class AddPersonComponent implements OnInit {
       // grossHoulyWageMinimum: 5,
       this.AddPersonForm2.get('grossHourlyWage').setValue(5);
       this.DpsPersonObject.renumeration.hourlyWage = 5;
-      this.ShowMessage('Het bruto-uurloon moet minstens 5 zijn', '');
+      this.logger.ShowMessage('Het bruto-uurloon moet minstens 5 zijn', '');
     }
   }
 
@@ -1785,7 +1774,7 @@ export class AddPersonComponent implements OnInit {
       if (this.checkValidation())
         this.showFormIndex = 2;
       else
-        this.ShowMessage('Er zijn onjuiste vermeldingen in het formulier', '');
+        this.logger.ShowMessage('Er zijn onjuiste vermeldingen in het formulier', '');
 
       this.createObjectsForm1();
     }
@@ -1797,7 +1786,7 @@ export class AddPersonComponent implements OnInit {
         this.setPositionIFEmpty();
 
         if (this.maindatas.length === 0 || this.DpsPersonObject.customerPostionId === "-1" || this.DpsPersonObject.customerPostionId === "0")
-          this.ShowMessage('Maak alstublieft positie voor de persoon !', '');
+          this.logger.ShowMessage('Maak alstublieft positie voor de persoon !', '');
         else
           this.postPersonData();
       }
@@ -1806,32 +1795,32 @@ export class AddPersonComponent implements OnInit {
 
   postPersonData() {
 
-    this.ShowMessage('Persoonsrecord creëren ....', '');
+    this.logger.ShowMessage('Persoonsrecord creëren ....', '');
 
     this.personsService.createPerson(this.DpsPersonObject).subscribe(res => {
       this.logger.log('response=' + res);
-      this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
+      this.logger.ShowMessage('Persoonsrecord met succes gemaakt.', '');
       this.router.navigate(['/dashboard']);
       //this.showFormIndex = 3;
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.logger.log('Error occured=' + err.error.message);
-          this.ShowMessage('Persoon maakt record mislukt.', '');
+          this.logger.ShowMessage('Persoon maakt record mislukt.', '');
           //this.showFormIndex = 4;
-          // this.ShowMessage('Error occured='+err.error.message,'');
+          // this.logger.ShowMessage('Error occured='+err.error.message,'');
         } else {
 
           if (err.status === 200) {
             this.router.navigate(['/dashboard']);
-            this.ShowMessage('Persoonsrecord met succes gemaakt.', '');
+            this.logger.ShowMessage('Persoonsrecord met succes gemaakt.', '');
           }
           else {
             this.logger.log('response code=' + err.status);
             this.logger.log('response body=' + err.error);
-            this.ShowMessage('Persoon maakt record mislukt.', '');
+            this.logger.ShowMessage('Persoon maakt record mislukt.', '');
           }
-          // this.ShowMessage('Error occured='+err.error,'');
+          // this.logger.ShowMessage('Error occured='+err.error,'');
         }
       }
     );
@@ -1841,7 +1830,7 @@ export class AddPersonComponent implements OnInit {
     this.showFormIndex = 1;
     //let ssid:string = this.AddPersonForm1.get('socialSecurityNumber').value;
     //this.newCustomSSIDValidator(ssid);
-    //this.ShowMessage('terug', '');
+    //this.logger.ShowMessage('terug', '');
   }
 
   isInvalid() {

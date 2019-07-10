@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { DataService } from 'src/app/shared/data.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingService } from '../../../shared/logging.service';
-import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-editperson',
@@ -85,7 +85,7 @@ export class EditPersonComponent implements OnInit {
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
-    private dialog: MatDialog, private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private logger: LoggingService) { }
 
   setDummyStatute() {
@@ -262,7 +262,7 @@ export class EditPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.logger.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
@@ -275,7 +275,7 @@ export class EditPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.logger.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
@@ -432,7 +432,7 @@ export class EditPersonComponent implements OnInit {
 
         if (this.bbic === "") {
           this.ibanValid = false;
-          this.ShowMessage("Ongeldig iban-nummer", '');
+          this.logger.ShowMessage("Ongeldig iban-nummer", '');
           this.editPersonForm.controls.bic.setValue('');
         }
         else {
@@ -449,23 +449,10 @@ export class EditPersonComponent implements OnInit {
         }
 
       }
-    }, error => this.ShowMessage(error, 'error'));
+    }, error => this.logger.ShowMessage(error, 'error'));
 
     this.changeMessage();
   }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
-
 
   setIbanNumber(value: string) {
 

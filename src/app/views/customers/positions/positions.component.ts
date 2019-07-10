@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { _Position, DpsPostion, LoginToken, DpsUser, Documents } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from '../../../shared/positions.service';
@@ -26,7 +26,6 @@ export class PositionsComponent implements OnInit {
 
   constructor(
     private positionsService: PositionsService, private dialog: MatDialog,
-    private snackBar: MatSnackBar,
     private logger: LoggingService
   ) { }
 
@@ -40,24 +39,13 @@ export class PositionsComponent implements OnInit {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.logger.log('Positions Form Data : ', this.maindatas);
-      //this.ShowMessage('Positions fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
   }
 
   FilterTheArchive() {
     this.logger.log('Positions Form Data : ', this.maindatas);
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   openDialog(): void {
@@ -81,14 +69,14 @@ export class PositionsComponent implements OnInit {
         if (this.SelectedIndex >= 0) {
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
-          this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
+          this.logger.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
         } else {
           this.logger.log('this.data.id :: ', this.data.id);
           if (parseInt('0' + this.data.id, 0) > 0) {
             this.maindatas.push(this.data);
             this.logger.log(' new this.maindatas :: ', this.maindatas);
             this.FilterTheArchive();
-            this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
+            this.logger.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
           }
         }
         */
