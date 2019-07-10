@@ -876,8 +876,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setJsonDataObject() {
 
-    console.log("sending json data");
-
     this.invoiceEmail = new EmailAddress();
     this.contractsEmail = new EmailAddress();
 
@@ -935,28 +933,32 @@ export class HeadQuartersComponent implements OnInit {
           }             
         }
     }
-    else {
-
-      // console.log("else send");
-
-      if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+    else 
+    {
+      if(this.HQFormData !== null && this.HQFormData !== undefined)
       {
-        if (this.dpsCustomer !== null) {
-          this.HQdata = {
-            "customer": this.dpsCustomer.customer,
-            "invoiceEmail": this.invoiceEmail,
-            "contractsEmail": this.contractsEmail,
-            "invoiceSettings": this.HQFormData.data.invoiceSettings,
-            "bulkContractsEnabled": false,
-            "statuteSettings": this.HQFormData.data.statuteSettings,
-            "contact": this.HQFormData.data.contact,
-            "activateContactAsUser": false,
-            "formValid": this.validity()
-          };
-          this.sendDatatoHome(this.HQdata);
+        if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+        {
+          if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+          {
+            if (this.dpsCustomer !== null) {
+              this.HQdata = {
+                "customer": this.dpsCustomer.customer,
+                "invoiceEmail": this.invoiceEmail,
+                "contractsEmail": this.contractsEmail,
+                "invoiceSettings": this.HQFormData.data.invoiceSettings,
+                "bulkContractsEnabled": false,
+                "statuteSettings": this.HQFormData.data.statuteSettings,
+                "contact": this.HQFormData.data.contact,
+                "activateContactAsUser": false,
+                "formValid": this.validity()
+              };
+              this.sendDatatoHome(this.HQdata);
+            }
+            else
+              this.HQdata = null;
+          }
         }
-        else
-          this.HQdata = null;
       }
     }
 
