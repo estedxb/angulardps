@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ContractService } from 'src/app/shared/contract.service';
 import { LoggingService } from 'src/app/shared/logging.service';
 
+
 @Component({
   selector: 'app-cancelcontract',
   templateUrl: './cancelcontract.component.html',

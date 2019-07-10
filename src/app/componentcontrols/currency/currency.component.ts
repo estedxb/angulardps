@@ -2,7 +2,6 @@ import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef, Chan
 import { LoggingService } from 'src/app/shared/logging.service';
 import { FormGroup, FormControl } from '@angular/forms';
 
-
 @Component({
   selector: 'app-currency',
   templateUrl: './currency.component.html',

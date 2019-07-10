@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from '../../../environments/environment';
 
+
 @Component({
   selector: 'app-headers',
   templateUrl: './headers.component.html',

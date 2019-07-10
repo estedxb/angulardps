@@ -4,6 +4,7 @@ import { LegalformService } from '../../shared/legalform.service';
 import { LanguagesService } from '../../shared/languages.service';
 import { LoggingService } from '../../shared/logging.service';
 
+
 @Component({
   selector: 'app-languages',
   templateUrl: './languages.component.html',

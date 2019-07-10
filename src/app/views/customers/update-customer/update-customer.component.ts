@@ -9,6 +9,7 @@ import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',

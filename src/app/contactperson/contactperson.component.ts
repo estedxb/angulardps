@@ -8,6 +8,7 @@ import {
   InvoiceSettings, Language, Contact
 } from '../shared/models';
 
+
 @Component({
   selector: 'app-contactperson',
   templateUrl: './contactperson.component.html',

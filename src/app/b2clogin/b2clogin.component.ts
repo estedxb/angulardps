@@ -5,6 +5,7 @@ import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-b2clogin',
   templateUrl: './b2clogin.component.html',

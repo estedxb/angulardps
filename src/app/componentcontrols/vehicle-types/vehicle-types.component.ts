@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
 
+
 @Component({
   selector: 'app-vehicle-types',
   templateUrl: './vehicle-types.component.html',

@@ -15,6 +15,7 @@ import { LoggingService } from '../../../shared/logging.service';
 export class PositionsComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   public maindatas = [];
+  public datas = [];
   public data: DpsPostion;
   public position: _Position;
   public workstationDocument: Documents;
@@ -45,7 +46,7 @@ export class PositionsComponent implements OnInit {
 
   FilterTheArchive() {
     this.logger.log('Positions Form Data : ', this.maindatas);
-    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+    this.datas = this.maindatas.filter(d => d.isArchived === false);
   }
 
   openDialog(): void {
@@ -113,7 +114,7 @@ export class PositionsComponent implements OnInit {
   onClickEdit(i) {
     this.SelectedIndex = i;
     this.logger.log('Edit Clicked Index :: ' + i);
-    this.data = this.maindatas[this.SelectedIndex];
+    this.data = this.datas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
@@ -121,8 +122,9 @@ export class PositionsComponent implements OnInit {
   updatePositions() {
     this.positionsService.updatePosition(this.data).subscribe(res => {
       this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
-      this.maindatas[this.SelectedIndex] = this.data;
-      this.FilterTheArchive();
+      // this.datas[this.SelectedIndex] = this.data;
+      // this.FilterTheArchive();
+      this.onPageInit();
     },
       (err: HttpErrorResponse) => {
         this.logger.log('Error :: ', err);
@@ -136,8 +138,9 @@ export class PositionsComponent implements OnInit {
   }
 
   onClickDelete(i) {
+    this.SelectedIndex = i;
     this.logger.log('Delete Clicked Index:: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isArchived = true;
     this.updatePositions();
   }
@@ -145,7 +148,7 @@ export class PositionsComponent implements OnInit {
   onStatusChange(event, i) {
     this.SelectedIndex = i;
     this.logger.log('Position index : ' + this.SelectedIndex + ', Enabled : ' + event);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isEnabled = event;
     this.updatePositions();
   }

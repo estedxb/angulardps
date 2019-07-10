@@ -19,6 +19,7 @@ import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.c
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
 
+
 @Component({
   selector: 'app-createcontract',
   templateUrl: './createcontract.component.html',

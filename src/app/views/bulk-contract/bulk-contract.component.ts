@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginToken } from 'src/app/shared/models';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-bulk-contract',
   templateUrl: './bulk-contract.component.html',

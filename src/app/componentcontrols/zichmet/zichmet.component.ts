@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
 
+
 @Component({
   selector: 'app-zichmet',
   templateUrl: './zichmet.component.html',

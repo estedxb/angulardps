@@ -7,6 +7,7 @@ import {
   InvoiceSettings, Language, Contact
 } from '../shared/models';
 
+
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',

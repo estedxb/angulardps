@@ -5,7 +5,6 @@ import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-
 /*
 import * as Msal from 'msal';
 import { MsalServiceLocal } from './shared/msal.service';

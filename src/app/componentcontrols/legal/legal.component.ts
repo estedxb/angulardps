@@ -4,6 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LegalformService } from '../../shared/legalform.service';
 import { LoggingService } from './../../shared/logging.service';
 
+
 @Component({
   selector: 'app-legal',
   templateUrl: './legal.component.html',

@@ -16,6 +16,7 @@ import { DataService } from '../../../src/app/shared/data.service';
 import { MatDialog } from '@angular/material';
 import { LoggingService } from '../shared/logging.service';
 
+
 @Component({
   selector: 'app-headquarters',
   templateUrl: './headquarters.component.html',

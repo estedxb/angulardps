@@ -7,8 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { LoggingService } from '../shared/logging.service';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
 import { CustomerListsService } from '../shared/customerlists.service';
-
 import { Router, CanActivate } from '@angular/router';
+
 
 @Component({
   selector: 'app-validate-login',

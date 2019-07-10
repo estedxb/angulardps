@@ -14,6 +14,7 @@ import { LoggingService } from '../../../shared/logging.service';
 export class UsersComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   public maindatas = [];
+  public datas = [];
   public data: DpsUser;
   public user: User;
   public email: EmailAddress;
@@ -39,11 +40,11 @@ export class UsersComponent implements OnInit {
       this.maindatas = users;
       this.FilterTheArchive();
       this.logger.log('Users Form Data : ', this.maindatas);
-      //this.logger.ShowMessage('Users fetched successfully.', '');
+      // this.logger.ShowMessage('Users fetched successfully.', '');
     }, error => this.logger.ShowMessage(error, 'error'));
   }
 
-  FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
+  FilterTheArchive() { this.datas = this.maindatas.filter(d => d.isArchived === false); }
 
   openDialog(): void {
     try {
@@ -59,11 +60,13 @@ export class UsersComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.logger.log('The dialog was closed');
+        this.onPageInit();
+        /*
         this.data = result;
         this.logger.log('this.data ::', this.data);
         if (this.SelectedIndex >= 0) {
           // maindatas Update User
-          this.maindatas[this.SelectedIndex] = this.data;
+          this.datas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
           this.logger.ShowMessage('Users "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is updated successfully.', '');
         } else {
@@ -84,10 +87,10 @@ export class UsersComponent implements OnInit {
             }
           } catch (e) { }
         }
+        */
       });
     } catch (e) { }
   }
-
 
   onClickAdd() {
     this.SelectedIndex = -1;
@@ -126,7 +129,7 @@ export class UsersComponent implements OnInit {
   onClickEdit(i) {
     this.SelectedIndex = i;
     this.logger.log('Edit Clicked Index :: ' + this.SelectedIndex);
-    this.data = this.maindatas[this.SelectedIndex];
+    this.data = this.datas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
@@ -134,8 +137,11 @@ export class UsersComponent implements OnInit {
   updateUsers() {
     this.usersService.updateUser(this.data).subscribe(res => {
       this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
+      this.onPageInit();
+      /*
       this.maindatas[this.SelectedIndex] = this.data;
       this.FilterTheArchive();
+      */
     },
       (err: HttpErrorResponse) => {
         this.logger.log('Error :: ', err);
@@ -149,8 +155,9 @@ export class UsersComponent implements OnInit {
   }
 
   onClickDelete(i) {
+    this.SelectedIndex = i;
     this.logger.log('Delete Clicked Index:: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isArchived = true;
     this.updateUsers();
     this.logger.ShowMessage('Locations "' + this.data.user.firstName + ' ' + this.data.user.lastName + '" is deleted successfully.', '');
@@ -159,7 +166,7 @@ export class UsersComponent implements OnInit {
   onStatusChange(event, i) {
     this.SelectedIndex = i;
     this.logger.log('Users index : ' + this.SelectedIndex + ', Enabled : ' + event);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isEnabled = event;
     this.updateUsers();
     let EnabledStatus = '';

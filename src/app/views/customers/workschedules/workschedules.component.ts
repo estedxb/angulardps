@@ -15,6 +15,7 @@ import { LoggingService } from '../../../shared/logging.service';
 export class WorkSchedulesComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   public maindatas = [];
+  public datas = [];
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;
   public errorMsg;
@@ -43,7 +44,7 @@ export class WorkSchedulesComponent implements OnInit {
   }
 
   FilterTheArchive() {
-    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
+    this.datas = this.maindatas.filter(d => d.isArchived === false);
   }
 
   openDialog(): void {
@@ -141,7 +142,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     // this.logger.log('Edit Data :: ', this.data);
     this.openDialog();
     return true;
@@ -149,7 +150,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   onClickCopy(i) {
     this.SelectedIndex = -1;
-    this.data = JSON.parse(JSON.stringify(this.maindatas[i]));
+    this.data = JSON.parse(JSON.stringify(this.datas[i]));
     this.data.id = 0;
     this.data.name += ' - Copy';
     this.data.isArchived = false;
@@ -158,10 +159,12 @@ export class WorkSchedulesComponent implements OnInit {
   }
 
   updateWorkschedules() {
+    this.logger.log('Data ::', this.data);
     this.workschedulesService.updateWorkschedule(this.data).subscribe(res => {
-      this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
-      this.maindatas[this.SelectedIndex] = this.data;
-      this.FilterTheArchive();
+      this.logger.log('response :: ', res);
+      // this.datas[this.SelectedIndex] = this.data;
+      // this.FilterTheArchive();
+      this.onPageInit();
     },
       (err: HttpErrorResponse) => {
         this.logger.log('Error :: ', err);
@@ -175,8 +178,9 @@ export class WorkSchedulesComponent implements OnInit {
   }
 
   onClickDelete(i) {
+    this.SelectedIndex = i;
     this.logger.log('Delete Clicked Index:: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isArchived = true;
     this.updateWorkschedules();
     this.logger.ShowMessage('Work Schedules "' + this.data.name + '" is deleted successfully.', '');
@@ -185,7 +189,7 @@ export class WorkSchedulesComponent implements OnInit {
   onStatusChange(event, i) {
     this.SelectedIndex = i;
     this.logger.log('Work Schedule index : ' + this.SelectedIndex + ', Enabled : ' + event);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isEnabled = event;
     this.updateWorkschedules();
     let EnabledStatus = '';

@@ -9,7 +9,6 @@ import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment.prod';
 
-
 @Component({
   selector: 'app-update-person',
   templateUrl: './update-person.component.html',

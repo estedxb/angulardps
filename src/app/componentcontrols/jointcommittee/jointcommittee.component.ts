@@ -4,6 +4,7 @@ import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 import { LoggingService } from '../../shared/logging.service';
 
+
 @Component({
   selector: 'app-jointcommittee',
   templateUrl: './jointcommittee.component.html',

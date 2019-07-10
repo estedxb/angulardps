@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 import { LoggingService } from '../../shared/logging.service';
 
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',

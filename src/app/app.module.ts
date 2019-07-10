@@ -16,7 +16,6 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { environment } from '../environments/environment';
 import { ErrorComponent } from './error.component';
 import { HttpClientModule } from '@angular/common/http';
-
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { VehicleTypesComponent } from './componentcontrols/vehicle-types/vehicle-types.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {

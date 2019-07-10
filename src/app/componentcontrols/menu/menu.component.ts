@@ -10,6 +10,7 @@ import { PlatformLocation } from '@angular/common';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../../shared/msal.service';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',

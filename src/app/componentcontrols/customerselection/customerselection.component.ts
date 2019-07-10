@@ -4,7 +4,6 @@ import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-customerselection',
   templateUrl: './customerselection.component.html',

@@ -12,6 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingService } from '../../../shared/logging.service';
 import { MatDialog } from '@angular/material';
 
+
 @Component({
   selector: 'app-editperson',
   templateUrl: './editperson.component.html',

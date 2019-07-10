@@ -9,6 +9,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { saveAs } from 'file-saver';
 import { LoggingService } from '../../../../shared/logging.service';
 
+
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',

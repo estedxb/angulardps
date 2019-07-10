@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../../shared/msal.service';
 
+
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
