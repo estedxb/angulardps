@@ -50,7 +50,6 @@ export class VehicleTypesComponent implements OnInit {
 
   constructor(
     private vehicleService: vehicleService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 
@@ -73,8 +72,8 @@ export class VehicleTypesComponent implements OnInit {
 
   setDefaultVehicle() {
 
-      this.selectedIndex = 0;
-      this.childEvent.emit(this.dropdownData[this.selectedIndex]);
+    this.selectedIndex = 0;
+    this.childEvent.emit(this.dropdownData[this.selectedIndex]);
   }
 
   ngDoCheck() {

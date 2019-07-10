@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ErrorMSG } from '../../shared/models';
 
 @Component({

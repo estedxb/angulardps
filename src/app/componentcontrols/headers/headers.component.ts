@@ -4,7 +4,6 @@ import { PlatformLocation } from '@angular/common';
 import $ from 'jquery';
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from '../../../environments/environment';
-// import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-headers',
@@ -27,7 +26,6 @@ export class HeadersComponent implements OnInit {
 
   constructor(
     platformLocation: PlatformLocation,
-    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) {
     this.platformLocation = (platformLocation as any).location.origin;

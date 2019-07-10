@@ -9,7 +9,6 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment.prod';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -39,7 +38,6 @@ export class UpdatePersonComponent implements OnInit {
   constructor(
     private personService: PersonService, private data: DataService,
     private logger: LoggingService,
-    // private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router,
     private snackBar: MatSnackBar) {
     // this.logger.log('InSide :: Update Person');
@@ -212,7 +210,7 @@ export class UpdatePersonComponent implements OnInit {
 
     }
 
-    if (this.currentPage === 'positions') {      
+    if (this.currentPage === 'positions') {
       this.logger.log(this.personpositionData);
       // this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
       this.personService.updatePosition(this.personpositionData).subscribe(res => {

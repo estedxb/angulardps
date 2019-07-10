@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-zichmet',
@@ -55,7 +54,6 @@ export class ZichmetComponent implements OnInit {
 
   constructor(
     private vehicleService: vehicleService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 
@@ -81,7 +79,7 @@ export class ZichmetComponent implements OnInit {
 
   setDefaultVehicle() {
     this.selectedIndex = 0;
-    
+
     this.childEvent.emit(this.dropdownData[this.selectedIndex]);
 
     // for(let i=0;i<this.datas.length;i++)

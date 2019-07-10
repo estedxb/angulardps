@@ -7,7 +7,6 @@ import { StatuteService } from '../../../shared/statute.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation, Language, DpsPostion, _Position, LoginToken,
@@ -86,7 +85,7 @@ export class AddPersonComponent implements OnInit {
   public selectedPositionIndex = 0;
   public selectedStatuteIndex = 0;
   public lastAddedPosition: string;
-  public lastAddedPositionId:string;
+  public lastAddedPositionId: string;
   public lastSelectedVehicle = "";
 
   public netExpenseSwitch = false;
@@ -220,7 +219,6 @@ export class AddPersonComponent implements OnInit {
     private positionsService: PositionsService, private logger: LoggingService,
     private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar,
     private statuteService: StatuteService,
-    private spinner: NgxUiLoaderService,
     private route: ActivatedRoute, private router: Router
   ) {
 
@@ -259,7 +257,7 @@ export class AddPersonComponent implements OnInit {
         this.datas = result;
         // this.maindatas = result;
         this.logger.log('this.data ::', this.datas);
-        this.logger.log(typeof(this.datas));
+        this.logger.log(typeof (this.datas));
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
@@ -405,19 +403,18 @@ export class AddPersonComponent implements OnInit {
     }
 
     this.selectedPositionIndex = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
-    this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
+    this.DpsPersonObject.customerPostionId = "" + this.lastAddedPositionId;
     this.changeMessage();
 
     //this.getPersonbySSIDVatNumber();
 
   }
 
-  getIndexOfPositionDropDownFunctie(position:string) {
+  getIndexOfPositionDropDownFunctie(position: string) {
 
     let index = -1;
-    for(let i=0;i<this.dataDropDownFunctie.length;i++)
-    {
-      if(position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
+    for (let i = 0; i < this.dataDropDownFunctie.length; i++) {
+      if (position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
         index = i;
     }
 
@@ -497,7 +494,7 @@ export class AddPersonComponent implements OnInit {
 
   findIndex(position: string) {
 
-    if(this.maindatas.length ===0)
+    if (this.maindatas.length === 0)
       this.DpsPersonObject.customerPostionId = "0";
 
     for (let i = 0; i < this.maindatas.length; i++) {
@@ -808,7 +805,7 @@ export class AddPersonComponent implements OnInit {
 
   setCalendar(year: number, month: number, day: number) {
 
-    this.logger.log("year="+year);
+    this.logger.log("year=" + year);
 
     let currentYear: any = new Date();
     currentYear = currentYear.getFullYear();
@@ -954,8 +951,7 @@ export class AddPersonComponent implements OnInit {
 
   getPersonbySSIDVatNumber() {
 
-    if (this.validSSID === true) 
-    {
+    if (this.validSSID === true) {
       const ssid: string = this.AddPersonForm1.get('socialSecurityNumber').value;
       const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
@@ -997,7 +993,7 @@ export class AddPersonComponent implements OnInit {
           }
         }
       );
-    } 
+    }
     else {
       this.logger.log('invalid SSN format');
     }
@@ -1039,7 +1035,7 @@ export class AddPersonComponent implements OnInit {
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'
       + '<soap12:Body><getBelgianBBAN xmlns="https://tempuri.org/">'
-      + '<Value>'+this.iban+'</Value>'
+      + '<Value>' + this.iban + '</Value>'
       + '</getBelgianBBAN></soap12:Body></soap12:Envelope>';
 
     const doc = parser.parseFromString(xmlString, 'text/xml');
@@ -1062,7 +1058,7 @@ export class AddPersonComponent implements OnInit {
     const xmlString = '<?xml version="1.0" encoding="utf-8"?>'
       + '<soap:Envelope xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + '<soap:Body><BBANtoBIC xmlns="http://tempuri.org/">'
-      + '<Value>'+this.bban+'</Value></BBANtoBIC></soap:Body></soap:Envelope>';
+      + '<Value>' + this.bban + '</Value></BBANtoBIC></soap:Body></soap:Envelope>';
 
     const headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*')
@@ -1089,22 +1085,19 @@ export class AddPersonComponent implements OnInit {
     this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
       console.log('bic Data : ', response);
 
-      if(response !== null && response.bic !== undefined)
-      {
+      if (response !== null && response.bic !== undefined) {
         this.bbic = response.bic;
 
-        if(this.bbic === "")
-        {
+        if (this.bbic === "") {
           this.ibanValid = false;
-          this.ShowMessage("Ongeldig iban-nummer",'');
+          this.ShowMessage("Ongeldig iban-nummer", '');
           this.AddPersonForm1.controls.bic.setValue('');
         }
-        else
-        {
+        else {
           this.ibanValid = true;
           this.AddPersonForm1.controls.bic.setValue(this.bbic);
         }
-  
+
         if (this.DpsPersonObject !== undefined && this.DpsPersonObject !== null) {
           if (this.DpsPersonObject.person !== undefined && this.DpsPersonObject.person !== null) {
             this.DpsPersonObject.person.bankAccount = new BankAccount();
@@ -1792,7 +1785,7 @@ export class AddPersonComponent implements OnInit {
       if (this.checkValidation())
         this.showFormIndex = 2;
       else
-        this.ShowMessage('Er zijn onjuiste vermeldingen in het formulier','');
+        this.ShowMessage('Er zijn onjuiste vermeldingen in het formulier', '');
 
       this.createObjectsForm1();
     }

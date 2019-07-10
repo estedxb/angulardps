@@ -9,7 +9,7 @@ import { LoginComponent } from '../../login/login.component';
 import { CustomerListsService } from '../../../shared/customerlists.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from 'src/environments/environment';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',
@@ -31,7 +31,6 @@ export class UpdateCustomerComponent implements OnInit {
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
     private snackBar: MatSnackBar, private logger: LoggingService,
-    private spinner: NgxUiLoaderService,
     private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
 
   validateLogin() {
@@ -71,16 +70,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
 
-    // this.spinner.start();
-
-    // setTimeout(() => {
-    //   /** spinner ends after 5 seconds */
-    //    this.spinner.stop();
-    // }, 1000);
-
-    // this.setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 1000);
+    // this.logger.showSpinner();
 
     this.activeRoute.params.subscribe((routeParams: any) => {
       this.logger.log('routeParams :: ', routeParams);

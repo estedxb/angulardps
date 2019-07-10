@@ -7,7 +7,6 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-contactperson',
@@ -39,7 +38,6 @@ export class ContactPersonComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
 
   }

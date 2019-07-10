@@ -13,7 +13,6 @@ import { ChildActivationEnd, ActivatedRoute, Router } from '@angular/router';
 import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatSnackBarConfig, MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
@@ -163,7 +162,6 @@ export class HeadQuartersComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    // private spinner: NgxUiLoaderService,
     private customerService: CustomersService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,

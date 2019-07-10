@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { getMinutes } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { environment } from '../../environments/environment';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,22 @@ export class LoggingService {
   public dateString = '';
   public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  constructor() {
+  public SpinnerShowing = false;
+
+  public showSpinner() {
+    if (!this.SpinnerShowing) {
+      this.SpinnerShowing = true;
+      this.spinner.startLoader('loader-01');
+    }
+  }
+  public hideSpinner() {
+    if (this.SpinnerShowing) {
+      this.spinner.stopLoader('loader-01');
+      this.SpinnerShowing = false;
+    }
+  }
+
+  constructor(private spinner: NgxUiLoaderService) {
     const date = new Date();
     this.dateString = this.Trim(date.getDate(), 2) + ' ' + this.monthNames[date.getMonth() + 1] + ' ' + date.getFullYear()
       + ' ' + this.Trim(date.getHours(), 2) + ':' + this.Trim(date.getMinutes(), 2);

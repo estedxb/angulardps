@@ -3,7 +3,7 @@ import { Contact, DpsUser, LoginToken, DPSCustomer, Customer, InvoiceSettings, C
 import { CustomersService } from 'src/app/shared/customers.service';
 import { DataService } from 'src/app/shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-editcustomer',
   templateUrl: './editcustomer.component.html',
@@ -28,7 +28,6 @@ export class EditCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomersService,
     private data: DataService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) {
 
     // this.vatNumber = this.dpsLoginToken.customerVatNumber;

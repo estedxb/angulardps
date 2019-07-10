@@ -37,7 +37,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   logoUrl: '../assets/svg/dpslogo.svg',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
-  overlayColor: 'rgba(227,119,25,0.8)',
+  overlayColor: 'rgba(227,119,25,0.6)',
   pbColor: 'red',
   pbDirection: 'ltr',
   pbThickness: 3,

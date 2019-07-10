@@ -4,7 +4,6 @@ import { SummaryService } from 'src/app/shared/summary.service';
 import { environment } from '../../../../environments/environment';
 import { Summaries, LoginToken } from '../../../shared/models';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-dashboardsummary',
   templateUrl: './dashboardaction.component.html',
@@ -24,10 +23,10 @@ export class DashboardActionComponent implements OnInit {
   @Output() public NotificationCount = new EventEmitter();
   constructor(
     public summaryService: SummaryService, private router: Router,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
   ngOnInit() {
+    this.logger.showSpinner();
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.loginaccessToken = this.dpsLoginToken.accessToken;
@@ -42,7 +41,9 @@ export class DashboardActionComponent implements OnInit {
       }
       this.logger.log('DashboardActionComponent Summaries Forms Data : ', this.datas);
       this.errorMsg = '';
+      this.logger.hideSpinner();
     }, error => {
+      this.logger.hideSpinner();
       this.logger.log('Error on ngOnInit while getSummaryByVatnumber(' + this.vatNumber + ') ::', error);
       this.errorMsg = 'Fout bij het ophalen van de behandeling.';
     });
@@ -76,12 +77,14 @@ export class DashboardActionComponent implements OnInit {
   }
 
   updateAction(index: number) {
+    this.logger.showSpinner();
     const summaries: Summaries = this.datas[index];
     summaries.isFinished = true;
     this.summaryService.updateSummaryByVatnumberAndSummaryID(summaries).subscribe(data => {
       this.datas.splice(index, 1);
       // this.logger.log('DashboardActionComponent Summaries Update Action Finished : ', data, this.datas);
       this.errorMsg = '';
+      this.logger.hideSpinner();
     }, error => {
       this.logger.log('Error while updateAction(' + index + ') ::', error);
       this.errorMsg = 'Fout tijdens het bijwerken van de behandeling.';

@@ -6,7 +6,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from '../../../shared/locations.service';
 import { CreatelocationComponent } from './createlocation/createlocation.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
@@ -26,7 +25,6 @@ export class LocationsComponent implements OnInit {
   constructor(
     private locationsService: LocationsService,
     private logger: LoggingService,
-    // private spinner: NgxUiLoaderService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar) { }
 

@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from '../../../shared/users.service';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private usersService: UsersService, private dialog: MatDialog,
-    // private spinner: NgxUiLoaderService,
     private snackBar: MatSnackBar, private logger: LoggingService) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }

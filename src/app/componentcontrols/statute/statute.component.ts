@@ -9,7 +9,6 @@ import {
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-statute',
@@ -59,7 +58,6 @@ export class StatuteComponent implements OnInit {
 
   constructor(
     private statuteService: StatuteService,
-    // // private spinner: NgxUiLoaderService,
     private fb: FormBuilder,
     private logger: LoggingService
   ) {
@@ -96,14 +94,14 @@ export class StatuteComponent implements OnInit {
   ngDoCheck() {
     this.createCoefficientArray();
 
-    if(this.STFormData !== undefined && this.STFormData !== null)
-    if (this.STFormData != this.oldSFTFormData) {
-      //this.createStatuteSettingsArrayEmpty();
-      this.oldSFTFormData = this.STFormData;
-      if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
-        this.loadInitialData();
+    if (this.STFormData !== undefined && this.STFormData !== null)
+      if (this.STFormData != this.oldSFTFormData) {
+        //this.createStatuteSettingsArrayEmpty();
+        this.oldSFTFormData = this.STFormData;
+        if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+          this.loadInitialData();
+        }
       }
-    }
   }
 
   loadCoefficientArray(data) {
@@ -177,7 +175,7 @@ export class StatuteComponent implements OnInit {
       this.statuteSettings[counter].mealVoucherSettings = new MealVoucherSettings();
       this.statuteSettings[counter].mealVoucherSettings.totalWorth = element.mealVoucherSettings.totalWorth;
       this.statuteSettings[counter].mealVoucherSettings.employerShare = element.mealVoucherSettings.employerShare;
-      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;     
+      this.statuteSettings[counter].mealVoucherSettings.minimumHours = element.mealVoucherSettings.minimumHours;
 
       counter++;
     });
@@ -372,12 +370,11 @@ export class StatuteComponent implements OnInit {
         this.emitData("ngOnit");
       }
 
-    }, error => this.errorMsg = error);    
-    
-    if (this.countStatutes > 0)
-    {
-      if(this.STFormData.data === null || this.STFormData.data === undefined)
-          this.loadCoefficientsEmpty();
+    }, error => this.errorMsg = error);
+
+    if (this.countStatutes > 0) {
+      if (this.STFormData.data === null || this.STFormData.data === undefined)
+        this.loadCoefficientsEmpty();
       else
         this.cloneArray();
     }
@@ -385,14 +382,14 @@ export class StatuteComponent implements OnInit {
 
   loadData() {
 
-    if(this.STFormData !== undefined && this.STFormData !== null)
-    if (this.STFormData != this.oldSFTFormData) {
-      //this.createStatuteSettingsArrayEmpty();
-      this.oldSFTFormData = this.STFormData;
-      if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
-        this.loadInitialData();
+    if (this.STFormData !== undefined && this.STFormData !== null)
+      if (this.STFormData != this.oldSFTFormData) {
+        //this.createStatuteSettingsArrayEmpty();
+        this.oldSFTFormData = this.STFormData;
+        if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
+          this.loadInitialData();
+        }
       }
-    }
 
   }
 
@@ -429,7 +426,7 @@ export class StatuteComponent implements OnInit {
 
     for (let i: number = 0; i < this.countStatutes; i++) {
       this.coefficientArray[i] = 0;
-      this.newArrayCoeff[i]= 0;
+      this.newArrayCoeff[i] = 0;
     }
 
   }
@@ -439,7 +436,7 @@ export class StatuteComponent implements OnInit {
     this.coefficientArray[i] = value;
 
     //Coefficient can only be 3.5 at most! 
-    if(value > 3.5)
+    if (value > 3.5)
       this.replaceArrayCoefficient(3.5, i);
     else
       this.replaceArrayCoefficient(value, i);

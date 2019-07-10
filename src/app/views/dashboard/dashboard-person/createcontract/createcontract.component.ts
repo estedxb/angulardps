@@ -18,7 +18,6 @@ import { saveAs } from 'file-saver';
 import { CalendarComponent } from 'src/app/componentcontrols/calendar/calendar.component';
 import { emit } from 'cluster';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DPSSystemMessageComponent } from '../../../../componentcontrols/dpssystem-message/dpssystem-message.component';
 
 @Component({
@@ -105,7 +104,6 @@ export class CreateContractComponent implements OnInit {
   public isSelectedDateDoesNotHaveWorkErrorMsg = ''; // 'Werkschema heeft geen werkdagen voor de geselecteerde datums';
   public isWorkScheduleVaildErrorMsg = 'Selecteer het juiste Werkrooster';
   public isLocationVaildErrorMsg = 'Selecteer de Vestiging';
-  public SpinnerShowing = false;
   public allowCreateContract = false;
   public personIsEnabled = false;
   public personIsArchived = true;
@@ -169,18 +167,6 @@ export class CreateContractComponent implements OnInit {
     return returnDate;
   }
 
-  showSpinner() {
-    if (!this.SpinnerShowing) {
-      this.SpinnerShowing = true;
-      this.spinner.startLoader('loader-01');
-    }
-  }
-  hideSpinner() {
-    if (this.SpinnerShowing) {
-      this.spinner.stopLoader('loader-01');
-      this.SpinnerShowing = false;
-    }
-  }
 
   constructor(
     private positionsService: PositionsService,
@@ -192,12 +178,11 @@ export class CreateContractComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<CreateContractComponent>,
     private contractService: ContractService,
-    private spinner: NgxUiLoaderService,
     @Inject(MAT_DIALOG_DATA) public selectedContract: SelectedContract) { }
 
   ngOnInit() {
-    this.showSpinner();
-    setTimeout(() => { this.hideSpinner(); }, 3000);
+    this.logger.showSpinner();
+    setTimeout(() => { this.logger.hideSpinner(); }, 3000);
     this.onPageInit();
   }
 
@@ -316,7 +301,7 @@ export class CreateContractComponent implements OnInit {
 
   getLocationsByVatNumber() {
     this.locationsData = [];
-    this.showSpinner();
+    this.logger.showSpinner();
     this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.locationsData = response;
 
@@ -331,7 +316,7 @@ export class CreateContractComponent implements OnInit {
         this.isLocationVaild = false;
 
         this.ShowMessage('Voeg de locatie toe voordat u een contract aanmaakt', '');
-        this.hideSpinner();
+        this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
       // this.hideSpinner();
@@ -341,7 +326,7 @@ export class CreateContractComponent implements OnInit {
 
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
-    this.showSpinner();
+    this.logger.showSpinner();
     this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsWorkSchedulesData = response;
 
@@ -350,7 +335,7 @@ export class CreateContractComponent implements OnInit {
         this.getContractReason();
       } else {
         this.ShowMessage('Voeg het werkschema toe voordat u een contract maakt', '');
-        this.hideSpinner();
+        this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
 
@@ -368,7 +353,7 @@ export class CreateContractComponent implements OnInit {
 
   getContractReason() {
     this.logger.log('getContractReason ');
-    this.showSpinner();
+    this.logger.showSpinner();
     this.contractService.getContractReason()
       .subscribe(contractReasons => {
         this.logger.log('LoadContractReason contractReasons', contractReasons);
@@ -383,7 +368,7 @@ export class CreateContractComponent implements OnInit {
 
   getPositionsByVatNumber() {
     this.dpsPositionsData = [];
-    this.showSpinner();
+    this.logger.showSpinner();
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
       this.dpsPositionsData = response;
       this.logger.log('dpsPositionsData : ', this.dpsPositionsData);
@@ -394,7 +379,7 @@ export class CreateContractComponent implements OnInit {
         this.loadPerson(this.personid, this.VatNumber);
       } else {
         this.ShowMessage('Persoon niet geselecteerd', '');
-        this.hideSpinner();
+        this.logger.hideSpinner();
         this.dialogRef.close(null);
       }
 
@@ -404,7 +389,7 @@ export class CreateContractComponent implements OnInit {
 
 
   loadPerson(personid: string, vatNumber: string) {
-    this.showSpinner();
+    this.logger.showSpinner();
     this.personService.getPersonBySSIDVatnumber(personid, vatNumber).subscribe(personinfo => {
       this.logger.log('personid :: ', personid);
       this.logger.log('loadPerson :: ', personinfo);
@@ -422,7 +407,7 @@ export class CreateContractComponent implements OnInit {
             this.logger.log('positionSelectedName 2 :: ' + this.positionSelectedName, dpsPositions[0]);
             this.currentDpsContract.contract.position = dpsPositions[0].position;
             this.currentDpsContract.contract.statute = personinfo.statute;
-            this.hideSpinner();
+            this.logger.hideSpinner();
           }, 100);
         }
       } else {
@@ -433,7 +418,7 @@ export class CreateContractComponent implements OnInit {
             this.logger.log('positionSelectedName 1 ::' + this.positionSelectedName);
             this.currentDpsContract.contract.position = null;
             this.currentDpsContract.contract.statute = personinfo.statute;
-            this.hideSpinner();
+            this.logger.hideSpinner();
           }, 100);
         }
       }
@@ -444,7 +429,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   SetMode() {
-    this.showSpinner();
+    this.logger.showSpinner();
     this.logger.log('SetMode Mode :: ' + this.mode);
     if (this.mode === 'edit') {
       this.currentDpsContract.id = this.contractId;
@@ -524,7 +509,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   loadContract(vatNumber: string, cid: string) {
-    this.showSpinner();
+    this.logger.showSpinner();
     this.contractService.getContractByVatNoAndId(vatNumber, cid).subscribe(response => {
       this.currentDpsContract = response;
       this.logger.log('loadContract :: ', response);
@@ -594,7 +579,7 @@ export class CreateContractComponent implements OnInit {
         this.calendarmonthDisableStatus = true;
       } else { this.calendarmonthDisableStatus = false; }
       this.logger.log('loadPerson currentDpsContract  ', this.currentDpsContract);
-      this.hideSpinner();
+      this.logger.hideSpinner();
     }, error => this.errorHandle(error));
   }
 
@@ -638,10 +623,10 @@ export class CreateContractComponent implements OnInit {
 
 
   onPrintContractClick() {
-    this.showSpinner();
+    this.logger.showSpinner();
     this.contractService.getPrintContractPDFFileURL(this.VatNumber, this.contractId).subscribe(
       printPDFSuccess => {
-        this.hideSpinner();
+        this.logger.hideSpinner();
         const FileURL = printPDFSuccess.fileUrl;
         saveAs(FileURL, 'PrintContract_' + this.VatNumber + '_' + this.contractId + '.pdf');
       },
@@ -698,7 +683,7 @@ export class CreateContractComponent implements OnInit {
 
   onApproveContractClick() {
     this.logger.log('onApproveContractClick :: ');
-    this.showSpinner();
+    this.logger.showSpinner();
     this.contractService.getApproveContract(this.VatNumber, this.contractId).subscribe(
       approveContractSuccess => {
         this.logger.log('onApproveContractClick', approveContractSuccess);
@@ -711,10 +696,10 @@ export class CreateContractComponent implements OnInit {
           this.errorMsg = 'Fout! bij het goedkeuren van het contract. ' + approveContractSuccess.message;
           this.ShowMessage(this.errorMsg, ''); // Error! in approving the contract
         }
-        this.hideSpinner();
+        this.logger.hideSpinner();
       },
       approveContractFailed => {
-        this.hideSpinner();
+        this.logger.hideSpinner();
         this.ShowMessage('Fout! bij het goedkeuren van het contract', 'error'); // Error! in approving the contract
         this.logger.log('Approving the contract failed. ' + approveContractFailed);
       }
@@ -898,21 +883,21 @@ export class CreateContractComponent implements OnInit {
             if (this.currentDpsContract.workScheduleId > 0) {
               if (this.currentDpsContract.locationId > 0) {
                 if (this.mode === 'edit') {
-                  this.showSpinner();
+                  this.logger.showSpinner();
                   this.contractService.updateContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
                     this.ShowMessage('Contract succesvol opgeslagen', '');
                     this.dialogRef.close(this.currentDpsContract);
-                    this.hideSpinner();
+                    this.logger.hideSpinner();
                   }, (err: HttpErrorResponse) => this.errorHandle(err));
                 } else {
                   console.log('in 9');
-                  this.showSpinner();
+                  this.logger.showSpinner();
                   this.contractService.createContract(this.currentDpsContract).subscribe(res => {
                     this.currentDpsContract = res.body;
                     this.ShowMessage('Contract succesvol opgeslagen', '');
                     this.dialogRef.close(this.currentDpsContract);
-                    this.hideSpinner();
+                    this.logger.hideSpinner();
                   }, (err: HttpErrorResponse) => this.errorHandle(err));
                 }
               } else { this.ShowMessage('Selecteer alstublieft Plaats', ''); }
@@ -947,7 +932,7 @@ export class CreateContractComponent implements OnInit {
 
   errorHandle(err: any) {
     if (err !== null) {
-      this.hideSpinner();
+      this.logger.hideSpinner();
       try {
         if (err.error instanceof Error) {
           this.ShowMessageCustom('Error...', err.error.message);

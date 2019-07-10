@@ -8,7 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../shared/person.service';
 import { environment } from '../../../../environments/environment';;
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DataService } from 'src/app/shared/data.service';
 import { forEach } from '@angular/router/src/utils/collection';
 
@@ -30,7 +29,7 @@ export class PersonDocumentComponent implements OnInit {
   public isConstructionSector: boolean;
   public isStudentAtWork: boolean;
   public isDriver: boolean;
-  
+
   public studentAtWorkProfile: StudentAtWorkProfile;
 
   public medicalAttestationDocumentName: string;
@@ -58,7 +57,6 @@ export class PersonDocumentComponent implements OnInit {
   constructor(
     private personService: PersonService,
     private dialog: MatDialog,
-    // private spinner: NgxUiLoaderService,
     private snackBar: MatSnackBar,
     private dataService: DataService,
     private logger: LoggingService) { }
@@ -143,43 +141,41 @@ export class PersonDocumentComponent implements OnInit {
         this.logger.log("balance=" + this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('balance').setValue(this.currentPerson.studentAtWorkProfile.balance);
         this.PersonDocumentForm.get('contingent').setValue(this.currentPerson.studentAtWorkProfile.contingent);
-        
-        let  x = new Date (this.currentPerson.studentAtWorkProfile.attestationDate);
+
+        let x = new Date(this.currentPerson.studentAtWorkProfile.attestationDate);
         let year = x.getFullYear().toString();
         this.logger.log('getFullYear() ::::::: ', year);
-        let month =  (x.getMonth() +1).toString() ;
+        let month = (x.getMonth() + 1).toString();
         //let mm ='';
         //let dd ='';
 
-        if(Number(month) < 10)
-        {
-          month = '0'+ month;
+        if (Number(month) < 10) {
+          month = '0' + month;
         }
         this.logger.log('getMonth() ::::::::: ', month);
         let day = x.getDate().toString();
 
-        if(Number(day) < 10)
-        {
-          day = '0'+ day;
+        if (Number(day) < 10) {
+          day = '0' + day;
         }
 
-        this.logger.log('getDay() ::::::: ', day);     
-        let attestationDate = year +'-'+ month +'-'+ day;
-        this.logger.log('attestationDate ::::::: ', attestationDate);        
+        this.logger.log('getDay() ::::::: ', day);
+        let attestationDate = year + '-' + month + '-' + day;
+        this.logger.log('attestationDate ::::::: ', attestationDate);
         this.PersonDocumentForm.get('attestationDate').setValue(attestationDate);
 
-       // vehicle.type = this.currentPerson.driverProfiles
-       for (let driverProfile of this.currentPerson.driverProfiles) {
-        
-        if (driverProfile.attestation.name !== undefined && driverProfile.attestation.name !== null && driverProfile.attestation.name !== '') {
+        // vehicle.type = this.currentPerson.driverProfiles
+        for (let driverProfile of this.currentPerson.driverProfiles) {
 
-            this.logger.log('attestation.name ::: ',driverProfile.attestation.name);
-            this.selectedOption = driverProfile.attestation.name.split('.').slice(0, -1).join('.') ;
+          if (driverProfile.attestation.name !== undefined && driverProfile.attestation.name !== null && driverProfile.attestation.name !== '') {
+
+            this.logger.log('attestation.name ::: ', driverProfile.attestation.name);
+            this.selectedOption = driverProfile.attestation.name.split('.').slice(0, -1).join('.');
             this.logger.log('this.selectedOption::: ', this.selectedOption);
             return this.selectedOption;
+          }
         }
-        }
- 
+
       }
     }
   }
@@ -230,11 +226,10 @@ export class PersonDocumentComponent implements OnInit {
     this.personService.getVehiclesForLicense().subscribe(response => {
       this.vehiclesForLicense = response;
       this.logger.log('this.vehiclesForLicense::: ', this.vehiclesForLicense);
-      if(this.currentPerson.driverProfiles!=null)
-      {
+      if (this.currentPerson.driverProfiles != null) {
         this.vehiclesForLicense = this.vehiclesForLicense.filter((el) => !this.currentPerson.driverProfiles.includes(el));
       }
-      
+
     }, error => this.ShowMessage(error, 'error'));
 
   }
@@ -266,7 +261,7 @@ export class PersonDocumentComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.medicalAttestationFileToUpload = files.item(0);
 
-       // this.currentPerson.medicalAttestation.name = files.item(0).name;
+        // this.currentPerson.medicalAttestation.name = files.item(0).name;
         this.currentPerson.medicalAttestation.location = "";
         this.logger.log('this.VatNumber :: ', this.VatNumber);
         this.personDocuments = new PersonDocuments();
@@ -313,7 +308,7 @@ export class PersonDocumentComponent implements OnInit {
         || files.item(0).type === 'image/png') {
         this.vcaAttestationFileToUpload = files.item(0);
 
-       // this.currentPerson.vcaAttestation.name = files.item(0).name;
+        // this.currentPerson.vcaAttestation.name = files.item(0).name;
         this.currentPerson.vcaAttestation.location = "";
         this.personDocuments = new PersonDocuments();
         this.personDocuments.customerVatNumber = this.VatNumber;
@@ -360,7 +355,7 @@ export class PersonDocumentComponent implements OnInit {
         this.constructionCardsToUpload = files.item(0);
 
         this.documents = new Documents();
-        this.documents.name = "" ; //files.item(0).name;
+        this.documents.name = ""; //files.item(0).name;
         this.documents.location = "";
         this.currentPerson.constructionCards.push(this.documents);
         this.personDocuments = new PersonDocuments();
@@ -381,7 +376,7 @@ export class PersonDocumentComponent implements OnInit {
       // do something, if upload success
       this.refreshPersonData();
       this.ShowMessage('succesvol geupload', '');
-      
+
     }, error => {
       this.ShowMessage('bestandsupload mislukt, probeer opnieuw!', '');
       this.logger.log(error);
@@ -411,7 +406,7 @@ export class PersonDocumentComponent implements OnInit {
         // this.currentPerson.studentAtWorkProfile.attestation.location = "";
         //this.currentPerson.studentAtWorkProfile.attestationDate = this.PersonDocumentForm.get('attestationDate').value;;
         //this.currentPerson.studentAtWorkProfile.balance = this.PersonDocumentForm.get('balance').value;;
-       // this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
+        // this.currentPerson.studentAtWorkProfile.contingent = this.PersonDocumentForm.get('contingent').value;
         this.personDocuments = new PersonDocuments();
         //this.personDocuments.customerVatNumber = this.VatNumber;
         //this.personDocuments.fileName = files.item(0).name;
@@ -517,7 +512,7 @@ export class PersonDocumentComponent implements OnInit {
         this.otherDocumentsToUpload = files.item(0);
 
         this.documents = new Documents();
-        this.documents.name = "" ; //files.item(0).name;
+        this.documents.name = ""; //files.item(0).name;
         this.documents.location = "";
         this.currentPerson.otherDocuments.push(this.documents);
         this.personDocuments = new PersonDocuments();

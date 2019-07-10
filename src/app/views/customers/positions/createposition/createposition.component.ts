@@ -8,7 +8,7 @@ import { environment } from '../../../../../environments/environment';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { LoggingService } from '../../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
@@ -35,7 +35,6 @@ export class CreatepositionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, private fileuploadService: FileuploadService,
     private positionsService: PositionsService, private snackBar: MatSnackBar,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService, public dialogRef: MatDialogRef<CreatepositionComponent>,
     @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
     this.currentPosition = posistionData;
@@ -133,7 +132,7 @@ export class CreatepositionComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') { this.fileToUpload = files.item(0); }
 
-      if (this.fileToUpload !== null) { 
+      if (this.fileToUpload !== null) {
         this.fileToUploadName = files.item(0).name;
         this.ShowMessage('werkpostfiche uploaden succesvol', '');
       }

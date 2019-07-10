@@ -12,7 +12,6 @@ import { CreateContractComponent } from './createcontract/createcontract.compone
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from '../../../../environments/environment';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { WorkSchedule } from '../../../shared/models';
 
 @Component({
@@ -67,6 +66,7 @@ export class DashboardPersonComponent implements OnInit {
   changeState() { this.currentState = this.currentState === 'initial' ? 'final' : 'initial'; }
 
   onPageInit() {
+    this.logger.showSpinner();
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.loginaccessToken = this.dpsLoginToken.accessToken;
@@ -91,6 +91,7 @@ export class DashboardPersonComponent implements OnInit {
         this.logger.log('onPageInit maindatas ::', this.maindatas);
         this.errorMsg = '';
       }, error => {
+        this.logger.hideSpinner();
         this.logger.log('onPageInit error while getting  getDpsScheduleByVatNumber('
           + this.vatNumber + ',' + localstartDate + ',' + localendDate + ') ::', error);
         this.errorMsg = 'Fout bij het ophalen van de planning.';
@@ -238,6 +239,7 @@ export class DashboardPersonComponent implements OnInit {
         } else { this.datas = this.maindatas; }
       } else { this.datas = this.maindatas; }
     } catch (e) { this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message); }
+    this.logger.hideSpinner();
   }
 
   addWeek() { this.WeekDiff += 1; this.onPageInit(); }

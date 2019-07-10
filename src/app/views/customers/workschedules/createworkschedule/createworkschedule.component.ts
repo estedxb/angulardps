@@ -8,7 +8,7 @@ import { WorkschedulesService } from 'src/app/shared/workschedules.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { copyObj } from '@angular/animations/browser/src/util';
 import { LoggingService } from '../../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-createworkschedule',
   templateUrl: './createworkschedule.component.html',
@@ -41,7 +41,6 @@ export class CreateWorkScheduleComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, private workschedulesService: WorkschedulesService, private dialog: MatDialog,
     private snackBar: MatSnackBar, public dialogRef: MatDialogRef<CreateWorkScheduleComponent>,
-    // private spinner: NgxUiLoaderService,
     @Inject(MAT_DIALOG_DATA) public dpsworkscheduledata: DpsWorkSchedule, private logger: LoggingService) {
     this.selectedDpsWorkSchedule = dpsworkscheduledata;
     this.currentDpsWorkSchedule = JSON.parse(JSON.stringify(dpsworkscheduledata));

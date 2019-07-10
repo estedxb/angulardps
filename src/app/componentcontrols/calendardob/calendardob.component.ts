@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { calendar } from 'ngx-bootstrap/chronos/moment/calendar';
 import { LoggingService } from '../../shared/logging.service';
 import { Form, FormGroup, FormControl } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-calendardob',
@@ -29,9 +28,7 @@ export class CalendarDOBComponent implements OnInit {
   set valueYear(value: any) { this._selectedValueYear = value; }
   get valueYear(): any { return this._selectedValueYear; }
 
-  constructor(
-    // private spinner: NgxUiLoaderService,
-    private logger: LoggingService) {
+  constructor(private logger: LoggingService) {
 
     const today: Date = new Date();
     this.dataDropDown = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];

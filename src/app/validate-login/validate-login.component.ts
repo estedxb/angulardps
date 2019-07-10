@@ -9,8 +9,6 @@ import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../share
 import { CustomerListsService } from '../shared/customerlists.service';
 
 import { Router, CanActivate } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-
 
 @Component({
   selector: 'app-validate-login',
@@ -28,7 +26,6 @@ export class ValidateLoginComponent implements OnInit {
   constructor(
     private router: Router,
     // private msalService: MsalServiceLocal, 
-    // private spinner: NgxUiLoaderService,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 

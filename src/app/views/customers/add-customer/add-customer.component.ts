@@ -12,7 +12,6 @@ import { DataService } from '../../../shared/data.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-add-customer',
@@ -44,7 +43,6 @@ export class AddCustomerComponent implements OnInit {
   public showFormIndex = 1;
   constructor(
     private customerService: CustomersService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService,
     private dialog: MatDialog, private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
     this.editObject = { data: '', page: '' };
@@ -136,9 +134,9 @@ export class AddCustomerComponent implements OnInit {
       if (this.HQdata.formValid === false)
         this.ShowMessage('Onjuiste invoer in invoerveld', '');
 
-      if(this.CTdata.formValid === false)
+      if (this.CTdata.formValid === false)
         this.ShowMessage('Onjuiste invoer in invoerveld', '');
-        
+
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
         if (this.HQdata.formValid === true && this.CTdata.formValid === true) {
           this.showFormIndex = 2;
@@ -214,20 +212,20 @@ export class AddCustomerComponent implements OnInit {
     });
   }
 
-  updateLocalStorage(customerVatNumber,customerName) {
+  updateLocalStorage(customerVatNumber, customerName) {
     this.dpsLoginToken.customerVatNumber = customerVatNumber;
     this.dpsLoginToken.customerName = customerName;
     this.dpsLoginToken.customerlogo = '';
     localStorage.setItem('dpsLoginToken', JSON.stringify(this.dpsLoginToken));
     this.logger.log('dpsLoginToken :: ', this.dpsLoginToken);
-    }
+  }
 
   updateData() {
 
     this.customerService.createCustomerUpdate(this.HQdata).subscribe(res => {
       this.ShowMessage('Klantrecord met succes gemaakt!', '');
       // this.showFormIndex = 3;      
-      this.updateLocalStorage(this.HQdata.customer.vatNumber,this.HQdata.customer.name);
+      this.updateLocalStorage(this.HQdata.customer.vatNumber, this.HQdata.customer.name);
       this.logger.log('Redirect Breaked 11');
       this.router.navigate(['/dashboard']);
       this.spinnerToggle = true;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoggingService } from '../../shared/logging.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginToken } from 'src/app/shared/models';
@@ -26,8 +25,7 @@ export class BulkContractComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, private router: Router,
-    private logger: LoggingService,
-    // private spinner: NgxUiLoaderService
+    private logger: LoggingService
   ) { }
 
   ngOnInit() {

@@ -6,7 +6,6 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from 'src/environments/environment';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +26,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, private router: Router,
     private snackBar: MatSnackBar,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
   ngOnInit() {

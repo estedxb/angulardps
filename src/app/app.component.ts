@@ -5,7 +5,6 @@ import { environment } from '../environments/environment';
 import { LoggingService } from './shared/logging.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 /*
 import * as Msal from 'msal';
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private spinner: NgxUiLoaderService,
     // private msalService: MsalServiceLocal,
     private logger: LoggingService) {
 
@@ -42,8 +40,8 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.spinner.start();
-    setTimeout(() => { this.spinner.stop(); }, 3000);
+    this.logger.showSpinner();
+    setTimeout(() => { this.logger.hideSpinner(); }, 3000);
   }
 
   /*

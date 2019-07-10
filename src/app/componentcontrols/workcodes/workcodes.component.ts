@@ -3,8 +3,6 @@ import { WorkCodesService } from '../../shared/workcodes.service';
 import { FormGroup, Form, FormControl } from '@angular/forms';
 import { WorkCodes } from '../../shared/models';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-
 
 @Component({
   selector: 'app-workcodes',
@@ -40,7 +38,6 @@ export class WorkCodesComponent implements OnInit {
 
   constructor(
     private workCodesService: WorkCodesService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 
