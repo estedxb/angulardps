@@ -56,13 +56,13 @@ export class UsersService {
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-      this.logger.log('vat number not correct format');
+      console.log('vat number not correct format');
     } else if (error.status === 204) {
-      this.logger.log('vat number doesnt exist ');
+      console.log('vat number doesnt exist ');
     } else if (error.status === 409) {
-      this.logger.log('user exists in the system, dont allow customer to create');
+      console.log('user exists in the system, dont allow customer to create');
     } else {
-      this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
     return Observable.throwError(error.message);
   }
