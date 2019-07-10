@@ -134,6 +134,9 @@ export class PersonPositionComponent implements OnInit {
 
   fillDataDropDownOnAdd(maindatas) {
 
+    this.logger.log("filter data drop down Add");
+    this.logger.log(this.DpsPersonObject);
+
     this.dataDropDownFunctie = [];
     this.dataDropDownFunctieIds = [];
 
@@ -145,6 +148,9 @@ export class PersonPositionComponent implements OnInit {
       }
     }
 
+    this.logger.log("main datas");
+    this.logger.log(maindatas);
+
     this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
 
     this.logger.log("selected index");
@@ -155,6 +161,7 @@ export class PersonPositionComponent implements OnInit {
       return;
     }
     else {
+      this.logger.log("last added position id=" + this.lastAddedPositionId);
       this.DpsPersonObject.customerPostionId = "" + this.lastAddedPositionId;
       this.changeMessage();
     }
@@ -195,6 +202,7 @@ export class PersonPositionComponent implements OnInit {
               this.maindatas.push(this.datas);
               this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
+              this.fillDataDropDownOnAdd(this.maindatas);
               this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
             }
           }
@@ -205,6 +213,8 @@ export class PersonPositionComponent implements OnInit {
 
   FilterTheArchive() {
 
+    this.logger.log("filter the archive");
+
     this.maindatas = this.maindatas.filter(d => d.isArchived === false);
     let sortedmaindatas = [];
 
@@ -214,7 +224,10 @@ export class PersonPositionComponent implements OnInit {
     for (let i = 0; i < this.maindatas.length; i++)
       positionArrays.push((this.maindatas[i].position.name.toLowerCase()));
 
-    if (this.maindatas !== null && this.maindatas !== undefined) {
+    if (this.maindatas !== null && this.maindatas !== undefined && this.maindatas.length > 0) {
+      if (this.maindatas[this.maindatas.length - 1].position !== null && this.maindatas[this.maindatas.length - 1].position !== undefined)
+        this.logger.log("position not found");
+
       this.lastAddedPosition = this.maindatas[this.maindatas.length - 1].position.name;
       this.lastAddedPositionId = this.maindatas[this.maindatas.length - 1].id;
     }
@@ -235,6 +248,9 @@ export class PersonPositionComponent implements OnInit {
 
     for (let i = 0; i < sortedmaindatas.length; i++)
       this.maindatas.push(sortedmaindatas[i]);
+
+    this.logger.log("main datas");
+    this.logger.log(this.maindatas);
 
   }
 
@@ -334,7 +350,13 @@ export class PersonPositionComponent implements OnInit {
   }
 
   switchNetExpense($event) {
-    this.DpsPersonObject.renumeration.costReimbursment = $event;
+
+    if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
+      this.DpsPersonObject.renumeration.costReimbursment = $event;
+    else {
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.costReimbursment = $event;
+    }
 
     if ($event === true) {
       this.PersonPositionForm.controls.netExpenseAllowance.enable();
@@ -352,6 +374,7 @@ export class PersonPositionComponent implements OnInit {
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
       this.logger.log("load person called Y ", res);
+      this.loadPersonDataNew(res);
       //this.loadPersonData(res);
     },
       (err: HttpErrorResponse) => {
@@ -403,6 +426,88 @@ export class PersonPositionComponent implements OnInit {
     return "";
   }
 
+  loadPersonDataNew(newresponse) {
+    this.logger.log("load person data new");
+    this.logger.log(newresponse);
+
+    this.DpsPersonObject = newresponse;
+
+    this.logger.log("customer position id=" + newresponse.customerPostionId);
+
+    if (newresponse.customerPostionId !== "" && newresponse.customerPostionId !== null && newresponse.customerPostionId !== undefined) {
+      this.logger.log("customer Position id=" + newresponse.customerPostionId);
+      this.findIndex(parseInt(newresponse.customerPostionId, 10));
+      this.DpsPersonObject.customerPostionId = "" + newresponse.customerPostionId;
+    }
+    else {
+      this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+      this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
+    }
+
+    if (newresponse.statute !== null && newresponse.statute !== undefined && newresponse.statute !== "") {
+      let counter = 0;
+      this.statutes.forEach((element) => {
+
+        if (element.name === newresponse.statute.name) {
+          this.selectedIndexStatute = counter;
+          this.DpsPersonObject.statute.name = newresponse.statute.name;
+          this.DpsPersonObject.statute.type = newresponse.statute.type;
+          this.DpsPersonObject.statute.brightStaffingID = newresponse.statute.brightStaffingID
+        }
+        counter++;
+      });
+
+      this.changeMessage();
+
+    }
+    else {
+
+      this.selectedIndexStatute = 0;
+
+      this.DpsPersonObject.statute = new Statute();
+      this.DpsPersonObject.statute.name = this.statutes[this.selectedIndexStatute].name;
+      this.DpsPersonObject.statute.type = this.statutes[this.selectedIndexStatute].type;
+      this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedIndexStatute].BrightStaffingID;
+
+      this.changeMessage();
+
+    }
+
+    if (newresponse.renumeration !== null && newresponse.renumeration !== undefined) {
+      this.DpsPersonObject.renumeration.hourlyWage = newresponse.renumeration.hourlyWage;
+      this.DpsPersonObject.renumeration.netCostReimbursment = newresponse.renumeration.netCostReimbursment;
+
+      this.kmtoggle = newresponse.renumeration.transportationAllowance;
+      this.nettoggle = newresponse.renumeration.costReimbursment;
+
+      this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+      this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
+
+      this.PersonPositionForm.controls.grossHourlyWage.setValue(newresponse.renumeration.hourlyWage);
+      this.PersonPositionForm.controls.netExpenseAllowance.setValue(newresponse.renumeration.netCostReimbursment);
+
+
+      if (this.nettoggle === true) {
+        this.PersonPositionForm.controls.netExpenseAllowance.enable();
+      }
+      else {
+        this.PersonPositionForm.controls.netExpenseAllowance.disable();
+      }
+
+      this.changeMessage();
+    }
+    else {
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+      this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
+
+      this.changeMessage();
+    }
+
+    this.PersonPositionForm.controls.extra.setValue(newresponse.addittionalInformation);
+
+  }
+
   loadPersonData(response) {
 
     const data = response;
@@ -411,16 +516,11 @@ export class PersonPositionComponent implements OnInit {
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject = data;
 
-    this.logger.log("response");
-    this.logger.log(response);
-
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined)
       this.findIndex(parseInt(data.customerPostionId, 10));
     else {
-
       this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
       this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
-
     }
 
     if (data.statute !== null && data.statute !== undefined && data.statute !== "") {
@@ -491,6 +591,8 @@ export class PersonPositionComponent implements OnInit {
 
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
 
+
+
   }
 
   onChangeDropDownFunctie($event) {
@@ -552,6 +654,11 @@ export class PersonPositionComponent implements OnInit {
         this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
         this.changeMessage();
       }
+      else {
+        this.DpsPersonObject.renumeration = new Renumeration();
+        this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+        this.changeMessage();
+      }
   }
 
   onHourlyWageReceive(grossHourlyWage: number) {
@@ -565,6 +672,10 @@ export class PersonPositionComponent implements OnInit {
           this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
           this.changeMessage();
         }
+        else {
+          this.DpsPersonObject.renumeration = new Renumeration();
+          this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
+        }
       }
     }
     else {
@@ -574,6 +685,10 @@ export class PersonPositionComponent implements OnInit {
           this.PersonPositionForm.get('grossHourlyWage').setValue(5);
           this.DpsPersonObject.renumeration.hourlyWage = 5;
           this.changeMessage();
+        }
+        else {
+          this.DpsPersonObject.renumeration = new Renumeration();
+          this.DpsPersonObject.renumeration.hourlyWage = 5;
         }
       }
     }
