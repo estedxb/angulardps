@@ -359,6 +359,7 @@ export class HeadQuartersComponent implements OnInit {
       this.ShowMessage('Btw-nummer staat niet in ons systeem', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
+
     if (errorMessage.status === 400) {
       this.ShowMessage('Btw-nummer is niet in correct formaat', '');
       this.HQForm.controls['vatNumber'].setValue('');

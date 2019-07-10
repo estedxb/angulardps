@@ -41,9 +41,8 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
-    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);
-    const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '/' + parameter).catch(this.errorHandler);
-    // const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
+    // console.log('getCustomersByVatNumber for VatNumber :: ' + parameter, this.getCustomersByVatNumberUrl + '/' + parameter);    
+    const result = this.http.get<any>(this.getCustomersByVatNumberUrl + '?VatNumber=' + parameter).catch(this.errorHandler);
     // console.log(result);
     return result;
   }
