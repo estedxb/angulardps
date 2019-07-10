@@ -10,6 +10,7 @@ import {
 import { CountriesComponent } from '../countries/countries.component';
 import { LoggingService } from 'src/app/shared/logging.service';
 
+
 @Component({
   selector: 'app-statute',
   templateUrl: './statute.component.html',
