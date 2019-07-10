@@ -42,6 +42,10 @@ export class AddPersonComponent implements OnInit {
 
   public zichmetdata;
   public receiveZichmetdata;
+  public countryString;
+  public nationalityString;
+  public birthCountryString;
+
 
   public selectedStatuteObject: any = {};
 
@@ -967,9 +971,10 @@ export class AddPersonComponent implements OnInit {
         }
         else {
           this.recordExists = true;
-          this.disableAllFields();
+          //this.disableAllFields();
           this.ShowMessage('Persoon bestaat al!', '');
-          this.errorMessage = 'Persoon bestaat al!';
+          this.router.navigate(['/person/'+ssid]);
+          // this.errorMessage = 'Persoon bestaat al!';
         }
       },
         (err: HttpErrorResponse) => {
@@ -1327,7 +1332,10 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.placeOfBirth = this.AddPersonForm1.get('placeOfBirth').value;
 
     this.DpsPersonObject.person.countryOfBirth = this.recvdCountryOfBirth;
+    this.birthCountryString = this.recvdCountryOfBirth;
+
     this.DpsPersonObject.person.nationality = this.recvdNationalityString;
+    this.nationalityString = this.recvdNationalityString;
 
     this.DpsPersonObject.person.travelMode = this.receiveZichmetdata;
     this.zichmetdata = this.receiveZichmetdata;
@@ -1348,6 +1356,7 @@ export class AddPersonComponent implements OnInit {
 
     this.DpsPersonObject.person.address.country = this.recvdCountryString;
     this.DpsPersonObject.person.address.countryCode = this.recvdCountryCode;
+    this.countryString = this.recvdCountryString;
 
     this.DpsPersonObject.person.email = new EmailAddress();
     this.DpsPersonObject.person.email.emailAddress = this.AddPersonForm1.get('emailAddress').value;
@@ -1359,10 +1368,6 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.phone.number = this.AddPersonForm1.get('vastNumber').value;
 
     this.DpsPersonObject.person.dateOfBirth = this.monthString + '/' + this.dayString + '/' + this.yearString;
-
-    this.DpsPersonObject.person.language = new Language();
-    this.DpsPersonObject.person.language.name = '';
-    this.DpsPersonObject.person.language.shortName = '';
 
     this.DpsPersonObject.person.bankAccount = new BankAccount();
     this.DpsPersonObject.person.bankAccount.iban = this.AddPersonForm1.get('iban').value;
@@ -1379,6 +1384,7 @@ export class AddPersonComponent implements OnInit {
     this.DpsPersonObject.person.language = new Language();
     this.DpsPersonObject.person.language.name = this.selectedlanguageObject.name;
     this.DpsPersonObject.person.language.shortName = this.selectedlanguageObject.shortName.toLowerCase();
+    this.languageString =  this.selectedlanguageObject.name;
 
     this.logger.log('selectedPositionIndex=' + this.selectedPositionIndex);
     this.findIndex(this.dataDropDownFunctie[this.selectedPositionIndex]);
@@ -1507,6 +1513,7 @@ export class AddPersonComponent implements OnInit {
 
     this.selectedlanguageObject.name = $event.name;
     this.selectedlanguageObject.shortName = $event.shortName.toLowerCase();
+    //this.languageString = $event.name;
 
     this.logger.log(this.selectedlanguageObject);
 
