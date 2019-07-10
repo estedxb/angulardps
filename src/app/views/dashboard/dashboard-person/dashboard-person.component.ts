@@ -285,13 +285,13 @@ export class DashboardPersonComponent implements OnInit {
     this.startDate = mon;
     this.endDate = sun;
 
-    this.SelectedMonday = mon.getUTCDate().toString() + '/' + mon.getUTCMonth().toString();
-    this.SelectedTuesday = tue.getUTCDate().toString() + '/' + tue.getUTCMonth().toString();
-    this.SelectedWednesday = wed.getUTCDate().toString() + '/' + wed.getUTCMonth().toString();
-    this.SelectedThursday = thu.getUTCDate().toString() + '/' + thu.getUTCMonth().toString();
-    this.SelectedFriday = fri.getUTCDate().toString() + '/' + fri.getUTCMonth().toString();
-    this.SelectedSaturday = sat.getUTCDate().toString() + '/' + sat.getUTCMonth().toString();
-    this.SelectedSunday = sun.getUTCDate().toString() + '/' + sun.getUTCMonth().toString();
+    this.SelectedMonday = this.formateZero(mon.getUTCDate()).toString() + '/' + this.formateZero(mon.getUTCMonth() + 1).toString();
+    this.SelectedTuesday = this.formateZero(tue.getUTCDate()).toString() + '/' + this.formateZero(tue.getUTCMonth() + 1).toString();
+    this.SelectedWednesday = this.formateZero(wed.getUTCDate()).toString() + '/' + this.formateZero(wed.getUTCMonth() + 1).toString();
+    this.SelectedThursday = this.formateZero(thu.getUTCDate()).toString() + '/' + this.formateZero(thu.getUTCMonth() + 1).toString();
+    this.SelectedFriday = this.formateZero(fri.getUTCDate()).toString() + '/' + this.formateZero(fri.getUTCMonth() + 1).toString();
+    this.SelectedSaturday = this.formateZero(sat.getUTCDate()).toString() + '/' + this.formateZero(sat.getUTCMonth() + 1).toString();
+    this.SelectedSunday = this.formateZero(sun.getUTCDate()).toString() + '/' + this.formateZero(sun.getUTCMonth() + 1).toString();
 
     // tslint:disable-next-line: max-line-length
     return this.formateZero(this.startDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.startDate) + (this.startDate.getUTCFullYear() !== this.endDate.getUTCFullYear() ? ' ' + this.startDate.getUTCFullYear() : '') + ' - ' + this.formateZero(this.endDate.getUTCDate().toString()) + ' ' + this.getShortMonth(this.endDate) + ' ' + this.endDate.getUTCFullYear();
@@ -357,8 +357,6 @@ export class DashboardPersonComponent implements OnInit {
       alert('openContractDialog :: ' + e.message);
     }
   }
-
-
 
   getSelectedPersonContracts(index, personid) {
     this.selectedPersonContracts = [];

@@ -93,11 +93,11 @@ export class HeadQuartersComponent implements OnInit {
   _isDisabled: boolean = true;
 
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-  public Id = "";
-  public currentPage = "";
+  public Id = '';
+  public currentPage = '';
 
   public EditdataFromComponents;
-  public selectedLegalObject: any = { "FormName": "NV" };
+  public selectedLegalObject: any = { 'FormName': 'NV' };
 
   // ngAfterViewInit(){
   //   //this.legalString = this.legalComponent.selectedString;
@@ -107,7 +107,7 @@ export class HeadQuartersComponent implements OnInit {
 
     //load Edit Page details
     if (this.oldData !== this.HQFormData) {
-      if (this.HQFormData !== undefined && this.HQFormData.data !== null && this.HQFormData.page === "edit") {
+      if (this.HQFormData !== undefined && this.HQFormData.data !== null && this.HQFormData.page === 'edit') {
         // this.clearFields();
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
@@ -119,22 +119,22 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
 
     this.HQForm = new FormGroup({
-      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12),Validators.maxLength(12),Validators.pattern("^[a-zA-Z0-9]+$")]),
+      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[a-zA-Z0-9]+$')]),
       firstname: new FormControl('', [Validators.required]),
       officialname: new FormControl('', [Validators.required]),
       creditCheck: new FormControl(),
       legalform: new FormControl(),
       creditLimit: new FormControl(),
-      street: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z0-9 ]+$")]),
-      streetnumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$")]),
+      street: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9 ]+$')]),
+      streetnumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
       bus: new FormControl(''),
-      city: new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
-      postalcode: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]),
+      postalcode: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]),
       country: new FormControl(''),
       phonenumber: new FormControl('', Validators.required),
-      invoiceEmail: new FormControl('', [Validators.required, Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")]),
-      contractsEmail: new FormControl('', [Validators.required, Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")]),
-      generalEmail: new FormControl('', [Validators.required, Validators.pattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$")])
+      invoiceEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
+      contractsEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
+      generalEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
 
     this.HQForm.get('creditLimit').disable();
@@ -144,20 +144,20 @@ export class HeadQuartersComponent implements OnInit {
     this.createObjects();  //check validations
 
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
-    localStorage.getItem('dpsLoginToken') !== '' &&
-    localStorage.getItem('dpsLoginToken') !== null) {
-    const sub = this.route.params.subscribe((params: any) => {
-      this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-      this.Id = params.id;
-      this.currentPage = params.page;
-    });
-  } else {
-    // this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
-    // // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
+      localStorage.getItem('dpsLoginToken') !== '' &&
+      localStorage.getItem('dpsLoginToken') !== null) {
+      const sub = this.route.params.subscribe((params: any) => {
+        this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+        this.Id = params.id;
+        this.currentPage = params.page;
+      });
+    } else {
+      // this.logger.log('localStorage.getItem("dpsLoginToken") not found.', this.dpsLoginToken);
+      // // this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
 
-    // this.logger.log('Redirect Breaked 9');
-    // //this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
-  }
+      // this.logger.log('Redirect Breaked 9');
+      // //this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+    }
 
   }
 
@@ -165,7 +165,7 @@ export class HeadQuartersComponent implements OnInit {
     private formBuilder: FormBuilder,
     // private spinner: NgxUiLoaderService,
     private customerService: CustomersService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
@@ -177,7 +177,7 @@ export class HeadQuartersComponent implements OnInit {
 
     //load Edit Page details
     if (this.HQFormData !== null && this.HQFormData !== undefined && this.oldData !== this.HQFormData) {
-      if (this.HQFormData !== undefined && this.HQFormData.data !== "" && this.HQFormData.page === "edit") {
+      if (this.HQFormData !== undefined && this.HQFormData.data !== '' && this.HQFormData.page === 'edit') {
         this.oldData = this.HQFormData;
         this.loadDataEdit(this.HQFormData.data);
         this.updateData();
@@ -254,23 +254,24 @@ export class HeadQuartersComponent implements OnInit {
       this.HQForm.get('phonenumber').valid === true &&
       this.HQForm.get('invoiceEmail').valid === true &&
       this.HQForm.get('contractsEmail').valid === true &&
+      // this.allowCustomer === true &&
       this.HQForm.get('generalEmail').valid === true) {
-      console.log("form valid");
+      console.log('form valid');
       return true;
     }
     else {
-      console.log("form not valid");
-      console.log("vatnumber=" + this.HQForm.get('vatNumber').valid);
-      console.log("firstname=" + this.HQForm.get('firstname').valid);
-      console.log("name=" + this.HQForm.get('officialname').valid);
-      console.log("street=" + this.HQForm.get('street').valid);
-      console.log("streetnumber=" + this.HQForm.get('streetnumber').valid);
-      console.log("city=" + this.HQForm.get('city').valid);
-      console.log("postalcode=" + this.HQForm.get('postalcode').valid);
-      console.log("phonenumber=" + this.HQForm.get('phonenumber').valid);
-      console.log("invoiceEmail=" + this.HQForm.get('invoiceEmail').valid);
-      console.log("contractsEmail=" + this.HQForm.get('contractsEmail').valid);
-      console.log("generalEmail=" + this.HQForm.get('generalEmail').valid);
+      console.log('form not valid');
+      console.log('vatnumber=' + this.HQForm.get('vatNumber').valid);
+      console.log('firstname=' + this.HQForm.get('firstname').valid);
+      console.log('name=' + this.HQForm.get('officialname').valid);
+      console.log('street=' + this.HQForm.get('street').valid);
+      console.log('streetnumber=' + this.HQForm.get('streetnumber').valid);
+      console.log('city=' + this.HQForm.get('city').valid);
+      console.log('postalcode=' + this.HQForm.get('postalcode').valid);
+      console.log('phonenumber=' + this.HQForm.get('phonenumber').valid);
+      console.log('invoiceEmail=' + this.HQForm.get('invoiceEmail').valid);
+      console.log('contractsEmail=' + this.HQForm.get('contractsEmail').valid);
+      console.log('generalEmail=' + this.HQForm.get('generalEmail').valid);
 
     }
 
@@ -297,7 +298,7 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessage($event) {
     this.nlegalString = $event;
-    this.selectedLegalObject = { "FormName": $event };
+    this.selectedLegalObject = { 'FormName': $event };
     this.setCustomerObject();
     this.createObjects();
   }
@@ -348,25 +349,33 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: any) {
 
-    this.ShowMessage("Klant met vatnummer bestaat al",'');
+    // this.ShowMessage("Klant met vatnummer bestaat al",'');
 
-    console.log("there is an error with api call to getCustomersbyVatNumber", errorMessage);
+    console.log('there is an error with api call to getCustomersbyVatNumber', errorMessage);
 
     this.allowCustomer = false;
 
-    if(errorMessage.status === 400)
-    {
-      this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
+    if (errorMessage.status === 404) {
+      this.ShowMessage('Btw-nummer is niet in correct formaat', '');
+      this.HQForm.controls['vatNumber'].setValue('');
     }
-    if(errorMessage.status === 204)
-    {
-      this.ShowMessage("Geen record in ons systeem",'');
+    if (errorMessage.status === 400) {
+      this.ShowMessage('Btw-nummer staat niet in ons systeem', '');
+      this.HQForm.controls['vatNumber'].setValue('');
     }
-    if(errorMessage.status === 409)
-    {
+    if (errorMessage.status === 204) {
+      this.ShowMessage('Geen record in ons systeem', '');
+      this.HQForm.controls['vatNumber'].setValue('');
+    }
+    if (errorMessage.status === 409) {
       console.log('error conflict 409');
-      this.ShowMessage("Klant met vatnummer bestaat al",'');
-      this.router.navigate(['/'+'customer/'+this.HQForm.get('vatNumber').value]);        
+      this.ShowMessage('Klant met vatnummer bestaat al', '');
+      this.router.navigate(['/' + 'customer/' + this.HQForm.get('vatNumber').value]);
+    }
+    if (errorMessage.status === 500) {
+      console.log('System Error', errorMessage);
+      this.ShowMessage('Interne Server Fout', '');
+      this.HQForm.controls['vatNumber'].setValue('');
     }
 
   }
@@ -380,7 +389,7 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   clearError() {
-    this.ErrorResponseMessage = "";
+    this.ErrorResponseMessage = '';
   }
 
   creditLimit(value: number) {
@@ -392,22 +401,21 @@ export class HeadQuartersComponent implements OnInit {
 
     this.loadData(response);
 
-    if(response.customer.creditCheck !== undefined && response.customer.creditCheck !== null)
-    {
+    if (response.customer.creditCheck !== undefined && response.customer.creditCheck !== null) {
       this.creditCheckboolean = response.customer.creditCheck.creditcheck;
       this.creditCheckPending = response.customer.creditCheck.creditCheckPending;
       this.creditCheckLimit = response.customer.creditCheck.creditLimit;
       this.creditcheckEdit = response.customer.creditCheck.creditcheck;
-  
+
       var today = new Date();
       this.creditCheck = new CreditCheck();
-  
+
       // assigning credit check object
       this.creditCheck.creditLimit = this.creditCheckLimit; //this.creditCheckLimit;
       this.creditCheck.creditcheck = this.creditCheckboolean;
       this.creditCheck.creditCheckPending = this.creditCheckPending;
-      this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-  
+      this.creditCheck.dateChecked = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+
       if (this.creditCheckboolean === true)
         this.creditLimit(this.creditCheckLimit);
       else {
@@ -418,25 +426,25 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   clearFields() {
-    this.HQForm.controls['firstname'].setValue("");
-    this.HQForm.controls['officialname'].setValue("");
-    this.HQForm.controls['street'].setValue("");
-    this.HQForm.controls['streetnumber'].setValue("");
-    this.HQForm.controls['bus'].setValue("");
-    this.HQForm.controls['city'].setValue("");
-    this.HQForm.controls['postalcode'].setValue("");
-    this.HQForm.controls['country'].setValue("");
-    this.HQForm.controls['phonenumber'].setValue("");
-    this.HQForm.controls['generalEmail'].setValue("");
-    this.HQForm.controls['invoiceEmail'].setValue("");
-    this.HQForm.controls['contractsEmail'].setValue("");
+    this.HQForm.controls['firstname'].setValue('');
+    this.HQForm.controls['officialname'].setValue('');
+    this.HQForm.controls['street'].setValue('');
+    this.HQForm.controls['streetnumber'].setValue('');
+    this.HQForm.controls['bus'].setValue('');
+    this.HQForm.controls['city'].setValue('');
+    this.HQForm.controls['postalcode'].setValue('');
+    this.HQForm.controls['country'].setValue('');
+    this.HQForm.controls['phonenumber'].setValue('');
+    this.HQForm.controls['generalEmail'].setValue('');
+    this.HQForm.controls['invoiceEmail'].setValue('');
+    this.HQForm.controls['contractsEmail'].setValue('');
 
   }
 
 
   loadData(verifiedCustomerData: any) {
 
-    console.log("customer data");
+    console.log('customer data');
     console.log(verifiedCustomerData);
 
     if (verifiedCustomerData !== null) {
@@ -516,7 +524,7 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheck.creditLimit = 0;
     this.creditCheck.creditcheck = this.creditcheckEdit;
     this.creditCheck.creditCheckPending = false;
-    this.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+    this.creditCheck.dateChecked = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
 
 
   }
@@ -570,8 +578,8 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.creditCheck.creditLimit = this.HQForm.get('creditLimit').value;
     this.customer.creditCheck.creditcheck = this.creditcheckEdit;
     this.customer.creditCheck.creditCheckPending = this.creditCheckPending;
-    this.customer.creditCheck.dateChecked = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-  
+    this.customer.creditCheck.dateChecked = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.address = this.address;
     this.customer.email = this.generalEmail;
@@ -595,9 +603,9 @@ export class HeadQuartersComponent implements OnInit {
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
 
     // assigning statutesettings object
-    this.statute.name = "";
-    this.paritairCommitee.name = "";
-    this.paritairCommitee.number = "";
+    this.statute.name = '';
+    this.paritairCommitee.name = '';
+    this.paritairCommitee.number = '';
     this.mealVoucherSettings.employerShare = 0;
     this.mealVoucherSettings.minimumHours = 0;
     this.mealVoucherSettings.totalWorth = 0;
@@ -688,16 +696,16 @@ export class HeadQuartersComponent implements OnInit {
     this.contact = new Contact();
 
     // assigning contacts 
-    this.contactsEmail.emailAddress = ""
-    this.phoneNumber.number = ""
-    this.language.name = ""
-    this.language.shortName = "";
+    this.contactsEmail.emailAddress = ''
+    this.phoneNumber.number = ''
+    this.language.name = ''
+    this.language.shortName = '';
 
-    this.contact.firstName = "";
-    this.contact.lastName = "";
+    this.contact.firstName = '';
+    this.contact.lastName = '';
     this.contact.email = this.contactsEmail;
     this.contact.mobile = this.phoneNumber;
-    this.contact.postion = "";
+    this.contact.postion = '';
     this.contact.language = this.language;
   }
 
@@ -735,11 +743,10 @@ export class HeadQuartersComponent implements OnInit {
   validity() {
     // && this.allowCustomer === true
 
-    if(this.HQForm.valid === false &&  this.HQForm.get('bus').value === "" && !this.emptyData())
+    if (this.HQForm.valid === false && this.HQForm.get('bus').value === '' && !this.emptyData())
       return true;
 
-    if(this.HQForm.valid === false)
-    {
+    if (this.HQForm.valid === false) {
       // if(this.HQForm.get('vatNumber').invalid === true)
       //   this.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
       //   if(this.HQForm.get('firstname').invalid === true)
@@ -772,27 +779,27 @@ export class HeadQuartersComponent implements OnInit {
 
   emptyData() {
 
-    if (this.HQForm.get('vatNumber').value === "")
+    if (this.HQForm.get('vatNumber').value === '')
       return true;
-    if (this.HQForm.get('firstname').value === "")
+    if (this.HQForm.get('firstname').value === '')
       return true;
-    if (this.HQForm.get('officialname').value === "")
+    if (this.HQForm.get('officialname').value === '')
       return true;
-    if (this.HQForm.get('street').value === "")
+    if (this.HQForm.get('street').value === '')
       return true;
-    if (this.HQForm.get('streetnumber').value === "")
+    if (this.HQForm.get('streetnumber').value === '')
       return true;
-    if (this.HQForm.get('city').value === "")
+    if (this.HQForm.get('city').value === '')
       return true;
-    if (this.HQForm.get('postalcode').value === "")
+    if (this.HQForm.get('postalcode').value === '')
       return true;
-    if (this.HQForm.get('phonenumber').value === "")
+    if (this.HQForm.get('phonenumber').value === '')
       return true;
-    if (this.HQForm.get('invoiceEmail').value === "")
+    if (this.HQForm.get('invoiceEmail').value === '')
       return true;
-    if (this.HQForm.get('contractsEmail').value === "")
+    if (this.HQForm.get('contractsEmail').value === '')
       return true;
-    if (this.HQForm.get('generalEmail').value === "")
+    if (this.HQForm.get('generalEmail').value === '')
       return true;
 
     return false;
@@ -810,60 +817,18 @@ export class HeadQuartersComponent implements OnInit {
 
     console.log(this.HQFormData.data.invoiceSettings);
 
-    if(this.HQFormData.data.invoiceSettings === null)
-    {
+    if (this.HQFormData.data.invoiceSettings === null) {
       if (this.dpsCustomer !== null) {
         this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": "",
-          "bulkContractsEnabled": false,
-          "statuteSettings": this.HQFormData.data.statuteSettings,
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null; 
-    }
-
-    if(this.HQFormData.data.statuteSettings === null)
-    {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": this.HQFormData.data.invoiceSettings,
-          "bulkContractsEnabled": false,
-          "statuteSettings": "",
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
-        };
-        this.sendDatatoHome(this.HQdata);
-      }
-      else
-        this.HQdata = null;
-      
-    }
-
-    if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
-    {
-      if (this.dpsCustomer !== null) {
-        this.HQdata = {
-          "customer": this.dpsCustomer.customer,
-          "invoiceEmail": this.invoiceEmail,
-          "contractsEmail": this.contractsEmail,
-          "invoiceSettings": this.HQFormData.data.invoiceSettings,
-          "bulkContractsEnabled": false,
-          "statuteSettings": this.HQFormData.data.statuteSettings,
-          "contact": this.HQFormData.data.contact,
-          "activateContactAsUser": false,
-          "formValid": this.validity()
+          'customer': this.dpsCustomer.customer,
+          'invoiceEmail': this.invoiceEmail,
+          'contractsEmail': this.contractsEmail,
+          'invoiceSettings': '',
+          'bulkContractsEnabled': false,
+          'statuteSettings': this.HQFormData.data.statuteSettings,
+          'contact': this.HQFormData.data.contact,
+          'activateContactAsUser': false,
+          'formValid': this.validity()
         };
         this.sendDatatoHome(this.HQdata);
       }
@@ -871,7 +836,46 @@ export class HeadQuartersComponent implements OnInit {
         this.HQdata = null;
     }
 
-    
+    if (this.HQFormData.data.statuteSettings === null) {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          'customer': this.dpsCustomer.customer,
+          'invoiceEmail': this.invoiceEmail,
+          'contractsEmail': this.contractsEmail,
+          'invoiceSettings': this.HQFormData.data.invoiceSettings,
+          'bulkContractsEnabled': false,
+          'statuteSettings': '',
+          'contact': this.HQFormData.data.contact,
+          'activateContactAsUser': false,
+          'formValid': this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+
+    }
+
+    if (this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null) {
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          'customer': this.dpsCustomer.customer,
+          'invoiceEmail': this.invoiceEmail,
+          'contractsEmail': this.contractsEmail,
+          'invoiceSettings': this.HQFormData.data.invoiceSettings,
+          'bulkContractsEnabled': false,
+          'statuteSettings': this.HQFormData.data.statuteSettings,
+          'contact': this.HQFormData.data.contact,
+          'activateContactAsUser': false,
+          'formValid': this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;
+    }
+
+
   }
 
 

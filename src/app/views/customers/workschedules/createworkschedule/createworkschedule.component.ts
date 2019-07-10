@@ -329,7 +329,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   OnTextBoxBlur(InputValue, rowid, dayOfWeek, SE, HM) {
-    // this.logger.log('OnTextBoxBlur(' + InputValue + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
+    this.logger.log('OnTextBoxBlur(' + InputValue + ', ' + rowid + ', ' + dayOfWeek + ', ' + SE + ', ' + HM + '); ');
     this.currentDpsWorkSchedule.workSchedule.workDays.forEach(wday => {
       if (dayOfWeek === wday.dayOfWeek) {
         // this.logger.log('wday(' + (rowid + 1) + ')', wday);
@@ -416,6 +416,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   onKey(e) {
+    this.logger.log('onKey ::' + e.target.value);
     if (e.keyCode >= 48 && e.keyCode <= 57) {
       return true;
     } else {
@@ -423,7 +424,7 @@ export class CreateWorkScheduleComponent implements OnInit {
     }
   }
   onHourKey(e) {
-    this.logger.log(e.target.value);
+    this.logger.log('onHourKey ::' + e.target.value);
     if (e.target.value < 23) {
       return true;
     } else {
@@ -435,7 +436,7 @@ export class CreateWorkScheduleComponent implements OnInit {
   }
 
   onMinKey(e) {
-    this.logger.log(e.target.value);
+    this.logger.log('onMinKey ::' + e.target.value);
     if (e.target.value < 59) {
       return true;
     } else {
