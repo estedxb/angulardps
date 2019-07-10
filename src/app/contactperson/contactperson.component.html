@@ -97,13 +97,13 @@
                 <label class="titleBold"> Telefoonnummer </label>
                 <input (change)="updateData()" formControlName="telephone" class="form-control" name="telephone"
                     type="text" />
-                <div class="form-control-feedback"
-                    *ngIf="CTForm.controls.telephone.invalid && (CTForm.controls.telephone.invalid || CTForm.controls.telephone.dirty || CTForm.controls.telephone.dirty || CTForm.controls.telephone.touched) else fnewvalid">
+                <!-- <div class="form-control-feedback"
+                    *ngIf="CTForm.controls.telephone.invalid && (CTForm.controls.telephone.touched || CTForm.controls.telephone.dirty || CTForm.controls.telephone.untouched) else fnewvalid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
                 </div>
                 <ng-template #fnewvalid>
                     <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template>
+                </ng-template> -->
             </div>
 
             <div class="col-sm-4 center-block middle-block" *ngIf="page === 'add' else blockelse">

@@ -441,7 +441,7 @@ export class PersonPositionComponent implements OnInit {
           this.selectedIndexStatute = counter;
           this.DpsPersonObject.statute.name = newresponse.statute.name;
           this.DpsPersonObject.statute.type = newresponse.statute.type;
-          this.DpsPersonObject.statute.brightStaffingID = newresponse.statute.brightStaffingID
+          this.DpsPersonObject.statute.brightStaffingID = newresponse.statute.brightStaffingID;
         }
         counter++;
       });
