@@ -320,9 +320,9 @@ export class HeadQuartersComponent implements OnInit {
     this.creditcheckEdit = false;
     this.HQForm.get('creditLimit').setValue('');
 
-    //if(this.HQForm.get('vatNumber').valid === true)    
-    this.getCustomerByVatNumber(this.vatNumber);
-
+    if (this.HQForm.get('vatNumber').valid === true) {
+      this.getCustomerByVatNumber(this.vatNumber);
+    }
   }
 
   // response Codes: 
@@ -356,13 +356,14 @@ export class HeadQuartersComponent implements OnInit {
     this.allowCustomer = false;
 
     if (errorMessage.status === 404) {
-      this.ShowMessage('Btw-nummer is niet in correct formaat', '');
-      this.HQForm.controls['vatNumber'].setValue('');
-    }
-    if (errorMessage.status === 400) {
       this.ShowMessage('Btw-nummer staat niet in ons systeem', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
+    if (errorMessage.status === 400) {
+      this.ShowMessage('Btw-nummer is niet in correct formaat', '');
+      this.HQForm.controls['vatNumber'].setValue('');
+    }
+
     if (errorMessage.status === 204) {
       this.ShowMessage('Geen record in ons systeem', '');
       this.HQForm.controls['vatNumber'].setValue('');
