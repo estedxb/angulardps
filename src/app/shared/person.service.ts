@@ -150,7 +150,7 @@ export class PersonService {
   }
 
   public getPersonBySSIDVatnumber(ssid: string, customervatnumber: string): Observable<DpsPerson> {
-    this.logger.log('getPersonBySSIDVatnumber :: ' + this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber);
+    // this.logger.log('getPersonBySSIDVatnumber :: ' + this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const result = this.http.get<DpsPerson>(
       this.getPersonForCustomerbySSIdNCVNURL + '/' + ssid + '/' + customervatnumber, this.httpOptions).catch(this.errorHandler);
@@ -253,16 +253,16 @@ export class PersonService {
 
   errorHandler(error: HttpErrorResponse) {
     if (error.status === 400) {
-      this.logger.log('vat number not correct format');
+     console.log('vat number not correct format');
     } else if (error.status === 204) {
-      this.logger.log('vat number doesnt exist ');
+    console.log('vat number doesnt exist ');
     } else if (error.status === 409) {
       console.log('error conflict 409');
       // this.router.navigate(['/'+'customer/'+'123456789101']);
 
-      this.logger.log('user exists in the system, dont allow customer to create');
+      console.log('user exists in the system, dont allow customer to create');
     } else {
-      this.logger.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
+      console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
     return Observable.throwError(error.message);
   }

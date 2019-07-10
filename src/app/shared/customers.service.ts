@@ -34,12 +34,10 @@ export class CustomersService {
   }
 
   public getCustomersByVatNumberEdit(parameter: string): Observable<DPSCustomer> {
-
     // console.log('edit call to get customer by vat Number');
     const result = this.http.get<any>(this.getCustomersByVatNumberEditUrl + '/' + parameter).catch(this.errorHandler);
     // console.log('result=' + result);
     return result;
-
   }
 
   public getCustomersByVatNumber(parameter: string): Observable<DPSCustomer> {
@@ -61,14 +59,12 @@ export class CustomersService {
       headers: httpHeaders,
       observe: 'response'
     });
-
   }
 
   public createCustomer(customer: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
     return this.http.post<any>(this.createCustomerURL, customer, {
       headers: httpHeaders,
       observe: 'response'
@@ -85,8 +81,6 @@ export class CustomersService {
     } else {
       console.log('Error :: ' + error.status + ' || error.message :: ' + error.message);
     }
-
     return Observable.throwError(error);
   }
-
 }

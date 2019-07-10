@@ -346,28 +346,27 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  handleError(errorMessage: HttpErrorResponse) {
+  handleError(errorMessage: any) {
 
-    console.log("there is an error with api call to getCustomersbyVatNumber");
+    this.ShowMessage("Klant met vatnummer bestaat al",'');
+
+    console.log("there is an error with api call to getCustomersbyVatNumber", errorMessage);
 
     this.allowCustomer = false;
 
-    if (errorMessage.status === 400)
+    if(errorMessage.status === 400)
     {
       this.ShowMessage( "Btw-nummer is niet in correct formaat",'');
     }
-    if (errorMessage.status === 204)
+    if(errorMessage.status === 204)
     {
       this.ShowMessage("Geen record in ons systeem",'');
     }
-    if (errorMessage.status === 409)
+    if(errorMessage.status === 409)
     {
       console.log('error conflict 409');
-      this.router.navigate(['/'+'customer/'+this.HQForm.get('vatNumber').value]);
-      this.router.navigate(['/dashboard']);
-
       this.ShowMessage("Klant met vatnummer bestaat al",'');
-        
+      this.router.navigate(['/'+'customer/'+this.HQForm.get('vatNumber').value]);        
     }
 
   }

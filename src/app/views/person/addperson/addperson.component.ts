@@ -225,6 +225,8 @@ export class AddPersonComponent implements OnInit {
   ) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
+      this.logger.log("positions service");
+      this.logger.log(this.maindatas);
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
@@ -257,12 +259,14 @@ export class AddPersonComponent implements OnInit {
         this.datas = result;
         // this.maindatas = result;
         this.logger.log('this.data ::', this.datas);
+        this.logger.log(typeof(this.datas));
 
         if (this.datas !== null && this.datas !== undefined) {
           if (this.SelectedIndexFunctie > -1) {
             //
             //this.dataDropDownFunctie.push(result);
             this.maindatas.push(this.datas);
+
             this.fillDataDropDown(this.maindatas)
             this.FilterTheArchive();
             this.ShowMessage('posities "' + this.datas.position.name + '" is succesvol bijgewerkt.', '');
@@ -357,6 +361,7 @@ export class AddPersonComponent implements OnInit {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
+      console.log(this.maindatas);
       this.FilterTheArchive();
       this.dataDropDownFunctie = this.maindatas;
       this.fillDataDropDown(this.maindatas);

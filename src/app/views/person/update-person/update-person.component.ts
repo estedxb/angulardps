@@ -212,7 +212,8 @@ export class UpdatePersonComponent implements OnInit {
 
     }
 
-    if (this.currentPage === 'positions') {
+    if (this.currentPage === 'positions') {      
+      this.logger.log(this.personpositionData);
       // this.ShowMessage('Persoon is succesvol bijgewerkt.', '');
       this.personService.updatePosition(this.personpositionData).subscribe(res => {
         this.logger.log('response=' + res);

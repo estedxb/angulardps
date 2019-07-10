@@ -25,14 +25,12 @@ export class vehicleService {
   }
 
   public getVehiclesNew(): Observable<any> {
-    this.logger.log("getVehicles url="+this.getVehicleUrlNew);
     const result = this.http.get<any>(this.getVehicleUrlNew).catch(this.errorHandler);
     return result;
   }
 
 
   public getVehicles(): Observable<any> {
-    this.logger.log("getVehicles url="+this.getVehicleUrl);
     const result = this.http.get<any>(this.getVehicleUrl).catch(this.errorHandler);
     return result;
   }

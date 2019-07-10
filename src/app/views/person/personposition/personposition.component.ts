@@ -303,9 +303,6 @@ export class PersonPositionComponent implements OnInit {
       this.countStatutes = data.length;
     }, error => this.errorMsg = error);
 
-    this.DpsPersonObject = new DpsPerson();
-    this.DpsPersonObject.renumeration = new Renumeration();
-
     this.nettoggle = true;
     this.kmtoggle = true;
 
@@ -361,8 +358,8 @@ export class PersonPositionComponent implements OnInit {
     const customerVatNumber = this.dpsLoginToken.customerVatNumber;
 
     this.personsService.getPersonBySSIDVatnumber(this.SocialSecurityId, customerVatNumber).subscribe(res => {
-      this.logger.log("load person called");
-      this.loadPersonData(res);
+      this.logger.log("load person called Y ", res);
+      //this.loadPersonData(res);
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -415,7 +412,8 @@ export class PersonPositionComponent implements OnInit {
     return "";
   }
 
-  loadPersonData(response) {
+  loadPersonData(response) 
+  {
 
     const data = response;
     let counter: number = 0;
@@ -426,17 +424,11 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log("response");
     this.logger.log(response);
 
-    this.logger.log("data received is=");
-    this.logger.log(data.customerPostionId);
-
     if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) 
         this.findIndex(parseInt(data.customerPostionId, 10));
     else {
 
-      this.logger.log("null customer positon id");
-
       this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
-      this.logger.log("selected index functie="+this.selectedIndexFunctie);
       this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
 
     }
@@ -469,6 +461,8 @@ export class PersonPositionComponent implements OnInit {
       this.DpsPersonObject.statute.type = this.statutes[this.selectedIndexStatute].type;
       this.DpsPersonObject.statute.brightStaffingID = this.statutes[this.selectedIndexStatute].BrightStaffingID;
 
+      this.changeMessage();
+
     }
 
     //hourlyWage
@@ -476,9 +470,6 @@ export class PersonPositionComponent implements OnInit {
     //transportationAllowance
     //costReimbursment
 
-
-    this.logger.log("data from renumeration");
-    this.logger.log(data);
 
     if(data.renumeration !== null && data.renumeration !== undefined)
     {
