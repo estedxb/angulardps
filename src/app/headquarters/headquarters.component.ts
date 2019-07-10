@@ -293,7 +293,7 @@ export class HeadQuartersComponent implements OnInit {
     //this.setStatuteSettingArray();
     //this.setContacts();
     this.setDpsCustomer();
-    this.setInvoiceSettings();
+    //this.setInvoiceSettings();
   }
 
   receiveMessage($event) {
@@ -676,6 +676,11 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceSettings.shiftAllowance = false;
     this.invoiceSettings.otherAllowance = false;
 
+    this.invoiceSettings.transportCoefficient = 1.20;
+    this.invoiceSettings.dimonaCost = 0.3510;
+    this.invoiceSettings.ecoCoefficient = 1.69;
+    this.invoiceSettings.mealvoucherCoefficient = 1.69;
+
     console.log("invoice settings empty");
     console.log(this.invoiceSettings);
 
@@ -918,7 +923,7 @@ export class HeadQuartersComponent implements OnInit {
                 "customer": this.dpsCustomer.customer,
                 "invoiceEmail": this.invoiceEmail,
                 "contractsEmail": this.contractsEmail,
-                "invoiceSettings": this.invoiceSettings,
+                "invoiceSettings": this.HQFormData.data.invoiceSettings,
                 "bulkContractsEnabled": false,
                 "statuteSettings": this.statuteSetting,
                 "contact": this.HQFormData.data.contact,
