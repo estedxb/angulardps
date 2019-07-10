@@ -15,16 +15,16 @@ export class PositionsService {
 
   constructor(private http: HttpClient, private logger: LoggingService) {
     if (environment.dataFromAPI_JSON && environment.getPositionsByVatNumber !== '') {
-      // this.logger.log('Data From Remote');
+      // console.log('Data From Remote');
       this.getPositionsByVatNumberUrl = environment.dpsAPI + environment.getPositionsByVatNumber;
     } else {
-      this.logger.log('getPositionsByVatNumberUrl Data From JSON');
+      console.log('getPositionsByVatNumberUrl Data From JSON');
       this.getPositionsByVatNumberUrl = environment.getAssetsDataPath + 'positions.json';
     }
     if (environment.dataFromAPI_JSON && environment.getPosition !== '') {
       this.getPositionUrl = environment.dpsAPI + environment.getPosition;
     } else {
-      this.logger.log('getPositionUrl Data From JSON');
+      console.log('getPositionUrl Data From JSON');
       this.getPositionUrl = environment.getAssetsDataPath + 'positions.json';
     }
 
@@ -32,10 +32,10 @@ export class PositionsService {
   }
 
   public getPositionsByVatNumber(vatNumber: string): Observable<DpsPostion[]> {
-    // this.logger.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + vatNumber);
+    // console.log('PositionsService Data From = ' + this.getPositionsByVatNumberUrl + '/' + vatNumber);
     const result = this.http.get<DpsPostion[]>(
       this.getPositionsByVatNumberUrl + '/' + vatNumber, this.httpOptions).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -59,7 +59,7 @@ export class PositionsService {
     // {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    // this.logger.log('formData:::', formData);
+    // console.log('formData:::', formData);
     new Response(formData).text().then(console.log);
     return this.http.post<any>(this.getPositionUpdateUrl + '/' + vatNumber + '/' + positionId, formData,
       {

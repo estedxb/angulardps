@@ -21,9 +21,9 @@ export class LanguagesService {
   }
 
   public getLanguages(): Observable<Language[]> {
-    // this.logger.log('LanguagesService Data From = ' + this.getLanguagesUrl);
+    // console.log('LanguagesService Data From = ' + this.getLanguagesUrl);
     const result = this.http.get<Language[]>(this.getLanguagesUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 

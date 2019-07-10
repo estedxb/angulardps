@@ -19,13 +19,13 @@ export class CustomerListsService {
     } else {
       this.getCustomerListUrl = environment.getAssetsDataPath + 'customerlists.json';
     }
-    // this.logger.log('Data From = ' + this.getCustomerListUrl);
+    // console.log('Data From = ' + this.getCustomerListUrl);
   }
 
   public getCustomers(): Observable<CustomersList[]> {
-    // this.logger.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
+    // console.log('CustomerListsService Data From = ' + this.getCustomerListUrl);
     const result = this.http.get<CustomersList[]>(this.getCustomerListUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -35,7 +35,7 @@ export class CustomerListsService {
   }
 
   public getCustomersbyUserEmail(UserEmail: string, Token: string = ''): Observable<CustomersList[]> {
-    this.logger.log('CustomerListsService Data From = getCustomersbyUserEmail :: ' + this.getCustomerListUrl + '/' + UserEmail);
+    console.log('CustomerListsService Data From = getCustomersbyUserEmail :: ' + this.getCustomerListUrl + '/' + UserEmail);
     if (Token === '') {
       Token = this.getToken();
     }
@@ -43,7 +43,7 @@ export class CustomerListsService {
     const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + UserEmail, {
       headers: { Authorization: 'Token token="' + Token + '"' }
     }).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
   errorHandler(error: HttpErrorResponse) { return Observable.throwError(error.message); }

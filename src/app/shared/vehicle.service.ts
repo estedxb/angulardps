@@ -17,11 +17,10 @@ export class vehicleService {
       this.getVehicleUrl = environment.getAssetsDataPath + 'vehicles.json';
     }
 
-    if(environment.dataFromAPI_JSON && environment.getVehicleUrlNew === '')
-    {
+    if (environment.dataFromAPI_JSON && environment.getVehicleUrlNew === '') {
       this.getVehicleUrlNew = environment.getAssetsDataPath + 'vehicles.json';
     }
-    // this.logger.log('Data From = ' + this.getStatuteUrl);
+    // console.log('Data From = ' + this.getStatuteUrl);
   }
 
   public getVehiclesNew(): Observable<any> {

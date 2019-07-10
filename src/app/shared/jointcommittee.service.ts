@@ -16,13 +16,13 @@ export class JointcommitteeService {
     } else {
       this.getJointCommiteeUrl = environment.getAssetsDataPath + 'jointcommittee.json';
     }
-    // this.logger.log('Data From = ' + this.getJointCommiteeUrl);
+    // console.log('Data From = ' + this.getJointCommiteeUrl);
   }
 
   public getJointCommitees(): Observable<ParitairCommitee[]> {
-    // this.logger.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
+    // console.log('JointcommitteeService Data From = ' + this.getJointCommiteeUrl);
     const result = this.http.get<ParitairCommitee[]>(this.getJointCommiteeUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 

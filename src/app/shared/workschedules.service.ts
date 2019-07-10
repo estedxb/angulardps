@@ -14,15 +14,15 @@ export class WorkschedulesService {
   private getWorkscheduleURL = '';
 
   constructor(private http: HttpClient, private logger: LoggingService) { // , private header: HttpHeaders
-    //environment.getWorkSchedulesByVatNumber = '';
+    // environment.getWorkSchedulesByVatNumber = '';
     if (environment.dataFromAPI_JSON && environment.getWorkSchedulesByVatNumber !== '') {
-      // this.logger.log('Data Work Schedules From Remote');
+      // console.log('Data Work Schedules From Remote');
       this.isRemoteURL = true;
       this.getWorkscheduleByVatNumberUrl = environment.dpsAPI + environment.getWorkSchedulesByVatNumber;
       this.getWorkscheduleURL = environment.dpsAPI + environment.getWorkSchedule;
       this.getWorkscheduleEmptyUrl = environment.getAssetsDataPath + environment.getWorkscheduleEmpty;
     } else {
-      this.logger.log('Data Work Schedules From JSON');
+      console.log('Data Work Schedules From JSON');
       this.isRemoteURL = false;
       this.getWorkscheduleByVatNumberUrl = environment.getAssetsDataPath + 'workschedules.json';
       this.getWorkscheduleEmptyUrl = environment.getAssetsDataPath + 'workschedules_empty.json';
@@ -32,36 +32,36 @@ export class WorkschedulesService {
   public getWorkscheduleByVatNumber(parameter: string): Observable<DpsWorkSchedule[]> {
     let WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl;
     if (this.isRemoteURL) { WorkscheduleByVatNumberUrl = this.getWorkscheduleByVatNumberUrl + '/' + parameter; }
-    // this.logger.log('Get Work Schedule By Vat Number Url', WorkscheduleByVatNumberUrl);
+    // console.log('Get Work Schedule By Vat Number Url', WorkscheduleByVatNumberUrl);
     const result = this.http.get<any[]>(WorkscheduleByVatNumberUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
   public getWorkscheduleEmpty(parameter: string = ''): Observable<any[]> {
-    // this.logger.log('Get Work Schedule Empty Url', this.getWorkscheduleEmptyUrl);
+    // console.log('Get Work Schedule Empty Url', this.getWorkscheduleEmptyUrl);
     const result = this.http.get<any[]>(this.getWorkscheduleEmptyUrl).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
   public getWorkscheduleById(parameter: string): Observable<any> {
-    // this.logger.log('Get Work Schedule By Id Url', this.getWorkscheduleURL + '/' + parameter);
+    // console.log('Get Work Schedule By Id Url', this.getWorkscheduleURL + '/' + parameter);
     let WorkscheduleURL = this.getWorkscheduleURL;
     if (this.isRemoteURL) { WorkscheduleURL = this.getWorkscheduleURL + '/' + parameter; }
     const result = this.http.get<any>(WorkscheduleURL).catch(this.errorHandler);
-    // this.logger.log(result);
+    // console.log(result);
     return result;
   }
 
   public createWorkschedule(workSchedule: any): Observable<any> {
-    // this.logger.log('Create Work Schedule Url', this.getWorkscheduleURL);
+    // console.log('Create Work Schedule Url', this.getWorkscheduleURL);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.getWorkscheduleURL, workSchedule, { headers: httpHeaders, observe: 'response' });
   }
 
   public updateWorkschedule(workSchedule: any): Observable<any> {
-    // this.logger.log('Update Work Schedule Url', this.getWorkscheduleURL, workSchedule);
+    // console.log('Update Work Schedule Url', this.getWorkscheduleURL, workSchedule);
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<any>(this.getWorkscheduleURL, workSchedule, { headers: httpHeaders, observe: 'response' });
   }
