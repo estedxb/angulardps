@@ -923,7 +923,7 @@ export class HeadQuartersComponent implements OnInit {
                 "customer": this.dpsCustomer.customer,
                 "invoiceEmail": this.invoiceEmail,
                 "contractsEmail": this.contractsEmail,
-                "invoiceSettings": this.HQFormData.data.invoiceSettings,
+                "invoiceSettings": this.invoiceSettings,
                 "bulkContractsEnabled": false,
                 "statuteSettings": this.statuteSetting,
                 "contact": this.HQFormData.data.contact,
