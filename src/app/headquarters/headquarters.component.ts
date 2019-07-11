@@ -188,6 +188,9 @@ export class HeadQuartersComponent implements OnInit {
 
   loadDataEdit(dpscustomer: any) {
 
+    this.logger.log("hq form data");
+    this.logger.log(this.HQFormData.data);
+
     if (dpscustomer !== null) {
 
       if (dpscustomer.customer !== null && dpscustomer.customer !== undefined) {
@@ -200,6 +203,7 @@ export class HeadQuartersComponent implements OnInit {
         if (dpscustomer.customer.creditCheck !== null && dpscustomer.customer.creditCheck !== undefined) {
           this.HQForm.controls['creditLimit'].setValue(dpscustomer.customer.creditCheck.creditLimit);
           this.creditcheckEdit = dpscustomer.customer.creditCheck.creditcheck;
+          this.creditCheckPending = dpscustomer.customer.creditCheck.creditCheckPending;
         }
 
         this.legalString = dpscustomer.customer.legalForm;
@@ -310,6 +314,7 @@ export class HeadQuartersComponent implements OnInit {
     this.vatNumber = this.HQForm.get('vatNumber').value;
 
     this.creditcheckEdit = false;
+    this.creditCheckPending = false;
     this.HQForm.get('creditLimit').setValue('');
 
     if (this.HQForm.get('vatNumber').valid === true) {
@@ -579,7 +584,6 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.isBlocked = false;
     
 
-    console.log(this.customer);
   }
 
   setStatuteSettingArray() {
@@ -592,6 +596,9 @@ export class HeadQuartersComponent implements OnInit {
 
     // assigning statutesettings object
     this.statute.name = '';
+    this.statute.type = '';
+    this.statute.brightStaffingID = 0;
+
     this.paritairCommitee.name = '';
     this.paritairCommitee.number = '';
     this.mealVoucherSettings.employerShare = 0;
@@ -664,9 +671,6 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceSettings.dimonaCost = 0.3510;
     this.invoiceSettings.ecoCoefficient = 1.69;
     this.invoiceSettings.mealvoucherCoefficient = 1.69;
-
-    console.log("invoice settings empty");
-    console.log(this.invoiceSettings);
 
   }
 
@@ -860,7 +864,7 @@ export class HeadQuartersComponent implements OnInit {
   {
 
     this.invoiceEmail = new EmailAddress();
-    this.contractsEmail = new EmailAddress();    
+    this.contractsEmail = new EmailAddress();
 
     // assigning emailaddress objects
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
@@ -868,8 +872,6 @@ export class HeadQuartersComponent implements OnInit {
 
     this.setInvoiceSettingsEmpty();
     this.setStatuteSettingArray();
-
-    console.log(this.dpsCustomer);
   
     if (this.dpsCustomer !== null) {
       this.HQdata = {

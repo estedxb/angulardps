@@ -182,15 +182,11 @@ export class AddCustomerComponent implements OnInit {
           if (this.CTdata !== null && this.CTdata !== undefined)
             this.HQdata.contact = this.CTdata.contact;
 
-          if (this.STdata !== null && this.STdata !== undefined) {
+          if (this.STdata !== null && this.STdata !== undefined) 
             this.HQdata.statuteSettings = this.STdata;
-          }
 
           if (this.FPdata !== null && this.FPdata !== undefined)
-          {
             this.HQdata.invoiceSettings = this.FPdata;
-            console.log(this.HQdata.invoiceSettings);
-          }
 
           // this.logger.log(this.HQdata);
           this.updateData();

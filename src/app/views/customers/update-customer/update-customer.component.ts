@@ -143,21 +143,10 @@ export class UpdateCustomerComponent implements OnInit {
   }
   receiveEditCustomerData($event) {
     this.editCustomerData = $event;
-
-    // this.logger.log("received customer data=");
-    // this.logger.log(this.editCustomerData);
-
   }
 
   onFormwardClick() {
     this.logger.log('forward click', this.editCustomerData);
-
-    //  this.spinner.start();
-
-    // setTimeout(() => {
-    //    this.spinner.stop();
-    // }, 5000);
-
 
     if (this.editCustomerData.formValid === false) {
       this.logger.ShowMessage('Onjuiste vermeldingen in formulier! ', '');
