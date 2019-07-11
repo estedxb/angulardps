@@ -548,7 +548,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setCustomerObject() {
 
-
     this.customer = new Customer();
     this.generalEmail = new EmailAddress();
     this.vcaCertification = new VcaCertification();
@@ -559,7 +558,6 @@ export class HeadQuartersComponent implements OnInit {
 
     // assigning general email address object
     this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
-
     this.phoneNumber.number = this.HQForm.get('phonenumber').value;
 
     // assigning customer object
@@ -587,7 +585,9 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.email = this.generalEmail;
     this.customer.vcaCertification = this.vcaCertification;
     this.customer.isBlocked = false;
+    
 
+    console.log(this.customer);
   }
 
   setStatuteSettingArray() {
@@ -786,13 +786,20 @@ export class HeadQuartersComponent implements OnInit {
 
     this.dpsCustomer = new DPSCustomer();
 
-    //assigning dps customer object
-    this.dpsCustomer.customer = this.customer;
-    this.dpsCustomer.invoiceEmail = this.invoiceEmail;
-    this.dpsCustomer.contractsEmail = this.contractsEmail;
-    // this.dpsCustomer.contact = this.contact;
+    if(this.customer !== null && this.customer !== undefined)
+    {
+        //assigning dps customer object
+        this.dpsCustomer.customer = this.customer;
+        this.dpsCustomer.invoiceEmail = this.invoiceEmail;
+        this.dpsCustomer.contractsEmail = this.contractsEmail;
+        // this.dpsCustomer.contact = this.contact;
 
-    this.setJsonDataObject();
+        console.log("setting DPS Customer");
+        console.log(this.dpsCustomer);
+
+        this.setJsonDataObject();
+    }
+
   }
 
   getJSONDataObject() {
@@ -879,7 +886,12 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  setJsonDataObject() {
+  updateCustomer() {
+    this.setCustomerObject();
+  }
+
+  setJsonDataObject() 
+  {
 
     this.invoiceEmail = new EmailAddress();
     this.contractsEmail = new EmailAddress();
@@ -887,85 +899,140 @@ export class HeadQuartersComponent implements OnInit {
     // assigning emailaddress objects
     this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
     this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
+    
+    if(this.HQFormData.data === null || this.HQFormData.data === undefined)
+    {
+      console.log("data is empty");
 
-    if(this.HQFormData !== undefined && this.HQFormData !== null)
-    {
-        if(this.HQFormData.data !== undefined && this.HQFormData.data !== null)
-        {
-          if(this.HQFormData.data.invoiceSettings === null || this.HQFormData.data.invoiceSettings === undefined)
-          {
-            this.setInvoiceSettingsEmpty();
-      
-            if (this.dpsCustomer !== null) {
-              this.HQdata = {
-                "customer": this.dpsCustomer.customer,
-                "invoiceEmail": this.invoiceEmail,
-                "contractsEmail": this.contractsEmail,
-                "invoiceSettings": this.invoiceSettings,
-                "bulkContractsEnabled": false,
-                "statuteSettings": this.HQFormData.data.statuteSettings,
-                "contact": this.HQFormData.data.contact,
-                "activateContactAsUser": false,
-                "formValid": this.validity()
-              };
-              this.sendDatatoHome(this.HQdata);
-            }
-            else
-              this.HQdata = null; 
-          }
-      
-          if(this.HQFormData.data.statuteSettings === null || this.HQFormData.data.statuteSettings === undefined)
-          {
-            this.setStatuteSettingArray();
-      
-            if (this.dpsCustomer !== null) {
-              this.HQdata = {
-                "customer": this.dpsCustomer.customer,
-                "invoiceEmail": this.invoiceEmail,
-                "contractsEmail": this.contractsEmail,
-                "invoiceSettings": this.invoiceSettings,
-                "bulkContractsEnabled": false,
-                "statuteSettings": this.statuteSetting,
-                "contact": this.HQFormData.data.contact,
-                "activateContactAsUser": false,
-                "formValid": this.validity()
-              };
-              this.sendDatatoHome(this.HQdata);
-            }
-            else
-              this.HQdata = null;
-            
-          }             
-        }
-    }
-    else 
-    {
-      if(this.HQFormData !== null && this.HQFormData !== undefined)
-      {
-        if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
-        {
-          if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
-          {
-            if (this.dpsCustomer !== null) {
-              this.HQdata = {
-                "customer": this.dpsCustomer.customer,
-                "invoiceEmail": this.invoiceEmail,
-                "contractsEmail": this.contractsEmail,
-                "invoiceSettings": this.HQFormData.data.invoiceSettings,
-                "bulkContractsEnabled": false,
-                "statuteSettings": this.HQFormData.data.statuteSettings,
-                "contact": this.HQFormData.data.contact,
-                "activateContactAsUser": false,
-                "formValid": this.validity()
-              };
-              this.sendDatatoHome(this.HQdata);
-            }
-            else
-              this.HQdata = null;
-          }
-        }
+      this.setInvoiceSettingsEmpty();
+      this.setStatuteSettingArray();
+
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.statuteSetting,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
       }
+      else
+        this.HQdata = null;   
     }
+    else {
+
+      console.log("data not empty");
+
+      if (this.dpsCustomer !== null) {
+        this.HQdata = {
+          "customer": this.dpsCustomer.customer,
+          "invoiceEmail": this.invoiceEmail,
+          "contractsEmail": this.contractsEmail,
+          "invoiceSettings": this.HQFormData.data.invoiceSettings,
+          "bulkContractsEnabled": false,
+          "statuteSettings": this.HQFormData.data.statuteSettings,
+          "contact": this.HQFormData.data.contact,
+          "activateContactAsUser": false,
+          "formValid": this.validity()
+        };
+        this.sendDatatoHome(this.HQdata);
+      }
+      else
+        this.HQdata = null;   
+    }
+
+    // if(this.HQFormData !== undefined && this.HQFormData !== null)
+    // {
+    //     if(this.HQFormData.data !== undefined && this.HQFormData.data !== null)
+    //     {
+    //       if(this.HQFormData.data.invoiceSettings === null || this.HQFormData.data.invoiceSettings === undefined)
+    //       {
+    //         this.setInvoiceSettingsEmpty();
+
+    //         console.log("invoice settings empty customer!!");
+    //         console.log(this.dpsCustomer.customer);
+      
+    //         if (this.dpsCustomer !== null) {
+    //           this.HQdata = {
+    //             "customer": this.dpsCustomer.customer,
+    //             "invoiceEmail": this.invoiceEmail,
+    //             "contractsEmail": this.contractsEmail,
+    //             "invoiceSettings": this.invoiceSettings,
+    //             "bulkContractsEnabled": false,
+    //             "statuteSettings": this.HQFormData.data.statuteSettings,
+    //             "contact": this.HQFormData.data.contact,
+    //             "activateContactAsUser": false,
+    //             "formValid": this.validity()
+    //           };
+    //           console.log("before sending");
+    //           console.log(this.HQdata);
+    //           this.sendDatatoHome(this.HQdata);
+    //         }
+    //         else
+    //           this.HQdata = null; 
+    //       }
+      
+    //       if(this.HQFormData.data.statuteSettings === null || this.HQFormData.data.statuteSettings === undefined)
+    //       {
+    //         this.setStatuteSettingArray();
+     
+    //         console.log("statute settings empty!!");
+
+    //         if (this.dpsCustomer !== null) {
+    //           this.HQdata = {
+    //             "customer": this.dpsCustomer.customer,
+    //             "invoiceEmail": this.invoiceEmail,
+    //             "contractsEmail": this.contractsEmail,
+    //             "invoiceSettings": this.invoiceSettings,
+    //             "bulkContractsEnabled": false,
+    //             "statuteSettings": this.statuteSetting,
+    //             "contact": this.HQFormData.data.contact,
+    //             "activateContactAsUser": false,
+    //             "formValid": this.validity()
+    //           };
+    //           this.sendDatatoHome(this.HQdata);
+    //         }
+    //         else
+    //           this.HQdata = null;
+            
+    //       }             
+    //     }
+    // }
+    // else 
+    // {
+    //   if(this.HQFormData !== null && this.HQFormData !== undefined)
+    //   {
+    //     if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+    //     {
+    //       if(this.HQFormData.data.statuteSettings !== null && this.HQFormData.data.invoiceSettings !== null)
+    //       {
+    //         console.log("not empty!!");
+
+    //         if (this.dpsCustomer !== null) {
+    //           this.HQdata = {
+    //             "customer": this.dpsCustomer.customer,
+    //             "invoiceEmail": this.invoiceEmail,
+    //             "contractsEmail": this.contractsEmail,
+    //             "invoiceSettings": this.HQFormData.data.invoiceSettings,
+    //             "bulkContractsEnabled": false,
+    //             "statuteSettings": this.HQFormData.data.statuteSettings,
+    //             "contact": this.HQFormData.data.contact,
+    //             "activateContactAsUser": false,
+    //             "formValid": this.validity()
+    //           };
+    //           this.sendDatatoHome(this.HQdata);
+    //         }
+    //         else
+    //           this.HQdata = null;
+    //       }
+    //     }
+    //   }
+    // }
 
   }
 
@@ -980,9 +1047,6 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   sendDatatoHome(data) {
-    // console.log("HQdata before sending");
-    // console.log(data);
-
     this.childEvent.emit(data);
   }
 
