@@ -998,7 +998,7 @@ export class HeadQuartersComponent implements OnInit {
     this.createObjectsEdit();
 
     if(this.changeDpsCustomer !== null)
-    {  
+    {
       let data = {
         "customer": this.changeDpsCustomer.customer,
         "invoiceEmail": this.changeDpsCustomer.invoiceEmail,
@@ -1010,8 +1010,9 @@ export class HeadQuartersComponent implements OnInit {
         "activateContactAsUser": this.HQFormData.data.activateContactAsUser,
         "formValid": true
       };
-    this.childEvent.emit(data);
+        this.childEvent.emit(data);
     }
+
   }
 
   sendDatatoHome(data) {
