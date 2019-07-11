@@ -31,6 +31,7 @@ export class HeadQuartersComponent implements OnInit {
   public countryString;
   public countryCode;
   public nlegalString;
+  public changeDpsCustomer;
 
   @Input() public HQFormData;
   @Output() public childEvent = new EventEmitter();
@@ -275,6 +276,83 @@ export class HeadQuartersComponent implements OnInit {
   }
 
 
+
+  createObjectsEdit() {
+
+    if (this.creditCheck === null) {
+      this.setCreditCheck();
+    }
+
+    this.setCustomerObjectEdit();
+  }
+
+  setCustomerObjectEdit() {
+
+    this.address = new Address();
+
+    // assigning address object
+    this.address.bus = this.HQForm.get('bus').value;
+    this.address.city = this.HQForm.get('city').value;
+    this.address.country = this.countryString;
+    this.address.countryCode = this.countryCode;
+    this.address.postalCode = this.HQForm.get('postalcode').value;
+    this.address.street = this.HQForm.get('street').value;
+    this.address.streetNumber = this.HQForm.get('streetnumber').value;
+
+    this.customer = new Customer();
+    this.generalEmail = new EmailAddress();
+    this.vcaCertification = new VcaCertification();
+    this.phoneNumber = new PhoneNumber();
+
+    // assigning vca Object
+    this.vcaCertification.cerified = false;
+
+    // assigning general email address object
+    this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
+    this.phoneNumber.number = this.HQForm.get('phonenumber').value;
+
+    // assigning customer object
+    this.customer.vatNumber = this.HQForm.get('vatNumber').value;
+    this.customer.name = this.HQForm.get('firstname').value;
+    this.customer.officialName = this.HQForm.get('officialname').value;
+
+    if (this.nlegalString !== null && this.nlegalString !== undefined)
+      this.customer.legalForm = this.nlegalString;
+    else {
+      this.customer.legalForm = this.selectedLegalObject.FormName;
+    }
+
+    var today = new Date();
+    this.customer.creditCheck = new CreditCheck();
+
+    // assigning credit check object
+    this.customer.creditCheck.creditLimit = this.HQForm.get('creditLimit').value;
+    this.customer.creditCheck.creditcheck = this.creditcheckEdit;
+    this.customer.creditCheck.creditCheckPending = this.creditCheckPending;
+    this.customer.creditCheck.dateChecked = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+
+    this.customer.phoneNumber = this.phoneNumber;
+    this.customer.address = this.address;
+    this.customer.email = this.generalEmail;
+    this.customer.vcaCertification = this.vcaCertification;
+    this.customer.isBlocked = false;
+    
+
+    this.changeDpsCustomer = new DPSCustomer();
+
+    if(this.customer !== null && this.customer !== undefined)
+    {
+        //assigning dps customer object
+        this.changeDpsCustomer.customer = this.customer;
+        this.changeDpsCustomer.invoiceEmail = this.invoiceEmail;
+        this.changeDpsCustomer.contractsEmail = this.contractsEmail;
+
+        console.log("setting DPS  EDIT Customer");
+        console.log(this.changeDpsCustomer);
+    }
+  
+  }
+  
   createObjects() {
 
     //all fields are validated
@@ -609,6 +687,8 @@ export class HeadQuartersComponent implements OnInit {
     this.statuteSettingObject.paritairCommitee = this.paritairCommitee;
     this.statuteSettingObject.mealVoucherSettings = this.mealVoucherSettings;
 
+
+
     this.statuteSetting.push(this.statuteSettingObject);
   }
 
@@ -892,14 +972,26 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   updateData() {
-    this.createObjects();
+
+    if(this.HQFormData !== null && this.HQFormData !== undefined)
+    {
+      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+      {
+        this.createObjectsEdit();
+        this.updateDataEdit();
+      }
+    }
+    else {
+      this.createObjects();
+    }
+
   }
 
   // post the json data
   updateDataEdit() {
 
       let data = {
-        "customer": this.HQFormData.data.customer,
+        "customer": this.changeDpsCustomer.customer,
         "invoiceEmail": this.HQFormData.data.customer.invoiceEmail,
         "contractsEmail": this.HQFormData.data.customer.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
