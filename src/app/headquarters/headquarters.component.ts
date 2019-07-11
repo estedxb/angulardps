@@ -335,17 +335,24 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.address = this.address;
     this.customer.email = this.generalEmail;
     this.customer.vcaCertification = this.vcaCertification;
-    this.customer.isBlocked = false;
-    
+    this.customer.isBlocked = false;    
 
     this.changeDpsCustomer = new DPSCustomer();
 
     if(this.customer !== null && this.customer !== undefined)
     {
-        //assigning dps customer object
-        this.changeDpsCustomer.customer = this.customer;
-        this.changeDpsCustomer.invoiceEmail = this.invoiceEmail;
-        this.changeDpsCustomer.contractsEmail = this.contractsEmail;
+
+      this.invoiceEmail = new EmailAddress();
+      this.contractsEmail = new EmailAddress();
+  
+      // assigning emailaddress objects
+      this.invoiceEmail.emailAddress = this.HQForm.get('invoiceEmail').value;
+      this.contractsEmail.emailAddress = this.HQForm.get('contractsEmail').value;
+  
+      //assigning dps customer object
+      this.changeDpsCustomer.customer = this.customer;
+      this.changeDpsCustomer.invoiceEmail = this.invoiceEmail;
+      this.changeDpsCustomer.contractsEmail = this.contractsEmail;
 
         console.log("setting DPS  EDIT Customer");
         console.log(this.changeDpsCustomer);
@@ -991,11 +998,11 @@ export class HeadQuartersComponent implements OnInit {
     this.createObjectsEdit();
 
     if(this.changeDpsCustomer !== null)
-    {
+    {  
       let data = {
         "customer": this.changeDpsCustomer.customer,
-        "invoiceEmail": this.changeDpsCustomer.customer.invoiceEmail,
-        "contractsEmail": this.changeDpsCustomer.customer.contractsEmail,
+        "invoiceEmail": this.changeDpsCustomer.invoiceEmail,
+        "contractsEmail": this.changeDpsCustomer.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.HQFormData.data.statuteSettings,
