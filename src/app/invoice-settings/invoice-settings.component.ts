@@ -177,17 +177,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       this.mobilityAllowanceObject.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
 
     this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
-
-    this.logger.log("shift allowances");
-    this.logger.log(this.shiftAllowances);
-
-    this.logger.log("other allowances ");
-    this.logger.log(this.otherAllowances);
-
-    // transportCoefficient: number; mealvoucherCoefficient: number; ecoCoefficient: number; dimonaCost: number;
-    // lieuDaysAllowance?: LieuDaysAllowance; sicknessInvoiced?: boolean; holidayInvoiced?: boolean; mobilityAllowance?: MobilityAllowance;
-    // otherAllowance?: boolean; shiftAllowance?: boolean; shiftAllowances?: ShiftAllowance[]; otherAllowances?: OtherAllowance[];
-
     this.invoiceSettings = new InvoiceSettings();
 
     this.invoiceSettings.transportCoefficient = this.tCoefficient;

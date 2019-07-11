@@ -96,9 +96,9 @@ export class AddCustomerComponent implements OnInit {
   }
 
   receiveStatuteData($event) {
-    // this.logger.log('received in home component ST data');
+    console.log('received in home component ST data');
     this.STdata = $event;
-    // this.logger.log(this.STdata);
+    console.log(this.STdata);
   }
 
   receiveInvoiceData($event) {
