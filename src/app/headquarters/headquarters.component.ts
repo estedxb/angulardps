@@ -355,19 +355,12 @@ export class HeadQuartersComponent implements OnInit {
   
   createObjects() {
 
-    //all fields are validated
-    //this.setCreditCheck();
-
     if (this.creditCheck === null) {
       this.setCreditCheck();
     }
-
     this.setAddress();
     this.setCustomerObject();
-    //this.setStatuteSettingArray();
-    //this.setContacts();
     this.setDpsCustomer();
-    //this.setInvoiceSettings();
   }
 
   receiveMessage($event) {
@@ -973,13 +966,19 @@ export class HeadQuartersComponent implements OnInit {
 
   updateData() {
 
+    this.logger.log("hq form data in update data");
+    this.logger.log(this.HQFormData);
+
     if(this.HQFormData !== null && this.HQFormData !== undefined)
     {
-      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined && this.HQFormData.data !== "")
       {
         this.createObjectsEdit();
         this.updateDataEdit();
       }
+      else {
+        this.createObjects();
+      }  
     }
     else {
       this.createObjects();
@@ -990,6 +989,8 @@ export class HeadQuartersComponent implements OnInit {
   // post the json data
   updateDataEdit() {
 
+    if(this.changeDpsCustomer !== null)
+    {
       let data = {
         "customer": this.changeDpsCustomer.customer,
         "invoiceEmail": this.HQFormData.data.customer.invoiceEmail,
@@ -1001,8 +1002,8 @@ export class HeadQuartersComponent implements OnInit {
         "activateContactAsUser": false,
         "formValid": true
       };
-
     this.childEvent.emit(data);
+    }
   }
 
   sendDatatoHome(data) {
