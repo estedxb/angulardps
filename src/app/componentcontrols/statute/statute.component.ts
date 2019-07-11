@@ -398,7 +398,7 @@ export class StatuteComponent implements OnInit {
     this.newArrayCoeff = [];
 
     for (let i = 0; i < this.countStatutes; i++)
-      this.newArrayCoeff[i] = 0;
+      this.newArrayCoeff[i] = 3.5;
 
 
     this.emitData("load");
@@ -423,8 +423,8 @@ export class StatuteComponent implements OnInit {
   createCoefficientArray() {
 
     for (let i: number = 0; i < this.countStatutes; i++) {
-      this.coefficientArray[i] = 0;
-      this.newArrayCoeff[i] = 0;
+      this.coefficientArray[i] = 3.5;
+      this.newArrayCoeff[i] = 3.5;
     }
 
   }
