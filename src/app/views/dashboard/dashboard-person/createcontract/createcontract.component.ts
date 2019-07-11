@@ -62,14 +62,16 @@ export class CreateContractComponent implements OnInit {
   public showLoading = false;
   public mode = 'new';
   public maindatas = [];
-  public dpsPositionsData: DpsPostion[] = [];
-  public locationsData = [];
+  public locationsDatas: Location[] = [];
+  public locationsData: Location[] = [];
+  public dpsWorkSchedulesDatas: DpsWorkSchedule[] = [];
   public dpsWorkSchedulesData: DpsWorkSchedule[] = [];
   public contractReasonDatas: ContractReason[] = [];
+  public dpsPositionsData: DpsPostion[] = [];
 
   public positionSelectedName: any;
-  public locationSelectedName: any;
-  public workScheduleSelected: any;
+  public locationSelectedId = 0;
+  public workScheduleSelectedId = 0;
   public contractReasonSelectedName: any;
 
   public dpsPosition: DpsPostion;
@@ -193,20 +195,28 @@ export class CreateContractComponent implements OnInit {
     this.setDatesRanges();
     // Getting the workdays of the person in other contracts for the selected week
     this.getContractWorkingWeekDays(this.selectedContract.personContracts);
-    // Loading the form Datas Starts from get Location first
-    this.getLocationsByVatNumber();
+    // Getting the contract Details if it is edit or update or extend else create empty contract object
+    this.getContractInfo();
   }
 
   // Setting the Dates Allowed Ranges
   setDatesRanges() {
-    this.allowedStartDate = new Date(this.selectedContract.startDate);
+    this.allowedStartDate = new Date(this.selectedContract.startDate.getFullYear() + '-' +
+      (this.selectedContract.startDate.getMonth() + 1) + '-' +
+      this.selectedContract.startDate.getDate());
+
     this.allowedStartYear = this.allowedStartDate.getFullYear();
     this.allowedStartMonth = this.allowedStartDate.getMonth();
     this.allowedStartDay = this.allowedStartDate.getDate();
-    this.allowedEndDate = new Date(this.selectedContract.endDate);
+
+    this.allowedEndDate = new Date(this.selectedContract.endDate.getFullYear() + '-' +
+      (this.selectedContract.endDate.getMonth() + 1) + '-' +
+      this.selectedContract.endDate.getDate());
+
     this.allowedEndYear = this.allowedEndDate.getFullYear();
     this.allowedEndMonth = this.allowedEndDate.getMonth();
     this.allowedEndDay = this.allowedEndDate.getDate();
+
     this.logger.log('setDatesRanges allowedStartDate :: ', this.allowedStartDate);
     this.logger.log('setDatesRanges allowedEndDate :: ', this.allowedEndDate);
   }
@@ -276,14 +286,36 @@ export class CreateContractComponent implements OnInit {
     }
   }
 
+  getContractInfo() {
+    this.logger.showSpinner();
+    if (this.mode !== 'new' && this.contractId !== 0) {
+      this.contractService.getContractByVatNoAndId(this.VatNumber, this.contractId.toString()).subscribe(response => {
+        this.currentDpsContract = response;
+        this.positionSelectedId = this.currentDpsContract.positionId;
+        this.locationSelectedId = this.currentDpsContract.locationId;
+        this.workScheduleSelectedId = this.currentDpsContract.workScheduleId;
+        this.positionSelectedName = this.currentDpsContract.contract.position.name;
+        this.getLocationsByVatNumber();
+      }, error => {
+        this.errorHandle(error);
+      });
+    } else {
+      this.getLocationsByVatNumber();
+    }
+  }
+
   getLocationsByVatNumber() {
     this.locationsData = [];
     this.logger.showSpinner();
-    this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
-      this.locationsData = response;
+    this.locationsService.getLocationByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(loc => {
+      this.locationsDatas = loc;
+      this.locationsData = loc.filter(l => (l.isArchived === false && l.isEnabled === true) ||
+        (l.id === this.locationSelectedId));
 
       if (this.locationsData.length > 0) {
-        this.locationSelectedName = this.locationsData[0].id;
+        if (this.locationSelectedId < 1) {
+          this.locationSelectedId = this.locationsData[0].id;
+        }
         this.isLocationVaildErrorMsg = '';
         this.isLocationVaild = true;
         this.getWorkscheduleByVatNumber();
@@ -304,11 +336,15 @@ export class CreateContractComponent implements OnInit {
   getWorkscheduleByVatNumber() {
     this.dpsWorkSchedulesData = [];
     this.logger.showSpinner();
-    this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(response => {
-      this.dpsWorkSchedulesData = response;
+    this.workschedulesService.getWorkscheduleByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(ws => {
+      this.dpsWorkSchedulesDatas = ws;
+      this.dpsWorkSchedulesData = ws.filter(w => (w.isArchived === false && w.isEnabled === true) ||
+        (w.id === this.workScheduleSelectedId));
 
       if (this.dpsWorkSchedulesData.length > 0) {
-        this.workScheduleSelected = this.dpsWorkSchedulesData[0].id;
+        if (this.workScheduleSelectedId < 1) {
+          this.workScheduleSelectedId = this.dpsWorkSchedulesData[0].id;
+        }
         this.getContractReason();
       } else {
         this.logger.ShowMessage('Voeg het werkschema toe voordat u een contract maakt', '');
@@ -364,7 +400,6 @@ export class CreateContractComponent implements OnInit {
     }, error => this.errorHandle(error));
   }
 
-
   loadPerson(personid: string, vatNumber: string) {
     this.logger.showSpinner();
     this.personService.getPersonBySSIDVatnumber(personid, vatNumber).subscribe(personinfo => {
@@ -399,7 +434,6 @@ export class CreateContractComponent implements OnInit {
           }, 100);
         }
       }
-
       this.logger.log('loadPerson currentDpsContract  ', this.currentDpsContract);
       // this.hideSpinner();
     }, error => this.errorHandle(error));
@@ -459,8 +493,8 @@ export class CreateContractComponent implements OnInit {
     this.currentDpsContract.id = this.contractId;
     this.currentDpsContract.customerVatNumber = this.VatNumber;
     this.currentDpsContract.personId = this.personid;
-    this.currentDpsContract.workScheduleId = 0;
-    this.currentDpsContract.locationId = this.locationSelectedName;
+    this.currentDpsContract.workScheduleId = this.workScheduleSelectedId;
+    this.currentDpsContract.locationId = this.locationSelectedId;
     this.currentDpsContract.positionId = this.positionSelectedId;
     this.currentDpsContract.parentContractId = 0;
     this.currentDpsContract.bsContractId = 0;
@@ -487,77 +521,77 @@ export class CreateContractComponent implements OnInit {
 
   loadContract(vatNumber: string, cid: string) {
     this.logger.showSpinner();
-    this.contractService.getContractByVatNoAndId(vatNumber, cid).subscribe(response => {
-      this.currentDpsContract = response;
-      this.logger.log('loadContract :: ', response);
+    // this.contractService.getContractByVatNoAndId(vatNumber, cid).subscribe(response => {
+    // this.currentDpsContract = response;
+    this.logger.log('loadContract :: ', this.currentDpsContract);
 
-      if (this.mode !== 'extend') {
-        this.selectedStartDate = new Date(response.contract.startDate);
-        this.selectedStartYear = this.selectedStartDate.getFullYear();
-        this.selectedStartMonth = this.selectedStartDate.getMonth();
-        this.selectedStartDay = this.selectedStartDate.getDate();
-        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
+    if (this.mode !== 'extend') {
+      this.selectedStartDate = new Date(this.currentDpsContract.contract.startDate);
+      this.selectedStartYear = this.selectedStartDate.getFullYear();
+      this.selectedStartMonth = this.selectedStartDate.getMonth();
+      this.selectedStartDay = this.selectedStartDate.getDate();
+      this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
 
-        this.selectedEndDate = new Date(response.contract.endDate);
-        this.selectedEndYear = this.selectedEndDate.getFullYear();
-        this.selectedEndMonth = this.selectedEndDate.getMonth();
-        this.selectedEndDay = this.selectedEndDate.getDate();
-        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
-        this.isApproved = response.approved;
-      } else {
-        this.selectedStartDate = new Date(this.allowedStartDate);
-        this.selectedStartYear = this.allowedStartYear;
-        this.selectedStartMonth = this.allowedStartMonth;
-        this.selectedStartDay = this.allowedStartDay;
-        this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
+      this.selectedEndDate = new Date(this.currentDpsContract.contract.endDate);
+      this.selectedEndYear = this.selectedEndDate.getFullYear();
+      this.selectedEndMonth = this.selectedEndDate.getMonth();
+      this.selectedEndDay = this.selectedEndDate.getDate();
+      this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+      this.isApproved = this.currentDpsContract.approved;
+    } else {
+      this.selectedStartDate = new Date(this.allowedStartDate);
+      this.selectedStartYear = this.allowedStartYear;
+      this.selectedStartMonth = this.allowedStartMonth;
+      this.selectedStartDay = this.allowedStartDay;
+      this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
 
-        this.selectedEndDate = new Date(this.allowedEndDate);
-        this.selectedEndYear = this.allowedEndYear;
-        this.selectedEndMonth = this.allowedEndMonth;
-        this.selectedEndDay = this.allowedEndDay;
-        this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
+      this.selectedEndDate = new Date(this.allowedEndDate);
+      this.selectedEndYear = this.allowedEndYear;
+      this.selectedEndMonth = this.allowedEndMonth;
+      this.selectedEndDay = this.allowedEndDay;
+      this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
 
-        this.currentDpsContract.parentContractId = this.currentDpsContract.id;
-        this.contractId = 0;
-        this.currentDpsContract.id = 0;
-        this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate);
-        this.currentDpsContract.contract.endDate = this.getDateString(this.selectedEndDate);
-      }
+      this.currentDpsContract.parentContractId = this.currentDpsContract.id;
+      this.contractId = 0;
+      this.currentDpsContract.id = 0;
+      this.currentDpsContract.contract.startDate = this.getDateString(this.selectedStartDate);
+      this.currentDpsContract.contract.endDate = this.getDateString(this.selectedEndDate);
+    }
 
-      this.positionSelectedId = response.positionId;
-      this.locationSelectedName = response.locationId;
-      this.workScheduleSelected = response.workScheduleId;
-      this.positionSelectedName = response.contract.position.name;
-      this.logger.log('positionSelectedName 4 ::' + this.positionSelectedName);
+    this.positionSelectedId = this.currentDpsContract.positionId;
+    this.locationSelectedId = this.currentDpsContract.locationId;
+    this.workScheduleSelectedId = this.currentDpsContract.workScheduleId;
+    this.positionSelectedName = this.currentDpsContract.contract.position.name;
+    this.logger.log('positionSelectedName 4 ::' + this.positionSelectedName);
 
-      this.contractReasonSelectedName = response.contract.contractReason;
+    this.contractReasonSelectedName = this.currentDpsContract.contract.contractReason;
 
-      if (this.selectedStartYear === this.selectedEndYear) {
-        this.calendaryearDisableStatus = true;
-      } else { this.calendaryearDisableStatus = false; }
+    if (this.selectedStartYear === this.selectedEndYear) {
+      this.calendaryearDisableStatus = true;
+    } else { this.calendaryearDisableStatus = false; }
 
-      if (this.selectedStartMonth === this.selectedEndMonth) {
-        this.calendarmonthDisableStatus = true;
-      } else { this.calendarmonthDisableStatus = false; }
+    if (this.selectedStartMonth === this.selectedEndMonth) {
+      this.calendarmonthDisableStatus = true;
+    } else { this.calendarmonthDisableStatus = false; }
 
-      this.getSelectedWeekDays();
+    this.getSelectedWeekDays();
 
-      // const selectedposition: DpsPostion = this.getPosition();
-      // this.logger.log('loadContract Position :: ', selectedposition);
+    // const selectedposition: DpsPostion = this.getPosition();
+    // this.logger.log('loadContract Position :: ', selectedposition);
 
-      this.logger.log('SetMode edit contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
-      this.logger.log('SetMode edit contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
+    this.logger.log('SetMode edit contract - this.selectedStartDate  :: ' + this.mode, this.selectedStartDate);
+    this.logger.log('SetMode edit contract - this.selectedEndDate  :: ' + this.mode, this.selectedEndDate);
 
-      if (this.selectedStartYear === this.selectedEndYear) {
-        this.calendaryearDisableStatus = true;
-      } else { this.calendaryearDisableStatus = false; }
+    if (this.selectedStartYear === this.selectedEndYear) {
+      this.calendaryearDisableStatus = true;
+    } else { this.calendaryearDisableStatus = false; }
 
-      if (this.selectedStartMonth === this.selectedEndMonth) {
-        this.calendarmonthDisableStatus = true;
-      } else { this.calendarmonthDisableStatus = false; }
-      this.logger.log('loadPerson currentDpsContract  ', this.currentDpsContract);
-      this.logger.hideSpinner();
-    }, error => this.errorHandle(error));
+    if (this.selectedStartMonth === this.selectedEndMonth) {
+      this.calendarmonthDisableStatus = true;
+    } else { this.calendarmonthDisableStatus = false; }
+    this.logger.log('loadPerson currentDpsContract  ', this.currentDpsContract);
+    this.logger.hideSpinner();
+    // }, error => this.errorHandle(error));
   }
 
   getSelectedWeekDays() {
@@ -571,7 +605,7 @@ export class CreateContractComponent implements OnInit {
     this.isSelectedWeeksVaild = true;
     this.isSelectedWeeksVaildErrorMsg = '';
 
-    while (loopDate.getDate() <= this.selectedEndDate.getDate() && i < 9) {
+    while (loopDate <= this.selectedEndDate && i < 9) {
       i += 1;
       this.logger.log('loopDate(' + i + ') :: (' + this.selectedEndDate + ')=> ' + loopDate);
       loopDate.setDate(loopDate.getDate() + 1);
@@ -594,10 +628,11 @@ export class CreateContractComponent implements OnInit {
         this.selectedWeekDays.push(selectedWeekDay);
       }
     }
-    this.logger.log('getSelectedWeekDays selectedWeekDays', this.selectedWeekDays);
-    this.onWorkScheduleChange(this.workScheduleSelected);
-  }
 
+    this.logger.log('getSelectedWeekDays selectedWeekDays', this.selectedWeekDays);
+    this.onWorkScheduleChange(this.workScheduleSelectedId);
+
+  }
 
   onPrintContractClick() {
     this.logger.showSpinner();
@@ -704,8 +739,14 @@ export class CreateContractComponent implements OnInit {
   onStartDateChange($event) {
     this.logger.log('start date $event', $event);
     if ($event !== undefined && $event !== null) {
-      if (this.getDate($event).getDate() >= this.allowedStartDate.getDate()) {
-        if (this.getDate($event).getDate() <= this.selectedEndDate.getDate()) {
+      this.logger.log('Selected Start Date = ' + this.getDate($event));
+      this.logger.log('Allowed Start Date = ' + this.allowedStartDate);
+      this.logger.log('Selected End Date = ' + this.selectedEndDate);
+
+      this.logger.log('Selected Start Date >= Allowed Start Date  ' + (this.getDate($event) >= this.allowedStartDate));
+      if (this.getDate($event) >= this.allowedStartDate) {
+        this.logger.log('Selected Start Date <= Selected End Date  ' + (this.getDate($event) <= this.selectedEndDate));
+        if (this.getDate($event) <= this.selectedEndDate) {
           this.isStartDateVaild = true;
           this.isStartDateVaildErrorMsg = '';
           this.selectedStartDate = this.getDate($event);
@@ -713,14 +754,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isStartDateVaild = false;
-          this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
+          this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week 1';
           this.logger.ShowMessage(this.isStartDateVaildErrorMsg, '');
           this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
           // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
         }
       } else {
         this.isStartDateVaild = false;
-        this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
+        this.isStartDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week 2';
         this.logger.ShowMessage(this.isStartDateVaildErrorMsg, '');
         this.calendarData = this.selectedStartDay + '/' + (this.selectedStartMonth + 1) + '/' + this.selectedStartYear;
         // this.ContractForm.controls.calendarStartDate.value(this.selectedStartDate);
@@ -733,8 +774,15 @@ export class CreateContractComponent implements OnInit {
   onEndDateChange($event) {
     this.logger.log('end date $event', $event);
     if ($event !== undefined && $event !== null) {
-      if (this.getDate($event).getDate() <= this.allowedEndDate.getDate()) {
-        if (this.getDate($event).getDate() >= this.selectedStartDate.getDate()) {
+      this.logger.log('Selected End Date = ' + this.getDate($event));
+      this.logger.log('Allowed End Date = ' + this.allowedEndDate);
+      this.logger.log('Selected Start Date = ' + this.selectedStartDate);
+
+      this.logger.log('Selected End Date <= Allowed End Date  ' + (this.getDate($event) <= this.allowedEndDate));
+      if (this.getDate($event) <= this.allowedEndDate) {
+
+        this.logger.log('Selected End Date >= Selected Start Date  ' + (this.getDate($event) >= this.selectedStartDate));
+        if (this.getDate($event) >= this.selectedStartDate) {
           this.isEndDateVaild = true;
           this.isEndDateVaildErrorMsg = '';
           this.selectedEndDate = this.getDate($event);
@@ -742,14 +790,14 @@ export class CreateContractComponent implements OnInit {
           this.getSelectedWeekDays();
         } else {
           this.isEndDateVaild = false;
-          this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
+          this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week 3';
           this.logger.ShowMessage(this.isEndDateVaildErrorMsg, '');
           this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
           // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
         }
       } else {
         this.isEndDateVaild = false;
-        this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week';
+        this.isEndDateVaildErrorMsg = 'Kies de datum met in de geselecteerde week 4';
         this.logger.ShowMessage(this.isEndDateVaildErrorMsg, '');
         this.calendarDataNew = this.selectedEndDay + '/' + (this.selectedEndMonth + 1) + '/' + this.selectedEndYear;
         // this.ContractForm.controls.calendarEndDate.value(this.selectedEndDate);
@@ -795,36 +843,52 @@ export class CreateContractComponent implements OnInit {
       this.logger.log('onWorkScheduleChange event :: ' + event); // option value will be sent as event
 
       if (event !== 0 && event !== undefined && event !== null && event !== '') {
-        this.workScheduleSelected = event;
-        this.currentDpsContract.workScheduleId = this.workScheduleSelected;
+        this.workScheduleSelectedId = parseInt(event, 0);
+        this.currentDpsContract.workScheduleId = this.workScheduleSelectedId;
         this.logger.log('onWorkScheduleChange  dpsWorkSchedulesData :: ', this.dpsWorkSchedulesData);
-        const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(w => w.id === parseInt(this.workScheduleSelected, 0));
-        this.logger.log('onWorkScheduleChange  workScheduleSelected  :: ' + this.workScheduleSelected, dpsWorkSchedules[0]);
+        const dpsWorkSchedules = this.dpsWorkSchedulesData.filter(w => w.id === this.workScheduleSelectedId);
+        this.logger.log('onWorkScheduleChange  workScheduleSelected  :: ' + this.workScheduleSelectedId, dpsWorkSchedules[0]);
         const workScheduleInit: WorkSchedule = dpsWorkSchedules[0].workSchedule;
         const workSchedule = new WorkSchedule();
         this.logger.log('onWorkScheduleChange  workScheduleInit :: ', workScheduleInit);
+
+        // Filtering the Selected workSchedule workdays has working time for the selected date
         workSchedule.workDays = workScheduleInit.workDays.filter(wd => {
-          this.logger.log('onWorkScheduleChange  workScheduleInit.workDays:: ', wd);
+          this.logger.log('onWorkScheduleChange  workScheduleInit.workDays :: ', wd);
           let workDaysWithworkHoursFound = false;
           if (wd.workTimes.length > 0) {
             let timeCount = 0;
             wd.workTimes.forEach(wt => {
-              this.logger.log('onWorkScheduleChange  workScheduleInit.workDays.workTimes[' + timeCount + '] :: ', workScheduleInit);
-              if (wt.startTime !== '00:00' || wt.endTime !== '00:00') { workDaysWithworkHoursFound = true; }
+              this.logger.log('onWorkScheduleChange  workScheduleInit.workDays.workTimes[' + timeCount + '] :: ', wt);
+
+              if (wt.startTime !== '00:00' || wt.endTime !== '00:00') {
+                workDaysWithworkHoursFound = true;
+                this.logger.log('onWorkScheduleChange  workDaysWithworkHoursFound (' +
+                  wd.dayOfWeek + ',' + timeCount + ') succeed ');
+              } else {
+                this.logger.log('onWorkScheduleChange  workDaysWithworkHoursFound (' +
+                  wd.dayOfWeek + ',' + timeCount + ') failed ');
+              }
               timeCount += 1;
             });
           }
+
+          this.logger.log('onWorkScheduleChange  this.selectedWeekDays.includes(' + wd.dayOfWeek + ') ' +
+            workDaysWithworkHoursFound + ' :: ' + this.selectedWeekDays.includes(wd.dayOfWeek));
+
           return this.selectedWeekDays.includes(wd.dayOfWeek) && workDaysWithworkHoursFound;
         });
 
         this.logger.log('onWorkScheduleChange  workScheduleInit workSchedule.workDays :: ', workSchedule.workDays);
 
         if (workSchedule.workDays.length < 1) {
-          if (this.workScheduleSelected !== null && this.workScheduleSelected !== undefined && this.workScheduleSelected !== '') {
+          if (this.workScheduleSelectedId !== 0) {
             this.isSelectedDateDoesNotHaveWork = false;
             this.isSelectedDateDoesNotHaveWorkErrorMsg = 'Werkschema heeft geen werkdagen voor de geselecteerde datums';
+            this.isWorkScheduleVaildErrorMsg = '';
           } else {
             this.isWorkScheduleVaild = false;
+            this.isSelectedDateDoesNotHaveWorkErrorMsg = '';
             this.isWorkScheduleVaildErrorMsg = 'Selecteer het juiste Werkrooster';
           }
         } else {
@@ -843,8 +907,8 @@ export class CreateContractComponent implements OnInit {
 
   onLocationChange(event) {
     this.logger.log('onLocationChange event :: ' + event); // option value will be sent as event
-    this.locationSelectedName = event;
-    this.currentDpsContract.locationId = this.locationSelectedName;
+    this.locationSelectedId = parseInt(event, 0);
+    this.currentDpsContract.locationId = this.locationSelectedId;
   }
 
   onCreateOrUpdateContractClick() {
@@ -924,6 +988,8 @@ export class CreateContractComponent implements OnInit {
         this.logger.ShowMessageCustom('Error...', JSON.stringify(err));
         this.logger.log(this.componentname + ' Error ', err);
       }
+
+      this.dialogRef.close(this.currentDpsContract);
     }
   }
 

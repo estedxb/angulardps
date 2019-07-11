@@ -17,10 +17,12 @@ import { environment } from 'src/environments/environment';
 })
 export class UpdateCustomerComponent implements OnInit {
   public SelectedPage = 'UpdateCustomer';
-  public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-  public loginaccessToken: string = this.dpsLoginToken.accessToken;
+  public dpsLoginToken: LoginToken = new LoginToken();
+  public loginaccessToken = '';
   public dpsCustomer: any;
-  public vatNumber: string;
+  public isDpsUser = false;
+  public vatNumber = '';
+  public userEmail = '';
   public CustomerName = '';
   public CustomerLogo = '';
   public currentPage = '';
@@ -30,7 +32,14 @@ export class UpdateCustomerComponent implements OnInit {
 
   constructor(// private routerEvent: RouterEvent,
     private customerListsService: CustomerListsService, private customerService: CustomersService,
-    private logger: LoggingService, private router: Router, private activeRoute: ActivatedRoute) { this.validateLogin(); }
+    private logger: LoggingService, private router: Router, private activeRoute: ActivatedRoute) {
+    this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
+    this.vatNumber = this.dpsLoginToken.customerVatNumber;
+    this.userEmail = this.dpsLoginToken.userEmail;
+    this.loginaccessToken = this.dpsLoginToken.accessToken;
+    this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
+    this.validateLogin();
+  }
 
   validateLogin() {
     try {
@@ -38,11 +47,13 @@ export class UpdateCustomerComponent implements OnInit {
       if (this.loginaccessToken === null || this.loginaccessToken === '' || this.loginaccessToken === undefined) {
         this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
         this.logger.log('Redirect Breaked 6');
+        this.logger.ShowMessage('Toegang geweigerd!', '');
         this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
       }
     } catch (e) {
       this.logger.log(this.constructor.name + ' - ' + 'Redirect... login');
       this.logger.log('Redirect Breaked 5');
+      this.logger.ShowMessage('Toegang geweigerd!', '');
       this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
   }
@@ -98,16 +109,50 @@ export class UpdateCustomerComponent implements OnInit {
   GetCustomerInfo(mode: number) {
     try {
       this.logger.log('this.vatNumber pageInit :: ' + this.vatNumber);
-      this.customerListsService.getCustomers().subscribe(dpscustomer => {
-        this.dpsCustomer = dpscustomer.filter(cl => cl.vatNumber === this.vatNumber)[0];
-        console.log('Customer Form Data : ', this.dpsCustomer);
-        if(this.dpsCustomer !==null ){
-          this.CustomerName = this.dpsCustomer.name + '';
-          this.CustomerLogo = this.dpsCustomer.logo !== undefined ? this.dpsCustomer.logo + '' : '';
-        }
-        if (mode === 1) { this.updateLocalStorage(); }
-        //this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
-      }, error => this.logger.ShowMessage(error, 'error'));
+      if (this.isDpsUser) {
+        this.customerListsService.getCustomers().subscribe(dpscustomer => {
+          this.dpsCustomer = dpscustomer.filter(cl => cl.vatNumber === this.vatNumber);
+          if (this.dpsCustomer !== null && this.dpsCustomer.length > 0) {
+            this.logger.log('Customer Form Data : ', this.dpsCustomer[0]);
+            this.CustomerName = this.dpsCustomer[0].name + '';
+            this.CustomerLogo = this.dpsCustomer[0].logo !== undefined ? this.dpsCustomer[0].logo + '' : '';
+            if (mode === 1) {
+              this.updateLocalStorage();
+            }
+            // this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
+          } else {
+            this.logger.ShowMessage('Toegang geweigerd!', '');
+            this.logger.log('Redirect Breaked 4');
+            this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+          }
+        }, error => {
+          this.logger.ShowMessage(error, 'error');
+          this.logger.log('Redirect Breaked 2');
+          this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+        });
+      } else {
+        this.customerListsService.getCustomersbyUserEmail(this.userEmail, this.loginaccessToken).subscribe(dpscustomer => {
+          this.dpsCustomer = dpscustomer.filter(cl => cl.vatNumber === this.vatNumber);
+          if (this.dpsCustomer !== null && this.dpsCustomer.length > 0) {
+            this.logger.log('Customer Form Data : ', this.dpsCustomer[0]);
+            this.CustomerName = this.dpsCustomer[0].name + '';
+            this.CustomerLogo = this.dpsCustomer[0].logo !== undefined ? this.dpsCustomer[0].logo + '' : '';
+            if (mode === 1) {
+              this.updateLocalStorage();
+            }
+            // this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
+          } else {
+            this.logger.ShowMessage('Toegang geweigerd!', '');
+            this.logger.log('Redirect Breaked 3');
+            this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+          }
+        }, error => {
+          this.logger.ShowMessage(error, 'error');
+          this.logger.log('Redirect Breaked 1');
+          this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
+        });
+      }
+
     } catch (e) {
       this.CustomerName = 'Error!!';
     }
