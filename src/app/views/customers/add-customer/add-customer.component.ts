@@ -102,9 +102,9 @@ export class AddCustomerComponent implements OnInit {
   }
 
   receiveInvoiceData($event) {
-    // this.logger.log('received in home component IS data');
+    this.logger.log('received in home component IS data');
     this.FPdata = $event;
-    // this.logger.log(this.FPdata);
+    this.logger.log(this.FPdata);
   }
 
   receiveHQdata($event) {
@@ -125,17 +125,15 @@ export class AddCustomerComponent implements OnInit {
   onFormwardClick() {
     document.getElementById('maincontent').scrollTo(0, 0);
 
+    console.log("before sent");
+    console.log(this.HQdata);
+
     if (this.showFormIndex === 1) {
 
-      this.logger.log("ct data is =");
-      this.logger.log(this.CTdata);
-      this.logger.log('validity HQ data=' + this.HQdata.formValid);
-      this.logger.log('validity CT data=' + this.CTdata.formValid);
-
-      if (this.HQdata.formValid === false)
+      if (this.HQdata !== undefined && this.HQdata !== null && this.HQdata.formValid === false)
         this.logger.ShowMessage('Onjuiste invoer in invoerveld', '');
 
-      if (this.CTdata.formValid === false)
+      if (this.HQdata !== undefined && this.CTdata !== null && this.CTdata.formValid === false)
         this.logger.ShowMessage('Onjuiste invoer in invoerveld', '');
 
       if (this.HQdata !== undefined && this.HQdata !== null && this.CTdata !== undefined && this.CTdata !== null) {
@@ -189,7 +187,10 @@ export class AddCustomerComponent implements OnInit {
           }
 
           if (this.FPdata !== null && this.FPdata !== undefined)
+          {
             this.HQdata.invoiceSettings = this.FPdata;
+            console.log(this.HQdata.invoiceSettings);
+          }
 
           // this.logger.log(this.HQdata);
           this.updateData();

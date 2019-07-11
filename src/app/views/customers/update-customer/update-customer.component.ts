@@ -100,9 +100,11 @@ export class UpdateCustomerComponent implements OnInit {
       this.logger.log('this.vatNumber pageInit :: ' + this.vatNumber);
       this.customerListsService.getCustomers().subscribe(dpscustomer => {
         this.dpsCustomer = dpscustomer.filter(cl => cl.vatNumber === this.vatNumber)[0];
-        this.logger.log('Customer Form Data : ', this.dpsCustomer);
-        this.CustomerName = this.dpsCustomer.name + '';
-        this.CustomerLogo = this.dpsCustomer.logo !== undefined ? this.dpsCustomer.logo + '' : '';
+        console.log('Customer Form Data : ', this.dpsCustomer);
+        if(this.dpsCustomer !==null ){
+          this.CustomerName = this.dpsCustomer.name + '';
+          this.CustomerLogo = this.dpsCustomer.logo !== undefined ? this.dpsCustomer.logo + '' : '';
+        }
         if (mode === 1) { this.updateLocalStorage(); }
         //this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
       }, error => this.logger.ShowMessage(error, 'error'));
