@@ -6,14 +6,14 @@ import {
 } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatTooltipModule, MatDialogRef, MAT_DIALOG_DATA
+  MatDialog, MatDialogConfig, MatTooltipModule, MatDialogRef, MAT_DIALOG_DATA
 } from '@angular/material';
 import { CreateContractComponent } from './createcontract/createcontract.component';
 import { PersonService } from '../../../shared/person.service';
 import { LoggingService } from '../../../shared/logging.service';
 import { environment } from '../../../../environments/environment';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { WorkSchedule } from '../../../shared/models';
+
 
 @Component({
   selector: 'app-dashboardperson',
@@ -60,13 +60,14 @@ export class DashboardPersonComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   constructor(
     private personService: PersonService, private route: ActivatedRoute, private logger: LoggingService,
-    private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar, private elRef: ElementRef) { }
+    private dialog: MatDialog, private router: Router, private elRef: ElementRef) { }
 
   ngOnInit() { this.onPageInit(); }
 
   changeState() { this.currentState = this.currentState === 'initial' ? 'final' : 'initial'; }
 
   onPageInit() {
+    this.logger.showSpinner();
     this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
     this.vatNumber = this.dpsLoginToken.customerVatNumber;
     this.loginaccessToken = this.dpsLoginToken.accessToken;
@@ -91,6 +92,7 @@ export class DashboardPersonComponent implements OnInit {
         this.logger.log('onPageInit maindatas ::', this.maindatas);
         this.errorMsg = '';
       }, error => {
+        this.logger.hideSpinner();
         this.logger.log('onPageInit error while getting  getDpsScheduleByVatNumber('
           + this.vatNumber + ',' + localstartDate + ',' + localendDate + ') ::', error);
         this.errorMsg = 'Fout bij het ophalen van de planning.';
@@ -202,17 +204,6 @@ export class DashboardPersonComponent implements OnInit {
     return buttonLeft;
   }
 
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
   onContractOver(contractId: number, state: boolean, ref: ElementRef) {
     if (state) {
       this.RollOverContract = contractId;
@@ -238,6 +229,7 @@ export class DashboardPersonComponent implements OnInit {
         } else { this.datas = this.maindatas; }
       } else { this.datas = this.maindatas; }
     } catch (e) { this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message); }
+    this.logger.hideSpinner();
   }
 
   addWeek() { this.WeekDiff += 1; this.onPageInit(); }
@@ -306,10 +298,10 @@ export class DashboardPersonComponent implements OnInit {
       if (mode !== undefined && mode !== null && mode !== '') {
         if (mode === 'extend' || mode === 'new') {
           if (!this.allowCreateContract) {
-            this.ShowMessage('Customer not allowed to create or extend contract.', '');
+            this.logger.ShowMessage('Customer not allowed to create or extend contract.', '');
             return;
           } else if (!personIsEnabled || personIsArchived) {
-            this.ShowMessage('Person is disabled or archived.', '');
+            this.logger.ShowMessage('Person is disabled or archived.', '');
             return;
           }
         }
@@ -351,7 +343,7 @@ export class DashboardPersonComponent implements OnInit {
           this.onPageInit();
         });
       } else {
-        this.ShowMessage('Error mode not selected.', '');
+        this.logger.ShowMessage('Error mode not selected.', '');
       }
     } catch (e) {
       alert('openContractDialog :: ' + e.message);
@@ -401,14 +393,14 @@ export class DashboardPersonComponent implements OnInit {
 if (this.SelectedIndex >= 0) {
   this.maindatas[this.SelectedIndex] = this.data;
   this.FilterTheArchive();
-  this.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
+  this.logger.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
 } else {
   this.logger.log('this.data.id :: ', this.data.id);
   if (parseInt('0' + this.data.id, 0) > 0) {
     this.maindatas.push(this.data);
     this.logger.log(' new this.maindatas :: ', this.maindatas);
     this.FilterTheArchive();
-    this.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
+    this.logger.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
   }
 }
 */

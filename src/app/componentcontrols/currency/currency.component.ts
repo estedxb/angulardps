@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output,ChangeDetectorRef,ChangeDetectionStrategy  } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { LoggingService } from 'src/app/shared/logging.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-currency',
@@ -55,23 +54,20 @@ export class CurrencyComponent implements OnInit {
     return this.value;
   }
 
-  constructor(private spinner: NgxUiLoaderService,private logger: LoggingService,private cdr: ChangeDetectorRef) {  
-
-  }
+  constructor(private logger: LoggingService, private cdr: ChangeDetectorRef) { }
 
   ngOnChanges() {
 
-    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
-    {
+    if (this.CurrencyFormData !== undefined && this.CurrencyFormData !== null) {
 
       if (this.oldcurrencyData !== this.CurrencyFormData) {
         this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
-      }  
+      }
     }
 
     if (this.inputdisabled !== this.olddisabled) {
-      this.olddisabled = this.inputdisabled;  
+      this.olddisabled = this.inputdisabled;
     }
 
   }
@@ -82,17 +78,16 @@ export class CurrencyComponent implements OnInit {
     this.logger.log("currencyFormData=");
     this.logger.log(this.CurrencyFormData);
 
-    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
-    {
+    if (this.CurrencyFormData !== undefined && this.CurrencyFormData !== null) {
 
       if (this.oldcurrencyData !== this.CurrencyFormData) {
         this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
-      }  
+      }
     }
 
     if (this.inputdisabled !== this.olddisabled) {
-      this.olddisabled = this.inputdisabled;  
+      this.olddisabled = this.inputdisabled;
     }
 
     this.refresh();
@@ -118,20 +113,18 @@ export class CurrencyComponent implements OnInit {
     this.childEvent.emit(this.datacurrencyDropDown[0]);
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
-    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
-    {
+    if (this.CurrencyFormData !== undefined && this.CurrencyFormData !== null) {
       if (this.oldcurrencyData !== this.CurrencyFormData) {
         this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();
-      }  
+      }
     }
     this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
 
-    if(this.CurrencyFormData !== undefined && this.CurrencyFormData !== null)
-    {
+    if (this.CurrencyFormData !== undefined && this.CurrencyFormData !== null) {
       if (this.oldcurrencyData !== this.CurrencyFormData) {
         this.oldcurrencyData = this.CurrencyFormData;
         this.loadInitialData();

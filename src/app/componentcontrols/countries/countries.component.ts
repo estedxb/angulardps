@@ -2,7 +2,8 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 // import { CountriesList } from '../../shared/models';
 import { CountriesService } from '../../shared/countries.service';
 import { LoggingService } from '../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
@@ -54,7 +55,6 @@ export class CountriesComponent implements OnInit {
 
   constructor(
     private countriesService: CountriesService,
-    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
   ngOnInit() {

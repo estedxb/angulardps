@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { JointcommitteeService } from '../../shared/jointcommittee.service';
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 import { LoggingService } from '../../shared/logging.service';
-// import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-jointcommittee',
@@ -44,7 +44,6 @@ export class JointcommitteeComponent implements OnInit {
 
   constructor(
     private jointcommitteeService: JointcommitteeService,
-    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) {
   }

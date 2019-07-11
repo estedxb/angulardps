@@ -3,9 +3,8 @@ import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { PersonService } from '../../../shared/person.service';
 import { PositionsService } from '../../../shared/positions.service';
 import { StatuteService } from '../../../shared/statute.service';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { CreatepositionComponent } from '../../customers/positions/createposition/createposition.component';
-
 import {
   DpsPerson, Person, SocialSecurityNumber, Gender, BankAccount, Renumeration, MedicalAttestation,
   Language, DpsPostion, _Position,
@@ -15,7 +14,6 @@ import {
 import { DataService } from 'src/app/shared/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-personposition',
@@ -80,7 +78,7 @@ export class PersonPositionComponent implements OnInit {
   public statutes = [];
   public countStatutes: number;
   public lastAddedPosition: string;
-  public lastAddedPositionId:string;
+  public lastAddedPositionId: string;
 
   public selectedIndexStatute: any = 0;
   public message: any;
@@ -101,16 +99,15 @@ export class PersonPositionComponent implements OnInit {
     private personsService: PersonService, private data: DataService,
     private logger: LoggingService, private positionsService: PositionsService,
     private fb: FormBuilder, private dialog: MatDialog,
-    // private spinner: NgxUiLoaderService,
-    private snackBar: MatSnackBar, private statuteService: StatuteService) {
+    private statuteService: StatuteService) {
 
     this.positionsService.getPositionsByVatNumber(this.dpsLoginToken.customerVatNumber).subscribe(positions => {
       this.maindatas = positions;
       this.FilterTheArchive();
       this.fillDataDropDown(this.maindatas);
       this.logger.log('Positions Form Data : ', this.maindatas);
-      //this.ShowMessage('Positions fetched successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Positions fetched successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
 
     //SetInitialValue();
     this.logger.log("social security id=" + this.SocialSecurityId);
@@ -158,22 +155,20 @@ export class PersonPositionComponent implements OnInit {
     this.logger.log("selected index");
     this.logger.log(this.selectedIndexFunctie);
 
-    if(this.lastAddedPosition === "0" || this.lastAddedPosition === "-1"  || this.lastAddedPosition === null) 
-    {
-      this.ShowMessage("position index not found",'');
+    if (this.lastAddedPosition === "0" || this.lastAddedPosition === "-1" || this.lastAddedPosition === null) {
+      this.logger.ShowMessage("position index not found", '');
       return;
     }
-    else
-    {
-      this.logger.log("last added position id="+this.lastAddedPositionId);
-      this.DpsPersonObject.customerPostionId = ""+this.lastAddedPositionId;
-      this.changeMessage();  
+    else {
+      this.logger.log("last added position id=" + this.lastAddedPositionId);
+      this.DpsPersonObject.customerPostionId = "" + this.lastAddedPositionId;
+      this.changeMessage();
     }
 
     //this.getPersonbySSIDVatNumber();
   }
 
-  
+
 
   openDialog(): void {
     try {
@@ -199,7 +194,7 @@ export class PersonPositionComponent implements OnInit {
             this.maindatas.push(this.datas);
             this.FilterTheArchive();
             this.fillDataDropDownOnAdd(this.maindatas);
-            this.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
+            this.logger.ShowMessage('Positions "' + this.datas.position.name + '" is updated successfully.', '');
           } else {
             this.logger.log('this.data.id :: ', this.datas.id);
             if (parseInt('0' + this.datas.id, 0) > 0) {
@@ -207,7 +202,7 @@ export class PersonPositionComponent implements OnInit {
               this.logger.log(' new this.maindatas :: ', this.maindatas);
               this.FilterTheArchive();
               this.fillDataDropDownOnAdd(this.maindatas);
-              this.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
+              this.logger.ShowMessage('Positions "' + this.datas.position.name + '" is added successfully.', '');
             }
           }
         }
@@ -225,27 +220,24 @@ export class PersonPositionComponent implements OnInit {
     let positionArrays = [];
     let tempArray = this.maindatas;
 
-    for(let i=0;i<this.maindatas.length;i++)
-        positionArrays.push((this.maindatas[i].position.name.toLowerCase()));
+    for (let i = 0; i < this.maindatas.length; i++)
+      positionArrays.push((this.maindatas[i].position.name.toLowerCase()));
 
-    if(this.maindatas !== null && this.maindatas !== undefined && this.maindatas.length > 0)
-    {
-      if(this.maindatas[this.maindatas.length-1].position !== null && this.maindatas[this.maindatas.length-1].position !== undefined)
-          this.logger.log("position not found");
+    if (this.maindatas !== null && this.maindatas !== undefined && this.maindatas.length > 0) {
+      if (this.maindatas[this.maindatas.length - 1].position !== null && this.maindatas[this.maindatas.length - 1].position !== undefined)
+        this.logger.log("position not found");
 
-      this.lastAddedPosition = this.maindatas[this.maindatas.length-1].position.name;
-      this.lastAddedPositionId = this.maindatas[this.maindatas.length-1].id;
+      this.lastAddedPosition = this.maindatas[this.maindatas.length - 1].position.name;
+      this.lastAddedPositionId = this.maindatas[this.maindatas.length - 1].id;
     }
 
     positionArrays.sort();
- 
-    for(let i=0;i<positionArrays.length;i++)
-    {
-      let found:boolean = false;
 
-      for(let j=0;j<this.maindatas.length && !found;j++)
-        if(positionArrays[i] === this.maindatas[j].position.name.toLowerCase())
-        {
+    for (let i = 0; i < positionArrays.length; i++) {
+      let found: boolean = false;
+
+      for (let j = 0; j < this.maindatas.length && !found; j++)
+        if (positionArrays[i] === this.maindatas[j].position.name.toLowerCase()) {
           sortedmaindatas.push(this.maindatas[j]);
           found = true;
         }
@@ -253,23 +245,12 @@ export class PersonPositionComponent implements OnInit {
 
     this.maindatas = [];
 
-    for(let i=0;i<sortedmaindatas.length;i++)
+    for (let i = 0; i < sortedmaindatas.length; i++)
       this.maindatas.push(sortedmaindatas[i]);
 
-  this.logger.log("main datas");
-  this.logger.log(this.maindatas);
-      
-  }
+    this.logger.log("main datas");
+    this.logger.log(this.maindatas);
 
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   setDummyStatute(data) {
@@ -356,16 +337,14 @@ export class PersonPositionComponent implements OnInit {
   onPageInit() {
   }
 
-  switchNetExpense($event) 
-  {
+  switchNetExpense($event) {
 
-    if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined )
+    if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
       this.DpsPersonObject.renumeration.costReimbursment = $event;
-    else 
-      {
-         this.DpsPersonObject.renumeration = new Renumeration();
-         this.DpsPersonObject.renumeration.costReimbursment = $event;
-      }
+    else {
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.costReimbursment = $event;
+    }
 
     if ($event === true) {
       this.PersonPositionForm.controls.netExpenseAllowance.enable();
@@ -399,24 +378,23 @@ export class PersonPositionComponent implements OnInit {
 
   findIndex(position) {
 
-    this.logger.log("position received="+position);
+    this.logger.log("position received=" + position);
 
     for (let i = 0; i < this.maindatas.length; i++) {
-      this.logger.log(typeof(this.maindatas[i].id));
+      this.logger.log(typeof (this.maindatas[i].id));
       if (position === this.maindatas[i].id)
         this.selectedIndexFunctie = i;
-        // this._selectedIndex = i;
+      // this._selectedIndex = i;
     }
   }
 
-  getIndexOfPositionDropDownFunctie(position:string) {
+  getIndexOfPositionDropDownFunctie(position: string) {
 
-    this.logger.log("position ="+position);
+    this.logger.log("position =" + position);
 
     let index = -1;
-    for(let i=0;i<this.dataDropDownFunctie.length;i++)
-    {
-      if(position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
+    for (let i = 0; i < this.dataDropDownFunctie.length; i++) {
+      if (position.toLowerCase() === this.dataDropDownFunctie[i].toLowerCase())
         index = i;
     }
 
@@ -424,12 +402,11 @@ export class PersonPositionComponent implements OnInit {
 
   }
 
-  getIdOfPosition(position:string) {
+  getIdOfPosition(position: string) {
 
     for (let i = 0; i < this.maindatas.length; i++) {
-      this.logger.log(typeof(this.maindatas[i].id));
-      if (position === this.maindatas[i].position.name.toString())
-      {
+      this.logger.log(typeof (this.maindatas[i].id));
+      if (position === this.maindatas[i].position.name.toString()) {
         return this.maindatas[i].id;
       }
     }
@@ -437,40 +414,36 @@ export class PersonPositionComponent implements OnInit {
     return "";
   }
 
-  loadPersonDataNew(newresponse)
-  {
+  loadPersonDataNew(newresponse) {
     this.logger.log("load person data new");
     this.logger.log(newresponse);
 
     this.DpsPersonObject = newresponse;
 
-    this.logger.log("customer position id="+newresponse.customerPostionId);
+    this.logger.log("customer position id=" + newresponse.customerPostionId);
 
-    if (newresponse.customerPostionId !== "" && newresponse.customerPostionId !== null && newresponse.customerPostionId !== undefined) 
-    {
-      this.logger.log("customer Position id="+newresponse.customerPostionId);
+    if (newresponse.customerPostionId !== "" && newresponse.customerPostionId !== null && newresponse.customerPostionId !== undefined) {
+      this.logger.log("customer Position id=" + newresponse.customerPostionId);
       this.findIndex(parseInt(newresponse.customerPostionId, 10));
       this.DpsPersonObject.customerPostionId = "" + newresponse.customerPostionId;
     }
     else {
-          this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
-          this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
-      }
+      this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
+      this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
+    }
 
-    if(newresponse.statute !== null && newresponse.statute !== undefined && newresponse.statute !== "") 
-    {
+    if (newresponse.statute !== null && newresponse.statute !== undefined && newresponse.statute !== "") {
       let counter = 0;
       this.statutes.forEach((element) => {
 
-        if(element.name === newresponse.statute.name)
-        {
+        if (element.name === newresponse.statute.name) {
           this.selectedIndexStatute = counter;
           this.DpsPersonObject.statute.name = newresponse.statute.name;
           this.DpsPersonObject.statute.type = newresponse.statute.type;
           this.DpsPersonObject.statute.brightStaffingID = newresponse.statute.brightStaffingID;
         }
         counter++;
-      });      
+      });
 
       this.changeMessage();
 
@@ -488,8 +461,7 @@ export class PersonPositionComponent implements OnInit {
 
     }
 
-    if(newresponse.renumeration !== null && newresponse.renumeration !== undefined)
-    {
+    if (newresponse.renumeration !== null && newresponse.renumeration !== undefined) {
       this.DpsPersonObject.renumeration.hourlyWage = newresponse.renumeration.hourlyWage;
       this.DpsPersonObject.renumeration.netCostReimbursment = newresponse.renumeration.netCostReimbursment;
 
@@ -498,7 +470,7 @@ export class PersonPositionComponent implements OnInit {
 
       this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
       this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
-  
+
       this.PersonPositionForm.controls.grossHourlyWage.setValue(newresponse.renumeration.hourlyWage);
       this.PersonPositionForm.controls.netExpenseAllowance.setValue(newresponse.renumeration.netCostReimbursment);
 
@@ -513,19 +485,18 @@ export class PersonPositionComponent implements OnInit {
       this.changeMessage();
     }
     else {
-          this.DpsPersonObject.renumeration = new Renumeration();          
-          this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
-          this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+      this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
 
-          this.changeMessage();
+      this.changeMessage();
     }
-  
+
     this.PersonPositionForm.controls.extra.setValue(newresponse.addittionalInformation);
 
   }
 
-  loadPersonData(response) 
-  {
+  loadPersonData(response) {
 
     const data = response;
     let counter: number = 0;
@@ -533,28 +504,26 @@ export class PersonPositionComponent implements OnInit {
     this.DpsPersonObject = new DpsPerson();
     this.DpsPersonObject = data;
 
-    if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined) 
-        this.findIndex(parseInt(data.customerPostionId, 10));
+    if (data.customerPostionId !== "" && data.customerPostionId !== null && data.customerPostionId !== undefined)
+      this.findIndex(parseInt(data.customerPostionId, 10));
     else {
       this.selectedIndexFunctie = this.getIndexOfPositionDropDownFunctie(this.lastAddedPosition);
       this.DpsPersonObject.customerPostionId = "" + (this.selectedIndexFunctie);
     }
 
-    if (data.statute !== null && data.statute !== undefined && data.statute !== "") 
-    {
+    if (data.statute !== null && data.statute !== undefined && data.statute !== "") {
       counter = 0;
       this.statutes.forEach((element) => {
 
-        if(element.name === data.statute.name)
-        {
+        if (element.name === data.statute.name) {
           this.selectedIndexStatute = counter;
           this.DpsPersonObject.statute = new Statute();
           this.DpsPersonObject.statute.name = data.statute.name;
           this.DpsPersonObject.statute.type = data.statute.type;
-          this.DpsPersonObject.statute.brightStaffingID = data.statute.BrightStaffingID;    
+          this.DpsPersonObject.statute.brightStaffingID = data.statute.BrightStaffingID;
         }
         counter++;
-      });      
+      });
 
       this.changeMessage();
 
@@ -578,8 +547,7 @@ export class PersonPositionComponent implements OnInit {
     //costReimbursment
 
 
-    if(data.renumeration !== null && data.renumeration !== undefined)
-    {
+    if (data.renumeration !== null && data.renumeration !== undefined) {
       this.DpsPersonObject.renumeration = new Renumeration();
       this.DpsPersonObject.renumeration.hourlyWage = data.renumeration.hourlyWage;
       this.DpsPersonObject.renumeration.netCostReimbursment = data.renumeration.netCostReimbursment;
@@ -589,7 +557,7 @@ export class PersonPositionComponent implements OnInit {
 
       this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
       this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
-  
+
       this.PersonPositionForm.controls.grossHourlyWage.setValue(data.renumeration.hourlyWage);
       this.PersonPositionForm.controls.netExpenseAllowance.setValue(data.renumeration.netCostReimbursment);
 
@@ -604,21 +572,21 @@ export class PersonPositionComponent implements OnInit {
       this.changeMessage();
     }
     else {
-          this.DpsPersonObject.renumeration = new Renumeration();          
-          this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
-          this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
+      this.DpsPersonObject.renumeration = new Renumeration();
+      this.DpsPersonObject.renumeration.costReimbursment = this.nettoggle;
+      this.DpsPersonObject.renumeration.transportationAllowance = this.kmtoggle;
     }
-  
+
     this.PersonPositionForm.controls.extra.setValue(data.addittionalInformation);
 
 
-  
+
   }
 
   onChangeDropDownFunctie($event) {
 
     this.positionChosen = this.dataDropDownFunctie[$event.target.value];
-    this.positionId =  this.getIdOfPosition(this.positionChosen);
+    this.positionId = this.getIdOfPosition(this.positionChosen);
 
     this.DpsPersonObject.customerPostionId = "" + this.positionId;
     this.changeMessage();
@@ -638,9 +606,8 @@ export class PersonPositionComponent implements OnInit {
 
   changeKM($event) {
 
-    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-    if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
-      {
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined) {
         this.DpsPersonObject.renumeration.transportationAllowance = $event;
         this.changeMessage();
       }
@@ -662,42 +629,36 @@ export class PersonPositionComponent implements OnInit {
   }
 
   addittionalInformation(value: string) {
-    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
-        {
-          this.DpsPersonObject.addittionalInformation = value;      
-          this.changeMessage();
-        }
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined) {
+        this.DpsPersonObject.addittionalInformation = value;
+        this.changeMessage();
+      }
   }
 
   onNetExpensesReceive(netExpenseAllowance: number) {
-    if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
-      {
+    if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
+      if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined) {
         this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
-        this.changeMessage();    
+        this.changeMessage();
       }
       else {
-          this.DpsPersonObject.renumeration = new Renumeration();
-          this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
-          this.changeMessage();
+        this.DpsPersonObject.renumeration = new Renumeration();
+        this.DpsPersonObject.renumeration.netCostReimbursment = netExpenseAllowance;
+        this.changeMessage();
       }
   }
 
-  onHourlyWageReceive(grossHourlyWage: number) 
-  {
+  onHourlyWageReceive(grossHourlyWage: number) {
     this.logger.log("dps person object");
     this.logger.log(this.DpsPersonObject);
 
-    if(grossHourlyWage >=5)
-    {
+    if (grossHourlyWage >= 5) {
       this.logger.log("dps person object if");
-      if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      {
-        if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
-        {
+      if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
+        if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined) {
           this.DpsPersonObject.renumeration.hourlyWage = grossHourlyWage;
-          this.changeMessage();  
+          this.changeMessage();
         }
         else {
           this.DpsPersonObject.renumeration = new Renumeration();
@@ -705,16 +666,13 @@ export class PersonPositionComponent implements OnInit {
         }
       }
     }
-    else 
-    {
+    else {
       this.logger.log("dps person object else");
-      if(this.DpsPersonObject !== null && this.DpsPersonObject !== undefined)
-      {
-        if(this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined)
-        {
+      if (this.DpsPersonObject !== null && this.DpsPersonObject !== undefined) {
+        if (this.DpsPersonObject.renumeration !== null && this.DpsPersonObject.renumeration !== undefined) {
           this.PersonPositionForm.get('grossHourlyWage').setValue(5);
           this.DpsPersonObject.renumeration.hourlyWage = 5;
-          this.changeMessage();  
+          this.changeMessage();
         }
         else {
           this.DpsPersonObject.renumeration = new Renumeration();

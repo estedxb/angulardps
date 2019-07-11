@@ -5,10 +5,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PositionsService } from 'src/app/shared/positions.service';
 import { FileuploadService } from 'src/app/shared/fileupload.service';
 import { environment } from '../../../../../environments/environment';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { LoggingService } from '../../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-createposition',
   templateUrl: './createposition.component.html',
@@ -33,9 +34,7 @@ export class CreatepositionComponent implements OnInit {
   @Output() public onUploadFinished = new EventEmitter();
 
   constructor(
-    private formBuilder: FormBuilder, private fileuploadService: FileuploadService,
-    private positionsService: PositionsService, private snackBar: MatSnackBar,
-    // private spinner: NgxUiLoaderService,
+    private formBuilder: FormBuilder, private fileuploadService: FileuploadService, private positionsService: PositionsService,
     private logger: LoggingService, public dialogRef: MatDialogRef<CreatepositionComponent>,
     @Inject(MAT_DIALOG_DATA) public posistionData: DpsPostion) {
     this.currentPosition = posistionData;
@@ -53,17 +52,6 @@ export class CreatepositionComponent implements OnInit {
     });
     this.loadPositionsToEdit();
 
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
   }
 
   loadPositionsToEdit() {
@@ -121,7 +109,7 @@ export class CreatepositionComponent implements OnInit {
 
       saveAs(this.currentPosition.position.workstationDocument.location, this.currentPosition.position.workstationDocument.name);
     } else {
-      this.ShowMessage('File Url Not Found', '');
+      this.logger.ShowMessage('File Url Not Found', '');
     }
   }
   // this.currentPosition.position.workstationDocument.location = environment.blobStorage + '/' + environment.getPositionsDownloadTemplate;
@@ -133,9 +121,9 @@ export class CreatepositionComponent implements OnInit {
       if (files.item(0).type === 'application/pdf' || files.item(0).type === 'image/jpg' || files.item(0).type === 'image/jpeg'
         || files.item(0).type === 'image/png') { this.fileToUpload = files.item(0); }
 
-      if (this.fileToUpload !== null) { 
+      if (this.fileToUpload !== null) {
         this.fileToUploadName = files.item(0).name;
-        this.ShowMessage('werkpostfiche uploaden succesvol', '');
+        this.logger.ShowMessage('werkpostfiche uploaden succesvol', '');
       }
     }
   }
@@ -146,7 +134,7 @@ export class CreatepositionComponent implements OnInit {
       this.positionsService.updatePositionWithFile(this.fileToUpload, this.VatNumber, this.currentPosition.id).subscribe(data => {
         this.logger.log('uploadFileToActivity()', data);
         this.setContractWorkstationDocumentInfo(data);
-        this.ShowMessage('werkpostfiche uploaden succesvol', '');
+        this.logger.ShowMessage('werkpostfiche uploaden succesvol', '');
         this.dialogRef.close(this.currentPosition);
       }, error => {
         this.logger.log('uploadFileToActivity() Error - ', error);

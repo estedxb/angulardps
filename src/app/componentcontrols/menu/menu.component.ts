@@ -7,9 +7,9 @@ import { environment } from '../../../environments/environment';
 import { LoginToken } from 'src/app/shared/models';
 import { PlatformLocation } from '@angular/common';
 
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../../shared/msal.service';
+
 
 @Component({
   selector: 'app-menu',
@@ -27,7 +27,6 @@ export class MenuComponent implements OnInit {
     private router: Router,
     platformLocation: PlatformLocation,
     private logger: LoggingService,
-    // private spinner: NgxUiLoaderService
     // private msalService: MsalServiceLocal,
     // public authService: AuthService
   ) { }

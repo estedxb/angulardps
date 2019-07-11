@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 
 @Component({
   selector: 'app-b2clogin',
@@ -17,7 +18,6 @@ export class B2cloginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     // private msalService: MsalServiceLocal,
-    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 

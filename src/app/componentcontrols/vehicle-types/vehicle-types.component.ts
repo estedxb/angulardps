@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LoggingService } from '../../shared/logging.service';
 import { vehicleService } from '../../shared/vehicle.service';
 
+
 @Component({
   selector: 'app-vehicle-types',
   templateUrl: './vehicle-types.component.html',
@@ -50,7 +51,6 @@ export class VehicleTypesComponent implements OnInit {
 
   constructor(
     private vehicleService: vehicleService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) { }
 
@@ -73,8 +73,8 @@ export class VehicleTypesComponent implements OnInit {
 
   setDefaultVehicle() {
 
-      this.selectedIndex = 0;
-      this.childEvent.emit(this.dropdownData[this.selectedIndex]);
+    this.selectedIndex = 0;
+    this.childEvent.emit(this.dropdownData[this.selectedIndex]);
   }
 
   ngDoCheck() {

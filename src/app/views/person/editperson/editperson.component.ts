@@ -8,10 +8,10 @@ import {
 import { PersonService } from 'src/app/shared/person.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from 'src/app/shared/data.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingService } from '../../../shared/logging.service';
-import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
+
 
 @Component({
   selector: 'app-editperson',
@@ -86,8 +86,7 @@ export class EditPersonComponent implements OnInit {
 
   constructor(
     public http: HttpClient, private personsService: PersonService, private data: DataService,
-    private dialog: MatDialog, private snackBar: MatSnackBar,
-    // private spinner: NgxUiLoaderService,
+    private dialog: MatDialog,
     private logger: LoggingService) { }
 
   setDummyStatute() {
@@ -116,7 +115,7 @@ export class EditPersonComponent implements OnInit {
 
   checkValidation() {
 
-    if(this.validSSID === true && this.editPersonForm.get('bic').value !== "" && this.ibanValid === true)
+    if (this.validSSID === true && this.editPersonForm.get('bic').value !== "" && this.ibanValid === true)
       return true;
 
     return false;
@@ -264,7 +263,7 @@ export class EditPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.logger.ShowMessage("Inzendingen zijn onjuist !",'');
 
       }
     }
@@ -277,7 +276,7 @@ export class EditPersonComponent implements OnInit {
         this.validSSID = true;
       else {
         this.validSSID = false;
-        //this.ShowMessage("Inzendingen zijn onjuist !",'');
+        //this.logger.ShowMessage("Inzendingen zijn onjuist !",'');
       }
 
     }
@@ -429,20 +428,17 @@ export class EditPersonComponent implements OnInit {
     this.personsService.getBICbyIBAN(this.iban).subscribe(response => {
       console.log('bic Data : ', response);
 
-      if(response !== null && response.bic !== undefined)
-      {
+      if (response !== null && response.bic !== undefined) {
         this.bbic = response.bic;
 
-        if(this.bbic === "")
-        {
+        if (this.bbic === "") {
           this.ibanValid = false;
-          this.ShowMessage("Ongeldig iban-nummer",'');
+          this.logger.ShowMessage("Ongeldig iban-nummer", '');
           this.editPersonForm.controls.bic.setValue('');
         }
-        else
-        {
+        else {
           this.ibanValid = true;
-          this.editPersonForm.controls.bic.setValue(this.bbic);      
+          this.editPersonForm.controls.bic.setValue(this.bbic);
         }
 
         if (this.DpsPersonObject !== null) {
@@ -451,26 +447,13 @@ export class EditPersonComponent implements OnInit {
             this.DpsPersonObject.person.bankAccount.iban = this.iban;
             this.DpsPersonObject.person.bankAccount.bic = this.bbic;
           }
-        }  
+        }
 
-      }      
-    }, error => this.ShowMessage(error, 'error'));
+      }
+    }, error => this.logger.ShowMessage(error, 'error'));
 
     this.changeMessage();
   }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
-
-
 
   setIbanNumber(value: string) {
 

@@ -6,7 +6,7 @@ import {
   LieuDaysAllowance, MobilityAllowance, ShiftAllowance, OtherAllowance,
   InvoiceSettings, Language, Contact
 } from '../shared/models';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-general',
@@ -26,16 +26,13 @@ export class GeneralComponent implements OnInit {
   @Input() public GLFormData;
   @Output() public childEvent = new EventEmitter();
 
-  constructor(
-    // private spinner: NgxUiLoaderService,
-    private logger: LoggingService
-  ) {
+  constructor(private logger: LoggingService) {
     this.loadVCA = false;
     this.loadBlk = false;
 
     this.changeVCA = false;
     this.changeBLK = false;
-  
+
   }
 
   ngDoCheck() {
@@ -46,8 +43,8 @@ export class GeneralComponent implements OnInit {
         this.blkContracten = this.loadBlk;
         if (this.GLFormData.data.customer !== null && this.GLFormData.page === "edit") {
           this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
-          if(this.vcaObject !== undefined && this.vcaObject !== null)           
-              this.vcaObject.cerified = this.loadVCA;
+          if (this.vcaObject !== undefined && this.vcaObject !== null)
+            this.vcaObject.cerified = this.loadVCA;
         }
       }
     }
@@ -84,7 +81,7 @@ export class GeneralComponent implements OnInit {
     this.logger.log("before sending value=");
     this.logger.log(this.vcaObject);
 
-    this.logger.log("blk contracten");   
+    this.logger.log("blk contracten");
     this.logger.log(this.blkContracten);
 
     let obj: any = { "vcaObject": this.vcaObject, "blk": this.blkContracten };

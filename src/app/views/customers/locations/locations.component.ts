@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatDialogRef, MatSnackBarRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { Location, LoginToken, DpsUser, Address } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from '../../../shared/locations.service';
 import { CreatelocationComponent } from './createlocation/createlocation.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
@@ -15,6 +14,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class LocationsComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   public maindatas = [];
+  public datas = [];
   public data: Location;
   public address: Address;
   public errorMsg;
@@ -26,9 +26,7 @@ export class LocationsComponent implements OnInit {
   constructor(
     private locationsService: LocationsService,
     private logger: LoggingService,
-    // private spinner: NgxUiLoaderService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar) { }
+    private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
@@ -40,22 +38,11 @@ export class LocationsComponent implements OnInit {
       this.maindatas = locations;
       this.FilterTheArchive();
       this.logger.log('Locations Forms Data : ', this.maindatas);
-      // this.ShowMessage('Locations is listed successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      // this.logger.ShowMessage('Locations is listed successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
   }
 
-  FilterTheArchive() { this.maindatas = this.maindatas.filter(d => d.isArchived === false); }
-
-  ShowMessage(MSG, Action = '') {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
-  }
+  FilterTheArchive() { this.datas = this.maindatas.filter(d => d.isArchived === false); }
 
   openDialog(): void {
     try {
@@ -69,18 +56,20 @@ export class LocationsComponent implements OnInit {
       const dialogRef = this.dialog.open(CreatelocationComponent, dialogConfig);
 
       const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => {
-        this.ShowMessage($event.MSG, $event.Action);
+        this.logger.ShowMessage($event.MSG, $event.Action);
       });
 
       dialogRef.afterClosed().subscribe(result => {
         this.logger.log('The dialog was closed');
+        this.onPageInit();
+        /*
         this.data = result;
         this.logger.log('this.data ::', this.data);
         if (this.SelectedIndex > -1) {
           // maindatas Update location
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
-          this.ShowMessage('Locations "' + this.data.name + '" is updated successfully.', '');
+          this.logger.ShowMessage('Locations "' + this.data.name + '" is updated successfully.', '');
         } else {
           // maindatas Add location
           this.logger.log('this.data.id :: ', this.data.id);
@@ -88,13 +77,13 @@ export class LocationsComponent implements OnInit {
             this.maindatas.push(this.data);
             this.logger.log('New Location Added Successfully :: ', this.maindatas);
             this.FilterTheArchive();
-            this.ShowMessage('Locations "' + this.data.name + '" is added successfully.', '');
+            this.logger.ShowMessage('Locations "' + this.data.name + '" is added successfully.', '');
           }
         }
+        */
       });
     } catch (e) { }
   }
-
 
   onClickAdd() {
     this.SelectedIndex = -1;
@@ -121,7 +110,7 @@ export class LocationsComponent implements OnInit {
   onClickEdit(i) {
     this.SelectedIndex = i;
     this.logger.log('Edit Clicked Index :: ' + this.SelectedIndex);
-    this.data = this.maindatas[this.SelectedIndex];
+    this.data = this.datas[this.SelectedIndex];
     this.openDialog();
     return true;
   }
@@ -129,8 +118,9 @@ export class LocationsComponent implements OnInit {
   updateLocations() {
     this.locationsService.updateLocation(this.data).subscribe(res => {
       this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
-      this.maindatas[this.SelectedIndex] = this.data;
-      this.FilterTheArchive();
+      // this.datas[this.SelectedIndex] = this.data;
+      // this.FilterTheArchive();
+      this.onPageInit();
     },
       (err: HttpErrorResponse) => {
         this.logger.log('Error :: ', err);
@@ -144,21 +134,22 @@ export class LocationsComponent implements OnInit {
   }
 
   onClickDelete(i) {
+    this.SelectedIndex = i;
     this.logger.log('Delete Clicked Index:: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isArchived = true;
     this.updateLocations();
-    this.ShowMessage('Locations "' + this.data.name + '" is deleted successfully.', '');
+    this.logger.ShowMessage('Locations "' + this.data.name + '" is deleted successfully.', '');
   }
 
   onStatusChange(event, i) {
     this.SelectedIndex = i;
     this.logger.log('Location index : ' + this.SelectedIndex + ', Enabled : ' + event);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isEnabled = event;
     this.updateLocations();
     let EnabledStatus = '';
     if (event) { EnabledStatus = 'enabled'; } else { EnabledStatus = 'disabled'; }
-    this.ShowMessage('Locations "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
+    this.logger.ShowMessage('Locations "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
   }
 }

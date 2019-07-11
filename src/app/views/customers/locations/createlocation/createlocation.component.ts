@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocationsService } from 'src/app/shared/locations.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { LoggingService } from '../../../../shared/logging.service';
+
 @Component({
   selector: 'app-createlocation',
   templateUrl: './createlocation.component.html',

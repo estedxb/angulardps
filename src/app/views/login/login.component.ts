@@ -8,7 +8,6 @@ import { UsersService } from '../../shared/users.service';
 import { CustomerListsService } from '../../shared/customerlists.service';
 import { environment } from '../../../environments/environment';
 import { LoggingService } from '../../shared/logging.service';
-
 import { Subscription } from 'rxjs/Subscription';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../../shared/msal.service';

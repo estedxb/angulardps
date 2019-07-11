@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoggingService } from '../../shared/logging.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginToken } from 'src/app/shared/models';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-home',
@@ -18,8 +18,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, private router: Router,
-    private logger: LoggingService,
-    // private spinner: NgxUiLoaderService
+    private logger: LoggingService
   ) { }
 
   ngOnInit() {

@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Form, Validators, FormGroup, FormControl } from '@angular/forms';
 
-import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { WorkSchedule, LoginToken, DpsUser, DpsWorkSchedule, WorkDays, WorkTimes, BreakTimes } from '../../../shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorkschedulesService } from '../../../shared/workschedules.service';
 import { CreateWorkScheduleComponent } from './createworkschedule/createworkschedule.component';
 import { LoggingService } from '../../../shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-workschedules',
   templateUrl: './workschedules.component.html',
@@ -16,6 +15,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class WorkSchedulesComponent implements OnInit {
   @Input() CustomerVatNumber: string;
   public maindatas = [];
+  public datas = [];
   public data: DpsWorkSchedule;
   public workSchedule: WorkSchedule;
   public errorMsg;
@@ -27,8 +27,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   constructor(
     private workschedulesService: WorkschedulesService, private logger: LoggingService,
-    // private spinner: NgxUiLoaderService,
-    private dialog: MatDialog, private snackBar: MatSnackBar) { }
+    private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void { this.onPageInit(); }
 
@@ -40,23 +39,12 @@ export class WorkSchedulesComponent implements OnInit {
       this.maindatas = dpsWorkSchedules;
       this.logger.log('Work Schedule Forms Data : ', this.maindatas);
       this.FilterTheArchive();
-      //this.ShowMessage('Work Schedules is listed successfully.', '');
-    }, error => this.ShowMessage(error, 'error'));
+      //this.logger.ShowMessage('Work Schedules is listed successfully.', '');
+    }, error => this.logger.ShowMessage(error, 'error'));
   }
 
   FilterTheArchive() {
-    this.maindatas = this.maindatas.filter(d => d.isArchived === false);
-  }
-
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    snackbarRef.onAction().subscribe(() => {
-      this.logger.log('Snackbar Action :: ' + Action);
-    });
+    this.datas = this.maindatas.filter(d => d.isArchived === false);
   }
 
   openDialog(): void {
@@ -70,7 +58,7 @@ export class WorkSchedulesComponent implements OnInit {
 
       const dialogRef = this.dialog.open(CreateWorkScheduleComponent, dialogConfig);
 
-      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.ShowMessage($event.MSG, $event.Action); });
+      const sub = dialogRef.componentInstance.showmsg.subscribe(($event) => { this.logger.ShowMessage($event.MSG, $event.Action); });
 
       dialogRef.afterClosed().subscribe(result => {
         this.logger.log('The dialog was closed');
@@ -85,7 +73,7 @@ export class WorkSchedulesComponent implements OnInit {
           this.logger.log('Update Work Schedule :: ' + this.SelectedIndex, this.data);
           this.maindatas[this.SelectedIndex] = this.data;
           this.FilterTheArchive();
-          this.ShowMessage('Work Schedules "' + this.data.name + '" is updated successfully.', '');
+          this.logger.ShowMessage('Work Schedules "' + this.data.name + '" is updated successfully.', '');
         } else {
           alert('n');
           // maindatas Add Work Schedule
@@ -94,7 +82,7 @@ export class WorkSchedulesComponent implements OnInit {
             this.maindatas.push(this.data);
             this.logger.log('New Work Schedule Added Successfully :: ', this.maindatas);
             this.FilterTheArchive();
-            this.ShowMessage('Work Schedules "' + this.data.name + '" is added successfully.', '');
+            this.logger.ShowMessage('Work Schedules "' + this.data.name + '" is added successfully.', '');
           }
         }
         */
@@ -154,7 +142,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   onClickEdit(i) {
     this.SelectedIndex = i;
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     // this.logger.log('Edit Data :: ', this.data);
     this.openDialog();
     return true;
@@ -162,7 +150,7 @@ export class WorkSchedulesComponent implements OnInit {
 
   onClickCopy(i) {
     this.SelectedIndex = -1;
-    this.data = JSON.parse(JSON.stringify(this.maindatas[i]));
+    this.data = JSON.parse(JSON.stringify(this.datas[i]));
     this.data.id = 0;
     this.data.name += ' - Copy';
     this.data.isArchived = false;
@@ -171,10 +159,12 @@ export class WorkSchedulesComponent implements OnInit {
   }
 
   updateWorkschedules() {
+    this.logger.log('Data ::', this.data);
     this.workschedulesService.updateWorkschedule(this.data).subscribe(res => {
-      this.logger.log('response :: ', res); this.logger.log('Data ::', this.data);
-      this.maindatas[this.SelectedIndex] = this.data;
-      this.FilterTheArchive();
+      this.logger.log('response :: ', res);
+      // this.datas[this.SelectedIndex] = this.data;
+      // this.FilterTheArchive();
+      this.onPageInit();
     },
       (err: HttpErrorResponse) => {
         this.logger.log('Error :: ', err);
@@ -188,21 +178,22 @@ export class WorkSchedulesComponent implements OnInit {
   }
 
   onClickDelete(i) {
+    this.SelectedIndex = i;
     this.logger.log('Delete Clicked Index:: ' + i);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isArchived = true;
     this.updateWorkschedules();
-    this.ShowMessage('Work Schedules "' + this.data.name + '" is deleted successfully.', '');
+    this.logger.ShowMessage('Work Schedules "' + this.data.name + '" is deleted successfully.', '');
   }
 
   onStatusChange(event, i) {
     this.SelectedIndex = i;
     this.logger.log('Work Schedule index : ' + this.SelectedIndex + ', Enabled : ' + event);
-    this.data = this.maindatas[i];
+    this.data = this.datas[i];
     this.data.isEnabled = event;
     this.updateWorkschedules();
     let EnabledStatus = '';
     if (event) { EnabledStatus = 'enabled'; } else { EnabledStatus = 'disabled'; }
-    this.ShowMessage('Work Schedules "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
+    this.logger.ShowMessage('Work Schedules "' + this.data.name + '" is ' + EnabledStatus + ' successfully.', '');
   }
 }

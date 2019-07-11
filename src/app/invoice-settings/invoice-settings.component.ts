@@ -9,10 +9,10 @@ import {
 import { TimeSpan } from '../shared/TimeSpan';
 import { LoggingService } from '../shared/logging.service';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material';
 import { tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-invoice-settings',
@@ -96,11 +96,10 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   public currencyShift: string = "";
   public currencyOther: string = "";
 
-  public invoiceSettings:InvoiceSettings;
+  public invoiceSettings: InvoiceSettings;
 
   constructor(
-    private fb: FormBuilder,private cd: ChangeDetectorRef,
-    // private spinner: NgxUiLoaderService,
+    private fb: FormBuilder, private cd: ChangeDetectorRef,
     private logger: LoggingService) { }
 
 
@@ -140,7 +139,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       this.selectedValueCurrency = this.datacurrencyDropDown[this._selectedInCurrency];
     }
   }
-  
+
 
   /********************************************** DropDown  Inhaalrust drop down *************************/
   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
@@ -160,10 +159,10 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     }
   }
 
-// Contract not valid: Dimona cost has to be at least 0.3300!
-// Contract not valid: Dimona cost can only be 0.3510 at most!
-// Contract not valid: Coefficient can only be 3.5 at most!
-// Contract not valid: Gross salary has to be at least 5!
+  // Contract not valid: Dimona cost has to be at least 0.3300!
+  // Contract not valid: Dimona cost can only be 0.3510 at most!
+  // Contract not valid: Coefficient can only be 3.5 at most!
+  // Contract not valid: Gross salary has to be at least 5!
 
   changeObject() {
 
@@ -171,13 +170,13 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.mCoefficient = parseFloat(this.ISForm.get('Maalticheques').value);
     this.echoValue = parseFloat(this.ISForm.get('Echo').value);
     this.dimonaValue = parseFloat(this.ISForm.get('Dimona').value);
-     
-    if(this.ISForm.get('mobilebox').value === "")
+
+    if (this.ISForm.get('mobilebox').value === "")
       this.mobilityAllowanceObject.amountPerKm = 0;
-    else     
+    else
       this.mobilityAllowanceObject.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
 
-    this.mobilityAllowanceObject.enabled = this.mobilitySwitch;  
+    this.mobilityAllowanceObject.enabled = this.mobilitySwitch;
 
     this.logger.log("shift allowances");
     this.logger.log(this.shiftAllowances);
@@ -201,20 +200,20 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.invoiceSettings.lieuDaysAllowance.payed = this.lieuDaysAllowanceObject.payed;
 
     this.invoiceSettings.sicknessInvoiced = this.sicknessInvoiced;
-    this.invoiceSettings.holidayInvoiced = this.holidayInvoiced;    
+    this.invoiceSettings.holidayInvoiced = this.holidayInvoiced;
     this.invoiceSettings.otherAllowance = this.andreSwitch;
 
     this.invoiceSettings.otherAllowances = [];
 
-    for(let i=0;i<this.otherAllowances.length;i++)
+    for (let i = 0; i < this.otherAllowances.length; i++)
       this.invoiceSettings.otherAllowances.push(this.otherAllowances[i]);
 
-     this.invoiceSettings.mobilityAllowance = new MobilityAllowance();
+    this.invoiceSettings.mobilityAllowance = new MobilityAllowance();
 
-      if(this.ISForm.get('mobilebox').value === "")
-        this.invoiceSettings.mobilityAllowance.amountPerKm = 0;
-      else     
-        this.invoiceSettings.mobilityAllowance.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
+    if (this.ISForm.get('mobilebox').value === "")
+      this.invoiceSettings.mobilityAllowance.amountPerKm = 0;
+    else
+      this.invoiceSettings.mobilityAllowance.amountPerKm = parseFloat(this.ISForm.get('mobilebox').value);
 
     this.invoiceSettings.mobilityAllowance.enabled = this.mobilitySwitch;
 
@@ -240,7 +239,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onChangeDropDownCurrencyTeam($event, i) {
 
-    this.logger.log("choosen value="+$event.target.value);
+    this.logger.log("choosen value=" + $event.target.value);
 
     if ($event.target.value === "0") {
       this.shiftAllowances[i].nominal = false;
@@ -292,15 +291,13 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     //load Edit Page details
     if (this.FPFormData !== undefined && this.FPFormData !== null) {
       if (this.FPFormData.data !== null && this.FPFormData.data !== undefined) {
-        if (this.oldFPFormData !== this.FPFormData) 
-        {
+        if (this.oldFPFormData !== this.FPFormData) {
           this.oldFPFormData = this.FPFormData;
 
           this.currencyDataOther = [];
           this.currencyDataShift = [];
 
-          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) 
-          {
+          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) {
 
             this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
             this.sicknessInvoiced = this.loadSwitchSickness;
@@ -411,12 +408,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                   if (this.FPFormData.data.invoiceSettings.shiftAllowances[0].nominal === false) {
                     this.currencyDataShift[0] = 0;
                     this.currencyShift = "€";
-                    this.selectedCurrencyIndex[0]  = 0;
+                    this.selectedCurrencyIndex[0] = 0;
                   }
                   else {
                     this.currencyShift = "%";
                     this.currencyDataShift[0] = 1;
-                    this.selectedCurrencyIndex[0]  = 1;
+                    this.selectedCurrencyIndex[0] = 1;
                   }
 
                   this.shiftAllowances[0].amount = parseInt(this.FPFormData.data.invoiceSettings.shiftAllowances[0].amount, 10);
@@ -429,12 +426,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
                     if (element.nominal === false) {
                       this.currencyDataShift[counter] = 0;
                       this.currencyShift = "€";
-                      this.selectedCurrencyIndex[counter]  = 0;
+                      this.selectedCurrencyIndex[counter] = 0;
                     }
                     else {
                       this.currencyShift = "%";
                       this.currencyDataShift[counter] = 1;
-                      this.selectedCurrencyIndex[counter]  = 1;
+                      this.selectedCurrencyIndex[counter] = 1;
                     }
 
                     this.addRows(element.shiftName, element.amount, element.nominal);
@@ -562,48 +559,44 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     let counter = 0;
     this.currencyDataOther = [];
     this.currencyDataShift = [];
-    this.selectedCurrencyIndex  = [];
+    this.selectedCurrencyIndex = [];
 
-    if(this.FPFormData !== undefined && this.FPFormData !== null)
-    if(this.FPFormData.data !== undefined && this.FPFormData.data !== null)
-      if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
-        if(this.FPFormData.data.invoiceSettings.otherAllowances !== undefined && this.FPFormData.data.invoiceSettings.otherAllowances!== null)
-        this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
-          this.logger.log(element);
-            if(element.nominal === true)
-            {
-              this.currencyDataOther[counter] = 1;
-              this.selectedCurrencyIndexAndre[counter] = 1;
-            }
-            else
-            {
-              this.currencyDataOther[counter] = 1;
-              this.selectedCurrencyIndexAndre[counter] = 0;
-            }
+    if (this.FPFormData !== undefined && this.FPFormData !== null)
+      if (this.FPFormData.data !== undefined && this.FPFormData.data !== null)
+        if (this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+          if (this.FPFormData.data.invoiceSettings.otherAllowances !== undefined && this.FPFormData.data.invoiceSettings.otherAllowances !== null)
+            this.FPFormData.data.invoiceSettings.otherAllowances.forEach((element) => {
+              this.logger.log(element);
+              if (element.nominal === true) {
+                this.currencyDataOther[counter] = 1;
+                this.selectedCurrencyIndexAndre[counter] = 1;
+              }
+              else {
+                this.currencyDataOther[counter] = 1;
+                this.selectedCurrencyIndexAndre[counter] = 0;
+              }
 
-            counter +=1;
-        });
+              counter += 1;
+            });
 
     counter = 0;
 
-    if(this.FPFormData !== undefined && this.FPFormData !== null)
-    if(this.FPFormData.data !== undefined && this.FPFormData.data !== null)
-      if(this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
-        if(this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances!== null)
+    if (this.FPFormData !== undefined && this.FPFormData !== null)
+      if (this.FPFormData.data !== undefined && this.FPFormData.data !== null)
+        if (this.FPFormData.data.invoiceSettings !== undefined && this.FPFormData.data.invoiceSettings !== null)
+          if (this.FPFormData.data.invoiceSettings.shiftAllowances !== undefined && this.FPFormData.data.invoiceSettings.shiftAllowances !== null)
             this.FPFormData.data.invoiceSettings.shiftAllowances.forEach((element) => {
-          if(element.nominal === true)
-          {
-            this.selectedCurrencyIndex[counter] = 1;
-            this.currencyDataShift[counter] = 1;
-          }
-          else
-          {
-            this.selectedCurrencyIndex[counter] = 0;
-            this.currencyDataShift[counter] = 1;
-          }
+              if (element.nominal === true) {
+                this.selectedCurrencyIndex[counter] = 1;
+                this.currencyDataShift[counter] = 1;
+              }
+              else {
+                this.selectedCurrencyIndex[counter] = 0;
+                this.currencyDataShift[counter] = 1;
+              }
 
-            counter +=1;
-        });
+              counter += 1;
+            });
 
   }
 
@@ -675,7 +668,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       AndreBox3: new FormControl(''),
 
       arrayAndreBox: this.fb.array([
-        this.createAndre('', '',false)
+        this.createAndre('', '', false)
       ]),
 
       arrayBox: this.fb.array([
@@ -708,7 +701,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     this.disableWorkCodes = true;
 
     this.ploegpremieSwitch = false;
-    this.andreSwitch = false;    
+    this.andreSwitch = false;
 
     this.changeInitialStatus();
 
@@ -744,14 +737,14 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     }
 
     this.ploegpremieSwitch = false;
-    this.andreSwitch = false;    
+    this.andreSwitch = false;
 
 
   }
 
   onTeamChange($event) {
 
-    this.ploegpremieSwitch = $event;    
+    this.ploegpremieSwitch = $event;
 
     if ($event === true) {
       this.shiftAllowance = true;
@@ -806,16 +799,14 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onDimonaChange(value) {
 
-    if(value > environment.DimonaCostMaximum || value < environment.DimonaCostMinium)
-    {
+    if (value > environment.DimonaCostMaximum || value < environment.DimonaCostMinium) {
       this.ISForm.get('Dimona').setValue(environment.DimonaCostMinium);
       this.dimonaValue = environment.DimonaCostMinium;
       this.changeObject();
     }
-    else
-    {
+    else {
       this.dimonaValue = parseFloat(value);
-      this.changeObject();  
+      this.changeObject();
     }
 
   }
@@ -993,7 +984,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   }
 
-  createAndre(value1, value2,nominal): FormGroup {
+  createAndre(value1, value2, nominal): FormGroup {
     this.addNewRow = false;
     this.removeLastRemove = true;
 
@@ -1041,7 +1032,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   }
 
   addAndreRows(value1, value2, nominal) {
-    this.Andre.push(this.createAndre(value1, value2,nominal));
+    this.Andre.push(this.createAndre(value1, value2, nominal));
     this.otherAllowanceObject = new OtherAllowance();
     this.otherAllowanceObject.codeId = value1;
     this.otherAllowanceObject.amount = value2;
@@ -1054,64 +1045,58 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   searchAndRemovePloegepremieElements(element) {
 
-    for(let i=0;i<this.Ploegpremiere.length;i++)
-    {
+    for (let i = 0; i < this.Ploegpremiere.length; i++) {
       const formGroup = this.Ploegpremiere.controls[i] as FormGroup;
       let codeId = formGroup.controls['PloegprimeBox1'].value;
       let amount = formGroup.controls['PloegprimeBox2'].value;
-      let currency = this.currencyDataShift[i]===1?true:false;
+      let currency = this.currencyDataShift[i] === 1 ? true : false;
 
-      if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
-      {
+      if (amount === element.amount && codeId === element.codeId && currency === element.nominal) {
         this.Ploegpremiere.removeAt(i);
         this.shiftAllowances.splice(i, 1);
-        this.currencyDataShift.splice(i,1);
+        this.currencyDataShift.splice(i, 1);
       }
     }
 
   }
 
-  searchAndRemoveAndreElements(element)
-  {
+  searchAndRemoveAndreElements(element) {
     this.logger.log("inside search remove andre elements");
 
-    for(let i=0;i<this.Andre.length;i++)
-    {
+    for (let i = 0; i < this.Andre.length; i++) {
       const formGroup = this.Andre.controls[i] as FormGroup;
       let amount = formGroup.controls['AndreBox2'].value;
       let codeId = this.workCode[i];
-      let currency = this.selectedCurrencyIndexAndre[i]===1?true:false;
+      let currency = this.selectedCurrencyIndexAndre[i] === 1 ? true : false;
 
-      if(amount === element.amount && codeId === element.codeId && currency === element.nominal)
-      {
+      if (amount === element.amount && codeId === element.codeId && currency === element.nominal) {
         this.Andre.removeAt(i);
         this.otherAllowances.splice(i, 1);
-        this.workCode.splice(i,1);
-        this.currencyDataOther.splice(i,1);
-        this.selectedCurrencyIndexAndre.splice(i,1);
+        this.workCode.splice(i, 1);
+        this.currencyDataOther.splice(i, 1);
+        this.selectedCurrencyIndexAndre.splice(i, 1);
       }
     }
   }
 
   resetCurrencyShift() {
 
-    for(let i=0;i<this.shiftAllowances.length;i++)
-      this.shiftAllowances[i].nominal = this.selectedCurrencyIndexAndre[i]===1?true:false;
+    for (let i = 0; i < this.shiftAllowances.length; i++)
+      this.shiftAllowances[i].nominal = this.selectedCurrencyIndexAndre[i] === 1 ? true : false;
 
   }
 
 
   resetCurrencies() {
 
-    for(let i=0;i<this.otherAllowances.length;i++)
-      this.otherAllowances[i].nominal = this.selectedCurrencyIndexAndre[i]===1?true:false;
+    for (let i = 0; i < this.otherAllowances.length; i++)
+      this.otherAllowances[i].nominal = this.selectedCurrencyIndexAndre[i] === 1 ? true : false;
 
   }
 
-  removeAndreRows(index) {    
+  removeAndreRows(index) {
 
-    if (this.Andre.length != 1)
-    {
+    if (this.Andre.length != 1) {
       this.searchAndRemoveAndreElements(this.otherAllowances[index]);
       this.resetCurrencies();
       this.changeObject();
@@ -1134,13 +1119,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   removeRows(index) {
 
-    if(this.Ploegpremiere.length != 1)
-    {
+    if (this.Ploegpremiere.length != 1) {
       this.Ploegpremiere.removeAt(index);
-          // remove from array shiftAllowances
+      // remove from array shiftAllowances
       this.shiftAllowances.splice(index, 1);
-      this.currencyDataShift.splice(index,1);
-      this.selectedCurrencyIndex.splice(index,1);
+      this.currencyDataShift.splice(index, 1);
+      this.selectedCurrencyIndex.splice(index, 1);
       this.resetCurrencyShift();
     }
 

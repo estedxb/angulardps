@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-page-not-found-component',
@@ -10,9 +10,7 @@ export class PageNotFoundComponentComponent implements OnInit {
   public positionid = 2;
   public locationid = 2;
   public username = 'lewis@esteinternational.com';
-  constructor(
-    // private spinner: NgxUiLoaderService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }

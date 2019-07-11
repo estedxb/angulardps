@@ -7,9 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { LoggingService } from '../shared/logging.service';
 import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
 import { CustomerListsService } from '../shared/customerlists.service';
-
 import { Router, CanActivate } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -28,7 +26,6 @@ export class ValidateLoginComponent implements OnInit {
   constructor(
     private router: Router,
     // private msalService: MsalServiceLocal, 
-    // private spinner: NgxUiLoaderService,
     public customerListsService: CustomerListsService, private logger: LoggingService
   ) { }
 

@@ -13,8 +13,9 @@ import { ChildActivationEnd, ActivatedRoute, Router } from '@angular/router';
 import { load } from '@angular/core/src/render3';
 import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { MatSnackBarConfig, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { LoggingService } from '../shared/logging.service';
+
 
 @Component({
   selector: 'app-headquarters',
@@ -163,14 +164,12 @@ export class HeadQuartersComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    // private spinner: NgxUiLoaderService,
     private customerService: CustomersService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
+    private logger: LoggingService,
     private data: DataService) {
-
   }
 
   ngAfterViewInit() {
@@ -349,34 +348,34 @@ export class HeadQuartersComponent implements OnInit {
 
   handleError(errorMessage: any) {
 
-    // this.ShowMessage("Klant met vatnummer bestaat al",'');
+    // this.logger.ShowMessage("Klant met vatnummer bestaat al",'');
 
     console.log('there is an error with api call to getCustomersbyVatNumber', errorMessage);
 
     this.allowCustomer = false;
 
     if (errorMessage.status === 404) {
-      this.ShowMessage('Btw-nummer staat niet in ons systeem', '');
+      this.logger.ShowMessage('Btw-nummer staat niet in ons systeem', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
 
     if (errorMessage.status === 400) {
-      this.ShowMessage('Btw-nummer is niet in correct formaat', '');
+      this.logger.ShowMessage('Btw-nummer is niet in correct formaat', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
 
     if (errorMessage.status === 204) {
-      this.ShowMessage('Geen record in ons systeem', '');
+      this.logger.ShowMessage('Geen record in ons systeem', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
     if (errorMessage.status === 409) {
       console.log('error conflict 409');
-      this.ShowMessage('Klant met vatnummer bestaat al', '');
+      this.logger.ShowMessage('Klant met vatnummer bestaat al', '');
       this.router.navigate(['/' + 'customer/' + this.HQForm.get('vatNumber').value]);
     }
     if (errorMessage.status === 500) {
       console.log('System Error', errorMessage);
-      this.ShowMessage('Interne Server Fout', '');
+      this.logger.ShowMessage('Interne Server Fout', '');
       this.HQForm.controls['vatNumber'].setValue('');
     }
 
@@ -646,8 +645,7 @@ export class HeadQuartersComponent implements OnInit {
 
     let lengthOfOtherAllowanceArray = 1;
 
-    for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) 
-    {
+    for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) {
       this.otherAllowanceObject = new OtherAllowance();
 
       this.otherAllowanceObject.amount = 0;
@@ -657,15 +655,14 @@ export class HeadQuartersComponent implements OnInit {
       this.invoiceSettings.otherAllowances.push(this.otherAllowanceObject);
     }
 
-    let lengthOfShiftAllowanceArray =1;
+    let lengthOfShiftAllowanceArray = 1;
 
-    for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) 
-    {
+    for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) {
 
       this.shiftAllowanceObject = new ShiftAllowance();
 
-      this.shiftAllowanceObject.amount   = 0;
-      this.shiftAllowanceObject.nominal  = false;
+      this.shiftAllowanceObject.amount = 0;
+      this.shiftAllowanceObject.nominal = false;
       this.shiftAllowanceObject.timeSpan = "";
       this.shiftAllowanceObject.shiftName = "";
 
@@ -686,8 +683,7 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  setInvoiceSettings() 
-  {
+  setInvoiceSettings() {
 
     this.lieuDaysAllowance = new LieuDaysAllowance();
     this.mobilityAllowance = new MobilityAllowance();
@@ -695,19 +691,15 @@ export class HeadQuartersComponent implements OnInit {
     this.otherAllowance = new Array();
     this.invoiceSettings = new InvoiceSettings();
 
-    if (this.HQFormData !== null && this.HQFormData !== undefined)
-    {
-      if (this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined) 
-      {
-        if (this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined) 
-        {
+    if (this.HQFormData !== null && this.HQFormData !== undefined) {
+      if (this.HQFormData.data !== undefined && this.HQFormData.data !== null && this.dpsCustomer !== null && this.HQFormData.data.invoiceSettings !== undefined && this.HQFormData.data.invoiceSettings !== null && this.dpsCustomer !== undefined) {
+        if (this.HQFormData.data.invoiceSettings.mobilityAllowance !== null && this.HQFormData.data.invoiceSettings.mobilityAllowance !== undefined) {
           this.mobilityAllowance.amountPerKm = this.HQFormData.data.invoiceSettings.mobilityAllowance.amountPerKm;
           this.mobilityAllowance.enabled = this.HQFormData.data.invoiceSettings.mobilityAllowance.enabled;
           this.invoiceSettings.mobilityAllowance = this.mobilityAllowance;
         }
 
-        if (this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) 
-        {
+        if (this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== null && this.HQFormData.data.invoiceSettings.lieuDaysAllowance !== undefined) {
           // assigning invoice settings 
           this.lieuDaysAllowance.enabled = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.enabled;
           this.lieuDaysAllowance.payed = this.HQFormData.data.invoiceSettings.lieuDaysAllowance.payed;
@@ -722,8 +714,7 @@ export class HeadQuartersComponent implements OnInit {
         if (this.HQFormData.data.invoiceSettings.otherAllowances !== null && this.HQFormData.data.invoiceSettings.otherAllowances !== undefined)
           lengthOfOtherAllowanceArray = this.HQFormData.data.invoiceSettings.otherAllowances.length;
 
-        for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) 
-        {
+        for (let count: number = 0; count < lengthOfOtherAllowanceArray; count += 1) {
           this.otherAllowanceObject = new OtherAllowance();
 
           this.otherAllowanceObject.amount = this.HQFormData.data.invoiceSettings.otherAllowances[count].amount;
@@ -738,8 +729,7 @@ export class HeadQuartersComponent implements OnInit {
         if (this.HQFormData.data.invoiceSettings.shiftAllowances !== null && this.HQFormData.data.invoiceSettings.shiftAllowances !== undefined)
           lengthOfShiftAllowanceArray = this.HQFormData.data.invoiceSettings.shiftAllowances.length;
 
-        for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) 
-        {
+        for (let i: number = 0; i < lengthOfShiftAllowanceArray; i += 1) {
 
           this.shiftAllowanceObject = new ShiftAllowance();
 
@@ -809,17 +799,6 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
-  ShowMessage(MSG, Action) {
-    const snackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.duration = 5000;
-    snackBarConfig.horizontalPosition = 'center';
-    snackBarConfig.verticalPosition = 'top';
-    const snackbarRef = this.snackBar.open(MSG, Action, snackBarConfig);
-    // snackbarRef.onAction().subscribe(() => {
-    //   this.logger.log('Snackbar Action :: ' + Action);
-    // });
-  }
-
   validity() {
     // && this.allowCustomer === true
 
@@ -828,27 +807,27 @@ export class HeadQuartersComponent implements OnInit {
 
     if (this.HQForm.valid === false) {
       // if(this.HQForm.get('vatNumber').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
       //   if(this.HQForm.get('firstname').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Naam','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Naam','');
       //   if(this.HQForm.get('officialname').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
       //   if(this.HQForm.get('streetnumber').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
       //   if(this.HQForm.get('street').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Straat','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Straat','');
       //   if(this.HQForm.get('city').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Nr','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Nr','');
       //   if(this.HQForm.get('postalcode').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
       //   if(this.HQForm.get('phonenumber').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
       //   if(this.HQForm.get('invoiceEmail').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
       //   if(this.HQForm.get('contractsEmail').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
       //   if(this.HQForm.get('generalEmail').invalid === true)
-      //   this.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
+      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
     }
 
     if (this.HQForm.valid === true && !this.emptyData())

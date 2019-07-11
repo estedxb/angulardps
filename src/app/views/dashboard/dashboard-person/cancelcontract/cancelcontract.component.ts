@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContractService } from 'src/app/shared/contract.service';
 import { LoggingService } from 'src/app/shared/logging.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-cancelcontract',
@@ -20,7 +20,6 @@ export class CancelContractComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CancelContractComponent>, @Inject(MAT_DIALOG_DATA) public contractData: DpsContract,
     private contractService: ContractService,
-    // private spinner: NgxUiLoaderService,
     private logger: LoggingService
   ) {
     this.currentContract = contractData;

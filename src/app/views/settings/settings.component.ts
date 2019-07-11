@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoggingService } from '../../shared/logging.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginToken } from 'src/app/shared/models';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-settings',
@@ -14,10 +14,9 @@ export class SettingsComponent implements OnInit {
   public SelectedPage = 'Settings';
   public dpsLoginToken: LoginToken = new LoginToken();
   public vatNumber: string = '';
-  constructor(  
+  constructor(
     private route: ActivatedRoute, private router: Router,
-    private logger: LoggingService,
-    // private spinner: NgxUiLoaderService
+    private logger: LoggingService
   ) { }
 
   ngOnInit() {

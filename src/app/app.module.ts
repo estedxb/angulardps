@@ -9,15 +9,13 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule, MatInputModule, MatTooltipModule } from '@angular/material';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { ModalModule, AlertModule, TimepickerModule } from 'ngx-bootstrap';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { environment } from '../environments/environment';
 import { ErrorComponent } from './error.component';
 import { HttpClientModule } from '@angular/common/http';
-
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { VehicleTypesComponent } from './componentcontrols/vehicle-types/vehicle-types.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -37,7 +35,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   logoUrl: '../assets/svg/dpslogo.svg',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
-  overlayColor: 'rgba(75,75,75,0.75)',
+  overlayColor: 'rgba(227,119,25,0.6)',
   pbColor: 'red',
   pbDirection: 'ltr',
   pbThickness: 3,

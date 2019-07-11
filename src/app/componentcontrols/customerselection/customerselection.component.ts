@@ -4,9 +4,6 @@ import { User, DpsUser, LoginToken } from 'src/app/shared/models';
 import { LoggingService } from '../../shared/logging.service';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-
-// import { NgxUiLoaderService } from 'ngx-ui-loader';
-
 @Component({
   selector: 'app-customerselection',
   templateUrl: './customerselection.component.html',
@@ -25,7 +22,6 @@ export class CustomerSelectionComponent implements OnInit {
   constructor(
     private customerLists: CustomerListsService,
     private router: Router,
-    // // private spinner: NgxUiLoaderService,
     private logger: LoggingService) { }
 
   oncustomerKeyup(value) {
