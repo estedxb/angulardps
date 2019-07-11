@@ -14,12 +14,11 @@
     </div>
     <form [formGroup]="ContractForm" novalidate id="ContractForm">
         <div class="contactperson" id="maincontent">
-
             <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
             <div class="row editicon" *ngIf="mode==='update'">
                 <div class="col-sm-12">
                     <button name="EditContract" (click)="onEnableEdit()" class="Editcontract"
-                        [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived'>
+                        [disabled]='!allowCreateContract || !personIsEnabled || personIsArchived || isApproved'>
                         <img src="../../../assets/svg/editbox.svg" /></button>
                 </div>
             </div>
@@ -94,7 +93,7 @@
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Werkrooster: </label>
                     <select id="workSchedule" name="workSchedule" class='form-control' required
-                        [(ngModel)]='workScheduleSelected' (ngModelChange)='onWorkScheduleChange($event)'
+                        [(ngModel)]='workScheduleSelectedId' (ngModelChange)='onWorkScheduleChange($event)'
                         [ngModelOptions]="{standalone: true}" [disabled]="this.mode=='update' ? true : null">
                         <option class='option' *ngFor='let workSchedule of dpsWorkSchedulesData'
                             [value]="workSchedule.id">
@@ -103,9 +102,8 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold"> Vestiging: </label>
-                    <select id="location" name="location" class='form-control' required
-                        [(ngModel)]='locationSelectedName' (ngModelChange)='onLocationChange($event)'
-                        [ngModelOptions]="{standalone: true}"
+                    <select id="location" name="location" class='form-control' required [(ngModel)]='locationSelectedId'
+                        (ngModelChange)='onLocationChange($event)' [ngModelOptions]="{standalone: true}"
                         [disabled]="this.mode=='edit' || this.mode=='update' || this.mode=='extend' ? true : null">
                         <option class='option' *ngFor='let location of locationsData' [value]="location.id">
                             {{location.name}} </option>
