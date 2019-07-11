@@ -37,7 +37,7 @@ export class LoggingService {
     }
   }
 
-  ShowMessage(msg, action, _duration = 4000) {
+  public ShowMessage(msg, action, _duration = 4000) {
     this.log('ShowMessage :: ' + msg);
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = _duration;
@@ -49,7 +49,7 @@ export class LoggingService {
     });
   }
 
-  ShowMessageCustom(title, msg, action = '', _duration = 4000) {
+  public ShowMessageCustom(title, msg, action = '', _duration = 4000) {
     const snackBarConfig = new MatSnackBarConfig();
     snackBarConfig.duration = _duration;
     snackBarConfig.horizontalPosition = 'center';

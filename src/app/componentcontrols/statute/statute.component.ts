@@ -213,14 +213,15 @@ export class StatuteComponent implements OnInit {
 
     this.statuteSettings = [];
 
-    for (let counter = 0; counter < this.statutes.length; counter += 1) {
+    for (let counter = 0; counter < this.statutes.length; counter += 1) 
+    {
       this.StatuteSettingsObject = new StatuteSetting();
       this.StatuteSettingsObject.mealVoucherSettings = new MealVoucherSettings();
 
       this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0.0;
       this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0.0;
       this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0.0;
-      this.StatuteSettingsObject.coefficient = 0;
+      this.StatuteSettingsObject.coefficient = 3.5;
 
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
       this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
@@ -274,9 +275,6 @@ export class StatuteComponent implements OnInit {
       this.isMealEnabled[counter] = false;
     else
       this.isMealEnabled[counter] = true;
-
-    // this.logger.log(this.statuteSettings);
-    // this.logger.log("lenght of array="+this.statuteSettings.length);    
 
     if (this.statuteSettings.length > 0) {
       this.StatuteSettingsObject = new StatuteSetting();
@@ -385,7 +383,6 @@ export class StatuteComponent implements OnInit {
 
     if (this.STFormData !== undefined && this.STFormData !== null)
       if (this.STFormData != this.oldSFTFormData) {
-        //this.createStatuteSettingsArrayEmpty();
         this.oldSFTFormData = this.STFormData;
         if (this.STFormData !== undefined && this.STFormData.data !== null && this.STFormData.page === "edit") {
           this.loadInitialData();
@@ -401,7 +398,7 @@ export class StatuteComponent implements OnInit {
     this.newArrayCoeff = [];
 
     for (let i = 0; i < this.countStatutes; i++)
-      this.newArrayCoeff[i] = 0;
+      this.newArrayCoeff[i] = 3.5;
 
 
     this.emitData("load");
@@ -426,8 +423,8 @@ export class StatuteComponent implements OnInit {
   createCoefficientArray() {
 
     for (let i: number = 0; i < this.countStatutes; i++) {
-      this.coefficientArray[i] = 0;
-      this.newArrayCoeff[i] = 0;
+      this.coefficientArray[i] = 3.5;
+      this.newArrayCoeff[i] = 3.5;
     }
 
   }
@@ -494,10 +491,10 @@ export class StatuteComponent implements OnInit {
     }
   }
 
-  receiveJTdata($event, i) {
+  receiveJTdata($event, i) 
+  {
 
     this.statuteSelectedString = $event.selectedObject;
-
     this.arrayParitairCommitee[i] = new ParitairCommitee();
     this.paritarirCommiteeObject = new ParitairCommitee();
 
@@ -508,13 +505,15 @@ export class StatuteComponent implements OnInit {
 
     this.arrayParitairCommitee[i] = this.paritarirCommiteeObject;
 
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
+    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+    {
       this.replaceArray(i);
-    } else {
-
+    } 
+    else {
       this.createArrayData();
       this.replaceArray(i);
     }
+
     this.emitData("JT");
 
   }
@@ -530,8 +529,7 @@ export class StatuteComponent implements OnInit {
     //else {
     //   this.createArrayData();
     // }
-    this.logger.log("statuteSettings Array");
-    this.logger.log(this.statuteSettings);
+    
     this.emitData("replace array Wergever");
 
   }
@@ -575,7 +573,8 @@ export class StatuteComponent implements OnInit {
 
     this.cloneArray();
 
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
+    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+    {
       this.statuteSettings[i].paritairCommitee.brightStaffingId = this.statuteSelectedString.BrightStaffingCommitteeId;
       this.statuteSettings[i].paritairCommitee.name = this.statuteSelectedString.name;
       this.statuteSettings[i].paritairCommitee.type = this.statuteSelectedString.type;
@@ -585,8 +584,6 @@ export class StatuteComponent implements OnInit {
   }
 
   emitData(message: string) {
-    // this.logger.log("sending from =" + message);
-    // this.logger.log(this.statuteSettings);
     this.childEvent.emit(this.statuteSettings);
   }
 
