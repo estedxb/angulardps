@@ -973,7 +973,6 @@ export class HeadQuartersComponent implements OnInit {
     {
       if(this.HQFormData.data !== null && this.HQFormData.data !== undefined && this.HQFormData.data !== "")
       {
-        this.createObjectsEdit();
         this.updateDataEdit();
       }
       else {
@@ -988,6 +987,8 @@ export class HeadQuartersComponent implements OnInit {
 
   // post the json data
   updateDataEdit() {
+
+    this.createObjectsEdit();
 
     if(this.changeDpsCustomer !== null)
     {
