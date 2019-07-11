@@ -221,7 +221,7 @@ export class StatuteComponent implements OnInit {
       this.StatuteSettingsObject.mealVoucherSettings.totalWorth = 0.0;
       this.StatuteSettingsObject.mealVoucherSettings.employerShare = 0.0;
       this.StatuteSettingsObject.mealVoucherSettings.minimumHours = 0.0;
-      this.StatuteSettingsObject.coefficient = 0;
+      this.StatuteSettingsObject.coefficient = 3.5;
 
       this.StatuteSettingsObject.paritairCommitee = new ParitairCommitee();
       this.StatuteSettingsObject.paritairCommitee.brightStaffingId = this.arrayParitairCommitee[counter].BrightStaffingCommitteeId;
@@ -529,8 +529,7 @@ export class StatuteComponent implements OnInit {
     //else {
     //   this.createArrayData();
     // }
-    this.logger.log("statuteSettings Array");
-    this.logger.log(this.statuteSettings);
+    
     this.emitData("replace array Wergever");
 
   }
@@ -565,10 +564,6 @@ export class StatuteComponent implements OnInit {
     if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) {
       this.statuteSettings[i].coefficient = value;
     }
-
-    console.log("coefficient set");
-    console.log(this.statuteSettings[i].coefficient);
-    console.log(this.statuteSettings);
 
     this.emitData("replace array coefficient");
 

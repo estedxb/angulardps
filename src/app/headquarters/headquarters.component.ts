@@ -599,7 +599,7 @@ export class HeadQuartersComponent implements OnInit {
     this.mealVoucherSettings.totalWorth = 0;
 
     this.statuteSettingObject.statute = this.statute;
-    this.statuteSettingObject.coefficient = 0;
+    this.statuteSettingObject.coefficient = 3.5;
     this.statuteSettingObject.paritairCommitee = this.paritairCommitee;
     this.statuteSettingObject.mealVoucherSettings = this.mealVoucherSettings;
 
