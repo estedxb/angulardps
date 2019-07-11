@@ -994,13 +994,13 @@ export class HeadQuartersComponent implements OnInit {
     {
       let data = {
         "customer": this.changeDpsCustomer.customer,
-        "invoiceEmail": this.HQFormData.data.customer.invoiceEmail,
-        "contractsEmail": this.HQFormData.data.customer.contractsEmail,
+        "invoiceEmail": this.changeDpsCustomer.customer.invoiceEmail,
+        "contractsEmail": this.changeDpsCustomer.customer.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
         "bulkContractsEnabled": false,
         "statuteSettings": this.HQFormData.data.statuteSettings,
         "contact": this.HQFormData.data.contact,
-        "activateContactAsUser": false,
+        "activateContactAsUser": this.HQFormData.data.activateContactAsUser,
         "formValid": true
       };
     this.childEvent.emit(data);
