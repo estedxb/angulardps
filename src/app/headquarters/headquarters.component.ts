@@ -525,7 +525,6 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheck.creditCheckPending = false;
     this.creditCheck.dateChecked = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
 
-
   }
 
   setAddress() {

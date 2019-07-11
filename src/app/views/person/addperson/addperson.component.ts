@@ -1003,8 +1003,6 @@ export class AddPersonComponent implements OnInit {
 
   loadDOBData(dateOfBirth: string) {
 
-    this.logger.log('load dob data');
-
     const dobArrayData = dateOfBirth.split('-');
     const yearString: string = dobArrayData[0];
     const monthString: string = dobArrayData[1];
