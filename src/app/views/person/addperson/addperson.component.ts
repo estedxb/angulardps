@@ -1217,16 +1217,6 @@ export class AddPersonComponent implements OnInit {
 
   loadObjects(response: any) {
 
-    // this.DpsPersonObject = new DpsPerson();
-    // this.PersonObject = new Person();
-
-    // this.SocialSecurityNumberObject = new SocialSecurityNumber();
-    // this.SocialSecurityNumberObject.number = this.AddPersonForm1.get('socialSecurityNumber').value;
-    // this.PersonObject.socialSecurityNumber = this.SocialSecurityNumberObject;
-
-    // this.DpsPersonObject.customerVatNumber = this.dpsLoginToken.customerVatNumber;
-    // this.DpsPersonObject.person = this.PersonObject;
-
     this.DpsPersonObject = new DpsPerson();
 
     // doubt here whether from token or from response
