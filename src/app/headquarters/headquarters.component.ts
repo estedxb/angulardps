@@ -1019,23 +1019,53 @@ export class HeadQuartersComponent implements OnInit {
 
     this.setInvoiceSettingsEmpty();
     this.setStatuteSettingArray();
-  
-    if (this.dpsCustomer !== null) {
-      this.HQdata = {
-        "customer": this.dpsCustomer.customer,
-        "invoiceEmail": this.invoiceEmail,
-        "contractsEmail": this.contractsEmail,
-        "invoiceSettings": this.invoiceSettings,
-        "bulkContractsEnabled": false,
-        "statuteSettings": this.statuteSetting,
-        "contact": this.HQFormData.data.contact,
-        "activateContactAsUser": false,
-        "formValid": this.validity()
-      };
-      this.sendDatatoHome(this.HQdata);
+
+    if(this.HQFormData !== null && this.HQFormData !== undefined)
+    {
+      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+      {
+        if(this.HQFormData.data.statuteSetting!== null && this.HQFormData.data.statuteSetting !== undefined)
+        {
+          if (this.dpsCustomer !== null) {
+            this.HQdata = {
+              "customer": this.dpsCustomer.customer,
+              "invoiceEmail": this.invoiceEmail,
+              "contractsEmail": this.contractsEmail,
+              "invoiceSettings": this.HQFormData.data.invoiceSettings,
+              "bulkContractsEnabled": false,
+              "statuteSettings": this.HQFormData.data.statuteSetting,
+              "contact": this.HQFormData.data.contact,
+              "activateContactAsUser": false,
+              "formValid": this.validity()
+            };
+            this.sendDatatoHome(this.HQdata);
+          }
+          else
+            this.HQdata = null;
+        }
+      }
     }
-    else
-      this.HQdata = null;
+    else {
+      if(this.HQFormData.data.contact !== null && this.HQFormData.data.contact !== undefined)
+      {
+        if (this.dpsCustomer !== null) {
+          this.HQdata = {
+            "customer": this.dpsCustomer.customer,
+            "invoiceEmail": this.invoiceEmail,
+            "contractsEmail": this.contractsEmail,
+            "invoiceSettings": this.invoiceSettings,
+            "bulkContractsEnabled": false,
+            "statuteSettings": this.statuteSetting,
+            "contact": this.HQFormData.data.contact,
+            "activateContactAsUser": false,
+            "formValid": this.validity()
+          };
+          this.sendDatatoHome(this.HQdata);
+        }
+        else
+          this.HQdata = null;  
+      }
+    }
 
   }
 

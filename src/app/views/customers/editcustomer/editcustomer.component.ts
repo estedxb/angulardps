@@ -68,11 +68,14 @@ export class EditCustomerComponent implements OnInit {
   receiveCTdata($event) {
     this.CTdata = $event;
     if (this.CTdata !== null && this.CTdata !== undefined) {
-      this.HQdata.contact = this.CTdata.contact;
-      this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
-      this.HQdata.formValid = true;
-
-      this.childEvent.emit(this.HQdata);
+      if(this.CTdata.contact !== null && this.CTdata.Contact !== undefined)
+      {
+        this.HQdata.contact = this.CTdata.contact;
+        this.HQdata.activateContactAsUser = this.CTdata.activateContactAsUser;
+        this.HQdata.formValid = true;
+  
+        this.childEvent.emit(this.HQdata);  
+      }
     }
 
   }
@@ -143,49 +146,52 @@ export class EditCustomerComponent implements OnInit {
     if (response !== null && response !== undefined) {
       if (response.contact !== null && response.contact !== undefined) {
 
-        if (this.HQdata.contact === null || this.HQdata.contact === undefined)
-          this.HQdata.contact = new Contact();
+        if(this.HQdata !== null && this.HQdata !== undefined)
+          {
+            this.HQdata.contact = new Contact();
 
-        if (response.contact.firstName !== undefined && response.contact.firstName !== null)
-          this.HQdata.contact.firstName = response.contact.firstName;
+            if (response.contact.firstName !== undefined && response.contact.firstName !== null)
+              this.HQdata.contact.firstName = response.contact.firstName;
+    
+            if (response.contact.lastName !== null && response.contact.lastName !== undefined)
+              this.HQdata.contact.lastName = response.contact.lastName;
+    
+            if (response.contact.email !== null && response.contact.email !== undefined) {
+              this.HQdata.contact.email = new EmailAddress();
+              this.HQdata.contact.email.emailAddress = response.contact.email.emailAddress;
+            }
+    
+            if (response.contact.language !== undefined && response.contact.language !== null) {
+              this.HQdata.contact.language = new Language();
+    
+              if (response.contact.language.name !== null && response.contact.language.name !== undefined)
+                this.HQdata.contact.language.name = response.contact.language.name;
+    
+              if (response.contact.language.shortName !== null && response.contact.language.shortName !== undefined)
+                this.HQdata.contact.language.shortName = response.contact.language.shortName;
+            }
+    
+            if (response.contact.mobile !== null && response.contact.mobile !== undefined) {
+              this.HQdata.contact.mobile = new PhoneNumber();
+              this.HQdata.contact.mobile.number = response.contact.mobile.number;
+            }
+    
+            if (response.contact.phoneNumber !== null && response.contact.phoneNumber !== undefined) {
+              this.HQdata.contact.phoneNumber = new PhoneNumber();
+              this.HQdata.contact.phoneNumber.number = response.contact.phoneNumber.number;
+            }
+    
+            if (response.contact.postion !== null && response.contact.postion !== undefined)
+              this.HQdata.contact.postion = response.contact.postion;
+    
+            if (response.activateContactAsUser !== null && response.activateContactAsUser !== undefined)
+              this.HQdata.activateContactAsUser = response.activateContactAsUser;
+    
+            this.HQdata.formValid = true;
+    
+            this.childEvent.emit(this.HQdata);
+          }
 
-        if (response.contact.lastName !== null && response.contact.lastName !== undefined)
-          this.HQdata.contact.lastName = response.contact.lastName;
-
-        if (response.contact.email !== null && response.contact.email !== undefined) {
-          this.HQdata.contact.email = new EmailAddress();
-          this.HQdata.contact.email.emailAddress = response.contact.email.emailAddress;
-        }
-
-        if (response.contact.language !== undefined && response.contact.language !== null) {
-          this.HQdata.contact.language = new Language();
-
-          if (response.contact.language.name !== null && response.contact.language.name !== undefined)
-            this.HQdata.contact.language.name = response.contact.language.name;
-
-          if (response.contact.language.shortName !== null && response.contact.language.shortName !== undefined)
-            this.HQdata.contact.language.shortName = response.contact.language.shortName;
-        }
-
-        if (response.contact.mobile !== null && response.contact.mobile !== undefined) {
-          this.HQdata.contact.mobile = new PhoneNumber();
-          this.HQdata.contact.mobile.number = response.contact.mobile.number;
-        }
-
-        if (response.contact.phoneNumber !== null && response.contact.phoneNumber !== undefined) {
-          this.HQdata.contact.phoneNumber = new PhoneNumber();
-          this.HQdata.contact.phoneNumber.number = response.contact.phoneNumber.number;
-        }
-
-        if (response.contact.postion !== null && response.contact.postion !== undefined)
-          this.HQdata.contact.postion = response.contact.postion;
-
-        if (response.activateContactAsUser !== null && response.activateContactAsUser !== undefined)
-          this.HQdata.activateContactAsUser = response.activateContactAsUser;
-
-        this.HQdata.formValid = true;
-
-        this.childEvent.emit(this.HQdata);
       }
 
     }
