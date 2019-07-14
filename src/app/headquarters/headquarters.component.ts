@@ -311,9 +311,6 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
-    this.logger.log("legal string="+this.legalString);
-    this.logger.log("nlegalString="+this.nlegalString);
-
     this.customer.legalForm = this.selectedLegalObject;
 
     var today = new Date();
@@ -779,16 +776,11 @@ export class HeadQuartersComponent implements OnInit {
 
     this.invoiceSettings.shiftAllowance = false;
     this.invoiceSettings.otherAllowance = false;
-
-    // DimonaCostMinium: 0.3300,
-    // DimonaCostMaximum: 0.3510,
-    // StatuteCoefficientMax: 3.5,
-    // grossHoulyWageMinimum: 5,
   
-    this.invoiceSettings.transportCoefficient = 1.20;
+    this.invoiceSettings.transportCoefficient = environment.transportCoefficient;
     this.invoiceSettings.dimonaCost = environment.DimonaCostMinium;
-    this.invoiceSettings.ecoCoefficient = 1.69;
-    this.invoiceSettings.mealvoucherCoefficient = 1.69;
+    this.invoiceSettings.ecoCoefficient = environment.echoCoefficient;
+    this.invoiceSettings.mealvoucherCoefficient = environment.maaltiCoeffcient;
 
   }
 
@@ -946,31 +938,6 @@ export class HeadQuartersComponent implements OnInit {
 
     if (this.HQForm.valid === false && this.HQForm.get('bus').value === '' && !this.emptyData())
       return true;
-
-    if (this.HQForm.valid === false) {
-      // if(this.HQForm.get('vatNumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
-      //   if(this.HQForm.get('firstname').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Naam','');
-      //   if(this.HQForm.get('officialname').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
-      //   if(this.HQForm.get('streetnumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
-      //   if(this.HQForm.get('street').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Straat','');
-      //   if(this.HQForm.get('city').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Nr','');
-      //   if(this.HQForm.get('postalcode').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
-      //   if(this.HQForm.get('phonenumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
-      //   if(this.HQForm.get('invoiceEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
-      //   if(this.HQForm.get('contractsEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
-      //   if(this.HQForm.get('generalEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
-    }
 
     if (this.HQForm.valid === true && !this.emptyData())
       return true;
