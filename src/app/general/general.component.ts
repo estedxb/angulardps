@@ -42,7 +42,8 @@ export class GeneralComponent implements OnInit {
         this.loadBlk = this.GLFormData.data.bulkContractsEnabled;
         this.blkContracten = this.loadBlk;
         if (this.GLFormData.data.customer !== null && this.GLFormData.page === "edit") {
-          this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
+          if(this.GLFormData.data.customer.vcaCertification !== null && this.GLFormData.data.customer.vcaCertification !== undefined)
+              this.loadVCA = this.GLFormData.data.customer.vcaCertification.cerified;
           if (this.vcaObject !== undefined && this.vcaObject !== null)
             this.vcaObject.cerified = this.loadVCA;
         }
@@ -61,11 +62,14 @@ export class GeneralComponent implements OnInit {
 
   changeVca($event) {
 
-    this.logger.log("change vca called");
-    this.logger.log($event);
+    this.vcaObject = new VcaCertification();
 
     this.changeVCA = $event;
     this.vcaObject.cerified = $event;
+
+    this.logger.log("change vca called");
+    this.logger.log($event);
+
     this.emitData();
   }
 

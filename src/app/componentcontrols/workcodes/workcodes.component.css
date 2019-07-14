@@ -17,7 +17,7 @@ input[type="number"] {
   overflow: hidden;
   outline: none;
 }
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled {
   background-color: rgb(235, 235, 228);
   opacity: 1;
 }
