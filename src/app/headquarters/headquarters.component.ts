@@ -15,6 +15,7 @@ import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
 import { MatDialog } from '@angular/material';
 import { LoggingService } from '../shared/logging.service';
+import { environment } from 'src/environments/environment.stag';
 
 
 @Component({
@@ -50,7 +51,6 @@ export class HeadQuartersComponent implements OnInit {
   getCustomersByvatNumberResponse: any;
   getCustomersByvatNumberErrorMessage: string;
 
-
   dpsCustomer: DPSCustomer;
   customer: Customer;
 
@@ -84,6 +84,7 @@ export class HeadQuartersComponent implements OnInit {
 
   numberPattern: string;
   vatNumber: string;
+  CustomerVatNumberFull: string;
   creditCheckLimit: number;
 
   allowCustomer: boolean;
@@ -121,7 +122,7 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
     
     this.HQForm = new FormGroup({
-      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[a-zA-Z0-9]+$')]),
+      vatNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]),
       firstname: new FormControl('', [Validators.required]),
       officialname: new FormControl('', [Validators.required]),
       creditCheck: new FormControl(),
@@ -373,7 +374,6 @@ export class HeadQuartersComponent implements OnInit {
          this.vcaCertification.cerified = false;
        }
     
-
         console.log("setting DPS  EDIT Customer");
         console.log(this.changeDpsCustomer);
     }
@@ -780,8 +780,13 @@ export class HeadQuartersComponent implements OnInit {
     this.invoiceSettings.shiftAllowance = false;
     this.invoiceSettings.otherAllowance = false;
 
+    // DimonaCostMinium: 0.3300,
+    // DimonaCostMaximum: 0.3510,
+    // StatuteCoefficientMax: 3.5,
+    // grossHoulyWageMinimum: 5,
+  
     this.invoiceSettings.transportCoefficient = 1.20;
-    this.invoiceSettings.dimonaCost = 0.3510;
+    this.invoiceSettings.dimonaCost = environment.DimonaCostMinium;
     this.invoiceSettings.ecoCoefficient = 1.69;
     this.invoiceSettings.mealvoucherCoefficient = 1.69;
 
@@ -890,7 +895,6 @@ export class HeadQuartersComponent implements OnInit {
 
         if(this.dpsCustomer.customer !== null && this.dpsCustomer.customer !== undefined)
         {
-
           this.dpsCustomer.customer.vcaCertification = new VcaCertification();
           // assigning vca Object    
           if(this.HQFormData !== null && this.HQFormData !== undefined)
