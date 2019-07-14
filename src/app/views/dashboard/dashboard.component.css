@@ -275,7 +275,9 @@
   height: 300px;
   overflow: auto;
 }
-
+.dashboardactioncontent table .WO {
+  border-top: 2px #fff solid;
+}
 #PersonContents .dashboardpersoncontent {
   min-height: 300px;
   min-height: calc(100vh - 440px);

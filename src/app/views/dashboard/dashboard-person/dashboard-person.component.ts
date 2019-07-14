@@ -22,8 +22,10 @@ import { WorkSchedule } from '../../../shared/models';
 })
 export class DashboardPersonComponent implements OnInit {
   @Input() NotificationCount: number;
-  public maindatas: DpsSchedulePerson[] = [];
-  public datas: DpsSchedulePerson[] = [];
+  public maindatasWithContracts: DpsSchedulePerson[] = [];
+  public maindatasWithOutContracts: DpsSchedulePerson[] = [];
+  public datasWithContracts: DpsSchedulePerson[] = [];
+  public datasWithOutContracts: DpsSchedulePerson[] = [];
   public selectedPersondatas: DpsSchedulePerson;
   public selectedPersonContracts: DpsScheduleContract[] = [];
   public data: any;
@@ -86,10 +88,18 @@ export class DashboardPersonComponent implements OnInit {
       .subscribe(dpsSchedule => {
         this.logger.log('onPageInit getDpsScheduleByVatNumber in DashboardPersonComponent ::', dpsSchedule);
         this.allowCreateContract = dpsSchedule.allowCreateContract;
-        this.maindatas = dpsSchedule.persons;
-        // this.datas = this.maindatas;
+        this.maindatasWithContracts = dpsSchedule.persons.filter(p => p.contracts.length > 0);
+        this.maindatasWithContracts.sort((p, b) => p.personName.localeCompare(b.personName));
+
+        this.maindatasWithOutContracts = dpsSchedule.persons.filter(p => {
+          if (p.contracts.length > 0) { return false; } else { return true; }
+        });
+        this.maindatasWithOutContracts.sort((p, b) => p.personName.localeCompare(b.personName));
+
+        // this.datas = this.maindatasWithContracts;
         this.filterScheduleByName();
-        this.logger.log('onPageInit maindatas ::', this.maindatas);
+        this.filterScheduleByNameWO();
+        this.logger.log('onPageInit maindatasWithContracts ::', this.maindatasWithContracts);
         this.errorMsg = '';
       }, error => {
         this.logger.hideSpinner();
@@ -215,20 +225,41 @@ export class DashboardPersonComponent implements OnInit {
   onPersonKeyup(value) {
     this.filterByName = value;
     this.filterScheduleByName();
+    this.filterScheduleByNameWO();
   }
 
   filterScheduleByName() {
     try {
-      this.datas = [];
-      if (this.maindatas !== null && this.maindatas !== undefined) {
-        if (this.maindatas.length > 0) {
-          console.log('this.maindatas', this.maindatas);
-          this.datas = this.maindatas
-            .map(pers => { if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1 && !pers.personIsArchived) { return pers; } });
-          console.log('this.datas', this.datas);
-        } else { this.datas = this.maindatas; }
-      } else { this.datas = this.maindatas; }
-    } catch (e) { this.logger.log('dashboardperson onPersonKeyup Error ! ' + e.message); }
+      this.datasWithContracts = [];
+      console.log('filterScheduleByName this.maindatasWithContracts', this.maindatasWithContracts);
+      if (this.maindatasWithContracts !== null && this.maindatasWithContracts !== undefined) {
+        if (this.maindatasWithContracts.length > 0) {
+          this.datasWithContracts = this.maindatasWithContracts.map(pers => {
+            if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1 && !pers.personIsArchived) { return pers; }
+          });
+        } else { this.datasWithContracts = this.maindatasWithContracts; }
+      } else { this.datasWithContracts = this.maindatasWithContracts; }
+      console.log('filterScheduleByName this.datasWithContracts', this.datasWithContracts);
+
+    } catch (e) { this.logger.log('filterScheduleByName dashboardperson onPersonKeyup Error ! ' + e.message); }
+    this.logger.hideSpinner();
+  }
+
+
+  filterScheduleByNameWO() {
+    try {
+      this.datasWithOutContracts = [];
+      console.log('filterScheduleByNameWO this.maindatasWithOutContracts', this.maindatasWithOutContracts);
+      if (this.maindatasWithOutContracts !== null && this.maindatasWithOutContracts !== undefined) {
+        if (this.maindatasWithOutContracts.length > 0) {
+          this.datasWithOutContracts = this.maindatasWithOutContracts.map(pers => {
+            if (pers.personName.toLowerCase().indexOf(this.filterByName.toLowerCase()) > -1 && !pers.personIsArchived) { return pers; }
+          });
+        } else { this.datasWithOutContracts = this.maindatasWithOutContracts; }
+      } else { this.datasWithOutContracts = this.maindatasWithOutContracts; }
+      console.log('filterScheduleByNameWO this.datasWithOutContracts', this.datasWithOutContracts);
+
+    } catch (e) { this.logger.log('filterScheduleByNameWO dashboardperson onPersonKeyup Error ! ' + e.message); }
     this.logger.hideSpinner();
   }
 
@@ -290,7 +321,7 @@ export class DashboardPersonComponent implements OnInit {
   }
   getShortMonth(date) { return date.toLocaleString('nl-NL', { month: 'short' }); }
 
-  openContractDialog(index, personid, contractid, personIsEnabled, personIsArchived, approved, mode): void {
+  openContractDialog(index, personid, contractid, personIsEnabled, personIsArchived, approved, mode, persontype): void {
     this.logger.log('openContractDialog(' + index + ',' + personid + ',' + contractid +
       ',' + personIsEnabled + ',' + personIsArchived + ',' + approved + ',' + mode + ')');
     // this.logger.log(this.startDate + ' and endDate :: ' + this.endDate);
@@ -307,7 +338,11 @@ export class DashboardPersonComponent implements OnInit {
         }
 
         const selectedContract = new SelectedContract();
-        selectedContract.personContracts = this.getSelectedPersonContracts(index, personid);
+        if (persontype === 'WO') {
+          selectedContract.personContracts = this.getSelectedPersonContractsWO(index, personid);
+        } else {
+          selectedContract.personContracts = this.getSelectedPersonContracts(index, personid);
+        }
 
         selectedContract.contractId = contractid;
         selectedContract.personId = personid;
@@ -354,8 +389,9 @@ export class DashboardPersonComponent implements OnInit {
     this.selectedPersonContracts = [];
     try {
       this.logger.log('getSelectedPersonContracts(' + index + ',' + personid + ') ');
-      if (this.datas.length > 0) {
-        this.selectedPersondatas = this.datas[index]; // this.datas.map(pers => { if (pers.personId === personid) { return pers; } });
+      if (this.datasWithContracts.length > 0) {
+        this.selectedPersondatas = this.datasWithContracts[index];
+        // this.datas.map(pers => { if (pers.personId === personid) { return pers; } });
         if (this.selectedPersondatas !== null) {
           try {
             if (this.selectedPersondatas.contracts.length > 0) {
@@ -365,8 +401,8 @@ export class DashboardPersonComponent implements OnInit {
         } else { this.selectedPersonContracts = []; }
       } else {
         try {
-          if (this.datas[0].contracts.length > 0) {
-            this.selectedPersonContracts = this.datas[0].contracts;
+          if (this.datasWithContracts[0].contracts.length > 0) {
+            this.selectedPersonContracts = this.datasWithContracts[0].contracts;
           } else { this.selectedPersonContracts = []; }
         } catch (e) { this.selectedPersonContracts = []; }
       }
@@ -374,6 +410,34 @@ export class DashboardPersonComponent implements OnInit {
     } catch (e) { this.selectedPersonContracts = []; }
     return this.selectedPersonContracts;
   }
+
+  getSelectedPersonContractsWO(index, personid) {
+    this.selectedPersonContracts = [];
+    try {
+      this.logger.log('getSelectedPersonContractsWO(' + index + ',' + personid + ') ');
+      if (this.datasWithOutContracts.length > 0) {
+        this.selectedPersondatas = this.datasWithOutContracts[index];
+        // this.datas.map(pers => { if (pers.personId === personid) { return pers; } });
+        if (this.selectedPersondatas !== null) {
+          try {
+            if (this.selectedPersondatas.contracts.length > 0) {
+              this.selectedPersonContracts = this.selectedPersondatas.contracts;
+            } else { this.selectedPersonContracts = []; }
+          } catch (e) { this.selectedPersonContracts = []; }
+        } else { this.selectedPersonContracts = []; }
+      } else {
+        try {
+          if (this.datasWithOutContracts[0].contracts.length > 0) {
+            this.selectedPersonContracts = this.datasWithOutContracts[0].contracts;
+          } else { this.selectedPersonContracts = []; }
+        } catch (e) { this.selectedPersonContracts = []; }
+      }
+      this.logger.log('getSelectedPersonContractsWO(' + personid + ') selectedPersonContracts :: ', this.selectedPersonContracts);
+    } catch (e) { this.selectedPersonContracts = []; }
+    return this.selectedPersonContracts;
+  }
+
+
   OpenAddPersonURL() {
     this.router.navigate(['./person/add']); this.logger.log(this.constructor.name + ' - ' + 'Redirect... person/add');
   }
@@ -386,19 +450,17 @@ export class DashboardPersonComponent implements OnInit {
 }
 
 
-
-
- //openContractDialog // dialogRef.afterClosed()
+// openContractDialog // dialogRef.afterClosed()
 /*
 if (this.SelectedIndex >= 0) {
-  this.maindatas[this.SelectedIndex] = this.data;
+  this.maindatasWithContracts[this.SelectedIndex] = this.data;
   this.FilterTheArchive();
   this.logger.ShowMessage('Positions "' + this.data.position.name + '" is updated successfully.', '');
 } else {
   this.logger.log('this.data.id :: ', this.data.id);
   if (parseInt('0' + this.data.id, 0) > 0) {
-    this.maindatas.push(this.data);
-    this.logger.log(' new this.maindatas :: ', this.maindatas);
+    this.maindatasWithContracts.push(this.data);
+    this.logger.log(' new this.maindatasWithContracts :: ', this.maindatasWithContracts);
     this.FilterTheArchive();
     this.logger.ShowMessage('Positions "' + this.data.position.name + '" is added successfully.', '');
   }

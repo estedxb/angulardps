@@ -38,7 +38,7 @@
             <td class="col-split col-split-m">Zon. {{SelectedSunday}}</td>
             <td class="col-split col-split-l">&nbsp;</td>
           </tr>
-          <ng-container *ngFor="let personContract of datas let idx= index">
+          <ng-container *ngFor="let personContract of datasWithContracts let idx= index">
             <ng-container *ngIf="personContract !== undefined">
               <tr class="Contents">
                 <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContract.personId)">
@@ -52,7 +52,7 @@
                 <td class="col-split col-split-f">
                   <!-- Persion is enable & Person is not archived & Add Button Will so only if the Customer is allowed to create create-->
                   <button class="addContract" [ngClass]="{'disabled': !allowCreateContract}"
-                    (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled ,personContract.personIsArchived, false, 'new')">
+                    (click)="openContractDialog(idx,personContract.personId,0,personContract.personIsEnabled ,personContract.personIsArchived, false, 'new','W')">
                     <img src="../../../../assets/svg/checklist_add.svg" />
                   </button>
                 </td>
@@ -81,7 +81,7 @@
                                 *ngIf="(!contract.childContractId > 0) && contract.approved ">
                                 <button class="contractActionbtn" id="extdcontract_{{contract.customerContractId}}"
                                   *ngIf="(!contract.childContractId > 0) && contract.approved"
-                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled ,personContract.personIsArchived, contract.approved,'extend')">
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled ,personContract.personIsArchived, contract.approved,'extend','W')">
                                   <div class="btnLeftTextContainer">
                                     <div id="triangleLeft"
                                       style="border-color: transparent transparent rgb(226, 226, 226); border-width: 0px 0px 26px 12px;">
@@ -97,7 +97,7 @@
                                 *ngIf="(!contract.childContractId > 0) && contract.approved"></div>
                               <div class="contractActionbtn2">
                                 <button class="contractActionbtn" id="editcontract_{{contract.customerContractId}}"
-                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled,personContract.personIsArchived, contract.approved,'update')">
+                                  (click)="openContractDialog(idx,personContract.personId,contract.customerContractId,personContract.personIsEnabled,personContract.personIsArchived, contract.approved,'update','W')">
                                   <div class="btnLeftIcon">
                                     <img src="../../../../assets/svg/eye.svg" alt="Extend">
                                   </div>
@@ -516,6 +516,83 @@
               </tr>
             </ng-container>
           </ng-container>
+
+          <ng-container *ngIf="datasWithOutContracts.length>0">
+            <tr class="WO">
+              <td colspan="10"></td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngFor="let personContractWO of datasWithOutContracts let idx= index">
+            <ng-container *ngIf="personContractWO !== undefined">
+              <tr class="Contents">
+                <td class="col-split col-split-n" (click)="OpenUpdatePerson(personContractWO.personId)">
+                  <div class="name"
+                    [ngClass]="{'notActive': (!personContractWO.personIsEnabled || personContractWO.personIsArchived)}">
+                    {{personContractWO.personName}}</div>
+                  <div class="position">
+                    {{personContractWO.positionName}}
+                  </div>
+                </td>
+                <td class="col-split col-split-f">
+                  <!-- Persion is enable & Person is not archived & Add Button Will so only if the Customer is allowed to create create-->
+                  <button class="addContract" [ngClass]="{'disabled': !allowCreateContract}"
+                    (click)="openContractDialog(idx,personContractWO.personId,0,personContractWO.personIsEnabled ,personContractWO.personIsArchived, false, 'new','WO')">
+                    <img src="../../../../assets/svg/checklist_add.svg" />
+                  </button>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Monday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Tuesday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Wednesday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Thursday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Friday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Saturday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-m">
+                  <!--Sunday Empty Column-->
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+                <td class="col-split col-split-l">
+                  <div class="FullCol Contract_0">
+                    <div class="centerline"></div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+
           <tr *ngIf="errorMsg !== null && errorMsg !== undefined && errorMsg !== ''">
             <td class="error" colspan="10">{{errorMsg}}</td>
           </tr>
@@ -525,6 +602,8 @@
             <div class="centerline"></div>
           </div>
         </ng-template>
+
+
       </div>
     </div>
   </div>

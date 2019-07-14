@@ -130,7 +130,7 @@ export class UpdatePersonComponent implements OnInit {
 
         this.PersonName = this.dpsPerson.person.firstName + ' ' + this.dpsPerson.person.lastName;
 
-        if (this.dpsPerson.activeContractCount > 0) { this.archiveDisable = true; }
+        if (this.dpsPerson.activeContractCount > 0) { this.archiveDisable = true; } else { this.archiveDisable = false; }
 
         if (this.dpsPerson.person.lastName === '' || this.dpsPerson.person.lastName === null ||
           this.dpsPerson.person.lastName === undefined) {
