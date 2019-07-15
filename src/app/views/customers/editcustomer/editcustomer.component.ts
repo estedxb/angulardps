@@ -191,11 +191,8 @@ export class EditCustomerComponent implements OnInit {
     
             this.childEvent.emit(this.HQdata);
           }
-
       }
-
     }
-
     // this.HQdata = response;
   }
   handleError(error: any) { }

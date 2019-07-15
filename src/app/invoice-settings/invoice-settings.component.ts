@@ -38,8 +38,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   public CurrencyFormData;
 
-  // tslint:disable-next-line: variable-name
-
   public addNewRow: boolean;
   public removeLastRemove: boolean;
 
@@ -158,11 +156,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
       this.selectedValue = this.dataDropDown[this._selectedIndex];
     }
   }
-
-  // Contract not valid: Dimona cost has to be at least 0.3300!
-  // Contract not valid: Dimona cost can only be 0.3510 at most!
-  // Contract not valid: Coefficient can only be 3.5 at most!
-  // Contract not valid: Gross salary has to be at least 5!
 
   changeObject() {
 
@@ -888,7 +881,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onChangeM($event) {
 
-    // this.holidayInvoiced = $event;
     this.mobilitySwitch = $event;
 
     if ($event === true) {
@@ -919,7 +911,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   }
 
   setMobileBox(value: number) {
-    // this.mobileBoxText = value;
     this.mobilityAllowanceObject.amountPerKm = value;
     this.changeObject();
   }
@@ -1111,6 +1102,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     if (this.Ploegpremiere.length != 1) {
       this.Ploegpremiere.removeAt(index);
+
       // remove from array shiftAllowances
       this.shiftAllowances.splice(index, 1);
       this.currencyDataShift.splice(index, 1);

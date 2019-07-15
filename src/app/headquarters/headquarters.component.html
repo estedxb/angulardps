@@ -1,15 +1,22 @@
 <div class="headquarters">
-    <!-- <div class="generalTitle">
-        <label class="titleLabel">Headquarters</label>
-      </div> -->
-
     <form [formGroup]="HQForm" id="hqform">
-
         <div class="row">
-            <div class="col-sm-6 inputWithImg">
+                <div class="col-sm-2">
+                        <label class="titleBold"> Code   </label>
+                        <select [ngModel]="selectedIndexVatCode" formControlName="countryVatCode"
+                                id="dd_countryvatcode" name="dd_countryvatcode"
+                                class="inhaalrust selectcomponent"
+                                (change)="onChangeDropDownCountryVatCode($event)" ng-dropdown
+                                required="required">
+                                <option *ngFor="let data of dataDropDownCountryVatCode let i= index"
+                                        [attr.data-index]="i" [value]="i">{{data}}</option>
+                        </select>
+                </div>
+            <div class="col-sm-4 inputWithImg">
+
                 <label class="titleBold"> Ondernemingsnummer </label>
                 <input (change)="clearError()" (blur)="creditLimitApi()" formControlName="vatNumber" name="vatNumber"
-                    maxlength="12" class="form-control" type="text" required />
+                    maxlength="10" class="form-control" type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.vatNumber.invalid && (HQForm.controls.vatNumber.dirty || HQForm.controls.vatNumber.touched || HQForm.controls.vatNumber.untouched ) else valid">
                     <img src="../../assets/img/InvalidIcon.png" alt="">

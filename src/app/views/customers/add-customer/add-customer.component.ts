@@ -289,17 +289,12 @@ export class AddCustomerComponent implements OnInit {
       data: response,
       page: 'edit'
     };
-
-    // this.logger.log("response object in from api");
-    // this.logger.log(this.editObject);
   }
 
   handleError(error: any) { }
 
   onBackwardClick() {
     document.getElementById('maincontent').scrollTo(0, 0);
-    // this.logger.log("current vat number");
-    // this.logger.log(this.currentVatNumber);
     this.getCustomerByVatNumberEdit(this.currentVatNumber);
     this.showFormIndex = 1;
   }

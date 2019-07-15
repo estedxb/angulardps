@@ -45,8 +45,6 @@ export class CalendarDOBComponent implements OnInit {
       monthString: '1',
       yearString: '2019'
     };
-
-    this.logger.log('calendar data received=' + this.CalendarData);
   }
 
   @Input() public CalendarData: string;
@@ -108,12 +106,10 @@ export class CalendarDOBComponent implements OnInit {
     }
 
     if (this.calendarDisableStatus === true) {
-      // this.logger.log('in');
       this.dayDisableStatus = true;
       this.monthDisableStatus = true;
       this.yearDisableStatus = true;
     } else {
-      // this.logger.log('out');
       this.dayDisableStatus = this.calendardayDisableStatus;
       this.monthDisableStatus = this.calendarmonthDisableStatus;
       this.yearDisableStatus = this.calendaryearDisableStatus;

@@ -29,10 +29,8 @@ export class GeneralComponent implements OnInit {
   constructor(private logger: LoggingService) {
     this.loadVCA = false;
     this.loadBlk = false;
-
     this.changeVCA = false;
     this.changeBLK = false;
-
   }
 
   ngDoCheck() {
@@ -61,37 +59,21 @@ export class GeneralComponent implements OnInit {
 
 
   changeVca($event) {
-
     this.vcaObject = new VcaCertification();
-
     this.changeVCA = $event;
     this.vcaObject.cerified = $event;
-
-    this.logger.log("change vca called");
-    this.logger.log($event);
-
     this.emitData();
   }
 
   changeBlk($event) {
-
     this.changeBLK = $event;
     this.blkContracten = $event;
     this.emitData();
   }
 
   emitData() {
-
-    this.logger.log("before sending value=");
-    this.logger.log(this.vcaObject);
-
-    this.logger.log("blk contracten");
-    this.logger.log(this.blkContracten);
-
     let obj: any = { "vcaObject": this.vcaObject, "blk": this.blkContracten };
-
     this.childEvent.emit(obj);
-
   }
 
 }

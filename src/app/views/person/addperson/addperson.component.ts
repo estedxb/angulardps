@@ -1661,9 +1661,6 @@ export class AddPersonComponent implements OnInit {
   }
 
   enableALLFields() {
-
-    this.logger.log('enabled all fields');
-
     this.AddPersonForm1.get('firstName').enable();
     this.AddPersonForm1.get('lastName').enable();
     this.AddPersonForm1.get('street').enable();
@@ -1674,10 +1671,8 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('vastNumber').enable();
     this.AddPersonForm1.get('emailAddress').enable();
     this.AddPersonForm1.get('iban').enable();
-    //this.AddPersonForm1.get('bic').enable();
     this.AddPersonForm1.get('bus').enable();
     this.AddPersonForm1.get('placeOfBirth').enable();
-
   }
 
   disableAllFields() {
@@ -1691,7 +1686,6 @@ export class AddPersonComponent implements OnInit {
     this.AddPersonForm1.get('vastNumber').disable();
     this.AddPersonForm1.get('emailAddress').disable();
     this.AddPersonForm1.get('iban').disable();
-    //this.AddPersonForm1.get('bic').disable();
     this.AddPersonForm1.get('bus').disable();
     this.AddPersonForm1.get('placeOfBirth').disable();
   }

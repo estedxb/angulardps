@@ -16,6 +16,7 @@ import { DataService } from '../../../src/app/shared/data.service';
 import { MatDialog } from '@angular/material';
 import { LoggingService } from '../shared/logging.service';
 import { environment } from 'src/environments/environment.stag';
+import { findIndex } from 'rxjs/operators';
 
 
 @Component({
@@ -50,6 +51,9 @@ export class HeadQuartersComponent implements OnInit {
 
   getCustomersByvatNumberResponse: any;
   getCustomersByvatNumberErrorMessage: string;
+  countryVatCode:string;
+
+  selectedIndexVatCode:any = 0;
 
   dpsCustomer: DPSCustomer;
   customer: Customer;
@@ -99,12 +103,32 @@ export class HeadQuartersComponent implements OnInit {
   public Id = '';
   public currentPage = '';
 
+  public dataDropDownCountryVatCode = [];
+
   public EditdataFromComponents;
   public selectedLegalObject='NV';
 
   // ngAfterViewInit(){
   //   //this.legalString = this.legalComponent.selectedString;
   // }
+
+   /********************************************** DropDown  Inhaalrust drop down *************************/
+   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
+
+   set selectedValue(value: any) { this._selectedValue = value; }
+   get selectedValue(): any { return this._selectedValue; }
+   set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dataDropDownCountryVatCode[this.selectedIndex]; }
+   get selectedIndex(): number { return this._selectedIndex; }
+   set value(value: any) { this._value = value; }
+   get value(): any { return this._value; }
+   resetToInitValue() { this.value = this.selectedValue; }
+ 
+   SetInitialValue() {
+     if (this.selectedValue === undefined) {
+       this._selectedIndex = 0;
+       this.selectedValue = this.dataDropDownCountryVatCode[this._selectedIndex];
+     }
+   }
 
   ngDoCheck() {
 
@@ -122,6 +146,7 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
     
     this.HQForm = new FormGroup({
+      countryVatCode: new FormControl(''),
       vatNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]),
       firstname: new FormControl('', [Validators.required]),
       officialname: new FormControl('', [Validators.required]),
@@ -146,6 +171,12 @@ export class HeadQuartersComponent implements OnInit {
     //this.legalString = "BVBA";
     this.createObjects();  //check validations
 
+
+    this.dataDropDownCountryVatCode = ['BE','NL','AT','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','HU','IE','IT','LV','LT','LU',
+                                        'MT','PL','PT','RO','SK','SI','SE'];
+
+    this.countryVatCode = this.dataDropDownCountryVatCode[0];
+
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
       localStorage.getItem('dpsLoginToken') !== '' &&
       localStorage.getItem('dpsLoginToken') !== null) {
@@ -162,6 +193,7 @@ export class HeadQuartersComponent implements OnInit {
       // //this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
 
+    this.selectedIndexVatCode = 0;
   }
 
   constructor(
@@ -187,6 +219,26 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
+  findIndexDropDownVat(countryCode) {
+
+    let index=0;
+
+    this.logger.log("searching in dropdown");
+
+    this.dataDropDownCountryVatCode.forEach(element => {
+      this.logger.log("element="+element);
+      this.logger.log("received country code="+countryCode);
+      if(element === countryCode)
+      {
+        this.logger.log("country code found="+element + " index="+index);
+        this._selectedIndex = index;
+        //this.selectedIndexVatCode = index;
+      }
+      index++;
+    });
+
+  }
+
 
   loadDataEdit(dpscustomer: any) {
 
@@ -197,8 +249,12 @@ export class HeadQuartersComponent implements OnInit {
 
       if (dpscustomer.customer !== null && dpscustomer.customer !== undefined) {
 
-        this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
+        this.findIndexDropDownVat(dpscustomer.vatCountryCode);
+        this.HQForm.controls['vatNumber'].setValue(dpscustomer.vatNumberNumber);
+
         this.HQForm.controls['vatNumber'].disable();
+        this.HQForm.controls['countryVatCode'].disable();
+        
         this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
         this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
 
@@ -285,8 +341,6 @@ export class HeadQuartersComponent implements OnInit {
 
   setCustomerObjectEdit() {
 
-    this.logger.log("cerified="+this.HQFormData.data.customer.vcaCertification.cerified);
-
     this.address = new Address();
 
     // assigning address object
@@ -307,7 +361,7 @@ export class HeadQuartersComponent implements OnInit {
     this.phoneNumber.number = this.HQForm.get('phonenumber').value;
 
     // assigning customer object
-    this.customer.vatNumber = this.HQForm.get('vatNumber').value;
+    this.customer.vatNumber = this.countryVatCode + this.HQForm.get('vatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
@@ -342,6 +396,9 @@ export class HeadQuartersComponent implements OnInit {
       this.changeDpsCustomer.invoiceEmail = this.invoiceEmail;
       this.changeDpsCustomer.contractsEmail = this.contractsEmail;
       this.changeDpsCustomer.customer.vcaCertification = new VcaCertification();
+      this.changeDpsCustomer.vatNumberNumber = this.HQForm.get('vatNumber').value;
+      this.changeDpsCustomer.countryVatCode = this.countryVatCode;
+
        // assigning vca Object    
        if(this.HQFormData !== null && this.HQFormData !== undefined)
        {
@@ -375,6 +432,12 @@ export class HeadQuartersComponent implements OnInit {
         console.log(this.changeDpsCustomer);
     }
   
+  }
+
+  onChangeDropDownCountryVatCode($event) {
+
+    this.countryVatCode = this.dataDropDownCountryVatCode[$event.target.value];
+    this.logger.log("country code="+this.countryVatCode);
   }
   
   createObjects() {
@@ -414,8 +477,9 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheckPending = false;
     this.HQForm.get('creditLimit').setValue('');
 
-    if (this.HQForm.get('vatNumber').valid === true) {
-      this.getCustomerByVatNumber(this.vatNumber);
+    if (this.HQForm.get('vatNumber').valid === true) {      
+      this.logger.log("country code="+this.countryVatCode);
+      this.getCustomerByVatNumber(this.countryVatCode + this.vatNumber);
     }
   }
 
@@ -432,7 +496,7 @@ export class HeadQuartersComponent implements OnInit {
     this.customerService.getCustomersByVatNumber(vatNumber)
       .subscribe(data => {
         response = data;
-        console.log(response);
+        // console.log(response);
 
         this.allowCustomer = true;
 
@@ -540,8 +604,8 @@ export class HeadQuartersComponent implements OnInit {
 
   loadData(verifiedCustomerData: any) {
 
-    console.log('customer data');
-    console.log(verifiedCustomerData);
+    // console.log('customer data');
+    // console.log(verifiedCustomerData);
 
     if (verifiedCustomerData !== null) {
       if (verifiedCustomerData.customer !== null) {
@@ -669,7 +733,9 @@ export class HeadQuartersComponent implements OnInit {
     this.phoneNumber.number = this.HQForm.get('phonenumber').value;
 
     // assigning customer object
-    this.customer.vatNumber = this.HQForm.get('vatNumber').value;
+    this.customer.vatNumber = this.countryVatCode + this.HQForm.get('vatNumber').value;
+
+    //this.customer.vatCountryCode = this.countryVatCode + this.HQForm.get('VatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
@@ -883,6 +949,9 @@ export class HeadQuartersComponent implements OnInit {
         this.dpsCustomer.customer = this.customer;
         this.dpsCustomer.invoiceEmail = this.invoiceEmail;
         this.dpsCustomer.contractsEmail = this.contractsEmail;
+        this.dpsCustomer.vatNumberNumber = this.HQForm.get('vatNumber').value;
+        this.dpsCustomer.vatCountryCode = this.countryVatCode;
+  
         // this.dpsCustomer.contact = this.contact;
 
         if(this.dpsCustomer.customer !== null && this.dpsCustomer.customer !== undefined)
@@ -1000,6 +1069,8 @@ export class HeadQuartersComponent implements OnInit {
           if (this.dpsCustomer !== null) {
             this.HQdata = {
               "customer": this.dpsCustomer.customer,
+              "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+              "vatCountryCode": this.dpsCustomer.vatCountryCode,
               "invoiceEmail": this.invoiceEmail,
               "contractsEmail": this.contractsEmail,
               "invoiceSettings": this.HQFormData.data.invoiceSettings,
@@ -1014,14 +1085,35 @@ export class HeadQuartersComponent implements OnInit {
           else
             this.HQdata = null;
         }
+        else {
+          if(this.HQFormData.data.contact !== null )
+          if (this.dpsCustomer !== null) {
+            this.HQdata = {
+              "customer": this.dpsCustomer.customer,
+              "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+              "vatCountryCode": this.dpsCustomer.vatCountryCode,
+              "invoiceEmail": this.invoiceEmail,
+              "contractsEmail": this.contractsEmail,
+              "invoiceSettings": this.invoiceSettings,
+              "bulkContractsEnabled": false,
+              "statuteSettings": this.statuteSetting,
+              "contact": this.HQFormData.data.contact,
+              "activateContactAsUser": false,
+              "formValid": this.validity()
+            };
+            this.sendDatatoHome(this.HQdata);
+          }
+          else
+            this.HQdata = null;  
       }
-    }
-    else {
-      if(this.HQFormData.data.contact !== null && this.HQFormData.data.contact !== undefined)
-      {
+      }
+      else {
+        if(this.HQFormData.data.contact !== null )
         if (this.dpsCustomer !== null) {
           this.HQdata = {
             "customer": this.dpsCustomer.customer,
+            "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+            "vatCountryCode": this.dpsCustomer.vatCountryCode,
             "invoiceEmail": this.invoiceEmail,
             "contractsEmail": this.contractsEmail,
             "invoiceSettings": this.invoiceSettings,
@@ -1035,15 +1127,34 @@ export class HeadQuartersComponent implements OnInit {
         }
         else
           this.HQdata = null;  
-      }
+    }
+
+    }
+    else {
+      if(this.HQFormData.data.contact !== null )
+        if (this.dpsCustomer !== null) {
+          this.HQdata = {
+            "customer": this.dpsCustomer.customer,
+            "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+            "vatCountryCode": this.dpsCustomer.vatCountryCode,
+            "invoiceEmail": this.invoiceEmail,
+            "contractsEmail": this.contractsEmail,
+            "invoiceSettings": this.invoiceSettings,
+            "bulkContractsEnabled": false,
+            "statuteSettings": this.statuteSetting,
+            "contact": this.HQFormData.data.contact,
+            "activateContactAsUser": false,
+            "formValid": this.validity()
+          };
+          this.sendDatatoHome(this.HQdata);
+        }
+        else
+          this.HQdata = null;  
     }
 
   }
 
   updateData() {
-
-    this.logger.log("hq form data in update data");
-    this.logger.log(this.HQFormData);
 
     if(this.HQFormData !== null && this.HQFormData !== undefined)
     {
@@ -1070,6 +1181,8 @@ export class HeadQuartersComponent implements OnInit {
     {
       let data = {
         "customer": this.changeDpsCustomer.customer,
+        "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+        "vatCountryCode": this.dpsCustomer.vatCountryCode,
         "invoiceEmail": this.changeDpsCustomer.invoiceEmail,
         "contractsEmail": this.changeDpsCustomer.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
@@ -1085,6 +1198,10 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   sendDatatoHome(data) {
+
+    this.logger.log("sending data");
+    this.logger.log(data);
+
     this.childEvent.emit(data);
   }
 
