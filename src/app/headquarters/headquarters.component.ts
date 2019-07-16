@@ -172,7 +172,7 @@ export class HeadQuartersComponent implements OnInit {
     this.createObjects();  //check validations
 
 
-    this.dataDropDownCountryVatCode = ['BE','NL','AT','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','HU','IE','IT','LV','LT','LU',
+    this.dataDropDownCountryVatCode = ['BE','NL','AT','BG','HR','CY','CZ','DK','EE','FD','FI','FR','DE','EL','HU','IE','IT','LV','LT','LU',
                                         'MT','PL','PT','RO','SK','SI','SE'];
 
     this.countryVatCode = this.dataDropDownCountryVatCode[0];
@@ -224,9 +224,12 @@ export class HeadQuartersComponent implements OnInit {
     let index=0;
 
     this.dataDropDownCountryVatCode.forEach(element => {
+      this.logger.log("country code="+countryCode);
+      this.logger.log("element="+element);
       if(element === countryCode)
       {
         this._selectedIndex = index;
+        this.selectedIndexVatCode = index;
       }
       index++;
     });
