@@ -223,16 +223,10 @@ export class HeadQuartersComponent implements OnInit {
 
     let index=0;
 
-    this.logger.log("searching in dropdown");
-
     this.dataDropDownCountryVatCode.forEach(element => {
-      this.logger.log("element="+element);
-      this.logger.log("received country code="+countryCode);
       if(element === countryCode)
       {
-        this.logger.log("country code found="+element + " index="+index);
         this._selectedIndex = index;
-        //this.selectedIndexVatCode = index;
       }
       index++;
     });
@@ -241,9 +235,6 @@ export class HeadQuartersComponent implements OnInit {
 
 
   loadDataEdit(dpscustomer: any) {
-
-    this.logger.log("load hq form data");
-    this.logger.log(this.HQFormData.data);
 
     if (dpscustomer !== null) {
 
@@ -254,7 +245,7 @@ export class HeadQuartersComponent implements OnInit {
 
         this.HQForm.controls['vatNumber'].disable();
         this.HQForm.controls['countryVatCode'].disable();
-        
+
         this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
         this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
 

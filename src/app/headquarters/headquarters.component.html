@@ -93,8 +93,7 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Nr. </label>
-                <input formControlName="streetnumber" class="form-control" (change)="updateData()" name="streetnumber"
-                    type="text" required />
+                <input formControlName="streetnumber" class="form-control" (change)="updateData()" name="streetnumber" type="text" required />
                 <div class="form-control-feedback"
                     *ngIf="HQForm.controls.streetnumber.invalid && (HQForm.controls.streetnumber.untouched || HQForm.controls.streetnumber.dirty || HQForm.controls.streetnumber.touched) else validn">
                     <img src="../../assets/img/InvalidIcon.png" alt="">
@@ -106,15 +105,7 @@
 
             <div class="col-sm-3 inputWithImg">
                 <label class="titleBold"> Bus </label>
-                <input formControlName="bus" class="form-control" (change)="updateData()" name="bus" type="text"
-                    required />
-                <!-- <div class="form-control-feedback"
-                    *ngIf="HQForm.controls.bus.invalid && ( HQForm.controls.bus.dirty || HQForm.controls.bus.touched) else validq">
-                    <img src="../../assets/img/InvalidIcon.png" alt="">
-                </div>
-                <ng-template #validq>
-                    <img src="../../assets/img/ValidIcon.png" alt="">
-                </ng-template> -->
+                <input formControlName="bus" class="form-control" (change)="updateData()" name="bus" type="text" required />
             </div>
         </div>
 
