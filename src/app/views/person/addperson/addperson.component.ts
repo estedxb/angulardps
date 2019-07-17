@@ -324,7 +324,7 @@ export class AddPersonComponent implements OnInit {
       country: new FormControl('', [Validators.required]),
       mobileNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9+ ]+$')]),
       vastNumber: new FormControl('',[Validators.required,Validators.pattern('^[0-9+ ]+$')]),
-      emailAddress: new FormControl('', [Validators.required]),
+      emailAddress: new FormControl('', [Validators.required,Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
       language: new FormControl('', [Validators.required]),
       nationality: new FormControl('', [Validators.required]),
       birthPlace: new FormControl('', [Validators.required]),
