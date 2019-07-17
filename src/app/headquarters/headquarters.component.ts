@@ -159,7 +159,7 @@ export class HeadQuartersComponent implements OnInit {
       city: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]),
       postalcode: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]),
       country: new FormControl(''),
-      phonenumber: new FormControl('', Validators.required),
+      phonenumber: new FormControl('', [Validators.required,Validators.pattern('^[0-9 +]+$')]),
       invoiceEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
       contractsEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
       generalEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])

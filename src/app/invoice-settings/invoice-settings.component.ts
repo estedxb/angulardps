@@ -199,6 +199,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     this.invoiceSettings.mobilityAllowance.enabled = this.mobilitySwitch;
 
+    this.logger.log("invoice settings object to send")
+    this.logger.log(this.invoiceSettings);
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
