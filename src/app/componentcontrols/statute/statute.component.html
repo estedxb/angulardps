@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="col col-sm-8"><label class="titleBold">Paritair Comité</label>
-        <app-jointcommittee [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString[i]"></app-jointcommittee>
+        <app-jointcommittee [datasObject]="datas" [TypeWorker]="TypeWorker[i]" (childEvent)="receiveJTdata($event,i)" [JCFormData]="JCString[i]"></app-jointcommittee>
       </div>
       <div class="col col-sm-4"><label class="titleBold">Coëfficient </label>
 

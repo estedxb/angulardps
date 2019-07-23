@@ -9,6 +9,7 @@ import {
 } from '../../shared/models';
 import { CountriesComponent } from '../countries/countries.component';
 import { LoggingService } from 'src/app/shared/logging.service';
+import { JointcommitteeService } from 'src/app/shared/jointcommittee.service';
 
 
 @Component({
@@ -56,14 +57,14 @@ export class StatuteComponent implements OnInit {
   coefficient: number;
   newCounter: number = 0;
   lengthStatueSettings: number = 0;
+  public datas:any=[];
 
   constructor(
     private statuteService: StatuteService,
     private fb: FormBuilder,
-    private logger: LoggingService
-  ) {
-
-  }
+    private logger: LoggingService,
+    private jointcommitteeService: JointcommitteeService
+  ) {     }
 
   setParitairCommitteArray() {
 
@@ -357,6 +358,14 @@ export class StatuteComponent implements OnInit {
       checkbox: new FormControl()
     });
 
+    this.jointcommitteeService.getJointCommitees().
+    subscribe(data => { 
+      this.datas = data;
+      this.onpageInit();
+     },
+      error => this.errorMsg = error);
+  }
+  onpageInit(){    
     this.statuteService.getStatutes().subscribe(data => {
       this.statutes = data;
 
@@ -495,26 +504,30 @@ export class StatuteComponent implements OnInit {
   {
 
     this.statuteSelectedString = $event.selectedObject;
-    this.arrayParitairCommitee[i] = new ParitairCommitee();
-    this.paritarirCommiteeObject = new ParitairCommitee();
 
-    this.paritarirCommiteeObject.brightStaffingId = $event.selectedObject.BrightStaffingCommitteeId;
-    this.paritarirCommiteeObject.name = $event.selectedObject.name;
-    this.paritarirCommiteeObject.number = $event.selectedObject.number;
-    this.paritarirCommiteeObject.type = $event.selectedObject.type;
-
-    this.arrayParitairCommitee[i] = this.paritarirCommiteeObject;
-
-    if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+    if($event.selectedObject !== null && $event.selectedObject !== undefined )
     {
-      this.replaceArray(i);
-    } 
-    else {
-      this.createArrayData();
-      this.replaceArray(i);
+      this.arrayParitairCommitee[i] = new ParitairCommitee();
+      this.paritarirCommiteeObject = new ParitairCommitee();    
+  
+      this.paritarirCommiteeObject.brightStaffingId = $event.selectedObject.BrightStaffingCommitteeId;
+      this.paritarirCommiteeObject.name = $event.selectedObject.name;
+      this.paritarirCommiteeObject.number = $event.selectedObject.number;
+      this.paritarirCommiteeObject.type = $event.selectedObject.type;
+  
+      this.arrayParitairCommitee[i] = this.paritarirCommiteeObject;
+  
+      if (this.statuteSettings !== null && this.statuteSettings !== undefined && this.statuteSettings.length !== 0) 
+      {
+        this.replaceArray(i);
+      } 
+      else {
+        this.createArrayData();
+        this.replaceArray(i);
+      }
+  
+      this.emitData("JT");
     }
-
-    this.emitData("JT");
 
   }
 

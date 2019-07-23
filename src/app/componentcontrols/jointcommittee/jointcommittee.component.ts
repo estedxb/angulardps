@@ -15,6 +15,7 @@ export class JointcommitteeComponent implements OnInit {
 
   @Input() public JCFormData;
   @Input() public TypeWorker;
+  @Input() public datasObject;
   @Output() public childEvent = new EventEmitter();
 
   public id = 'ddl_jointcommittee';
@@ -71,6 +72,9 @@ export class JointcommitteeComponent implements OnInit {
     }
 
     const obj: any = { selectedObject: datas[position], arrayObject: datas };
+
+    this.logger.log("sending obj paritair");
+    this.logger.log(obj);
     this.childEvent.emit(obj);
 
 
@@ -80,9 +84,12 @@ export class JointcommitteeComponent implements OnInit {
 
     this.resetToInitValue();
 
-    this.jointcommitteeService.getJointCommitees().
-      subscribe(data => { this.filterDatas(data); },
-        error => this.errorMsg = error);
+    // this.jointcommitteeService.getJointCommitees().
+    //   subscribe(data => { this.filterDatas(data); },
+    //     error => this.errorMsg = error);
+
+    if(this.datasObject !== undefined && this.datasObject !== null)
+      this.filterDatas(this.datasObject);
 
     if (this.selectedValue === undefined) { this.SetInitialValue(); }
 
