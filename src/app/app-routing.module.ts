@@ -58,14 +58,7 @@ import { WeekPipe } from './pipes/week.pipe';
 import { TimeSpliterPipe } from './pipes/time-spliter.pipe';
 import { NumPipe } from './pipes/num.pipe';
 import { environment } from '../environments/environment';
-
-/*
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { MsalServiceLocal } from './shared/msal.service';
-import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
-import { LogLevel } from 'msal';
-*/
-
+import { LoginbgComponent } from './views/loginbg/loginbg.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponentComponent },
@@ -82,6 +75,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  { path: 'loginbg', component: LoginbgComponent },
   { path: 'person/addperson', component: AddPersonComponent },
   { path: 'person/add', component: AddPersonComponent },
   { path: 'person/:id', component: UpdatePersonComponent },
@@ -118,4 +112,3 @@ export const entringComponents = [
   CreatepositionComponent, CancelContractComponent, CreateContractComponent
 ];
 
-export const routingProviders = []; // [ MsalServiceLocal, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }];

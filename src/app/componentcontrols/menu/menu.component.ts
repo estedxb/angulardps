@@ -6,10 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { environment } from '../../../environments/environment';
 import { LoginToken } from 'src/app/shared/models';
 import { PlatformLocation } from '@angular/common';
-
-// import * as Msal from 'msal';
-// import { MsalServiceLocal } from '../../shared/msal.service';
-
+import { MsalService } from '../../shared/msal.service';
 
 @Component({
   selector: 'app-menu',
@@ -27,7 +24,7 @@ export class MenuComponent implements OnInit {
     private router: Router,
     platformLocation: PlatformLocation,
     private logger: LoggingService,
-    // private msalService: MsalServiceLocal,
+    private msalService: MsalService,
     // public authService: AuthService
   ) { }
 
@@ -41,7 +38,6 @@ export class MenuComponent implements OnInit {
     const dpsLoginTokenString = localStorage.getItem('dpsLoginToken');
     if (dpsLoginTokenString !== '' && dpsLoginTokenString !== null && dpsLoginTokenString !== undefined) {
       this.dpsLoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
-      // alert(this.dpsLoginToken);
       this.VatNumber = this.dpsLoginToken.customerVatNumber;
       this.isDpsUser = this.dpsLoginToken.userRole === 'DPSAdmin' ? true : false;
     }
@@ -51,6 +47,6 @@ export class MenuComponent implements OnInit {
     this.logger.log(this.constructor.name + ' - ' + 'Redirect... Logout');
     localStorage.removeItem('dpsLoginToken');
     this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
-    // this.msalService.logout();
+    this.msalService.logout();
   }
 }

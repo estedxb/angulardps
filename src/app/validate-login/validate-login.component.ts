@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 // import * as Msal from 'msal';
 // import { MsalServiceLocal } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
-import { Login, DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
+import { DPSCustomer, DpsUser, LoginToken, CustomersList } from '../shared/models';
 import { CustomerListsService } from '../shared/customerlists.service';
 import { Router, CanActivate } from '@angular/router';
 

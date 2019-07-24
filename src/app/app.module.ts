@@ -2,7 +2,7 @@ import { NgModule, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule, routingComponents, entringComponents, routingProviders } from './app-routing.module';
+import { AppRoutingModule, routingComponents, entringComponents } from './app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
@@ -18,6 +18,9 @@ import { ErrorComponent } from './error.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { VehicleTypesComponent } from './componentcontrols/vehicle-types/vehicle-types.component';
+import { LoginbgComponent } from './views/loginbg/loginbg.component';
+import { MsalService } from './shared/msal.service';
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#e37719',
   bgsOpacity: 0.5,
@@ -43,34 +46,27 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Bezig met laden ...',
   textColor: '#FFFFFF',
   textPosition: 'center-center'
-  // ,
-  // delay: 0,
-  // maxTime: -1,
-  // minTime: 500  
+  // , delay: 0, maxTime: -1, minTime: 500
 };
 
-export function loggerCallback(logLevel, message, piiEnabled) {
-  console.log('client logging' + message);
-}
-
+export function loggerCallback(logLevel, message, piiEnabled) { console.log('client logging' + message); }
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, ErrorComponent, VehicleTypesComponent],
+  declarations: [AppComponent, routingComponents, ErrorComponent, VehicleTypesComponent, LoginbgComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule, NoopAnimationsModule, MatAutocompleteModule, MatTooltipModule, MatInputModule,
     MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatProgressButtonsModule, AppRoutingModule, AutocompleteLibModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, AngularFontAwesomeModule, ModalModule.forRoot(),
     AlertModule.forRoot(), TimepickerModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    UiSwitchModule.forRoot({ size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff' })
+    UiSwitchModule.forRoot({
+      size: 'small', color: '#fff', switchOffColor: '#C7C7C7', switchColor: 'limegreen', defaultBoColor: '#000', defaultBgColor: '#fff'
+    })
   ],
-  providers: [DatePipe, routingProviders],
+  providers: [DatePipe, MsalService],
   bootstrap: [AppComponent],
   exports: [],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [entringComponents]
 })
 export class AppModule { }
-/*
-
-*/
