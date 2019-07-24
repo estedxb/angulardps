@@ -1,6 +1,6 @@
 /*::ng-deep*/
 body {
-  background-image: url("./../../assets/img/pagenotfound_bg.png");
+  background-image: url("./../../../assets/img/pagenotfound_bg.png");
 }
 #bgimgs {
   width: 100%;
@@ -124,12 +124,12 @@ body {
   padding-right: 30px;
 }
 #bgimgs #LoginDiv .rightcontainer #logindetails input.userid {
-  background-image: url(./../../assets/svg/person.svg);
+  background-image: url(./../../../assets/svg/person.svg);
   background-repeat: no-repeat;
   background-position: right;
 }
 #bgimgs #LoginDiv .rightcontainer #logindetails input.password {
-  background-image: url(./../../assets/svg/lock.svg);
+  background-image: url(./../../../assets/svg/lock.svg);
   background-repeat: no-repeat;
   background-position: right;
 }
@@ -181,11 +181,4 @@ body {
   left: 0px;
   padding: 3px;
   margin: 4px 4px;
-}
-.msg {
-  margin: 20px 0px 0px 20px;
-  width: 310px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 16px;
 }

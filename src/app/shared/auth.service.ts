@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Login, LoginToken } from './models';
+import { LoginToken } from './models';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
