@@ -69,8 +69,6 @@ export class UpdateCustomerComponent implements OnInit {
 
   onPageInit() {
 
-    // this.logger.showSpinner();
-
     this.activeRoute.params.subscribe((routeParams: any) => {
       this.logger.log('routeParams :: ', routeParams);
       this.Id = routeParams.id;
@@ -119,7 +117,6 @@ export class UpdateCustomerComponent implements OnInit {
             if (mode === 1) {
               this.updateLocalStorage();
             }
-            // this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
           } else {
             this.logger.ShowMessage('Toegang geweigerd!', '');
             this.logger.log('Redirect Breaked 4');
@@ -140,7 +137,6 @@ export class UpdateCustomerComponent implements OnInit {
             if (mode === 1) {
               this.updateLocalStorage();
             }
-            // this.logger.ShowMessage('Customer fetched successfully. ' + this.CustomerName, '');
           } else {
             this.logger.ShowMessage('Toegang geweigerd!', '');
             this.logger.log('Redirect Breaked 3');

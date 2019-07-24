@@ -1,9 +1,11 @@
 import { TimeSpan } from './TimeSpan';
 export class DPSCustomer {
+    vatNumberNumber: string; vatCountryCode: string;
     customer: Customer; invoiceEmail?: EmailAddress; contractsEmail?: EmailAddress; bulkContractsEnabled: boolean;
     statuteSettings?: StatuteSetting[]; invoiceSettings?: InvoiceSettings; contact: Contact; activateContactAsUser: boolean;
 }
 export class Customer {
+    vatCountryCode:string;
     vatNumber: string; name: string; officialName?: string; legalForm: string; creditCheck: CreditCheck; address?: Address;
     phoneNumber?: PhoneNumber; email?: EmailAddress; vcaCertification?: VcaCertification; isBlocked: boolean;
 }

@@ -15,6 +15,8 @@ import { TimeSpan } from '../shared/TimeSpan';
 import { DataService } from '../../../src/app/shared/data.service';
 import { MatDialog } from '@angular/material';
 import { LoggingService } from '../shared/logging.service';
+import { environment } from 'src/environments/environment.stag';
+import { findIndex } from 'rxjs/operators';
 
 
 @Component({
@@ -49,7 +51,9 @@ export class HeadQuartersComponent implements OnInit {
 
   getCustomersByvatNumberResponse: any;
   getCustomersByvatNumberErrorMessage: string;
+  countryVatCode:string;
 
+  selectedIndexVatCode:any = 0;
 
   dpsCustomer: DPSCustomer;
   customer: Customer;
@@ -84,6 +88,7 @@ export class HeadQuartersComponent implements OnInit {
 
   numberPattern: string;
   vatNumber: string;
+  CustomerVatNumberFull: string;
   creditCheckLimit: number;
 
   allowCustomer: boolean;
@@ -98,12 +103,32 @@ export class HeadQuartersComponent implements OnInit {
   public Id = '';
   public currentPage = '';
 
+  public dataDropDownCountryVatCode = [];
+
   public EditdataFromComponents;
-  public selectedLegalObject: any = { 'FormName': 'NV' };
+  public selectedLegalObject='NV';
 
   // ngAfterViewInit(){
   //   //this.legalString = this.legalComponent.selectedString;
   // }
+
+   /********************************************** DropDown  Inhaalrust drop down *************************/
+   private _selectedValue: any; private _selectedIndex: any = 0; private _value: any;
+
+   set selectedValue(value: any) { this._selectedValue = value; }
+   get selectedValue(): any { return this._selectedValue; }
+   set selectedIndex(value: number) { this._selectedIndex = value; this.value = this.dataDropDownCountryVatCode[this.selectedIndex]; }
+   get selectedIndex(): number { return this._selectedIndex; }
+   set value(value: any) { this._value = value; }
+   get value(): any { return this._value; }
+   resetToInitValue() { this.value = this.selectedValue; }
+ 
+   SetInitialValue() {
+     if (this.selectedValue === undefined) {
+       this._selectedIndex = 0;
+       this.selectedValue = this.dataDropDownCountryVatCode[this._selectedIndex];
+     }
+   }
 
   ngDoCheck() {
 
@@ -121,7 +146,8 @@ export class HeadQuartersComponent implements OnInit {
   ngOnInit() {
     
     this.HQForm = new FormGroup({
-      vatNumber: new FormControl('', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[a-zA-Z0-9]+$')]),
+      countryVatCode: new FormControl(''),
+      vatNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]),
       firstname: new FormControl('', [Validators.required]),
       officialname: new FormControl('', [Validators.required]),
       creditCheck: new FormControl(),
@@ -133,7 +159,7 @@ export class HeadQuartersComponent implements OnInit {
       city: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]),
       postalcode: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]),
       country: new FormControl(''),
-      phonenumber: new FormControl('', Validators.required),
+      phonenumber: new FormControl('', [Validators.required,Validators.pattern('^[0-9 +]+$')]),
       invoiceEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
       contractsEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')]),
       generalEmail: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
@@ -144,6 +170,12 @@ export class HeadQuartersComponent implements OnInit {
     this.allowCustomer = false;
     //this.legalString = "BVBA";
     this.createObjects();  //check validations
+
+
+    this.dataDropDownCountryVatCode = ['BE','NL','AT','BG','HR','CY','CZ','DK','EE','FD','FI','FR','DE','EL','HU','IE','IT','LV','LT','LU',
+                                        'MT','PL','PT','RO','SK','SI','SE'];
+
+    this.countryVatCode = this.dataDropDownCountryVatCode[0];
 
     if (localStorage.getItem('dpsLoginToken') !== undefined &&
       localStorage.getItem('dpsLoginToken') !== '' &&
@@ -161,6 +193,7 @@ export class HeadQuartersComponent implements OnInit {
       // //this.router.navigate(['./' + environment.B2C + environment.logInRedirectURL]);
     }
 
+    this.selectedIndexVatCode = 0;
   }
 
   constructor(
@@ -186,18 +219,36 @@ export class HeadQuartersComponent implements OnInit {
 
   }
 
+  findIndexDropDownVat(countryCode) {
+
+    let index=0;
+
+    this.dataDropDownCountryVatCode.forEach(element => {
+      this.logger.log("country code="+countryCode);
+      this.logger.log("element="+element);
+      if(element === countryCode)
+      {
+        this._selectedIndex = index;
+        this.selectedIndexVatCode = index;
+      }
+      index++;
+    });
+
+  }
+
 
   loadDataEdit(dpscustomer: any) {
-
-    this.logger.log("hq form data");
-    this.logger.log(this.HQFormData.data);
 
     if (dpscustomer !== null) {
 
       if (dpscustomer.customer !== null && dpscustomer.customer !== undefined) {
 
-        this.HQForm.controls['vatNumber'].setValue(dpscustomer.customer.vatNumber);
+        this.findIndexDropDownVat(dpscustomer.vatCountryCode);
+        this.HQForm.controls['vatNumber'].setValue(dpscustomer.vatNumberNumber);
+
         this.HQForm.controls['vatNumber'].disable();
+        this.HQForm.controls['countryVatCode'].disable();
+
         this.HQForm.controls['firstname'].setValue(dpscustomer.customer.name);
         this.HQForm.controls['officialname'].setValue(dpscustomer.customer.officialName);
 
@@ -208,6 +259,7 @@ export class HeadQuartersComponent implements OnInit {
         }
 
         this.legalString = dpscustomer.customer.legalForm;
+        this.selectedLegalObject = dpscustomer.customer.legalForm;
 
         if (dpscustomer.customer.address !== null && dpscustomer.customer.address !== undefined) {
           this.HQForm.controls['street'].setValue(dpscustomer.customer.address.street);
@@ -228,11 +280,6 @@ export class HeadQuartersComponent implements OnInit {
         if (dpscustomer.invoiceEmail !== null && dpscustomer.invoiceEmail !== undefined)
           this.HQForm.controls['invoiceEmail'].setValue(dpscustomer.invoiceEmail.emailAddress);
 
-
-        // this.invoiceSettings = new InvoiceSettings();
-        // this.invoiceSettings = dpscustomer.invoiceSettings;
-
-        // this.HQdata.invoiceSettings = dpscustomer.invoiceSettings;
       }
 
     }
@@ -301,26 +348,18 @@ export class HeadQuartersComponent implements OnInit {
 
     this.customer = new Customer();
     this.generalEmail = new EmailAddress();
-    this.vcaCertification = new VcaCertification();
     this.phoneNumber = new PhoneNumber();
-
-    // assigning vca Object
-    this.vcaCertification.cerified = false;
 
     // assigning general email address object
     this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
     this.phoneNumber.number = this.HQForm.get('phonenumber').value;
 
     // assigning customer object
-    this.customer.vatNumber = this.HQForm.get('vatNumber').value;
+    this.customer.vatNumber = this.countryVatCode + this.HQForm.get('vatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
-    if (this.nlegalString !== null && this.nlegalString !== undefined)
-      this.customer.legalForm = this.nlegalString;
-    else {
-      this.customer.legalForm = this.selectedLegalObject.FormName;
-    }
+    this.customer.legalForm = this.selectedLegalObject;
 
     var today = new Date();
     this.customer.creditCheck = new CreditCheck();
@@ -334,14 +373,11 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.address = this.address;
     this.customer.email = this.generalEmail;
-    this.customer.vcaCertification = this.vcaCertification;
-    this.customer.isBlocked = false;    
+    this.customer.isBlocked = false;           
 
     this.changeDpsCustomer = new DPSCustomer();
-
     if(this.customer !== null && this.customer !== undefined)
-    {
-
+    {    
       this.invoiceEmail = new EmailAddress();
       this.contractsEmail = new EmailAddress();
   
@@ -353,11 +389,49 @@ export class HeadQuartersComponent implements OnInit {
       this.changeDpsCustomer.customer = this.customer;
       this.changeDpsCustomer.invoiceEmail = this.invoiceEmail;
       this.changeDpsCustomer.contractsEmail = this.contractsEmail;
+      this.changeDpsCustomer.customer.vcaCertification = new VcaCertification();
+      this.changeDpsCustomer.vatNumberNumber = this.HQForm.get('vatNumber').value;
+      this.changeDpsCustomer.countryVatCode = this.countryVatCode;
 
+       // assigning vca Object    
+       if(this.HQFormData !== null && this.HQFormData !== undefined)
+       {
+         if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+         {
+             if(this.HQFormData.data.customer !== null && this.HQFormData.data.customer !== undefined)
+             {
+                if(this.HQFormData.data.customer.vcaCertification !== null && this.HQFormData.data.customer.vcaCertification !== undefined)
+                {
+                  this.changeDpsCustomer.customer.vcaCertification.cerified = this.HQFormData.data.customer.vcaCertification.cerified;
+                  console.log("customer vca="+this.changeDpsCustomer.customer.vcaCertification.cerified);
+                }
+                else {
+                    console.log("vca is null");
+                }
+             }
+             else {
+              console.log("customer is null");
+             }
+         }
+         else {
+           console.log("data is null");
+         }
+       }
+       else {
+        console.log("HQFormData is null");
+         this.vcaCertification.cerified = false;
+       }
+    
         console.log("setting DPS  EDIT Customer");
         console.log(this.changeDpsCustomer);
     }
   
+  }
+
+  onChangeDropDownCountryVatCode($event) {
+
+    this.countryVatCode = this.dataDropDownCountryVatCode[$event.target.value];
+    this.logger.log("country code="+this.countryVatCode);
   }
   
   createObjects() {
@@ -372,9 +446,11 @@ export class HeadQuartersComponent implements OnInit {
 
   receiveMessage($event) {
     this.nlegalString = $event;
-    this.selectedLegalObject = { 'FormName': $event };
+    this.selectedLegalObject = $event;
+
     this.setCustomerObject();
     this.createObjects();
+
   }
 
   receiveMessageCountry($event) {
@@ -395,8 +471,9 @@ export class HeadQuartersComponent implements OnInit {
     this.creditCheckPending = false;
     this.HQForm.get('creditLimit').setValue('');
 
-    if (this.HQForm.get('vatNumber').valid === true) {
-      this.getCustomerByVatNumber(this.vatNumber);
+    if (this.HQForm.get('vatNumber').valid === true) {      
+      this.logger.log("country code="+this.countryVatCode);
+      this.getCustomerByVatNumber(this.countryVatCode + this.vatNumber);
     }
   }
 
@@ -413,7 +490,7 @@ export class HeadQuartersComponent implements OnInit {
     this.customerService.getCustomersByVatNumber(vatNumber)
       .subscribe(data => {
         response = data;
-        console.log(response);
+        // console.log(response);
 
         this.allowCustomer = true;
 
@@ -521,8 +598,8 @@ export class HeadQuartersComponent implements OnInit {
 
   loadData(verifiedCustomerData: any) {
 
-    console.log('customer data');
-    console.log(verifiedCustomerData);
+    // console.log('customer data');
+    // console.log(verifiedCustomerData);
 
     if (verifiedCustomerData !== null) {
       if (verifiedCustomerData.customer !== null) {
@@ -627,23 +704,36 @@ export class HeadQuartersComponent implements OnInit {
     this.vcaCertification = new VcaCertification();
     this.phoneNumber = new PhoneNumber();
 
-    // assigning vca Object
-    this.vcaCertification.cerified = false;
+    // assigning vca Object    
+    if(this.HQFormData !== null && this.HQFormData !== undefined)
+    {
+      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+      {
+          if(this.HQFormData.data.customer !== null && this.HQFormData.customer !== undefined)
+          {
+             if(this.HQFormData.data.customer.vcaCertification !== null && this.HQFormData.data.customer.vcaCertification !== undefined)
+             {
+              this.vcaCertification.cerified = this.HQFormData.data.customer.vcaCertification.cerified;
+             }
+          }
+      }
+    }
+    else {
+      this.vcaCertification.cerified = false;
+    }
 
     // assigning general email address object
     this.generalEmail.emailAddress = this.HQForm.get('generalEmail').value;
     this.phoneNumber.number = this.HQForm.get('phonenumber').value;
 
     // assigning customer object
-    this.customer.vatNumber = this.HQForm.get('vatNumber').value;
+    this.customer.vatNumber = this.countryVatCode + this.HQForm.get('vatNumber').value;
+
+    //this.customer.vatCountryCode = this.countryVatCode + this.HQForm.get('VatNumber').value;
     this.customer.name = this.HQForm.get('firstname').value;
     this.customer.officialName = this.HQForm.get('officialname').value;
 
-    if (this.nlegalString !== null && this.nlegalString !== undefined)
-      this.customer.legalForm = this.nlegalString;
-    else {
-      this.customer.legalForm = this.selectedLegalObject.FormName;
-    }
+    this.customer.legalForm = this.selectedLegalObject;
 
     var today = new Date();
     this.customer.creditCheck = new CreditCheck();
@@ -657,7 +747,8 @@ export class HeadQuartersComponent implements OnInit {
     this.customer.phoneNumber = this.phoneNumber;
     this.customer.address = this.address;
     this.customer.email = this.generalEmail;
-    this.customer.vcaCertification = this.vcaCertification;
+    this.customer.vcaCertification = new VcaCertification();
+    this.customer.vcaCertification.cerified = this.vcaCertification.cerified;
     this.customer.isBlocked = false;
     
 
@@ -745,11 +836,11 @@ export class HeadQuartersComponent implements OnInit {
 
     this.invoiceSettings.shiftAllowance = false;
     this.invoiceSettings.otherAllowance = false;
-
-    this.invoiceSettings.transportCoefficient = 1.20;
-    this.invoiceSettings.dimonaCost = 0.3510;
-    this.invoiceSettings.ecoCoefficient = 1.69;
-    this.invoiceSettings.mealvoucherCoefficient = 1.69;
+  
+    this.invoiceSettings.transportCoefficient = environment.transportCoefficient;
+    this.invoiceSettings.dimonaCost = environment.DimonaCostMinium;
+    this.invoiceSettings.ecoCoefficient = environment.echoCoefficient;
+    this.invoiceSettings.mealvoucherCoefficient = environment.maaltiCoeffcient;
 
   }
 
@@ -852,8 +943,44 @@ export class HeadQuartersComponent implements OnInit {
         this.dpsCustomer.customer = this.customer;
         this.dpsCustomer.invoiceEmail = this.invoiceEmail;
         this.dpsCustomer.contractsEmail = this.contractsEmail;
+        this.dpsCustomer.vatNumberNumber = this.HQForm.get('vatNumber').value;
+        this.dpsCustomer.vatCountryCode = this.countryVatCode;
+  
         // this.dpsCustomer.contact = this.contact;
 
+        if(this.dpsCustomer.customer !== null && this.dpsCustomer.customer !== undefined)
+        {
+          this.dpsCustomer.customer.vcaCertification = new VcaCertification();
+          // assigning vca Object    
+          if(this.HQFormData !== null && this.HQFormData !== undefined)
+          {
+            if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+            {
+                if(this.HQFormData.data.customer !== null && this.HQFormData.data.customer !== undefined)
+                {
+                   if(this.HQFormData.data.customer.vcaCertification !== null && this.HQFormData.data.customer.vcaCertification !== undefined)
+                   {
+                     this.dpsCustomer.customer.vcaCertification.cerified = this.HQFormData.data.customer.vcaCertification.cerified;
+                     console.log("customer vca="+this.dpsCustomer.customer.vcaCertification.cerified);
+                   }
+                   else {
+                       console.log("vca is null");
+                   }
+                }
+                else {
+                 console.log("customer is null");
+                }
+            }
+            else {
+              console.log("data is null");
+            }
+          }
+          else {
+           console.log("HQFormData is null");
+            this.vcaCertification.cerified = false;
+          }
+        }
+      
         console.log("setting DPS Customer");
         console.log(this.dpsCustomer);
 
@@ -874,31 +1001,6 @@ export class HeadQuartersComponent implements OnInit {
 
     if (this.HQForm.valid === false && this.HQForm.get('bus').value === '' && !this.emptyData())
       return true;
-
-    if (this.HQForm.valid === false) {
-      // if(this.HQForm.get('vatNumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Ondernemingsnummer','');
-      //   if(this.HQForm.get('firstname').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Naam','');
-      //   if(this.HQForm.get('officialname').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Officiële naam','');
-      //   if(this.HQForm.get('streetnumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Rechtsvorm','');
-      //   if(this.HQForm.get('street').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Straat','');
-      //   if(this.HQForm.get('city').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Nr','');
-      //   if(this.HQForm.get('postalcode').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Plaats','');
-      //   if(this.HQForm.get('phonenumber').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Postcode','');
-      //   if(this.HQForm.get('invoiceEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Telefoonnummer','');
-      //   if(this.HQForm.get('contractsEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Algemeen e-mail adres','');
-      //   if(this.HQForm.get('generalEmail').invalid === true)
-      //   this.logger.ShowMessage('Onjuiste invoer in invoerveld Facturatie e-mail adres','');
-    }
 
     if (this.HQForm.valid === true && !this.emptyData())
       return true;
@@ -951,30 +1053,102 @@ export class HeadQuartersComponent implements OnInit {
 
     this.setInvoiceSettingsEmpty();
     this.setStatuteSettingArray();
-  
-    if (this.dpsCustomer !== null) {
-      this.HQdata = {
-        "customer": this.dpsCustomer.customer,
-        "invoiceEmail": this.invoiceEmail,
-        "contractsEmail": this.contractsEmail,
-        "invoiceSettings": this.invoiceSettings,
-        "bulkContractsEnabled": false,
-        "statuteSettings": this.statuteSetting,
-        "contact": this.HQFormData.data.contact,
-        "activateContactAsUser": false,
-        "formValid": this.validity()
-      };
-      this.sendDatatoHome(this.HQdata);
+
+    if(this.HQFormData !== null && this.HQFormData !== undefined)
+    {
+      if(this.HQFormData.data !== null && this.HQFormData.data !== undefined)
+      {
+        if(this.HQFormData.data.statuteSetting!== null && this.HQFormData.data.statuteSetting !== undefined)
+        {
+          if (this.dpsCustomer !== null) {
+            this.HQdata = {
+              "customer": this.dpsCustomer.customer,
+              "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+              "vatCountryCode": this.dpsCustomer.vatCountryCode,
+              "invoiceEmail": this.invoiceEmail,
+              "contractsEmail": this.contractsEmail,
+              "invoiceSettings": this.HQFormData.data.invoiceSettings,
+              "bulkContractsEnabled": false,
+              "statuteSettings": this.HQFormData.data.statuteSetting,
+              "contact": this.HQFormData.data.contact,
+              "activateContactAsUser": false,
+              "formValid": this.validity()
+            };
+            this.sendDatatoHome(this.HQdata);
+          }
+          else
+            this.HQdata = null;
+        }
+        else {
+          if(this.HQFormData.data.contact !== null )
+          if (this.dpsCustomer !== null) {
+            this.HQdata = {
+              "customer": this.dpsCustomer.customer,
+              "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+              "vatCountryCode": this.dpsCustomer.vatCountryCode,
+              "invoiceEmail": this.invoiceEmail,
+              "contractsEmail": this.contractsEmail,
+              "invoiceSettings": this.invoiceSettings,
+              "bulkContractsEnabled": false,
+              "statuteSettings": this.statuteSetting,
+              "contact": this.HQFormData.data.contact,
+              "activateContactAsUser": false,
+              "formValid": this.validity()
+            };
+            this.sendDatatoHome(this.HQdata);
+          }
+          else
+            this.HQdata = null;  
+      }
+      }
+      else {
+        if(this.HQFormData.data.contact !== null )
+        if (this.dpsCustomer !== null) {
+          this.HQdata = {
+            "customer": this.dpsCustomer.customer,
+            "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+            "vatCountryCode": this.dpsCustomer.vatCountryCode,
+            "invoiceEmail": this.invoiceEmail,
+            "contractsEmail": this.contractsEmail,
+            "invoiceSettings": this.invoiceSettings,
+            "bulkContractsEnabled": false,
+            "statuteSettings": this.statuteSetting,
+            "contact": this.HQFormData.data.contact,
+            "activateContactAsUser": false,
+            "formValid": this.validity()
+          };
+          this.sendDatatoHome(this.HQdata);
+        }
+        else
+          this.HQdata = null;  
     }
-    else
-      this.HQdata = null;
+
+    }
+    else {
+      if(this.HQFormData.data.contact !== null )
+        if (this.dpsCustomer !== null) {
+          this.HQdata = {
+            "customer": this.dpsCustomer.customer,
+            "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+            "vatCountryCode": this.dpsCustomer.vatCountryCode,
+            "invoiceEmail": this.invoiceEmail,
+            "contractsEmail": this.contractsEmail,
+            "invoiceSettings": this.invoiceSettings,
+            "bulkContractsEnabled": false,
+            "statuteSettings": this.statuteSetting,
+            "contact": this.HQFormData.data.contact,
+            "activateContactAsUser": false,
+            "formValid": this.validity()
+          };
+          this.sendDatatoHome(this.HQdata);
+        }
+        else
+          this.HQdata = null;  
+    }
 
   }
 
   updateData() {
-
-    this.logger.log("hq form data in update data");
-    this.logger.log(this.HQFormData);
 
     if(this.HQFormData !== null && this.HQFormData !== undefined)
     {
@@ -1001,6 +1175,8 @@ export class HeadQuartersComponent implements OnInit {
     {
       let data = {
         "customer": this.changeDpsCustomer.customer,
+        "vatNumberNumber": this.dpsCustomer.vatNumberNumber,
+        "vatCountryCode": this.dpsCustomer.vatCountryCode,
         "invoiceEmail": this.changeDpsCustomer.invoiceEmail,
         "contractsEmail": this.changeDpsCustomer.contractsEmail,
         "invoiceSettings": this.HQFormData.data.invoiceSettings,
@@ -1016,6 +1192,10 @@ export class HeadQuartersComponent implements OnInit {
   }
 
   sendDatatoHome(data) {
+
+    this.logger.log("sending data");
+    this.logger.log(data);
+
     this.childEvent.emit(data);
   }
 

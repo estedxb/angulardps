@@ -128,7 +128,7 @@ export class ContactPersonComponent implements OnInit {
       position: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       mobile: new FormControl('', [Validators.required]),
       // Validators.pattern("^/[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{2}[\.\\- ]{0,1}[0-9]{3}[\.\\- ]{0,1}[0-9]{2}/$")
-      telephone: new FormControl(''),
+      telephone: new FormControl('',[Validators.required,Validators.pattern('^[0-9+ ]+$')]),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
     });
 

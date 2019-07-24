@@ -38,8 +38,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   public CurrencyFormData;
 
-  // tslint:disable-next-line: variable-name
-
   public addNewRow: boolean;
   public removeLastRemove: boolean;
 
@@ -88,10 +86,10 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   public loadSwitchTeam: boolean;
   public loadSwitchOther: boolean;
 
-  public tCoefficient: any = "1.20";
-  public mCoefficient: any = "1.69";
-  public echoValue: any = "1.69";
-  public dimonaValue: any = "0.3510";
+  public tCoefficient: any = environment.transportCoefficient;
+  public mCoefficient: any = environment.maaltiCoeffcient;
+  public echoValue: any = environment.echoCoefficient;
+  public dimonaValue: any = environment.DimonaCostMinium;
 
   public currencyShift: string = "";
   public currencyOther: string = "";
@@ -159,11 +157,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Contract not valid: Dimona cost has to be at least 0.3300!
-  // Contract not valid: Dimona cost can only be 0.3510 at most!
-  // Contract not valid: Coefficient can only be 3.5 at most!
-  // Contract not valid: Gross salary has to be at least 5!
-
   changeObject() {
 
     this.tCoefficient = parseFloat(this.ISForm.get('Verplaatsingen').value);
@@ -206,6 +199,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     this.invoiceSettings.mobilityAllowance.enabled = this.mobilitySwitch;
 
+    this.logger.log("invoice settings object to send")
+    this.logger.log(this.invoiceSettings);
 
     let jsonObject: any = {
       'lieuDaysAllowance': this.lieuDaysAllowanceObject,
@@ -286,7 +281,8 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
           this.currencyDataOther = [];
           this.currencyDataShift = [];
 
-          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) {
+          if (this.FPFormData.data.invoiceSettings !== null && this.FPFormData.data.invoiceSettings !== undefined) 
+          {
 
             this.loadSwitchSickness = this.FPFormData.data.invoiceSettings.sicknessInvoiced;
             this.sicknessInvoiced = this.loadSwitchSickness;
@@ -664,12 +660,12 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
         this.createFirstServant()
       ])
 
-    });
+    });  
 
-    this.ISForm.get('Verplaatsingen').setValue('1.20');
-    this.ISForm.get('Dimona').setValue('0.3510');
-    this.ISForm.get('Echo').setValue('1.69');
-    this.ISForm.get('Maalticheques').setValue('1.69');
+    this.ISForm.get('Verplaatsingen').setValue(environment.transportCoefficient);
+    this.ISForm.get('Dimona').setValue(environment.DimonaCostMaximum);
+    this.ISForm.get('Echo').setValue(environment.echoCoefficient);
+    this.ISForm.get('Maalticheques').setValue(environment.maaltiCoeffcient);
 
     // set Ploegpremiere to the form control containing contacts
     this.Ploegpremiere = this.ISForm.get('arrayBox') as FormArray;
@@ -887,7 +883,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
   onChangeM($event) {
 
-    // this.holidayInvoiced = $event;
     this.mobilitySwitch = $event;
 
     if ($event === true) {
@@ -918,7 +913,6 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
   }
 
   setMobileBox(value: number) {
-    // this.mobileBoxText = value;
     this.mobilityAllowanceObject.amountPerKm = value;
     this.changeObject();
   }
@@ -1110,6 +1104,7 @@ export class InvoiceSettingsComponent implements OnInit, AfterViewInit {
 
     if (this.Ploegpremiere.length != 1) {
       this.Ploegpremiere.removeAt(index);
+
       // remove from array shiftAllowances
       this.shiftAllowances.splice(index, 1);
       this.currencyDataShift.splice(index, 1);
