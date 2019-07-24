@@ -21,6 +21,7 @@ export class CreateuserComponent implements OnInit {
   public languageStringNew;
   public languageShortName;
   public languageShortNameNew;
+  selectedOption: any;
   public isNewUser = false;
   public dpsLoginToken: LoginToken = JSON.parse(localStorage.getItem('dpsLoginToken'));
   public VatNumber = this.dpsLoginToken.customerVatNumber;
@@ -57,11 +58,13 @@ export class CreateuserComponent implements OnInit {
     this.UserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       lastname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      usertype: new FormControl(''),
+     // usertype: new FormControl(''),
       mobile: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+')]),
       telephone: new FormControl('', [Validators.pattern('^[0-9]+')]),
       emailaddress: new FormControl('', [Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])
+   
     });
+    this.selectedOption = "1";
     this.loadUserToEdit();
   }
 
@@ -72,10 +75,11 @@ export class CreateuserComponent implements OnInit {
         this.UserForm.controls.firstname.setValue(this.currentUser.user.firstName);
         this.UserForm.controls.lastname.setValue(this.currentUser.user.lastName);
         this.UserForm.controls.emailaddress.setValue(this.currentUser.user.email.emailAddress);
-        this.UserForm.controls.usertype.setValue(this.currentUser.userRole);
+        //this.UserForm.controls.usertype.setValue(this.currentUser.userRole);
         this.UserForm.controls.mobile.setValue(this.currentUser.user.mobile.number);
         this.UserForm.controls.telephone.setValue(this.currentUser.user.phone.number);
         this.addDefaultLaguage();
+        this.selectedOption = this.currentUser.uSerRoleId;
         this.languageString = this.currentUser.user.language.name;
         this.languageShortName = this.currentUser.user.language.shortName;
         this.isNewUser = false;
@@ -107,6 +111,7 @@ export class CreateuserComponent implements OnInit {
       this.currentUser.user.language.shortName = 'nl';
     }
   }
+  onOptionSelected(event) { this.logger.log(event); }
 
   public updateData() { this.createObjects(); }
 
@@ -120,7 +125,17 @@ export class CreateuserComponent implements OnInit {
     this.currentUser.user.mobile.number = this.UserForm.get('mobile').value;
     this.currentUser.user.language.name = this.languageStringNew;
     this.currentUser.user.language.shortName = this.languageShortNameNew;
-    this.currentUser.userRole = this.UserForm.get('usertype').value;
+    if(this.selectedOption=== "1")
+    {
+      this.currentUser.userRole =   "Master User" ;
+    }
+    else
+    {
+      this.currentUser.userRole =   "User" ;
+    }
+    this.currentUser.uSerRoleId =  this.selectedOption ;
+
+    //this.UserForm.get('usertype').value;
   }
 
   public getJSONObject() {

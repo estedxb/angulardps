@@ -54,14 +54,18 @@
                 </div>
                 <div class="col-sm-6 inputWithImg">
                     <label class="titleBold">Type gebruiker </label>
-                    <input formControlName="usertype" class="form-control" name="usertype" type="text" />
-                    <div class="form-control-feedback"
+                    <!-- <input formControlName="usertype" class="form-control" name="usertype" type="text" /> -->
+                    <select class="selectcomponent" [(ngModel)]='selectedOption' [value]='1' (ngModelChange)='onOptionSelected($event)' id="ddl_usertype" name="ddl_usertype"  [ngModelOptions]="{standalone: true}"  required="">
+                        <option value="1">Master User</option>
+                            <option value="2">User</option>                            
+                      </select>
+                    <!-- <div class="form-control-feedback"
                         *ngIf="UserForm.controls.usertype.invalid && (UserForm.controls.usertype.dirty || UserForm.controls.usertype.untouched) else cnewvalid">
                         <img src="../../assets/img/InvalidIcon.png" alt="">
                     </div>
                     <ng-template #cnewvalid>
                         <img src="../../assets/img/ValidIcon.png" alt="">
-                    </ng-template>
+                    </ng-template> -->
                 </div>
             </div>
 

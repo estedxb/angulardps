@@ -47,7 +47,7 @@ export class User {
     userName: string; firstName: string; lastName: string; email: EmailAddress; mobile: PhoneNumber; phone: PhoneNumber; language: Language;
 }
 export class DpsUser {
-    customerVatNumber: string; user: User; userRole: string; isEnabled: boolean; isArchived: boolean;
+    customerVatNumber: string; user: User; userRole: string; isEnabled: boolean; isArchived: boolean; uSerRoleId: Number;
 }
 export class Location {
     id: number; customerVatNumber: string; name: string; address?: Address; isEnabled: boolean; isArchived: boolean;
