@@ -13,7 +13,7 @@ export const environment = {
   logOutRedirectURL: 'logout',
   logInSuccessURL: 'dashboard',
   B2CSuccess: 'validate',
-  B2C: '',
+  B2C: 'b2c',
   B2CScopes: [
     'https://digitalpayrollservices.onmicrosoft.com/dev/User.Read',
     'https://digitalpayrollservices.onmicrosoft.com/dev/openid',
