@@ -5,15 +5,24 @@ export const environment = {
   dpsAPI: 'https://dpsapistg.azurewebsites.net/api/',
   boemmAPI: 'https://boemmapistg.azurewebsites.net/api/',
   blobStorage: 'https://dpsstorageaccountstg.blob.core.windows.net',
-  aadurl: 'https://login.microsoftonline.com', // 'https://digitalpayrollservices.b2clogin.com', // 
-  tenantid: 'digitalpayrollservices.onmicrosoft.com',
-  clientId: '4beb27ea-cf5b-4a8c-ae57-91a087e0ff60',
+  aadurl: 'https://login.microsoftonline.com',
+  tenantid: '1e80b2ce-1eda-4151-bb0c-421667c03f16',
+  clientId: '4f8e08ae-07c2-4625-807b-481a282d4014',
   webUrl: 'https://dpsselfserviceportalstg.azurewebsites.net/',
   logInRedirectURL: 'login',
   logOutRedirectURL: 'logout',
   logInSuccessURL: 'dashboard',
   B2CSuccess: 'validate',
-  B2C: '',
+  B2C: 'b2c',
+  B2CScopes: [
+    'https://digitalpayrollservices.onmicrosoft.com/dev/User.Read',
+    'https://digitalpayrollservices.onmicrosoft.com/dev/openid',
+    'https://digitalpayrollservices.onmicrosoft.com/dev/user_impersonation'
+  ],
+  B2CTodoAccessTokenKey: 'b2c.access.token',
+  signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
+  signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
+  forgotPasswordPolicy: 'B2C_1_SelfServicePasswordChange',
   DPSCustomerName: 'Digital Payroll Services',
   DPSVATNumber: '987654321000',
   MorningStart: 6,
@@ -26,10 +35,6 @@ export const environment = {
   transportCoefficient: 1.20,
   maaltiCoeffcient: 1.69,
   logInSuccessNoCustomerURL: 'customer/add',
-  signInPolicy: 'B2C_1_SelfServiceSignUpSignIn',
-  signUpPolicy: 'B2C_1_SelfServiceSignUpSignIn',
-  forgotPasswordPolicy: 'B2C_1_SelfServicePasswordChange',
-  B2CTodoAccessTokenKey: 'dpsuseraccesstoken',
   getAssetsDataPath: '../../assets/data/',
   getPositionFileUploads: 'position/',
   getPositionsDownloadTemplate: 'position/Position1.pdf',
@@ -86,6 +91,7 @@ export const environment = {
   getPrintContractFileURL: 'Contract/Pdf',
   getApproveContractURL: 'Contract/Approve',
   getContractReasonURL: 'ContractReasons',
+  getAADUserGroupUrl: 'B2CGraphClient',
   isLoggingRequired: true
 };
 

@@ -47,7 +47,7 @@ export class User {
     userName: string; firstName: string; lastName: string; email: EmailAddress; mobile: PhoneNumber; phone: PhoneNumber; language: Language;
 }
 export class DpsUser {
-    customerVatNumber: string; user: User; userRole: string; isEnabled: boolean; isArchived: boolean;
+    customerVatNumber: string; user: User; userRole: string; isEnabled: boolean; isArchived: boolean; uSerRoleId: Number;
 }
 export class Location {
     id: number; customerVatNumber: string; name: string; address?: Address; isEnabled: boolean; isArchived: boolean;
@@ -59,13 +59,6 @@ export class DpsPostion {
 export class _Position {
     name: string; taskDescription: string; isStudentAllowed: boolean; costCenter: string; workstationDocument: Documents;
 }
-export class Login { userid: string; password: string; }
-export class LoginToken {
-    accessToken: string; customerName: string; customerVatNumber: string; customerlogo: string;
-    userName?: string; userEmail: string; userRole: string; isLoggedIn: boolean;
-}
-
-// dpsUser: DpsUser;
 export class DpsPerson {
     customerVatNumber: string; person: Person; customerPostionId: string; statute: Statute; renumeration: Renumeration;
     addittionalInformation: string; medicalAttestation: MedicalAttestation; vcaAttestation: Documents;
@@ -122,20 +115,10 @@ export class Summaries {
     id: number; customerVatNumber: string; message: string; dateTime: string; actionTypeId: string;
     objectId: string; objectDomain: string; secondId: string; priority: number; isManual: boolean; isFinished: boolean;
 }
-
 export class SelectedContract {
     personContracts: DpsScheduleContract[]; contractId: number; personId: string; startDate: Date; endDate: Date; mode: string;
     approved: boolean; allowCreateContract: boolean; personIsEnabled: boolean; personIsArchived: boolean;
 }
-
-/*
-export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
-export class PersonsContracts {
-    customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string;
-    customerPostionId: string; dpsContracts: DpsContract[];
-}
-*/
-
 export class PersonDocuments { customerVatNumber: string; personId: string; fileName: string; fileType: string; file: File; }
 export enum FileType {
     MedicalAttestation = 'MedicalAttestation', VcaAttestation = 'VcaAttestation',
@@ -159,8 +142,30 @@ export class DpsScheduleContract {
 export class PrintContractPDF { contractId: string; fileUrl: string; }
 export class ApproveContractSuccess { contractId: string; accessStatus: boolean; message: string; }
 export class ApproveContract { customerVatNumber: string; contractId: string; }
-
 // tslint:disable-next-line: variable-name
 export class ContractReason { name: string; BrightStaffing_Contract_Reason_ID: string; }
-
 export class ErrorMSG { Title: string; MSG: string; }
+export class AADUserGroups {
+    'odata.metadata': string;
+    value: UserGroups[];
+}
+export class LoginToken {
+    accessToken: string; customerName: string; customerVatNumber: string; customerlogo: string;
+    userName?: string; userEmail: string; userRole: string; isLoggedIn: boolean;
+}
+export class UserGroups {
+    'odata.type': string; objectType: string; objectId: string; deletionTimestamp?: any; description?: any;
+    dirSyncEnabled?: any; displayName: string; lastDirSyncTime?: any; mail?: any; mailNickname: string;
+    mailEnabled: boolean; onPremisesDomainName?: any; onPremisesNetBiosName?: any; onPremisesSamAccountName?: any;
+    onPremisesSecurityIdentifier?: any; provisioningErrors: any[]; proxyAddresses: any[]; securityEnabled: boolean;
+}
+export enum GroupsID { DPSAdmin = 0, DPSCustomerMaster = 1, DPSCustomerUser = 2, Others = 3 }
+
+
+/*
+export class DpsPersonsContracts { personsContracts: PersonsContracts[]; }
+export class PersonsContracts {
+    customerVatNumber: string; socialSecurityNumber: SocialSecurityNumber; firstName: string; lastName: string;
+    customerPostionId: string; dpsContracts: DpsContract[];
+}
+*/

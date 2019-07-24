@@ -36,9 +36,7 @@ export class CustomerListsService {
 
   public getCustomersbyUserEmail(UserEmail: string, Token: string = ''): Observable<CustomersList[]> {
     console.log('CustomerListsService Data From = getCustomersbyUserEmail :: ' + this.getCustomerListUrl + '/' + UserEmail);
-    if (Token === '') {
-      Token = this.getToken();
-    }
+    if (Token === '') { Token = this.getToken(); }
 
     const result = this.http.get<CustomersList[]>(this.getCustomerListUrl + '/' + UserEmail, {
       headers: { Authorization: 'Token token="' + Token + '"' }

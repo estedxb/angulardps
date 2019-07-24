@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import * as Msal from 'msal';
-// import { MsalServiceLocal } from '../shared/msal.service';
+import { MsalService } from '../shared/msal.service';
 import { LoggingService } from '../shared/logging.service';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
 
@@ -17,25 +17,15 @@ export class B2cloginComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    // private msalService: MsalServiceLocal,
+    private msalService: MsalService,
     private logger: LoggingService
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.id = params['id'];
-      // this.msalService.login();
-    });
-    /*
-    if (!this.msalService.isLoggedIn()) {
-      // alert('Not Logged-In == ' + this.msalService.isLoggedIn());
-      this.msalService.login();
-    } else {
-      // alert('Already Logged-In ');
-      console.log('getAuthenticationToken 2 :: ', this.msalService.getAuthenticationToken());
-      // this.msalService.updateSessionStorage();
-    }
-    */
+    // this.activatedRoute.params.subscribe(params => { this.id = params['id']; });
+    const loginstate: boolean = this.msalService.isLoggedIn();
+    if (!loginstate) {
+      this.msalService.loginRedirect();
+    } else { this.msalService.getGroupDetails(this.msalService.getIdToken()); }
   }
-
 }
